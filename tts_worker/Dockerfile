@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir \
 # Copy the app files into container
 COPY . /app
 
-# Expose port
+# Expose port (must be 7860 for Hugging Face Spaces deployment)
 EXPOSE 7860
 ENV PORT=7860
 
