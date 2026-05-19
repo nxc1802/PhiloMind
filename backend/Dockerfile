@@ -20,6 +20,7 @@ RUN npx prisma generate
 # Build typescript compilation
 RUN npm run build
 
+ENV PORT=7860
 EXPOSE 7860
 
 # Bootstraps API server
