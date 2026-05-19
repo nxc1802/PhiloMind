@@ -34,9 +34,10 @@ PhiloMind/
 
 ## 🛠️ Deployment Configuration (GitHub Actions CD)
 
-This repository includes a continuous deployment pipeline (`deploy.yml`) that automatically builds and deploys your services to Hugging Face Spaces on every push to the `main` branch:
+This repository includes continuous deployment pipelines that automatically build and deploy your services to Hugging Face Spaces on every push to the `main` branch:
 
-1. **Frontend App**: Pushed to [Cuong2004/PhiloMind](https://huggingface.co/spaces/Cuong2004/PhiloMind).
-2. **TTS Worker**: Pushed to [Cuong2004/PhiloMind_TTSworker](https://huggingface.co/spaces/Cuong2004/PhiloMind_TTSworker).
+1. **Backend API Server (NestJS)**: Pushed to [Cuong2004/PhiloMind](https://huggingface.co/spaces/Cuong2004/PhiloMind) (runs 24/7 on Hugging Face Docker Space, listening on port 7860).
+2. **TTS Worker (FastAPI)**: Pushed to [Cuong2004/PhiloMind_TTSworker](https://huggingface.co/spaces/Cuong2004/PhiloMind_TTSworker) (ONNX speech synthesis microservice).
+3. **Frontend Application (Next.js)**: Deployed to **Vercel** (connected directly to the `/frontend` directory of this repo for fast global edge serving and native React/Next rendering).
 
 *To enable deployment, ensure you have added your Hugging Face write token to the GitHub Repository Secrets as `HF_TOKEN`.*

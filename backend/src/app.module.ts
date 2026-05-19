@@ -7,6 +7,7 @@ import { TTSModule } from './tts/tts.module';
 import { CoursesModule } from './courses/courses.module';
 import { DebatesModule } from './debate/debates.module';
 import { FlashcardsModule } from './flashcards/flashcards.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -21,5 +22,6 @@ import { FlashcardsModule } from './flashcards/flashcards.module';
     DebatesModule,
     FlashcardsModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}

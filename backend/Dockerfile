@@ -20,7 +20,7 @@ RUN npx prisma generate
 # Build typescript compilation
 RUN npm run build
 
-EXPOSE 3001
+EXPOSE 7860
 
 # Bootstraps API server
 CMD ["node", "dist/src/main"]

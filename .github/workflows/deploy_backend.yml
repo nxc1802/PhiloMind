@@ -1,21 +1,21 @@
-name: PhiloMind Frontend Continuous Deployment to Hugging Face
+name: PhiloMind Backend Continuous Deployment to Hugging Face
 
 on:
   push:
     branches: [ main, master ]
     paths:
-      - 'frontend/**'
-      - '.github/workflows/deploy_frontend.yml'
+      - 'backend/**'
+      - '.github/workflows/deploy_backend.yml'
 
 jobs:
-  deploy-frontend:
-    name: Deploy Frontend to Hugging Face Space
+  deploy-backend:
+    name: Deploy Backend to Hugging Face Space
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v3
 
-      - name: Push Frontend to Hugging Face Space
+      - name: Push Backend to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
@@ -23,20 +23,20 @@ jobs:
           git config --global user.name "github-actions[bot]"
           
           # Clone the Hugging Face Space repository using the HF token
-          git clone https://Cuong2004:$HF_TOKEN@huggingface.co/spaces/Cuong2004/PhiloMind hf_frontend
+          git clone https://Cuong2004:$HF_TOKEN@huggingface.co/spaces/Cuong2004/PhiloMind hf_backend
           
           # Clear the cloned folder (excluding the .git folder)
-          find hf_frontend -maxdepth 1 ! -name 'hf_frontend' ! -name '.git' -exec rm -rf {} +
+          find hf_backend -maxdepth 1 ! -name 'hf_backend' ! -name '.git' -exec rm -rf {} +
           
-          # Copy the frontend folder contents into the cloned space
-          cp -r frontend/* hf_frontend/
+          # Copy the backend folder contents into the cloned space
+          cp -r backend/* hf_backend/
           
           # Check if there are changes to commit
-          cd hf_frontend
+          cd hf_backend
           git add .
           if git diff --cached --quiet; then
-            echo "No changes in frontend to deploy."
+            echo "No changes in backend to deploy."
           else
-            git commit -m "Deploy from GitHub Actions Commit: ${{ github.sha }}"
+            git commit -m "Deploy Backend from GitHub Actions Commit: ${{ github.sha }}"
             git push origin main
           fi

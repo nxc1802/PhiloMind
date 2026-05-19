@@ -6,8 +6,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Set API Prefix
-  app.setGlobalPrefix('api');
+  // Set API Prefix and exclude root health check endpoints for container pings
+  app.setGlobalPrefix('api', { exclude: ['/', 'health'] });
 
   // Enable CORS
   app.enableCors({
