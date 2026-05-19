@@ -21,4 +21,4 @@ EXPOSE 7860
 ENV PORT=7860
 ENV HOST=0.0.0.0
 
-CMD ["npx", "next", "start", "-p", "7860", "-H", "0.0.0.0"]
+CMD ["sh", "-c", "npx next start -p ${PORT:-7860} -H 0.0.0.0"]
