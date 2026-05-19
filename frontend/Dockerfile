@@ -17,8 +17,8 @@ ENV NEXT_PUBLIC_API_URL=http://localhost:3001/api
 RUN npm run build
 
 # Expose port and define runtime command for Hugging Face Spaces compatibility
-EXPOSE 7860
-ENV PORT=7860
+EXPOSE 3000
+ENV PORT=3000
 ENV HOST=0.0.0.0
 
-CMD ["sh", "-c", "npx next start -p ${PORT:-7860} -H 0.0.0.0"]
+CMD ["npx", "next", "start"]

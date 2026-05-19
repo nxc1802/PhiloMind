@@ -7,7 +7,30 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: 'var(--bg-color)',
+        foreground: 'var(--text-color)',
+        primary: 'var(--primary-color)',
+        secondary: 'var(--secondary-color)',
+        accent: {
+          purple: 'var(--accent-purple)',
+        },
+        node: {
+          complete: 'var(--node-complete)',
+          locked: 'var(--node-locked)',
+        },
+        surface: {
+          lowest: 'var(--surface-container-lowest)',
+          container: 'var(--surface-container)',
+          high: 'var(--surface-container-high)',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
-};
+}

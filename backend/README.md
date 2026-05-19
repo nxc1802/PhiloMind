@@ -17,4 +17,4 @@ Once running, the Swagger documentation is accessible at `/docs` (or `/api/docs`
 
 ## Health Check
 - Root health check: `/`
-- Service health check: `/health` (provides timestamped server runtime health logs)
+- Service health check: `/health`
