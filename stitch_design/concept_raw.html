@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PhiloMind - Radical Freedom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fbf9f5",
+                        "outline-variant": "#c5c6ce",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#bac6e7",
+                        "surface-container": "#efeeea",
+                        "on-secondary-fixed-variant": "#481bc6",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#cabeff",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#0e1b34",
+                        "on-secondary-fixed": "#1c0062",
+                        "surface-bright": "#fbf9f5",
+                        "on-primary-container": "#8591b0",
+                        "secondary-container": "#7858f5",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "surface-container-low": "#f5f3ef",
+                        "deep-focus": "#0F172A",
+                        "node-locked": "#CBD5E1",
+                        "tertiary": "#001921",
+                        "tertiary-container": "#002f3b",
+                        "secondary-fixed": "#e6deff",
+                        "inverse-surface": "#30312e",
+                        "primary": "#08152e",
+                        "on-surface": "#1b1c1a",
+                        "on-primary-fixed-variant": "#3b4662",
+                        "outline": "#75777e",
+                        "surface-dim": "#dbdad6",
+                        "on-tertiary-container": "#009ec2",
+                        "on-background": "#1b1c1a",
+                        "on-tertiary-fixed": "#001f28",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "inverse-on-surface": "#f2f0ed",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d9e2ff",
+                        "surface": "#fbf9f5",
+                        "surface-container-high": "#eae8e4",
+                        "glass-stroke": "rgba(255, 255, 255, 0.2)",
+                        "surface-container-lowest": "#ffffff",
+                        "node-progress": "#7C5DFA",
+                        "on-secondary-container": "#fffbff",
+                        "on-error": "#ffffff",
+                        "node-complete": "#10B981",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#45464d",
+                        "surface-variant": "#e4e2de",
+                        "inverse-primary": "#bac6e7",
+                        "surface-tint": "#525e7b",
+                        "primary-container": "#1e2a44",
+                        "surface-container-highest": "#e4e2de",
+                        "secondary": "#5e3bdb",
+                        "tertiary-fixed": "#b7eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "button-x": "32px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "button-y": "16px"
+                    },
+                    "fontFamily": {
+                        "display-xxl": ["Inter"],
+                        "display-xxl-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "button-label": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-xxl": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "display-xxl-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.25", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "button-label": ["16px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .glass-floating {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 40px rgba(94, 59, 219, 0.1); /* Subtle secondary glow */
+        }
+        
+        @keyframes breathe {
+            0% { box-shadow: 0 0 0 0 rgba(124, 93, 250, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(124, 93, 250, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(124, 93, 250, 0); }
+        }
+        .node-breathing {
+            animation: breathe 2s infinite;
+        }
+
+        .gradient-path {
+            background: linear-gradient(to bottom, #5e3bdb, #4cd6ff);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen overflow-x-hidden selection:bg-secondary selection:text-white relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/80 dark:bg-primary-container/80 backdrop-blur-xl border-b border-glass-stroke pl-[calc(16rem+64px)] hidden md:flex transition-transform duration-200">
+<div class="flex-1 flex justify-end items-center gap-4">
+<button class="hover:text-secondary transition-colors duration-300 text-on-surface-variant p-2 rounded-full hover:bg-surface-variant flex items-center justify-center scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:text-secondary transition-colors duration-300 text-on-surface-variant p-2 rounded-full hover:bg-surface-variant flex items-center justify-center scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-64 bg-surface-container/60 dark:bg-tertiary-container/60 backdrop-blur-2xl border-r border-glass-stroke flex flex-col p-base z-40 hidden md:flex">
+<div class="px-4 py-6 mb-8">
+<h1 class="font-display-xxl-mobile text-display-xxl-mobile tracking-tighter text-primary dark:text-primary-fixed-dim">PhiloMind</h1>
+<p class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim mt-1">Deep Thought Explorer</p>
+</div>
+<ul class="flex-1 flex flex-col gap-2">
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<!-- Active State -->
+<a class="flex items-center gap-4 bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 translate-x-1 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                    Learning Journey
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+                    Flashcards
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+                    Podcasts
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+                    Debate
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+                    Progress
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all font-label-md text-label-md mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<div class="mt-4 px-4 pb-4">
+<button class="w-full bg-surface-container-highest hover:bg-surface-variant text-primary font-button-label text-button-label rounded-full py-button-y transition-colors">
+                Upgrade to Sage
+            </button>
+</div>
+</nav>
+<!-- Main Layout Content -->
+<main class="md:ml-64 pt-24 md:pt-32 px-margin-mobile md:px-margin-desktop pb-32 flex flex-col md:flex-row gap-gutter md:gap-12 w-full max-w-[1600px] mx-auto">
+<!-- Left Learning Nav (The Universe Map fragment) -->
+<aside class="w-full md:w-1/4 shrink-0 flex flex-col gap-6 sticky top-32 self-start hidden lg:flex">
+<h3 class="font-headline-md text-headline-md text-primary tracking-tight">Existentialism</h3>
+<div class="glass-card rounded-xl p-6 relative">
+<div class="absolute left-10 top-12 bottom-12 w-px bg-surface-variant z-0"></div>
+<!-- Gradient segment representing progress -->
+<div class="absolute left-10 top-12 h-24 w-px gradient-path z-0"></div>
+<ul class="flex flex-col gap-8 relative z-10">
+<!-- Complete Node -->
+<li class="flex items-start gap-4 cursor-pointer group">
+<div class="w-8 h-8 rounded-full bg-node-complete flex items-center justify-center shrink-0 mt-1 ring-4 ring-background group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-[18px]" data-icon="check">check</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Module 1</p>
+<p class="font-body-md text-body-md text-on-surface font-semibold">The Absurd</p>
+</div>
+</li>
+<!-- In-Progress Node -->
+<li class="flex items-start gap-4 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-node-progress flex items-center justify-center shrink-0 mt-1 ring-4 ring-background node-breathing">
+<div class="w-2 h-2 bg-white rounded-full"></div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-secondary">Current Focus</p>
+<p class="font-headline-md text-[18px] text-primary font-bold">Radical Freedom</p>
+</div>
+</li>
+<!-- Available Node -->
+<li class="flex items-start gap-4 cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-surface flex items-center justify-center shrink-0 mt-1 ring-4 ring-background">
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Next</p>
+<p class="font-body-md text-body-md text-primary">Bad Faith</p>
+</div>
+</li>
+<!-- Locked Node -->
+<li class="flex items-start gap-4 opacity-40">
+<div class="w-8 h-8 rounded-full border-2 border-node-locked bg-surface flex items-center justify-center shrink-0 mt-1 ring-4 ring-background">
+<span class="material-symbols-outlined text-node-locked text-[16px]" data-icon="lock">lock</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Locked</p>
+<p class="font-body-md text-body-md text-on-surface-variant">The Other</p>
+</div>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Right Main Content Area -->
+<section class="w-full lg:w-3/4 flex flex-col gap-[80px]">
+<!-- Header & Summary -->
+<div class="flex flex-col gap-6">
+<div class="flex flex-wrap items-center gap-4 mb-2">
+<span class="bg-surface-variant text-on-surface-variant px-4 py-1.5 rounded-full font-label-md text-label-md border border-outline-variant/30">Difficulty: Hard</span>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+                        12 min read
+                    </div>
+</div>
+<h2 class="font-display-xxl text-display-xxl-mobile md:text-display-xxl text-primary max-w-3xl leading-tight">
+                    Concept: Radical Freedom <span class="text-secondary">(Sartre)</span>
+</h2>
+<div class="glass-card rounded-2xl p-8 max-w-4xl mt-6">
+<p class="font-body-lg text-body-lg text-on-surface-variant italic mb-4">"Quick Take: Existence precedes essence. We are condemned to be free."</p>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed max-w-3xl">
+                        Sartre argues that unlike objects (which are designed with a purpose in mind), human beings simply exist first, and then we define ourselves through our choices and actions. There is no predetermined human nature, no divine plan, and no excuses. This absolute freedom brings profound anguish, as we are entirely responsible for who we become.
+                    </p>
+<button class="mt-4 text-secondary font-label-md text-label-md flex items-center gap-1 hover:text-primary transition-colors">
+                        Read full exposition <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Visual Explanation (Flowchart/Diagram) -->
+<div class="flex flex-col gap-6">
+<h3 class="font-headline-lg text-headline-lg text-primary">Ontological Framework</h3>
+<div class="glass-card rounded-2xl p-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 relative overflow-hidden">
+<!-- Decorative background shapes -->
+<div class="absolute -top-20 -left-20 w-64 h-64 bg-secondary-fixed opacity-30 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-20 -right-20 w-80 h-80 bg-tertiary-fixed-dim opacity-20 rounded-full blur-3xl"></div>
+<!-- Being-in-itself -->
+<div class="z-10 flex flex-col items-center gap-4 text-center w-64">
+<div class="w-32 h-32 rounded-full border border-outline-variant bg-surface-container flex flex-col items-center justify-center p-4">
+<span class="material-symbols-outlined text-outline text-3xl mb-1" data-icon="category">category</span>
+</div>
+<h4 class="font-headline-md text-[20px] text-primary">Being-in-itself</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Objects. Facticity. Complete, full, unchangeable identity.</p>
+</div>
+<!-- Connector -->
+<div class="z-10 flex flex-col items-center gap-2">
+<span class="font-label-md text-label-md text-secondary tracking-widest uppercase">Negation</span>
+<div class="w-24 h-px bg-gradient-to-r from-outline-variant to-secondary relative flex items-center justify-end">
+<span class="material-symbols-outlined text-secondary absolute -right-2" data-icon="arrow_right">arrow_right</span>
+</div>
+</div>
+<!-- Being-for-itself -->
+<div class="z-10 flex flex-col items-center gap-4 text-center w-64">
+<div class="w-32 h-32 rounded-full border-2 border-secondary bg-surface flex flex-col items-center justify-center p-4 shadow-[0_0_30px_rgba(94,59,219,0.15)]">
+<span class="material-symbols-outlined text-secondary text-3xl mb-1" data-icon="psychology">psychology</span>
+</div>
+<h4 class="font-headline-md text-[20px] text-primary">Being-for-itself</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Consciousness. Nothingness. Fluid, undefinable, absolute freedom.</p>
+</div>
+</div>
+</div>
+<!-- Podcast Widget -->
+<div class="flex flex-col gap-6">
+<h3 class="font-headline-lg text-headline-lg text-primary">Audio Deep Dive</h3>
+<div class="glass-floating rounded-2xl p-6 flex flex-col gap-6 relative overflow-hidden">
+<!-- Progress bar background line -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-surface-variant"></div>
+<!-- Actual progress -->
+<div class="absolute bottom-0 left-0 w-1/3 h-1 bg-tertiary-fixed-dim"></div>
+<div class="flex items-center gap-6">
+<button class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center hover:scale-105 transition-transform shrink-0 shadow-lg">
+<span class="material-symbols-outlined text-3xl" data-icon="play_arrow" data-weight="fill">play_arrow</span>
+</button>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-secondary mb-1">Episode 4</p>
+<h4 class="font-headline-md text-[20px] text-primary leading-tight">Condemned to be Free: The Burden of Choice</h4>
+</div>
+<!-- Pseudo Waveform -->
+<div class="hidden md:flex items-center gap-1 h-8 opacity-60">
+<div class="w-1 h-3 bg-primary rounded-full"></div>
+<div class="w-1 h-6 bg-primary rounded-full"></div>
+<div class="w-1 h-4 bg-primary rounded-full"></div>
+<div class="w-1 h-8 bg-primary rounded-full"></div>
+<div class="w-1 h-5 bg-primary rounded-full"></div>
+<div class="w-1 h-2 bg-primary rounded-full"></div>
+<div class="w-1 h-7 bg-primary rounded-full"></div>
+<div class="w-1 h-4 bg-secondary rounded-full"></div>
+<div class="w-1 h-8 bg-secondary rounded-full"></div>
+<div class="w-1 h-6 bg-surface-variant rounded-full"></div>
+<div class="w-1 h-3 bg-surface-variant rounded-full"></div>
+</div>
+</div>
+<!-- Transcript snippet -->
+<div class="bg-surface/50 rounded-xl p-4 border border-glass-stroke mt-2 h-32 overflow-hidden relative">
+<div class="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-surface/80 to-transparent z-10"></div>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-50 mb-2">Host: "...so when we say 'condemned', it sounds negative, right? But Sartre isn't necessarily pessimistic here."</p>
+<p class="font-body-md text-body-md text-primary font-medium">Guest: "Exactly. The condemnation is just the inescapable fact of it. You can't choose *not* to choose. Even choosing not to act is a choice for which you are entirely responsible."</p>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-50 mt-2">Host: "Which leads us directly into his concept of Bad Faith..."</p>
+</div>
+</div>
+</div>
+<!-- AI Debate Chat -->
+<div class="flex flex-col gap-6 pt-12 border-t border-glass-stroke">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="forum">forum</span>
+<h3 class="font-headline-lg text-headline-lg text-primary">Challenge the Idea</h3>
+</div>
+<div class="glass-card rounded-2xl p-6 md:p-8 flex flex-col gap-8">
+<!-- AI Message -->
+<div class="flex items-start gap-4 max-w-3xl">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-1">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-surface-container rounded-2xl rounded-tl-none p-5 text-on-surface font-body-md text-body-md">
+                            Sartre asserts that freedom is absolute and we are responsible for everything we are. But if freedom is absolute, are we responsible for things inherently beyond our control, like our birthplace, our physical limitations, or natural disasters? How does Existentialism address these seemingly immovable constraints?
+                        </div>
+</div>
+<!-- Suggested Actions (Pills) -->
+<div class="flex flex-wrap items-center gap-4 pl-14">
+<button class="bg-surface hover:bg-secondary/10 text-secondary border border-secondary/20 rounded-full px-button-x py-button-y font-button-label text-button-label transition-colors">
+                            Explain "Facticity"
+                        </button>
+<button class="bg-surface hover:bg-secondary/10 text-secondary border border-secondary/20 rounded-full px-button-x py-button-y font-button-label text-button-label transition-colors">
+                            Provide a Real-life example
+                        </button>
+<button class="bg-surface hover:bg-secondary/10 text-secondary border border-secondary/20 rounded-full px-button-x py-button-y font-button-label text-button-label transition-colors">
+                            Formulate a Counter-argument
+                        </button>
+</div>
+<!-- Input Area -->
+<div class="mt-4 pl-14">
+<div class="relative w-full">
+<input class="w-full bg-surface-container-highest border-none rounded-full py-4 pl-6 pr-16 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-2 focus:ring-secondary outline-none transition-all" placeholder="Type your own challenge or question..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

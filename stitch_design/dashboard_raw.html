@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PhiloMind Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fbf9f5",
+                        "outline-variant": "#c5c6ce",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#bac6e7",
+                        "surface-container": "#efeeea",
+                        "on-secondary-fixed-variant": "#481bc6",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#cabeff",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#0e1b34",
+                        "on-secondary-fixed": "#1c0062",
+                        "surface-bright": "#fbf9f5",
+                        "on-primary-container": "#8591b0",
+                        "secondary-container": "#7858f5",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "surface-container-low": "#f5f3ef",
+                        "deep-focus": "#0F172A",
+                        "node-locked": "#CBD5E1",
+                        "tertiary": "#001921",
+                        "tertiary-container": "#002f3b",
+                        "secondary-fixed": "#e6deff",
+                        "inverse-surface": "#30312e",
+                        "primary": "#08152e",
+                        "on-surface": "#1b1c1a",
+                        "on-primary-fixed-variant": "#3b4662",
+                        "outline": "#75777e",
+                        "surface-dim": "#dbdad6",
+                        "on-tertiary-container": "#009ec2",
+                        "on-background": "#1b1c1a",
+                        "on-tertiary-fixed": "#001f28",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "inverse-on-surface": "#f2f0ed",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d9e2ff",
+                        "surface": "#fbf9f5",
+                        "surface-container-high": "#eae8e4",
+                        "glass-stroke": "rgba(255, 255, 255, 0.2)",
+                        "surface-container-lowest": "#ffffff",
+                        "node-progress": "#7C5DFA",
+                        "on-secondary-container": "#fffbff",
+                        "on-error": "#ffffff",
+                        "node-complete": "#10B981",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#45464d",
+                        "surface-variant": "#e4e2de",
+                        "inverse-primary": "#bac6e7",
+                        "surface-tint": "#525e7b",
+                        "primary-container": "#1e2a44",
+                        "surface-container-highest": "#e4e2de",
+                        "secondary": "#5e3bdb",
+                        "tertiary-fixed": "#b7eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "button-x": "32px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "button-y": "16px"
+                    },
+                    "fontFamily": {
+                        "display-xxl": ["Inter"],
+                        "display-xxl-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "button-label": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-xxl": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "display-xxl-mobile": ["40px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.25", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "button-label": ["16px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            background-image: radial-gradient(circle at 50% 0%, rgba(120, 88, 245, 0.05) 0%, transparent 70%);
+            background-attachment: fixed;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid theme('colors.glass-stroke');
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.02);
+        }
+        .dark .glass-card {
+            background: rgba(8, 21, 46, 0.7);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row">
+<!-- TopAppBar (Mobile Only) -->
+<header class="md:hidden bg-surface/80 dark:bg-primary-container/80 backdrop-blur-xl border-b border-glass-stroke fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-20">
+<div class="font-display-xxl-mobile text-display-xxl-mobile tracking-tighter text-primary dark:text-primary-fixed-dim">PhiloMind</div>
+<div class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim">
+<button class="hover:text-secondary transition-colors duration-300 scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:text-secondary transition-colors duration-300 scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex bg-surface-container/60 dark:bg-tertiary-container/60 backdrop-blur-2xl border-r border-glass-stroke docked left-0 h-full w-64 fixed left-0 top-0 h-full flex flex-col p-base z-40">
+<div class="mb-10 px-4 mt-8">
+<h1 class="font-display-xxl text-display-xxl text-primary dark:text-primary-fixed-dim tracking-tighter" style="font-size: 32px;">PhiloMind</h1>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">Deep Thought Explorer</p>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-4 bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 font-label-md text-label-md Active: translate-x-1 transition-transform hover:bg-surface-container-highest dark:hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 font-label-md text-label-md hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                    Learning Journey
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 font-label-md text-label-md hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+                    Flashcards
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 font-label-md text-label-md hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+                    Podcasts
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 font-label-md text-label-md hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+                    Debate
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 font-label-md text-label-md hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+                    Progress
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant px-4 py-3 font-label-md text-label-md hover:bg-surface-container-highest dark:hover:bg-primary-container rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<div class="mt-auto px-4 pb-8">
+<button class="w-full bg-secondary-container text-on-secondary-container font-button-label text-button-label py-button-y rounded-full hover:bg-secondary transition-colors">
+                Upgrade to Sage
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full md:ml-64 pt-24 md:pt-12 px-margin-mobile md:px-margin-desktop pb-24 max-w-[1440px] mx-auto">
+<!-- Welcome Header -->
+<header class="mb-12">
+<h2 class="font-headline-lg text-headline-lg md:font-display-xxl md:text-display-xxl text-primary mb-2">Good morning, Socrates.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Ready to dive back into Existentialism?</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Main Column (Hero + Concepts) -->
+<div class="lg:col-span-8 flex flex-col gap-10">
+<!-- "Continue Learning" Hero Card -->
+<section class="glass-card rounded-xl p-8 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary-container/10 z-0"></div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div class="max-w-xl">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider mb-2 block">Continue Learning</span>
+<h3 class="font-headline-lg text-headline-lg text-primary mb-2">The Myth of Sisyphus</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Chapter 2: The Absurd Walls. Exploring the initial confrontation with meaninglessness.</p>
+<div class="w-full max-w-md mb-6">
+<div class="flex justify-between font-label-md text-label-md text-on-surface-variant mb-2">
+<span>Progress</span>
+<span>65%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-node-progress rounded-full w-[65%]"></div>
+</div>
+</div>
+</div>
+<button class="shrink-0 bg-primary text-on-primary font-button-label text-button-label px-button-x py-button-y rounded-full hover:bg-secondary transition-all transform group-hover:scale-105 shadow-sm">
+                            Resume Journey
+                        </button>
+</div>
+</section>
+<!-- Recent Concepts -->
+<section>
+<h4 class="font-headline-md text-headline-md text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="history">history</span>
+                        Recent Concepts
+                    </h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+<a class="glass-card rounded-xl p-6 hover:-translate-y-1 transition-transform group" href="#">
+<div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center mb-4 text-secondary group-hover:bg-secondary group-hover:text-on-secondary transition-colors border border-glass-stroke shadow-sm">
+<span class="material-symbols-outlined" data-icon="blur_on">blur_on</span>
+</div>
+<h5 class="font-headline-md text-headline-md text-primary mb-2" style="font-size: 18px;">Absurdism</h5>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">The conflict between the human tendency to seek inherent value and the silent universe.</p>
+</a>
+<a class="glass-card rounded-xl p-6 hover:-translate-y-1 transition-transform group" href="#">
+<div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center mb-4 text-node-complete group-hover:bg-node-complete group-hover:text-on-secondary transition-colors border border-glass-stroke shadow-sm">
+<span class="material-symbols-outlined" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<h5 class="font-headline-md text-headline-md text-primary mb-2" style="font-size: 18px;">Radical Freedom</h5>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Sartre's concept that we are "condemned to be free" and fully responsible.</p>
+</a>
+<a class="glass-card rounded-xl p-6 hover:-translate-y-1 transition-transform group" href="#">
+<div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center mb-4 text-secondary-container group-hover:bg-secondary-container group-hover:text-on-secondary transition-colors border border-glass-stroke shadow-sm">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</div>
+<h5 class="font-headline-md text-headline-md text-primary mb-2" style="font-size: 18px;">The Gaze</h5>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Being perceived by others alters our self-perception and freedom.</p>
+</a>
+</div>
+</section>
+</div>
+<!-- Sidebar Column (Progress + Flashcards) -->
+<div class="lg:col-span-4 flex flex-col gap-10">
+<!-- Daily Flashcards Widget -->
+<section class="glass-card rounded-xl p-6 border-t-4 border-t-secondary-container">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="font-headline-md text-headline-md text-primary mb-1">Daily Review</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Spaced repetition</p>
+</div>
+<div class="bg-surface-container-high text-primary font-label-md text-label-md px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="style">style</span>
+                            15 Due
+                        </div>
+</div>
+<div class="bg-surface rounded-lg p-6 mb-6 text-center border border-glass-stroke shadow-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-4 block">Up Next</span>
+<h5 class="font-headline-md text-headline-md text-primary mb-2 line-clamp-2">"Existence precedes essence"</h5>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">- Jean-Paul Sartre</p>
+</div>
+<button class="w-full bg-surface-container text-primary font-button-label text-button-label py-button-y rounded-full hover:bg-surface-variant border border-glass-stroke transition-colors">
+                        Start Review
+                    </button>
+</section>
+<!-- Progress Overview -->
+<section class="glass-card rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-headline-md text-primary">Intellectual Growth</h4>
+<div class="flex items-center gap-1 text-secondary-container bg-secondary-container/10 px-3 py-1 rounded-full font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm" data-icon="local_fire_department" data-weight="fill">local_fire_department</span>
+                            12-day Streak
+                        </div>
+</div>
+<!-- Simplified Heatmap Representation -->
+<div class="grid grid-cols-7 gap-2 mt-4">
+<!-- Simulated weeks of activity -->
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/20 rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/40 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/60 rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/80 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/40 rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/20 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/60 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/100 rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/40 rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/20 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/40 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/60 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/80 rounded-sm"></div>
+<div class="w-full aspect-square bg-secondary/100 rounded-sm border border-secondary"></div>
+</div>
+<div class="flex justify-between items-center mt-3 text-xs text-on-surface-variant font-body-md text-body-md">
+<span>Less</span>
+<div class="flex gap-1">
+<div class="w-3 h-3 bg-surface-container rounded-sm"></div>
+<div class="w-3 h-3 bg-secondary/20 rounded-sm"></div>
+<div class="w-3 h-3 bg-secondary/60 rounded-sm"></div>
+<div class="w-3 h-3 bg-secondary/100 rounded-sm"></div>
+</div>
+<span>More</span>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

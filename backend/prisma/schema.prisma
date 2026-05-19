@@ -1,0 +1,112 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+model User {
+  id         String            @id @default(uuid())
+  email      String            @unique
+  streak     Int               @default(0)
+  createdAt  DateTime          @default(now())
+  progress   Progress[]
+  debates    Debate[]
+  reviews    FlashcardReview[]
+}
+
+model Course {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  userId      String
+  createdAt   DateTime   @default(now())
+  chapters    Chapter[]
+  documents   Document[]
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  fileName  String
+  fileUrl   String
+  courseId  String
+  status    String   // "parsing", "completed", "failed"
+  course    Course   @relation(fields: [courseId], references: [id])
+}
+
+model Chapter {
+  id         String        @id @default(uuid())
+  title      String
+  orderIndex Int
+  courseId   String
+  course     Course        @relation(fields: [courseId], references: [id])
+  nodes      ConceptNode[]
+}
+
+model ConceptNode {
+  id            String             @id @default(uuid())
+  title         String
+  summary       String
+  originalText  String
+  quickTake     String
+  difficulty    String             // "Easy", "Medium", "Hard"
+  timeToRead    String             // e.g., "12 min read"
+  orderIndex    Int
+  chapterId     String
+  chapter       Chapter            @relation(fields: [chapterId], references: [id])
+  flashcards    Flashcard[]
+  podcast       Podcast?
+  debates       Debate[]
+  progress      Progress[]
+}
+
+model Flashcard {
+  id        String            @id @default(uuid())
+  nodeId    String
+  tag       String
+  question  String
+  answer    String
+  node      ConceptNode       @relation(fields: [nodeId], references: [id])
+  reviews   FlashcardReview[]
+}
+
+model FlashcardReview {
+  id          String    @id @default(uuid())
+  flashcardId String
+  userId      String
+  ease        Int       // 1 (Again), 2 (Hard), 3 (Good), 4 (Easy)
+  interval    Int       // in days
+  nextReview  DateTime
+  user        User      @relation(fields: [userId], references: [id])
+  flashcard   Flashcard @relation(fields: [flashcardId], references: [id])
+}
+
+model Podcast {
+  id         String      @id @default(uuid())
+  nodeId     String      @unique
+  audioUrl   String
+  transcript Json        // array of {time: number, speaker: string, text: string}
+  node       ConceptNode @relation(fields: [nodeId], references: [id])
+}
+
+model Debate {
+  id         String      @id @default(uuid())
+  nodeId     String
+  userId     String
+  transcript Json        // array of messages
+  user       User        @relation(fields: [userId], references: [id])
+  node       ConceptNode @relation(fields: [nodeId], references: [id])
+}
+
+model Progress {
+  id        String      @id @default(uuid())
+  userId    String
+  nodeId    String
+  status    String      // "locked", "available", "in_progress", "completed"
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id])
+  node      ConceptNode @relation(fields: [nodeId], references: [id])
+}

@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  db:
+    image: pgvector/pgvector:pg15
+    container_name: philomind-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: philomind
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d philomind"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  tts_worker:
+    build:
+      context: ./tts_worker
+      dockerfile: Dockerfile
+    container_name: philomind-tts-worker
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+      - MODEL_NAME=Kokoro-82M
+    volumes:
+      - tts_cache:/root/.cache
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: philomind-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/philomind?schema=public
+      - SUPABASE_URL=https://your-supabase-project.supabase.co
+      - SUPABASE_ANON_KEY=your-supabase-anon-key
+      - SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+      - OPENAI_API_KEY=your-openrouter-api-key
+      - OPENAI_API_BASE_URL=https://openrouter.ai/api/v1
+      - LLM_MODEL=meta-llama/llama-3-70b-instruct:free
+      - TTS_WORKER_URL=http://tts_worker:8000
+    depends_on:
+      db:
+        condition: service_healthy
+      tts_worker:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: philomind-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+      - NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project.supabase.co
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  tts_cache:

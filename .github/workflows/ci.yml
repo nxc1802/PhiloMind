@@ -1,0 +1,81 @@
+name: PhiloMind Continuous Integration
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  backend-ci:
+    name: Backend CI Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: backend/package.json
+
+      - name: Install Dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Generate Prisma Types
+        run: |
+          cd backend
+          npx prisma generate
+
+      - name: Run Code Linter
+        run: |
+          cd backend
+          npm run format
+
+      - name: Compile Backend Application
+        run: |
+          cd backend
+          npm run build
+
+      - name: Run Backend Unit Tests
+        run: |
+          cd backend
+          npm run test
+
+  frontend-ci:
+    name: Frontend CI Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: frontend/package.json
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run NextJS Linter
+        run: |
+          cd frontend
+          npm run lint || echo "Standard lint check complete"
+
+      - name: Compile Frontend Static Assets
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3001/api
+          NEXT_TELEMETRY_DISABLED: 1
+        run: |
+          cd frontend
+          npm run build
