@@ -126,7 +126,7 @@ Format your response exactly as a JSON object of this structure:
   async generatePodcastScript(
     conceptTitle: string,
     summary: string,
-  ): Promise<{ host: string; guest: string }[]> {
+  ): Promise<{ speaker: string; text: string }[]> {
     try {
       if (process.env.OPENAI_API_KEY === 'dummy-key' || !process.env.OPENAI_API_KEY) {
         return this.getMockPodcastScript();
