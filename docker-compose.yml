@@ -40,15 +40,16 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - PORT=3001
-      - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/philomind?schema=public
-      - SUPABASE_URL=https://your-supabase-project.supabase.co
-      - SUPABASE_ANON_KEY=your-supabase-anon-key
-      - SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
-      - OPENAI_API_KEY=your-openrouter-api-key
-      - OPENAI_API_BASE_URL=https://openrouter.ai/api/v1
-      - LLM_MODEL=meta-llama/llama-3-70b-instruct:free
-      - TTS_WORKER_URL=http://tts_worker:8000
+      - PORT=${PORT:-3001}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgrespassword@db:5432/philomind?schema=public}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL}
+      - LLM_MODEL=${LLM_MODEL}
+      - TTS_WORKER_URL=${TTS_WORKER_URL:-http://tts_worker:8000}
     depends_on:
       db:
         condition: service_healthy
@@ -66,10 +67,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PORT=3000
-      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
-      - NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project.supabase.co
-      - NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+      - PORT=${PORT:-3000}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001/api}
+      - NEXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}
     depends_on:
       - backend
 
