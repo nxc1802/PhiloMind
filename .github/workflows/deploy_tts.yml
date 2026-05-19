@@ -1,0 +1,42 @@
+name: PhiloMind TTS Worker Continuous Deployment to Hugging Face
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'tts_worker/**'
+      - '.github/workflows/deploy_tts.yml'
+
+jobs:
+  deploy-tts:
+    name: Deploy TTS Worker to Hugging Face Space
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v3
+
+      - name: Push TTS Worker to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
+          # Clone the Hugging Face Space repository using the HF token
+          git clone https://Cuong2004:$HF_TOKEN@huggingface.co/spaces/Cuong2004/PhiloMind_TTSworker hf_tts
+          
+          # Clear the cloned folder (excluding the .git folder)
+          find hf_tts -maxdepth 1 ! -name 'hf_tts' ! -name '.git' -exec rm -rf {} +
+          
+          # Copy the tts_worker folder contents into the cloned space
+          cp -r tts_worker/* hf_tts/
+          
+          # Check if there are changes to commit
+          cd hf_tts
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes in TTS worker to deploy."
+          else
+            git commit -m "Deploy from GitHub Actions Commit: ${{ github.sha }}"
+            git push origin main
+          fi
