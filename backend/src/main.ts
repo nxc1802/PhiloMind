@@ -35,9 +35,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  const port = process.env.PORT || 3001;
+  // Force port 7860 in Hugging Face Spaces environment to satisfy health check routing, otherwise fallback to PORT or 3001
+  const port = process.env.SPACE_ID ? 7860 : (process.env.PORT || 3001);
   await app.listen(port, '0.0.0.0');
-  console.log(`[PhiloMind Backend] Service is running on http://localhost:${port}/api`);
-  console.log(`[PhiloMind Swagger] Documentation is running on http://localhost:${port}/docs`);
+  console.log(`[PhiloMind Backend] Service is running on port ${port} (bind 0.0.0.0)`);
+  console.log(`[PhiloMind Swagger] Documentation is available at http://localhost:${port}/docs`);
 }
 bootstrap();

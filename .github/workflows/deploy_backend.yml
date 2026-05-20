@@ -40,3 +40,44 @@ jobs:
             git commit -m "Deploy Backend from GitHub Actions Commit: ${{ github.sha }}"
             git push origin main
           fi
+
+      - name: Monitor Hugging Face Space Build and logs
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          echo "Waiting 10 seconds for Hugging Face to detect the push..."
+          sleep 10
+          
+          # Fetch JWT token
+          JWT_RESPONSE=$(curl -s -H "Authorization: Bearer $HF_TOKEN" https://huggingface.co/api/spaces/Cuong2004/PhiloMind/jwt)
+          JWT_TOKEN=$(echo $JWT_RESPONSE | jq -r '.token')
+          
+          if [ "$JWT_TOKEN" = "null" ] || [ -z "$JWT_TOKEN" ]; then
+            echo "Failed to retrieve JWT token. Response: $JWT_RESPONSE"
+            exit 1
+          fi
+          
+          echo "Successfully retrieved JWT token. Monitoring Space runtime status..."
+          
+          # Poll Space status
+          for i in {1..30}; do
+            STATUS_JSON=$(curl -s https://huggingface.co/api/spaces/Cuong2004/PhiloMind)
+            STAGE=$(echo $STATUS_JSON | jq -r '.runtime.stage')
+            echo "Current stage: $STAGE (Attempt $i/30)"
+            
+            if [ "$STAGE" = "RUNNING" ]; then
+              echo "Space is successfully RUNNING!"
+              break
+            elif [ "$STAGE" = "RUNTIME_ERROR" ] || [ "$STAGE" = "BUILD_ERROR" ] || [ "$STAGE" = "CRASHED" ]; then
+              echo "Space build/runtime encountered an error: $STAGE"
+              break
+            fi
+            sleep 20
+          done
+          
+          # Print Logs
+          echo "=== HUGGING FACE BUILD LOGS ==="
+          curl -s -H "Authorization: Bearer $JWT_TOKEN" "https://api.hf.space/v1/Cuong2004/PhiloMind/logs/build" | tail -n 100
+          
+          echo "=== HUGGING FACE RUNTIME LOGS ==="
+          curl -s -H "Authorization: Bearer $JWT_TOKEN" "https://api.hf.space/v1/Cuong2004/PhiloMind/logs/run" | tail -n 100
