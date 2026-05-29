@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   House,
   Layers3,
@@ -13,6 +13,19 @@ import {
   X,
 } from "lucide-react";
 import { SIDEBAR_NAV_ITEMS } from "../constants";
+import { useAuth } from "../context/AuthContext";
+
+// Lấy chữ cái đầu của tên để hiển thị trong avatar
+const getInitials = (name) =>
+  name
+    ? name
+        .trim()
+        .split(/\s+/)
+        .slice(-2)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase()
+    : "?";
 
 // Navbar top — gom tat ca dieu huong chinh
 // Tren desktop: hien thi 6 NavLink + icon o phia phai
@@ -28,8 +41,17 @@ const TOP_NAV_ITEMS = [
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const handleLogout = () => {
+    logout();
+    setIsUserMenuOpen(false);
+    navigate("/home");
+  };
 
   return (
     <>
@@ -99,9 +121,65 @@ export default function Navbar() {
           >
             <SettingsIcon size={20} />
           </Link>
-          <div className="h-8 w-8 bg-red-800 rounded-full flex items-center justify-center text-white font-bold text-sm">
-            JS
-          </div>
+
+          {user ? (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                aria-label="Tài khoản"
+                className="h-9 w-9 bg-red-800 rounded-full flex items-center justify-center text-white font-bold text-sm hover:bg-red-900 transition-colors"
+              >
+                {getInitials(user.name)}
+              </button>
+
+              {isUserMenuOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setIsUserMenuOpen(false)}
+                  />
+                  <div className="absolute right-0 top-12 z-50 w-60 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="font-bold text-gray-900 truncate">
+                        {user.name}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {user.email}
+                      </p>
+                    </div>
+                    <Link
+                      to="/settings"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <span className="material-symbols-outlined text-base">
+                        settings
+                      </span>
+                      Cài đặt
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-800 hover:bg-red-50"
+                    >
+                      <span className="material-symbols-outlined text-base">
+                        logout
+                      </span>
+                      Đăng xuất
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-red-800 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-red-900 transition-colors whitespace-nowrap"
+            >
+              Đăng nhập
+            </Link>
+          )}
         </div>
       </header>
 

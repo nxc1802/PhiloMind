@@ -104,3 +104,20 @@ export const MINDMAP_CHAPTERS = [
 export const countSections = (chapter) => chapter.sections.length;
 export const countLessons  = (chapter) =>
   chapter.sections.reduce((total, section) => total + section.lessons.length, 0);
+
+// Danh sách phẳng tất cả bài học kèm ngữ cảnh chương/đề mục
+// Dùng để tra cứu nhanh tiêu đề bài học từ slug trong trang Lesson
+export const ALL_LESSONS = MINDMAP_CHAPTERS.flatMap((chapter) =>
+  chapter.sections.flatMap((section) =>
+    section.lessons.map((lesson) => ({
+      ...lesson,
+      chapterTitle: chapter.title,
+      chapterSubtitle: chapter.subtitle,
+      sectionTitle: section.title,
+    }))
+  )
+);
+
+// Tra cứu 1 bài học theo slug; trả về null nếu không tồn tại
+export const findLessonBySlug = (slug) =>
+  ALL_LESSONS.find((lesson) => lesson.slug === slug) || null;

@@ -6,9 +6,10 @@ import FlashcardDetail from "./pages/FlashcardDetail";
 import DebateCorner from "./pages/DebateCorner";
 import Quiz from "./pages/Quiz";
 import Lesson from "./pages/Lesson";
-import Mindmap from "./pages/Mindmap";
 import Docs from "./pages/Docs";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 
 // QUIZ SUB-PAGES
@@ -31,9 +32,12 @@ function App() {
       <Route path="/debate" element={<DebateCorner />} />
       <Route path="/quiz" element={<Quiz />} />
       <Route path="/lessons" element={<Lesson />} />
-      <Route path="/mindmap" element={<Mindmap />} />
       <Route path="/docs" element={<Docs />} />
       <Route path="/settings" element={<Settings />} />
+
+      {/* Auth */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       {/* Quiz sub-pages */}
       <Route path="/quiz/matching" element={<MatchingQuiz />} />

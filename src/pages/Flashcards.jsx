@@ -77,8 +77,8 @@ const Flashcards = () => {
       <PageHero
         eyebrow="Bộ thẻ ghi nhớ"
         icon="cards"
-        title="Chọn Chương Học – Flashcards"
-        subtitle="Hệ thống học tập biện chứng: từ lý thuyết đến thực tiễn thông qua việc ghi nhớ chủ động."
+        title="Chọn Chương Học – Trò chơi Lật thẻ"
+        subtitle="Học qua trò chơi ghép cặp (Shinkei-suijaku): tìm và nối khái niệm với mô tả tương ứng để ghi nhớ chủ động và hiệu quả hơn."
       >
         <div className="relative max-w-xl">
           <input

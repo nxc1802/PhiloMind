@@ -54,7 +54,7 @@ export default function HomePages() {
               </div>
 
               <Link
-                to="/mindmap"
+                to="/lessons"
                 className="bg-gradient-to-br from-red-700 to-red-900 p-6 rounded-xl shadow-md border border-red-900 flex flex-col justify-between text-white hover:shadow-xl hover:-translate-y-1 transition-all"
               >
                 <div>
@@ -200,7 +200,7 @@ export default function HomePages() {
               </div>
 
               {/* Knowledge Map */}
-              <Link to="/mindmap" className="bg-blue-50 p-8 rounded-xl shadow-md border border-gray-200 cursor-pointer block hover:shadow-lg transition-all">
+              <Link to="/lessons" className="bg-blue-50 p-8 rounded-xl shadow-md border border-gray-200 cursor-pointer block hover:shadow-lg transition-all">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="font-bold text-lg text-gray-900">Knowledge Map</h3>
                   <span className="material-symbols-outlined text-gray-600">open_in_full</span>

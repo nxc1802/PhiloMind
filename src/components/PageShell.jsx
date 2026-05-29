@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import StudyModulesSidebar from "./StudyModulesSidebar";
+import DiscussionWidget from "./DiscussionWidget";
 
 // Layout chuan dung cho moi trang trong he thong
 // Lay HomePages lam mau: Navbar + Sidebar trai + Main bg-gray-50
@@ -16,6 +17,8 @@ export default function PageShell({ activeKey, footer = null, children }) {
           {children}
         </main>
       </div>
+      {/* Khu thảo luận nổi — xuất hiện trên mọi trang */}
+      <DiscussionWidget />
     </>
   );
 }

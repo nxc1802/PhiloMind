@@ -173,6 +173,54 @@ Ket qua cuoi: `webpack compiled successfully` — KHONG con warning nao.
 | v1.1.1    | 26/05/2026 | AI Agent        | Don dep van de ton dong sau audit FE — chi tiet o Muc 8 |
 | v1.2.0    | 26/05/2026 | AI Agent        | Thong nhat design toan he thong theo trang Home — chi tiet o Muc 9 |
 | v1.3.0    | 26/05/2026 | AI Agent        | Bo sung tinh nang FE con thieu — chi tiet o Muc 10 |
+| v1.4.0    | 27/05/2026 | AI Agent        | Big Update: tich hop Mindmap vao Lesson, quiz tung cau, Discussion noi, game lat the, Login/Register — chi tiet o Muc 11 |
+
+---
+
+## 11. BIG UPDATE — v1.4.0 (27/05/2026)
+
+5 hang muc lon theo yeu cau. Toan bo FE, chua dung BE.
+
+### 1) Tich hop Mindmap vao trang Lesson
+- Tao `components/LessonMindmap.jsx` (chuyen logic Branch/ChapterMap/filter tu Mindmap cu sang, them highlight `activeSlug`).
+- `pages/Lesson.jsx`: hien thi muc luc tong (mindmap) TRUOC, noi dung bai hoc SAU. Bam 1 nhanh -> `setSearchParams({lesson})` + cuon muot toi noi dung bai (ref + scrollIntoView).
+- Tieu de/breadcrumb bai hoc lay tu `findLessonBySlug` (helper moi trong `data/mindmapData.js`, kem `ALL_LESSONS`).
+- XOA `pages/Mindmap.jsx`, route `/mindmap`, muc "Mindmap" trong SIDEBAR_NAV_ITEMS. Link `/mindmap` o Home + NotFound chuyen ve `/lessons`.
+- DIEU CHINH (27/05/2026): vao `/lessons` chi hien mindmap; noi dung bai hoc CHI render khi da chon 1 bai (`?lesson=<slug>`). Khi chua chon hien empty-state "Chon mot bai hoc de bat dau" thay vi bai mac dinh.
+
+### 2) Quiz on tap cuoi bai — tung cau mot
+- `FinalQuiz` trong `pages/Lesson.jsx` viet lai: hien 1 cau moi luot, co thanh tien do.
+- Tra loi dung -> o xanh + hien GIAI THICH ngan gon + nut "Cau tiep theo". Tra loi sai -> o do, cho chon lai.
+- Diem chi tinh cau dung ngay lan dau. Them field `explanation` cho moi cau trong `data/lessonContent.js`.
+
+### 3) Discussion noi (floating)
+- `components/DiscussionWidget.jsx` (moi) + `data/discussionSeed.js` (moi).
+- Nut noi goc trai-duoi (`fixed`, khong bi anh huong khi cuon), mo panel hien trao doi User <-> Admin.
+- Tin nhan Admin noi bat hon (nen do, badge "Admin", icon verified). Tin nguoi dung gui luu localStorage.
+- Gan vao `components/PageShell.jsx` -> xuat hien tren moi trang. Tranh dung goc voi AI chat bubble (goc phai) cua Home.
+
+### 4) Flashcard -> Tro choi lat the (Shinkei-suijaku)
+- `data/flashcardData.js` (moi): moi chuong 6 cap term/desc.
+- `pages/FlashcardDetail.jsx` viet lai thanh game ghep cap: lat 2 the, khop thi loai bo, khong khop thi up lai. Bang diem (so luot, da ghep), nut choi lai (xao bai Fisher-Yates), thong bao thang + toast.
+- Hang so `MEMORY_MATCH_DELAY_MS`, `MEMORY_FLIP_BACK_MS` trong `constants.js`.
+- `pages/Flashcards.jsx`: cap nhat tieu de/subtitle phan anh tro choi.
+
+### 5) Dang nhap + Dang ky
+- `context/AuthContext.jsx` (moi): mock auth FE, luu users + current user vao localStorage (LUU Y: chi tam thoi, BE that se thay the).
+- `components/AuthLayout.jsx` (moi, kem `AuthField`): bo cuc dung chung cho 2 trang auth.
+- `pages/Login.jsx`, `pages/Register.jsx` (moi): form co validate, toast, dieu huong ve `/home`.
+- Route `/login`, `/register` trong `App.js`. `index.js` boc them `AuthProvider`.
+- `components/Navbar.jsx`: avatar tinh "JS" thay bang trang thai auth — co user thi hien initials + dropdown (ten, email, Cai dat, Dang xuat); chua dang nhap thi nut "Dang nhap".
+
+### Provider tree (cap nhat)
+```
+BrowserRouter
+ -> AuthProvider
+    -> ToastProvider
+       -> App (Routes)
+```
+
+### Webpack ket qua: `Compiled successfully` — 0 warning (build CI=true).
 
 ---
 

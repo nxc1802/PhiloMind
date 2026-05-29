@@ -37,13 +37,13 @@ export default function NotFound() {
             Về trang chủ
           </Link>
           <Link
-            to="/mindmap"
+            to="/lessons"
             className="border-2 border-red-800 text-red-800 px-6 py-3 rounded-lg font-bold hover:bg-red-50 transition-colors inline-flex items-center gap-2"
           >
             <span className="material-symbols-outlined text-base">
               account_tree
             </span>
-            Xem mục lục
+            Xem mục lục bài học
           </Link>
         </div>
       </div>

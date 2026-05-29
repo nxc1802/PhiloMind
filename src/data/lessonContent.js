@@ -86,6 +86,7 @@ export const VIDEO_QUIZ_QUESTIONS = [
 ];
 
 // --- Quiz tổng kết cuối bài ---
+// Mỗi câu có thêm `explanation`: hiển thị khi người học trả lời đúng
 export const FINAL_QUIZ_QUESTIONS = [
   {
     question: "Đặc điểm nào KHÔNG phải của vật chất theo quan điểm duy vật biện chứng?",
@@ -96,11 +97,15 @@ export const FINAL_QUIZ_QUESTIONS = [
       "Có thể nhận thức được",
     ],
     correctIndex: 1,
+    explanation:
+      "Vật chất tồn tại khách quan, độc lập với ý thức. Nói vật chất phụ thuộc vào ý thức là quan điểm duy tâm, trái với chủ nghĩa duy vật biện chứng.",
   },
   {
     question: "Hình thức vận động nào là cao nhất?",
     options: ["Cơ học", "Vật lý", "Hóa học", "Xã hội"],
     correctIndex: 3,
+    explanation:
+      "Vận động xã hội là hình thức cao nhất và phức tạp nhất, bao hàm trong nó các hình thức vận động thấp hơn (cơ, lý, hóa, sinh).",
   },
   {
     question: "Không gian và thời gian là gì?",
@@ -110,6 +115,8 @@ export const FINAL_QUIZ_QUESTIONS = [
       "Tồn tại độc lập với vật chất",
     ],
     correctIndex: 0,
+    explanation:
+      "Không gian và thời gian là những hình thức tồn tại khách quan của vật chất đang vận động, không thể tách rời khỏi vật chất.",
   },
   {
     question: "Câu nào sau đây thể hiện đúng quan điểm duy vật biện chứng?",
@@ -119,6 +126,8 @@ export const FINAL_QUIZ_QUESTIONS = [
       "Vật chất và ý thức tồn tại song song không liên hệ",
     ],
     correctIndex: 1,
+    explanation:
+      "Vật chất là cái có trước và quyết định ý thức; đồng thời ý thức có tính độc lập tương đối và tác động trở lại vật chất thông qua hoạt động thực tiễn.",
   },
 ];
 

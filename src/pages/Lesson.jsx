@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
+import LessonMindmap from "../components/LessonMindmap";
 import { useToast } from "../components/Toast";
 import useLocalStorage from "../hooks/useLocalStorage";
 import {
@@ -10,6 +11,7 @@ import {
   PODCAST_EPISODE,
   SYLLABUS_ITEMS,
 } from "../data/lessonContent";
+import { findLessonBySlug } from "../data/mindmapData";
 import { QUIZ_PASS_THRESHOLD, PODCAST_SKIP_SECONDS } from "../constants";
 
 // --- Helper tạo className cho 1 đáp án trắc nghiệm dựa trên trạng thái ---
@@ -317,32 +319,84 @@ function VideoWithReminder() {
 }
 
 /* ============================================================
-   QUIZ TỔNG KẾT CUỐI BÀI
+   QUIZ TỔNG KẾT CUỐI BÀI — hiển thị từng câu một
+   Trả lời đúng: ô xanh + hiện giải thích. Trả lời sai: ô đỏ, cho chọn lại.
    ============================================================ */
 function FinalQuiz() {
   const { showToast } = useToast();
-  const [answers, setAnswers] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-  const allAnswered = FINAL_QUIZ_QUESTIONS.every((_, i) => i in answers);
-  const score = FINAL_QUIZ_QUESTIONS.filter(
-    (q, i) => answers[i] === q.correctIndex
-  ).length;
-  const passed = score >= QUIZ_PASS_THRESHOLD;
+  const totalQuestions = FINAL_QUIZ_QUESTIONS.length;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [wrongPicks, setWrongPicks] = useState([]); // các đáp án sai đã chọn ở câu hiện tại
+  const [isSolved, setIsSolved] = useState(false); // đã trả lời đúng câu hiện tại chưa
+  const [score, setScore] = useState(0); // số câu đúng ngay lần đầu
+  const [isFinished, setIsFinished] = useState(false);
+
+  const currentQuestion = FINAL_QUIZ_QUESTIONS[currentIndex];
 
   const resetQuiz = () => {
-    setAnswers({});
-    setSubmitted(false);
+    setCurrentIndex(0);
+    setWrongPicks([]);
+    setIsSolved(false);
+    setScore(0);
+    setIsFinished(false);
   };
 
-  const handleSubmit = () => {
-    setSubmitted(true);
-    showToast(
-      passed
-        ? `Xuất sắc! Bạn đã qua bài với ${score}/${FINAL_QUIZ_QUESTIONS.length} câu đúng.`
-        : `Bạn đạt ${score}/${FINAL_QUIZ_QUESTIONS.length} câu — chưa đủ điểm qua bài.`,
-      passed ? "success" : "warning"
-    );
+  const handlePick = (optionIndex) => {
+    if (isSolved) return;
+    if (optionIndex === currentQuestion.correctIndex) {
+      // Chỉ tính điểm nếu chưa từng chọn sai ở câu này
+      if (wrongPicks.length === 0) setScore((prev) => prev + 1);
+      setIsSolved(true);
+    } else if (!wrongPicks.includes(optionIndex)) {
+      setWrongPicks((prev) => [...prev, optionIndex]);
+    }
   };
+
+  const goToNext = () => {
+    const isLast = currentIndex === totalQuestions - 1;
+    if (isLast) {
+      setIsFinished(true);
+      const passed = score >= QUIZ_PASS_THRESHOLD;
+      showToast(
+        passed
+          ? `Xuất sắc! Bạn trả lời đúng ngay ${score}/${totalQuestions} câu.`
+          : `Bạn đúng ngay ${score}/${totalQuestions} câu — hãy ôn lại nhé.`,
+        passed ? "success" : "warning"
+      );
+      return;
+    }
+    setCurrentIndex((prev) => prev + 1);
+    setWrongPicks([]);
+    setIsSolved(false);
+  };
+
+  const getButtonClassName = (optionIndex) => {
+    const base =
+      "w-full text-left rounded-xl border-2 px-4 py-3.5 font-medium transition-all flex items-center gap-3 ";
+    if (isSolved && optionIndex === currentQuestion.correctIndex) {
+      return base + "border-green-500 bg-green-50 text-green-900";
+    }
+    if (wrongPicks.includes(optionIndex)) {
+      return base + "border-red-500 bg-red-50 text-red-900";
+    }
+    if (isSolved) {
+      return base + "border-gray-200 opacity-60";
+    }
+    return base + "border-gray-200 hover:border-red-400 hover:bg-red-50";
+  };
+
+  const getOptionIcon = (optionIndex) => {
+    if (isSolved && optionIndex === currentQuestion.correctIndex)
+      return "check_circle";
+    if (wrongPicks.includes(optionIndex)) return "cancel";
+    return "radio_button_unchecked";
+  };
+
+  const progressPercent = isFinished
+    ? 100
+    : Math.round((currentIndex / totalQuestions) * 100);
+  const passed = score >= QUIZ_PASS_THRESHOLD;
 
   return (
     <div className="bg-white rounded-2xl shadow-md border border-red-200 p-7 mt-8">
@@ -354,64 +408,38 @@ function FinalQuiz() {
           Quiz ôn tập cuối bài
         </span>
       </div>
-      <h2 className="text-2xl font-bold text-red-900 mb-2">
-        Kiểm tra tổng kết
-      </h2>
-      <p className="text-gray-600 text-sm mb-5">
-        Hoàn thành {FINAL_QUIZ_QUESTIONS.length} câu hỏi để chứng nhận hoàn
-        thành bài học. Đạt {QUIZ_PASS_THRESHOLD}/{FINAL_QUIZ_QUESTIONS.length}{" "}
-        câu để qua bài.
-      </p>
+      <h2 className="text-2xl font-bold text-red-900 mb-4">Kiểm tra tổng kết</h2>
 
-      <div className="space-y-6">
-        {FINAL_QUIZ_QUESTIONS.map((q, qIndex) => (
+      {/* Thanh tiến độ */}
+      <div className="flex items-center gap-3 mb-6">
+        <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
           <div
-            key={qIndex}
-            className="border-b border-gray-100 pb-5 last:border-0"
-          >
-            <p className="font-semibold mb-3 text-gray-900">
-              Câu {qIndex + 1}. {q.question}
-            </p>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {q.options.map((option, optIndex) => (
-                <button
-                  key={optIndex}
-                  disabled={submitted}
-                  onClick={() => setAnswers({ ...answers, [qIndex]: optIndex })}
-                  className={getOptionClassName({
-                    submitted,
-                    picked: answers[qIndex] === optIndex,
-                    isCorrect: optIndex === q.correctIndex,
-                    base: "text-left rounded-lg border-2",
-                    sizing: "px-4 py-3 text-sm",
-                  })}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
+            className="h-full bg-red-800 rounded-full transition-all duration-300"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+        <span className="text-sm text-gray-500 tabular-nums shrink-0">
+          {isFinished ? totalQuestions : currentIndex + 1}/{totalQuestions}
+        </span>
       </div>
 
-      {!submitted ? (
-        <button
-          disabled={!allAnswered}
-          onClick={handleSubmit}
-          className="mt-6 bg-red-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-900 disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          Nộp bài quiz
-        </button>
-      ) : (
+      {isFinished ? (
         <div
-          className={`mt-6 p-5 rounded-xl ${
+          className={`p-6 rounded-xl text-center ${
             passed
               ? "bg-green-50 border-2 border-green-300"
               : "bg-amber-50 border-2 border-amber-300"
           }`}
         >
-          <div className="text-3xl font-bold mb-2">
-            {score}/{FINAL_QUIZ_QUESTIONS.length} câu đúng
+          <span
+            className={`material-symbols-outlined text-5xl ${
+              passed ? "text-green-600" : "text-amber-600"
+            }`}
+          >
+            {passed ? "workspace_premium" : "refresh"}
+          </span>
+          <div className="text-3xl font-bold mt-2 mb-1 text-gray-900">
+            {score}/{totalQuestions} câu đúng ngay lần đầu
           </div>
           <p className={passed ? "text-green-800" : "text-amber-800"}>
             {passed
@@ -420,10 +448,65 @@ function FinalQuiz() {
           </p>
           <button
             onClick={resetQuiz}
-            className="mt-3 text-sm underline text-gray-600"
+            className="mt-4 bg-red-800 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
           >
-            Làm lại
+            Làm lại từ đầu
           </button>
+        </div>
+      ) : (
+        <div>
+          <p className="font-semibold text-lg mb-4 text-gray-900">
+            Câu {currentIndex + 1}. {currentQuestion.question}
+          </p>
+
+          <div className="space-y-2.5">
+            {currentQuestion.options.map((option, optIndex) => (
+              <button
+                key={optIndex}
+                disabled={isSolved}
+                onClick={() => handlePick(optIndex)}
+                className={getButtonClassName(optIndex)}
+              >
+                <span className="material-symbols-outlined text-xl shrink-0">
+                  {getOptionIcon(optIndex)}
+                </span>
+                {option}
+              </button>
+            ))}
+          </div>
+
+          {/* Phản hồi sai: nhắc chọn lại */}
+          {!isSolved && wrongPicks.length > 0 && (
+            <div className="mt-4 bg-red-50 border border-red-200 text-red-800 p-3 rounded-lg text-sm flex items-center gap-2">
+              <span className="material-symbols-outlined text-base">
+                error
+              </span>
+              Chưa chính xác — hãy thử một đáp án khác.
+            </div>
+          )}
+
+          {/* Phản hồi đúng: hiện giải thích + nút tiếp theo */}
+          {isSolved && (
+            <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-lg">
+              <p className="font-bold text-green-800 flex items-center gap-2 mb-1">
+                <span className="material-symbols-outlined text-base">
+                  lightbulb
+                </span>
+                Chính xác!
+              </p>
+              <p className="text-sm text-green-900/90 leading-relaxed">
+                {currentQuestion.explanation}
+              </p>
+              <button
+                onClick={goToNext}
+                className="mt-4 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+              >
+                {currentIndex === totalQuestions - 1
+                  ? "Xem kết quả →"
+                  : "Câu tiếp theo →"}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -621,216 +704,266 @@ const SYLLABUS_STATUS_CONFIG = {
 };
 
 /* ============================================================
-   PAGE chính
+   PAGE chính — Mục lục tổng (mindmap) trước, nội dung bài học sau
    ============================================================ */
-// Doc slug bai hoc tu URL va doi sang ten hien thi
-// Vi dien tat ca lesson dang dung chung 1 trang -> map sang badge thong tin
-const SLUG_TO_LABEL = {
-  "pham-tru-vat-chat": "Phạm trù vật chất",
-  "phuong-thuc-ton-tai": "Phương thức tồn tại của vật chất",
-  "ban-chat-y-thuc": "Nguồn gốc và bản chất của ý thức",
-  "quan-he-vc-yt": "Mối quan hệ vật chất – ý thức",
-  "hai-nguyen-ly": "Hai nguyên lý cơ bản",
-  "cap-pham-tru": "Các cặp phạm trù",
-  "ba-quy-luat": "Ba quy luật cơ bản",
-};
-
 const Lesson = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const lessonSlug = searchParams.get("lesson");
-  const lessonLabelFromSlug = lessonSlug ? SLUG_TO_LABEL[lessonSlug] : null;
+  const activeLesson = lessonSlug ? findLessonBySlug(lessonSlug) : null;
 
-  // Luu trang thai warmup vao localStorage de F5 khong mat
+  // Ref tới phần nội dung bài học để cuộn xuống khi chọn 1 nhánh trên sơ đồ
+  const lessonContentRef = useRef(null);
+
+  // Lưu trạng thái warmup vào localStorage để F5 không mất
   const [isWarmupDone, setIsWarmupDone] = useLocalStorage(
     "mln_warmup_done",
     false
   );
 
+  // Bấm 1 bài học trên sơ đồ -> cập nhật URL và cuộn tới nội dung bài học
+  const handleOpenLesson = (slug) => {
+    if (!slug) return;
+    setSearchParams({ lesson: slug });
+    // Đợi React cập nhật xong rồi mới cuộn cho mượt
+    requestAnimationFrame(() => {
+      lessonContentRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  };
+
+  // Quay lại mục lục: xóa tham số lesson khỏi URL -> mindmap hiện lại
+  const handleBackToMindmap = () => setSearchParams({});
+
   return (
     <PageShell activeKey="lessons">
       <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-4 flex-wrap">
+        <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
           <span>Trang chủ</span>
           <span>›</span>
-          <span>Bài học</span>
-          <span>›</span>
-          <strong className="text-red-800">
-            {lessonLabelFromSlug || "Chủ nghĩa duy vật biện chứng"}
+          <strong className={activeLesson ? "" : "text-red-800"}>
+            Bài học
           </strong>
+          {activeLesson && (
+            <>
+              <span>›</span>
+              <strong className="text-red-800">{activeLesson.title}</strong>
+            </>
+          )}
         </div>
 
-        {/* Header bài học */}
-        <header className="mb-8">
-          {lessonLabelFromSlug && (
+        {/* MỤC LỤC TỔNG — chỉ hiện khi chưa chọn bài; chọn xong sẽ ẩn đi */}
+        {!activeLesson && (
+          <div className="mb-10">
+            <LessonMindmap
+              activeSlug={lessonSlug}
+              onOpenLesson={handleOpenLesson}
+            />
+          </div>
+        )}
+
+        {/* ===== NỘI DUNG BÀI HỌC — chỉ hiện sau khi chọn bài từ sơ đồ ===== */}
+        <div ref={lessonContentRef} className="scroll-mt-20">
+          {activeLesson ? (
+            <div className="pt-2">
+          <button
+            type="button"
+            onClick={handleBackToMindmap}
+            className="inline-flex items-center gap-1 text-sm font-semibold text-red-800 hover:text-red-900 mb-5"
+          >
+            <span className="material-symbols-outlined text-base">
+              arrow_back
+            </span>
+            Quay lại mục lục bài học
+          </button>
+          <header className="mb-8">
             <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1.5 rounded-full text-xs font-bold mb-3">
               <span className="material-symbols-outlined text-base">
                 bookmark
               </span>
-              Bạn đang xem: {lessonLabelFromSlug}
+              Bạn đang xem: {activeLesson.title}
             </div>
-          )}
-          <h1 className="font-bold text-3xl md:text-4xl text-red-900 mb-3">
-            Bài 1: Vật chất và các hình thức tồn tại của vật chất
-          </h1>
-          <div className="flex flex-wrap gap-2">
-            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
-              Triết học
-            </span>
-            <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-              <span className="material-symbols-outlined text-sm">schedule</span>
-              45 phút
-            </span>
-          </div>
-        </header>
-
-        {/* Warm-up chỉ hiển thị khi chưa hoàn thành */}
-        {!isWarmupDone && (
-          <WarmupSection onDone={() => setIsWarmupDone(true)} />
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <VideoWithReminder />
-
-            {/* Lesson body */}
-            <article className="bg-white rounded-2xl shadow-md border border-gray-200 p-8 space-y-6">
-              <blockquote className="border-l-4 border-red-800 bg-red-50/40 pl-5 pr-3 py-4 rounded-r-lg">
-                <p className="italic text-xl text-red-900 leading-relaxed mb-2">
-                  "Vật chất là một phạm trù triết học dùng để chỉ thực tại
-                  khách quan được đem lại cho con người trong cảm giác..."
-                </p>
-                <span className="text-sm text-gray-500">
-                  — V.I. Lênin, Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm
-                  phê phán
+            <h1 className="font-bold text-3xl md:text-4xl text-red-900 mb-3">
+              {activeLesson.title}
+            </h1>
+            <div className="flex flex-wrap gap-2">
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                Triết học
+              </span>
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                <span className="material-symbols-outlined text-sm">
+                  schedule
                 </span>
-              </blockquote>
-
-              <section>
-                <h2 className="text-2xl font-bold text-red-900 mb-3">
-                  1. Định nghĩa vật chất của Lênin
-                </h2>
-                <p className="text-gray-700 leading-relaxed mb-3">
-                  Định nghĩa của Lênin về vật chất bao quát ba nội dung cơ
-                  bản, giúp giải quyết triệt để hai mặt của vấn đề cơ bản
-                  của triết học.
-                </p>
-                <ul className="space-y-2 text-gray-700 leading-relaxed">
-                  <li>
-                    <strong className="text-red-900">Thứ nhất:</strong> Vật
-                    chất là cái có trước, ý thức là cái có sau.
-                  </li>
-                  <li>
-                    <strong className="text-red-900">Thứ hai:</strong> Vật
-                    chất là cái mà con người có thể nhận thức được qua cảm
-                    giác.
-                  </li>
-                </ul>
-              </section>
-
-              <div className="bg-blue-50 rounded-xl p-6 text-center">
-                <h4 className="font-bold text-gray-900 mb-3">Sơ đồ tư duy</h4>
-                <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2T0oKzFgSs41_uPl7DH2lLOTYb3SxDZB_kd8GpeTjioOwrYtiKCHxMgA988xiG38bbJ6kHsbcaZ6NB5fwVhU-hX_fuk1yMDbzNQlf7hVZ55UPqUd7F8NC9JKADq4NeFoNN0S_dhU3TjhBNdbUIQGm28SveS2d-P7aiKpHJiufcGzd1wxH_9SoofRYAN_LDJsikyZtKm4WUEIn_R8NblvXegmi4LrZflrHd4Uz2wH7Y9W_TOWXBmiRAPWefJZFVQFDn-sJDNu7M6s"
-                  alt="So do tu duy bai hoc"
-                  className="w-full rounded-lg"
-                />
-              </div>
-
-              <section>
-                <h2 className="text-2xl font-bold text-red-900 mb-3">
-                  2. Các hình thức tồn tại của vật chất
-                </h2>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  Theo quan điểm duy vật biện chứng, vận động là phương thức
-                  tồn tại của vật chất.
-                </p>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="bg-red-50 rounded-xl p-5 border border-red-100">
-                    <h5 className="font-bold text-red-900 mb-2">
-                      Vận động cơ học
-                    </h5>
-                    <p className="text-gray-700 text-sm">
-                      Sự thay đổi vị trí của các vật thể trong không gian.
-                    </p>
-                  </div>
-                  <div className="bg-red-50 rounded-xl p-5 border border-red-100">
-                    <h5 className="font-bold text-red-900 mb-2">
-                      Vận động vật lý
-                    </h5>
-                    <p className="text-gray-700 text-sm">
-                      Vận động của các phân tử và các quá trình nhiệt, điện.
-                    </p>
-                  </div>
-                </div>
-              </section>
-            </article>
-
-            <PodcastPlayer />
-
-            <FinalQuiz />
-
-            {/* Bottom navigation */}
-            <div className="flex justify-between gap-3">
-              <button
-                type="button"
-                className="border-2 border-red-800 text-red-800 px-5 py-3 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors"
-              >
-                ← Bài trước
-              </button>
-              <button
-                type="button"
-                className="bg-red-800 text-white px-5 py-3 rounded-lg font-bold hover:bg-red-900 transition-colors"
-              >
-                Bài tiếp theo →
-              </button>
+                45 phút
+              </span>
             </div>
-          </div>
+          </header>
 
-          {/* Sidebar syllabus */}
-          <aside className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden sticky top-20">
-              <div className="bg-red-800 text-white p-5">
-                <h3 className="font-bold text-lg mb-3">Nội dung khóa học</h3>
-                <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-white rounded-full"
-                    style={{ width: "16%" }}
+          {/* Warm-up chỉ hiển thị khi chưa hoàn thành */}
+          {!isWarmupDone && (
+            <WarmupSection onDone={() => setIsWarmupDone(true)} />
+          )}
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+              <VideoWithReminder />
+
+              {/* Lesson body */}
+              <article className="bg-white rounded-2xl shadow-md border border-gray-200 p-8 space-y-6">
+                <blockquote className="border-l-4 border-red-800 bg-red-50/40 pl-5 pr-3 py-4 rounded-r-lg">
+                  <p className="italic text-xl text-red-900 leading-relaxed mb-2">
+                    "Vật chất là một phạm trù triết học dùng để chỉ thực tại
+                    khách quan được đem lại cho con người trong cảm giác..."
+                  </p>
+                  <span className="text-sm text-gray-500">
+                    — V.I. Lênin, Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm
+                    phê phán
+                  </span>
+                </blockquote>
+
+                <section>
+                  <h2 className="text-2xl font-bold text-red-900 mb-3">
+                    1. Định nghĩa vật chất của Lênin
+                  </h2>
+                  <p className="text-gray-700 leading-relaxed mb-3">
+                    Định nghĩa của Lênin về vật chất bao quát ba nội dung cơ
+                    bản, giúp giải quyết triệt để hai mặt của vấn đề cơ bản
+                    của triết học.
+                  </p>
+                  <ul className="space-y-2 text-gray-700 leading-relaxed">
+                    <li>
+                      <strong className="text-red-900">Thứ nhất:</strong> Vật
+                      chất là cái có trước, ý thức là cái có sau.
+                    </li>
+                    <li>
+                      <strong className="text-red-900">Thứ hai:</strong> Vật
+                      chất là cái mà con người có thể nhận thức được qua cảm
+                      giác.
+                    </li>
+                  </ul>
+                </section>
+
+                <div className="bg-blue-50 rounded-xl p-6 text-center">
+                  <h4 className="font-bold text-gray-900 mb-3">Sơ đồ tư duy</h4>
+                  <img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2T0oKzFgSs41_uPl7DH2lLOTYb3SxDZB_kd8GpeTjioOwrYtiKCHxMgA988xiG38bbJ6kHsbcaZ6NB5fwVhU-hX_fuk1yMDbzNQlf7hVZ55UPqUd7F8NC9JKADq4NeFoNN0S_dhU3TjhBNdbUIQGm28SveS2d-P7aiKpHJiufcGzd1wxH_9SoofRYAN_LDJsikyZtKm4WUEIn_R8NblvXegmi4LrZflrHd4Uz2wH7Y9W_TOWXBmiRAPWefJZFVQFDn-sJDNu7M6s"
+                    alt="So do tu duy bai hoc"
+                    className="w-full rounded-lg"
                   />
                 </div>
-                <p className="text-sm text-white/80 mt-2">
-                  Đã hoàn thành 2/12 bài học
-                </p>
-              </div>
 
-              <div className="p-4 space-y-2">
-                {SYLLABUS_ITEMS.map((item, index) => {
-                  const config = SYLLABUS_STATUS_CONFIG[item.status];
-                  return (
-                    <div
-                      key={index}
-                      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border text-sm ${config.className}`}
-                    >
-                      <span className="material-symbols-outlined text-base">
-                        {config.icon}
-                      </span>
-                      <span className="flex-1">{item.title}</span>
+                <section>
+                  <h2 className="text-2xl font-bold text-red-900 mb-3">
+                    2. Các hình thức tồn tại của vật chất
+                  </h2>
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Theo quan điểm duy vật biện chứng, vận động là phương thức
+                    tồn tại của vật chất.
+                  </p>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="bg-red-50 rounded-xl p-5 border border-red-100">
+                      <h5 className="font-bold text-red-900 mb-2">
+                        Vận động cơ học
+                      </h5>
+                      <p className="text-gray-700 text-sm">
+                        Sự thay đổi vị trí của các vật thể trong không gian.
+                      </p>
                     </div>
-                  );
-                })}
-              </div>
+                    <div className="bg-red-50 rounded-xl p-5 border border-red-100">
+                      <h5 className="font-bold text-red-900 mb-2">
+                        Vận động vật lý
+                      </h5>
+                      <p className="text-gray-700 text-sm">
+                        Vận động của các phân tử và các quá trình nhiệt, điện.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+              </article>
 
-              <button
-                type="button"
-                className="w-full bg-gray-700 text-white py-3 font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
-              >
-                <span className="material-symbols-outlined text-base">
-                  download
-                </span>
-                Tài liệu đi kèm (PDF)
-              </button>
+              <PodcastPlayer />
+
+              <FinalQuiz />
+
+              {/* Bottom navigation */}
+              <div className="flex justify-between gap-3">
+                <button
+                  type="button"
+                  className="border-2 border-red-800 text-red-800 px-5 py-3 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors"
+                >
+                  ← Bài trước
+                </button>
+                <button
+                  type="button"
+                  className="bg-red-800 text-white px-5 py-3 rounded-lg font-bold hover:bg-red-900 transition-colors"
+                >
+                  Bài tiếp theo →
+                </button>
+              </div>
             </div>
-          </aside>
+
+            {/* Sidebar syllabus */}
+            <aside className="lg:col-span-1">
+              <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden sticky top-20">
+                <div className="bg-red-800 text-white p-5">
+                  <h3 className="font-bold text-lg mb-3">Nội dung khóa học</h3>
+                  <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-white rounded-full"
+                      style={{ width: "16%" }}
+                    />
+                  </div>
+                  <p className="text-sm text-white/80 mt-2">
+                    Đã hoàn thành 2/12 bài học
+                  </p>
+                </div>
+
+                <div className="p-4 space-y-2">
+                  {SYLLABUS_ITEMS.map((item, index) => {
+                    const config = SYLLABUS_STATUS_CONFIG[item.status];
+                    return (
+                      <div
+                        key={index}
+                        className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border text-sm ${config.className}`}
+                      >
+                        <span className="material-symbols-outlined text-base">
+                          {config.icon}
+                        </span>
+                        <span className="flex-1">{item.title}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  className="w-full bg-gray-700 text-white py-3 font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-base">
+                    download
+                  </span>
+                  Tài liệu đi kèm (PDF)
+                </button>
+              </div>
+            </aside>
+          </div>
+            </div>
+          ) : (
+            <div className="border-t border-gray-200 pt-12 pb-16 text-center">
+              <span className="material-symbols-outlined text-6xl text-red-800/30">
+                touch_app
+              </span>
+              <h2 className="text-xl font-bold text-gray-800 mt-3">
+                Chọn một bài học để bắt đầu
+              </h2>
+              <p className="text-gray-500 mt-1 max-w-md mx-auto">
+                Bấm vào một đề mục hoặc bài học trên sơ đồ tư duy phía trên để mở
+                nội dung bài học tương ứng.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </PageShell>

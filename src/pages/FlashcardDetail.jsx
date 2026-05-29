@@ -1,70 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageShell, { PageHero } from "../components/PageShell";
+import { useToast } from "../components/Toast";
+import { MEMORY_CHAPTERS } from "../data/flashcardData";
+import { MEMORY_MATCH_DELAY_MS, MEMORY_FLIP_BACK_MS } from "../constants";
 
-// Du lieu the cua tung chuong — sau nay BE se cung cap
-const FLASHCARD_DATA = {
-  1: {
-    title: "Nhập môn Triết học",
-    cards: [
-      {
-        front: "Triết học là gì?",
-        back: "Triết học là hệ thống tri thức lý luận chung nhất về thế giới và vị trí con người.",
-      },
-      {
-        front: "Đối tượng nghiên cứu của triết học?",
-        back: "Nghiên cứu các quy luật chung nhất của tự nhiên, xã hội và tư duy.",
-      },
-    ],
-  },
-  2: {
-    title: "Chủ nghĩa Duy vật Biện chứng",
-    cards: [
-      {
-        front: "Vật chất là gì?",
-        back: "Vật chất là phạm trù triết học dùng để chỉ thực tại khách quan.",
-      },
-      {
-        front: "Ý thức là gì?",
-        back: "Ý thức là sự phản ánh thế giới khách quan vào bộ não con người.",
-      },
-    ],
-  },
-  3: {
-    title: "Phép Biện chứng Duy vật",
-    cards: [
-      {
-        front: "Quy luật lượng chất?",
-        back: "Sự thay đổi về lượng dẫn đến thay đổi về chất.",
-      },
-    ],
-  },
-  4: {
-    title: "Học thuyết Giá trị Thặng dư",
-    cards: [
-      {
-        front: "Giá trị thặng dư là gì?",
-        back: "Là phần giá trị mới dôi ra ngoài giá trị sức lao động do công nhân tạo ra.",
-      },
-    ],
-  },
-  5: {
-    title: "Chủ nghĩa Duy vật Lịch sử",
-    cards: [
-      {
-        front: "Hình thái kinh tế xã hội là gì?",
-        back: "Là xã hội ở từng giai đoạn lịch sử nhất định với kiểu quan hệ sản xuất đặc trưng.",
-      },
-    ],
-  },
-};
+// Tạo danh sách thẻ đã xáo trộn từ các cặp term/desc của chương
+// Mỗi cặp sinh ra 2 thẻ: 1 thẻ khái niệm, 1 thẻ mô tả — dùng chung pairId
+function buildShuffledTiles(pairs) {
+  const tiles = pairs.flatMap((pair) => [
+    { key: `${pair.id}-term`, pairId: pair.id, kind: "term", text: pair.term },
+    { key: `${pair.id}-desc`, pairId: pair.id, kind: "desc", text: pair.desc },
+  ]);
+  // Xáo trộn Fisher–Yates
+  for (let i = tiles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+  }
+  return tiles;
+}
 
 const FlashcardDetail = () => {
   const { id } = useParams();
-  const chapter = FLASHCARD_DATA[id];
+  const { showToast } = useToast();
+  const chapter = MEMORY_CHAPTERS[id];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [round, setRound] = useState(0); // tăng lên để xáo lại khi chơi lại
+  const [flippedKeys, setFlippedKeys] = useState([]); // các thẻ đang lật (tối đa 2)
+  const [matchedPairs, setMatchedPairs] = useState([]); // pairId đã ghép đúng
+  const [moves, setMoves] = useState(0);
+
+  // Xáo trộn lại mỗi khi đổi chương hoặc bấm chơi lại
+  // `round` cố ý nằm trong deps để ép tính lại (xáo bài) dù không dùng trực tiếp
+  const tiles = useMemo(
+    () => (chapter ? buildShuffledTiles(chapter.pairs) : []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [chapter, round]
+  );
+
+  const totalPairs = chapter ? chapter.pairs.length : 0;
+  const isComparing = flippedKeys.length === 2;
+  const isWon = totalPairs > 0 && matchedPairs.length === totalPairs;
+
+  // So khớp khi đã lật đủ 2 thẻ
+  useEffect(() => {
+    if (flippedKeys.length !== 2) return;
+    const [first, second] = flippedKeys.map((key) =>
+      tiles.find((tile) => tile.key === key)
+    );
+    const isMatch = first && second && first.pairId === second.pairId;
+    const delay = isMatch ? MEMORY_MATCH_DELAY_MS : MEMORY_FLIP_BACK_MS;
+    const timer = setTimeout(() => {
+      if (isMatch) setMatchedPairs((prev) => [...prev, first.pairId]);
+      setFlippedKeys([]);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [flippedKeys, tiles]);
+
+  // Thông báo khi hoàn thành
+  useEffect(() => {
+    if (isWon) {
+      showToast(`Hoàn thành! Bạn đã ghép xong với ${moves} lượt.`, "success");
+    }
+    // Chỉ chạy khi trạng thái thắng thay đổi
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isWon]);
+
+  const restartGame = () => {
+    setFlippedKeys([]);
+    setMatchedPairs([]);
+    setMoves(0);
+    setRound((prev) => prev + 1);
+  };
+
+  const handleTileClick = (tile) => {
+    if (isComparing) return; // đang so khớp, khóa thao tác
+    if (matchedPairs.includes(tile.pairId)) return; // đã ghép xong
+    if (flippedKeys.includes(tile.key)) return; // đang lật rồi
+    const next = [...flippedKeys, tile.key];
+    setFlippedKeys(next);
+    if (next.length === 2) setMoves((prev) => prev + 1);
+  };
 
   if (!chapter) {
     return (
@@ -87,109 +103,132 @@ const FlashcardDetail = () => {
     );
   }
 
-  const currentCard = chapter.cards[currentIndex];
-  const totalCards = chapter.cards.length;
-
-  const goToNext = () => {
-    if (currentIndex < totalCards - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setIsFlipped(false);
-    }
-  };
-
-  const goToPrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setIsFlipped(false);
-    }
-  };
-
   return (
     <PageShell activeKey="flashcards">
       <PageHero
-        eyebrow={`Flashcard ${currentIndex + 1} / ${totalCards}`}
-        icon="cards"
+        eyebrow="Trò chơi lật thẻ ghi nhớ"
+        icon="extension"
         title={chapter.title}
-        subtitle="Bấm vào thẻ để lật xem mặt sau. Dùng nút bên dưới để chuyển thẻ."
+        subtitle="Tìm và ghép cặp giữa khái niệm và mô tả tương ứng. Ghép đúng thì hai thẻ biến mất, ghép sai thì thẻ úp lại. Vừa học vừa chơi!"
       />
 
-      <div className="px-6 md:px-12 py-10 max-w-3xl mx-auto">
-        {/* Flashcard with flip effect */}
-        <button
-          type="button"
-          onClick={() => setIsFlipped((prev) => !prev)}
-          className="w-full block"
-          style={{ perspective: "1200px" }}
-        >
-          <div
-            className="relative w-full h-80 transition-transform duration-700"
-            style={{
-              transformStyle: "preserve-3d",
-              transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-            }}
-          >
-            {/* FRONT */}
-            <div
-              className="absolute inset-0 bg-white border-2 border-red-800 rounded-2xl shadow-xl flex items-center justify-center p-8"
-              style={{ backfaceVisibility: "hidden" }}
-            >
-              <div className="text-center">
-                <span className="inline-block px-3 py-1 text-xs uppercase tracking-wider text-red-800 font-bold bg-red-50 rounded-full mb-4">
-                  Câu hỏi
-                </span>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  {currentCard.front}
-                </h2>
-                <p className="text-gray-500 text-sm">Bấm để lật ↻</p>
-              </div>
+      <div className="px-6 md:px-12 py-10 max-w-5xl mx-auto">
+        {/* Bảng điểm */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div className="flex gap-3">
+            <div className="bg-white rounded-xl border border-gray-200 px-5 py-3 shadow-sm">
+              <p className="text-xs uppercase tracking-wider text-gray-500">
+                Số lượt
+              </p>
+              <p className="text-2xl font-bold text-red-800">{moves}</p>
             </div>
-
-            {/* BACK */}
-            <div
-              className="absolute inset-0 bg-red-800 text-white rounded-2xl shadow-xl flex items-center justify-center p-8"
-              style={{
-                backfaceVisibility: "hidden",
-                transform: "rotateY(180deg)",
-              }}
-            >
-              <div className="text-center">
-                <span className="inline-block px-3 py-1 text-xs uppercase tracking-wider bg-white/20 rounded-full mb-4">
-                  Câu trả lời
-                </span>
-                <h2 className="text-2xl font-semibold leading-relaxed">
-                  {currentCard.back}
-                </h2>
-              </div>
+            <div className="bg-white rounded-xl border border-gray-200 px-5 py-3 shadow-sm">
+              <p className="text-xs uppercase tracking-wider text-gray-500">
+                Đã ghép
+              </p>
+              <p className="text-2xl font-bold text-red-800">
+                {matchedPairs.length}/{totalPairs}
+              </p>
             </div>
           </div>
-        </button>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center mt-8">
           <button
             type="button"
-            onClick={goToPrev}
-            disabled={currentIndex === 0}
-            className="border-2 border-red-800 text-red-800 px-6 py-3 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            onClick={restartGame}
+            className="inline-flex items-center gap-2 border-2 border-red-800 text-red-800 px-5 py-2.5 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors"
           >
-            ← Previous
-          </button>
-
-          <span className="text-gray-500 font-semibold">
-            {currentIndex + 1} / {totalCards}
-          </span>
-
-          <button
-            type="button"
-            onClick={goToNext}
-            disabled={currentIndex === totalCards - 1}
-            className="bg-red-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-900 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            Next →
+            <span className="material-symbols-outlined text-base">refresh</span>
+            Chơi lại / Xáo bài
           </button>
         </div>
 
-        <div className="mt-6 text-center">
+        {/* Thông báo thắng */}
+        {isWon && (
+          <div className="bg-green-50 border-2 border-green-300 rounded-2xl p-6 mb-6 text-center">
+            <span className="material-symbols-outlined text-5xl text-green-600">
+              celebration
+            </span>
+            <h2 className="text-2xl font-bold text-green-800 mt-2">
+              Xuất sắc! Bạn đã ghép xong tất cả các cặp.
+            </h2>
+            <p className="text-green-700 mt-1">
+              Hoàn thành trong {moves} lượt. Thử lại để cải thiện điểm nhé!
+            </p>
+          </div>
+        )}
+
+        {/* Lưới thẻ */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+          {tiles.map((tile) => {
+            const isMatched = matchedPairs.includes(tile.pairId);
+            const isFlipped = isMatched || flippedKeys.includes(tile.key);
+            const isTerm = tile.kind === "term";
+            return (
+              <button
+                key={tile.key}
+                type="button"
+                onClick={() => handleTileClick(tile)}
+                disabled={isMatched}
+                className="relative h-32 md:h-36 w-full"
+                style={{ perspective: "1000px" }}
+                aria-label={isFlipped ? tile.text : "Thẻ úp"}
+              >
+                <div
+                  className={`relative w-full h-full transition-transform duration-500 ${
+                    isMatched ? "opacity-0 scale-90" : "opacity-100"
+                  }`}
+                  style={{
+                    transformStyle: "preserve-3d",
+                    transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                  }}
+                >
+                  {/* Mặt úp */}
+                  <div
+                    className="absolute inset-0 rounded-xl bg-gradient-to-br from-red-700 to-red-900 shadow-md flex items-center justify-center"
+                    style={{ backfaceVisibility: "hidden" }}
+                  >
+                    <span className="material-symbols-outlined text-white/80 text-4xl">
+                      psychology_alt
+                    </span>
+                  </div>
+
+                  {/* Mặt ngửa */}
+                  <div
+                    className={`absolute inset-0 rounded-xl shadow-md flex items-center justify-center p-3 text-center border-2 ${
+                      isTerm
+                        ? "bg-white border-red-300"
+                        : "bg-blue-50 border-blue-200"
+                    }`}
+                    style={{
+                      backfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                    }}
+                  >
+                    <div>
+                      <span
+                        className={`block text-[10px] uppercase tracking-wider font-bold mb-1 ${
+                          isTerm ? "text-red-800" : "text-blue-700"
+                        }`}
+                      >
+                        {isTerm ? "Khái niệm" : "Mô tả"}
+                      </span>
+                      <span
+                        className={`${
+                          isTerm
+                            ? "font-bold text-gray-900 text-sm md:text-base"
+                            : "text-gray-700 text-xs md:text-sm leading-snug"
+                        }`}
+                      >
+                        {tile.text}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 text-center">
           <Link
             to="/flashcards"
             className="text-sm text-gray-500 underline hover:text-red-800"
