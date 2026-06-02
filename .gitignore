@@ -114,3 +114,7 @@ dist/
 **/dist/
 build/
 **/build/
+
+# Uploaded files
+**/public/uploads/*
+!**/public/uploads/.gitkeep
