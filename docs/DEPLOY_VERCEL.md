@@ -22,12 +22,10 @@ The frontend is a standard React (Create React App) application located in the `
 3. In the project setup panel, configure these settings:
    - **Framework Preset**: `Create React App`
    - **Root Directory**: `frontend`
-4. Expand **Environment Variables** and add the following keys:
+4. Expand **Environment Variables** and add the following key:
    | Key | Description | Example / Recommended Value |
    | --- | --- | --- |
-   | `NEXT_PUBLIC_API_URL` | The public endpoint of your deployed backend service. | `https://philomind-backend.up.railway.app/api` |
-   | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL. | `https://xyz.supabase.co` |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous API public key. | `your-supabase-anon-key` |
+   | `REACT_APP_API_URL` | The public endpoint of your deployed NestJS backend service. | `https://cuong2004-philomind.hf.space/api` |
 5. Click **Deploy**. Vercel will build, optimize, and serve your React-based philosophy learning sandbox immediately.
 
 ---
