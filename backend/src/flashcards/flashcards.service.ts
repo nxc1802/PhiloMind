@@ -74,4 +74,73 @@ export class FlashcardsService {
 
     return createdReview;
   }
+
+  // ==================== NEW CRUD METHODS FOR ADMIN ====================
+
+  async create(dto: any) {
+    return this.prisma.flashcard.create({
+      data: {
+        nodeId: dto.nodeId,
+        tag: dto.tag,
+        question: dto.question,
+        answer: dto.answer,
+      },
+    });
+  }
+
+  async findAll(nodeId?: string) {
+    return this.prisma.flashcard.findMany({
+      where: nodeId ? { nodeId } : undefined,
+      include: {
+        node: {
+          select: { title: true, chapterId: true },
+        },
+      },
+    });
+  }
+
+  async findById(id: string) {
+    const card = await this.prisma.flashcard.findUnique({
+      where: { id },
+      include: {
+        node: true,
+      },
+    });
+    if (!card) throw new Error('Flashcard not found');
+    return card;
+  }
+
+  async update(id: string, dto: any) {
+    await this.findById(id);
+    return this.prisma.flashcard.update({
+      where: { id },
+      data: {
+        tag: dto.tag,
+        question: dto.question,
+        answer: dto.answer,
+      },
+    });
+  }
+
+  async remove(id: string) {
+    await this.findById(id);
+
+    return this.prisma.$transaction(async (tx) => {
+      await tx.flashcardReview.deleteMany({ where: { flashcardId: id } });
+      return tx.flashcard.delete({ where: { id } });
+    });
+  }
+
+  async bulkImport(nodeId: string, flashcards: { question: string; answer: string; tag?: string }[]) {
+    const data = flashcards.map((f) => ({
+      nodeId,
+      question: f.question,
+      answer: f.answer,
+      tag: f.tag || 'Chung',
+    }));
+
+    return this.prisma.flashcard.createMany({
+      data,
+    });
+  }
 }

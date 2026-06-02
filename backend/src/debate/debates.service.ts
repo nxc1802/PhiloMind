@@ -9,6 +9,101 @@ export class DebatesService {
     private ai: AIService,
   ) {}
 
+  // ==================== DEBATE TOPICS CRUD ====================
+
+  async getTopics() {
+    return this.prisma.debateTopic.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async createTopic(dto: any) {
+    return this.prisma.debateTopic.create({
+      data: {
+        title: dto.title,
+        description: dto.description,
+        initialPrompt: dto.initialPrompt,
+      },
+    });
+  }
+
+  async updateTopic(id: string, dto: any) {
+    return this.prisma.debateTopic.update({
+      where: { id },
+      data: {
+        title: dto.title,
+        description: dto.description,
+        initialPrompt: dto.initialPrompt,
+      },
+    });
+  }
+
+  async deleteTopic(id: string) {
+    return this.prisma.$transaction(async (tx) => {
+      // Cascade delete debates associated with this topic
+      await tx.debate.deleteMany({ where: { topicId: id } });
+      return tx.debateTopic.delete({ where: { id } });
+    });
+  }
+
+  // ==================== TOPIC DEBATE WORKFLOW ====================
+
+  async getOrCreateTopicDebate(topicId: string, userId: string) {
+    let debate = await this.prisma.debate.findFirst({
+      where: { topicId, userId },
+    });
+
+    if (!debate) {
+      const topic = await this.prisma.debateTopic.findUnique({
+        where: { id: topicId },
+      });
+      if (!topic) throw new NotFoundException('Debate topic not found');
+
+      debate = await this.prisma.debate.create({
+        data: {
+          topicId,
+          userId,
+          transcript: [
+            { speaker: 'Host', text: topic.initialPrompt, time: 0 },
+          ] as any,
+        },
+      });
+    }
+
+    return debate;
+  }
+
+  async sendTopicDebateMessage(topicId: string, userId: string, message: string) {
+    const debate = await this.getOrCreateTopicDebate(topicId, userId);
+    const transcript = debate.transcript as any[];
+
+    // Build chat history with full conversation continuous flow
+    const chatHistory = transcript.map((t) => ({
+      role: t.speaker === 'Host' ? 'assistant' : ('user' as 'user' | 'assistant'),
+      content: t.text,
+    }));
+
+    const topic = await this.prisma.debateTopic.findUnique({ where: { id: topicId } });
+    const reply = await this.ai.getSocraticDebateReply(
+      topic?.title || "Tranh luận biện chứng",
+      message,
+      chatHistory,
+    );
+
+    const updatedTranscript = [
+      ...transcript,
+      { speaker: 'User', text: message, time: Date.now() },
+      { speaker: 'Host', text: reply, time: Date.now() },
+    ];
+
+    return this.prisma.debate.update({
+      where: { id: debate.id },
+      data: { transcript: updatedTranscript as any },
+    });
+  }
+
+  // ==================== CONCEPT NODE DEBATE WORKFLOW ====================
+
   async getOrCreateDebate(nodeId: string, userId: string) {
     let debate = await this.prisma.debate.findFirst({
       where: { nodeId, userId },
@@ -20,8 +115,8 @@ export class DebatesService {
       });
       if (!node) throw new NotFoundException('Concept node not found');
 
-      // Initialize default prompt
-      const prompt = `Let's debate the concept of "${node.title}". Consider this proposition: ${node.quickTake}. Do you agree with this statement, or do you find inconsistencies in its core logic? Why?`;
+      // Initialize default prompt in Vietnamese
+      const prompt = `Chúng ta hãy cùng thảo luận về khái niệm "${node.title}". Hãy xem xét luận điểm sau: "${node.quickTake}". Đồng chí có đồng ý với quan điểm này không, hay đồng chí nhận thấy có điểm nào chưa nhất quán trong lập luận cốt lõi này? Tại sao?`;
       
       debate = await this.prisma.debate.create({
         data: {
@@ -41,26 +136,50 @@ export class DebatesService {
     const debate = await this.getOrCreateDebate(nodeId, userId);
     const transcript = debate.transcript as any[];
 
-    // Format chat history for OpenRouter LLM
+    // Build chat history with full conversation continuous flow
     const chatHistory = transcript.map((t) => ({
       role: t.speaker === 'Host' ? 'assistant' : ('user' as 'user' | 'assistant'),
       content: t.text,
     }));
 
-    // Generate Socratic response from AI
-    const reply = await this.ai.getSocraticDebateReply(debate.nodeId, message, chatHistory);
+    const node = await this.prisma.conceptNode.findUnique({ where: { id: nodeId } });
+    const reply = await this.ai.getSocraticDebateReply(
+      node?.title || "Tranh luận biện chứng",
+      message,
+      chatHistory,
+    );
 
-    // Append to transcript
     const updatedTranscript = [
       ...transcript,
       { speaker: 'User', text: message, time: Date.now() },
       { speaker: 'Host', text: reply, time: Date.now() },
     ];
 
-    // Save back to db
     return this.prisma.debate.update({
       where: { id: debate.id },
       data: { transcript: updatedTranscript as any },
+    });
+  }
+
+  async findAll() {
+    return this.prisma.debate.findMany({
+      include: {
+        node: {
+          select: { title: true, chapterId: true },
+        },
+        topic: {
+          select: { title: true },
+        },
+        user: {
+          select: { name: true, email: true },
+        },
+      },
+    });
+  }
+
+  async remove(id: string) {
+    return this.prisma.debate.delete({
+      where: { id },
     });
   }
 }

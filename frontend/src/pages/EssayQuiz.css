@@ -1,0 +1,57 @@
+.essay-page {
+  min-height: 100vh;
+  background: #f3f0e6;
+  padding: 40px;
+}
+
+.essay-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.essay-label {
+  color: #800020;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.essay-container h1 {
+  font-size: 52px;
+  color: #570013;
+  margin: 14px 0 30px;
+}
+
+.quote-card {
+  background: white;
+  border-left: 4px solid #800020;
+  padding: 40px;
+  margin-bottom: 30px;
+}
+
+.quote-card h2 {
+  font-size: 42px;
+  line-height: 1.5;
+  color: #1d2433;
+}
+
+.quote-card p {
+  margin-top: 20px;
+  color: #666;
+}
+
+.essay-box textarea {
+  width: 100%;
+  height: 240px;
+  border: none;
+  border-radius: 16px;
+  padding: 24px;
+  resize: none;
+  font-size: 16px;
+}
+
+.essay-actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}

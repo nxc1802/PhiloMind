@@ -1,0 +1,19 @@
+.mcq-page {
+  min-height: 100vh;
+  background: #f9f9ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mcq-page h1 {
+  color: #570013;
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.mcq-page p {
+  font-size: 18px;
+  color: #444;
+}

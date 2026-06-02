@@ -1,0 +1,22 @@
+Phân tích toàn bộ dự án
+
+Dự án hiện tại cần fix các lỗi sau:
+Admin:
+- Chưa có cách để tạo Quiz System
+- Đẩy PDF lên không cho nhập metadata như tên, description, ...
+- Flashcard cần show theo dạng cây phân cấp để dễ nhìn
+- Chưa có cách để tạo Trò chơi ghép cặp
+
+User:
+- Xoá button Start Daily Lesson
+- Feedback Hub có thể di chuyển quanh vùng dưới đáy và mép phải. Có thể tắt bằng cách nhấn ra vùng ngoài chứ không chỉ dấu đóng
+- Trong bài học cụ thể, Những lesson đã được học hoặc những bài làm nóng đã pass trong quá trình học sẽ vĩnh viễn mất đi và không yêu cầu thực hiện lại khi reload trang
+- Trong bài học cụ thể, Diễn đàn Thảo luận tạo thành dạng component nằm liền dưới Nội dung khóa học và có cấu trúc tương tự
+- Trong phần nội dung khoá học trong bài học cụ thể, chỉ show các bài học thuộc về chương đang học mà thôi
+- Trò chơi ghép cặp đang gặp vấn đề về việc content đang out of box, cần có cơ chế cuộn
+- Cài đặt không chỉ nằm ở góc trên mà còn nằm ở góc dưới, ngay vị trí của Start Daily Lesson đã bị xoá
+
+Backend:
+- Các cơ chế về tiến độ học cần được thêm vào (tiến độ lesson, tiến độ flashcard, tiến độ nghe podcast, tiến độ quiz system, ...)
+- Âm thanh thu được từ TTS đã có những không phải âm thanh lời nói mà nghe rất kỳ, rất có thể do môi trường local của MacOS không phù hợp, cần cấu hình docker kỹ hơn
+- BE, DB schema phải được tinh chỉnh để phù hợp và đồng bộ với các thay đổi trên từ FE của user lẫn admin (Bạn sở hữu MCP supabase, vậy nên hãy tự động thực hiện migration)

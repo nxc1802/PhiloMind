@@ -1,24 +1,23 @@
-FROM node:22-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Install dependencies
-COPY package.json ./
-RUN npm install
+# Install simple http server for serving static files
+RUN npm install -g serve
 
-# Copy source files
+# Copy package lists
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy code
 COPY . .
 
-# Set environment variables for production compilation
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NEXT_PUBLIC_API_URL=http://localhost:3001/api
-
-# Build NextJS production app
+# Build React app
 RUN npm run build
 
-# Expose port and define runtime command for Hugging Face Spaces compatibility
 EXPOSE 3000
-ENV PORT=3000
-ENV HOST=0.0.0.0
 
-CMD ["npx", "next", "start"]
+# Serve static build on port 3000
+CMD ["serve", "-s", "build", "-l", "3000"]

@@ -11,11 +11,14 @@ generator client {
 model User {
   id         String            @id @default(uuid())
   email      String            @unique
+  name       String?
   streak     Int               @default(0)
   createdAt  DateTime          @default(now())
   progress   Progress[]
   debates    Debate[]
   reviews    FlashcardReview[]
+  feedbacks  Feedback[]
+  comments   Comment[]
 }
 
 model Course {
@@ -29,21 +32,26 @@ model Course {
 }
 
 model Document {
-  id        String   @id @default(uuid())
-  fileName  String
-  fileUrl   String
-  courseId  String
-  status    String   // "parsing", "completed", "failed"
-  course    Course   @relation(fields: [courseId], references: [id])
+  id          String   @id @default(uuid())
+  fileName    String
+  fileUrl     String
+  courseId    String
+  status      String   // "parsing", "completed", "failed"
+  title       String?
+  description String?
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 model Chapter {
-  id         String        @id @default(uuid())
-  title      String
-  orderIndex Int
-  courseId   String
-  course     Course        @relation(fields: [courseId], references: [id])
-  nodes      ConceptNode[]
+  id              String        @id @default(uuid())
+  title           String
+  orderIndex      Int
+  courseId        String
+  parentChapterId String?
+  course          Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  parentChapter   Chapter?      @relation("SubChapters", fields: [parentChapterId], references: [id], onDelete: Cascade)
+  subChapters     Chapter[]     @relation("SubChapters")
+  nodes           ConceptNode[]
 }
 
 model ConceptNode {
@@ -54,13 +62,17 @@ model ConceptNode {
   quickTake     String
   difficulty    String             // "Easy", "Medium", "Hard"
   timeToRead    String             // e.g., "12 min read"
+  videoUrl      String?            // YouTube Video URL
   orderIndex    Int
   chapterId     String
-  chapter       Chapter            @relation(fields: [chapterId], references: [id])
+  chapter       Chapter            @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   flashcards    Flashcard[]
   podcast       Podcast?
   debates       Debate[]
   progress      Progress[]
+  warmups       Warmup[]
+  comments      Comment[]
+  quizzes       Quiz[]
 }
 
 model Flashcard {
@@ -69,7 +81,7 @@ model Flashcard {
   tag       String
   question  String
   answer    String
-  node      ConceptNode       @relation(fields: [nodeId], references: [id])
+  node      ConceptNode       @relation(fields: [nodeId], references: [id], onDelete: Cascade)
   reviews   FlashcardReview[]
 }
 
@@ -80,8 +92,8 @@ model FlashcardReview {
   ease        Int       // 1 (Again), 2 (Hard), 3 (Good), 4 (Easy)
   interval    Int       // in days
   nextReview  DateTime
-  user        User      @relation(fields: [userId], references: [id])
-  flashcard   Flashcard @relation(fields: [flashcardId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
 }
 
 model Podcast {
@@ -89,24 +101,86 @@ model Podcast {
   nodeId     String      @unique
   audioUrl   String
   transcript Json        // array of {time: number, speaker: string, text: string}
-  node       ConceptNode @relation(fields: [nodeId], references: [id])
+  node       ConceptNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+}
+
+model DebateTopic {
+  id            String   @id @default(uuid())
+  title         String
+  description   String
+  initialPrompt String
+  createdAt     DateTime @default(now())
+  debates       Debate[]
 }
 
 model Debate {
-  id         String      @id @default(uuid())
-  nodeId     String
+  id         String       @id @default(uuid())
+  nodeId     String?
+  topicId    String?
   userId     String
-  transcript Json        // array of messages
-  user       User        @relation(fields: [userId], references: [id])
-  node       ConceptNode @relation(fields: [nodeId], references: [id])
+  transcript Json         // array of messages
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  node       ConceptNode? @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+  topic      DebateTopic? @relation(fields: [topicId], references: [id], onDelete: Cascade)
+}
+
+model Warmup {
+  id           String      @id @default(uuid())
+  nodeId       String
+  type         String      // "image-guess" | "story"
+  title        String
+  image        String?
+  blanks       String?
+  answer       String?
+  story        String?
+  question     String?
+  options      Json?       // array of strings
+  correctIndex Int?
+  reveal       String
+  node         ConceptNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
 }
 
 model Progress {
-  id        String      @id @default(uuid())
+  id                 String      @id @default(uuid())
+  userId             String
+  nodeId             String
+  status             String      // "locked", "available", "in_progress", "completed"
+  lessonCompleted    Boolean     @default(false)
+  flashcardCompleted Boolean     @default(false)
+  podcastCompleted   Boolean     @default(false)
+  quizCompleted      Boolean     @default(false)
+  updatedAt          DateTime    @updatedAt
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  node               ConceptNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
   userId    String
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String      @id @default(uuid())
   nodeId    String
-  status    String      // "locked", "available", "in_progress", "completed"
-  updatedAt DateTime    @updatedAt
-  user      User        @relation(fields: [userId], references: [id])
-  node      ConceptNode @relation(fields: [nodeId], references: [id])
+  userId    String
+  userName  String?
+  role      String      @default("student") // "student" | "admin"
+  content   String
+  createdAt DateTime    @default(now())
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  node      ConceptNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+}
+
+model Quiz {
+  id           String      @id @default(uuid())
+  nodeId       String?
+  type         String      // "mcq" | "matching" | "essay" | "image" | "analysis"
+  title        String
+  description  String?
+  questions    Json        // MCQ questions, Matching pairs, or Essay prompts
+  createdAt    DateTime    @default(now())
+  node         ConceptNode? @relation(fields: [nodeId], references: [id], onDelete: Cascade)
 }

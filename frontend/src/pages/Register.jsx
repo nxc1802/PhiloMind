@@ -1,0 +1,92 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthLayout, { AuthField } from "../components/AuthLayout";
+import { useAuth } from "../context/AuthContext";
+import { useToast } from "../components/Toast";
+
+const Register = () => {
+  const navigate = useNavigate();
+  const { register } = useAuth();
+  const { showToast } = useToast();
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+  });
+  const [error, setError] = useState("");
+
+  const updateField = (field) => (e) =>
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (!form.name.trim() || !form.email.trim()) {
+      setError("Vui lòng điền đầy đủ các trường.");
+      return;
+    }
+    const result = await register({
+      name: form.name,
+      email: form.email,
+    });
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    showToast("Đăng ký thành công! Chào mừng bạn.", "success");
+    navigate("/home");
+  };
+
+  return (
+    <AuthLayout
+      icon="person_add"
+      title="Đăng ký"
+      subtitle="Tạo tài khoản để bắt đầu hành trình học tập"
+      footer={
+        <>
+          Đã có tài khoản?{" "}
+          <Link to="/login" className="text-red-800 font-semibold hover:underline">
+            Đăng nhập
+          </Link>
+        </>
+      }
+    >
+      <form onSubmit={handleSubmit}>
+        <AuthField
+          label="Họ và tên"
+          icon="badge"
+          type="text"
+          value={form.name}
+          onChange={updateField("name")}
+          placeholder="Nguyễn Văn A"
+        />
+        <AuthField
+          label="Email"
+          icon="mail"
+          type="email"
+          value={form.email}
+          onChange={updateField("email")}
+          placeholder="ban@example.com"
+        />
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-800 text-sm rounded-lg px-3 py-2 mb-4 flex items-center gap-2">
+            <span className="material-symbols-outlined text-base">error</span>
+            {error}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          className="w-full bg-red-800 text-white font-bold py-3 rounded-lg hover:bg-red-900 transition-colors"
+        >
+          Tạo tài khoản
+        </button>
+      </form>
+    </AuthLayout>
+  );
+};
+
+export default Register;

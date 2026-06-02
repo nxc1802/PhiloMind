@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
-import http from 'http';
 
 @Injectable()
 export class TTSService {
@@ -33,42 +32,31 @@ export class TTSService {
     }
   }
 
-  private callTTSWorker(text: string): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-      const url = new URL(`${this.workerUrl}/api/tts/synthesize`);
-      const postData = JSON.stringify({ text, voice: 'af_bella' });
+  private async callTTSWorker(text: string): Promise<Buffer> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
-      const options = {
-        hostname: url.hostname,
-        port: url.port || 80,
-        path: url.pathname,
+    try {
+      const response = await fetch(`${this.workerUrl}/api/tts/synthesize`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(postData),
         },
-      };
-
-      const req = http.request(options, (res) => {
-        if (res.statusCode !== 200) {
-          reject(new Error(`TTS Worker responded with status code ${res.statusCode}`));
-          return;
-        }
-
-        const chunks: Buffer[] = [];
-        res.on('data', (chunk) => chunks.push(chunk));
-        res.on('end', () => resolve(Buffer.concat(chunks)));
+        body: JSON.stringify({ text, voice: 'af_bella' }),
+        signal: controller.signal,
       });
 
-      req.on('error', (err) => reject(err));
-      
-      // Set reasonable timeout
-      req.setTimeout(30000, () => {
-        req.destroy(new Error('TTS Worker request timed out after 30 seconds.'));
-      });
+      clearTimeout(timeoutId);
 
-      req.write(postData);
-      req.end();
-    });
+      if (!response.ok) {
+        throw new Error(`TTS Worker responded with status code ${response.status}`);
+      }
+
+      const arrayBuffer = await response.arrayBuffer();
+      return Buffer.from(arrayBuffer);
+    } catch (err) {
+      clearTimeout(timeoutId);
+      throw err;
+    }
   }
 }
