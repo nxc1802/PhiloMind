@@ -11,6 +11,14 @@ export const PODCAST_SKIP_SECONDS = 10;        // Bước tua nhanh/lùi của p
 export const MEMORY_MATCH_DELAY_MS = 450;      // Thời gian giữ trước khi loại bỏ 2 thẻ khớp
 export const MEMORY_FLIP_BACK_MS = 1000;       // Thời gian giữ trước khi úp lại 2 thẻ không khớp
 
+// --- Bài học tương tác "Hành trình Khai Sáng" (Nguồn gốc của triết học) ---
+// Tách hằng số ra đây để tránh magic number rải rác trong component (Rule 6)
+export const JOURNEY_STORAGE_KEY = "mln_journey_nguon_goc_v1"; // key lưu tiến độ vào localStorage
+export const JOURNEY_TOTAL_PIECES = 2;                         // số "mảnh ghép tri thức" cần thu thập (Nhận thức + Xã hội)
+export const JOURNEY_FINAL_PASS = 3;                           // số câu đúng tối thiểu để đạt quiz tổng kết
+export const TYPEWRITER_SPEED_MS = 18;                         // tốc độ gõ chữ của lời thoại nhân vật dẫn đường (ms/ký tự)
+export const NPC_REVEAL_DELAY_MS = 550;                        // độ trễ giữa các bong bóng thoại NPC khi xuất hiện tuần tự
+
 // --- Cấu hình sidebar dùng chung cho mọi trang ---
 // Mỗi item có key để xác định trang đang active
 // Mindmap đã được tích hợp thẳng vào trang Lessons nên không còn mục riêng
