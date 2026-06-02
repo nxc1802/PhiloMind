@@ -1,6 +1,6 @@
 # Deploying PhiloMind to Vercel
 
-This guide outlines the step-by-step process of deploying the **PhiloMind Frontend** (Next.js) and optionally the **NestJS Backend** on Vercel. 
+This guide outlines the step-by-step process of deploying the **PhiloMind Frontend** (React / Create React App) and optionally the **NestJS Backend** on Vercel. 
 
 ---
 
@@ -12,15 +12,15 @@ This guide outlines the step-by-step process of deploying the **PhiloMind Fronte
 
 ---
 
-## 2. Deploying the Frontend (Next.js)
+## 2. Deploying the Frontend (React / Create React App)
 
-The frontend is a standard Next.js application located in the `frontend/` directory.
+The frontend is a standard React (Create React App) application located in the `frontend/` directory.
 
 ### Steps:
 1. Go to your **Vercel Dashboard** and click **Add New** > **Project**.
 2. Select your `PhiloMind` monorepo repository.
 3. In the project setup panel, configure these settings:
-   - **Framework Preset**: `Next.js`
+   - **Framework Preset**: `Create React App`
    - **Root Directory**: `frontend`
 4. Expand **Environment Variables** and add the following keys:
    | Key | Description | Example / Recommended Value |
