@@ -10,6 +10,7 @@ import Flashcards from './pages/Flashcards';
 import Quizzes from './pages/Quizzes';
 import Podcasts from './pages/Podcasts';
 import Debates from './pages/Debates';
+import Philosofun from './pages/Philosofun';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/podcasts" element={<Podcasts />} />
         <Route path="/debates" element={<Debates />} />
+        <Route path="/philosofun" element={<Philosofun />} />
       </Routes>
     </ToastProvider>
   );

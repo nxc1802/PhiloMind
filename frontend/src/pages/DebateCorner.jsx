@@ -148,7 +148,7 @@ const DebateCorner = () => {
             )}
           </>
         }
-        subtitle={!activeDebate ? "Chọn một chủ đề kịch bản hoặc khái niệm lý thuyết học thuật để bắt đầu đối thoại biện chứng cùng triết gia AI." : ""}
+        subtitle=""
       />
 
       <div className="px-6 md:px-12 py-10 max-w-6xl mx-auto">

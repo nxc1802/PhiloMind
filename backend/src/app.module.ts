@@ -9,6 +9,7 @@ import { DebatesModule } from './debate/debates.module';
 import { FlashcardsModule } from './flashcards/flashcards.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { UsersModule } from './users/users.module';
+import { PhilosofunModule } from './philosofun/philosofun.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -25,6 +26,7 @@ import { AppController } from './app.controller';
     FlashcardsModule,
     QuizzesModule,
     UsersModule,
+    PhilosofunModule,
   ],
   controllers: [AppController],
 })

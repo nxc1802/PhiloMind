@@ -185,5 +185,21 @@ export const api = {
       });
       return handleResponse(response);
     }
+  },
+  
+  philosofun: {
+    list: async () => handleResponse(await fetch(`${API_BASE_URL}/philosofun`)),
+    get: async (id) => handleResponse(await fetch(`${API_BASE_URL}/philosofun/${id}`)),
+    create: async (data) => handleResponse(await fetch(`${API_BASE_URL}/philosofun`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })),
+    update: async (id, data) => handleResponse(await fetch(`${API_BASE_URL}/philosofun/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })),
+    delete: async (id) => handleResponse(await fetch(`${API_BASE_URL}/philosofun/${id}`, { method: 'DELETE' }))
   }
 };

@@ -42,7 +42,7 @@ export default function Docs() {
         eyebrow="Thư viện tài liệu"
         icon="description"
         title="PDF Docs"
-        subtitle="Bộ sưu tập tài liệu Triết học Mác – Lênin. Tải về hoặc xem trực tuyến để hỗ trợ quá trình học tập."
+        subtitle=""
       />
 
       <div className="px-6 md:px-12 py-10 max-w-5xl mx-auto">
@@ -70,20 +70,7 @@ export default function Docs() {
                   <p className="text-gray-600 text-sm mb-3">
                     {doc.description}
                   </p>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
-                    <span className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-sm">
-                        menu_book
-                      </span>
-                      {doc.pages} trang
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-sm">
-                        database
-                      </span>
-                      {doc.size}
-                    </span>
-                  </div>
+
                 </div>
                 <button
                   type="button"

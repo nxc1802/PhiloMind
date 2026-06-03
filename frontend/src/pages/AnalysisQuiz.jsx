@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 const AnalysisQuiz = () => {
   return (
-    <PageShell activeKey="quiz">
+    <PageShell activeKey="practice">
       <PageHero
         eyebrow="Chuyên đề 05"
         icon="menu_book"
         title="Phân tích Văn bản"
-        subtitle='"Không có lý luận cách mạng thì cũng không có phong trào cách mạng." — V.I. Lenin'
+        subtitle=""
       />
 
       <div className="px-6 md:px-12 py-12 max-w-3xl mx-auto text-center">
@@ -22,7 +22,7 @@ const AnalysisQuiz = () => {
             Hiện tại chuyên đề này chưa được cập nhật dữ liệu văn bản kinh điển thực tế từ cơ sở dữ liệu để phân tích.
           </p>
           <Link
-            to="/quiz"
+            to="/practice"
             className="inline-block bg-red-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-red-900 transition-colors"
           >
             ← Quay lại danh sách

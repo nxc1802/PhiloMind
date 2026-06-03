@@ -208,5 +208,15 @@ export const api = {
       });
       return handleResponse(response);
     }
+  },
+  philosofun: {
+    list: async () => {
+      const response = await fetch(`${API_BASE_URL}/philosofun`);
+      return handleResponse(response);
+    },
+    get: async (id) => {
+      const response = await fetch(`${API_BASE_URL}/philosofun/${id}`);
+      return handleResponse(response);
+    }
   }
 };

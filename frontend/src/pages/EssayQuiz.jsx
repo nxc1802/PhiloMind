@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 const EssayQuiz = () => {
   return (
-    <PageShell activeKey="quiz">
+    <PageShell activeKey="practice">
       <PageHero
         eyebrow="Chuyên đề 04"
         icon="edit_note"
         title="Tư duy Độc lập"
-        subtitle='"Học thuyết của Marx là học thuyết vạn năng..." — V.I. Lenin'
+        subtitle=""
       />
 
       <div className="px-6 md:px-12 py-12 max-w-3xl mx-auto text-center">
@@ -22,7 +22,7 @@ const EssayQuiz = () => {
             Hiện tại chưa có đề thi tự luận chính thức nào được giao bởi Ban giảng huấn cho chuyên đề này.
           </p>
           <Link
-            to="/quiz"
+            to="/practice"
             className="inline-block bg-red-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-red-900 transition-colors"
           >
             ← Quay lại danh sách

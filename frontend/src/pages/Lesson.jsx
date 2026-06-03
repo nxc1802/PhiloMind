@@ -1317,6 +1317,7 @@ const Lesson = () => {
   const lessonContentRef = useRef(null);
 
   const [isWarmupDone, setIsWarmupDone] = useState(false);
+  const [isVideoWatched, setIsVideoWatched] = useState(false);
 
   // Mark warmup completed in database permanently
   const handleWarmupComplete = async () => {
@@ -1340,6 +1341,7 @@ const Lesson = () => {
 
   useEffect(() => {
     setIsWarmupDone(false);
+    setIsVideoWatched(false);
   }, [lessonSlug]);
 
   // Load courses & journey on mount/user change
@@ -1392,7 +1394,9 @@ const Lesson = () => {
         .then((res) => {
           setCurrentNodeDetails(res);
           const hasPassed = res.progress && res.progress.length > 0 && (res.progress[0].lessonCompleted || res.progress[0].status === 'completed');
-          setIsWarmupDone(!!hasPassed);
+          const noWarmups = !res.warmups || res.warmups.length === 0;
+          setIsWarmupDone(!!hasPassed || noWarmups);
+          setIsVideoWatched(!!hasPassed || noWarmups);
           setLoadingNode(false);
         })
         .catch((err) => {
@@ -1667,13 +1671,34 @@ const Lesson = () => {
               ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-2 space-y-6">
-                    {/* Warm-up chỉ hiển thị khi chưa hoàn thành và có dữ liệu thực tế */}
-                    {currentNodeDetails?.warmups && currentNodeDetails.warmups.length > 0 && !isWarmupDone ? (
-                      <WarmupSection dbWarmups={currentNodeDetails.warmups} onDone={handleWarmupComplete} />
-                    ) : (
-                      <>
-                        <VideoWithReminder dbVideoUrl={currentNodeDetails?.videoUrl} />
+                    {/* Luồng học tập khóa tuần tự: Video -> Warm-up -> Content -> Podcast/Quiz/Discussion */}
+                    <VideoWithReminder dbVideoUrl={currentNodeDetails?.videoUrl} />
 
+                    {!isVideoWatched && (
+                      <div className="bg-slate-900 text-white rounded-2xl p-8 border border-red-800/20 shadow-xl text-center space-y-4">
+                        <div className="inline-flex items-center justify-center h-12 w-12 bg-red-800/20 rounded-full text-red-500 border border-red-850/30">
+                          <span className="material-symbols-outlined text-2xl animate-pulse text-red-500">play_circle</span>
+                        </div>
+                        <h4 className="text-lg font-bold">Hãy xem video để bắt đầu bài học</h4>
+                        <p className="text-gray-400 text-sm max-w-md mx-auto">
+                          Vui lòng bấm nút dưới đây sau khi xem xong video nhập môn để tiếp tục phần câu hỏi làm nóng.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setIsVideoWatched(true)}
+                          className="bg-red-800 hover:bg-red-900 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md transform hover:scale-105"
+                        >
+                          Tôi đã xem xong video
+                        </button>
+                      </div>
+                    )}
+
+                    {isVideoWatched && currentNodeDetails?.warmups && currentNodeDetails.warmups.length > 0 && !isWarmupDone && (
+                      <WarmupSection dbWarmups={currentNodeDetails.warmups} onDone={handleWarmupComplete} />
+                    )}
+
+                    {isWarmupDone && (
+                      <>
                         {/* Lesson body & Summary */}
                         <div className="space-y-6">
                           {/* Textbook reading card */}
@@ -1723,15 +1748,15 @@ const Lesson = () => {
                             </div>
                           </div>
                         </div>
+
+                        <PodcastPlayer dbPodcast={currentNodeDetails?.podcast} />
+
+                        <FinalQuiz dbFlashcards={currentNodeDetails?.flashcards} onComplete={handleFinalQuizComplete} />
+
+                        {/* Diễn đàn Thảo luận nằm liền dưới Nội dung khóa học (sau Bài kiểm tra) */}
+                        {currentNodeDetails?.id && <LessonDiscussion nodeId={currentNodeDetails.id} />}
                       </>
                     )}
-
-                    <PodcastPlayer dbPodcast={currentNodeDetails?.podcast} />
-
-                    <FinalQuiz dbFlashcards={currentNodeDetails?.flashcards} onComplete={handleFinalQuizComplete} />
-
-                    {/* Diễn đàn Thảo luận nằm liền dưới Nội dung khóa học (sau Bài kiểm tra) */}
-                    {currentNodeDetails?.id && <LessonDiscussion nodeId={currentNodeDetails.id} />}
 
                     {/* Bottom navigation */}
                     <div className="flex justify-between gap-3 mt-8">
@@ -1803,20 +1828,7 @@ const Lesson = () => {
                 </div>
               )}
             </div>
-          ) : (
-            <div className="border-t border-gray-200 pt-12 pb-16 text-center">
-              <span className="material-symbols-outlined text-6xl text-red-800/30">
-                touch_app
-              </span>
-              <h2 className="text-xl font-bold text-gray-800 mt-3">
-                Chọn một bài học để bắt đầu
-              </h2>
-              <p className="text-gray-500 mt-1 max-w-md mx-auto">
-                Bấm vào một đề mục hoặc bài học trên sơ đồ tư duy phía trên để mở
-                nội dung bài học thực tế từ cơ sở dữ liệu.
-              </p>
-            </div>
-          )}
+          ) : null}
         </div>
       </div>
     </PageShell>

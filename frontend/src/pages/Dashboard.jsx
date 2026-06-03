@@ -4,11 +4,31 @@ import PageShell from '../components/PageShell';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-export default function HomePages() {
+function getYouTubeId(url) {
+  if (!url) return "Mzg-AdRrjGY";
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : "Mzg-AdRrjGY";
+}
+
+function getSlugFromTitle(title) {
+  if (!title) return '';
+  return title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đĐ]/g, 'd')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+export default function Dashboard() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { user } = useAuth();
   const [courses, setCourses] = useState([]);
-  const [stats, setStats] = useState({ chapters: 3, sections: 9, lessons: 24 });
+  const [activeNodes, setActiveNodes] = useState([]);
+  const [stats, setStats] = useState({ chapters: 0, sections: 0, lessons: 0 });
   const [aiInput, setAiInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
     { role: 'assistant', content: 'Chào đồng chí! Hôm nay chúng ta sẽ tìm hiểu về khái niệm nào trong Triết học?' }
@@ -25,14 +45,25 @@ export default function HomePages() {
           try {
             const journey = await api.courses.getJourney(mainCourse.id, user.id);
             let lessonsCount = 0;
+            const nodesList = [];
+            
             journey.forEach(chap => {
-              lessonsCount += chap.nodes.length;
+              lessonsCount += (chap.nodes || []).length;
+              (chap.nodes || []).forEach(n => {
+                nodesList.push({
+                  ...n,
+                  chapterTitle: chap.title
+                });
+              });
             });
+
             setStats({
               chapters: journey.length,
               sections: journey.length * 3,
               lessons: lessonsCount
             });
+
+            setActiveNodes(nodesList.slice(0, 4));
           } catch (e) {
             console.error("Error loading journey details:", e);
           }
@@ -59,7 +90,7 @@ export default function HomePages() {
       } else if (userMsg.toLowerCase().includes("ý thức")) {
         reply += "Ý thức là sự phản ánh năng động, sáng tạo thế giới khách quan vào bộ não người, có nguồn gốc tự nhiên và xã hội.";
       } else {
-        reply += "Mời đồng chí tìm hiểu kỹ hơn trong phần Sơ đồ tư duy bài học ở mục 'Lessons' hoặc tham gia Tranh biện AI Socratic để làm rõ vấn đề.";
+        reply += "Mời đồng chí tìm hiểu kỹ hơn trong phần Sơ đồ tư duy bài học ở mục 'Lesson' hoặc tham gia Tranh biện AI Socratic để làm rõ vấn đề.";
       }
       setChatMessages(prev => [...prev, { role: 'assistant', content: reply }]);
     }, 1000);
@@ -72,7 +103,7 @@ export default function HomePages() {
   };
 
   return (
-    <PageShell activeKey="home">
+    <PageShell activeKey="dashboard">
       <>
         {/* Hero Section */}
         <section className="w-full bg-red-800 py-16 px-12 relative overflow-hidden">
@@ -97,26 +128,17 @@ export default function HomePages() {
         </section>
 
         <div className="px-12 py-12 max-w-6xl mx-auto">
-          {/* Quotes Section & Progress */}
+          {/* Main layout grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="md:col-span-2 bg-blue-50 p-8 rounded-xl shadow-md border-l-4 border-red-800 relative">
-              <span className="material-symbols-outlined absolute right-6 top-6 text-red-800/10 text-6xl select-none">
-                format_quote
-              </span>
-              <div className="relative z-10">
-                <p className="italic text-2xl text-gray-900 mb-6 leading-relaxed">
-                  "Các nhà triết học đã chỉ giải thích thế giới bằng nhiều cách khác nhau, song vấn đề là cải tạo thế giới."
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-gray-300 flex-shrink-0" />
-                  <div>
-                    <p className="font-bold text-gray-900">Karl Marx</p>
-                    <p className="text-sm text-gray-500">Luận cương về Feuerbach, 1845</p>
-                  </div>
-                </div>
-              </div>
+            {/* Motivation Card */}
+            <div className="md:col-span-2 bg-blue-50 p-8 rounded-xl shadow-md border-l-4 border-red-800 flex flex-col justify-center">
+              <h3 className="font-bold text-2xl text-gray-900 mb-2">Chào mừng đồng chí!</h3>
+              <p className="text-gray-700 leading-relaxed text-base">
+                Chào mừng đồng chí đến với Học viện Triết học PhiloMind. Hãy tiếp tục hành trình nghiên cứu, rèn luyện tư duy biện chứng và giải quyết các bài tập thực hành hôm nay.
+              </p>
             </div>
 
+            {/* Mindmap Link Card */}
             <Link
               to="/lessons"
               className="bg-gradient-to-br from-red-700 to-red-900 p-6 rounded-xl shadow-md border border-red-900 flex flex-col justify-between text-white hover:shadow-xl hover:-translate-y-1 transition-all"
@@ -127,7 +149,7 @@ export default function HomePages() {
                   <span className="material-symbols-outlined">account_tree</span>
                 </div>
                 <p className="text-sm text-white/80 mb-4">
-                  Mục lục tổng dạng sơ đồ tư duy: Chương → Đề mục → Bài học.
+                  Mở rộng mục lục học tập trực quan tương tác toàn khóa.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
@@ -151,104 +173,64 @@ export default function HomePages() {
             </Link>
           </div>
 
-          {/* Lesson Cards */}
+          {/* Active Curriculum */}
           <h3 className="font-bold text-3xl text-gray-900 mb-6 flex items-center gap-3">
             <span className="material-symbols-outlined text-red-800">auto_stories</span>
             Active Curriculum
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {/* Lesson Card 1 */}
-            <Link
-              to="/lessons?lesson=nguon-goc-triet-hoc"
-              className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 block text-left"
-            >
-              <div className="aspect-video bg-gray-300 rounded-lg mb-4 overflow-hidden">
-                <img
-                  className="w-full h-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFZ0OqhZipKgNxHDuY4HHUm9woW3yDmnvo_N9R9yjd-V41eeguFVIw5joENdzlRIsM5p64jEEbymNdtxTR9boXOQn35TB9daqtITtSZvEKeh0bmEFmiTr9Zxu3CP30H97CTh9IP3tgdKwLv5wGC2lccTyzv9kVnfPn8E7L6_Ox1pKkoeWxka9c5k96YuiQ946LWknyevKUN6SMi4QISaxUKBmgvBNPqZb5MOYboZCnzB0nw_nYctPaSlnYRJJDi8eVFGG_Ms-Oa2A"
-                  alt="Nhập môn Triết học"
-                />
-              </div>
-              <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-800 text-xs font-bold rounded uppercase mb-2">
-                Chương 1
-              </span>
-              <h4 className="font-bold text-lg text-gray-900 mb-2">Nguồn gốc của triết học</h4>
-              <p className="text-gray-600 text-sm line-clamp-2 mb-4">
-                Triết học ra đời từ nguồn gốc nhận thức và nguồn gốc xã hội từ thời cổ đại.
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500 flex items-center gap-1">
-                  <span className="material-symbols-outlined text-sm">schedule</span> 8 min
-                </span>
-                <span className="p-2 bg-gray-100 text-red-800 rounded-lg group-hover:bg-red-800 group-hover:text-white transition-colors">
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </span>
-              </div>
-            </Link>
-
-            {/* Lesson Card 2 */}
-            <Link
-              to="/lessons?lesson=pham-tru-vat-chat"
-              className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 block text-left"
-            >
-              <div className="aspect-video bg-gray-300 rounded-lg mb-4 overflow-hidden">
-                <img
-                  className="w-full h-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuEjyZhdAAPzo_EoSvQvU-VL27N83gvp2pPiQWOBvmyC4zd-IHksUnB2I-IDse7t0rpnwGCvO_HrQ18DwfAaAVOQO4ACbb3wkWuRtQpgXC2eGLVSsjJTqq06JDFWPEKCgJtQX2pCqQdcv2G9AfwgGkYr1GQ7fiQfZAD_JKjHsjCo1FSFg6HyJhNtsAYzK_JaPmNq4ZkaGhfQPNqzCshnu_S7ZzZl4bMdanNyxEGLqf-5RAMR60u2gn-61z6PoJ8TloxTVxe_9X09w"
-                  alt="Duy vật biện chứng"
-                />
-              </div>
-              <span className="inline-block px-2 py-0.5 bg-green-100 text-green-800 text-xs font-bold rounded uppercase mb-2">
-                Chương 2
-              </span>
-              <h4 className="font-bold text-lg text-gray-900 mb-2">Phạm trù vật chất</h4>
-              <p className="text-gray-600 text-sm line-clamp-2 mb-4">
-                Vật chất là thực tại khách quan tồn tại độc lập với ý thức, được đem lại cho con người trong cảm giác.
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500 flex items-center gap-1">
-                  <span className="material-symbols-outlined text-sm">schedule</span> 15 min
-                </span>
-                <span className="p-2 bg-gray-100 text-red-800 rounded-lg group-hover:bg-red-800 group-hover:text-white transition-colors">
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </span>
-              </div>
-            </Link>
-
-            {/* Featured Lesson Card */}
-            <div className="lg:col-span-2 bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 flex flex-col md:flex-row gap-6">
-              <div className="md:w-1/2 bg-gray-300 rounded-lg overflow-hidden">
-                <img
-                  className="w-full h-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQwIbsnOJP7Zz1CFHXZ0TQzEKNqH3FMF6Qysz93VttyINK220t3VeVGBxAs5xDJsPDVTQn1djfkWNoMVGY9Nm63DeoFXQD4lu5s-cO8cphVQdTyMFPPDRxbAc_gSV7ipbG9j6izohMcZls-FMrOStKvU0euXQo2foTb9G3GHUD_jaR2bfn3yTdjDyYivtP-lOxMZqkIBZ6VZfMqPGOwKHuiL47IEu13AXYCQWGTe9qlrx9oL86Vx1HZgRY1FBTFEuZja0KI3z4yiY"
-                  alt="Duy vật lịch sử"
-                />
-              </div>
-              <div className="md:w-1/2 flex flex-col justify-center">
-                <span className="inline-block w-fit px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs font-bold rounded uppercase mb-2">
-                  Chương 3
-                </span>
-                <h4 className="font-bold text-2xl text-gray-900 mb-3">Biện chứng LLSX – QHSX</h4>
-                <p className="text-gray-600 mb-6">
-                  Tìm hiểu quy luật quan hệ sản xuất phù hợp với trình độ phát triển của lực lượng sản xuất.
-                </p>
-                <div className="flex items-center gap-4">
-                  <Link to="/lessons?lesson=llsx-qhsx" className="bg-red-800 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-900 transition-all">
-                    Bắt đầu học
-                  </Link>
-                  <button className="text-gray-600 p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <span className="material-symbols-outlined">bookmark</span>
-                  </button>
-                </div>
-              </div>
+          {activeNodes.length === 0 ? (
+            <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-300 mb-12">
+              <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">folder_open</span>
+              <p className="text-gray-500 text-sm">Chưa có bài học nào được khởi tạo. Vui lòng tải tài liệu giáo trình ở Admin.</p>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {activeNodes.map((node) => (
+                <Link
+                  key={node.id}
+                  to={`/lessons?lesson=${getSlugFromTitle(node.title)}`}
+                  className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-200 block text-left hover:-translate-y-1"
+                >
+                  <div className="aspect-video bg-gray-350 rounded-lg mb-4 overflow-hidden relative">
+                    {node.videoUrl ? (
+                      <img
+                        className="w-full h-full object-cover"
+                        src={`https://img.youtube.com/vi/${getYouTubeId(node.videoUrl)}/mqdefault.jpg`}
+                        alt={node.title}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-red-50 text-red-850 font-bold text-xs uppercase p-3 text-center">
+                        {node.title}
+                      </div>
+                    )}
+                  </div>
+                  <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-800 text-xs font-bold rounded uppercase mb-2">
+                    {node.chapterTitle ? node.chapterTitle.split(":")[0] : "Bài học"}
+                  </span>
+                  <h4 className="font-bold text-base text-gray-900 mb-2 truncate" title={node.title}>
+                    {node.title}
+                  </h4>
+                  <p className="text-gray-600 text-xs line-clamp-2 mb-4">
+                    {node.summary}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <span className="material-symbols-outlined text-xs">schedule</span> {node.timeToRead || "10 min"}
+                    </span>
+                    <span className="p-2 bg-gray-50 text-red-800 rounded-lg group-hover:bg-red-800 group-hover:text-white transition-colors">
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
 
           {/* Timeline & Mind Map */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Timeline */}
-            <div className="bg-blue-50 p-8 rounded-xl shadow-md border border-gray-200">
+            <div className="bg-blue-50 p-8 rounded-xl shadow-md border border-gray-200 text-left">
               <div className="flex justify-between items-center mb-8">
                 <h3 className="font-bold text-lg text-gray-900">Mốc lịch sử triết học</h3>
                 <button className="text-red-800 font-semibold text-sm">Xem dòng lịch sử</button>
@@ -270,7 +252,7 @@ export default function HomePages() {
             </div>
 
             {/* Knowledge Map */}
-            <Link to="/lessons" className="bg-blue-50 p-8 rounded-xl shadow-md border border-gray-200 cursor-pointer block hover:shadow-lg transition-all">
+            <Link to="/lessons" className="bg-blue-50 p-8 rounded-xl shadow-md border border-gray-200 cursor-pointer block hover:shadow-lg transition-all text-left">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-bold text-lg text-gray-900">Bản đồ tri thức</h3>
                 <span className="material-symbols-outlined text-gray-600">open_in_full</span>

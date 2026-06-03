@@ -11,6 +11,7 @@ const SIDEBAR_ITEMS = [
   { key: 'quizzes', label: 'Hệ thống Quiz', icon: 'quiz', to: '/quizzes' },
   { key: 'podcasts', label: 'Podcasts', icon: 'podcasts', to: '/podcasts' },
   { key: 'debates', label: 'Tranh luận AI', icon: 'forum', to: '/debates' },
+  { key: 'philosofun', label: 'Philosofun', icon: 'smart_display', to: '/philosofun' },
 ];
 
 export default function AdminPageShell({ activeKey, children }) {

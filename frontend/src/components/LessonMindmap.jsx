@@ -163,17 +163,10 @@ export default function LessonMindmap({ chapters = [], activeSlug, onOpenLesson,
             <span className="material-symbols-outlined text-red-800">
               account_tree
             </span>
-            <span className="text-xs uppercase tracking-wider text-red-800 font-bold">
-              Mục lục tổng
-            </span>
           </div>
           <h2 className="font-bold text-2xl text-gray-900">
             Sơ đồ tư duy bài học
           </h2>
-          <p className="text-gray-500 text-sm">
-            Cấu trúc <strong>Chương → Đề mục → Bài học</strong>. Bấm vào bất kỳ
-            nhánh nào để nhảy tới bài học bên dưới.
-          </p>
         </div>
 
         <div className="relative w-full md:max-w-xs">

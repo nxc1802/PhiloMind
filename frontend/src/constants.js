@@ -15,9 +15,10 @@ export const MEMORY_FLIP_BACK_MS = 1000;       // Thời gian giữ trước khi
 // Mỗi item có key để xác định trang đang active
 // Mindmap đã được tích hợp thẳng vào trang Lessons nên không còn mục riêng
 export const SIDEBAR_NAV_ITEMS = [
-  { key: "flashcards", to: "/flashcards", icon: "cards",        label: "Flashcards"  },
-  { key: "debate",     to: "/debate",     icon: "diversity_3",  label: "Debate"      },
-  { key: "lessons",    to: "/lessons",    icon: "menu_book",    label: "Lessons"     },
-  { key: "quiz",       to: "/quiz",       icon: "quiz",         label: "Quiz System" },
-  { key: "docs",       to: "/docs",       icon: "description",  label: "PDF Docs"    },  // route /docs nay co thuc, xem src/pages/Docs.jsx
+  { key: "dashboard",  to: "/dashboard",  icon: "dashboard",      label: "Dashboard"   },
+  { key: "lessons",    to: "/lessons",    icon: "menu_book",      label: "Lesson"      },
+  { key: "practice",   to: "/practice",   icon: "fitness_center", label: "Practice"    },
+  { key: "debate",     to: "/debate",     icon: "diversity_3",    label: "Debate"      },
+  { key: "philosofun", to: "/philosofun", icon: "smart_display",  label: "Philosofun"  },
+  { key: "docs",       to: "/docs",       icon: "description",    label: "PDF docs"    },
 ];

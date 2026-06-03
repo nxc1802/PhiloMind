@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import PageShell, { PageHero } from "../components/PageShell";
 import { api } from "../services/api";
 import { useToast } from "../components/Toast";
@@ -14,6 +15,7 @@ const FALLBACK_MATCHING_PAIRS = [
 ];
 
 export default function MatchingQuiz() {
+  const { id } = useParams();
   const { showToast } = useToast();
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,11 +37,17 @@ export default function MatchingQuiz() {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await api.quizzes.list();
-      const matchingQuizzes = (res || []).filter(q => q.type === 'matching');
-      setQuizzes(matchingQuizzes);
-      if (matchingQuizzes.length > 0) {
-        setCurrentGame(matchingQuizzes[0]);
+      if (id) {
+        const quiz = await api.quizzes.get(id);
+        setCurrentGame(quiz);
+        setQuizzes([quiz]);
+      } else {
+        const res = await api.quizzes.list();
+        const matchingQuizzes = (res || []).filter(q => q.type === 'matching');
+        setQuizzes(matchingQuizzes);
+        if (matchingQuizzes.length > 0) {
+          setCurrentGame(matchingQuizzes[0]);
+        }
       }
     } catch (err) {
       console.error("Error loading matching quizzes:", err);
@@ -47,7 +55,7 @@ export default function MatchingQuiz() {
     } finally {
       setLoading(false);
     }
-  }, [showToast]);
+  }, [id, showToast]);
 
   useEffect(() => {
     loadData();
@@ -154,7 +162,7 @@ export default function MatchingQuiz() {
   };
 
   return (
-    <PageShell activeKey="quiz">
+    <PageShell activeKey="practice">
       <PageHero
         eyebrow="Thử thách Trí tuệ"
         icon="extension"

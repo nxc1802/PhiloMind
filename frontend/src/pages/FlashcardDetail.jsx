@@ -131,7 +131,7 @@ const FlashcardDetail = () => {
 
   if (loading) {
     return (
-      <PageShell activeKey="flashcards">
+      <PageShell activeKey="practice">
         <div className="text-center py-20">
           <span className="material-symbols-outlined animate-spin text-5xl text-red-800">sync</span>
           <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị trò chơi học tập...</p>
@@ -142,7 +142,7 @@ const FlashcardDetail = () => {
 
   if (!chapterDetails) {
     return (
-      <PageShell activeKey="flashcards">
+      <PageShell activeKey="practice">
         <div className="px-12 py-16 max-w-3xl mx-auto text-center">
           <span className="material-symbols-outlined text-7xl text-gray-300">
             search_off
@@ -151,7 +151,7 @@ const FlashcardDetail = () => {
             Không tìm thấy chương học
           </h1>
           <Link
-            to="/flashcards"
+            to="/practice"
             className="inline-block mt-6 bg-red-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-900"
           >
             ← Quay lại danh sách
@@ -163,7 +163,7 @@ const FlashcardDetail = () => {
 
   if (totalPairs === 0) {
     return (
-      <PageShell activeKey="flashcards">
+      <PageShell activeKey="practice">
         <PageHero
           eyebrow="Trò chơi lật thẻ ghi nhớ"
           icon="extension"
@@ -180,7 +180,7 @@ const FlashcardDetail = () => {
               Chương này hiện chưa có dữ liệu thẻ ghi nhớ học thuật để bắt đầu trò chơi ghép cặp. Ban quản trị đang cập nhật bài tập.
             </p>
             <Link
-              to="/flashcards"
+              to="/practice"
               className="inline-block mt-6 bg-red-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-red-900 transition-colors"
             >
               ← Quay lại danh sách
@@ -192,7 +192,7 @@ const FlashcardDetail = () => {
   }
 
   return (
-    <PageShell activeKey="flashcards">
+    <PageShell activeKey="practice">
       <PageHero
         eyebrow="Trò chơi lật thẻ ghi nhớ"
         icon="extension"
@@ -318,7 +318,7 @@ const FlashcardDetail = () => {
 
         <div className="mt-8 text-center">
           <Link
-            to="/flashcards"
+            to="/practice"
             className="text-sm text-gray-500 underline hover:text-red-800"
           >
             ← Quay lại danh sách chương

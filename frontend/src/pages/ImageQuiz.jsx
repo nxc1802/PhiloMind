@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ImageQuiz = () => {
   return (
-    <PageShell activeKey="quiz">
+    <PageShell activeKey="practice">
       <PageHero
         eyebrow="Chuyên đề 06"
         icon="image_search"
@@ -22,7 +22,7 @@ const ImageQuiz = () => {
             Hiện tại chuyên đề này chưa được cập nhật dữ liệu hình ảnh gợi ý thực tế từ cơ sở dữ liệu.
           </p>
           <Link
-            to="/quiz"
+            to="/practice"
             className="inline-block bg-red-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-red-900 transition-colors"
           >
             ← Quay lại danh sách

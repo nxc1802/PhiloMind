@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
-  House,
-  Layers3,
-  MessagesSquare,
+  LayoutDashboard,
   BookOpen,
-  CircleHelp,
+  Dumbbell,
+  MessagesSquare,
+  Play,
   FileText,
   Settings as SettingsIcon,
-  MessageCircle,
   Menu,
   X,
 } from "lucide-react";
@@ -31,12 +30,12 @@ const getInitials = (name) =>
 // Tren desktop: hien thi 6 NavLink + icon o phia phai
 // Tren mobile: nut hamburger mo drawer chua cac muc sidebar
 const TOP_NAV_ITEMS = [
-  { to: "/home",       label: "Home",       Icon: House },
-  { to: "/flashcards", label: "Flashcards", Icon: Layers3 },
-  { to: "/debate",     label: "Debate",     Icon: MessagesSquare },
-  { to: "/lessons",    label: "Lessons",    Icon: BookOpen },
-  { to: "/quiz",       label: "Quiz",       Icon: CircleHelp },
-  { to: "/docs",       label: "Docs",       Icon: FileText },
+  { to: "/dashboard",  label: "Dashboard",   Icon: LayoutDashboard },
+  { to: "/lessons",    label: "Lesson",      Icon: BookOpen },
+  { to: "/practice",   label: "Practice",    Icon: Dumbbell },
+  { to: "/debate",     label: "Debate",      Icon: MessagesSquare },
+  { to: "/philosofun", label: "Philosofun",  Icon: Play },
+  { to: "/docs",       label: "PDF docs",    Icon: FileText },
 ];
 
 export default function Navbar() {
@@ -50,7 +49,7 @@ export default function Navbar() {
   const handleLogout = () => {
     logout();
     setIsUserMenuOpen(false);
-    navigate("/home");
+    navigate("/dashboard");
   };
 
   return (
@@ -68,7 +67,7 @@ export default function Navbar() {
             <Menu size={24} />
           </button>
 
-          <Link to="/home" className="flex items-center gap-3">
+          <Link to="/dashboard" className="flex items-center gap-3">
             <img
               alt="Dialectic Academy Logo"
               className="h-9 w-9 md:h-10 md:w-10 object-contain rounded-md"
@@ -105,14 +104,6 @@ export default function Navbar() {
 
         {/* Right cluster */}
         <div className="flex items-center gap-2 md:gap-4">
-          <button
-            type="button"
-            aria-label="Trò chuyện với Dialectic AI"
-            title="Trò chuyện"
-            className="p-2 hover:bg-blue-100 rounded-full transition-all text-gray-600"
-          >
-            <MessageCircle size={20} />
-          </button>
           <Link
             to="/settings"
             aria-label="Cài đặt"
@@ -206,21 +197,6 @@ export default function Navbar() {
             </div>
 
             <nav className="flex-1 overflow-y-auto p-3 space-y-1">
-              <NavLink
-                to="/home"
-                onClick={closeMobileMenu}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-lg ${
-                    isActive
-                      ? "bg-red-50 text-red-800 font-semibold"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`
-                }
-              >
-                <span className="material-symbols-outlined">home</span>
-                Trang chủ
-              </NavLink>
-
               {SIDEBAR_NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.key}

@@ -184,3 +184,11 @@ model Quiz {
   createdAt    DateTime    @default(now())
   node         ConceptNode? @relation(fields: [nodeId], references: [id], onDelete: Cascade)
 }
+
+model Philosofun {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  videoUrl    String
+  createdAt   DateTime @default(now())
+}
