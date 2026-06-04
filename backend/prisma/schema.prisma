@@ -73,6 +73,12 @@ model ConceptNode {
   warmups       Warmup[]
   comments      Comment[]
   quizzes       Quiz[]
+
+  // Synchronized Lesson Framework Fields
+  storyIntro     Json?
+  lessonContents Json?
+  minigame       Json?
+  finalSummary   Json?
 }
 
 model Flashcard {

@@ -128,6 +128,18 @@ class CreateNodeDto {
   @IsString()
   @IsNotEmpty()
   chapterId: string;
+
+  @IsOptional()
+  storyIntro?: any;
+
+  @IsOptional()
+  lessonContents?: any;
+
+  @IsOptional()
+  minigame?: any;
+
+  @IsOptional()
+  finalSummary?: any;
 }
 
 class UpdateNodeDto {
@@ -162,6 +174,18 @@ class UpdateNodeDto {
   @IsNumber()
   @IsOptional()
   orderIndex?: number;
+
+  @IsOptional()
+  storyIntro?: any;
+
+  @IsOptional()
+  lessonContents?: any;
+
+  @IsOptional()
+  minigame?: any;
+
+  @IsOptional()
+  finalSummary?: any;
 }
 
 class SynthesizePodcastDto {

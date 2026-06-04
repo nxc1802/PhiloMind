@@ -74,7 +74,152 @@ async function main() {
       difficulty: 'Medium',
       timeToRead: '8 min read',
       orderIndex: 1,
-      videoUrl: defaultYoutubeUrl
+      videoUrl: defaultYoutubeUrl,
+      storyIntro: {
+        enable: true,
+        background: 'https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=1200',
+        character: {
+          name: 'Karl Marx',
+          avatar: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=200',
+          position: 'left'
+        },
+        dialogs: [
+          {
+            id: 'dialog_01',
+            text: 'Chào đồng chí! Tôi là Karl Marx. Hôm nay chúng ta sẽ cùng du hành thời gian về thế kỷ VIII-VI TCN để xem Triết học đã ra đời như thế nào nhé.',
+            animation: 'fade',
+            duration: 3000
+          },
+          {
+            id: 'dialog_02',
+            text: 'Triết học không tự dưng xuất hiện. Nó bắt nguồn từ hai cội nguồn lớn: Nhận thức của bộ não và những biến động mạnh mẽ của tổ chức Xã hội.',
+            animation: 'slide',
+            duration: 3000
+          }
+        ],
+        nextButton: {
+          text: 'Khám phá bài học',
+          style: 'primary'
+        }
+      },
+      lessonContents: [
+        {
+          conceptId: 'concept_cognition',
+          title: 'Nguồn gốc nhận thức',
+          media: {
+            type: 'video',
+            url: defaultYoutubeUrl,
+            thumbnail: '',
+            autoplay: false
+          },
+          questions: [
+            {
+              questionId: 'q_cognition_1',
+              type: 'single_choice',
+              question: 'Nhu cầu nhận thức nào dưới đây thực chất đã dẫn đến sự ra đời của tư duy triết học?',
+              answers: [
+                {
+                  answerId: 'ans_c1_1',
+                  text: 'Nhu cầu cúng bái thần linh theo phong tục nguyên thủy.',
+                  isCorrect: false,
+                  explanation: 'Chưa chính xác. Tư duy tôn giáo, thần thoại mới thiên về cúng bái siêu nhiên.'
+                },
+                {
+                  answerId: 'ans_c1_2',
+                  text: 'Nhu cầu khái quát hóa tri thức rời rạc thành hệ thống lý luận lý tính phổ quát để giải thích thế giới.',
+                  isCorrect: true,
+                  explanation: 'Chính xác! Nguồn gốc nhận thức của triết học là sự phát triển của tư duy lý tính trừu tượng vượt qua tư duy huyền thoại.'
+                }
+              ],
+              forceUntilCorrect: true
+            }
+          ],
+          conceptSummary: {
+            title: 'Đúc kết Nguồn gốc nhận thức',
+            content: [
+              'Tư duy lý luận xuất hiện thay thế cho tư duy huyền thoại và tôn giáo nguyên thủy.',
+              'Khái quát hóa, trừu tượng hóa các tri thức riêng lẻ thành các khái niệm, quy luật có tính phổ quát.'
+            ]
+          }
+        },
+        {
+          conceptId: 'concept_social',
+          title: 'Nguồn gốc xã hội',
+          media: {
+            type: 'image',
+            url: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900',
+            thumbnail: '',
+            autoplay: false
+          },
+          questions: [
+            {
+              questionId: 'q_social_1',
+              type: 'single_choice',
+              question: 'Nguyên nhân sâu xa nào về mặt xã hội dẫn tới sự tách biệt của tầng lớp trí thức chuyên nghiệp nghiên cứu triết học?',
+              answers: [
+                {
+                  answerId: 'ans_s1_1',
+                  text: 'Sự ra đời của chế độ tư hữu, phân chia giai cấp đối kháng và phân công lao động trí óc tách biệt lao động chân tay.',
+                  isCorrect: true,
+                  explanation: 'Xuất sắc! Sự phân công lao động xã hội tạo điều kiện cho một bộ phận chuyên tâm lao động trí óc, hệ thống hóa tư tưởng.'
+                },
+                {
+                  answerId: 'ans_s1_2',
+                  text: 'Con người chán nản công việc chân tay nên cùng nhau đi học triết học.',
+                  isCorrect: false,
+                  explanation: 'Không chính xác. Đây là quy luật khách quan của lịch sử phát triển lực lượng sản xuất chứ không đơn thuần là ý muốn chủ quan.'
+                }
+              ],
+              forceUntilCorrect: true
+            }
+          ],
+          conceptSummary: {
+            title: 'Đúc kết Nguồn gốc xã hội',
+            content: [
+              'Xã hội phân hóa giai cấp và xuất hiện chế độ tư hữu tư liệu sản xuất.',
+              'Lao động trí óc tách khỏi lao động chân tay, tạo điều kiện cho các nhà thông thái đúc kết lý luận chuyên nghiệp.'
+            ]
+          }
+        }
+      ],
+      minigame: {
+        enable: true,
+        type: 'matching_2_columns',
+        config: {
+          title: 'Nối các nguồn gốc triết học',
+          leftColumn: [
+            { id: 'left_01', text: 'Nguồn gốc Nhận thức' },
+            { id: 'left_02', text: 'Nguồn gốc Xã hội' },
+            { id: 'left_03', text: 'Thời gian xuất hiện' }
+          ],
+          rightColumn: [
+            { id: 'right_01', text: 'Sự phát triển của tư duy lý tính thay thế giải thích thế giới bằng huyền thoại' },
+            { id: 'right_02', text: 'Lao động trí óc tách rời chân tay và phân hóa giai cấp đối kháng' },
+            { id: 'right_03', text: 'Khoảng thế kỷ VIII - VI trước Công nguyên' }
+          ],
+          correctPairs: [
+            { leftId: 'left_01', rightId: 'right_01' },
+            { leftId: 'left_02', rightId: 'right_02' },
+            { leftId: 'left_03', rightId: 'right_03' }
+          ]
+        }
+      },
+      finalSummary: {
+        title: 'Hoàn thành bài học Nguồn gốc Triết học!',
+        description: 'Đồng chí đã thấu suốt hai cội nguồn lớn khai sinh ra hệ thống lý luận triết học loài người.',
+        keyTakeaways: [
+          'Triết học nảy sinh từ nhu cầu nhận thức khái quát bằng lý tính.',
+          'Triết học chỉ xuất hiện khi có sự phân công lao động xã hội và hình thành tầng lớp trí thức chuyên nghiệp.'
+        ],
+        rewards: {
+          xp: 120,
+          badge: 'Lý luận gia trẻ tuổi'
+        },
+        actions: {
+          retryButton: true,
+          nextLessonButton: true
+        }
+      }
     },
     { title: 'Khái niệm triết học', summary: 'Triết học là hệ thống tri thức lý luận chung nhất của con người về thế giới.', originalText: 'Triết học là hệ thống quan điểm lí luận chung nhất về thế giới, về con người và vị trí của con người trong thế giới đó.', quickTake: 'Hệ thống tri thức lý luận chung nhất về thế giới.', difficulty: 'Easy', timeToRead: '6 min read', orderIndex: 2, videoUrl: defaultYoutubeUrl },
     { title: 'Vấn đề cơ bản của triết học', summary: 'Vấn đề quan hệ giữa vật chất và ý thức là vấn đề cơ bản của mọi hệ thống triết học.', originalText: 'Vấn đề cơ bản lớn của mọi triết học, đặc biệt là triết học hiện đại, là vấn đề quan hệ giữa tư duy và tồn tại, giữa ý thức và vật chất.', quickTake: 'Mối quan hệ biện chứng giữa vật chất và ý thức.', difficulty: 'Hard', timeToRead: '12 min read', orderIndex: 3, videoUrl: defaultYoutubeUrl },
@@ -96,6 +241,10 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter1.id,
+        storyIntro: n.storyIntro ? (n.storyIntro as any) : undefined,
+        lessonContents: n.lessonContents ? (n.lessonContents as any) : undefined,
+        minigame: n.minigame ? (n.minigame as any) : undefined,
+        finalSummary: n.finalSummary ? (n.finalSummary as any) : undefined,
       }
     });
     createdCh1Nodes.push(node);

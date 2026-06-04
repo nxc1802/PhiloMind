@@ -389,6 +389,10 @@ export class CoursesService {
         videoUrl: dto.videoUrl || null,
         orderIndex: dto.orderIndex,
         chapterId: dto.chapterId,
+        storyIntro: dto.storyIntro !== undefined ? dto.storyIntro : null,
+        lessonContents: dto.lessonContents !== undefined ? dto.lessonContents : null,
+        minigame: dto.minigame !== undefined ? dto.minigame : null,
+        finalSummary: dto.finalSummary !== undefined ? dto.finalSummary : null,
       },
     });
   }
@@ -418,6 +422,10 @@ export class CoursesService {
         timeToRead: dto.timeToRead,
         videoUrl: dto.videoUrl !== undefined ? dto.videoUrl : undefined,
         orderIndex: dto.orderIndex,
+        storyIntro: dto.storyIntro !== undefined ? dto.storyIntro : undefined,
+        lessonContents: dto.lessonContents !== undefined ? dto.lessonContents : undefined,
+        minigame: dto.minigame !== undefined ? dto.minigame : undefined,
+        finalSummary: dto.finalSummary !== undefined ? dto.finalSummary : undefined,
       },
     });
   }
