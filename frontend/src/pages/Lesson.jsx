@@ -1,10 +1,13 @@
-import React, { useMemo, useState, useRef, useEffect, Suspense, lazy } from "react";
+import React, { useMemo, useRef, Suspense, lazy } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
 import LessonMindmap from "../components/LessonMindmap";
 import { useToast } from "../components/Toast";
-import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
+import { useJourney } from "../hooks/useJourney";
+import { useNodeDetails } from "../hooks/useNodeDetails";
+import { useCompleteNodeMutation } from "../hooks/useMutations";
+
 import { getTitleFromSlug, getSlugFromTitle } from "../utils/slug";
 import { LessonSkeleton } from "./lesson/components/LessonSkeleton";
 import { LessonSidebar } from "./lesson/components/LessonSidebar";
@@ -18,30 +21,14 @@ const Lesson = () => {
   const { showToast } = useToast();
   const { user } = useAuth();
 
-  const [dbJourney, setDbJourney] = useState([]);
-  const [currentNodeDetails, setCurrentNodeDetails] = useState(null);
-  const [loadingNode, setLoadingNode] = useState(false);
-
   const lessonContentRef = useRef(null);
 
-  // Load courses & journey on mount/user change
-  useEffect(() => {
-    if (!user) return;
-    const fetchJourney = async () => {
-      try {
-        const res = await api.courses.list();
-        const mainCourse = res.find(c => c.title.includes('Triết học'));
-        if (mainCourse) {
-          const journey = await api.courses.getJourney(mainCourse.id, user.id);
-          setDbJourney(journey);
-        }
-      } catch (err) {
-        console.error("Failed to load course journey:", err);
-      }
-    };
-    fetchJourney();
-  }, [user]);
+  // Load course journey using query hook
+  const { data: journeyData } = useJourney(user);
+  const dbJourney = useMemo(() => journeyData?.journey || [], [journeyData]);
 
+
+  // Match active lesson node
   const activeLesson = useMemo(() => {
     if (!lessonSlug || dbJourney.length === 0) return null;
     for (const chap of dbJourney) {
@@ -53,41 +40,12 @@ const Lesson = () => {
     return null;
   }, [lessonSlug, dbJourney]);
 
-  // Load node details (both core and full details in parallel for optimization)
-  useEffect(() => {
-    if (!user || !lessonSlug || dbJourney.length === 0) return;
-    
-    let matchedNode = null;
-    for (const chap of dbJourney) {
-      if (chap.nodes) {
-        const node = chap.nodes.find(n => getSlugFromTitle(n.title) === lessonSlug);
-        if (node) {
-          matchedNode = node;
-          break;
-        }
-      }
-    }
+  // Node details query hook
+  const { data: currentNodeDetails, isLoading: loadingNode } = useNodeDetails(activeLesson?.id, user?.id);
 
-    if (matchedNode) {
-      setLoadingNode(true);
-      Promise.all([
-        api.courses.getNodeCore(matchedNode.id, user.id),
-        api.courses.getNodeDetails(matchedNode.id, user.id)
-      ])
-      .then(([coreRes, detailsRes]) => {
-        // Merge core details (progress statuses, lessonType) with full details
-        const mergedNode = { ...detailsRes, ...coreRes };
-        setCurrentNodeDetails(mergedNode);
-        setLoadingNode(false);
-      })
-      .catch((err) => {
-        console.error("Error loading node details:", err);
-        setLoadingNode(false);
-      });
-    } else {
-      setCurrentNodeDetails(null);
-    }
-  }, [lessonSlug, dbJourney, user]);
+  // Complete node mutation
+  const completeNodeMutation = useCompleteNodeMutation();
+
 
   // Flattened syllabus list with real DB progress statuses
   const flatSyllabusItems = useMemo(() => {
@@ -228,47 +186,22 @@ const Lesson = () => {
   const handleCompleteLesson = async () => {
     if (!user || !currentNodeDetails) return;
 
-    try {
-      const result = await api.courses.completeNode(currentNodeDetails.id, user.id);
-      
-      if (result && result.nextNodeTitle) {
-        showToast(`Chúc mừng! Bạn đã hoàn thành bài học và mở khóa bài tiếp theo: "${result.nextNodeTitle}"`, "success");
-      } else {
-        showToast("Xuất sắc! Bạn đã hoàn thành tất cả các bài học trong khóa học này!", "success");
-      }
-
-      // Reload course journey to update unlocked status for the next lesson
-      const courseList = await api.courses.list();
-      const mainCourse = courseList.find(c => c.title.includes('Triết học'));
-      if (mainCourse) {
-        const journey = await api.courses.getJourney(mainCourse.id, user.id);
-        setDbJourney(journey);
-      }
-
-      // Update current progress locally so revisit mode immediately kicks in
-      setCurrentNodeDetails(prev => {
-        if (!prev) return null;
-        const updatedProgress = [...(prev.progress || [])];
-        if (updatedProgress.length > 0) {
-          updatedProgress[0] = {
-            ...updatedProgress[0],
-            status: "completed",
-            lessonCompleted: true,
-            quizCompleted: true
-          };
-        } else {
-          updatedProgress.push({
-            status: "completed",
-            lessonCompleted: true,
-            quizCompleted: true
-          });
+    completeNodeMutation.mutate(
+      { nodeId: currentNodeDetails.id, userId: user.id },
+      {
+        onSuccess: (result) => {
+          if (result && result.nextNodeTitle) {
+            showToast(`Chúc mừng! Bạn đã hoàn thành bài học và mở khóa bài tiếp theo: "${result.nextNodeTitle}"`, "success");
+          } else {
+            showToast("Xuất sắc! Bạn đã hoàn thành tất cả các bài học trong khóa học này!", "success");
+          }
+        },
+        onError: (err) => {
+          console.error("Error completing lesson:", err);
+          showToast("Có lỗi xảy ra khi cập nhật tiến độ bài học.", "error");
         }
-        return { ...prev, progress: updatedProgress };
-      });
-    } catch (err) {
-      console.error("Error completing lesson:", err);
-      showToast("Có lỗi xảy ra khi cập nhật tiến độ bài học.", "error");
-    }
+      }
+    );
   };
 
   const isRevisit = useMemo(() => {

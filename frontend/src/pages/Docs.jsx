@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PageShell, { PageHero } from "../components/PageShell";
 import { api } from "../services/api";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../services/queryKeys";
 
 export default function Docs() {
-  const [dbDocs, setDbDocs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: dbDocsData, isLoading: loading } = useQuery({
+    queryKey: queryKeys.documents.list(),
+    queryFn: () => api.documents.list(),
+    staleTime: 1000 * 60 * 10, // Documents change very rarely
+  });
+  const dbDocs = dbDocsData || [];
 
-  useEffect(() => {
-    const fetchDocs = async () => {
-      try {
-        const res = await api.documents.list();
-        setDbDocs(res || []);
-      } catch (err) {
-        console.error("Lỗi tải danh sách tài liệu từ backend:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDocs();
-  }, []);
 
   const displayDocs = dbDocs.map(doc => ({
     id: doc.id,

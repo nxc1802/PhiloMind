@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import PageShell from '../components/PageShell';
-import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useJourney } from '../hooks/useJourney';
 
 function getYouTubeId(url) {
   if (!url) return "Mzg-AdRrjGY";
@@ -26,53 +26,44 @@ function getSlugFromTitle(title) {
 export default function Dashboard() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { user } = useAuth();
-  const [courses, setCourses] = useState([]);
-  const [activeNodes, setActiveNodes] = useState([]);
-  const [stats, setStats] = useState({ chapters: 0, sections: 0, lessons: 0 });
   const [aiInput, setAiInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
     { role: 'assistant', content: 'Chào đồng chí! Hôm nay chúng ta sẽ tìm hiểu về khái niệm nào trong Triết học?' }
   ]);
 
-  const toggleChat = () => setIsChatOpen((prev) => !prev);
+  const { data, isLoading } = useJourney(user);
+  const courses = data?.courses || [];
+  const journey = data?.journey;
 
-  useEffect(() => {
-    api.courses.list()
-      .then(async (res) => {
-        setCourses(res);
-        const mainCourse = res.find(c => c.title.includes('Triết học'));
-        if (mainCourse && user) {
-          try {
-            const journey = await api.courses.getJourney(mainCourse.id, user.id);
-            let lessonsCount = 0;
-            const nodesList = [];
-            
-            journey.forEach(chap => {
-              lessonsCount += (chap.nodes || []).length;
-              (chap.nodes || []).forEach(n => {
-                nodesList.push({
-                  ...n,
-                  chapterTitle: chap.title
-                });
-              });
-            });
+  const stats = useMemo(() => {
+    const list = journey || [];
+    let lessonsCount = 0;
+    list.forEach(chap => {
+      lessonsCount += (chap.nodes || []).length;
+    });
+    return {
+      chapters: list.length,
+      sections: list.length * 3,
+      lessons: lessonsCount
+    };
+  }, [journey]);
 
-            setStats({
-              chapters: journey.length,
-              sections: journey.length * 3,
-              lessons: lessonsCount
-            });
-
-            setActiveNodes(nodesList.slice(0, 4));
-          } catch (e) {
-            console.error("Error loading journey details:", e);
-          }
-        }
-      })
-      .catch((err) => {
-        console.error("Error loading courses:", err);
+  const activeNodes = useMemo(() => {
+    const list = journey || [];
+    const nodesList = [];
+    list.forEach(chap => {
+      (chap.nodes || []).forEach(n => {
+        nodesList.push({
+          ...n,
+          chapterTitle: chap.title
+        });
       });
-  }, [user]);
+    });
+    return nodesList.slice(0, 4);
+  }, [journey]);
+
+
+  const toggleChat = () => setIsChatOpen((prev) => !prev);
 
   const handleAiSend = (e) => {
     e.preventDefault();
@@ -101,6 +92,7 @@ export default function Dashboard() {
     title: 'Triết học Mác – Lênin',
     description: 'Nghiên cứu các quy luật vận động chung nhất của tự nhiên, xã hội và tư duy thông qua phương pháp luận biện chứng duy vật.'
   };
+
 
   return (
     <PageShell activeKey="dashboard">
@@ -179,13 +171,19 @@ export default function Dashboard() {
             Active Curriculum
           </h3>
 
-          {activeNodes.length === 0 ? (
+          {isLoading ? (
+            <div className="text-center py-12">
+              <span className="material-symbols-outlined animate-spin text-4xl text-red-800">sync</span>
+              <p className="text-gray-500 mt-2 font-semibold">Đang tải giáo trình...</p>
+            </div>
+          ) : activeNodes.length === 0 ? (
             <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-300 mb-12">
               <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">folder_open</span>
               <p className="text-gray-500 text-sm">Chưa có bài học nào được khởi tạo. Vui lòng tải tài liệu giáo trình ở Admin.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+
               {activeNodes.map((node) => (
                 <Link
                   key={node.id}

@@ -1,8 +1,12 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import PageShell, { PageHero } from "../components/PageShell";
 import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../components/Toast";
+import { useQuery } from "@tanstack/react-query";
+import { useJourney } from "../hooks/useJourney";
+import { queryKeys } from "../services/queryKeys";
+import { useSendDebateMessageMutation, useSendTopicDebateMessageMutation } from "../hooks/useMutations";
 
 const DebateCorner = () => {
   const { user } = useAuth();
@@ -12,86 +16,69 @@ const DebateCorner = () => {
   const [debateType, setDebateType] = useState("topic"); 
   const [activeDebate, setActiveDebate] = useState(null); // { type: 'topic' | 'concept', id: string } | null
   
-  // Data States
-  const [nodes, setNodes] = useState([]);
-  const [topics, setTopics] = useState([]);
-  
   const [selectedNodeId, setSelectedNodeId] = useState("");
   const [selectedTopicId, setSelectedTopicId] = useState("");
   
-  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  
-  const [loadingLists, setLoadingLists] = useState(true);
-  const [loadingChat, setLoadingChat] = useState(false);
-  const [sendingMsg, setSendingMsg] = useState(false);
-
   const chatEndRef = useRef(null);
 
-  // Fetch both Topics and Nodes list on mount
+  // Fetch course journey to get real nodes
+  const { data: journeyData, isLoading: loadingJourney } = useJourney(user);
+  const nodes = useMemo(() => {
+    return journeyData?.journey.flatMap(c => c.nodes || []) || [];
+  }, [journeyData]);
+
+  // Fetch Socratic debate topics
+  const { data: topicsData, isLoading: loadingTopics } = useQuery({
+    queryKey: queryKeys.debates.topics(),
+    queryFn: () => api.debates.topics.list(),
+    staleTime: 1000 * 60 * 10,
+  });
+  const topics = useMemo(() => topicsData || [], [topicsData]);
+
+  const loadingLists = loadingJourney || loadingTopics;
+
+  // Auto-select defaults
   useEffect(() => {
-    if (!user) return;
-    const loadDebateResources = async () => {
-      setLoadingLists(true);
-      try {
-        // Fetch Topics
-        const topicsList = await api.debates.topics.list();
-        setTopics(topicsList);
-        if (topicsList.length > 0) {
-          setSelectedTopicId(topicsList[0].id);
-        }
-
-        // Fetch Nodes
-        const res = await api.courses.list();
-        const mainCourse = res.find(c => c.title.includes('Triết học'));
-        if (mainCourse) {
-          const journey = await api.courses.getJourney(mainCourse.id, user.id);
-          const allNodes = journey.flatMap(c => c.nodes);
-          setNodes(allNodes);
-          if (allNodes.length > 0) {
-            const materialNode = allNodes.find(n => n.title.includes('vật chất'));
-            setSelectedNodeId(materialNode ? materialNode.id : allNodes[0].id);
-          }
-        }
-      } catch (err) {
-        console.error("Failed to load debate list resources:", err);
-      } finally {
-        setLoadingLists(false);
-      }
-    };
-    loadDebateResources();
-  }, [user]);
-
-  // Fetch transcript depending on active debate type
-  const fetchDebateTranscript = useCallback(async () => {
-    if (!user) return;
-    setLoadingChat(true);
-    try {
-      if (debateType === "topic") {
-        if (!selectedTopicId) return;
-        const res = await api.debates.topics.getTranscript(selectedTopicId, user.id);
-        setMessages(Array.isArray(res.transcript) ? res.transcript : []);
-      } else {
-        if (!selectedNodeId) return;
-        const res = await api.debates.getTranscript(selectedNodeId, user.id);
-        setMessages(Array.isArray(res.transcript) ? res.transcript : []);
-      }
-    } catch (err) {
-      console.error("Failed to load transcript:", err);
-      showToast("Tải đối thoại phản biện thất bại: " + err.message, "error");
-    } finally {
-      setLoadingChat(false);
+    if (topics.length > 0 && !selectedTopicId) {
+      setSelectedTopicId(topics[0].id);
     }
-  }, [user, debateType, selectedTopicId, selectedNodeId, showToast]);
+  }, [topics, selectedTopicId]);
 
   useEffect(() => {
-    fetchDebateTranscript();
-  }, [fetchDebateTranscript]);
+    if (nodes.length > 0 && !selectedNodeId) {
+      const materialNode = nodes.find(n => n.title.includes('vật chất'));
+      setSelectedNodeId(materialNode ? materialNode.id : nodes[0].id);
+    }
+  }, [nodes, selectedNodeId]);
+
+  // Fetch active debate session transcript
+  const activeDebateId = debateType === "topic" ? selectedTopicId : selectedNodeId;
+
+  const { data: debateSession, isLoading: loadingChat } = useQuery({
+    queryKey: queryKeys.debates.transcript(activeDebateId, user?.id, debateType),
+    queryFn: () => {
+      if (debateType === "topic") {
+        return api.debates.topics.getTranscript(selectedTopicId, user.id);
+      } else {
+        return api.debates.getTranscript(selectedNodeId, user.id);
+      }
+    },
+    enabled: !!user?.id && !!activeDebateId,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const messages = useMemo(() => debateSession?.transcript || [], [debateSession]);
 
   // Scroll to bottom smoothly
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, sendingMsg]);
+  }, [messages]);
+
+  // Send message mutations
+  const sendDebateMsgMutation = useSendDebateMessageMutation();
+  const sendTopicDebateMsgMutation = useSendTopicDebateMessageMutation();
+  const sendingMsg = sendDebateMsgMutation.isPending || sendTopicDebateMsgMutation.isPending;
 
   // Send message
   const handleSendMessage = async (e) => {
@@ -100,27 +87,34 @@ const DebateCorner = () => {
 
     const userMessage = inputValue.trim();
     setInputValue("");
-    setSendingMsg(true);
 
-    // Optimistic local update
-    setMessages(prev => [...prev, { speaker: "User", text: userMessage, time: Date.now() }]);
-
-    try {
-      if (debateType === "topic") {
-        const res = await api.debates.topics.sendMessage(selectedTopicId, user.id, userMessage);
-        setMessages(Array.isArray(res.transcript) ? res.transcript : []);
-      } else {
-        const res = await api.debates.sendMessage(selectedNodeId, user.id, userMessage);
-        setMessages(Array.isArray(res.transcript) ? res.transcript : []);
-      }
-      showToast("Gửi phản biện biện chứng thành công!", "success");
-    } catch (err) {
-      console.error("Failed to post argument:", err);
-      showToast("Lỗi gửi lập luận: " + err.message, "error");
-    } finally {
-      setSendingMsg(false);
+    if (debateType === "topic") {
+      sendTopicDebateMsgMutation.mutate(
+        { topicId: selectedTopicId, userId: user.id, message: userMessage },
+        {
+          onSuccess: () => {
+            showToast("Gửi phản biện biện chứng thành công!", "success");
+          },
+          onError: (err) => {
+            showToast("Lỗi gửi lập luận: " + err.message, "error");
+          }
+        }
+      );
+    } else {
+      sendDebateMsgMutation.mutate(
+        { nodeId: selectedNodeId, userId: user.id, message: userMessage },
+        {
+          onSuccess: () => {
+            showToast("Gửi phản biện biện chứng thành công!", "success");
+          },
+          onError: (err) => {
+            showToast("Lỗi gửi lập luận: " + err.message, "error");
+          }
+        }
+      );
     }
   };
+
 
   // Compute currently selected information
   const activeTopic = useMemo(() => {

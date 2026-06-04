@@ -1,37 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import PageShell from '../components/PageShell';
-import { useToast } from '../components/Toast';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '../services/api';
+import { queryKeys } from '../services/queryKeys';
 
 export default function Philosofun() {
-  const { showToast } = useToast();
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [activeVideo, setActiveVideo] = useState(null); // popup video detail
 
-  const loadVideos = useCallback(async () => {
-    setLoading(true);
-    try {
-      // Fetch Philosofun videos
-      // Since we added this to API service, let's make sure it's defined in frontend api too.
-      // Wait, is it? We will check and update frontend services/api.js if not.
-      // Let's call a generic fetch to be safe or define it in services/api.js first!
-      const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
-      const response = await fetch(`${API_BASE_URL}/philosofun`);
-      if (!response.ok) throw new Error('Không thể tải dữ liệu video.');
-      const data = await response.json();
-      setVideos(data || []);
-    } catch (err) {
-      console.error(err);
-      showToast('Lỗi tải danh sách video Philosofun: ' + err.message, 'error');
-    } finally {
-      setLoading(false);
-    }
-  }, [showToast]);
+  const { data: videosData, isLoading: loading } = useQuery({
+    queryKey: queryKeys.philosofun.list(),
+    queryFn: () => api.philosofun.list(),
+    staleTime: 1000 * 60 * 10, // Videos change rarely
+  });
+  const videos = videosData || [];
 
-  useEffect(() => {
-    loadVideos();
-  }, [loadVideos]);
 
   const getYoutubeId = (url) => {
     if (!url) return '';

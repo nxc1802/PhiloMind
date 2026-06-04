@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import PageShell, { PageHero } from "../components/PageShell";
 import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../components/Toast";
+import { useQuery } from "@tanstack/react-query";
+import { useJourney } from "../hooks/useJourney";
+import { useSubmitReviewMutation } from "../hooks/useMutations";
+import { queryKeys } from "../services/queryKeys";
 
 export default function Practice() {
   const { user } = useAuth();
@@ -12,58 +16,33 @@ export default function Practice() {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   // States for Spaced Repetition Review Deck
-  const [dueCards, setDueCards] = useState([]);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isReviewMode, setIsReviewMode] = useState(false);
-  const [loadingDue, setLoadingDue] = useState(false);
-
-  // States for chapters list loading
-  const [dbJourney, setDbJourney] = useState([]);
-  const [loadingChapters, setLoadingChapters] = useState(true);
-
-  // States for general quizzes
-  const [generalQuizzes, setGeneralQuizzes] = useState([]);
-  const [loadingQuizzes, setLoadingQuizzes] = useState(true);
 
   // Fetch course journey to get real chapters
-  useEffect(() => {
-    if (!user) return;
-    const fetchChapters = async () => {
-      setLoadingChapters(true);
-      try {
-        const res = await api.courses.list();
-        const mainCourse = res.find(c => c.title.includes('Triết học'));
-        if (mainCourse) {
-          const journey = await api.courses.getJourney(mainCourse.id, user.id);
-          setDbJourney(journey || []);
-        }
-      } catch (err) {
-        console.error("Failed to load course chapters:", err);
-      } finally {
-        setLoadingChapters(false);
-      }
-    };
-    fetchChapters();
-  }, [user]);
+  const { data: journeyData, isLoading: loadingChapters } = useJourney(user);
+  const dbJourney = useMemo(() => journeyData?.journey || [], [journeyData]);
 
   // Fetch general quizzes
-  useEffect(() => {
-    const fetchQuizzes = async () => {
-      setLoadingQuizzes(true);
-      try {
-        const res = await api.quizzes.list();
-        // Quiz tổng: quizzes where nodeId is null or undefined
-        const filtered = (res || []).filter(q => !q.nodeId);
-        setGeneralQuizzes(filtered);
-      } catch (err) {
-        console.error("Failed to load general quizzes:", err);
-      } finally {
-        setLoadingQuizzes(false);
-      }
-    };
-    fetchQuizzes();
-  }, []);
+  const { data: generalQuizzesData, isLoading: loadingQuizzes } = useQuery({
+    queryKey: queryKeys.quizzes.list(null),
+    queryFn: async () => {
+      const res = await api.quizzes.list();
+      return (res || []).filter(q => !q.nodeId);
+    },
+    staleTime: 1000 * 60 * 10, // General quizzes change rarely
+  });
+  const generalQuizzes = generalQuizzesData || [];
+
+  // Fetch due cards
+  const { data: dueCardsData, isLoading: loadingDue } = useQuery({
+    queryKey: queryKeys.flashcards.due(user?.id),
+    queryFn: () => api.flashcards.getDue(user.id),
+    enabled: !!user?.id,
+    staleTime: 1000 * 60 * 2, // 2 minutes stale time for due cards
+  });
+  const dueCards = dueCardsData || [];
 
   // Compute actual main chapters from dbJourney
   const dbChapters = useMemo(() => {
@@ -121,50 +100,37 @@ export default function Practice() {
     });
   }, [dbJourney]);
 
-  // Fetch due cards on mount / user change
-  const fetchDueCards = useCallback(async () => {
-    if (!user) return;
-    setLoadingDue(true);
-    try {
-      const res = await api.flashcards.getDue(user.id);
-      setDueCards(res || []);
-    } catch (err) {
-      console.error("Error fetching due flashcards:", err);
-    } finally {
-      setLoadingDue(false);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    fetchDueCards();
-  }, [fetchDueCards]);
+  // Mutation for submitting spaced repetition review
+  const submitReviewMutation = useSubmitReviewMutation();
 
   // Handle Spaced Repetition Review Submission
   const handleReviewEase = async (ease) => {
     if (!user || dueCards.length === 0) return;
     const card = dueCards[currentReviewIndex];
     
-    try {
-      await api.flashcards.submitReview(user.id, card.id, ease);
-      showToast("Đã ghi nhận phản hồi và cập nhật lịch ôn tập!", "success");
-      
-      setIsFlipped(false);
-      // Move to next card
-      if (currentReviewIndex < dueCards.length - 1) {
-        setCurrentReviewIndex(prev => prev + 1);
-      } else {
-        // Finished all cards!
-        showToast("Tuyệt vời! Bạn đã hoàn thành tất cả các thẻ ôn tập hôm nay.", "success");
-        setIsReviewMode(false);
-        setCurrentReviewIndex(0);
-        // Refresh due list
-        fetchDueCards();
+    submitReviewMutation.mutate(
+      { userId: user.id, flashcardId: card.id, ease },
+      {
+        onSuccess: () => {
+          showToast("Đã ghi nhận phản hồi và cập nhật lịch ôn tập!", "success");
+          setIsFlipped(false);
+          // Move to next card
+          if (currentReviewIndex < dueCards.length - 1) {
+            setCurrentReviewIndex(prev => prev + 1);
+          } else {
+            // Finished all cards!
+            showToast("Tuyệt vời! Bạn đã hoàn thành tất cả các thẻ ôn tập hôm nay.", "success");
+            setIsReviewMode(false);
+            setCurrentReviewIndex(0);
+          }
+        },
+        onError: (err) => {
+          showToast("Gửi đánh giá thất bại: " + err.message, "error");
+        }
       }
-    } catch (err) {
-      console.error("Error submitting review:", err);
-      showToast("Gửi đánh giá thất bại: " + err.message, "error");
-    }
+    );
   };
+
 
   // Filter chapters for game
   const visibleChapters = searchKeyword.trim()

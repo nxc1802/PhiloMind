@@ -1,44 +1,45 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { api } from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import { useToast } from "../../../components/Toast";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../../../services/queryKeys";
+import { useCreateCommentMutation } from "../../../hooks/useMutations";
 
 export function LessonDiscussion({ nodeId }) {
   const { user } = useAuth();
-  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
 
-  const fetchComments = useCallback(async () => {
-    try {
-      const res = await api.courses.comments.list(nodeId);
-      setComments(res);
-    } catch (err) {
-      console.error("Failed to fetch comments:", err);
-    }
-  }, [nodeId]);
+  // Fetch comments via React Query
+  const { data: commentsData, isLoading } = useQuery({
+    queryKey: queryKeys.courses.comments(nodeId),
+    queryFn: () => api.courses.comments.list(nodeId),
+    enabled: !!nodeId,
+    staleTime: 1000 * 60, // Comments are relatively active, stale after 1m
+  });
+  const comments = commentsData || [];
 
-  useEffect(() => {
-    if (nodeId) {
-      fetchComments();
-    }
-  }, [nodeId, fetchComments]);
+  // Create comment mutation
+  const createCommentMutation = useCreateCommentMutation();
+  const loading = createCommentMutation.isPending;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!newComment.trim()) return;
-    setLoading(true);
-    try {
-      await api.courses.comments.create(nodeId, user.id, newComment.trim(), user.role || 'student');
-      setNewComment("");
-      showToast("Đã gửi bình luận thảo luận thành công!", "success");
-      await fetchComments();
-    } catch (err) {
-      showToast("Gửi bình luận thất bại: " + err.message, "error");
-    } finally {
-      setLoading(false);
-    }
+    if (!newComment.trim() || !user?.id) return;
+    
+    createCommentMutation.mutate(
+      { nodeId, userId: user.id, content: newComment.trim(), role: user.role || 'student' },
+      {
+        onSuccess: () => {
+          setNewComment("");
+          showToast("Đã gửi bình luận thảo luận thành công!", "success");
+        },
+        onError: (err) => {
+          showToast("Gửi bình luận thất bại: " + err.message, "error");
+        }
+      }
+    );
   };
 
   return (
@@ -56,7 +57,12 @@ export function LessonDiscussion({ nodeId }) {
 
       {/* Danh sách bình luận */}
       <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 mb-6">
-        {comments.length === 0 ? (
+        {isLoading ? (
+          <div className="text-center py-8 text-gray-400 flex items-center justify-center">
+            <span className="material-symbols-outlined animate-spin text-red-800 text-2xl mr-2">sync</span>
+            Đang tải thảo luận...
+          </div>
+        ) : comments.length === 0 ? (
           <div className="text-center py-8 text-gray-400">
             <span className="material-symbols-outlined text-4xl block mb-2 opacity-50">chat_bubble_outline</span>
             Chưa có thảo luận nào. Hãy là người đầu tiên đưa ra quan điểm!
@@ -112,7 +118,7 @@ export function LessonDiscussion({ nodeId }) {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             disabled={loading}
-            className="flex-grow px-4 py-3 border border-gray-300 rounded-xl focus:border-red-800 outline-none text-sm text-gray-850 bg-gray-50/50"
+            className="flex-grow px-4 py-3 border border-gray-300 rounded-xl focus:border-red-800 outline-none text-sm text-gray-855 bg-gray-50/50"
           />
           <button
             type="submit"
