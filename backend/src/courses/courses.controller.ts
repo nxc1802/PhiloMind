@@ -129,6 +129,10 @@ class CreateNodeDto {
   @IsNotEmpty()
   chapterId: string;
 
+  @IsString()
+  @IsNotEmpty()
+  lessonType: string;
+
   @IsOptional()
   storyIntro?: any;
 
@@ -174,6 +178,10 @@ class UpdateNodeDto {
   @IsNumber()
   @IsOptional()
   orderIndex?: number;
+
+  @IsString()
+  @IsOptional()
+  lessonType?: string;
 
   @IsOptional()
   storyIntro?: any;
@@ -347,6 +355,21 @@ export class CoursesController {
   @ApiOperation({ summary: 'Retrieve comprehensive learn detail for a concept node' })
   async getNodeDetails(@Param('nodeId') nodeId: string, @Query('userId') userId: string) {
     return this.coursesService.getNodeDetails(nodeId, userId);
+  }
+
+  @Get('courses/nodes/:nodeId/core')
+  @ApiOperation({ summary: 'Retrieve core progress and type info for a concept node' })
+  async getNodeCore(@Param('nodeId') nodeId: string, @Query('userId') userId: string) {
+    return this.coursesService.getNodeCore(nodeId, userId);
+  }
+
+  @Post('courses/nodes/:nodeId/complete')
+  @ApiOperation({ summary: 'Mark node as completed and auto-unlock next node' })
+  async completeNode(
+    @Param('nodeId') nodeId: string,
+    @Body() dto: { userId: string },
+  ) {
+    return this.coursesService.completeNode(nodeId, dto.userId);
   }
 
   @Patch('courses/nodes/:nodeId/progress')

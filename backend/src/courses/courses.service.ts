@@ -178,10 +178,28 @@ export class CoursesService {
       include: {
         nodes: {
           orderBy: { orderIndex: 'asc' },
-          include: {
-            progress: { where: { userId } },
+          select: {
+            id: true,
+            title: true,
+            orderIndex: true,
+            difficulty: true,
+            timeToRead: true,
+            videoUrl: true,
+            chapterId: true,
+            lessonType: true,
+            progress: { 
+              where: { userId },
+              select: {
+                id: true,
+                status: true,
+                lessonCompleted: true,
+                flashcardCompleted: true,
+                podcastCompleted: true,
+                quizCompleted: true,
+              }
+            },
             _count: { select: { flashcards: true } },
-          },
+          }
         },
       },
     });
@@ -204,6 +222,129 @@ export class CoursesService {
 
     if (!node) throw new NotFoundException('Concept node not found');
     return node;
+  }
+
+  async getNodeCore(nodeId: string, userId: string) {
+    const node = await this.prisma.conceptNode.findUnique({
+      where: { id: nodeId },
+      select: {
+        id: true,
+        title: true,
+        difficulty: true,
+        timeToRead: true,
+        videoUrl: true,
+        orderIndex: true,
+        chapterId: true,
+        lessonType: true,
+        progress: { 
+          where: { userId },
+          select: {
+            id: true,
+            status: true,
+            lessonCompleted: true,
+            flashcardCompleted: true,
+            podcastCompleted: true,
+            quizCompleted: true,
+          }
+        },
+      },
+    });
+    if (!node) throw new NotFoundException('Concept node not found');
+    return node;
+  }
+
+  async completeNode(nodeId: string, userId: string) {
+    // 1. Get the current node with its chapter
+    const currentNode = await this.prisma.conceptNode.findUnique({
+      where: { id: nodeId },
+      include: { chapter: true },
+    });
+    if (!currentNode) throw new NotFoundException('Concept node not found');
+
+    // 2. Mark progress of current node as completed
+    const existingProgress = await this.prisma.progress.findFirst({
+      where: { userId, nodeId },
+    });
+
+    const updateData = {
+      status: 'completed',
+      lessonCompleted: true,
+      quizCompleted: true,
+    };
+
+    if (existingProgress) {
+      await this.prisma.progress.update({
+        where: { id: existingProgress.id },
+        data: updateData,
+      });
+    } else {
+      await this.prisma.progress.create({
+        data: {
+          userId,
+          nodeId,
+          ...updateData,
+        },
+      });
+    }
+
+    // 3. Find the next node in the course
+    let nextNode = null;
+    
+    // Try to find next node in the same chapter
+    nextNode = await this.prisma.conceptNode.findFirst({
+      where: {
+        chapterId: currentNode.chapterId,
+        orderIndex: { gt: currentNode.orderIndex },
+      },
+      orderBy: { orderIndex: 'asc' },
+    });
+
+    // If not found in the same chapter, look in the next chapter
+    if (!nextNode) {
+      const nextChapter = await this.prisma.chapter.findFirst({
+        where: {
+          courseId: currentNode.chapter.courseId,
+          orderIndex: { gt: currentNode.chapter.orderIndex },
+        },
+        orderBy: { orderIndex: 'asc' },
+      });
+
+      if (nextChapter) {
+        nextNode = await this.prisma.conceptNode.findFirst({
+          where: { chapterId: nextChapter.id },
+          orderBy: { orderIndex: 'asc' },
+        });
+      }
+    }
+
+    // 4. If next node is found, unlock it (set progress status to 'available')
+    if (nextNode) {
+      const nextProgress = await this.prisma.progress.findFirst({
+        where: { userId, nodeId: nextNode.id },
+      });
+
+      // Only unlock if it is currently locked or has no progress record
+      if (!nextProgress) {
+        await this.prisma.progress.create({
+          data: {
+            userId,
+            nodeId: nextNode.id,
+            status: 'available',
+          },
+        });
+      } else if (nextProgress.status === 'locked') {
+        await this.prisma.progress.update({
+          where: { id: nextProgress.id },
+          data: { status: 'available' },
+        });
+      }
+    }
+
+    return {
+      completedNodeId: nodeId,
+      nextNodeId: nextNode ? nextNode.id : null,
+      nextNodeTitle: nextNode ? nextNode.title : null,
+    };
   }
 
   async updateNodeProgress(
@@ -389,6 +530,7 @@ export class CoursesService {
         videoUrl: dto.videoUrl || null,
         orderIndex: dto.orderIndex,
         chapterId: dto.chapterId,
+        lessonType: dto.lessonType,
         storyIntro: dto.storyIntro !== undefined ? dto.storyIntro : null,
         lessonContents: dto.lessonContents !== undefined ? dto.lessonContents : null,
         minigame: dto.minigame !== undefined ? dto.minigame : null,
@@ -422,6 +564,7 @@ export class CoursesService {
         timeToRead: dto.timeToRead,
         videoUrl: dto.videoUrl !== undefined ? dto.videoUrl : undefined,
         orderIndex: dto.orderIndex,
+        lessonType: dto.lessonType !== undefined ? dto.lessonType : undefined,
         storyIntro: dto.storyIntro !== undefined ? dto.storyIntro : undefined,
         lessonContents: dto.lessonContents !== undefined ? dto.lessonContents : undefined,
         minigame: dto.minigame !== undefined ? dto.minigame : undefined,

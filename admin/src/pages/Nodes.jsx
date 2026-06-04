@@ -20,6 +20,7 @@ export default function Nodes() {
     difficulty: 'Medium',
     timeToRead: '10 min read',
     videoUrl: '', // YouTube Video URL
+    lessonType: '', // 'classic' | 'adventure'
     orderIndex: 1,
     chapterId: '',
     storyIntro: '',
@@ -71,6 +72,7 @@ export default function Nodes() {
       difficulty: 'Medium',
       timeToRead: '10 min read',
       videoUrl: '',
+      lessonType: '',
       orderIndex: nodes.length + 1,
       chapterId: chapters.length > 0 ? chapters[0].id : '',
       storyIntro: '',
@@ -84,12 +86,13 @@ export default function Nodes() {
     setModal({ isOpen: true, type: 'edit', node });
     setForm({
       title: node.title,
-      summary: node.summary,
-      originalText: node.originalText,
-      quickTake: node.quickTake,
+      summary: node.summary || '',
+      originalText: node.originalText || '',
+      quickTake: node.quickTake || '',
       difficulty: node.difficulty || 'Medium',
       timeToRead: node.timeToRead || '10 min read',
       videoUrl: node.videoUrl || '',
+      lessonType: node.lessonType || '',
       orderIndex: node.orderIndex,
       chapterId: node.chapterId,
       storyIntro: node.storyIntro ? JSON.stringify(node.storyIntro, null, 2) : '',
@@ -110,6 +113,10 @@ export default function Nodes() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.lessonType) {
+      showToast('Vui lòng chọn loại bài học (Lesson Type) bắt buộc!', 'error');
+      return;
+    }
     try {
       const parseJsonField = (fieldVal, fieldName) => {
         if (!fieldVal || !fieldVal.trim()) return null;
@@ -308,40 +315,65 @@ export default function Nodes() {
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Tóm tắt bài học (Summary)</label>
-                      <textarea
-                        rows="3"
+                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Loại bài học <span className="text-red-500">*</span></label>
+                      <select
                         required
-                        placeholder="Tóm tắt lý thuyết bài học (tối đa 5 dòng)..."
-                        value={form.summary}
-                        onChange={(e) => setForm({ ...form, summary: e.target.value })}
-                        className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-colors resize-none"
-                      />
+                        value={form.lessonType}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setForm({ ...form, lessonType: val });
+                          if (val === 'classic' && activeRightTab === 'framework') {
+                            setActiveRightTab('warmups');
+                          }
+                        }}
+                        className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-red-500 transition-colors"
+                      >
+                        <option value="">-- Chọn chế độ bài học --</option>
+                        <option value="classic">📖 Cổ điển (Video → Câu hỏi → Giáo trình)</option>
+                        <option value="adventure">🗺️ Phiêu lưu (Tương tác RPG đa giai đoạn)</option>
+                      </select>
+                      <p className="text-[11px] text-slate-500">Lưu ý: Không được bỏ trống. Phải chọn chế độ hiển thị phù hợp.</p>
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Ý chính nhanh (Quick Take)</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Ý chính rút gọn cô đọng nhất..."
-                        value={form.quickTake}
-                        onChange={(e) => setForm({ ...form, quickTake: e.target.value })}
-                        className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-colors"
-                      />
-                    </div>
+                    {form.lessonType !== 'adventure' && (
+                      <>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Tóm tắt bài học (Summary)</label>
+                          <textarea
+                            rows="3"
+                            required={form.lessonType === 'classic'}
+                            placeholder="Tóm tắt lý thuyết bài học (tối đa 5 dòng)..."
+                            value={form.summary}
+                            onChange={(e) => setForm({ ...form, summary: e.target.value })}
+                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-colors resize-none"
+                          />
+                        </div>
 
-                    <div className="space-y-1">
-                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Trích dẫn giáo trình gốc (Original Text)</label>
-                      <textarea
-                        rows="4"
-                        required
-                        placeholder="Trích dẫn chính văn giáo trình học thuật..."
-                        value={form.originalText}
-                        onChange={(e) => setForm({ ...form, originalText: e.target.value })}
-                        className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-colors resize-none"
-                      />
-                    </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Ý chính nhanh (Quick Take)</label>
+                          <input
+                            type="text"
+                            required={form.lessonType === 'classic'}
+                            placeholder="Ý chính rút gọn cô đọng nhất..."
+                            value={form.quickTake}
+                            onChange={(e) => setForm({ ...form, quickTake: e.target.value })}
+                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-colors"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Trích dẫn giáo trình gốc (Original Text)</label>
+                          <textarea
+                            rows="4"
+                            required={form.lessonType === 'classic'}
+                            placeholder="Trích dẫn chính văn giáo trình học thuật..."
+                            value={form.originalText}
+                            onChange={(e) => setForm({ ...form, originalText: e.target.value })}
+                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-colors resize-none"
+                          />
+                        </div>
+                      </>
+                    )}
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
@@ -401,15 +433,17 @@ export default function Nodes() {
                         >
                           🔥 Làm nóng (Warmups)
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => setActiveRightTab('framework')}
-                          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
-                            activeRightTab === 'framework' ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
-                          }`}
-                        >
-                          ⚡ Khung đồng bộ (Framework)
-                        </button>
+                        {form.lessonType === 'adventure' && (
+                          <button
+                            type="button"
+                            onClick={() => setActiveRightTab('framework')}
+                            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                              activeRightTab === 'framework' ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                            }`}
+                          >
+                            ⚡ Khung đồng bộ (Framework)
+                          </button>
+                        )}
                         <button
                           type="button"
                           onClick={() => setActiveRightTab('advanced')}

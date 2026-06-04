@@ -1,0 +1,107 @@
+/* ==========================================================================
+   ANIMATION cho bai hoc tuong tac "Hanh trinh Khai Sang" (Adventure Mode)
+   Dung transform/opacity (chay tren GPU) de giu hieu nang cao khi trinh dien.
+   ========================================================================== */
+
+/* Toast truot len */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.28s ease-out both; }
+
+/* Bong bong thoai xuat hien */
+@keyframes jBubbleIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.j-bubble-in { animation: jBubbleIn 0.32s ease-out both; }
+
+/* Con tro nhay cuoi cau dang go */
+@keyframes jCaret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.j-caret { animation: jCaret 0.8s steps(1) infinite; margin-left: 1px; color: #b91c1c; }
+
+/* Ngon lua/duoc tri tue rung rinh */
+@keyframes jFlicker {
+  0%, 100% { transform: scaleY(1) translateY(0); opacity: 1; }
+  50%      { transform: scaleY(1.08) translateY(-1px); opacity: 0.85; }
+}
+.j-flicker { animation: jFlicker 1.6s ease-in-out infinite; }
+
+/* Nhun nhay nhe (sach, dau hoi) */
+@keyframes jBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.j-bob { animation: jBob 2s ease-in-out infinite; }
+
+/* Sao lap lanh */
+@keyframes jTwinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+.j-twinkle { animation: jTwinkle 2.4s ease-in-out infinite; }
+
+/* Cong thoi gian xoay cham */
+@keyframes jSpinSlow { to { transform: rotate(360deg); } }
+.j-spin-slow { animation: jSpinSlow 24s linear infinite; }
+
+/* Diem sang tren ban do dap nhe */
+@keyframes jPulseSoft {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50%      { transform: scale(1.18); opacity: 1; }
+}
+.j-pulse-soft { animation: jPulseSoft 2.2s ease-in-out infinite; }
+
+/* Tia set loe sang */
+@keyframes jFlash { 0%, 92%, 100% { opacity: 0; } 94%, 98% { opacity: 1; } }
+.j-flash { animation: jFlash 3.2s ease-in-out infinite; }
+
+/* Den co dai rung lac khi dong dat */
+@keyframes jShake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  20% { transform: translateX(-3px) rotate(-0.6deg); }
+  40% { transform: translateX(3px) rotate(0.6deg); }
+  60% { transform: translateX(-2px) rotate(-0.4deg); }
+  80% { transform: translateX(2px) rotate(0.4deg); }
+}
+.j-shake { animation: jShake 0.45s ease-in-out infinite; }
+
+/* Khe nut lan rong */
+@keyframes jCrackGrow { from { stroke-dashoffset: 60; } to { stroke-dashoffset: 0; } }
+.j-crack-grow { stroke-dasharray: 60; animation: jCrackGrow 1.4s ease-out forwards; }
+
+/* Cuoc cuoc xuong dat (lao dong chan tay) */
+@keyframes jDig {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-22deg); }
+}
+.j-dig { animation: jDig 1.3s ease-in-out infinite; }
+
+/* Node trung tam toa sang */
+@keyframes jGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(167,139,250,0.6)); transform: scale(1); }
+  50%      { filter: drop-shadow(0 0 16px rgba(167,139,250,1)); transform: scale(1.05); }
+}
+.j-glow { animation: jGlow 2.4s ease-in-out infinite; }
+
+/* Ve net noi 2 nhanh vao tam */
+@keyframes jDraw { from { stroke-dasharray: 200; stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+.j-draw { stroke-dasharray: 200; animation: jDraw 1s ease-out forwards; }
+
+/* The tri thuc lat mo */
+@keyframes jCardReveal {
+  from { opacity: 0; transform: rotateX(-40deg) translateY(8px); }
+  to   { opacity: 1; transform: rotateX(0) translateY(0); }
+}
+.j-card-reveal { animation: jCardReveal 0.5s ease-out both; transform-origin: top center; }
+
+/* Hieu ung "mo khoa manh ghep" — sang bung */
+@keyframes jUnlock {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.j-unlock { animation: jUnlock 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Ton trong nguoi dung bat "giam chuyen dong": tat moi animation lap vo han */
+@media (prefers-reduced-motion: reduce) {
+  .j-flicker, .j-bob, .j-twinkle, .j-spin-slow, .j-pulse-soft,
+  .j-flash, .j-shake, .j-dig, .j-glow {
+    animation: none !important;
+  }
+}

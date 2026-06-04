@@ -75,6 +75,7 @@ async function main() {
       timeToRead: '8 min read',
       orderIndex: 1,
       videoUrl: defaultYoutubeUrl,
+      lessonType: 'adventure',
       storyIntro: {
         enable: true,
         background: 'https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=1200',
@@ -241,6 +242,7 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter1.id,
+        lessonType: n.lessonType || 'classic',
         storyIntro: n.storyIntro ? (n.storyIntro as any) : undefined,
         lessonContents: n.lessonContents ? (n.lessonContents as any) : undefined,
         minigame: n.minigame ? (n.minigame as any) : undefined,
@@ -288,6 +290,7 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter2.id,
+        lessonType: 'classic',
       }
     });
     createdCh2Nodes.push(node);
@@ -329,6 +332,7 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter3.id,
+        lessonType: 'classic',
       }
     });
     createdCh3Nodes.push(node);

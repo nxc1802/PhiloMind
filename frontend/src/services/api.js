@@ -81,6 +81,22 @@ export const api = {
       return handleResponse(response);
     },
 
+    getNodeCore: async (nodeId, userId) => {
+      const response = await fetch(
+        `${API_BASE_URL}/courses/nodes/${nodeId}/core?userId=${encodeURIComponent(userId)}`
+      );
+      return handleResponse(response);
+    },
+
+    completeNode: async (nodeId, userId) => {
+      const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId }),
+      });
+      return handleResponse(response);
+    },
+
     updateProgress: async (nodeId, userId, status, extraFields = {}) => {
       const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/progress`, {
         method: 'PATCH',
