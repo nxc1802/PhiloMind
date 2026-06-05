@@ -27,7 +27,7 @@ jobs:
           echo "https://Cuong2004:$HF_TOKEN@huggingface.co" > ~/.git-credentials
           
           # Clone the Hugging Face Space repository
-          git clone https://huggingface.co/spaces/Cuong2004/PhiloMind_TTSworker hf_tts
+          git clone https://Cuong2004:$HF_TOKEN@huggingface.co/spaces/Cuong2004/PhiloMind_TTSworker hf_tts
           
           # Clear the cloned folder (excluding the .git folder)
           find hf_tts -maxdepth 1 ! -name 'hf_tts' ! -name '.git' -exec rm -rf {} +

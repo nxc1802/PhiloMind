@@ -27,7 +27,7 @@ jobs:
           echo "https://Cuong2004:$HF_TOKEN@huggingface.co" > ~/.git-credentials
           
           # Clone the Hugging Face Space repository
-          git clone https://huggingface.co/spaces/Cuong2004/PhiloMind hf_backend
+          git clone https://Cuong2004:$HF_TOKEN@huggingface.co/spaces/Cuong2004/PhiloMind hf_backend
           
           # Clear the cloned folder (excluding the .git folder)
           find hf_backend -maxdepth 1 ! -name 'hf_backend' ! -name '.git' -exec rm -rf {} +
