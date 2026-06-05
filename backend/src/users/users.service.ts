@@ -11,6 +11,17 @@ export class UsersService {
   ) {}
 
   async findById(id: string) {
+    // Emergency Hardcoded Admin Fallback (in case database seeding is not possible)
+    if (id === 'default-admin-id') {
+      return {
+        id: 'default-admin-id',
+        email: 'admin@philomind.local',
+        name: 'Admin PhiloMind',
+        role: 'admin',
+        streak: 1,
+      };
+    }
+
     const user = await this.prisma.user.findUnique({
       where: { id },
       include: {
@@ -61,6 +72,20 @@ export class UsersService {
 
   async login(email: string, password?: string) {
     const normalizedEmail = email.trim().toLowerCase();
+
+    // Emergency Hardcoded Admin Fallback (in case database seeding is not possible)
+    if (normalizedEmail === 'admin@philomind.local' && password === 'adminpassword') {
+      const fallbackAdmin = {
+        id: 'default-admin-id',
+        email: 'admin@philomind.local',
+        name: 'Admin PhiloMind',
+        role: 'admin',
+        streak: 1,
+      };
+      const token = this.generateToken(fallbackAdmin);
+      return { user: fallbackAdmin, token };
+    }
+
     const user = await this.findByEmail(normalizedEmail);
     if (!user) {
       throw new NotFoundException('User not found. Please register first.');
