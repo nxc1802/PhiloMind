@@ -11,7 +11,7 @@ function getYouTubeId(url) {
     if (url.length === 11 && !url.includes('/') && !url.includes('.')) {
       return url;
     }
-    const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+    const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/;
     const match = url.match(regExp);
     return (match && match[1] && match[1].length === 11) ? match[1] : "Mzg-AdRrjGY";
   } catch (error) {
