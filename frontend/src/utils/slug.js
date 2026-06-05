@@ -31,6 +31,7 @@ const SLUG_TO_TITLE = Object.entries(TITLE_TO_SLUG).reduce((acc, [title, slug]) 
 }, {});
 
 export function getSlugFromTitle(title) {
+  if (!title) return "";
   return TITLE_TO_SLUG[title] || title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 

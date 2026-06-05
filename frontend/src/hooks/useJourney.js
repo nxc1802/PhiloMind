@@ -11,7 +11,7 @@ export function useJourney(user) {
       if (!userId) return { courses: [], mainCourse: null, journey: [] };
 
       // 1. Fetch courses list
-      const courses = await api.courses.list(userId);
+      const courses = await api.courses.list();
       const mainCourse = courses.find(c => c.title.includes('Triết học')) || courses[0];
       
       if (!mainCourse) {
