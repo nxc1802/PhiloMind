@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -6,19 +7,50 @@ async function main() {
   console.log('Seeding PhiloMind philosophy sanctuary database with Vietnamese Marxist-Leninist Philosophy...');
 
   const userId = 'default-user-id';
+  const adminId = 'default-admin-id';
+  
+  const studentHashedPassword = await bcrypt.hash('studentpassword', 10);
+  const adminHashedPassword = await bcrypt.hash('adminpassword', 10);
 
   // 1. Upsert Default User
   const user = await prisma.user.upsert({
     where: { id: userId },
-    update: { name: 'Nguyễn Văn A', streak: 5 },
+    update: { 
+      name: 'Nguyễn Văn A', 
+      streak: 5, 
+      password: studentHashedPassword,
+      role: 'student' 
+    },
     create: {
       id: userId,
       email: 'student@philomind.local',
       name: 'Nguyễn Văn A',
       streak: 5,
+      password: studentHashedPassword,
+      role: 'student',
     },
   });
   console.log(`User created or verified: ${user.email} (${user.name})`);
+
+  // 1.5 Upsert Admin User
+  const admin = await prisma.user.upsert({
+    where: { id: adminId },
+    update: { 
+      name: 'Admin PhiloMind', 
+      streak: 1, 
+      password: adminHashedPassword,
+      role: 'admin' 
+    },
+    create: {
+      id: adminId,
+      email: 'admin@philomind.local',
+      name: 'Admin PhiloMind',
+      streak: 1,
+      password: adminHashedPassword,
+      role: 'admin',
+    },
+  });
+  console.log(`Admin created or verified: ${admin.email} (${admin.name})`);
 
   // Clean up any existing records
   await prisma.warmup.deleteMany({});

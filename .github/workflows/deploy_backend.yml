@@ -22,8 +22,12 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           
-          # Clone the Hugging Face Space repository using the HF token
-          git clone https://Cuong2004:$HF_TOKEN@huggingface.co/spaces/Cuong2004/PhiloMind hf_backend
+          # Set up git credentials store securely
+          git config --global credential.helper store
+          echo "https://Cuong2004:$HF_TOKEN@huggingface.co" > ~/.git-credentials
+          
+          # Clone the Hugging Face Space repository
+          git clone https://huggingface.co/spaces/Cuong2004/PhiloMind hf_backend
           
           # Clear the cloned folder (excluding the .git folder)
           find hf_backend -maxdepth 1 ! -name 'hf_backend' ! -name '.git' -exec rm -rf {} +
@@ -40,6 +44,9 @@ jobs:
             git commit -m "Deploy Backend from GitHub Actions Commit: ${{ github.sha }}"
             git push origin main
           fi
+          
+          # Clean up credentials
+          rm -f ~/.git-credentials
 
       - name: Monitor Hugging Face Space Build and logs
         env:

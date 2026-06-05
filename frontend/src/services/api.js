@@ -1,6 +1,15 @@
 // API client service for PhiloMind frontend to communicate with backend
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
+function getHeaders(customHeaders = {}) {
+  const token = localStorage.getItem('token');
+  const headers = { ...customHeaders };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  return headers;
+}
+
 /**
  * Helper to handle fetch responses and handle JSON/text properly
  */
@@ -26,20 +35,20 @@ async function handleResponse(response) {
 export const api = {
   // ==================== AUTH & USER ====================
   auth: {
-    register: async (email, name) => {
+    register: async (email, name, password) => {
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name }),
+        body: JSON.stringify({ email, name, password }),
       });
       return handleResponse(response);
     },
 
-    login: async (email) => {
+    login: async (email, password) => {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, password }),
       });
       return handleResponse(response);
     },
@@ -54,7 +63,9 @@ export const api = {
     },
 
     getUser: async (userId) => {
-      const response = await fetch(`${API_BASE_URL}/users/${userId}`);
+      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     }
   },
@@ -63,27 +74,32 @@ export const api = {
   courses: {
     list: async (userId) => {
       const url = userId ? `${API_BASE_URL}/courses?userId=${encodeURIComponent(userId)}` : `${API_BASE_URL}/courses`;
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     },
 
     getJourney: async (courseId, userId) => {
       const response = await fetch(
-        `${API_BASE_URL}/courses/${courseId}/journey?userId=${encodeURIComponent(userId)}`
+        `${API_BASE_URL}/courses/${courseId}/journey?userId=${encodeURIComponent(userId)}`,
+        { headers: getHeaders() }
       );
       return handleResponse(response);
     },
 
     getNodeDetails: async (nodeId, userId) => {
       const response = await fetch(
-        `${API_BASE_URL}/courses/nodes/${nodeId}?userId=${encodeURIComponent(userId)}`
+        `${API_BASE_URL}/courses/nodes/${nodeId}?userId=${encodeURIComponent(userId)}`,
+        { headers: getHeaders() }
       );
       return handleResponse(response);
     },
 
     getNodeCore: async (nodeId, userId) => {
       const response = await fetch(
-        `${API_BASE_URL}/courses/nodes/${nodeId}/core?userId=${encodeURIComponent(userId)}`
+        `${API_BASE_URL}/courses/nodes/${nodeId}/core?userId=${encodeURIComponent(userId)}`,
+        { headers: getHeaders() }
       );
       return handleResponse(response);
     },
@@ -91,7 +107,7 @@ export const api = {
     completeNode: async (nodeId, userId) => {
       const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/complete`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ userId }),
       });
       return handleResponse(response);
@@ -100,7 +116,7 @@ export const api = {
     updateProgress: async (nodeId, userId, status, extraFields = {}) => {
       const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/progress`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ userId, status, ...extraFields }),
       });
       return handleResponse(response);
@@ -109,20 +125,22 @@ export const api = {
     uploadDoc: async (courseId, fileName, content) => {
       const response = await fetch(`${API_BASE_URL}/courses/${courseId}/upload`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ fileName, content }),
       });
       return handleResponse(response);
     },
     comments: {
       list: async (nodeId) => {
-        const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/comments`);
+        const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/comments`, {
+          headers: getHeaders()
+        });
         return handleResponse(response);
       },
       create: async (nodeId, userId, content, role = 'student') => {
         const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/comments`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify({ userId, content, role }),
         });
         return handleResponse(response);
@@ -137,14 +155,16 @@ export const api = {
       if (courseId) {
         url += `&courseId=${encodeURIComponent(courseId)}`;
       }
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     },
 
     submitReview: async (userId, flashcardId, ease) => {
       const response = await fetch(`${API_BASE_URL}/flashcards/review`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ userId, flashcardId, ease }),
       });
       return handleResponse(response);
@@ -152,7 +172,9 @@ export const api = {
 
     list: async (nodeId) => {
       const url = nodeId ? `${API_BASE_URL}/flashcards?nodeId=${encodeURIComponent(nodeId)}` : `${API_BASE_URL}/flashcards`;
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     }
   },
@@ -161,7 +183,8 @@ export const api = {
   debates: {
     getTranscript: async (nodeId, userId) => {
       const response = await fetch(
-        `${API_BASE_URL}/debates/${nodeId}?userId=${encodeURIComponent(userId)}`
+        `${API_BASE_URL}/debates/${nodeId}?userId=${encodeURIComponent(userId)}`,
+        { headers: getHeaders() }
       );
       return handleResponse(response);
     },
@@ -169,7 +192,7 @@ export const api = {
     sendMessage: async (nodeId, userId, message) => {
       const response = await fetch(`${API_BASE_URL}/debates/${nodeId}/message`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ userId, message }),
       });
       return handleResponse(response);
@@ -177,19 +200,22 @@ export const api = {
 
     topics: {
       list: async () => {
-        const response = await fetch(`${API_BASE_URL}/debates/topics`);
+        const response = await fetch(`${API_BASE_URL}/debates/topics`, {
+          headers: getHeaders()
+        });
         return handleResponse(response);
       },
       getTranscript: async (topicId, userId) => {
         const response = await fetch(
-          `${API_BASE_URL}/debates/topic/${topicId}?userId=${encodeURIComponent(userId)}`
+          `${API_BASE_URL}/debates/topic/${topicId}?userId=${encodeURIComponent(userId)}`,
+          { headers: getHeaders() }
         );
         return handleResponse(response);
       },
       sendMessage: async (topicId, userId, message) => {
         const response = await fetch(`${API_BASE_URL}/debates/topic/${topicId}/message`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify({ userId, message }),
         });
         return handleResponse(response);
@@ -199,18 +225,24 @@ export const api = {
   documents: {
     list: async (courseId) => {
       const url = courseId ? `${API_BASE_URL}/documents?courseId=${encodeURIComponent(courseId)}` : `${API_BASE_URL}/documents`;
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     }
   },
   quizzes: {
     list: async (nodeId) => {
       const url = nodeId ? `${API_BASE_URL}/quizzes?nodeId=${encodeURIComponent(nodeId)}` : `${API_BASE_URL}/quizzes`;
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     },
     get: async (id) => {
-      const response = await fetch(`${API_BASE_URL}/quizzes/${id}`);
+      const response = await fetch(`${API_BASE_URL}/quizzes/${id}`, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     }
   },
@@ -219,7 +251,7 @@ export const api = {
     create: async (userId, content) => {
       const response = await fetch(`${API_BASE_URL}/feedbacks`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ userId, content }),
       });
       return handleResponse(response);
@@ -227,11 +259,15 @@ export const api = {
   },
   philosofun: {
     list: async () => {
-      const response = await fetch(`${API_BASE_URL}/philosofun`);
+      const response = await fetch(`${API_BASE_URL}/philosofun`, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     },
     get: async (id) => {
-      const response = await fetch(`${API_BASE_URL}/philosofun/${id}`);
+      const response = await fetch(`${API_BASE_URL}/philosofun/${id}`, {
+        headers: getHeaders()
+      });
       return handleResponse(response);
     }
   }

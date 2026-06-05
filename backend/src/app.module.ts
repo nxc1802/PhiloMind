@@ -10,6 +10,7 @@ import { FlashcardsModule } from './flashcards/flashcards.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { UsersModule } from './users/users.module';
 import { PhilosofunModule } from './philosofun/philosofun.module';
+import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -27,6 +28,7 @@ import { AppController } from './app.controller';
     QuizzesModule,
     UsersModule,
     PhilosofunModule,
+    AuthModule,
   ],
   controllers: [AppController],
 })

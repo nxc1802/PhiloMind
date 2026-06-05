@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param, Query, Patch, Put, Delete, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Patch, Put, Delete, UseInterceptors, UploadedFile, BadRequestException, UseGuards } from '@nestjs/common';
 import { CoursesService } from './courses.service';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 class CreateCourseDto {
   @IsString()
@@ -270,6 +271,8 @@ class UpdatePodcastDto {
 
 @ApiTags('Courses & Roadmaps')
 @Controller()
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class CoursesController {
   constructor(private coursesService: CoursesService) {}
 

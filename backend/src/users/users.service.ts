@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Inject, forwardRef } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject(forwardRef(() => JwtService)) private jwtService: JwtService,
+  ) {}
 
   async findById(id: string) {
     const user = await this.prisma.user.findUnique({
@@ -23,29 +28,55 @@ export class UsersService {
     });
   }
 
-  async register(email: string, name: string) {
+  generateToken(user: any) {
+    const payload = { email: user.email, sub: user.id, role: user.role };
+    return this.jwtService.sign(payload);
+  }
+
+  async register(email: string, name: string, password?: string) {
     const normalizedEmail = email.trim().toLowerCase();
     const exists = await this.findByEmail(normalizedEmail);
     if (exists) {
       throw new BadRequestException('Email already registered');
     }
 
-    return this.prisma.user.create({
+    let hashedPassword = null;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
+    const user = await this.prisma.user.create({
       data: {
         email: normalizedEmail,
         name: name.trim(),
+        password: hashedPassword,
+        role: 'student',
         streak: 0,
       },
     });
+
+    const token = this.generateToken(user);
+    return { user, token };
   }
 
-  async login(email: string) {
+  async login(email: string, password?: string) {
     const normalizedEmail = email.trim().toLowerCase();
     const user = await this.findByEmail(normalizedEmail);
     if (!user) {
       throw new NotFoundException('User not found. Please register first.');
     }
-    return user;
+
+    if (user.password && password) {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        throw new BadRequestException('Invalid credentials');
+      }
+    } else if (user.password && !password) {
+      throw new BadRequestException('Password required');
+    }
+
+    const token = this.generateToken(user);
+    return { user, token };
   }
 
   async googleLogin(idToken: string) {
@@ -70,12 +101,14 @@ export class UsersService {
           data: {
             email,
             name,
+            role: 'student',
             streak: 1,
           },
         });
       }
-      return user;
-    } catch (err) {
+      const token = this.generateToken(user);
+      return { user, token };
+    } catch (err: any) {
       throw new BadRequestException(`Google login failed: ${err.message}`);
     }
   }

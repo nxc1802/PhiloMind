@@ -8,7 +8,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgrespassword}
       POSTGRES_DB: philomind
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -41,7 +41,7 @@ services:
       - "3001:3001"
     environment:
       - PORT=${PORT:-3001}
-      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgrespassword@db:5432/philomind?schema=public}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:${POSTGRES_PASSWORD:-postgrespassword}@db:5432/philomind?schema=public}
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
       - SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}

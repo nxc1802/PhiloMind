@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Param, Query, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Delete, Put, UseGuards } from '@nestjs/common';
 import { DebatesService } from './debates.service';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { IsString, IsNotEmpty } from 'class-validator';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
 
 class DebateMessageDto {
   @IsString()
@@ -29,6 +32,8 @@ class CreateDebateTopicDto {
 
 @ApiTags('Socratic AI Debate')
 @Controller('debates')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth()
 export class DebatesController {
   constructor(private debatesService: DebatesService) {}
 
@@ -41,18 +46,21 @@ export class DebatesController {
   }
 
   @Post('topics')
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new debate topic (Admin)' })
   async createTopic(@Body() dto: CreateDebateTopicDto) {
     return this.debatesService.createTopic(dto);
   }
 
   @Put('topics/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update a debate topic (Admin)' })
   async updateTopic(@Param('id') id: string, @Body() dto: CreateDebateTopicDto) {
     return this.debatesService.updateTopic(id, dto);
   }
 
   @Delete('topics/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a debate topic (Admin)' })
   async deleteTopic(@Param('id') id: string) {
     return this.debatesService.deleteTopic(id);
@@ -78,6 +86,7 @@ export class DebatesController {
   // ==================== CONCEPT NODE DEBATE WORKFLOW ====================
 
   @Get('all')
+  @Roles('admin')
   @ApiOperation({ summary: 'List all Socratic debate sessions (Admin)' })
   async getAllDebates() {
     return this.debatesService.findAll();
@@ -99,6 +108,7 @@ export class DebatesController {
   }
 
   @Delete(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a Socratic debate session (Admin)' })
   async deleteDebate(@Param('id') id: string) {
     return this.debatesService.remove(id);

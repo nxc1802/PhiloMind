@@ -1,6 +1,7 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastProvider } from './components/Toast';
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import Courses from './pages/Courses';
@@ -12,20 +13,41 @@ import Podcasts from './pages/Podcasts';
 import Debates from './pages/Debates';
 import Philosofun from './pages/Philosofun';
 
+function ProtectedRoute({ children }) {
+  const token = localStorage.getItem('token');
+  const userStr = localStorage.getItem('user');
+
+  if (!token || !userStr) {
+    return <Navigate to="/login" replace />;
+  }
+
+  try {
+    const user = JSON.parse(userStr);
+    if (user.role !== 'admin') {
+      return <Navigate to="/login" replace />;
+    }
+  } catch (_) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
 export default function App() {
   return (
     <ToastProvider>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/chapters" element={<Chapters />} />
-        <Route path="/nodes" element={<Nodes />} />
-        <Route path="/flashcards" element={<Flashcards />} />
-        <Route path="/quizzes" element={<Quizzes />} />
-        <Route path="/podcasts" element={<Podcasts />} />
-        <Route path="/debates" element={<Debates />} />
-        <Route path="/philosofun" element={<Philosofun />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
+        <Route path="/chapters" element={<ProtectedRoute><Chapters /></ProtectedRoute>} />
+        <Route path="/nodes" element={<ProtectedRoute><Nodes /></ProtectedRoute>} />
+        <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />
+        <Route path="/quizzes" element={<ProtectedRoute><Quizzes /></ProtectedRoute>} />
+        <Route path="/podcasts" element={<ProtectedRoute><Podcasts /></ProtectedRoute>} />
+        <Route path="/debates" element={<ProtectedRoute><Debates /></ProtectedRoute>} />
+        <Route path="/philosofun" element={<ProtectedRoute><Philosofun /></ProtectedRoute>} />
       </Routes>
     </ToastProvider>
   );

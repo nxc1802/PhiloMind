@@ -3,6 +3,7 @@ import io
 import wave
 import math
 import logging
+import threading
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -15,6 +16,9 @@ app = FastAPI(title="PhiloMind Open Source TTS Worker", version="1.0.0")
 class TTSRequest(BaseModel):
     text: str
     voice: str = "af_bella"  # Default Kokoro female voice
+
+# Global lock for thread-safe TTS generation
+tts_lock = threading.Lock()
 
 # Global placeholder for the Kokoro model instance
 kokoro_model = None
@@ -33,7 +37,7 @@ def download_kokoro_assets():
         logger.info("Downloading Kokoro-82M ONNX model weights...")
         try:
             urllib.request.urlretrieve(
-                "https://github.com/theodorek/kokoro-onnx/releases/download/v0.1.0/kokoro-v0_19.onnx",
+                "https://github.com/thewh1teagle/kokoro-onnx/releases/download/v0.1.0/kokoro-v0_19.onnx",
                 model_path
             )
             logger.info("Kokoro ONNX weights downloaded successfully.")
@@ -44,7 +48,7 @@ def download_kokoro_assets():
         logger.info("Downloading voice definitions...")
         try:
             urllib.request.urlretrieve(
-                "https://github.com/theodorek/kokoro-onnx/releases/download/v0.1.0/voices.json",
+                "https://github.com/thewh1teagle/kokoro-onnx/releases/download/v0.1.0/voices.json",
                 voices_path
             )
             logger.info("Voice definitions downloaded successfully.")
@@ -124,12 +128,16 @@ def synthesize_speech(request: TTSRequest):
     if not request.text.strip():
         raise HTTPException(status_code=400, detail="Text cannot be empty.")
     
+    if len(request.text) > 2000:
+        raise HTTPException(status_code=400, detail="Text length exceeds limit of 2000 characters.")
+    
     try:
         if kokoro_model is not None:
             # Render using Kokoro-ONNX engine
             logger.info(f"Synthesizing text with Kokoro ONNX: {request.text[:40]}...")
             # voice must be loadable
-            samples, sample_rate = kokoro_model.create(request.text, voice=request.voice, speed=1.0, phonemes=None)
+            with tts_lock:
+                samples, sample_rate = kokoro_model.create(request.text, voice=request.voice, speed=1.0, phonemes=None)
             
             # Write float array samples to WAV format
             wav_io = io.BytesIO()

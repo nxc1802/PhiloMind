@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { PhilosofunService } from './philosofun.service';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
 
 class CreatePhilosofunDto {
   @IsString()
@@ -33,10 +36,13 @@ class UpdatePhilosofunDto {
 
 @ApiTags('Philosofun')
 @Controller('philosofun')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth()
 export class PhilosofunController {
   constructor(private readonly service: PhilosofunService) {}
 
   @Post()
+  @Roles('admin')
   @ApiOperation({ summary: 'Upload a new Philosofun video' })
   async create(@Body() dto: CreatePhilosofunDto) {
     return this.service.create(dto);
@@ -55,12 +61,14 @@ export class PhilosofunController {
   }
 
   @Put(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update a video' })
   async update(@Param('id') id: string, @Body() dto: UpdatePhilosofunDto) {
     return this.service.update(id, dto);
   }
 
   @Delete(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a video' })
   async remove(@Param('id') id: string) {
     return this.service.remove(id);

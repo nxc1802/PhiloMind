@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Put, Delete, UseGuards } from '@nestjs/common';
 import { QuizzesService } from './quizzes.service';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
 
 class CreateQuizDto {
   @IsString()
@@ -47,10 +50,13 @@ class UpdateQuizDto {
 
 @ApiTags('Quizzes & Interactive Systems')
 @Controller('quizzes')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth()
 export class QuizzesController {
   constructor(private quizzesService: QuizzesService) {}
 
   @Post()
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new quiz or matching game' })
   async createQuiz(@Body() dto: CreateQuizDto) {
     return this.quizzesService.createQuiz(dto);
@@ -69,12 +75,14 @@ export class QuizzesController {
   }
 
   @Put(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update a quiz' })
   async updateQuiz(@Param('id') id: string, @Body() dto: UpdateQuizDto) {
     return this.quizzesService.updateQuiz(id, dto);
   }
 
   @Delete(':id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a quiz by ID' })
   async deleteQuiz(@Param('id') id: string) {
     return this.quizzesService.deleteQuiz(id);

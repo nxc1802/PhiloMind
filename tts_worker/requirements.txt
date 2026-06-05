@@ -1,0 +1,7 @@
+fastapi>=0.109.0
+uvicorn>=0.27.0
+pydantic>=2.5.0
+numpy>=1.22.0,<2.0.0
+onnxruntime>=1.16.0
+soundfile>=0.12.1
+kokoro-onnx>=0.1.0

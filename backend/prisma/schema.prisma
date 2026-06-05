@@ -11,6 +11,8 @@ generator client {
 model User {
   id         String            @id @default(uuid())
   email      String            @unique
+  password   String?
+  role       String            @default("student")
   name       String?
   streak     Int               @default(0)
   createdAt  DateTime          @default(now())
@@ -19,6 +21,7 @@ model User {
   reviews    FlashcardReview[]
   feedbacks  Feedback[]
   comments   Comment[]
+  courses    Course[]
 }
 
 model Course {
@@ -29,6 +32,9 @@ model Course {
   createdAt   DateTime   @default(now())
   chapters    Chapter[]
   documents   Document[]
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Document {
@@ -40,6 +46,8 @@ model Document {
   title       String?
   description String?
   course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
 }
 
 model Chapter {
@@ -94,6 +102,8 @@ model Flashcard {
   answer    String
   node      ConceptNode       @relation(fields: [nodeId], references: [id], onDelete: Cascade)
   reviews   FlashcardReview[]
+
+  @@index([nodeId])
 }
 
 model FlashcardReview {
@@ -105,6 +115,9 @@ model FlashcardReview {
   nextReview  DateTime
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([flashcardId])
 }
 
 model Podcast {
@@ -133,6 +146,10 @@ model Debate {
   user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   node       ConceptNode? @relation(fields: [nodeId], references: [id], onDelete: Cascade)
   topic      DebateTopic? @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([nodeId])
+  @@index([topicId])
 }
 
 model Warmup {
@@ -149,6 +166,8 @@ model Warmup {
   correctIndex Int?
   reveal       String
   node         ConceptNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@index([nodeId])
 }
 
 model Progress {
@@ -174,6 +193,8 @@ model Feedback {
   content   String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Comment {
@@ -186,6 +207,9 @@ model Comment {
   createdAt DateTime    @default(now())
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   node      ConceptNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@index([nodeId])
+  @@index([userId])
 }
 
 model Quiz {
@@ -197,6 +221,8 @@ model Quiz {
   questions    Json        // MCQ questions, Matching pairs, or Essay prompts
   createdAt    DateTime    @default(now())
   node         ConceptNode? @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@index([nodeId])
 }
 
 model Philosofun {

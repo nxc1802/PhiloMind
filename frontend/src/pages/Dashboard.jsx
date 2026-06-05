@@ -1,14 +1,23 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageShell from '../components/PageShell';
 import { useAuth } from '../context/AuthContext';
 import { useJourney } from '../hooks/useJourney';
+import { api } from '../services/api';
 
 function getYouTubeId(url) {
-  if (!url) return "Mzg-AdRrjGY";
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : "Mzg-AdRrjGY";
+  if (!url || typeof url !== 'string') return "Mzg-AdRrjGY";
+  try {
+    if (url.length === 11 && !url.includes('/') && !url.includes('.')) {
+      return url;
+    }
+    const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[1] && match[1].length === 11) ? match[1] : "Mzg-AdRrjGY";
+  } catch (error) {
+    console.error("Failed to parse YouTube URL:", error);
+    return "Mzg-AdRrjGY";
+  }
 }
 
 function getSlugFromTitle(title) {
@@ -27,6 +36,7 @@ export default function Dashboard() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { user } = useAuth();
   const [aiInput, setAiInput] = useState("");
+  const [topicId, setTopicId] = useState(null);
   const [chatMessages, setChatMessages] = useState([
     { role: 'assistant', content: 'Chào đồng chí! Hôm nay chúng ta sẽ tìm hiểu về khái niệm nào trong Triết học?' }
   ]);
@@ -34,6 +44,43 @@ export default function Dashboard() {
   const { data, isLoading } = useJourney(user);
   const courses = data?.courses || [];
   const journey = data?.journey;
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const topics = await api.debates.topics.list();
+        if (topics && topics.length > 0) {
+          const mainTopic = topics.find(t => t.title.includes('Duy vật')) || topics[0];
+          setTopicId(mainTopic.id);
+        }
+      } catch (err) {
+        console.error("Failed to fetch debate topics:", err);
+      }
+    };
+    if (user) {
+      fetchTopics();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const loadChatHistory = async () => {
+      if (isChatOpen && topicId && user) {
+        try {
+          const debate = await api.debates.topics.getTranscript(topicId, user.id);
+          if (debate && debate.transcript && debate.transcript.length > 0) {
+            const formatted = debate.transcript.map(t => ({
+              role: t.speaker === 'User' ? 'user' : 'assistant',
+              content: t.text
+            }));
+            setChatMessages(formatted);
+          }
+        } catch (err) {
+          console.error("Failed to load chat history:", err);
+        }
+      }
+    };
+    loadChatHistory();
+  }, [isChatOpen, topicId, user]);
 
   const stats = useMemo(() => {
     const list = journey || [];
@@ -65,7 +112,7 @@ export default function Dashboard() {
 
   const toggleChat = () => setIsChatOpen((prev) => !prev);
 
-  const handleAiSend = (e) => {
+  const handleAiSend = async (e) => {
     e.preventDefault();
     if (!aiInput.trim()) return;
 
@@ -73,18 +120,23 @@ export default function Dashboard() {
     setChatMessages(prev => [...prev, { role: 'user', content: userMsg }]);
     setAiInput("");
 
-    // Simple auto mock reply from AI
-    setTimeout(() => {
-      let reply = "Đây là một câu hỏi rất sâu sắc về phương pháp luận duy vật biện chứng. ";
-      if (userMsg.toLowerCase().includes("vật chất")) {
-        reply += "Vật chất là thực tại khách quan tồn tại độc lập với ý thức con người. Theo Lênin, cảm giác chỉ phản ánh vật chất.";
-      } else if (userMsg.toLowerCase().includes("ý thức")) {
-        reply += "Ý thức là sự phản ánh năng động, sáng tạo thế giới khách quan vào bộ não người, có nguồn gốc tự nhiên và xã hội.";
+    try {
+      if (topicId && user) {
+        const updatedDebate = await api.debates.topics.sendMessage(topicId, user.id, userMsg);
+        const formatted = updatedDebate.transcript.map(t => ({
+          role: t.speaker === 'User' ? 'user' : 'assistant',
+          content: t.text
+        }));
+        setChatMessages(formatted);
       } else {
-        reply += "Mời đồng chí tìm hiểu kỹ hơn trong phần Sơ đồ tư duy bài học ở mục 'Lesson' hoặc tham gia Tranh biện AI Socratic để làm rõ vấn đề.";
+        setTimeout(() => {
+          setChatMessages(prev => [...prev, { role: 'assistant', content: 'Hệ thống AI đang khởi tạo, vui lòng thử lại sau.' }]);
+        }, 1000);
       }
-      setChatMessages(prev => [...prev, { role: 'assistant', content: reply }]);
-    }, 1000);
+    } catch (err) {
+      console.error("Failed to send debate message:", err);
+      setChatMessages(prev => [...prev, { role: 'assistant', content: `Lỗi kết nối AI: ${err.message}` }]);
+    }
   };
 
   const activeCourse = courses.find(c => c.title.includes('Triết học')) || {
@@ -111,7 +163,7 @@ export default function Dashboard() {
                 placeholder="Tìm kiếm khái niệm, luận điểm hoặc bài học..."
                 type="text"
               />
-              <button className="absolute right-3 top-2 bottom-2 bg-white text-red-800 px-6 rounded-full font-bold flex items-center gap-2 hover:bg-gray-100 transition-colors">
+              <button aria-label="Tìm kiếm AI" className="absolute right-3 top-2 bottom-2 bg-white text-red-800 px-6 rounded-full font-bold flex items-center gap-2 hover:bg-gray-100 transition-colors">
                 <span className="material-symbols-outlined text-sm">bolt</span>
                 AI Search
               </button>
@@ -279,7 +331,7 @@ export default function Dashboard() {
                     <p className="text-xs opacity-70">Trợ lý đồng chí luôn sẵn sàng</p>
                   </div>
                 </div>
-                <button className="text-white/60 hover:text-white" onClick={toggleChat}>
+                <button aria-label="Đóng chat" className="text-white/60 hover:text-white" onClick={toggleChat}>
                   <span className="material-symbols-outlined">close</span>
                 </button>
               </div>
@@ -305,7 +357,7 @@ export default function Dashboard() {
                   value={aiInput}
                   onChange={(e) => setAiInput(e.target.value)}
                 />
-                <button type="submit" className="bg-red-800 text-white p-2 rounded-lg hover:bg-red-900">
+                <button aria-label="Gửi tin nhắn" type="submit" className="bg-red-800 text-white p-2 rounded-lg hover:bg-red-900">
                   <span className="material-symbols-outlined text-sm">send</span>
                 </button>
               </form>
@@ -314,6 +366,7 @@ export default function Dashboard() {
 
           <button
             onClick={toggleChat}
+            aria-label="Mở khung trò chuyện AI"
             className="h-16 w-16 bg-red-800 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all relative"
           >
             <span className="material-symbols-outlined text-3xl">psychology</span>

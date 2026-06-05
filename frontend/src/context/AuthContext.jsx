@@ -10,10 +10,11 @@ export function AuthProvider({ children }) {
 
   // Đăng ký: trả về { ok, error }
   const register = useCallback(
-    async ({ name, email }) => {
+    async ({ name, email, password }) => {
       try {
-        const user = await api.auth.register(email, name);
-        setCurrentUser(user);
+        const res = await api.auth.register(email, name, password);
+        localStorage.setItem('token', res.token);
+        setCurrentUser(res.user);
         return { ok: true };
       } catch (err) {
         return { ok: false, error: err.message || "Đăng ký thất bại." };
@@ -24,10 +25,11 @@ export function AuthProvider({ children }) {
 
   // Đăng nhập: gọi API và lưu vào localstorage
   const login = useCallback(
-    async ({ email }) => {
+    async ({ email, password }) => {
       try {
-        const user = await api.auth.login(email);
-        setCurrentUser(user);
+        const res = await api.auth.login(email, password);
+        localStorage.setItem('token', res.token);
+        setCurrentUser(res.user);
         return { ok: true };
       } catch (err) {
         return { ok: false, error: err.message || "Đăng nhập thất bại." };
@@ -40,8 +42,9 @@ export function AuthProvider({ children }) {
   const loginWithGoogle = useCallback(
     async (idToken) => {
       try {
-        const user = await api.auth.googleLogin(idToken);
-        setCurrentUser(user);
+        const res = await api.auth.googleLogin(idToken);
+        localStorage.setItem('token', res.token);
+        setCurrentUser(res.user);
         return { ok: true };
       } catch (err) {
         return { ok: false, error: err.message || "Đăng nhập bằng Google thất bại." };
@@ -50,7 +53,10 @@ export function AuthProvider({ children }) {
     [setCurrentUser]
   );
 
-  const logout = useCallback(() => setCurrentUser(null), [setCurrentUser]);
+  const logout = useCallback(() => {
+    localStorage.removeItem('token');
+    setCurrentUser(null);
+  }, [setCurrentUser]);
 
   return (
     <AuthContext.Provider value={{ user: currentUser, register, login, logout, loginWithGoogle }}>
