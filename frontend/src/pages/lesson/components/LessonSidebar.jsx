@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { getSlugFromTitle } from "../../../utils/slug";
 
 const SYLLABUS_STATUS_CONFIG = {
@@ -16,7 +16,19 @@ const SYLLABUS_STATUS_CONFIG = {
   },
 };
 
-export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, handleSyllabusClick }) {
+export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, handleSyllabusClick, currentNodeDetails }) {
+  const [showDocsDropdown, setShowDocsDropdown] = useState(false);
+  const documents = currentNodeDetails?.chapter?.course?.documents || [];
+
+  const handlePdfClick = () => {
+    if (documents.length === 0) return;
+    if (documents.length === 1) {
+      window.open(documents[0].fileUrl, '_blank');
+    } else {
+      setShowDocsDropdown(!showDocsDropdown);
+    }
+  };
+
   return (
     <aside className="lg:col-span-1 text-left">
       <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden sticky top-20">
@@ -55,15 +67,41 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
           })}
         </div>
 
-        <button
-          type="button"
-          className="w-full bg-gray-700 text-white py-3 font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
-        >
-          <span className="material-symbols-outlined text-base">
-            download
-          </span>
-          Tài liệu đi kèm (PDF)
-        </button>
+        <div className="relative">
+          <button
+            type="button"
+            disabled={documents.length === 0}
+            onClick={handlePdfClick}
+            className={`w-full py-3 font-semibold transition-colors flex items-center justify-center gap-2 ${
+              documents.length === 0
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-gray-700 hover:bg-gray-800 text-white cursor-pointer"
+            }`}
+          >
+            <span className="material-symbols-outlined text-base">
+              download
+            </span>
+            Tài liệu đi kèm (PDF) {documents.length > 0 ? `(${documents.length})` : ""}
+          </button>
+          
+          {showDocsDropdown && documents.length > 1 && (
+            <div className="absolute bottom-full left-0 right-0 mb-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden divide-y divide-gray-100">
+              {documents.map((doc) => (
+                <a
+                  key={doc.id}
+                  href={doc.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 text-xs text-gray-700 transition-colors font-medium text-left"
+                  onClick={() => setShowDocsDropdown(false)}
+                >
+                  <span className="material-symbols-outlined text-sm text-red-800">picture_as_pdf</span>
+                  <span className="truncate flex-1">{doc.fileName}</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </aside>
   );

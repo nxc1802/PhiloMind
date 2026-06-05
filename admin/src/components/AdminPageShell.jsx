@@ -5,11 +5,7 @@ const SIDEBAR_ITEMS = [
   { key: 'dashboard', label: 'Dashboard', icon: 'dashboard', to: '/' },
   { key: 'users', label: 'Học viên', icon: 'group', to: '/users' },
   { key: 'courses', label: 'Tài liệu PDF', icon: 'picture_as_pdf', to: '/courses' },
-  { key: 'chapters', label: 'Chương học', icon: 'account_tree', to: '/chapters' },
-  { key: 'nodes', label: 'Bài học (Nodes)', icon: 'auto_stories', to: '/nodes' },
-  { key: 'flashcards', label: 'Thẻ nhớ (Flashcards)', icon: 'layers', to: '/flashcards' },
-  { key: 'quizzes', label: 'Hệ thống Quiz', icon: 'quiz', to: '/quizzes' },
-  { key: 'podcasts', label: 'Podcasts', icon: 'podcasts', to: '/podcasts' },
+  { key: 'nodes', label: 'Giáo trình & Bài học', icon: 'auto_stories', to: '/nodes' },
   { key: 'debates', label: 'Tranh luận AI', icon: 'forum', to: '/debates' },
   { key: 'philosofun', label: 'Philosofun', icon: 'smart_display', to: '/philosofun' },
 ];

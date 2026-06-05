@@ -215,7 +215,7 @@ export class CoursesService {
         podcast: true,
         flashcards: true,
         progress: { where: { userId } },
-        chapter: { include: { course: true } },
+        chapter: { include: { course: { include: { documents: true } } } },
         warmups: true, // INCLUDE WARMUPS
       },
     });

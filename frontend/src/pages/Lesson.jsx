@@ -311,6 +311,7 @@ const Lesson = () => {
                     progressStats={progressStats}
                     lessonSlug={lessonSlug}
                     handleSyllabusClick={handleSyllabusClick}
+                    currentNodeDetails={currentNodeDetails}
                   />
                 </div>
               )}

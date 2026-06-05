@@ -5,11 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import Courses from './pages/Courses';
-import Chapters from './pages/Chapters';
 import Nodes from './pages/Nodes';
-import Flashcards from './pages/Flashcards';
-import Quizzes from './pages/Quizzes';
-import Podcasts from './pages/Podcasts';
 import Debates from './pages/Debates';
 import Philosofun from './pages/Philosofun';
 
@@ -41,11 +37,7 @@ export default function App() {
         <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
-        <Route path="/chapters" element={<ProtectedRoute><Chapters /></ProtectedRoute>} />
         <Route path="/nodes" element={<ProtectedRoute><Nodes /></ProtectedRoute>} />
-        <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />
-        <Route path="/quizzes" element={<ProtectedRoute><Quizzes /></ProtectedRoute>} />
-        <Route path="/podcasts" element={<ProtectedRoute><Podcasts /></ProtectedRoute>} />
         <Route path="/debates" element={<ProtectedRoute><Debates /></ProtectedRoute>} />
         <Route path="/philosofun" element={<ProtectedRoute><Philosofun /></ProtectedRoute>} />
       </Routes>

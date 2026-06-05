@@ -218,16 +218,20 @@ export default function Practice() {
                       className="absolute inset-0 bg-gradient-to-br from-red-800 to-red-950 text-white rounded-2xl p-6 flex flex-col justify-center items-center shadow-md"
                       style={{ backfaceVisibility: "hidden" }}
                     >
-                      <span className="text-xs uppercase opacity-75 tracking-wider mb-3">Câu hỏi / Thuật ngữ</span>
-                      <p className="text-xl font-bold leading-relaxed">{activeReviewCard.question}</p>
+                      <span className="text-xs uppercase opacity-75 tracking-wider mb-3 shrink-0">Câu hỏi / Thuật ngữ</span>
+                      <div className="w-full overflow-y-auto max-h-[160px] pr-1 scrollbar-thin flex flex-col justify-center items-center">
+                        <p className="text-base md:text-lg font-bold leading-relaxed">{activeReviewCard.question}</p>
+                      </div>
                     </div>
 
                     <div
                       className="absolute inset-0 bg-blue-50 border-2 border-red-800 text-gray-900 rounded-2xl p-6 flex flex-col justify-center items-center shadow-md"
                       style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                     >
-                      <span className="text-xs uppercase text-red-800 font-bold tracking-wider mb-3">Giải nghĩa / Đáp án</span>
-                      <p className="text-lg font-semibold leading-relaxed text-gray-800">{activeReviewCard.answer}</p>
+                      <span className="text-xs uppercase text-red-800 font-bold tracking-wider mb-3 shrink-0">Giải nghĩa / Đáp án</span>
+                      <div className="w-full overflow-y-auto max-h-[160px] pr-1 scrollbar-thin text-left">
+                        <p className="text-sm md:text-base font-semibold leading-relaxed text-gray-800">{activeReviewCard.answer}</p>
+                      </div>
                     </div>
                   </div>
                 </div>

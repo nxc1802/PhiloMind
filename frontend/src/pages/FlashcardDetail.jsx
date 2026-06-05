@@ -291,23 +291,25 @@ const FlashcardDetail = () => {
                       transform: "rotateY(180deg)",
                     }}
                   >
-                    <div>
+                    <div className="w-full flex flex-col items-center justify-center max-h-full">
                       <span
-                        className={`block text-[10px] uppercase tracking-wider font-bold mb-1 ${
+                        className={`block text-[10px] uppercase tracking-wider font-bold mb-1 shrink-0 ${
                           isTerm ? "text-red-800" : "text-blue-700"
                         }`}
                       >
                         {isTerm ? "Khái niệm" : "Mô tả"}
                       </span>
-                      <span
-                        className={`${
-                          isTerm
-                            ? "font-bold text-gray-900 text-sm md:text-base"
-                            : "text-gray-700 text-xs md:text-sm leading-snug"
-                        }`}
-                      >
-                        {tile.text}
-                      </span>
+                      <div className="w-full overflow-y-auto max-h-[72px] pr-0.5 scrollbar-thin">
+                        <span
+                          className={`${
+                            isTerm
+                              ? "font-bold text-gray-900 text-xs md:text-sm"
+                              : "text-gray-700 text-[10px] md:text-xs leading-snug"
+                          }`}
+                        >
+                          {tile.text}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
