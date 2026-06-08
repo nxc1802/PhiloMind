@@ -28,9 +28,12 @@ function App() {
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
-  // 1. Prefetch public resources immediately when accessing the website (on mount)
+  // Prefetch resources when accessing the website with an active session, or upon logging in
   useEffect(() => {
-    // General Quizzes List (exclude those tied to specific nodes)
+    const token = localStorage.getItem('token');
+    if (!user && !token) return; // Wait until authenticated to avoid 401 errors on protected routes
+
+    // 1. Prefetch public resources (shared across all authenticated users)
     queryClient.prefetchQuery({
       queryKey: queryKeys.quizzes.list(null),
       queryFn: async () => {
@@ -40,38 +43,33 @@ function App() {
       staleTime: 1000 * 60 * 10,
     });
 
-    // Debate Topics List
     queryClient.prefetchQuery({
       queryKey: queryKeys.debates.topics(),
       queryFn: () => api.debates.topics.list(),
       staleTime: 1000 * 60 * 10,
     });
 
-    // PDF Documents List
     queryClient.prefetchQuery({
       queryKey: queryKeys.documents.list(),
       queryFn: () => api.documents.list(),
       staleTime: 1000 * 60 * 10,
     });
 
-    // Philosofun Videos List
     queryClient.prefetchQuery({
       queryKey: queryKeys.philosofun.list(),
       queryFn: () => api.philosofun.list(),
       staleTime: 1000 * 60 * 10,
     });
-  }, [queryClient]);
 
-  // 2. Prefetch user-specific resources when user logs in or session is restored
-  useEffect(() => {
-    if (!user?.id) return;
-
-    // Due Flashcards
-    queryClient.prefetchQuery({
-      queryKey: queryKeys.flashcards.due(user.id),
-      queryFn: () => api.flashcards.getDue(user.id),
-      staleTime: 1000 * 60 * 2,
-    });
+    // 2. Prefetch user-specific resources
+    const userId = user?.id || JSON.parse(localStorage.getItem('mln_auth_current'))?.id;
+    if (userId) {
+      queryClient.prefetchQuery({
+        queryKey: queryKeys.flashcards.due(userId),
+        queryFn: () => api.flashcards.getDue(userId),
+        staleTime: 1000 * 60 * 2,
+      });
+    }
   }, [user, queryClient]);
 
   return (
