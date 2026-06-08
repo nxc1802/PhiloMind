@@ -6,13 +6,24 @@ import { Link } from "react-router-dom";
 
 // Nut Settings dung cho footer cua sidebar
 export const SettingsButton = (
-  <Link
-    to="/settings"
-    className="w-full border border-red-800/30 text-red-850 hover:bg-red-800 hover:text-white font-semibold py-3 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 bg-red-50/50"
-  >
-    <span className="material-symbols-outlined text-lg">settings</span>
-    Cài đặt tài khoản
-  </Link>
+  <div className="flex flex-col gap-2 w-full">
+    <a
+      href="https://forms.gle/9AXVDRqzcAnTbdU39"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full border border-red-800/30 text-red-850 hover:bg-red-800 hover:text-white font-semibold py-3 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 bg-red-50/50"
+    >
+      <span className="material-symbols-outlined text-lg">rate_review</span>
+      Thực hiện khảo sát
+    </a>
+    <Link
+      to="/settings"
+      className="w-full border border-red-800/30 text-red-850 hover:bg-red-800 hover:text-white font-semibold py-3 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 bg-red-50/50"
+    >
+      <span className="material-symbols-outlined text-lg">settings</span>
+      Cài đặt tài khoản
+    </Link>
+  </div>
 );
 
 // Layout chuan dung cho moi trang trong he thong

@@ -215,6 +215,17 @@ export default function Navbar() {
                 </NavLink>
               ))}
 
+              <a
+                href="https://forms.gle/9AXVDRqzcAnTbdU39"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeMobileMenu}
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100"
+              >
+                <span className="material-symbols-outlined">rate_review</span>
+                Thực hiện khảo sát
+              </a>
+
               <NavLink
                 to="/settings"
                 onClick={closeMobileMenu}
