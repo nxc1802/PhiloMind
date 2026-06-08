@@ -1,234 +1,122 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useToast } from "../../components/Toast";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { SceneArt } from "./components/JourneyArt";
+import DialogueSequence, { SpeechBubble } from "./components/GuideSpeech";
 import "./adventure.css";
 
-export default function AdventureLessonPlayer({ 
-  nodeDetails, 
-  isRevisit, 
-  onComplete, 
-  onBackToMindmap 
-}) {
-  const [phase, setPhase] = useState(isRevisit ? "final" : "intro"); // "intro" | "contents" | "minigame" | "final"
-  const [introIndex, setIntroIndex] = useState(0);
-  const [activeConceptIdx, setActiveConceptIdx] = useState(0);
-  const [conceptStep, setConceptStep] = useState("media"); // "media" | "question" | "explanation" | "summary"
-  
-  // Concept Questions States
-  const [activeQuestionIdx, setActiveQuestionIdx] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showExplanation, setShowExplanation] = useState(false);
+const STAGES = ["intro", "cognitive", "social", "summary", "quiz", "done"];
+const STAGE_LABELS = {
+  intro: "Khởi hành",
+  cognitive: "Nhận thức",
+  social: "Xã hội",
+  summary: "Hợp nhất",
+  quiz: "Tổng kết",
+  done: "Hoàn thành",
+};
 
-  // Minigame States
-  const [matchingPairs, setMatchingPairs] = useState({}); // { leftId: rightId }
-  const [selectedLeft, setSelectedLeft] = useState(null);
-  const [selectedRight, setSelectedRight] = useState(null);
-  const [matchingError, setMatchingError] = useState({}); // { leftId: true, rightId: true }
-  const [matchingSuccessCount, setMatchingSuccessCount] = useState(0);
+function getOptionClass({ resolved, isCorrect, isWrongPick }) {
+  const base =
+    "w-full text-left rounded-xl border-2 px-4 py-3.5 font-medium transition-all flex items-center gap-3 ";
+  if (resolved && isCorrect) return base + "border-green-500 bg-green-50 text-green-900";
+  if (isWrongPick) return base + "border-red-500 bg-red-50 text-red-900";
+  if (resolved) return base + "border-gray-200 opacity-60";
+  return base + "border-gray-200 hover:border-red-400 hover:bg-red-50 bg-white";
+}
 
-  // Minigame Type 1 (Single column sorting) states
-  const [sortItems, setSortItems] = useState([]);
-  const [sortSuccess, setSortSuccess] = useState(false);
-
-  // Minigame Type 3 (Mindmap tree) states
-  const [treeAnswers, setTreeAnswers] = useState({}); // { nodeId: optionId }
-  const [selectedTreeOption, setSelectedTreeOption] = useState(null);
-
-  const { showToast } = useToast();
-
-  const storyIntro = nodeDetails.storyIntro;
-  const lessonContents = nodeDetails.lessonContents || [];
-  const minigame = nodeDetails.minigame;
-  const finalSummary = nodeDetails.finalSummary;
+function GradedQuestion({ prompt, options, correctFeedback, wrongFeedback, onPass, passLabel = "Tiếp tục" }) {
+  const [wrongPicks, setWrongPicks] = useState([]);
+  const [solved, setSolved] = useState(false);
 
   useEffect(() => {
-    setPhase(isRevisit ? "final" : "intro");
-    setIntroIndex(0);
-    setActiveConceptIdx(0);
-    setConceptStep("media");
-  }, [nodeDetails?.id, isRevisit]);
+    setWrongPicks([]);
+    setSolved(false);
+  }, [prompt]);
 
-  // Initialize Minigames when phase changes to "minigame"
-  useEffect(() => {
-    if (phase !== "minigame" || !minigame?.enable) return;
-
-    if (minigame.type === "single_column_sorting") {
-      const items = minigame.config?.items || [];
-      const shuffled = [...items].sort(() => Math.random() - 0.5);
-      setSortItems(shuffled);
-      setSortSuccess(false);
-    } else if (minigame.type === "matching_2_columns") {
-      setMatchingPairs({});
-      setSelectedLeft(null);
-      setSelectedRight(null);
-      setMatchingSuccessCount(0);
-    } else if (minigame.type === "mindmap_tree") {
-      setTreeAnswers({});
-      setSelectedTreeOption(null);
-    }
-  }, [phase, minigame]);
-
-  const activeDialog = storyIntro?.dialogs?.[introIndex];
-  
-  const handleNextDialog = () => {
-    if (!storyIntro?.dialogs) return;
-    if (introIndex < storyIntro.dialogs.length - 1) {
-      setIntroIndex(prev => prev + 1);
-    } else {
-      setPhase("contents");
+  const handlePick = (index) => {
+    if (solved) return;
+    if (options[index].correct) {
+      setSolved(true);
+    } else if (!wrongPicks.includes(index)) {
+      setWrongPicks((prev) => [...prev, index]);
     }
   };
 
-  const handleConceptMediaNext = () => {
-    const currentConcept = lessonContents[activeConceptIdx];
-    if (currentConcept?.questions && currentConcept.questions.length > 0) {
-      setConceptStep("question");
-      setActiveQuestionIdx(0);
-      setSelectedAnswer(null);
-      setShowExplanation(false);
-    } else {
-      setConceptStep("summary");
-    }
-  };
+  return (
+    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left">
+      <p className="font-semibold text-lg mb-4 text-gray-900">{prompt}</p>
+      <div className="space-y-2.5">
+        {options.map((opt, index) => (
+          <button
+            key={index}
+            type="button"
+            disabled={solved}
+            onClick={() => handlePick(index)}
+            className={getOptionClass({
+              resolved: solved,
+              isCorrect: opt.correct,
+              isWrongPick: wrongPicks.includes(index),
+            })}
+          >
+            <span className="material-symbols-outlined text-xl shrink-0">
+              {solved && opt.correct
+                ? "check_circle"
+                : wrongPicks.includes(index)
+                ? "cancel"
+                : "radio_button_unchecked"}
+            </span>
+            {opt.text}
+          </button>
+        ))}
+      </div>
 
-  const handleAnswerSelect = (answer) => {
-    if (showExplanation) return;
-    setSelectedAnswer(answer);
-    setShowExplanation(true);
-    
-    if (answer.isCorrect) {
-      showToast("Chính xác! Lập luận rất vững chắc.", "success");
-    } else {
-      showToast("Chưa chính xác. Hãy chiêm nghiệm thêm gợi ý.", "error");
-    }
-  };
+      {!solved && wrongPicks.length > 0 && (
+        <div className="mt-4 bg-red-50 border border-red-200 text-red-800 p-3 rounded-lg text-base flex items-start gap-2 j-bubble-in">
+          <span className="material-symbols-outlined text-base shrink-0">error</span>
+          <span>{wrongFeedback}</span>
+        </div>
+      )}
 
-  const handleQuestionNext = () => {
-    const currentConcept = lessonContents[activeConceptIdx];
-    const totalQuestions = currentConcept?.questions?.length || 0;
-    
-    if (selectedAnswer?.isCorrect) {
-      if (activeQuestionIdx < totalQuestions - 1) {
-        setActiveQuestionIdx(prev => prev + 1);
-        setSelectedAnswer(null);
-        setShowExplanation(false);
-        setConceptStep("question");
-      } else {
-        setConceptStep("summary");
-      }
-    } else {
-      setSelectedAnswer(null);
-      setShowExplanation(false);
-    }
-  };
+      {solved && (
+        <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-lg j-bubble-in">
+          <p className="font-bold text-green-800 flex items-center gap-2 mb-1">
+            <span className="material-symbols-outlined text-base">lightbulb</span>
+            Chính xác!
+          </p>
+          <p className="text-base text-green-900/90 leading-relaxed">{correctFeedback}</p>
+          <button
+            type="button"
+            onClick={onPass}
+            className="mt-4 inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+          >
+            {passLabel}
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
-  const handleConceptSummaryNext = () => {
-    if (activeConceptIdx < lessonContents.length - 1) {
-      setActiveConceptIdx(prev => prev + 1);
-      setConceptStep("media");
-    } else {
-      if (minigame?.enable) {
-        setPhase("minigame");
-      } else {
-        setPhase("final");
-        if (onComplete) onComplete();
-      }
-    }
-  };
+function SceneBanner({ scene, badge, title, subtitle }) {
+  return (
+    <div className="relative rounded-2xl overflow-hidden shadow-md mb-5 h-24 md:h-32">
+      <SceneArt scene={scene} className="absolute inset-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+      <div className="absolute bottom-0 left-0 p-3.5 md:p-4 text-white text-left">
+        {badge && (
+          <span className="inline-block bg-white/20 backdrop-blur text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded mb-1">
+            {badge}
+          </span>
+        )}
+        <h2 className="text-lg md:text-2xl font-bold drop-shadow leading-tight">{title}</h2>
+        {subtitle && <p className="text-white/85 text-xs md:text-sm">{subtitle}</p>}
+      </div>
+    </div>
+  );
+}
 
-  // --- MINIGAME 1: Single Column Sorting ---
-  const moveItem = (index, direction) => {
-    const newItems = [...sortItems];
-    const targetIndex = index + direction;
-    if (targetIndex < 0 || targetIndex >= newItems.length) return;
-    
-    const temp = newItems[index];
-    newItems[index] = newItems[targetIndex];
-    newItems[targetIndex] = temp;
-    setSortItems(newItems);
-  };
-
-  const checkSortOrder = () => {
-    const correctOrder = minigame.config?.correctOrder || [];
-    let isCorrect = true;
-    for (let i = 0; i < sortItems.length; i++) {
-      if (sortItems[i].id !== correctOrder[i]) {
-        isCorrect = false;
-        break;
-      }
-    }
-
-    if (isCorrect) {
-      setSortSuccess(true);
-      showToast("Sắp xếp chính xác! Trình tự logic rất chuẩn xác.", "success");
-    } else {
-      showToast("Thứ tự chưa hợp lý. Hãy thử sắp xếp lại.", "warning");
-    }
-  };
-
-  // --- MINIGAME 2: Matching 2 Columns ---
-  const handleSelectLeft = (leftItem) => {
-    if (matchingPairs[leftItem.id]) return;
-    setSelectedLeft(leftItem);
-    if (selectedRight) checkMatch(leftItem, selectedRight);
-  };
-
-  const handleSelectRight = (rightItem) => {
-    const isMatched = Object.values(matchingPairs).includes(rightItem.id);
-    if (isMatched) return;
-    setSelectedRight(rightItem);
-    if (selectedLeft) checkMatch(selectedLeft, rightItem);
-  };
-
-  const checkMatch = (left, right) => {
-    const correctPairs = minigame.config?.correctPairs || [];
-    const isCorrect = correctPairs.some(p => p.leftId === left.id && p.rightId === right.id);
-
-    if (isCorrect) {
-      setMatchingPairs(prev => ({ ...prev, [left.id]: right.id }));
-      setMatchingSuccessCount(prev => prev + 1);
-      setSelectedLeft(null);
-      setSelectedRight(null);
-      showToast("Ghép nối chính xác!", "success");
-    } else {
-      setMatchingError({ [left.id]: true, [right.id]: true });
-      showToast("Ghép nối chưa chính xác.", "error");
-      setTimeout(() => {
-        setMatchingError({});
-        setSelectedLeft(null);
-        setSelectedRight(null);
-      }, 1000);
-    }
-  };
-
-  const isMatchingGameFinished = useMemo(() => {
-    const leftColumn = minigame?.config?.leftColumn || [];
-    return matchingSuccessCount === leftColumn.length && leftColumn.length > 0;
-  }, [matchingSuccessCount, minigame]);
-
-  // --- MINIGAME 3: MindMap Tree ---
-  const handleTreeDrop = (nodeId) => {
-    if (!selectedTreeOption) return;
-    if (selectedTreeOption.matchNodeId === nodeId) {
-      setTreeAnswers(prev => ({ ...prev, [nodeId]: selectedTreeOption }));
-      setSelectedTreeOption(null);
-      showToast("Đặt đúng vị trí nhánh sơ đồ!", "success");
-    } else {
-      showToast("Khái niệm này không thuộc nhánh này. Hãy thử lại.", "error");
-      setSelectedTreeOption(null);
-    }
-  };
-
-  const isTreeGameFinished = useMemo(() => {
-    const nodes = minigame?.config?.treeNodes || [];
-    const totalRequired = nodes.filter(n => n.parentId !== null).length;
-    return Object.keys(treeAnswers).length === totalRequired && totalRequired > 0;
-  }, [treeAnswers, minigame]);
-
-  const handleMinigameComplete = () => {
-    setPhase("final");
-    if (onComplete) onComplete();
-  };
-
+function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay = true }) {
   const getYoutubeId = (url) => {
     if (!url) return "";
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -236,561 +124,1094 @@ export default function AdventureLessonPlayer({
     return (match && match[2].length === 11) ? match[2] : "";
   };
 
+  const ytId = getYoutubeId(src);
+
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative w-full min-h-[500px] flex flex-col text-slate-100 font-sans transition-all duration-500">
-      {/* Header Tiến trình của Adventure Player */}
-      <div className="px-6 py-4 bg-slate-950 border-b border-slate-800/80 flex items-center justify-between shrink-0">
-        <span className="text-sm font-extrabold tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-amber-300">
-          Hành trình biện chứng
+    <div className="rounded-2xl overflow-hidden shadow-md mb-5 bg-black">
+      <div className="relative w-full aspect-video bg-black">
+        {ytId ? (
+          <iframe
+            title={title}
+            width="100%"
+            height="100%"
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}`}
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+        ) : (
+          <video
+            ref={(el) => {
+              if (el) el.muted = muted;
+            }}
+            src={src}
+            controls
+            autoPlay={autoPlay}
+            loop
+            playsInline
+            preload="metadata"
+            className="w-full h-full object-cover"
+          />
+        )}
+        {badge && (
+          <span className="absolute top-3 left-3 inline-block bg-black/55 backdrop-blur text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded pointer-events-none">
+            {badge}
+          </span>
+        )}
+      </div>
+      <div className="bg-gradient-to-r from-red-900 to-red-800 px-4 md:px-5 py-2.5 text-white text-left">
+        <h2 className="text-base md:text-xl font-bold leading-tight">{title}</h2>
+        {subtitle && <p className="text-white/80 text-xs md:text-sm">{subtitle}</p>}
+      </div>
+    </div>
+  );
+}
+
+function PieceReward({ label, onNext }) {
+  return (
+    <div className="bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-6 text-center text-white shadow-xl j-unlock">
+      <span className="material-symbols-outlined text-5xl">extension</span>
+      <p className="text-sm uppercase tracking-wider font-semibold mt-1 opacity-90">
+        Mảnh ghép tri thức
+      </p>
+      <p className="text-2xl font-bold mt-1 mb-4">{label}</p>
+      <button
+        type="button"
+        onClick={onNext}
+        className="bg-white text-orange-700 px-6 py-2.5 rounded-lg font-bold hover:bg-orange-50 transition-colors inline-flex items-center gap-1.5"
+      >
+        Tiếp tục hành trình
+        <span className="material-symbols-outlined text-base">arrow_forward</span>
+      </button>
+    </div>
+  );
+}
+
+function IntroStage({ introData, onComplete }) {
+  const [phase, setPhase] = useState(0); // 0: hoi thoai, 1: chon diem khoi hanh
+  const [chosen, setChosen] = useState(null);
+
+  const introLines = useMemo(() => {
+    const lines = introData?.dialogs || [];
+    return lines.map((line) => ({
+      who: line.who || "guide",
+      text: line.text
+    }));
+  }, [introData]);
+
+  return (
+    <div>
+      <VideoScene 
+        src={introData?.videoUrl || introData?.background || "https://www.youtube.com/watch?v=Mzg-AdRrjGY"} 
+        badge={introData?.subtitle} 
+        title={introData?.title || "Cỗ Máy Thời Gian"} 
+      />
+      {phase === 0 && introLines.length > 0 && (
+        <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 md:p-6">
+          <DialogueSequence
+            lines={introLines}
+            onComplete={() => setPhase(1)}
+            ctaLabel="Chọn điểm khởi hành"
+          />
+        </div>
+      )}
+
+      {phase === 1 && (
+        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left">
+          <p className="font-semibold text-lg mb-1 text-gray-900">
+            Bạn muốn bắt đầu hành trình từ đâu?
+          </p>
+          <p className="text-sm text-gray-500 mb-4">
+            Một lựa chọn nhập vai — mọi nền văn minh đều dẫn tới cùng một bước ngoặt.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-3 mb-4">
+            {(introData?.startPoints || []).map((sp) => (
+              <button
+                key={sp.id}
+                type="button"
+                onClick={() => setChosen(sp.id)}
+                className={`rounded-xl border-2 p-4 text-center transition-all ${
+                  chosen === sp.id
+                    ? "border-red-800 bg-red-50 shadow-md"
+                    : "border-gray-200 hover:border-red-300 hover:bg-red-50/40"
+                }`}
+              >
+                <span className="material-symbols-outlined text-3xl text-red-800">
+                  {sp.icon}
+                </span>
+                <p className="font-bold text-gray-900 mt-1">{sp.label}</p>
+                <p className="text-xs text-gray-500">{sp.place}</p>
+              </button>
+            ))}
+          </div>
+
+          {chosen && (
+            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 j-bubble-in">
+              <p className="text-sm text-indigo-900 leading-relaxed mb-3">
+                {introData?.startConfirm}
+              </p>
+              <button
+                type="button"
+                onClick={() => onComplete(chosen)}
+                className="inline-flex items-center gap-1.5 bg-red-800 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+              >
+                Lên đường
+                <span className="material-symbols-outlined text-base">rocket_launch</span>
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CognitiveStage({ cognitiveData, onComplete }) {
+  const [phase, setPhase] = useState(0);
+  const [revealedSteps, setRevealedSteps] = useState(1);
+
+  const steps = cognitiveData?.conclusion?.steps || [];
+  const allStepsShown = revealedSteps >= steps.length;
+
+  useEffect(() => {
+    if (phase !== 4 || allStepsShown) return;
+    const t = setTimeout(() => setRevealedSteps((c) => c + 1), 1100);
+    return () => clearTimeout(t);
+  }, [phase, revealedSteps, allStepsShown, steps.length]);
+
+  return (
+    <div>
+      <VideoScene 
+        src={cognitiveData?.videoUrl || "https://www.youtube.com/watch?v=Mzg-AdRrjGY"} 
+        badge={cognitiveData?.badge} 
+        title={cognitiveData?.title} 
+        subtitle={cognitiveData?.subtitle} 
+      />
+
+      {phase === 0 && (
+        <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 md:p-6">
+          <DialogueSequence 
+            lines={cognitiveData?.setup || []} 
+            onComplete={() => setPhase(1)} 
+            ctaLabel="Trả lời" 
+          />
+        </div>
+      )}
+
+      {phase === 1 && cognitiveData?.myth && (
+        <GradedQuestion
+          prompt={cognitiveData.myth.prompt}
+          options={cognitiveData.myth.options}
+          correctFeedback={cognitiveData.myth.correctFeedback}
+          wrongFeedback={cognitiveData.myth.wrongFeedback}
+          onPass={() => setPhase(2)}
+          passLabel="Tiếp tục"
+        />
+      )}
+
+      {phase === 2 && (
+        <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 md:p-6">
+          <DialogueSequence 
+            lines={cognitiveData?.twist || []} 
+            onComplete={() => setPhase(3)} 
+            ctaLabel="Trả lời Lyra" 
+          />
+        </div>
+      )}
+
+      {phase === 3 && cognitiveData?.shift && (
+        <GradedQuestion
+          prompt={cognitiveData.shift.prompt}
+          options={cognitiveData.shift.options}
+          correctFeedback={cognitiveData.shift.correctFeedback}
+          wrongFeedback={cognitiveData.shift.wrongFeedback}
+          onPass={() => setPhase(4)}
+          passLabel="Đúc kết kiến thức"
+        />
+      )}
+
+      {phase === 4 && (
+        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left animate-fadeIn">
+          <h3 className="text-xl font-bold text-red-900 mb-4 flex items-center gap-2">
+            <span className="material-symbols-outlined">timeline</span>
+            {cognitiveData?.conclusion?.title}
+          </h3>
+          <div className="space-y-3">
+            {steps.slice(0, revealedSteps).map((step, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-4 bg-gradient-to-r from-red-50 to-amber-50 border border-red-100 rounded-xl p-4 j-card-reveal"
+              >
+                <div className="h-11 w-11 rounded-lg bg-red-800 text-white flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined">{step.icon}</span>
+                </div>
+                <div>
+                  <p className="font-bold text-red-900">{step.head}</p>
+                  <p className="text-sm text-gray-700 leading-relaxed">{step.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {!allStepsShown ? (
+            <p className="mt-4 text-sm text-gray-400 inline-flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-base animate-pulse">more_horiz</span>
+              Đang đúc kết…
+            </p>
+          ) : (
+            <div className="mt-5">
+              <PieceReward label={cognitiveData?.pieceLabel} onNext={() => onComplete("cognitive")} />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ChainGame({ chain, onSuccess }) {
+  const { showToast } = useToast();
+  
+  const shuffled = useMemo(() => {
+    if (!chain?.items) return [];
+    const arr = [...chain.items];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, [chain?.items]);
+
+  const [placed, setPlaced] = useState([]);
+  const [wrongId, setWrongId] = useState(null);
+  const done = placed.length === (chain?.items?.length || 0);
+
+  const handlePick = (item) => {
+    if (done || placed.includes(item.id)) return;
+    if (item.order === placed.length) {
+      const next = [...placed, item.id];
+      setPlaced(next);
+      setWrongId(null);
+      if (next.length === chain.items.length) {
+        showToast(chain.successFeedback || "Ghép nối chính xác!", "success");
+      }
+    } else {
+      setWrongId(item.id);
+      showToast("Chưa đúng thứ tự — hãy bắt đầu từ nguyên nhân gốc rễ.", "warning");
+      setTimeout(() => setWrongId(null), 500);
+    }
+  };
+
+  const itemById = (id) => chain?.items?.find((it) => it.id === id);
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left animate-fadeIn">
+      <h3 className="text-xl font-bold text-red-900 mb-1 flex items-center gap-2">
+        <span className="material-symbols-outlined">link</span>
+        {chain?.title || "Lắp ráp chuỗi nhân quả"}
+      </h3>
+      <p className="text-sm text-gray-500 mb-4">{chain?.instruction}</p>
+
+      <div className="space-y-2 mb-5">
+        {placed.map((id, index) => {
+          const item = itemById(id);
+          return (
+            <div key={id}>
+              <div className="flex items-center gap-3 bg-green-50 border-2 border-green-400 rounded-xl px-4 py-3 j-unlock">
+                <span className="h-7 w-7 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold shrink-0">
+                  {index + 1}
+                </span>
+                <span className="material-symbols-outlined text-green-700">{item?.icon || "link"}</span>
+                <span className="text-sm text-green-900 font-medium">{item?.text}</span>
+              </div>
+              {index < (chain?.items?.length || 0) - 1 && (
+                <div className="flex justify-center text-gray-300">
+                  <span className="material-symbols-outlined">arrow_downward</span>
+                </div>
+              )}
+            </div>
+          );
+        })}
+        {done && (
+          <p className="text-center text-green-700 font-semibold text-sm mt-2 j-bubble-in">
+            {chain?.successFeedback}
+          </p>
+        )}
+      </div>
+
+      {!done && (
+        <div className="grid sm:grid-cols-2 gap-3">
+          {shuffled
+            .filter((it) => !placed.includes(it.id))
+            .map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handlePick(item)}
+                className={`flex items-center gap-3 text-left rounded-xl border-2 px-4 py-3 transition-all ${
+                  wrongId === item.id
+                    ? "border-red-500 bg-red-50 j-shake"
+                    : "border-gray-200 bg-white hover:border-red-400 hover:bg-red-50"
+                }`}
+              >
+                <span className="material-symbols-outlined text-red-800 shrink-0">{item.icon || "radio_button_unchecked"}</span>
+                <span className="text-sm text-gray-800">{item.text}</span>
+              </button>
+            ))}
+        </div>
+      )}
+
+      {done && (
+        <div className="mt-5">
+          <PieceReward label={chain?.reward || "MẢNH GHÉP MỚI"} onNext={onSuccess} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SocialStage({ socialData, minigameData, onComplete }) {
+  const [phase, setPhase] = useState(0);
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  const roles = socialData?.roles || [];
+  const role = roles[roleIndex];
+
+  const handleRolePass = () => {
+    if (roleIndex < roles.length - 1) {
+      setRoleIndex((i) => i + 1);
+    } else {
+      setPhase(2);
+    }
+  };
+
+  return (
+    <div>
+      <VideoScene 
+        src={socialData?.videoUrl || "https://www.youtube.com/watch?v=Mzg-AdRrjGY"} 
+        badge={socialData?.badge} 
+        title={socialData?.title} 
+        subtitle={socialData?.subtitle} 
+      />
+
+      {phase === 0 && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={() => setPhase(1)}
+            className="inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+          >
+            Vào vai trải nghiệm
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </div>
+      )}
+
+      {phase === 1 && role && (
+        <div className="space-y-4 text-left animate-fadeIn">
+          <div className="bg-gray-900 text-white rounded-xl px-4 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
+            <span className="material-symbols-outlined text-base">theater_comedy</span>
+            {role.label}
+          </div>
+          <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+            <SpeechBubble who={role.who} text={role.intro} animate={false} />
+          </div>
+          <GradedQuestion
+            key={role.who}
+            prompt={role.question}
+            options={role.options}
+            correctFeedback={role.feedbackCorrect}
+            wrongFeedback={role.feedbackWrong}
+            onPass={handleRolePass}
+            passLabel={roleIndex < roles.length - 1 ? "Sang vai tiếp theo" : "Tới đại hội bộ tộc"}
+          />
+        </div>
+      )}
+
+      {phase === 2 && socialData?.keyQuestion && (
+        <div className="space-y-4 animate-fadeIn">
+          <GradedQuestion
+            prompt={socialData.keyQuestion.prompt}
+            options={socialData.keyQuestion.options}
+            correctFeedback={socialData.keyQuestion.correctFeedback}
+            wrongFeedback={socialData.keyQuestion.wrongFeedback}
+            onPass={() => setPhase(3)}
+            passLabel="Ghi nhớ điều cốt lõi"
+          />
+        </div>
+      )}
+
+      {phase === 3 && (
+        <div className="space-y-4 text-left animate-fadeIn">
+          <div className="bg-amber-50 border-l-4 border-amber-500 rounded-r-xl p-4 j-bubble-in">
+            <p className="text-amber-900 font-bold flex items-center gap-2 mb-2">
+              <span className="material-symbols-outlined">warning</span>
+              GHI NHỚ
+            </p>
+            <ul className="space-y-2">
+              {(socialData?.warning || []).map((text, i) => (
+                <li key={i} className="flex items-start gap-2 text-amber-900 leading-relaxed">
+                  <span className="material-symbols-outlined text-base text-amber-600 mt-0.5 shrink-0">
+                    chevron_right
+                  </span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => setPhase(4)}
+              className="inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+            >
+              Lắp ráp chuỗi nhân quả
+              <span className="material-symbols-outlined text-base">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {phase === 4 && minigameData?.config && (
+        <ChainGame chain={minigameData.config} onSuccess={() => onComplete("social")} />
+      )}
+    </div>
+  );
+}
+
+function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
+  if (!merged) {
+    return (
+      <div className="animate-fadeIn">
+        <SceneBanner scene="synthesis" badge="Hợp nhất tri thức" title={summaryData?.title || "Hợp nhất tri thức"} />
+        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 md:p-8 text-center">
+          <div className="inline-flex h-16 w-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white items-center justify-center shadow-lg j-glow">
+            <span className="material-symbols-outlined text-4xl">extension</span>
+          </div>
+          <h3 className="text-xl md:text-2xl font-bold text-red-900 mt-4">
+            Bạn đã thu thập đủ 2 mảnh ghép tri thức!
+          </h3>
+          <p className="text-gray-600 mt-2 max-w-lg mx-auto leading-relaxed">
+            Hãy ghép hai mảnh <strong>Nguồn gốc nhận thức</strong> và{" "}
+            <strong>Nguồn gốc xã hội</strong> lại với nhau để hé lộ bức tranh hoàn chỉnh về
+            nguồn gốc của Triết học.
+          </p>
+          <button
+            type="button"
+            onClick={onMerge}
+            className="mt-6 inline-flex items-center gap-2 bg-red-800 text-white px-7 py-3.5 rounded-xl font-bold text-lg hover:bg-red-900 transition-colors shadow-md active:scale-95"
+          >
+            <span className="material-symbols-outlined">join_full</span>
+            Ghép 2 mảnh tri thức
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="animate-fadeIn">
+      <SceneBanner scene="synthesis" badge="Đúc kết hoàn chỉnh" title={summaryData?.title || "Hợp nhất tri thức"} />
+      <div className="bg-gradient-to-br from-red-50 via-white to-amber-50 border border-red-100 rounded-2xl p-6 md:p-7 shadow-md j-unlock text-left">
+        <div className="text-center">
+          <div className="inline-block rounded-2xl px-6 py-4 text-white bg-gradient-to-br from-red-700 to-red-900 shadow-lg j-glow">
+            <span className="material-symbols-outlined text-3xl">hub</span>
+            <p className="font-bold text-xl mt-1">{summaryData?.center}</p>
+            <p className="text-xs text-white/80 mt-0.5">{summaryData?.centerNote}</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-3 mt-6">
+          {(summaryData?.branches || []).map((b) => (
+            <div
+              key={b.id}
+              className={`rounded-xl p-4 text-white bg-gradient-to-br ${b.color} shadow`}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="material-symbols-outlined">{b.icon}</span>
+                <h4 className="font-bold">{b.title}</h4>
+              </div>
+              <ul className="space-y-1.5 text-sm text-white/90">
+                {(b.points || []).map((p, i) => (
+                  <li key={i} className="flex items-start gap-1.5">
+                    <span className="material-symbols-outlined text-sm mt-0.5">chevron_right</span>
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 bg-white border-l-4 border-red-700 rounded-r-xl p-4 shadow-sm">
+          <p className="text-xs uppercase tracking-wider text-red-700 font-bold mb-1 flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-base">auto_awesome</span>
+            Đúc kết hoàn chỉnh
+          </p>
+          <p className="text-gray-800 leading-relaxed">{summaryData?.finalStatement}</p>
+        </div>
+
+        <div className="mt-6 text-center">
+          <button
+            type="button"
+            onClick={onComplete}
+            className="inline-flex items-center gap-1.5 bg-red-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-900 transition-colors shadow-md active:scale-95"
+          >
+            Làm bài kiểm tra tổng kết
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PieceSlot({ branch, index, collected, active }) {
+  if (!branch) return null;
+  if (collected) {
+    return (
+      <div className={`rounded-xl p-3.5 text-white bg-gradient-to-br ${branch.color || "from-gray-700 to-gray-900"} shadow-sm j-unlock text-left`}>
+        <div className="flex items-center gap-2">
+          <span className="h-7 w-7 rounded-full bg-white/25 flex items-center justify-center text-xs font-bold shrink-0">
+            {index + 1}
+          </span>
+          <span className="material-symbols-outlined">{branch.icon}</span>
+          <h4 className="font-bold text-sm leading-tight">{branch.title}</h4>
+          <span className="material-symbols-outlined ml-auto text-white/90">check_circle</span>
+        </div>
+        <p className="text-xs text-white/90 mt-2 leading-relaxed">{branch.tagline}</p>
+      </div>
+    );
+  }
+  return (
+    <div
+      className={`rounded-xl p-3.5 border-2 border-dashed transition-all text-left ${
+        active ? "border-red-300 bg-red-50/50" : "border-gray-200 bg-gray-50"
+      }`}
+    >
+      <div className="flex items-center gap-2">
+        <span
+          className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+            active ? "bg-red-200 text-red-800" : "bg-gray-200 text-gray-400"
+          }`}
+        >
+          {index + 1}
         </span>
-        <div className="flex gap-2">
-          <span className={`h-2.5 w-8 rounded-full transition-all duration-300 ${phase === "intro" ? "bg-red-600 scale-105" : "bg-slate-800"}`} />
-          <span className={`h-2.5 w-8 rounded-full transition-all duration-300 ${phase === "contents" ? "bg-amber-500 scale-105" : "bg-slate-800"}`} />
-          <span className={`h-2.5 w-8 rounded-full transition-all duration-300 ${phase === "minigame" ? "bg-indigo-500 scale-105" : "bg-slate-800"}`} />
-          <span className={`h-2.5 w-8 rounded-full transition-all duration-300 ${phase === "final" ? "bg-emerald-500 scale-105" : "bg-slate-800"}`} />
+        <span className={`material-symbols-outlined ${active ? "text-red-400" : "text-gray-300"}`}>
+          {active ? "hourglass_top" : "lock"}
+        </span>
+        <span className={`text-sm font-semibold ${active ? "text-red-700" : "text-gray-400"}`}>
+          {active ? "Đang khám phá…" : "Chưa mở khóa"}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function KnowledgePanel({ branches = [], pieces, activePieceId, canMerge, merged, onMerge }) {
+  if (branches.length < 2) return null;
+  return (
+    <aside className="lg:sticky lg:top-[5.5rem] w-full">
+      <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden">
+        <div className="bg-gradient-to-r from-red-900 to-red-800 px-4 py-3 text-white text-left">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined">extension</span>
+            <h3 className="font-bold">Nguồn Gốc Triết Học</h3>
+            <span className="ml-auto text-xs bg-white/20 px-2 py-0.5 rounded-full font-bold tabular-nums">
+              {pieces.length}/2
+            </span>
+          </div>
+        </div>
+
+        <div className="p-4 space-y-2.5">
+          <PieceSlot
+            branch={branches[0]}
+            index={0}
+            collected={pieces.includes(branches[0].id)}
+            active={activePieceId === branches[0].id}
+          />
+
+          <div className="flex justify-center">
+            <span
+              className={`material-symbols-outlined text-2xl ${
+                merged ? "text-green-500" : canMerge ? "text-red-500 animate-pulse" : "text-gray-300"
+              }`}
+            >
+              {merged ? "link" : "add"}
+            </span>
+          </div>
+
+          <PieceSlot
+            branch={branches[1]}
+            index={1}
+            collected={pieces.includes(branches[1].id)}
+            active={activePieceId === branches[1].id}
+          />
+
+          {!merged && (
+            <div className="pt-2">
+              {canMerge ? (
+                <button
+                  type="button"
+                  onClick={onMerge}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-red-800 text-white px-4 py-3 rounded-xl font-bold hover:bg-red-900 transition-colors shadow-md j-glow active:scale-95"
+                >
+                  <span className="material-symbols-outlined">join_full</span>
+                  Ghép 2 mảnh
+                </button>
+              ) : (
+                <p className="text-center text-xs text-gray-400 leading-relaxed px-2">
+                  Hoàn thành cả 2 phần học để mở khóa thao tác ghép.
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+function FinalQuizStage({ questions = [], onComplete }) {
+  const { showToast } = useToast();
+  const total = questions.length;
+
+  const [index, setIndex] = useState(0);
+  const [wrongPicks, setWrongPicks] = useState([]);
+  const [solved, setSolved] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const q = questions[index];
+
+  const handlePick = (optIndex) => {
+    if (solved) return;
+    if (optIndex === q.correctIndex) {
+      if (wrongPicks.length === 0) setScore((s) => s + 1);
+      setSolved(true);
+    } else if (!wrongPicks.includes(optIndex)) {
+      setWrongPicks((prev) => [...prev, optIndex]);
+    }
+  };
+
+  const goNext = () => {
+    if (index === total - 1) {
+      const passed = score >= 4; // Min 4/5 questions correct on first try to pass smoothly
+      showToast(
+        passed
+          ? `Xuất sắc! Bạn đúng ngay ${score}/${total} câu.`
+          : `Bạn đúng ngay ${score}/${total} câu — ôn lại nhé.`,
+        passed ? "success" : "warning"
+      );
+      onComplete(score);
+      return;
+    }
+    setIndex((i) => i + 1);
+    setWrongPicks([]);
+    setSolved(false);
+  };
+
+  const progress = Math.round((index / total) * 100);
+
+  if (!q) return null;
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md border border-red-200 p-6 md:p-7 text-left animate-fadeIn">
+      <div className="flex items-center gap-2 mb-1">
+        <span className="material-symbols-outlined text-red-800">assignment</span>
+        <span className="text-xs uppercase tracking-wider text-red-800 font-bold">
+          Kiểm tra tổng kết hành trình
+        </span>
+      </div>
+      <h2 className="text-2xl font-bold text-red-900 mb-4">Bạn đã hiểu nguồn gốc triết học?</h2>
+
+      <div className="flex items-center gap-3 mb-6">
+        <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="h-full bg-red-800 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
+        </div>
+        <span className="text-sm text-gray-500 tabular-nums shrink-0">{index + 1}/{total}</span>
+      </div>
+
+      <p className="font-semibold text-lg mb-4 text-gray-900 font-serif">
+        Câu {index + 1}. {q.question}
+      </p>
+      <div className="space-y-2.5">
+        {q.options.map((opt, optIndex) => (
+          <button
+            key={optIndex}
+            type="button"
+            disabled={solved}
+            onClick={() => handlePick(optIndex)}
+            className={getOptionClass({
+              resolved: solved,
+              isCorrect: optIndex === q.correctIndex,
+              isWrongPick: wrongPicks.includes(optIndex),
+            })}
+          >
+            <span className="material-symbols-outlined text-xl shrink-0">
+              {solved && optIndex === q.correctIndex
+                ? "check_circle"
+                : wrongPicks.includes(optIndex)
+                ? "cancel"
+                : "radio_button_unchecked"}
+            </span>
+            {opt}
+          </button>
+        ))}
+      </div>
+
+      {!solved && wrongPicks.length > 0 && (
+        <div className="mt-4 bg-red-50 border border-red-200 text-red-800 p-3 rounded-lg text-sm flex items-center gap-2">
+          <span className="material-symbols-outlined text-base">error</span>
+          Chưa chính xác — hãy thử một đáp án khác.
+        </div>
+      )}
+
+      {solved && (
+        <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-lg j-bubble-in">
+          <p className="font-bold text-green-800 flex items-center gap-2 mb-1">
+            <span className="material-symbols-outlined text-base">lightbulb</span>
+            Chính xác!
+          </p>
+          <p className="text-sm text-green-900/90 leading-relaxed font-serif">{q.explanation}</p>
+          <button
+            type="button"
+            onClick={goNext}
+            className="mt-4 inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+          >
+            {index === total - 1 ? "Xem kết quả" : "Câu tiếp theo"}
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CompletionStage({ score, total, completionData, xpReward, badgeReward, onReplay, onBackToMindmap }) {
+  return (
+    <div className="relative overflow-hidden rounded-3xl shadow-xl bg-gradient-to-br from-[#0A3CA0] via-[#062E81] to-[#041C52] text-white text-center animate-fadeIn">
+      <div className="absolute -right-20 -top-20 w-72 h-72 bg-blue-400/25 rounded-full blur-3xl" />
+      <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-amber-300/15 rounded-full blur-3xl" />
+
+      <div className="relative p-8 md:p-10">
+        <div className="inline-flex items-center gap-1.5 bg-white/15 border border-white/25 backdrop-blur px-4 py-1.5 rounded-full text-sm font-bold mb-6">
+          <span className="material-symbols-outlined text-base">verified</span>
+          Hoàn thành hành trình
+        </div>
+
+        <div className="flex flex-col items-center j-unlock">
+          <div className="h-24 w-24 rounded-full bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center shadow-2xl ring-4 ring-white/25">
+            <span className="material-symbols-outlined text-5xl text-white">military_tech</span>
+          </div>
+          <p className="text-xs uppercase tracking-widest text-blue-100 mt-4 font-bold">Huy hiệu đạt được</p>
+          <h2 className="text-3xl font-bold mt-1">{completionData?.badge || badgeReward}</h2>
+          <p className="text-white/75 text-sm">{completionData?.badgeNote || "Hành trình hoàn thành!"}</p>
+        </div>
+
+        <div className="bg-white/12 border border-white/20 backdrop-blur rounded-2xl px-6 py-4 mt-6 inline-block">
+          <p className="text-sm text-blue-50/90">Kết quả kiểm tra</p>
+          <p className="text-2xl font-bold tabular-nums">{score}/{total} câu đúng ngay lần đầu</p>
+        </div>
+
+        <p className="max-w-xl mx-auto text-white/90 leading-relaxed mt-6">{completionData?.message || "Chúc mừng đồng chí đã hoàn thành xuất sắc!"}</p>
+
+        {completionData?.quote && (
+          <blockquote className="max-w-lg mx-auto border-l-4 border-amber-300 pl-4 text-left mt-6 italic text-white/90 font-serif">
+            "{completionData.quote.text}"
+            <footer className="text-sm text-amber-200 not-italic mt-1">— {completionData.quote.author}</footer>
+          </blockquote>
+        )}
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={onReplay}
+            className="inline-flex items-center gap-1.5 bg-white/15 border border-white/30 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/25 transition-colors active:scale-95"
+          >
+            <span className="material-symbols-outlined text-base">replay</span>
+            Chơi lại hành trình
+          </button>
+
+          <button
+            type="button"
+            onClick={onBackToMindmap}
+            className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-300 to-orange-400 text-blue-950 px-6 py-3 rounded-xl font-bold hover:from-amber-400 hover:to-orange-500 transition-colors shadow-lg active:scale-95"
+          >
+            Hoàn thành & Quay lại sơ đồ
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function JourneyHeader({ stage, pieces, onBack, onReset }) {
+  const steps = STAGES.slice(0, 5);
+  const activeIndex = STAGES.indexOf(stage);
+  const canGoBack = activeIndex > 0;
+  const currentLabel = STAGE_LABELS[steps[Math.min(activeIndex, steps.length - 1)]];
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-4 md:p-5 mb-6 sticky top-4 z-20 text-left">
+      <div className="flex items-center justify-between gap-3 mb-5">
+        <button
+          type="button"
+          onClick={onBack}
+          disabled={!canGoBack}
+          title="Quay lại chặng trước"
+          className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-bold border-2 transition-all ${
+            canGoBack
+              ? "border-red-800 text-red-800 bg-white hover:bg-red-800 hover:text-white shadow-sm active:scale-95"
+              : "border-gray-100 text-gray-300 cursor-not-allowed"
+          }`}
+        >
+          <span className="material-symbols-outlined text-lg">arrow_back</span>
+          <span className="hidden sm:inline">Quay lại</span>
+        </button>
+
+        <div className="text-center min-w-0">
+          <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold leading-none">
+            Chặng {Math.min(activeIndex + 1, steps.length)}/{steps.length}
+          </p>
+          <p className="text-sm md:text-base font-bold text-red-900 truncate leading-tight mt-0.5">
+            {currentLabel}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <div
+            className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full"
+            title="Mảnh ghép tri thức đã thu thập"
+          >
+            <span className="material-symbols-outlined text-amber-600 text-base">extension</span>
+            <span className="text-sm font-bold text-amber-700 tabular-nums">
+              {pieces.length}/2
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onReset}
+            title="Bắt đầu lại từ đầu"
+            className="inline-flex items-center justify-center h-9 w-9 rounded-full text-gray-400 hover:text-white hover:bg-red-700 border border-gray-200 hover:border-red-700 transition-all active:scale-95"
+          >
+            <span className="material-symbols-outlined text-lg">restart_alt</span>
+          </button>
         </div>
       </div>
 
-      {/* Vùng Content chính */}
-      <div className="flex-1 p-6 md:p-8 flex flex-col items-center justify-center relative min-h-[380px]">
-        {/* Phase 1: Intro */}
-        {phase === "intro" && (
-          <div className="w-full max-w-2xl text-center space-y-6 animate-fadeIn">
-            {storyIntro?.background && (
-              <div 
-                className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none transition-opacity duration-700" 
-                style={{ backgroundImage: `url(${storyIntro.background})` }}
+      <div className="flex items-start">
+        {steps.map((s, i) => {
+          const done = i < activeIndex;
+          const active = i === activeIndex;
+          return (
+            <React.Fragment key={s}>
+              <div className="flex flex-col items-center gap-1.5 shrink-0 w-14 md:w-16">
+                <div
+                  className={`h-9 w-9 md:h-10 md:w-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                    done
+                      ? "bg-green-500 text-white shadow-sm"
+                      : active
+                      ? "bg-red-800 text-white ring-4 ring-red-100 shadow-md scale-110"
+                      : "bg-white text-gray-400 border-2 border-gray-200"
+                  }`}
+                >
+                  {done ? (
+                    <span className="material-symbols-outlined text-lg">check</span>
+                  ) : (
+                    i + 1
+                  )}
+                </div>
+                <span
+                  className={`text-[11px] md:text-xs font-semibold text-center leading-tight ${
+                    active ? "text-red-800" : done ? "text-green-600" : "text-gray-400"
+                  }`}
+                >
+                  {STAGE_LABELS[s]}
+                </span>
+              </div>
+
+              {i < steps.length - 1 && (
+                <div className="flex-1 h-1.5 rounded-full bg-gray-200 overflow-hidden mt-[15px] md:mt-[17px]">
+                  <div
+                    className={`h-full rounded-full bg-green-500 transition-all duration-500 ${
+                      done ? "w-full" : "w-0"
+                    }`}
+                  />
+                </div>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+const INITIAL_STATE = { stage: "intro", pieces: [], startPoint: null, score: null, merged: false };
+
+export default function AdventureLessonPlayer({ 
+  nodeDetails, 
+  isRevisit, 
+  onComplete, 
+  onBackToMindmap 
+}) {
+  const storageKey = useMemo(() => `philosophy_journey_state_${nodeDetails?.id || "default"}`, [nodeDetails?.id]);
+  const [state, setState] = useLocalStorage(storageKey, INITIAL_STATE);
+
+  const introData = useMemo(() => nodeDetails?.storyIntro || {}, [nodeDetails?.storyIntro]);
+  const cognitiveData = useMemo(() => {
+    const list = nodeDetails?.lessonContents || [];
+    return list.find(c => c.id === "cognitive") || list[0] || {};
+  }, [nodeDetails?.lessonContents]);
+  const socialData = useMemo(() => {
+    const list = nodeDetails?.lessonContents || [];
+    return list.find(c => c.id === "social") || list[1] || {};
+  }, [nodeDetails?.lessonContents]);
+  const minigame = useMemo(() => nodeDetails?.minigame || {}, [nodeDetails?.minigame]);
+  const summaryData = useMemo(() => nodeDetails?.finalSummary?.summary || {}, [nodeDetails?.finalSummary]);
+  const finalQuizQuestions = useMemo(() => nodeDetails?.finalSummary?.quiz || [], [nodeDetails?.finalSummary]);
+  const completionData = useMemo(() => nodeDetails?.finalSummary?.completion || {}, [nodeDetails?.finalSummary]);
+  const xpReward = useMemo(() => nodeDetails?.finalSummary?.rewards?.xp || 120, [nodeDetails?.finalSummary]);
+  const badgeReward = useMemo(() => nodeDetails?.finalSummary?.rewards?.badge || "Nhà Khai Sáng", [nodeDetails?.finalSummary]);
+
+  const setStage = useCallback(
+    (patch) => setState((prev) => ({ ...prev, ...patch })),
+    [setState]
+  );
+
+  const collectPiece = useCallback(
+    (pieceId, nextStage) =>
+      setState((prev) => ({
+        ...prev,
+        pieces: prev.pieces.includes(pieceId) ? prev.pieces : [...prev.pieces, pieceId],
+        stage: nextStage,
+      })),
+    [setState]
+  );
+
+  const reset = useCallback(() => setState(INITIAL_STATE), [setState]);
+
+  const mergePieces = useCallback(() => setStage({ merged: true }), [setStage]);
+
+  const goBack = useCallback(
+    () =>
+      setState((prev) => {
+        const idx = STAGES.indexOf(prev.stage);
+        if (idx <= 0) return prev;
+        return { ...prev, stage: STAGES[idx - 1] };
+      }),
+    [setState]
+  );
+
+  const handleFinalQuizComplete = useCallback((finalScore) => {
+    setStage({ score: finalScore, stage: "done" });
+    if (onComplete) {
+      onComplete(); // Save completion status to Database
+    }
+  }, [setStage, onComplete]);
+
+  const handleReplay = useCallback(() => {
+    reset();
+  }, [reset]);
+
+  const handleFinish = useCallback(() => {
+    reset();
+    if (onBackToMindmap) {
+      onBackToMindmap();
+    }
+  }, [reset, onBackToMindmap]);
+
+  const { stage, pieces, score, merged } = state;
+
+  const showPanel = stage === "cognitive" || stage === "social" || stage === "summary";
+  const activePieceId =
+    stage === "cognitive" ? "cognitive" : stage === "social" ? "social" : null;
+
+  return (
+    <div className={`${showPanel ? "max-w-6xl" : "max-w-3xl"} mx-auto transition-all w-full`}>
+      <div className="mb-5 text-left">
+        <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-850 px-3 py-1.5 rounded-full text-xs font-bold mb-2">
+          <span className="material-symbols-outlined text-base">explore</span>
+          Bài học tương tác
+        </div>
+        <h1 className="font-bold text-3xl md:text-4xl text-red-950 leading-tight">
+          Hành trình Khai Sáng: {nodeDetails?.title || "Nguồn gốc của Triết học"}
+        </h1>
+        <p className="text-gray-500 mt-1">
+          Học qua trò chơi nhập vai — bạn là người trả lời, hệ thống dẫn dắt và đặt câu hỏi.
+        </p>
+      </div>
+
+      {stage !== "done" && (
+        <JourneyHeader stage={stage} pieces={pieces} onBack={goBack} onReset={reset} />
+      )}
+
+      {showPanel ? (
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-6 items-start w-full">
+          <div className="min-w-0">
+            {stage === "cognitive" && (
+              <CognitiveStage 
+                cognitiveData={cognitiveData} 
+                onComplete={(piece) => collectPiece(piece, "social")} 
               />
             )}
-            
-            <div className="flex justify-center mb-4">
-              <div className="relative h-40 w-40 bg-gradient-to-tr from-red-800/30 to-amber-500/20 rounded-full border border-red-500/30 flex items-center justify-center overflow-hidden shadow-lg">
-                {storyIntro?.character?.avatar ? (
-                  <img src={storyIntro.character.avatar} alt="Character" className="h-full w-full object-cover" />
-                ) : (
-                  <span className="material-symbols-outlined text-6xl text-red-500 animate-pulse">account_circle</span>
-                )}
-                <div className="absolute bottom-2 bg-red-900/90 text-white font-bold text-2xs px-2.5 py-0.5 rounded-full border border-red-800">
-                  {storyIntro?.character?.name || "Người dẫn chuyện"}
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-slate-950/90 border border-slate-850 rounded-2xl p-6 md:p-8 shadow-xl relative min-h-[120px] flex items-center justify-center">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45 bg-slate-950 border-t border-l border-slate-855" />
-              <p className="text-base md:text-lg text-slate-200 leading-relaxed font-serif">
-                {activeDialog?.text || "..."}
-              </p>
-            </div>
-
-            <div className="flex justify-center pt-2">
-              <button
-                type="button"
-                onClick={handleNextDialog}
-                className="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-full font-bold shadow-lg transition-transform hover:scale-105 active:scale-95 flex items-center gap-1.5"
-              >
-                <span>{introIndex < (storyIntro?.dialogs?.length || 0) - 1 ? "Tiếp theo" : (storyIntro?.nextButton?.text || "Bắt đầu bài học")}</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Phase 2: Contents */}
-        {phase === "contents" && (
-          <div className="w-full max-w-3xl space-y-6 animate-fadeIn">
-            <div className="flex justify-between items-center text-xs text-slate-400 uppercase font-bold tracking-wider mb-2 border-b border-slate-800/60 pb-3">
-              <span>Khái niệm {activeConceptIdx + 1}/{lessonContents.length}: {lessonContents[activeConceptIdx]?.title}</span>
-              <span className="text-amber-550 font-bold bg-amber-955/40 px-2 py-0.5 rounded-md border border-amber-900/40">
-                {conceptStep === "media" ? "1. Tình huống" : conceptStep === "question" ? "2. Trả lời" : "3. Đúc kết"}
-              </span>
-            </div>
-
-            {/* Step: Media */}
-            {conceptStep === "media" && (
-              <div className="space-y-6">
-                <div className="relative rounded-2xl overflow-hidden shadow-lg border border-slate-800 bg-slate-950 flex items-center justify-center min-h-[300px]">
-                  {lessonContents[activeConceptIdx]?.media?.type === "video" ? (
-                    getYoutubeId(lessonContents[activeConceptIdx]?.media?.url) ? (
-                      <iframe
-                        title="concept-video"
-                        width="100%"
-                        height="360"
-                        src={`https://www.youtube.com/embed/${getYoutubeId(lessonContents[activeConceptIdx]?.media?.url)}?autoplay=${lessonContents[activeConceptIdx]?.media?.autoplay ? 1 : 0}`}
-                        frameBorder="0"
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                        className="w-full"
-                      />
-                    ) : (
-                      <div className="text-center p-8 text-slate-500">
-                        <span className="material-symbols-outlined text-6xl mb-2 text-slate-700">video_camera_back</span>
-                        <p>Video tình huống chưa cấu hình</p>
-                      </div>
-                    )
-                  ) : (
-                    lessonContents[activeConceptIdx]?.media?.url ? (
-                      <img 
-                        src={lessonContents[activeConceptIdx].media.url} 
-                        alt="Concept Media" 
-                        className="max-h-[360px] object-contain rounded-xl"
-                      />
-                    ) : (
-                      <div className="text-center p-8 text-slate-500">
-                        <span className="material-symbols-outlined text-6xl mb-2 text-slate-700">image</span>
-                        <p>Hình ảnh minh họa chưa được thiết lập</p>
-                      </div>
-                    )
-                  )}
-                </div>
-
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    onClick={handleConceptMediaNext}
-                    className="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-xl font-bold transition-transform hover:scale-105 active:scale-95 flex items-center gap-1.5 shadow-md"
-                  >
-                    <span>Tiếp tục kiểm tra lý luận</span>
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </button>
-                </div>
-              </div>
+            {stage === "social" && (
+              <SocialStage 
+                socialData={socialData} 
+                minigameData={minigame} 
+                onComplete={(piece) => collectPiece(piece, "summary")} 
+              />
             )}
-
-            {/* Step: Questions */}
-            {(conceptStep === "question" || conceptStep === "explanation") && (
-              <div className="space-y-6 text-left">
-                {(() => {
-                  const currentQ = lessonContents[activeConceptIdx]?.questions?.[activeQuestionIdx];
-                  if (!currentQ) return null;
-                  return (
-                    <div className="space-y-6">
-                      <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800/80 shadow-md">
-                        <label className="text-2xs uppercase text-slate-500 font-bold tracking-wider block mb-1">Câu hỏi trắc nghiệm kiểm tra {activeQuestionIdx + 1}:</label>
-                        <h4 className="text-base md:text-lg font-bold leading-relaxed text-slate-200">
-                          {currentQ.question}
-                        </h4>
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-3">
-                        {currentQ.answers?.map((ans) => {
-                          const isSelected = selectedAnswer?.answerId === ans.answerId;
-                          
-                          let btnClass = "bg-slate-955 border-slate-850 hover:border-slate-700 hover:bg-slate-900/60 text-slate-300";
-                          if (isSelected) {
-                            btnClass = ans.isCorrect 
-                              ? "bg-emerald-950/40 border-emerald-500 text-emerald-300"
-                              : "bg-red-950/40 border-red-500 text-red-300";
-                          }
-
-                          return (
-                            <button
-                              key={ans.answerId}
-                              type="button"
-                              onClick={() => handleAnswerSelect(ans)}
-                              disabled={showExplanation && selectedAnswer?.answerId !== ans.answerId}
-                              className={`w-full text-left p-4 rounded-xl border text-sm font-semibold transition-all duration-300 ${btnClass} disabled:opacity-50 flex items-center justify-between`}
-                            >
-                              <span>{ans.text}</span>
-                              {isSelected && (
-                                <span className="material-symbols-outlined text-base">
-                                  {ans.isCorrect ? "check_circle" : "cancel"}
-                                </span>
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-
-                      {showExplanation && selectedAnswer && (
-                        <div className={`p-5 rounded-2xl border text-xs leading-relaxed transition-all duration-300 ${
-                          selectedAnswer.isCorrect 
-                            ? "bg-emerald-950/20 border-emerald-900/50 text-slate-350" 
-                            : "bg-red-950/20 border-red-900/50 text-slate-350"
-                        }`}>
-                          <div className="flex items-center gap-1.5 font-bold mb-2">
-                            <span className="material-symbols-outlined text-sm">
-                              {selectedAnswer.isCorrect ? "verified" : "info"}
-                            </span>
-                            <span>{selectedAnswer.isCorrect ? "Giải thích khoa học:" : "Gợi ý lý luận:"}</span>
-                          </div>
-                          <p>{selectedAnswer.explanation || "Không có giải thích bổ sung."}</p>
-                          
-                          <div className="flex justify-end mt-4">
-                            <button
-                              type="button"
-                              onClick={handleQuestionNext}
-                              className={`px-6 py-2 rounded-lg font-bold text-xs transition-all ${
-                                selectedAnswer.isCorrect 
-                                  ? "bg-emerald-800 hover:bg-emerald-700 text-white" 
-                                  : "bg-red-800 hover:bg-red-700 text-white"
-                              }`}
-                            >
-                              {selectedAnswer.isCorrect ? "Tiếp tục" : "Lập luận lại"}
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })()}
-              </div>
-            )}
-
-            {/* Step: Summary */}
-            {conceptStep === "summary" && (
-              <div className="space-y-6 text-left">
-                {(() => {
-                  const summary = lessonContents[activeConceptIdx]?.conceptSummary;
-                  return (
-                    <div className="bg-gradient-to-br from-amber-950/20 to-orange-950/10 rounded-2xl border border-amber-900/40 p-6 md:p-8 space-y-4 shadow-xl">
-                      <div className="flex items-center gap-2 border-b border-amber-900/45 pb-3">
-                        <span className="material-symbols-outlined text-amber-500 text-2xl">menu_book</span>
-                        <h3 className="text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-300">
-                          {summary?.title || "Đúc kết khái niệm"}
-                        </h3>
-                      </div>
-                      
-                      {summary?.content && Array.isArray(summary.content) && summary.content.length > 0 ? (
-                        <ul className="space-y-3.5 text-slate-300 text-sm md:text-base">
-                          {summary.content.map((point, idx) => (
-                            <li key={idx} className="flex items-start gap-2 leading-relaxed">
-                              <span className="material-symbols-outlined text-amber-500 text-base shrink-0 pt-0.5">check_circle</span>
-                              <span>{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-slate-400 italic text-sm">Chưa cập nhật lý thuyết tóm tắt cho khái niệm này.</p>
-                      )}
-                    </div>
-                  );
-                })()}
-
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    onClick={handleConceptSummaryNext}
-                    className="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-xl font-bold transition-transform hover:scale-105 active:scale-95 flex items-center gap-1.5 shadow-md"
-                  >
-                    <span>{activeConceptIdx < lessonContents.length - 1 ? "Khái niệm tiếp theo" : "Bắt đầu Minigame củng cố"}</span>
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </button>
-                </div>
-              </div>
+            {stage === "summary" && (
+              <SummaryStage
+                summaryData={summaryData}
+                merged={merged}
+                onMerge={mergePieces}
+                onComplete={() => setStage({ stage: "quiz" })}
+              />
             )}
           </div>
-        )}
 
-        {/* Phase 3: Minigames */}
-        {phase === "minigame" && minigame?.enable && (
-          <div className="w-full max-w-3xl space-y-6 animate-fadeIn">
-            <div className="text-center space-y-2 mb-4 border-b border-slate-800 pb-4">
-              <span className="text-2xs uppercase text-slate-400 font-extrabold tracking-widest bg-slate-950 px-3 py-1 rounded-full border border-slate-850">
-                Giai đoạn 3: Trò chơi củng cố
-              </span>
-              <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300 mt-2">
-                {minigame.config?.title || "Minigame Tương Tác"}
-              </h3>
-            </div>
+          <KnowledgePanel
+            branches={summaryData?.branches}
+            pieces={pieces}
+            activePieceId={activePieceId}
+            canMerge={stage === "summary" && pieces.length >= 2 && !merged}
+            merged={merged}
+            onMerge={mergePieces}
+          />
+        </div>
+      ) : (
+        <div className="w-full">
+          {stage === "intro" && (
+            <IntroStage 
+              introData={introData} 
+              onComplete={(startPoint) => setStage({ startPoint, stage: "cognitive" })} 
+            />
+          )}
 
-            {/* Minigame Type 1: single_column_sorting */}
-            {minigame.type === "single_column_sorting" && (
-              <div className="space-y-6">
-                <p className="text-xs text-slate-400 italic text-center">
-                  Nhấp vào mũi tên lên xuống để di chuyển các thẻ tri thức sao cho đúng thứ tự logic biện chứng.
-                </p>
+          {stage === "quiz" && (
+            <FinalQuizStage
+              questions={finalQuizQuestions}
+              onComplete={handleFinalQuizComplete}
+            />
+          )}
 
-                <div className="space-y-2 max-w-md mx-auto">
-                  {sortItems.map((item, index) => (
-                    <div 
-                      key={item.id} 
-                      className={`flex justify-between items-center p-4 bg-slate-955 border rounded-xl text-sm font-semibold transition-all duration-300 ${
-                        sortSuccess ? "border-emerald-500 bg-emerald-950/20 text-emerald-300" : "border-slate-800 text-slate-300"
-                      }`}
-                    >
-                      <span className="truncate pr-4">{item.text}</span>
-                      
-                      {!sortSuccess && (
-                        <div className="flex gap-1 shrink-0">
-                          <button
-                            type="button"
-                            onClick={() => moveItem(index, -1)}
-                            disabled={index === 0}
-                            className="p-1 hover:bg-slate-900 text-slate-400 hover:text-slate-200 rounded disabled:opacity-30 flex items-center"
-                          >
-                            <span className="material-symbols-outlined text-base font-bold">arrow_upward</span>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => moveItem(index, 1)}
-                            disabled={index === sortItems.length - 1}
-                            className="p-1 hover:bg-slate-900 text-slate-400 hover:text-slate-200 rounded disabled:opacity-30 flex items-center"
-                          >
-                            <span className="material-symbols-outlined text-base font-bold">arrow_downward</span>
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex justify-center pt-2">
-                  {!sortSuccess ? (
-                    <button
-                      type="button"
-                      onClick={checkSortOrder}
-                      className="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 active:scale-95"
-                    >
-                      Xác nhận Thứ tự
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={handleMinigameComplete}
-                      className="bg-emerald-800 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105"
-                    >
-                      Tiến tới Đúc kết bài học →
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Minigame Type 2: matching_2_columns */}
-            {minigame.type === "matching_2_columns" && (
-              <div className="space-y-6">
-                <p className="text-xs text-slate-400 italic text-center">
-                  Nhấp vào một ô ở cột trái (khái niệm), sau đó chọn định nghĩa đúng ở cột phải để ghép nối.
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                  <div className="space-y-3.5 text-left">
-                    <h4 className="text-xs uppercase text-slate-400 font-bold border-b border-slate-800 pb-2 mb-3">Cột Trái: Khái niệm</h4>
-                    {minigame.config?.leftColumn?.map((item) => {
-                      const isMatched = !!matchingPairs[item.id];
-                      const isSelected = selectedLeft?.id === item.id;
-                      const hasError = !!matchingError[item.id];
-                      
-                      let cardClass = "border-slate-800 bg-slate-950/40 text-slate-350 hover:border-slate-700";
-                      if (isMatched) cardClass = "border-emerald-600 bg-emerald-950/20 text-emerald-450";
-                      else if (isSelected) cardClass = "border-indigo-500 bg-indigo-950/20 text-indigo-400 scale-102";
-                      else if (hasError) cardClass = "border-red-600 bg-red-950/30 text-red-400 animate-shake";
-
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => handleSelectLeft(item)}
-                          disabled={isMatched}
-                          className={`w-full text-left p-4 rounded-xl border text-sm font-semibold transition-all duration-300 ${cardClass}`}
-                        >
-                          {item.text}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  <div className="space-y-3.5 text-left">
-                    <h4 className="text-xs uppercase text-slate-400 font-bold border-b border-slate-800 pb-2 mb-3">Cột Phải: Định nghĩa</h4>
-                    {minigame.config?.rightColumn?.map((item) => {
-                      const isMatched = Object.values(matchingPairs).includes(item.id);
-                      const isSelected = selectedRight?.id === item.id;
-                      const hasError = !!matchingError[item.id];
-
-                      let cardClass = "border-slate-800 bg-slate-955 text-slate-350 hover:border-slate-700";
-                      if (isMatched) cardClass = "border-emerald-600 bg-emerald-950/10 text-emerald-500 opacity-60";
-                      else if (isSelected) cardClass = "border-indigo-500 bg-indigo-950/20 text-indigo-400 scale-102";
-                      else if (hasError) cardClass = "border-red-600 bg-red-950/30 text-red-400 animate-shake";
-
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => handleSelectRight(item)}
-                          disabled={isMatched}
-                          className={`w-full text-left p-4 rounded-xl border text-xs leading-relaxed transition-all duration-300 ${cardClass}`}
-                        >
-                          {item.text}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {isMatchingGameFinished && (
-                  <div className="flex justify-center pt-4">
-                    <button
-                      type="button"
-                      onClick={handleMinigameComplete}
-                      className="bg-emerald-800 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105"
-                    >
-                      Tiến tới Đúc kết bài học →
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Minigame Type 3: mindmap_tree */}
-            {minigame.type === "mindmap_tree" && (
-              <div className="space-y-6">
-                <p className="text-xs text-slate-400 italic text-center">
-                  Nhấp vào một nhãn từ khóa ở dưới, sau đó click vào ô trống tương ứng trên nhánh sơ đồ tư duy để ghép.
-                </p>
-
-                <div className="bg-slate-950 p-4 rounded-xl border border-slate-850 flex flex-wrap gap-2.5 justify-center max-w-2xl mx-auto">
-                  {minigame.config?.options?.map((opt) => {
-                    const isUsed = Object.values(treeAnswers).some(val => val.id === opt.id);
-                    if (isUsed) return null;
-                    const isSelected = selectedTreeOption?.id === opt.id;
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => setSelectedTreeOption(opt)}
-                        className={`px-4 py-2.5 rounded-lg border text-xs font-bold transition-all ${
-                          isSelected ? "bg-indigo-650 border-indigo-500 text-white scale-105" : "bg-slate-900 border-slate-800 text-slate-350 hover:text-slate-100"
-                        }`}
-                      >
-                        {opt.text}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="bg-slate-950/50 p-6 rounded-2xl border border-slate-855 max-w-2xl mx-auto flex flex-col items-center">
-                  {minigame.config?.treeNodes?.map((node) => {
-                    const isRoot = node.parentId === null;
-                    const answer = treeAnswers[node.id];
-                    
-                    if (isRoot) {
-                      return (
-                        <div key={node.id} className="bg-red-950/40 border border-red-900 px-6 py-3 rounded-xl font-bold text-sm text-red-200 shadow mb-6">
-                          {node.label}
-                        </div>
-                      );
-                    }
-
-                    return (
-                      <div key={node.id} className="flex items-center gap-2 mb-3.5 last:mb-0 w-full justify-center">
-                        <span className="text-slate-650">└─</span>
-                        <div className="text-xs text-slate-400 font-bold bg-slate-900 border border-slate-800 px-3 py-2 rounded-lg shrink-0">
-                          {node.label}
-                        </div>
-                        <span className="text-slate-500 font-serif">→</span>
-
-                        {answer ? (
-                          <div className="bg-emerald-950/20 border border-emerald-600 text-emerald-300 px-4 py-2 rounded-lg text-xs font-bold shadow-md">
-                            {answer.text}
-                          </div>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={() => handleTreeDrop(node.id)}
-                            className="bg-amber-955 border border-dashed border-amber-600/80 hover:bg-amber-900/10 text-amber-500 px-4 py-2 rounded-lg text-xs font-bold transition-colors"
-                          >
-                            [Thả khái niệm vào đây]
-                          </button>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {isTreeGameFinished && (
-                  <div className="flex justify-center pt-4">
-                    <button
-                      type="button"
-                      onClick={handleMinigameComplete}
-                      className="bg-emerald-800 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105"
-                    >
-                      Tiến tới Đúc kết bài học →
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Phase 4: Final Summary */}
-        {phase === "final" && (
-          <div className="w-full max-w-2xl text-center space-y-6 py-6 animate-fadeIn">
-            <div className="inline-flex items-center justify-center h-20 w-20 bg-emerald-950/40 border border-emerald-500 rounded-full text-emerald-400 mb-2 shadow-lg">
-              <span className="material-symbols-outlined text-5xl animate-bounce">emoji_events</span>
-            </div>
-
-            <div className="space-y-2">
-              <h3 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-amber-300 font-serif">
-                {finalSummary?.title || "Chúc mừng bạn đã hoàn thành!"}
-              </h3>
-              <p className="text-slate-450 text-sm max-w-md mx-auto leading-relaxed">
-                {finalSummary?.description || "Chúc mừng đồng chí đã hoàn thành xuất sắc toàn bộ bài học và kiểm tra kiến thức lý luận."}
-              </p>
-            </div>
-
-            {finalSummary?.keyTakeaways && Array.isArray(finalSummary.keyTakeaways) && finalSummary.keyTakeaways.length > 0 && (
-              <div className="bg-slate-950 p-6 rounded-2xl border border-slate-850 text-left space-y-3.5 max-w-lg mx-auto">
-                <h4 className="text-xs uppercase text-slate-500 font-bold tracking-wider border-b border-slate-850/80 pb-2 flex items-center gap-1">
-                  <span className="material-symbols-outlined text-sm">auto_awesome</span> Những điều cốt lõi cần nhớ
-                </h4>
-                <ul className="space-y-3 text-slate-300 text-xs md:text-sm">
-                  {finalSummary.keyTakeaways.map((takeaway, idx) => (
-                    <li key={idx} className="flex items-start gap-2 leading-relaxed">
-                      <span className="text-emerald-500 font-bold shrink-0">•</span>
-                      <span>{takeaway}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {finalSummary?.rewards && (
-              <div className="bg-gradient-to-r from-amber-950/20 to-orange-950/20 rounded-2xl border border-amber-900/40 p-5 max-w-sm mx-auto flex items-center justify-around shadow-md">
-                <div className="text-center">
-                  <span className="text-[10px] font-bold uppercase text-slate-450 tracking-wider">XP nhận được</span>
-                  <p className="text-2xl font-black text-amber-500 mt-0.5">+{finalSummary.rewards.xp || 50} XP</p>
-                </div>
-                <div className="h-8 w-px bg-slate-800" />
-                <div className="text-center">
-                  <span className="text-[10px] font-bold uppercase text-slate-450 tracking-wider">Huy hiệu</span>
-                  <p className="text-sm font-bold text-slate-200 mt-1 flex items-center gap-0.5 justify-center">
-                    <span className="material-symbols-outlined text-amber-500 text-sm animate-pulse">stars</span>
-                    {finalSummary.rewards.badge || "Thành viên tích cực"}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <div className="flex flex-wrap justify-center gap-3 pt-4">
-              {finalSummary?.actions?.retryButton !== false && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPhase("intro");
-                    setIntroIndex(0);
-                    setActiveConceptIdx(0);
-                    setConceptStep("media");
-                  }}
-                  className="px-6 py-3 border border-slate-800 text-slate-300 rounded-xl font-bold hover:bg-slate-950 hover:text-white transition-all text-sm flex items-center gap-1"
-                >
-                  <span className="material-symbols-outlined text-sm">replay</span>
-                  Học lại
-                </button>
-              )}
-              
-              <button
-                type="button"
-                onClick={onBackToMindmap}
-                className="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition-transform hover:scale-105 text-sm"
-              >
-                Hoàn thành & Quay lại sơ đồ
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+          {stage === "done" && (
+            <CompletionStage
+              score={score ?? 0}
+              total={finalQuizQuestions.length || 5}
+              completionData={completionData}
+              xpReward={xpReward}
+              badgeReward={badgeReward}
+              onReplay={handleReplay}
+              onBackToMindmap={handleFinish}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Avatar } from "./JourneyArt";
 
 export const CHARACTERS = {
-  guide: { name: "Sophia", role: "Người Khai Sáng", avatar: "guide", color: "from-violet-500 to-indigo-600" },
-  elder: { name: "Thôn trưởng", role: "Trưởng tộc lạc", avatar: "elder", color: "from-amber-500 to-orange-600" },
-  skeptic: { name: "Theon", role: "Kẻ hoài nghi", avatar: "skeptic", color: "from-cyan-500 to-blue-600" },
-  slave: { name: "Kẻ đào mỏ", role: "Lao động chân tay", avatar: "slave", color: "from-zinc-500 to-stone-600" },
-  noble: { name: "Học sĩ", role: "Lao động trí óc", avatar: "noble", color: "from-fuchsia-500 to-purple-600" }
+  guide: { name: "Sophia", role: "Người Khai Sáng dẫn đường", avatar: "guide", color: "from-indigo-500 to-violet-600" },
+  elder: { name: "Già làng Kael", role: "Trưởng bộ tộc", avatar: "elder", color: "from-amber-500 to-orange-600" },
+  skeptic: { name: "Người hoài nghi Lyra", role: "Kẻ phản biện trong bộ tộc", avatar: "skeptic", color: "from-cyan-500 to-blue-600" },
+  slave: { name: "Người lao động Borin", role: "Tầng lớp lao động chân tay", avatar: "slave", color: "from-stone-500 to-stone-700" },
+  noble: { name: "Quý tộc Theon", role: "Tầng lớp lao động trí óc", avatar: "noble", color: "from-fuchsia-500 to-purple-600" }
 };
 
 const TYPEWRITER_SPEED_MS = 18;

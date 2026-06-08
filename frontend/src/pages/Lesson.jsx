@@ -14,7 +14,6 @@ import { LessonSidebar } from "./lesson/components/LessonSidebar";
 
 const ClassicLessonPlayer = lazy(() => import("./lesson/ClassicLessonPlayer"));
 const AdventureLessonPlayer = lazy(() => import("./lesson/AdventureLessonPlayer"));
-const PhilosophyJourney = lazy(() => import("./lesson/PhilosophyJourney"));
 
 const Lesson = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -213,27 +212,6 @@ const Lesson = () => {
     return prog.status === 'completed' || prog.lessonCompleted === true;
   }, [currentNodeDetails]);
 
-  const isJourney = useMemo(() => {
-    return activeLesson && getSlugFromTitle(activeLesson.title) === "nguon-goc-triet-hoc";
-  }, [activeLesson]);
-
-  const nextLessonItem = useMemo(() => {
-    if (flatSyllabusItems.length === 0 || !activeLesson) return null;
-    const currentIdx = flatSyllabusItems.findIndex(item => item.id === activeLesson.id);
-    if (currentIdx !== -1 && currentIdx < flatSyllabusItems.length - 1) {
-      return flatSyllabusItems[currentIdx + 1];
-    }
-    return null;
-  }, [flatSyllabusItems, activeLesson]);
-
-  const nextLesson = useMemo(() => {
-    if (!nextLessonItem) return null;
-    return {
-      slug: getSlugFromTitle(nextLessonItem.title),
-      title: nextLessonItem.title
-    };
-  }, [nextLessonItem]);
-
   return (
     <PageShell activeKey="lessons">
       <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto">
@@ -278,80 +256,64 @@ const Lesson = () => {
                 </span>
                 Quay lại sơ đồ bài học
               </button>
-              {isJourney ? (
-                loadingNode ? (
-                  <LessonSkeleton />
-                ) : (
-                  <Suspense fallback={<LessonSkeleton />}>
-                    <PhilosophyJourney
-                      nextLesson={nextLesson}
-                      onNextLesson={(slug) => handleOpenLesson(slug)}
-                      onComplete={handleCompleteLesson}
-                    />
-                  </Suspense>
-                )
+              <header className="mb-8 text-left">
+                <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1.5 rounded-full text-xs font-bold mb-3">
+                  <span className="material-symbols-outlined text-base">
+                    bookmark
+                  </span>
+                  Đang học: {activeLesson.title}
+                </div>
+                <h1 className="font-bold text-3xl md:text-4xl text-red-900 mb-3">
+                  {activeLesson.title}
+                </h1>
+                <div className="flex flex-wrap gap-2">
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                    Triết học
+                  </span>
+                  <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                    <span className="material-symbols-outlined text-sm">
+                      schedule
+                    </span>
+                    {currentNodeDetails?.timeToRead || "10 phút"}
+                  </span>
+                  <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                    Độ khó: {currentNodeDetails?.difficulty || "Medium"}
+                  </span>
+                </div>
+              </header>
+
+              {loadingNode ? (
+                <LessonSkeleton />
               ) : (
-                <>
-                  <header className="mb-8 text-left">
-                    <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1.5 rounded-full text-xs font-bold mb-3">
-                      <span className="material-symbols-outlined text-base">
-                        bookmark
-                      </span>
-                      Đang học: {activeLesson.title}
-                    </div>
-                    <h1 className="font-bold text-3xl md:text-4xl text-red-900 mb-3">
-                      {activeLesson.title}
-                    </h1>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
-                        Triết học
-                      </span>
-                      <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-                        <span className="material-symbols-outlined text-sm">
-                          schedule
-                        </span>
-                        {currentNodeDetails?.timeToRead || "10 phút"}
-                      </span>
-                      <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
-                        Độ khó: {currentNodeDetails?.difficulty || "Medium"}
-                      </span>
-                    </div>
-                  </header>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2 space-y-6">
+                    <Suspense fallback={<LessonSkeleton />}>
+                      {currentNodeDetails?.lessonType === 'adventure' ? (
+                        <AdventureLessonPlayer 
+                          nodeDetails={currentNodeDetails} 
+                          isRevisit={isRevisit}
+                          onComplete={handleCompleteLesson} 
+                          onBackToMindmap={handleBackToMindmap}
+                        />
+                      ) : (
+                        <ClassicLessonPlayer 
+                          nodeDetails={currentNodeDetails} 
+                          isRevisit={isRevisit}
+                          onComplete={handleCompleteLesson} 
+                          onBackToMindmap={handleBackToMindmap}
+                        />
+                      )}
+                    </Suspense>
+                  </div>
 
-                  {loadingNode ? (
-                    <LessonSkeleton />
-                  ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                      <div className="lg:col-span-2 space-y-6">
-                        <Suspense fallback={<LessonSkeleton />}>
-                          {currentNodeDetails?.lessonType === 'adventure' ? (
-                            <AdventureLessonPlayer 
-                              nodeDetails={currentNodeDetails} 
-                              isRevisit={isRevisit}
-                              onComplete={handleCompleteLesson} 
-                              onBackToMindmap={handleBackToMindmap}
-                            />
-                          ) : (
-                            <ClassicLessonPlayer 
-                              nodeDetails={currentNodeDetails} 
-                              isRevisit={isRevisit}
-                              onComplete={handleCompleteLesson} 
-                              onBackToMindmap={handleBackToMindmap}
-                            />
-                          )}
-                        </Suspense>
-                      </div>
-
-                      <LessonSidebar 
-                        flatSyllabusItems={flatSyllabusItems}
-                        progressStats={progressStats}
-                        lessonSlug={lessonSlug}
-                        handleSyllabusClick={handleSyllabusClick}
-                        currentNodeDetails={currentNodeDetails}
-                      />
-                    </div>
-                  )}
-                </>
+                  <LessonSidebar 
+                    flatSyllabusItems={flatSyllabusItems}
+                    progressStats={progressStats}
+                    lessonSlug={lessonSlug}
+                    handleSyllabusClick={handleSyllabusClick}
+                    currentNodeDetails={currentNodeDetails}
+                  />
+                </div>
               )}
             </div>
           ) : null}
