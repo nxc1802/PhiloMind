@@ -110,6 +110,7 @@ async function main() {
       lessonType: 'adventure',
       storyIntro: {
         enable: true,
+        videoUrl: 'https://www.youtube.com/watch?v=k_jbTWq-u50',
         background: 'https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=1200',
         character: {
           name: 'Sophia',
@@ -135,6 +136,7 @@ async function main() {
         {
           id: 'cognitive',
           scene: 'earthquake',
+          videoUrl: 'https://www.youtube.com/watch?v=1VwbmgMTbkk',
           badge: 'Thử thách 1 / 2',
           title: 'Giải mã sấm truyền',
           subtitle: 'Nguồn gốc nhận thức',
@@ -178,6 +180,7 @@ async function main() {
         {
           id: 'social',
           scene: 'society',
+          videoUrl: 'https://youtu.be/JNutDwj92is',
           badge: 'Thử thách 2 / 2',
           title: '...khi phương thức sản xuất thay đổi...',
           subtitle: 'Nguồn gốc xã hội',
