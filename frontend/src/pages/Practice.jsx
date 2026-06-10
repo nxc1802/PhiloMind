@@ -238,20 +238,28 @@ export default function Practice() {
                 <span className="ml-2 text-gray-500 font-semibold">Đang tải dữ liệu thẻ...</span>
               </div>
             ) : isReviewMode && activeReviewCard ? (
-              <div className="bg-white rounded-2xl border border-red-200 p-8 shadow-lg max-w-2xl mx-auto text-center animate-fadeIn">
-                <div className="flex justify-between items-center mb-6 text-sm text-gray-500">
-                  <span className="bg-red-50 text-red-800 px-3 py-1 rounded-full font-bold uppercase tracking-wider text-xs">
+              <div className="bg-white rounded-3xl border border-red-100 p-8 shadow-2xl max-w-2xl mx-auto text-center animate-fadeIn relative overflow-hidden">
+                {/* Progress Bar */}
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gray-100">
+                  <div 
+                    className="h-full bg-red-800 transition-all duration-300"
+                    style={{ width: `${((currentReviewIndex + 1) / reviewCards.length) * 100}%` }}
+                  />
+                </div>
+
+                <div className="flex justify-between items-center mb-6 text-sm text-gray-500 mt-2">
+                  <span className="bg-red-55 text-red-850 px-3 py-1 rounded-full font-bold uppercase tracking-wider text-xs">
                     {reviewTitle}
                   </span>
-                  <span>
+                  <span className="font-bold text-gray-600">
                     Thẻ thứ {currentReviewIndex + 1} / {reviewCards.length}
                   </span>
                 </div>
 
-                {/* Flipping card */}
+                {/* Flipping card container */}
                 <div 
                   onClick={() => setIsFlipped(!isFlipped)}
-                  className="w-full h-64 relative mb-6 cursor-pointer select-none group" 
+                  className="w-full h-80 relative mb-6 cursor-pointer select-none group" 
                   style={{ perspective: "1000px" }}
                   title="Click vào thẻ để lật mặt"
                 >
@@ -262,23 +270,45 @@ export default function Practice() {
                       transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)"
                     }}
                   >
+                    {/* Front Face */}
                     <div
-                      className="absolute inset-0 bg-gradient-to-br from-red-850 to-red-950 text-white rounded-2xl p-6 flex flex-col justify-center items-center shadow-md border border-red-900"
-                      style={{ backfaceVisibility: "hidden" }}
+                      className={`absolute inset-0 bg-gradient-to-br from-red-800 via-red-900 to-red-950 text-white rounded-2xl p-8 flex flex-col justify-between items-center shadow-xl border border-red-700 transition-opacity duration-300 ${
+                        isFlipped ? "opacity-0 pointer-events-none" : "opacity-100"
+                      }`}
+                      style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                     >
-                      <span className="text-xs uppercase opacity-75 tracking-wider mb-3 shrink-0">Câu hỏi / Thuật ngữ</span>
-                      <div className="w-full overflow-y-auto max-h-[160px] pr-1 scrollbar-thin flex flex-col justify-center items-center">
-                        <p className="text-base md:text-lg font-bold leading-relaxed">{activeReviewCard.question}</p>
+                      <div className="w-full flex justify-between items-center opacity-75">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-200">Câu hỏi / Thuật ngữ</span>
+                        <span className="material-symbols-outlined text-lg text-red-200">help</span>
+                      </div>
+                      <div className="w-full overflow-y-auto max-h-[180px] pr-1 my-auto scrollbar-thin flex flex-col justify-center items-center">
+                        <p className="text-lg md:text-xl font-bold leading-relaxed font-serif text-center">{activeReviewCard.question}</p>
+                      </div>
+                      <div className="w-full text-center text-xs text-red-300/80 font-medium">
+                        Chạm vào thẻ để lật xem đáp án
                       </div>
                     </div>
 
+                    {/* Back Face */}
                     <div
-                      className="absolute inset-0 bg-amber-50 border-2 border-red-800 text-gray-900 rounded-2xl p-6 flex flex-col justify-center items-center shadow-md"
-                      style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                      className={`absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-red-800 text-gray-900 rounded-2xl p-8 flex flex-col justify-between items-center shadow-xl transition-opacity duration-300 ${
+                        isFlipped ? "opacity-100" : "opacity-0 pointer-events-none"
+                      }`}
+                      style={{
+                        backfaceVisibility: "hidden",
+                        WebkitBackfaceVisibility: "hidden",
+                        transform: "rotateY(180deg)"
+                      }}
                     >
-                      <span className="text-xs uppercase text-red-800 font-bold tracking-wider mb-3 shrink-0">Giải nghĩa / Đáp án</span>
-                      <div className="w-full overflow-y-auto max-h-[160px] pr-1 scrollbar-thin text-left">
-                        <p className="text-sm md:text-base font-semibold leading-relaxed text-gray-800">{activeReviewCard.answer}</p>
+                      <div className="w-full flex justify-between items-center border-b border-red-200/50 pb-2">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-850">Giải nghĩa / Đáp án</span>
+                        <span className="material-symbols-outlined text-lg text-red-800">menu_book</span>
+                      </div>
+                      <div className="w-full overflow-y-auto max-h-[180px] pr-1 my-auto scrollbar-thin text-left">
+                        <p className="text-base md:text-lg font-semibold leading-relaxed text-gray-800 font-serif">{activeReviewCard.answer}</p>
+                      </div>
+                      <div className="w-full text-center text-xs text-red-800/60 font-semibold">
+                        Chạm vào thẻ để quay lại mặt trước
                       </div>
                     </div>
                   </div>
@@ -330,6 +360,7 @@ export default function Practice() {
                 </div>
               </div>
             ) : (
+
               <div className="space-y-8">
                 {/* Tổng hợp card */}
                 <div className="bg-gradient-to-br from-red-50 to-amber-50 border border-red-200 rounded-2xl p-6 flex flex-col sm:flex-row justify-between items-center gap-6 shadow-md">
