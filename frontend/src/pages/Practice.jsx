@@ -151,7 +151,7 @@ export default function Practice() {
   const startChapterReview = (chapter) => {
     const chapterCards = allFlashcards.filter(c => chapter.nodeIds.includes(c.nodeId));
     if (chapterCards.length === 0) {
-      showToast("Chương này chưa có thẻ nhớ nào để ôn tập.", "warning");
+      showToast("Chương học đang được cập nhật nội dung học thuật.", "warning");
       return;
     }
     setReviewCards(chapterCards);
@@ -341,7 +341,7 @@ export default function Practice() {
                       <h3 className="font-bold text-lg text-gray-900">Ôn tập tổng hợp</h3>
                       <p className="text-sm text-gray-600 mt-0.5">
                         {dueCards.length > 0 ? (
-                          <>Đồng chí có <strong className="text-red-800 font-bold">{dueCards.length} thẻ</strong> đến hạn cần ôn tập hôm nay để củng cố dài hạn.</>
+                          <>Đồng chí có <strong className="text-red-850 font-bold">{dueCards.length} thẻ</strong> đến hạn cần ôn tập hôm nay để củng cố dài hạn.</>
                         ) : (
                           "Không còn thẻ nhớ nào đến hạn hôm nay. Hãy học theo từng chương học bên dưới."
                         )}
@@ -401,13 +401,19 @@ export default function Practice() {
                           
                           <div className="mt-4 pt-3 border-t border-gray-150">
                             <div className="flex justify-between text-xs mb-1.5 font-semibold">
-                              <span className="text-gray-500">{chapter.cardCount} Flashcards</span>
-                              <span className="text-red-850">{chapter.progress}% Hoàn thành</span>
+                              {chapter.cardCount > 0 ? (
+                                <>
+                                  <span className="text-gray-500">{chapter.cardCount} Flashcards</span>
+                                  <span className="text-red-850">{chapter.progress}% Hoàn thành</span>
+                                </>
+                              ) : (
+                                <span className="text-amber-600 font-bold bg-amber-50 px-2.5 py-0.5 rounded-md">Đang cập nhật</span>
+                              )}
                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-1.5">
                               <div
                                 className="bg-red-800 h-1.5 rounded-full transition-all"
-                                style={{ width: `${chapter.progress}%` }}
+                                style={{ width: `${chapter.cardCount > 0 ? chapter.progress : 0}%` }}
                               />
                             </div>
                           </div>
@@ -482,13 +488,19 @@ export default function Practice() {
                     
                     <div className="mt-4 pt-3 border-t border-gray-150">
                       <div className="flex justify-between text-xs mb-1.5 font-semibold">
-                        <span className="text-gray-500">{chapter.cardCount} Flashcards</span>
-                        <span className="text-red-850">{chapter.progress}% Hoàn thành</span>
+                        {chapter.cardCount > 0 ? (
+                          <>
+                            <span className="text-gray-500">{chapter.cardCount} Flashcards</span>
+                            <span className="text-red-850">{chapter.progress}% Hoàn thành</span>
+                          </>
+                        ) : (
+                          <span className="text-amber-600 font-bold bg-amber-50 px-2.5 py-0.5 rounded-md">Đang cập nhật</span>
+                        )}
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-1.5">
                         <div
-                          className="bg-red-800 h-1.5 rounded-full transition-all"
-                          style={{ width: `${chapter.progress}%` }}
+                          className="bg-red-850 h-1.5 rounded-full transition-all"
+                          style={{ width: `${chapter.cardCount > 0 ? chapter.progress : 0}%` }}
                         />
                       </div>
                     </div>
@@ -498,6 +510,8 @@ export default function Practice() {
             )}
           </section>
         )}
+
+
 
         {/* TAB 3: QUIZ TỔNG HỢP & MOCK EXAMS */}
         {activeTab === "quiz" && (

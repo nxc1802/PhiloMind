@@ -56,6 +56,10 @@ async function main() {
   await prisma.warmup.deleteMany({});
   await prisma.debate.deleteMany({});
   await prisma.debateTopic.deleteMany({});
+  await prisma.quiz.deleteMany({});
+  await prisma.flashcardReview.deleteMany({});
+  await prisma.flashcard.deleteMany({});
+
 
   const existingCourses = await prisma.course.findMany({
     where: { title: 'Triết học Mác – Lênin' }
@@ -492,217 +496,156 @@ async function main() {
     console.log('Seeded Marxist-Leninist Philosophy main podcast episode.');
   }
 
-  // 5. Seed Flashcards
-  const ch1QuizCards = [
+  // 5. Seed Flashcards from prompts.txt (Chapter 1 node only, Chapter 2 & 3 empty)
+  const promptsQuestions = [
     {
-      question: "Khái niệm nào dùng để chỉ toàn bộ những quan niệm, quan điểm của con người về thế giới, về bản thân con người và vị trí của con người trong thế giới đó?\nA. Nhân sinh quan\nB. Phương pháp luận\nC. Thế giới quan\nD. Ý thức xã hội",
-      answer: "C. Thế giới quan"
+      question: "Tư duy triết học ra đời thay thế cho loại hình tư duy nào trước đó trong lịch sử tư tưởng nhân loại?",
+      options: [
+        "A. Tư duy khoa học và tư duy nghệ thuật",
+        "B. Tư duy huyền thoại và tôn giáo nguyên thủy",
+        "C. Tư duy siêu hình và cơ học cổ điển",
+        "D. Tư duy kinh nghiệm và tư duy trực quan"
+      ],
+      correctIndex: 1,
+      cleanAnswer: "Tư duy huyền thoại và tôn giáo nguyên thủy",
+      explanation: "Tư duy triết học ra đời thay thế cho tư duy huyền thoại và tôn giáo nguyên thủy trước đó trong lịch sử tư tưởng nhân loại."
     },
     {
-      question: "Lịch sử phát triển của thế giới quan trải qua những hình thức cơ bản nào theo thứ tự?\nA. Triết học -> Tôn giáo -> Huyền thoại\nB. Huyền thoại -> Tôn giáo -> Triết học\nC. Tôn giáo -> Huyền thoại -> Triết học\nD. Khoa học -> Thần thoại -> Tôn giáo",
-      answer: "B. Huyền thoại -> Tôn giáo -> Triết học"
+      question: "Về mặt nguồn gốc xã hội, triết học chỉ ra đời khi nào?",
+      options: [
+        "A. Khi loài người mới xuất hiện và có nhu cầu giải thích tự nhiên",
+        "B. Khi nền sản xuất xã hội chưa có sự phân công lao động",
+        "C. Khi lao động trí óc đã tách khỏi lao động chân tay và xuất hiện giai cấp",
+        "D. Khi chế độ cộng sản nguyên thủy đạt đến đỉnh cao"
+      ],
+      correctIndex: 2,
+      cleanAnswer: "Khi lao động trí óc đã tách khỏi lao động chân tay và xuất hiện giai cấp",
+      explanation: "Về mặt nguồn gốc xã hội, triết học chỉ ra đời khi lao động trí óc đã tách khỏi lao động chân tay và xuất hiện giai cấp."
     },
     {
-      question: "Hình thái thế giới quan nào coi các lực lượng siêu nhiên, thần linh là đấng tối cao quyết định và chi phối hoàn toàn cuộc sống con người?\nA. Thế giới quan huyền thoại\nB. Thế giới quan tôn giáo\nC. Thế giới quan triết học\nD. Thế giới quan khoa học",
-      answer: "B. Thế giới quan tôn giáo"
+      question: "Thuật ngữ \"Triết gia\" (philosophos) xuất hiện đầu tiên ở nhà tư tưởng nào thời cổ đại để chỉ người nghiên cứu về bản chất của sự vật?",
+      options: [
+        "A. Socrates",
+        "B. Aristotle",
+        "C. Heraclitus",
+        "D. Plato"
+      ],
+      correctIndex: 2,
+      cleanAnswer: "Heraclitus",
+      explanation: "Thuật ngữ \"Triết gia\" (philosophos) xuất hiện đầu tiên ở Heraclitus thời cổ đại để chỉ người nghiên cứu về bản chất của sự vật."
     },
     {
-      question: "Điểm khác biệt cốt lõi giúp thế giới quan triết học vươn lên trình độ cao hơn thế giới quan huyền thoại và tôn giáo là gì?\nA. Triết học chứa nhiều câu chuyện ly kỳ hơn\nB. Triết học bắt buộc người học phải đi tu bái thần\nC. Triết học diễn tả quan niệm dưới dạng hệ thống lý luận, khái niệm và tư duy lý tính\nD. Triết học không quan tâm đến vị trí của con người",
-      answer: "C. Triết học diễn tả quan niệm dưới dạng hệ thống lý luận, khái niệm và tư duy lý tính"
+      question: "Ở Hy Lạp cổ đại, thuật ngữ \"philosophia\" mang ý nghĩa là gì?",
+      options: [
+        "A. Yêu mến sự thông thái",
+        "B. Con đường dẫn đến lẽ phải",
+        "C. Khoa học của mọi khoa học",
+        "D. Sự truy tìm bản chất của con người"
+      ],
+      correctIndex: 0,
+      cleanAnswer: "Yêu mến sự thông thái",
+      explanation: "Ở Hy Lạp cổ đại, thuật ngữ \"philosophia\" mang ý nghĩa là yêu mến sự thông thái."
     },
     {
-      question: "Một sinh viên cho rằng: \"Học giỏi hay không là do số phận sắp đặt, có học bằng mắt cũng không qua môn\". Sinh viên này đang chịu ảnh hưởng của loại thế giới quan nào?\nA. Thế giới quan triết học biện chứng\nB. Thế giới quan khoa học thực nghiệm\nC. Thế giới quan tôn giáo/định mệnh cảm tính\nD. Không thuộc thế giới quan nào cả",
-      answer: "C. Thế giới quan tôn giáo/định mệnh cảm tính"
+      question: "Trong triết học Ấn Độ cổ đại, thuật ngữ \"Dar'sana\" có nghĩa gốc là gì?",
+      options: [
+        "A. Yêu mến sự thông thái",
+        "B. Chiêm ngưỡng, sự suy ngẫm dẫn dắt đến lẽ phải",
+        "C. Khám phá vũ trụ huyền bí",
+        "D. Sự biểu hiện cao của trí tuệ"
+      ],
+      correctIndex: 1,
+      cleanAnswer: "Chiêm ngưỡng, sự suy ngẫm dẫn dắt đến lẽ phải",
+      explanation: "Trong triết học Ấn Độ cổ đại, thuật ngữ \"Dar'sana\" có nghĩa gốc là chiêm ngưỡng, sự suy ngẫm dẫn dắt đến lẽ phải."
     },
     {
-      question: "Vai trò quan trọng nhất của thế giới quan đối với cuộc sống của con người là gì?\nA. Giúp con người dự đoán chính xác kết quả xổ số\nB. Định hướng cho toàn bộ nhận thức, thái độ và hành vi thực tiễn của con người\nC. Thay thế cho các nhu cầu ăn uống, giải trí hằng ngày\nD. Giúp con người không cần phải suy nghĩ khi làm việc",
-      answer: "B. Định hướng cho toàn bộ nhận thức, thái độ và hành vi thực tiễn của con người"
+      question: "Triết học là gì?",
+      options: [
+        "A. Là khoa học của mọi khoa học",
+        "B. Là hình thái ý thức xã hội đặc biệt, hệ thống quan điểm lý luận chung nhất về thế giới, về con người và tư duy",
+        "C. Là một bộ môn khoa học thực nghiệm nghiên cứu về tự nhiên",
+        "D. Là niềm tin và những tín điều tôn giáo của loài người"
+      ],
+      correctIndex: 1,
+      cleanAnswer: "Là hình thái ý thức xã hội đặc biệt, hệ thống quan điểm lý luận chung nhất về thế giới, về con người và tư duy",
+      explanation: "Triết học là hình thái ý thức xã hội đặc biệt, hệ thống quan điểm lý luận chung nhất về thế giới, về con người và tư duy."
     },
     {
-      question: "Vì sao nói triết học là hạt nhân lý luận của thế giới quan?\nA. Vì triết học là môn học khó nhất trong các loại thế giới quan\nB. Vì triết học cấu thành từ những tri thức lý luận chung nhất, có tính hệ thống và logic để định hướng các thành phần khác của thế giới quan\nC. Vì chỉ có những người có thế giới quan triết học mới tồn tại được\nD. Vì triết học ra đời trước tất cả các loại thế giới quan khác",
-      answer: "B. Vì triết học cấu thành từ những tri thức lý luận chung nhất, có tính hệ thống và logic để định hướng các thành phần khác của thế giới quan"
+      question: "Đối tượng nghiên cứu của triết học trong thời kỳ \"Nền triết học tự nhiên\" (Hy Lạp cổ đại) là gì?",
+      options: [
+        "A. Chỉ nghiên cứu về đời sống tâm linh",
+        "B. Bao gồm tất cả những tri thức mà con người có được, là khoa học của các khoa học",
+        "C. Chỉ nghiên cứu về các hiện tượng xã hội",
+        "D. Tập trung vào các quy luật của kinh tế chính trị"
+      ],
+      correctIndex: 1,
+      cleanAnswer: "Bao gồm tất cả những tri thức mà con người có được, là khoa học của các khoa học",
+      explanation: "Đối tượng nghiên cứu của triết học trong thời kỳ \"Nền triết học tự nhiên\" (Hy Lạp cổ đại) bao gồm tất cả những tri thức mà con người có được, là khoa học của các khoa học."
     },
     {
-      question: "Một \"KOL tài chính\" trên mạng phán: \"Muốn giàu sang thì phải cúng sao giải hạn, tiền tài tự khắc bay vào tài khoản\". Đứng dưới góc độ thế giới quan triết học khoa học, lời khuyên này thực chất là gì?\nA. Phương pháp làm giàu tối ưu và ít rủi ro nhất.\nB. Sự đánh tráo bản chất, hướng con người vào thế giới quan tôn giáo/mê tín để trục lợi thay vì thúc đẩy lao động thực tiễn.\nC. Một lý thuyết kinh tế vĩ mô đã được nhà nước công nhận.\nD. Tư duy lý tính độc lập.",
-      answer: "B. Sự đánh tráo bản chất, hướng con người vào thế giới quan tôn giáo/mê tín để trục lợi thay vì thúc đẩy lao động thực tiễn."
+      question: "Ở Tây Âu thời trung cổ, triết học chịu sự quy định và chi phối của hệ tư tưởng nào?",
+      options: [
+        "A. Khoa học tự nhiên",
+        "B. Cơ học cổ điển",
+        "C. Thần học và hệ tư tưởng Kitô giáo",
+        "D. Phật giáo"
+      ],
+      correctIndex: 2,
+      cleanAnswer: "Thần học và hệ tư tưởng Kitô giáo",
+      explanation: "Ở Tây Âu thời trung cổ, triết học chịu sự quy định và chi phối của thần học và hệ tư tưởng Kitô giáo."
     },
     {
-      question: "Hiện tượng \"thấy bói nói bừa\" nhưng nhiều người vẫn tin sái cổ phản ánh điều gì về mặt thế giới quan?\nA. Trình độ tư duy trừu tượng của xã hội đã đạt tới đỉnh cao.\nB. Con người khi gặp khủng hoảng thực tiễn mà thiếu thế giới quan lý luận khoa học thì dễ bấu víu vào thế giới quan tôn giáo cảm tính.\nC. Các thầy bói đều nắm giữ bản chất lý luận chung nhất của vũ trụ.\nD. Khoa học hiện đại đã hoàn toàn đầu hàng trước tâm linh.",
-      answer: "B. Con người khi gặp khủng hoảng thực tiễn mà thiếu thế giới quan lý luận khoa học thì dễ bấu víu vào thế giới quan tôn giáo cảm tính."
+      question: "Khái niệm \"thế giới quan\" lần đầu tiên được nhà triết học nào sử dụng trong tác phẩm \"Phê phán năng lực phán đoán\"?",
+      options: [
+        "A. G.W.F. Hegel",
+        "B. I. Kant",
+        "C. F. Schelling",
+        "D. C. Mác"
+      ],
+      correctIndex: 1,
+      cleanAnswer: "I. Kant",
+      explanation: "Khái niệm \"thế giới quan\" lần đầu tiên được nhà triết học I. Kant sử dụng trong tác phẩm \"Phê phán năng lực phán đoán\"."
     },
     {
-      question: "Khi bạn thay đổi thế giới quan của mình từ \"mọi việc do may rủi\" sang \"mọi việc có nguyên nhân - kết quả và cần nỗ lực thực tiễn\", điều gì sẽ thay đổi theo?\nA. Vận may của bạn sẽ tự động tăng lên 100%.\nB. Toàn bộ nguyên tắc sống, thái độ ứng xử và cách bạn hành động đối diện với khó khăn sẽ thay đổi.\nC. Bạn không bao giờ gặp phải thất bại trong đời nữa.\nD. Bạn sẽ trở thành một nhà triết học cổ đại.",
-      answer: "B. Toàn bộ nguyên tắc sống, thái độ ứng xử và cách bạn hành động đối diện với khó khăn sẽ thay đổi."
+      question: "Vấn đề cơ bản lớn của mọi triết học là gì?",
+      options: [
+        "A. Vấn đề nguồn gốc của loài người",
+        "B. Vấn đề quan hệ giữa tự nhiên và xã hội",
+        "C. Vấn đề quan hệ giữa tư duy với tồn tại (giữa ý thức và vật chất)",
+        "D. Vấn đề khả năng sáng tạo của con người"
+      ],
+      correctIndex: 2,
+      cleanAnswer: "Vấn đề quan hệ giữa tư duy với tồn tại (giữa ý thức và vật chất)",
+      explanation: "Vấn đề cơ bản lớn của mọi triết học là vấn đề quan hệ giữa tư duy với tồn tại (giữa ý thức và vật chất)."
     }
   ];
 
-  const ch2Pairs = [
-    { term: 'Vật chất', desc: 'Phạm trù chỉ thực tại khách quan' },
-    { term: 'Ý thức', desc: 'Sự phản ánh thế giới khách quan vào bộ não' },
-    { term: 'Vận động', desc: 'Phương thức tồn tại của vật chất' },
-    { term: 'Không gian – thời gian', desc: 'Hình thức tồn tại của vật chất' },
-    { term: 'Phản ánh', desc: 'Thuộc tính chung của mọi dạng vật chất' },
-    { term: 'Đứng im', desc: 'Trạng thái vận động trong thăng bằng tương đối' }
-  ];
-
   const ch1FirstNode = createdCh1Nodes[0];
-  for (const q of ch1QuizCards) {
+  for (const item of promptsQuestions) {
     await prisma.flashcard.create({
       data: {
         nodeId: ch1FirstNode.id,
-        tag: 'Nguồn gốc của triết học',
-        question: q.question,
-        answer: q.answer,
+        tag: 'Khái lược về triết học',
+        question: item.question,
+        answer: item.cleanAnswer,
       }
     });
   }
 
-  if (materialNode) {
-    for (const p of ch2Pairs) {
-      await prisma.flashcard.create({
-        data: {
-          nodeId: materialNode.id,
-          tag: 'Duy vật biện chứng',
-          question: `Giải nghĩa thuật ngữ triết học: "${p.term}"?`,
-          answer: p.desc,
-        }
-      });
-    }
-  }
-
-  // ==================== NEW SEED: INTERACTIVE MCQ QUIZZES & MOCK EXAMS ====================
+  // ==================== SEED: MCQ QUIZZES & MOCK EXAMS ====================
   if (ch1FirstNode) {
     await prisma.quiz.create({
       data: {
         nodeId: ch1FirstNode.id,
         type: 'mcq',
-        title: 'Trắc nghiệm Chương 1: Nguồn gốc và Khái lược về Triết học',
-        description: 'Kiểm tra nhanh kiến thức về hoàn cảnh lịch sử, nguồn gốc nhận thức và nguồn gốc xã hội của triết học.',
-        questions: [
-          {
-            question: 'Triết học ra đời vào khoảng thời gian nào và ở đâu?',
-            options: [
-              'Thế kỷ XV - XVI sau TCN tại châu Âu',
-              'Thế kỷ VIII - VI trước TCN tại Hy Lạp, Ấn Độ, Trung Hoa cổ đại',
-              'Thế kỷ I sau TCN tại La Mã cổ đại',
-              'Thời kỳ Phục hưng tại Tây Âu'
-            ],
-            correctIndex: 1,
-            explanation: 'Triết học xuất hiện khoảng thế kỷ VIII - VI trước Công nguyên tại các trung tâm văn minh lớn của nhân loại thời cổ đại như Hy Lạp, Ấn Độ và Trung Hoa.'
-          },
-          {
-            question: 'Nguồn gốc nhận thức của triết học là gì?',
-            options: [
-              'Sự phân chia giai cấp trong xã hội',
-              'Sự phân công lao động trí óc tách khỏi lao động chân tay',
-              'Sự phát triển của tư duy trừu tượng khái quát tri thức huyền thoại thành hệ thống lý luận',
-              'Sự hình thành chế độ tư hữu'
-            ],
-            correctIndex: 2,
-            explanation: 'Nguồn gốc nhận thức của triết học là sự hình thành năng lực tư duy trừu tượng, khái quát hóa tri thức để thay thế tư duy huyền thoại, tôn giáo bằng lý luận lý tính.'
-          },
-          {
-            question: 'Nguồn gốc xã hội của sự ra đời triết học gắn liền với yếu tố nào?',
-            options: [
-              'Xã hội công xã nguyên thủy hòa bình',
-              'Sự xuất hiện chế độ tư hữu, phân chia giai cấp và lao động trí óc tách khỏi lao động chân tay',
-              'Sự liên kết giữa các bộ tộc nguyên thủy',
-              'Sự suy sụp hoàn toàn của nền kinh tế nông nghiệp'
-            ],
-            correctIndex: 1,
-            explanation: 'Triết học ra đời khi chế độ cộng sản nguyên thủy tan rã, tư hữu xuất hiện dẫn đến phân hóa giai cấp, và lao động trí óc tách rời lao động chân tay tạo ra tầng lớp trí thức chuyên nghiên cứu lý luận.'
-          },
-          {
-            question: 'Triết học khác với thế giới quan huyền thoại và tôn giáo ở điểm nào?',
-            options: [
-              'Giải thích thế giới bằng các câu chuyện thần thoại',
-              'Giải thích thế giới bằng niềm tin cảm tính tuyệt đối',
-              'Giải thích thế giới dưới dạng hệ thống các khái niệm, phạm trù, quy luật có tính logic và lý luận lý tính',
-              'Không quan tâm đến mối quan hệ giữa con người và tự nhiên'
-            ],
-            correctIndex: 2,
-            explanation: 'Khác biệt cốt lõi là triết học diễn tả thế giới quan bằng hệ thống lý luận lý tính chặt chẽ gồm khái niệm, quy luật và phạm trù.'
-          },
-          {
-            question: 'Ai là những người đầu tiên hệ thống hóa tri thức thành các học thuyết triết học?',
-            options: [
-              'Tất cả những người nô lệ làm việc ngoài đồng',
-              'Các nhà hiền triết, nhà thông thái thuộc tầng lớp lao động trí óc',
-              'Các chiến binh tinh nhuệ của bộ tộc',
-              'Thầy cúng và các tu sĩ thần thoại'
-            ],
-            correctIndex: 1,
-            explanation: 'Các nhà hiền triết, nhà tư tưởng thuộc tầng lớp lao động trí óc có thời gian và của cải dư thừa để quan sát, đàm đạo và hệ thống hóa lý luận.'
-          }
-        ] as any
-      }
-    });
-  }
-
-  if (materialNode) {
-    await prisma.quiz.create({
-      data: {
-        nodeId: materialNode.id,
-        type: 'mcq',
-        title: 'Trắc nghiệm Chương 2: Vật chất và các hình thức tồn tại',
-        description: 'Đánh giá mức độ thấu hiểu định nghĩa vật chất của V.I. Lênin và mối quan hệ biện chứng.',
-        questions: [
-          {
-            question: 'Định nghĩa vật chất của V.I. Lênin chỉ ra thuộc tính phổ biến nhất của vật chất là gì?',
-            options: [
-              'Tồn tại khách quan, độc lập với ý thức của con người',
-              'Có khối lượng và kích thước đo lường được',
-              'Luôn ở trạng thái đứng im tuyệt đối',
-              'Chỉ tồn tại khi con người cảm giác được'
-            ],
-            correctIndex: 0,
-            explanation: 'Thuộc tính chung nhất, quan trọng nhất của vật chất trong định nghĩa của Lênin là "thực tại khách quan" - tồn tại độc lập với ý thức con người.'
-          },
-          {
-            question: 'Theo chủ nghĩa duy vật biện chứng, vận động là gì?',
-            options: [
-              'Sự thay đổi vị trí trong không gian',
-              'Sự phát triển đi lên không ngừng',
-              'Mọi sự biến đổi nói chung, là phương thức tồn tại của vật chất',
-              'Một trạng thái tạm thời của vật chất'
-            ],
-            correctIndex: 2,
-            explanation: 'Vận động hiểu theo nghĩa biện chứng là mọi sự biến đổi nói chung của vật chất và là thuộc tính cố hữu, phương thức tồn tại tuyệt đối của vật chất.'
-          },
-          {
-            question: 'Nguồn gốc xã hội của ý thức bao gồm những yếu tố nào?',
-            options: [
-              'Bộ não người và thế giới khách quan tác động',
-              'Lao động và ngôn ngữ',
-              'Tình cảm và ý chí của con người',
-              'Sách vở và các trường học cổ đại'
-            ],
-            correctIndex: 1,
-            explanation: 'Nguồn gốc tự nhiên là bộ não và sự tác động của thế giới khách quan, còn nguồn gốc quyết định trực tiếp hình thành ý thức về mặt xã hội chính là Lao động và Ngôn ngữ.'
-          },
-          {
-            question: 'Mối quan hệ biện chứng giữa vật chất và ý thức khẳng định điều gì?',
-            options: [
-              'Ý thức quyết định hoàn toàn vật chất',
-              'Vật chất và ý thức tồn tại song song, không ảnh hưởng lẫn nhau',
-              'Vật chất quyết định ý thức; ý thức có tính độc lập tương đối và tác động trở lại vật chất qua thực tiễn',
-              'Ý thức sinh ra vật chất để con người sử dụng'
-            ],
-            correctIndex: 2,
-            explanation: 'Duy vật biện chứng khẳng định vật chất quyết định ý thức về mặt nguồn gốc và nội dung, nhưng ý thức có khả năng tác động ngược lại vật chất thông qua hoạt động thực tiễn.'
-          },
-          {
-            question: 'Trạng thái đứng im biện chứng của vật chất có đặc điểm gì?',
-            options: [
-              'Là tuyệt đối, vĩnh viễn và không biến đổi',
-              'Là trạng thái vận động trong thăng bằng tương đối, tạm thời và gắn liền với một quan hệ xác định',
-              'Không tồn tại trong thế giới hiện thực',
-              'Chỉ xảy ra khi không gian và thời gian biến mất'
-            ],
-            correctIndex: 1,
-            explanation: 'Đứng im là tương đối, tạm thời vì sự vật chỉ tạm thời giữ nguyên cấu trúc trong một mối quan hệ nhất định, bản chất nó vẫn đang không ngừng biến đổi.'
-          }
-        ] as any
+        title: 'Trắc nghiệm Chương 1: Triết học và vai trò của triết học',
+        description: 'Bài trắc nghiệm 10 câu hỏi tổng hợp kiến thức Chương 1 từ prompts.txt.',
+        questions: promptsQuestions.map(item => ({
+          question: item.question,
+          options: item.options,
+          correctIndex: item.correctIndex,
+          explanation: item.explanation
+        })) as any
       }
     });
   }
@@ -713,65 +656,15 @@ async function main() {
       type: 'mcq',
       title: 'Đề thi thử học thuật số 1: Tổng hợp Triết học Mác - Lênin',
       description: 'Đề thi thử mô phỏng kỳ thi chính thức. Không có kết quả lập tức sau mỗi câu, điểm số và giải thích chi tiết sẽ hiển thị sau khi hoàn thành toàn bộ bài thi.',
-      questions: [
-        {
-          question: 'Vấn đề cơ bản lớn của mọi hệ thống triết học là gì?',
-          options: [
-            'Quan hệ giữa tư duy và tồn tại, hay giữa ý thức và vật chất',
-            'Cách thức đạt được sự giàu có nhanh nhất',
-            'Sự tranh giành quyền lực giữa các giai cấp',
-            'Tìm kiếm các quy luật vật lý của vũ trụ'
-          ],
-          correctIndex: 0,
-          explanation: 'Mọi hệ thống triết học đều xoay quanh vấn đề nền tảng: mối quan hệ giữa vật chất và ý thức (hay tồn tại và tư duy) gồm hai mặt: cái nào có trước và con người có nhận thức được thế giới hay không.'
-        },
-        {
-          question: 'Trí tuệ nhân tạo (AI) trong tương lai liệu có đạt tới ý thức như con người?',
-          options: [
-            'Có, vì AI có thể tính toán nhanh hơn bộ não con người',
-            'Không, vì AI không có cơ quan phản ánh sống là não người và không có nguồn gốc xã hội (lao động, ngôn ngữ, thực tiễn xã hội)',
-            'Có, nếu lập trình viên sử dụng ngôn ngữ lập trình mới',
-            'Có, vì máy tính chạy bằng điện năng tương tự xung thần kinh'
-          ],
-          correctIndex: 1,
-          explanation: 'Ý thức là thuộc tính của một dạng vật chất tổ chức cao là brain người và được hình thành qua thực tiễn lao động, ngôn ngữ xã hội. AI chỉ là sự mô phỏng máy móc, không có nguồn gốc tự nhiên lẫn nguồn gốc xã hội của ý thức.'
-        },
-        {
-          question: 'Theo phép biện chứng duy vật, động lực thúc đẩy sự vận động và phát triển của mọi sự vật hiện tượng là gì?',
-          options: [
-            'Sự thúc đẩy từ một đấng tối cao (Cú hích của Chúa)',
-            'Sự đấu tranh của các mặt đối lập trong bản thân sự vật (Mâu thuẫn biện chứng)',
-            'Sự may mắn hoặc ý chí chủ quan của con người',
-            'Sự biến mất hoàn toàn của lượng chất cũ'
-          ],
-          correctIndex: 1,
-          explanation: 'Quy luật mâu thuẫn (Quy luật thống nhất và đấu tranh của các mặt đối lập) chỉ ra nguồn gốc, động lực bên trong của sự phát triển chính là mâu thuẫn biện chứng.'
-        },
-        {
-          question: 'Khái niệm "Cơ sở hạ tầng" trong chủ nghĩa duy vật lịch sử dùng để chỉ điều gì?',
-          options: [
-            'Hệ thống đường xá, cầu cống, nhà ga và mạng lưới điện',
-            'Hệ thống các quan điểm chính trị, pháp luật và thiết chế tương ứng',
-            'Toàn bộ những quan hệ sản xuất hợp thành cơ cấu kinh tế của một xã hội nhất định',
-            'Các nhà máy sản xuất vật chất quy mô lớn'
-          ],
-          correctIndex: 2,
-          explanation: 'Cơ sở hạ tầng là phạm trù triết học dùng để chỉ toàn bộ các quan hệ sản xuất (sở hữu, quản lý, phân phối) cấu thành cơ cấu kinh tế của một xã hội.'
-        },
-        {
-          question: 'Bản chất của con người theo luận điểm kinh điển của Karl Marx là gì?',
-          options: [
-            'Tính thiện bẩm sinh ai cũng có từ nhỏ',
-            'Tổng hòa của các nhu cầu sinh học đơn thuần',
-            'Trong tính hiện thực của nó, là tổng hòa những quan hệ xã hội',
-            'Lòng yêu thương đồng loại vô điều kiện'
-          ],
-          correctIndex: 2,
-          explanation: 'Karl Marx khẳng định: "Trong tính hiện thực của nó, bản chất con người là tổng hòa những quan hệ xã hội". Con người vừa là sản phẩm vừa là chủ thể của hoàn cảnh xã hội.'
-        }
-      ] as any
+      questions: promptsQuestions.map(item => ({
+        question: item.question,
+        options: item.options,
+        correctIndex: item.correctIndex,
+        explanation: item.explanation
+      })) as any
     }
   });
+
 
   // ==================== NEW SEED: DEBATE TOPICS / SCENARIOS ====================
   await prisma.debateTopic.createMany({

@@ -192,20 +192,20 @@ const FlashcardDetail = () => {
           title={chapterDetails.title}
           subtitle="Nối các khái niệm ở cột bên trái với định nghĩa tương ứng ở cột bên phải."
         />
-        <div className="px-12 py-16 max-w-3xl mx-auto text-center">
-          <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-300">
-            <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">
-              layers_clear
-            </span>
-            <h3 className="font-bold text-gray-800 text-lg mb-1">Chưa có thẻ ghi nhớ nào</h3>
-            <p className="text-gray-500 text-sm max-w-sm mx-auto">
-              Chương này hiện chưa có dữ liệu thẻ học thuật để bắt đầu trò chơi ghép cặp.
+        <div className="px-6 md:px-12 py-16 max-w-4xl mx-auto text-center">
+          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-12 text-center border border-gray-200 shadow-xl max-w-2xl mx-auto animate-fadeIn">
+            <div className="h-16 w-16 bg-red-50 text-red-800 rounded-2xl flex items-center justify-center shadow-md mx-auto mb-6">
+              <span className="material-symbols-outlined text-3xl">hourglass_empty</span>
+            </div>
+            <h3 className="font-bold text-gray-900 text-2xl mb-2 font-serif">Đang cập nhật</h3>
+            <p className="text-gray-500 text-sm max-w-md mx-auto leading-relaxed">
+              Nội dung học tập và bộ câu hỏi ôn luyện cho chương này hiện đang được hoàn thiện. Vui lòng quay lại sau!
             </p>
             <Link
               to="/practice"
-              className="inline-block mt-6 bg-red-800 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-red-900 transition-colors"
+              className="inline-block mt-8 bg-red-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-red-900 shadow-md hover:shadow-lg transition-all"
             >
-              ← Quay lại danh sách
+              ← Quay lại danh sách thực hành
             </Link>
           </div>
         </div>
@@ -244,7 +244,7 @@ const FlashcardDetail = () => {
           <button
             type="button"
             onClick={restartGame}
-            className="inline-flex items-center gap-2 border-2 border-red-800 text-red-800 px-5 py-2.5 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 border-2 border-red-800 text-red-800 px-5 py-2.5 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors shadow-sm"
           >
             <span className="material-symbols-outlined text-base">refresh</span>
             Chơi lại / Xáo bài
@@ -253,14 +253,14 @@ const FlashcardDetail = () => {
 
         {/* Thông báo thắng */}
         {isWon && (
-          <div className="bg-green-50 border-2 border-green-300 rounded-2xl p-6 mb-6 text-center animate-fadeIn">
+          <div className="bg-green-50 border-2 border-green-300 rounded-2xl p-6 mb-6 text-center animate-fadeIn shadow-sm">
             <span className="material-symbols-outlined text-5xl text-green-600">
               celebration
             </span>
-            <h2 className="text-2xl font-bold text-green-800 mt-2">
+            <h2 className="text-2xl font-bold text-green-800 mt-2 font-serif">
               Xuất sắc! Bạn đã ghép xong tất cả các cặp.
             </h2>
-            <p className="text-green-700 mt-1">
+            <p className="text-green-700 mt-1 text-sm font-semibold">
               Hoàn thành trong {moves} lượt. Bấm "Chơi lại / Xáo bài" để thử thách lại!
             </p>
           </div>
@@ -270,9 +270,9 @@ const FlashcardDetail = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Cột Trái: Khái niệm */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-base text-red-900 flex items-center gap-2">
-              <span className="material-symbols-outlined text-red-850 text-lg">psychology</span>
+          <div className="space-y-4">
+            <h3 className="font-bold text-base text-red-950 flex items-center gap-2 pb-2 border-b border-gray-100">
+              <span className="material-symbols-outlined text-red-800 text-lg">psychology</span>
               Khái niệm Triết học
             </h3>
             <div className="space-y-3">
@@ -281,13 +281,13 @@ const FlashcardDetail = () => {
                 const isSelected = selectedTerm?.id === item.id;
                 const hasError = mismatched?.termId === item.id;
 
-                let cardClass = "bg-white border-gray-200 text-gray-800 hover:border-red-400 hover:bg-red-50/50 cursor-pointer";
+                let cardClass = "bg-white border-gray-200 text-gray-800 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
                 if (isMatched) {
-                  cardClass = "bg-emerald-50 border-emerald-500 text-emerald-800 pointer-events-none opacity-90";
+                  cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
                 } else if (hasError) {
                   cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
                 } else if (isSelected) {
-                  cardClass = "bg-red-50 border-red-800 text-red-800 ring-2 ring-red-800 font-bold";
+                  cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
                 }
 
                 return (
@@ -296,11 +296,14 @@ const FlashcardDetail = () => {
                     type="button"
                     onClick={() => handleSelectTerm(item)}
                     disabled={isMatched}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all flex items-center justify-between ${cardClass}`}
+                    className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
                   >
-                    <span className="font-bold text-sm md:text-base">{item.text}</span>
+                    <div className="flex flex-col gap-1 w-full text-left">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Khái niệm</span>
+                      <span className="font-bold text-sm md:text-base leading-snug">{item.text}</span>
+                    </div>
                     {isMatched && (
-                      <span className="material-symbols-outlined text-emerald-600 text-lg">check_circle</span>
+                      <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
                     )}
                   </button>
                 );
@@ -309,9 +312,9 @@ const FlashcardDetail = () => {
           </div>
 
           {/* Cột Phải: Định nghĩa */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-base text-red-900 flex items-center gap-2">
-              <span className="material-symbols-outlined text-red-850 text-lg">menu_book</span>
+          <div className="space-y-4">
+            <h3 className="font-bold text-base text-red-950 flex items-center gap-2 pb-2 border-b border-gray-100">
+              <span className="material-symbols-outlined text-red-800 text-lg">menu_book</span>
               Định nghĩa / Ý nghĩa khoa học
             </h3>
             <div className="space-y-3">
@@ -320,13 +323,13 @@ const FlashcardDetail = () => {
                 const isSelected = selectedDesc?.id === item.id;
                 const hasError = mismatched?.descId === item.id;
 
-                let cardClass = "bg-white border-gray-200 text-gray-700 hover:border-red-400 hover:bg-red-50/50 cursor-pointer";
+                let cardClass = "bg-white border-gray-200 text-gray-700 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
                 if (isMatched) {
-                  cardClass = "bg-emerald-50 border-emerald-500 text-emerald-800 pointer-events-none opacity-90";
+                  cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
                 } else if (hasError) {
                   cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
                 } else if (isSelected) {
-                  cardClass = "bg-red-50 border-red-800 text-red-850 ring-2 ring-red-800 font-bold";
+                  cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
                 }
 
                 return (
@@ -335,9 +338,12 @@ const FlashcardDetail = () => {
                     type="button"
                     onClick={() => handleSelectDesc(item)}
                     disabled={isMatched}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all flex items-center justify-between ${cardClass}`}
+                    className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
                   >
-                    <span className="text-xs md:text-sm leading-relaxed pr-2">{item.text}</span>
+                    <div className="flex flex-col gap-1 w-full text-left">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Định nghĩa</span>
+                      <span className="text-xs md:text-sm leading-relaxed pr-2">{item.text}</span>
+                    </div>
                     {isMatched && (
                       <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
                     )}
@@ -348,6 +354,7 @@ const FlashcardDetail = () => {
           </div>
 
         </div>
+
 
         <div className="mt-8 text-center">
           <Link

@@ -1,22 +1,60 @@
-Phân tích toàn bộ dự án
-
-Dự án hiện tại cần fix các lỗi sau:
-Admin:
-- Chưa có cách để tạo Quiz System
-- Đẩy PDF lên không cho nhập metadata như tên, description, ...
-- Flashcard cần show theo dạng cây phân cấp để dễ nhìn
-- Chưa có cách để tạo Trò chơi ghép cặp
-
-User:
-- Xoá button Start Daily Lesson
-- Feedback Hub có thể di chuyển quanh vùng dưới đáy và mép phải. Có thể tắt bằng cách nhấn ra vùng ngoài chứ không chỉ dấu đóng
-- Trong bài học cụ thể, Những lesson đã được học hoặc những bài làm nóng đã pass trong quá trình học sẽ vĩnh viễn mất đi và không yêu cầu thực hiện lại khi reload trang
-- Trong bài học cụ thể, Diễn đàn Thảo luận tạo thành dạng component nằm liền dưới Nội dung khóa học và có cấu trúc tương tự
-- Trong phần nội dung khoá học trong bài học cụ thể, chỉ show các bài học thuộc về chương đang học mà thôi
-- Trò chơi ghép cặp đang gặp vấn đề về việc content đang out of box, cần có cơ chế cuộn
-- Cài đặt không chỉ nằm ở góc trên mà còn nằm ở góc dưới, ngay vị trí của Start Daily Lesson đã bị xoá
-
-Backend:
-- Các cơ chế về tiến độ học cần được thêm vào (tiến độ lesson, tiến độ flashcard, tiến độ nghe podcast, tiến độ quiz system, ...)
-- Âm thanh thu được từ TTS đã có những không phải âm thanh lời nói mà nghe rất kỳ, rất có thể do môi trường local của MacOS không phù hợp, cần cấu hình docker kỹ hơn
-- BE, DB schema phải được tinh chỉnh để phù hợp và đồng bộ với các thay đổi trên từ FE của user lẫn admin (Bạn sở hữu MCP supabase, vậy nên hãy tự động thực hiện migration)
+Câu 1: Tư duy triết học ra đời thay thế cho loại hình tư duy nào trước đó trong lịch sử tư tưởng nhân loại?
+A. Tư duy khoa học và tư duy nghệ thuật
+B. Tư duy huyền thoại và tôn giáo nguyên thủy
+C. Tư duy siêu hình và cơ học cổ điển
+D. Tư duy kinh nghiệm và tư duy trực quan
+Đáp án: B. Tư duy huyền thoại và tôn giáo nguyên thủy
+Câu 2: Về mặt nguồn gốc xã hội, triết học chỉ ra đời khi nào?
+A. Khi loài người mới xuất hiện và có nhu cầu giải thích tự nhiên
+B. Khi nền sản xuất xã hội chưa có sự phân công lao động
+C. Khi lao động trí óc đã tách khỏi lao động chân tay và xuất hiện giai cấp
+D. Khi chế độ cộng sản nguyên thủy đạt đến đỉnh cao
+Đáp án: C. Khi lao động trí óc đã tách khỏi lao động chân tay và xuất hiện giai cấp
+Câu 3: Thuật ngữ "Triết gia" (philosophos) xuất hiện đầu tiên ở nhà tư tưởng nào thời cổ đại để chỉ người nghiên cứu về bản chất của sự vật?
+A. Socrates
+B. Aristotle
+C. Heraclitus
+D. Plato
+Đáp án: C. Heraclitus
+Câu 4: Ở Hy Lạp cổ đại, thuật ngữ "philosophia" mang ý nghĩa là gì?
+A. Yêu mến sự thông thái
+B. Con đường dẫn đến lẽ phải
+C. Khoa học của mọi khoa học
+D. Sự truy tìm bản chất của con người
+Đáp án: A. Yêu mến sự thông thái
+Câu 5: Trong triết học Ấn Độ cổ đại, thuật ngữ "Dar'sana" có nghĩa gốc là gì?
+A. Yêu mến sự thông thái
+B. Chiêm ngưỡng, sự suy ngẫm dẫn dắt đến lẽ phải
+C. Khám phá vũ trụ huyền bí
+D. Sự biểu hiện cao của trí tuệ
+Đáp án: B. Chiêm ngưỡng, sự suy ngẫm dẫn dắt đến lẽ phải
+Câu 6: Triết học là gì?
+A. Là khoa học của mọi khoa học
+B. Là hình thái ý thức xã hội đặc biệt, hệ thống quan điểm lý luận chung nhất về thế giới, về con người và tư duy
+C. Là một bộ môn khoa học thực nghiệm nghiên cứu về tự nhiên
+D. Là niềm tin và những tín điều tôn giáo của loài người
+Đáp án: B. Là hình thái ý thức xã hội đặc biệt, hệ thống quan điểm lý luận chung nhất về thế giới, về con người và tư duy
+Câu 7: Đối tượng nghiên cứu của triết học trong thời kỳ "Nền triết học tự nhiên" (Hy Lạp cổ đại) là gì?
+A. Chỉ nghiên cứu về đời sống tâm linh
+B. Bao gồm tất cả những tri thức mà con người có được, là khoa học của các khoa học
+C. Chỉ nghiên cứu về các hiện tượng xã hội
+D. Tập trung vào các quy luật của kinh tế chính trị
+Đáp án: B. Bao gồm tất cả những tri thức mà con người có được, là khoa học của các khoa học
+Câu 8: Ở Tây Âu thời trung cổ, triết học chịu sự quy định và chi phối của hệ tư tưởng nào?
+A. Khoa học tự nhiên
+B. Cơ học cổ điển
+C. Thần học và hệ tư tưởng Kitô giáo
+D. Phật giáo
+Đáp án: C. Thần học và hệ tư tưởng Kitô giáo
+Câu 9: Khái niệm "thế giới quan" lần đầu tiên được nhà triết học nào sử dụng trong tác phẩm "Phê phán năng lực phán đoán"?
+A. G.W.F. Hegel
+B. I. Kant
+C. F. Schelling
+D. C. Mác
+Đáp án: B. I. Kant
+Câu 10: Vấn đề cơ bản lớn của mọi triết học là gì?
+A. Vấn đề nguồn gốc của loài người
+B. Vấn đề quan hệ giữa tự nhiên và xã hội
+C. Vấn đề quan hệ giữa tư duy với tồn tại (giữa ý thức và vật chất)
+D. Vấn đề khả năng sáng tạo của con người
+Đáp án: C. Vấn đề quan hệ giữa tư duy với tồn tại (giữa ý thức và vật chất)
