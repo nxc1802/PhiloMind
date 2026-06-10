@@ -83,8 +83,7 @@ export class FlashcardsController {
   }
 
   @Get()
-  @Roles('admin')
-  @ApiOperation({ summary: 'List all flashcards (Admin)' })
+  @ApiOperation({ summary: 'List all flashcards' })
   async getFlashcards(@Query('nodeId') nodeId?: string) {
     return this.flashcardsService.findAll(nodeId);
   }

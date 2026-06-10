@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef, Suspense, lazy } from "react";
+import React, { useMemo, useRef, Suspense, lazy, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
 import LessonMindmap from "../components/LessonMindmap";
@@ -11,6 +11,7 @@ import { useCompleteNodeMutation } from "../hooks/useMutations";
 import { getTitleFromSlug, getSlugFromTitle } from "../utils/slug";
 import { LessonSkeleton } from "./lesson/components/LessonSkeleton";
 import { LessonSidebar } from "./lesson/components/LessonSidebar";
+import { KnowledgePanel } from "./lesson/components/KnowledgePanel";
 
 const ClassicLessonPlayer = lazy(() => import("./lesson/ClassicLessonPlayer"));
 const AdventureLessonPlayer = lazy(() => import("./lesson/AdventureLessonPlayer"));
@@ -18,15 +19,28 @@ const AdventureLessonPlayer = lazy(() => import("./lesson/AdventureLessonPlayer"
 const Lesson = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const lessonSlug = searchParams.get("lesson");
-  const [hasAttemptedAutoLoad, setHasAttemptedAutoLoad] = useState(false);
   const { showToast } = useToast();
   const { user } = useAuth();
+  const [adventurePlayerState, setAdventurePlayerState] = useState(null);
 
   const lessonContentRef = useRef(null);
 
   // Load course journey using query hook
   const { data: journeyData } = useJourney(user);
   const dbJourney = useMemo(() => journeyData?.journey || [], [journeyData]);
+
+  // Auto-redirect if no lesson selected
+  useEffect(() => {
+    if (!lessonSlug && dbJourney && dbJourney.length > 0) {
+      const firstChap = dbJourney[0];
+      if (firstChap && firstChap.nodes && firstChap.nodes.length > 0) {
+        const firstNode = firstChap.nodes[0];
+        if (firstNode) {
+          setSearchParams({ lesson: getSlugFromTitle(firstNode.title) });
+        }
+      }
+    }
+  }, [lessonSlug, dbJourney, setSearchParams]);
 
 
   // Match active lesson node
@@ -40,31 +54,6 @@ const Lesson = () => {
     }
     return null;
   }, [lessonSlug, dbJourney]);
-
-  // Auto-select and load the first active/available lesson if none is selected on initial page visit
-  useEffect(() => {
-    if (dbJourney.length > 0 && !lessonSlug && !hasAttemptedAutoLoad) {
-      setHasAttemptedAutoLoad(true);
-      let fallbackNode = null;
-      for (const chap of dbJourney) {
-        if (chap.nodes && chap.nodes.length > 0) {
-          for (const node of chap.nodes) {
-            if (!fallbackNode) {
-              fallbackNode = node;
-            }
-            const status = node.progress && node.progress[0]?.status;
-            if (status === 'in_progress' || status === 'available') {
-              setSearchParams({ lesson: getSlugFromTitle(node.title) });
-              return;
-            }
-          }
-        }
-      }
-      if (fallbackNode) {
-        setSearchParams({ lesson: getSlugFromTitle(fallbackNode.title) });
-      }
-    }
-  }, [dbJourney, lessonSlug, setSearchParams, hasAttemptedAutoLoad]);
 
   // Node details query hook
   const { data: currentNodeDetails, isLoading: loadingNode } = useNodeDetails(activeLesson?.id, user?.id);
@@ -320,6 +309,7 @@ const Lesson = () => {
                           isRevisit={isRevisit}
                           onComplete={handleCompleteLesson} 
                           onBackToMindmap={handleBackToMindmap}
+                          onStateChange={setAdventurePlayerState}
                         />
                       ) : (
                         <ClassicLessonPlayer 
@@ -332,13 +322,25 @@ const Lesson = () => {
                     </Suspense>
                   </div>
 
-                  <LessonSidebar 
-                    flatSyllabusItems={flatSyllabusItems}
-                    progressStats={progressStats}
-                    lessonSlug={lessonSlug}
-                    handleSyllabusClick={handleSyllabusClick}
-                    currentNodeDetails={currentNodeDetails}
-                  />
+                  <div className="lg:col-span-1 flex flex-col gap-6 lg:sticky lg:top-20">
+                    <LessonSidebar 
+                      flatSyllabusItems={flatSyllabusItems}
+                      progressStats={progressStats}
+                      lessonSlug={lessonSlug}
+                      handleSyllabusClick={handleSyllabusClick}
+                      currentNodeDetails={currentNodeDetails}
+                    />
+                    {adventurePlayerState?.showPanel && (
+                      <KnowledgePanel
+                        branches={adventurePlayerState.branches}
+                        pieces={adventurePlayerState.pieces}
+                        activePieceId={adventurePlayerState.activePieceId}
+                        canMerge={adventurePlayerState.canMerge}
+                        merged={adventurePlayerState.merged}
+                        onMerge={adventurePlayerState.onMerge}
+                      />
+                    )}
+                  </div>
                 </div>
               )}
             </div>

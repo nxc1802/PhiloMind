@@ -570,6 +570,209 @@ async function main() {
     }
   }
 
+  // ==================== NEW SEED: INTERACTIVE MCQ QUIZZES & MOCK EXAMS ====================
+  if (ch1FirstNode) {
+    await prisma.quiz.create({
+      data: {
+        nodeId: ch1FirstNode.id,
+        type: 'mcq',
+        title: 'Trắc nghiệm Chương 1: Nguồn gốc và Khái lược về Triết học',
+        description: 'Kiểm tra nhanh kiến thức về hoàn cảnh lịch sử, nguồn gốc nhận thức và nguồn gốc xã hội của triết học.',
+        questions: [
+          {
+            question: 'Triết học ra đời vào khoảng thời gian nào và ở đâu?',
+            options: [
+              'Thế kỷ XV - XVI sau TCN tại châu Âu',
+              'Thế kỷ VIII - VI trước TCN tại Hy Lạp, Ấn Độ, Trung Hoa cổ đại',
+              'Thế kỷ I sau TCN tại La Mã cổ đại',
+              'Thời kỳ Phục hưng tại Tây Âu'
+            ],
+            correctIndex: 1,
+            explanation: 'Triết học xuất hiện khoảng thế kỷ VIII - VI trước Công nguyên tại các trung tâm văn minh lớn của nhân loại thời cổ đại như Hy Lạp, Ấn Độ và Trung Hoa.'
+          },
+          {
+            question: 'Nguồn gốc nhận thức của triết học là gì?',
+            options: [
+              'Sự phân chia giai cấp trong xã hội',
+              'Sự phân công lao động trí óc tách khỏi lao động chân tay',
+              'Sự phát triển của tư duy trừu tượng khái quát tri thức huyền thoại thành hệ thống lý luận',
+              'Sự hình thành chế độ tư hữu'
+            ],
+            correctIndex: 2,
+            explanation: 'Nguồn gốc nhận thức của triết học là sự hình thành năng lực tư duy trừu tượng, khái quát hóa tri thức để thay thế tư duy huyền thoại, tôn giáo bằng lý luận lý tính.'
+          },
+          {
+            question: 'Nguồn gốc xã hội của sự ra đời triết học gắn liền với yếu tố nào?',
+            options: [
+              'Xã hội công xã nguyên thủy hòa bình',
+              'Sự xuất hiện chế độ tư hữu, phân chia giai cấp và lao động trí óc tách khỏi lao động chân tay',
+              'Sự liên kết giữa các bộ tộc nguyên thủy',
+              'Sự suy sụp hoàn toàn của nền kinh tế nông nghiệp'
+            ],
+            correctIndex: 1,
+            explanation: 'Triết học ra đời khi chế độ cộng sản nguyên thủy tan rã, tư hữu xuất hiện dẫn đến phân hóa giai cấp, và lao động trí óc tách rời lao động chân tay tạo ra tầng lớp trí thức chuyên nghiên cứu lý luận.'
+          },
+          {
+            question: 'Triết học khác với thế giới quan huyền thoại và tôn giáo ở điểm nào?',
+            options: [
+              'Giải thích thế giới bằng các câu chuyện thần thoại',
+              'Giải thích thế giới bằng niềm tin cảm tính tuyệt đối',
+              'Giải thích thế giới dưới dạng hệ thống các khái niệm, phạm trù, quy luật có tính logic và lý luận lý tính',
+              'Không quan tâm đến mối quan hệ giữa con người và tự nhiên'
+            ],
+            correctIndex: 2,
+            explanation: 'Khác biệt cốt lõi là triết học diễn tả thế giới quan bằng hệ thống lý luận lý tính chặt chẽ gồm khái niệm, quy luật và phạm trù.'
+          },
+          {
+            question: 'Ai là những người đầu tiên hệ thống hóa tri thức thành các học thuyết triết học?',
+            options: [
+              'Tất cả những người nô lệ làm việc ngoài đồng',
+              'Các nhà hiền triết, nhà thông thái thuộc tầng lớp lao động trí óc',
+              'Các chiến binh tinh nhuệ của bộ tộc',
+              'Thầy cúng và các tu sĩ thần thoại'
+            ],
+            correctIndex: 1,
+            explanation: 'Các nhà hiền triết, nhà tư tưởng thuộc tầng lớp lao động trí óc có thời gian và của cải dư thừa để quan sát, đàm đạo và hệ thống hóa lý luận.'
+          }
+        ] as any
+      }
+    });
+  }
+
+  if (materialNode) {
+    await prisma.quiz.create({
+      data: {
+        nodeId: materialNode.id,
+        type: 'mcq',
+        title: 'Trắc nghiệm Chương 2: Vật chất và các hình thức tồn tại',
+        description: 'Đánh giá mức độ thấu hiểu định nghĩa vật chất của V.I. Lênin và mối quan hệ biện chứng.',
+        questions: [
+          {
+            question: 'Định nghĩa vật chất của V.I. Lênin chỉ ra thuộc tính phổ biến nhất của vật chất là gì?',
+            options: [
+              'Tồn tại khách quan, độc lập với ý thức của con người',
+              'Có khối lượng và kích thước đo lường được',
+              'Luôn ở trạng thái đứng im tuyệt đối',
+              'Chỉ tồn tại khi con người cảm giác được'
+            ],
+            correctIndex: 0,
+            explanation: 'Thuộc tính chung nhất, quan trọng nhất của vật chất trong định nghĩa của Lênin là "thực tại khách quan" - tồn tại độc lập với ý thức con người.'
+          },
+          {
+            question: 'Theo chủ nghĩa duy vật biện chứng, vận động là gì?',
+            options: [
+              'Sự thay đổi vị trí trong không gian',
+              'Sự phát triển đi lên không ngừng',
+              'Mọi sự biến đổi nói chung, là phương thức tồn tại của vật chất',
+              'Một trạng thái tạm thời của vật chất'
+            ],
+            correctIndex: 2,
+            explanation: 'Vận động hiểu theo nghĩa biện chứng là mọi sự biến đổi nói chung của vật chất và là thuộc tính cố hữu, phương thức tồn tại tuyệt đối của vật chất.'
+          },
+          {
+            question: 'Nguồn gốc xã hội của ý thức bao gồm những yếu tố nào?',
+            options: [
+              'Bộ não người và thế giới khách quan tác động',
+              'Lao động và ngôn ngữ',
+              'Tình cảm và ý chí của con người',
+              'Sách vở và các trường học cổ đại'
+            ],
+            correctIndex: 1,
+            explanation: 'Nguồn gốc tự nhiên là bộ não và sự tác động của thế giới khách quan, còn nguồn gốc quyết định trực tiếp hình thành ý thức về mặt xã hội chính là Lao động và Ngôn ngữ.'
+          },
+          {
+            question: 'Mối quan hệ biện chứng giữa vật chất và ý thức khẳng định điều gì?',
+            options: [
+              'Ý thức quyết định hoàn toàn vật chất',
+              'Vật chất và ý thức tồn tại song song, không ảnh hưởng lẫn nhau',
+              'Vật chất quyết định ý thức; ý thức có tính độc lập tương đối và tác động trở lại vật chất qua thực tiễn',
+              'Ý thức sinh ra vật chất để con người sử dụng'
+            ],
+            correctIndex: 2,
+            explanation: 'Duy vật biện chứng khẳng định vật chất quyết định ý thức về mặt nguồn gốc và nội dung, nhưng ý thức có khả năng tác động ngược lại vật chất thông qua hoạt động thực tiễn.'
+          },
+          {
+            question: 'Trạng thái đứng im biện chứng của vật chất có đặc điểm gì?',
+            options: [
+              'Là tuyệt đối, vĩnh viễn và không biến đổi',
+              'Là trạng thái vận động trong thăng bằng tương đối, tạm thời và gắn liền với một quan hệ xác định',
+              'Không tồn tại trong thế giới hiện thực',
+              'Chỉ xảy ra khi không gian và thời gian biến mất'
+            ],
+            correctIndex: 1,
+            explanation: 'Đứng im là tương đối, tạm thời vì sự vật chỉ tạm thời giữ nguyên cấu trúc trong một mối quan hệ nhất định, bản chất nó vẫn đang không ngừng biến đổi.'
+          }
+        ] as any
+      }
+    });
+  }
+
+  await prisma.quiz.create({
+    data: {
+      nodeId: null,
+      type: 'mcq',
+      title: 'Đề thi thử học thuật số 1: Tổng hợp Triết học Mác - Lênin',
+      description: 'Đề thi thử mô phỏng kỳ thi chính thức. Không có kết quả lập tức sau mỗi câu, điểm số và giải thích chi tiết sẽ hiển thị sau khi hoàn thành toàn bộ bài thi.',
+      questions: [
+        {
+          question: 'Vấn đề cơ bản lớn của mọi hệ thống triết học là gì?',
+          options: [
+            'Quan hệ giữa tư duy và tồn tại, hay giữa ý thức và vật chất',
+            'Cách thức đạt được sự giàu có nhanh nhất',
+            'Sự tranh giành quyền lực giữa các giai cấp',
+            'Tìm kiếm các quy luật vật lý của vũ trụ'
+          ],
+          correctIndex: 0,
+          explanation: 'Mọi hệ thống triết học đều xoay quanh vấn đề nền tảng: mối quan hệ giữa vật chất và ý thức (hay tồn tại và tư duy) gồm hai mặt: cái nào có trước và con người có nhận thức được thế giới hay không.'
+        },
+        {
+          question: 'Trí tuệ nhân tạo (AI) trong tương lai liệu có đạt tới ý thức như con người?',
+          options: [
+            'Có, vì AI có thể tính toán nhanh hơn bộ não con người',
+            'Không, vì AI không có cơ quan phản ánh sống là não người và không có nguồn gốc xã hội (lao động, ngôn ngữ, thực tiễn xã hội)',
+            'Có, nếu lập trình viên sử dụng ngôn ngữ lập trình mới',
+            'Có, vì máy tính chạy bằng điện năng tương tự xung thần kinh'
+          ],
+          correctIndex: 1,
+          explanation: 'Ý thức là thuộc tính của một dạng vật chất tổ chức cao là brain người và được hình thành qua thực tiễn lao động, ngôn ngữ xã hội. AI chỉ là sự mô phỏng máy móc, không có nguồn gốc tự nhiên lẫn nguồn gốc xã hội của ý thức.'
+        },
+        {
+          question: 'Theo phép biện chứng duy vật, động lực thúc đẩy sự vận động và phát triển của mọi sự vật hiện tượng là gì?',
+          options: [
+            'Sự thúc đẩy từ một đấng tối cao (Cú hích của Chúa)',
+            'Sự đấu tranh của các mặt đối lập trong bản thân sự vật (Mâu thuẫn biện chứng)',
+            'Sự may mắn hoặc ý chí chủ quan của con người',
+            'Sự biến mất hoàn toàn của lượng chất cũ'
+          ],
+          correctIndex: 1,
+          explanation: 'Quy luật mâu thuẫn (Quy luật thống nhất và đấu tranh của các mặt đối lập) chỉ ra nguồn gốc, động lực bên trong của sự phát triển chính là mâu thuẫn biện chứng.'
+        },
+        {
+          question: 'Khái niệm "Cơ sở hạ tầng" trong chủ nghĩa duy vật lịch sử dùng để chỉ điều gì?',
+          options: [
+            'Hệ thống đường xá, cầu cống, nhà ga và mạng lưới điện',
+            'Hệ thống các quan điểm chính trị, pháp luật và thiết chế tương ứng',
+            'Toàn bộ những quan hệ sản xuất hợp thành cơ cấu kinh tế của một xã hội nhất định',
+            'Các nhà máy sản xuất vật chất quy mô lớn'
+          ],
+          correctIndex: 2,
+          explanation: 'Cơ sở hạ tầng là phạm trù triết học dùng để chỉ toàn bộ các quan hệ sản xuất (sở hữu, quản lý, phân phối) cấu thành cơ cấu kinh tế của một xã hội.'
+        },
+        {
+          question: 'Bản chất của con người theo luận điểm kinh điển của Karl Marx là gì?',
+          options: [
+            'Tính thiện bẩm sinh ai cũng có từ nhỏ',
+            'Tổng hòa của các nhu cầu sinh học đơn thuần',
+            'Trong tính hiện thực của nó, là tổng hòa những quan hệ xã hội',
+            'Lòng yêu thương đồng loại vô điều kiện'
+          ],
+          correctIndex: 2,
+          explanation: 'Karl Marx khẳng định: "Trong tính hiện thực của nó, bản chất con người là tổng hòa những quan hệ xã hội". Con người vừa là sản phẩm vừa là chủ thể của hoàn cảnh xã hội.'
+        }
+      ] as any
+    }
+  });
+
   // ==================== NEW SEED: DEBATE TOPICS / SCENARIOS ====================
   await prisma.debateTopic.createMany({
     data: [

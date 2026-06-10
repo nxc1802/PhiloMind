@@ -667,8 +667,6 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
   );
 }
 
-
-
 function FinalQuizStage({ questions = [], onComplete }) {
   const { showToast } = useToast();
   const total = questions.length;
@@ -850,7 +848,7 @@ function JourneyHeader({ stage, pieces, onBack, onReset }) {
   const currentLabel = STAGE_LABELS[steps[Math.min(activeIndex, steps.length - 1)]];
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-4 md:p-5 mb-6 sticky top-4 z-20 text-left">
+    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-4 md:p-5 mb-6 text-left">
       <div className="flex items-center justify-between gap-3 mb-5">
         <button
           type="button"
@@ -951,10 +949,36 @@ export default function AdventureLessonPlayer({
   nodeDetails, 
   isRevisit, 
   onComplete, 
-  onBackToMindmap 
+  onBackToMindmap,
+  onStateChange
 }) {
   const storageKey = useMemo(() => `philosophy_journey_state_${nodeDetails?.id || "default"}`, [nodeDetails?.id]);
   const [state, setState] = useLocalStorage(storageKey, INITIAL_STATE);
+
+  const { stage, pieces, score, merged } = state;
+
+  const showPanel = stage === "cognitive" || stage === "social" || stage === "summary";
+  const activePieceId =
+    stage === "cognitive" ? "cognitive" : stage === "social" ? "social" : null;
+
+  const mergePieces = useCallback(() => setState((prev) => ({ ...prev, merged: true })), [setState]);
+
+  useEffect(() => {
+    if (onStateChange) {
+      onStateChange({
+        showPanel,
+        branches: nodeDetails?.finalSummary?.summary?.branches,
+        pieces,
+        activePieceId,
+        canMerge: stage === "summary" && pieces.length >= 2 && !merged,
+        merged,
+        onMerge: mergePieces,
+      });
+    }
+    return () => {
+      if (onStateChange) onStateChange(null);
+    };
+  }, [onStateChange, showPanel, nodeDetails?.finalSummary?.summary?.branches, pieces, activePieceId, stage, merged, mergePieces]);
 
   const introData = useMemo(() => nodeDetails?.storyIntro || {}, [nodeDetails?.storyIntro]);
   const cognitiveData = useMemo(() => {
@@ -989,8 +1013,6 @@ export default function AdventureLessonPlayer({
 
   const reset = useCallback(() => setState(INITIAL_STATE), [setState]);
 
-  const mergePieces = useCallback(() => setStage({ merged: true }), [setStage]);
-
   const goBack = useCallback(
     () =>
       setState((prev) => {
@@ -1019,10 +1041,8 @@ export default function AdventureLessonPlayer({
     }
   }, [reset, onBackToMindmap]);
 
-  const { stage, pieces, score, merged } = state;
-
   return (
-    <div className="w-full mx-auto transition-all">
+    <div className="w-full text-left">
       <div className="mb-5 text-left">
         <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-850 px-3 py-1.5 rounded-full text-xs font-bold mb-2">
           <span className="material-symbols-outlined text-base">explore</span>

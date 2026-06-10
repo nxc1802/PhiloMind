@@ -30,8 +30,8 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
   };
 
   return (
-    <aside className="lg:col-span-1 text-left">
-      <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden sticky top-20">
+    <aside className="lg:col-span-1 text-left w-full">
+      <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden w-full">
         <div className="bg-red-800 text-white p-5">
           <h3 className="font-bold text-lg mb-3">Nội dung khóa học</h3>
           <div className="h-2 bg-white/20 rounded-full overflow-hidden">
@@ -45,7 +45,7 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
           </p>
         </div>
 
-        <div className="p-4 space-y-2 max-h-[400px] overflow-y-auto">
+        <div className="p-4 space-y-2 max-h-[300px] overflow-y-auto">
           {flatSyllabusItems.map((item, index) => {
             const config = SYLLABUS_STATUS_CONFIG[item.status] || SYLLABUS_STATUS_CONFIG.locked;
             const isActiveLesson = getSlugFromTitle(item.title) === lessonSlug;

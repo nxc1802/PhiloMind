@@ -5,14 +5,7 @@ import { api } from "../services/api";
 import { useToast } from "../components/Toast";
 import "./MatchingQuiz.css";
 
-// Premium Fallback Philosophy Matching Deck if database has no quizzes yet
-const FALLBACK_MATCHING_PAIRS = [
-  { left: "Vật chất", right: "Thực tại khách quan tồn tại độc lập với ý thức, được đem lại cho con người trong cảm giác." },
-  { left: "Ý thức", right: "Hình ảnh chủ quan của thế giới khách quan, sự phản ánh năng động, sáng tạo thế giới đó vào bộ não người." },
-  { left: "Mâu thuẫn biện chứng", right: "Sự thống nhất và đấu tranh của các mặt đối lập trong một sự vật, hiện tượng." },
-  { left: "Đứng im", right: "Trạng thái vận động trong thăng bằng, sự ổn định tương đối của sự vật hiện tượng trong những điều kiện nhất định." },
-  { left: "Quan hệ sản xuất", right: "Quan hệ giữa người với người trong quá trình sản xuất vật chất, là cơ sở hạ tầng của xã hội." },
-];
+
 
 export default function MatchingQuiz() {
   const { id } = useParams();
@@ -73,11 +66,11 @@ export default function MatchingQuiz() {
 
   const startGame = (game = null) => {
     const activeGame = game || currentGame;
-    let pairs = FALLBACK_MATCHING_PAIRS;
-
-    if (activeGame && Array.isArray(activeGame.questions) && activeGame.questions.length > 0) {
-      pairs = activeGame.questions;
+    if (!activeGame || !Array.isArray(activeGame.questions) || activeGame.questions.length === 0) {
+      showToast("Không có câu hỏi ghép cặp cho trò chơi này.", "warning");
+      return;
     }
+    const pairs = activeGame.questions;
 
     // Format pairs for layout
     const formattedLeft = pairs.map((p, i) => ({ id: `left-${i}`, text: p.left, matchIndex: i }));
@@ -175,6 +168,14 @@ export default function MatchingQuiz() {
           <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 shadow-sm">
             <span className="material-symbols-outlined animate-spin text-5xl text-red-800">sync</span>
             <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị đấu trường ghép cặp...</p>
+          </div>
+        ) : quizzes.length === 0 ? (
+          <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-300 max-w-xl mx-auto">
+            <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">layers_clear</span>
+            <h3 className="font-bold text-gray-800 text-lg mb-1">Chưa có Thử thách Ghép cặp nào</h3>
+            <p className="text-gray-500 text-sm">
+              Hiện tại hệ thống chưa có dữ liệu câu hỏi ghép cặp từ CSDL. Đang chờ cập nhật.
+            </p>
           </div>
         ) : !isPlaying ? (
           // GAME START SCREEN
