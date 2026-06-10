@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, Suspense, lazy, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef, Suspense, lazy } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
 import LessonMindmap from "../components/LessonMindmap";
@@ -18,6 +18,7 @@ const AdventureLessonPlayer = lazy(() => import("./lesson/AdventureLessonPlayer"
 const Lesson = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const lessonSlug = searchParams.get("lesson");
+  const [hasAttemptedAutoLoad, setHasAttemptedAutoLoad] = useState(false);
   const { showToast } = useToast();
   const { user } = useAuth();
 
@@ -26,44 +27,6 @@ const Lesson = () => {
   // Load course journey using query hook
   const { data: journeyData } = useJourney(user);
   const dbJourney = useMemo(() => journeyData?.journey || [], [journeyData]);
-
-  const hasAutoRedirected = useRef(false);
-
-  // Auto-redirect to first active or available lesson on initial page access
-  useEffect(() => {
-    if (dbJourney.length > 0 && !lessonSlug && !hasAutoRedirected.current) {
-      hasAutoRedirected.current = true;
-      let targetNode = null;
-
-      // Find the first node in the journey that is 'in_progress' or 'available'
-      for (const chap of dbJourney) {
-        if (chap.nodes) {
-          const found = chap.nodes.find(n => {
-            const status = n.progress && n.progress[0]?.status;
-            return status === 'in_progress' || status === 'available';
-          });
-          if (found) {
-            targetNode = found;
-            break;
-          }
-        }
-      }
-
-      // If no node has explicit progress status, pick the very first node of the syllabus
-      if (!targetNode) {
-        for (const chap of dbJourney) {
-          if (chap.nodes && chap.nodes.length > 0) {
-            targetNode = chap.nodes[0];
-            break;
-          }
-        }
-      }
-
-      if (targetNode) {
-        setSearchParams({ lesson: getSlugFromTitle(targetNode.title) });
-      }
-    }
-  }, [dbJourney, lessonSlug, setSearchParams]);
 
 
   // Match active lesson node
@@ -77,6 +40,31 @@ const Lesson = () => {
     }
     return null;
   }, [lessonSlug, dbJourney]);
+
+  // Auto-select and load the first active/available lesson if none is selected on initial page visit
+  useEffect(() => {
+    if (dbJourney.length > 0 && !lessonSlug && !hasAttemptedAutoLoad) {
+      setHasAttemptedAutoLoad(true);
+      let fallbackNode = null;
+      for (const chap of dbJourney) {
+        if (chap.nodes && chap.nodes.length > 0) {
+          for (const node of chap.nodes) {
+            if (!fallbackNode) {
+              fallbackNode = node;
+            }
+            const status = node.progress && node.progress[0]?.status;
+            if (status === 'in_progress' || status === 'available') {
+              setSearchParams({ lesson: getSlugFromTitle(node.title) });
+              return;
+            }
+          }
+        }
+      }
+      if (fallbackNode) {
+        setSearchParams({ lesson: getSlugFromTitle(fallbackNode.title) });
+      }
+    }
+  }, [dbJourney, lessonSlug, setSearchParams, hasAttemptedAutoLoad]);
 
   // Node details query hook
   const { data: currentNodeDetails, isLoading: loadingNode } = useNodeDetails(activeLesson?.id, user?.id);

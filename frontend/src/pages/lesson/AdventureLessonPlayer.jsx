@@ -667,123 +667,7 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
   );
 }
 
-function PieceSlot({ branch, index, collected, active, isCompact = false }) {
-  if (!branch) return null;
-  if (collected) {
-    return (
-      <div className={`rounded-xl ${isCompact ? "p-2.5" : "p-3.5"} text-white bg-gradient-to-br ${branch.color || "from-gray-700 to-gray-900"} shadow-sm j-unlock text-left`}>
-        <div className="flex items-center gap-2">
-          <span className="h-6 w-6 rounded-full bg-white/25 flex items-center justify-center text-[10px] font-bold shrink-0">
-            {index + 1}
-          </span>
-          <span className="material-symbols-outlined text-lg">{branch.icon}</span>
-          <h4 className="font-bold text-xs leading-tight">{branch.title}</h4>
-          <span className="material-symbols-outlined ml-auto text-sm text-white/90">check_circle</span>
-        </div>
-        {!isCompact && (
-          <p className="text-xs text-white/90 mt-2 leading-relaxed">{branch.tagline}</p>
-        )}
-      </div>
-    );
-  }
-  return (
-    <div
-      className={`rounded-xl ${isCompact ? "p-2.5" : "p-3.5"} border-2 border-dashed transition-all text-left ${
-        active ? "border-red-300 bg-red-50/50" : "border-gray-200 bg-gray-50"
-      }`}
-    >
-      <div className="flex items-center gap-2">
-        <span
-          className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 ${
-            active ? "bg-red-200 text-red-800" : "bg-gray-200 text-gray-400"
-          }`}
-        >
-          {index + 1}
-        </span>
-        <span className={`material-symbols-outlined text-lg ${active ? "text-red-400" : "text-gray-300"}`}>
-          {active ? "hourglass_top" : "lock"}
-        </span>
-        <span className={`text-xs font-semibold ${active ? "text-red-750" : "text-gray-400"}`}>
-          {active ? "Đang khám phá…" : "Chưa mở khóa"}
-        </span>
-      </div>
-    </div>
-  );
-}
 
-function KnowledgePanel({ branches = [], pieces, activePieceId, canMerge, merged, onMerge, isCompact = false }) {
-  if (branches.length < 2) return null;
-  const content = (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden h-full flex flex-col justify-between">
-      <div className="bg-gradient-to-r from-red-900 to-red-800 px-4 py-3 text-white text-left">
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-base">extension</span>
-          <h3 className="font-bold text-sm">Nguồn Gốc Triết Học</h3>
-          <span className="ml-auto text-xs bg-white/20 px-2 py-0.5 rounded-full font-bold tabular-nums">
-            {pieces.length}/2
-          </span>
-        </div>
-      </div>
-
-      <div className="p-4 flex-1 flex flex-col justify-center space-y-2">
-        <PieceSlot
-          branch={branches[0]}
-          index={0}
-          collected={pieces.includes(branches[0].id)}
-          active={activePieceId === branches[0].id}
-          isCompact={isCompact}
-        />
-
-        <div className="flex justify-center text-xs my-0.5">
-          <span
-            className={`material-symbols-outlined text-lg ${
-              merged ? "text-green-500" : canMerge ? "text-red-500 animate-pulse" : "text-gray-300"
-            }`}
-          >
-            {merged ? "link" : "add"}
-          </span>
-        </div>
-
-        <PieceSlot
-          branch={branches[1]}
-          index={1}
-          collected={pieces.includes(branches[1].id)}
-          active={activePieceId === branches[1].id}
-          isCompact={isCompact}
-        />
-
-        {!merged && (
-          <div className="pt-1">
-            {canMerge ? (
-              <button
-                type="button"
-                onClick={onMerge}
-                className="w-full inline-flex items-center justify-center gap-1.5 bg-red-800 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-900 transition-colors shadow-md j-glow active:scale-95"
-              >
-                <span className="material-symbols-outlined text-sm">join_full</span>
-                Ghép 2 mảnh
-              </button>
-            ) : (
-              <p className="text-center text-[10px] text-gray-400 leading-relaxed px-1">
-                Hoàn thành cả 2 phần để mở khóa ghép.
-              </p>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  if (isCompact) {
-    return <div className="w-full h-full">{content}</div>;
-  }
-
-  return (
-    <aside className="lg:sticky lg:top-[5.5rem] w-full">
-      {content}
-    </aside>
-  );
-}
 
 function FinalQuizStage({ questions = [], onComplete }) {
   const { showToast } = useToast();
@@ -959,14 +843,14 @@ function CompletionStage({ score, total, completionData, xpReward, badgeReward, 
   );
 }
 
-function JourneyHeader({ stage, pieces, onBack, onReset, isCompact = false }) {
+function JourneyHeader({ stage, pieces, onBack, onReset }) {
   const steps = STAGES.slice(0, 5);
   const activeIndex = STAGES.indexOf(stage);
   const canGoBack = activeIndex > 0;
   const currentLabel = STAGE_LABELS[steps[Math.min(activeIndex, steps.length - 1)]];
 
   return (
-    <div className={`bg-white rounded-2xl shadow-md border border-gray-200 p-4 md:p-5 text-left ${isCompact ? "h-full mb-0" : "mb-6 sticky top-4 z-20"}`}>
+    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-4 md:p-5 mb-6 sticky top-4 z-20 text-left">
       <div className="flex items-center justify-between gap-3 mb-5">
         <button
           type="button"
@@ -1137,12 +1021,8 @@ export default function AdventureLessonPlayer({
 
   const { stage, pieces, score, merged } = state;
 
-  const showPanel = stage === "cognitive" || stage === "social" || stage === "summary";
-  const activePieceId =
-    stage === "cognitive" ? "cognitive" : stage === "social" ? "social" : null;
-
   return (
-    <div className={`${showPanel ? "max-w-6xl" : "max-w-3xl"} mx-auto transition-all w-full`}>
+    <div className="w-full mx-auto transition-all">
       <div className="mb-5 text-left">
         <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-850 px-3 py-1.5 rounded-full text-xs font-bold mb-2">
           <span className="material-symbols-outlined text-base">explore</span>
@@ -1156,78 +1036,61 @@ export default function AdventureLessonPlayer({
         </p>
       </div>
 
-      {showPanel ? (
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 items-stretch mb-6">
-          <JourneyHeader stage={stage} pieces={pieces} onBack={goBack} onReset={reset} isCompact={true} />
-          <KnowledgePanel
-            branches={summaryData?.branches}
-            pieces={pieces}
-            activePieceId={activePieceId}
-            canMerge={stage === "summary" && pieces.length >= 2 && !merged}
+      {stage !== "done" && (
+        <JourneyHeader stage={stage} pieces={pieces} onBack={goBack} onReset={reset} />
+      )}
+
+      <div className="w-full">
+        {stage === "intro" && (
+          <IntroStage 
+            introData={introData} 
+            onComplete={(startPoint) => setStage({ startPoint, stage: "cognitive" })} 
+          />
+        )}
+
+        {stage === "cognitive" && (
+          <CognitiveStage 
+            cognitiveData={cognitiveData} 
+            onComplete={(piece) => collectPiece(piece, "social")} 
+          />
+        )}
+
+        {stage === "social" && (
+          <SocialStage 
+            socialData={socialData} 
+            minigameData={minigame} 
+            onComplete={(piece) => collectPiece(piece, "summary")} 
+          />
+        )}
+
+        {stage === "summary" && (
+          <SummaryStage
+            summaryData={summaryData}
             merged={merged}
             onMerge={mergePieces}
-            isCompact={true}
+            onComplete={() => setStage({ stage: "quiz" })}
           />
-        </div>
-      ) : (
-        stage !== "done" && (
-          <JourneyHeader stage={stage} pieces={pieces} onBack={goBack} onReset={reset} />
-        )
-      )}
+        )}
 
-      {showPanel ? (
-        <div className="w-full min-w-0">
-          {stage === "cognitive" && (
-            <CognitiveStage 
-              cognitiveData={cognitiveData} 
-              onComplete={(piece) => collectPiece(piece, "social")} 
-            />
-          )}
-          {stage === "social" && (
-            <SocialStage 
-              socialData={socialData} 
-              minigameData={minigame} 
-              onComplete={(piece) => collectPiece(piece, "summary")} 
-            />
-          )}
-          {stage === "summary" && (
-            <SummaryStage
-              summaryData={summaryData}
-              merged={merged}
-              onMerge={mergePieces}
-              onComplete={() => setStage({ stage: "quiz" })}
-            />
-          )}
-        </div>
-      ) : (
-        <div className="w-full">
-          {stage === "intro" && (
-            <IntroStage 
-              introData={introData} 
-              onComplete={(startPoint) => setStage({ startPoint, stage: "cognitive" })} 
-            />
-          )}
+        {stage === "quiz" && (
+          <FinalQuizStage
+            questions={finalQuizQuestions}
+            onComplete={handleFinalQuizComplete}
+          />
+        )}
 
-          {stage === "quiz" && (
-            <FinalQuizStage
-              questions={finalQuizQuestions}
-              onComplete={handleFinalQuizComplete}
-            />
-          )}
-
-          {stage === "done" && (
-            <CompletionStage
-              score={score ?? 0}
-              total={finalQuizQuestions.length || 5}
-              completionData={completionData}
-              xpReward={xpReward}
-              badgeReward={badgeReward}
-              onReplay={handleReplay}
-              onBackToMindmap={handleFinish}
-            />
-          )}
-        </div>
-      )}
+        {stage === "done" && (
+          <CompletionStage
+            score={score ?? 0}
+            total={finalQuizQuestions.length || 5}
+            completionData={completionData}
+            xpReward={xpReward}
+            badgeReward={badgeReward}
+            onReplay={handleReplay}
+            onBackToMindmap={handleFinish}
+          />
+        )}
+      </div>
     </div>
   );
 }
