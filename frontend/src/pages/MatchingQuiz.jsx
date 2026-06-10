@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import PageShell, { PageHero } from "../components/PageShell";
 import { api } from "../services/api";
@@ -25,6 +25,17 @@ export default function MatchingQuiz() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(0);
+
+  const errorTimeoutRef = useRef(null);
+
+  // Clean up error timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (errorTimeoutRef.current) {
+        clearTimeout(errorTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Load quizzes
   const loadData = useCallback(async () => {
@@ -102,6 +113,18 @@ export default function MatchingQuiz() {
   // Check matching logic
   const handleSelectLeft = (item) => {
     if (matchedPairs[item.id]) return; // already matched
+
+    // If there is currently a mismatch error active, clear it and select this new card immediately
+    if (Object.keys(errors).length > 0) {
+      if (errorTimeoutRef.current) {
+        clearTimeout(errorTimeoutRef.current);
+      }
+      setErrors({});
+      setSelectedRight(null);
+      setSelectedLeft(item);
+      return;
+    }
+
     setSelectedLeft(item);
 
     // If right was already selected, check match
@@ -114,6 +137,18 @@ export default function MatchingQuiz() {
     // Check if already matched
     const isMatched = Object.values(matchedPairs).includes(item.id);
     if (isMatched) return;
+
+    // If there is currently a mismatch error active, clear it and select this new card immediately
+    if (Object.keys(errors).length > 0) {
+      if (errorTimeoutRef.current) {
+        clearTimeout(errorTimeoutRef.current);
+      }
+      setErrors({});
+      setSelectedLeft(null);
+      setSelectedRight(item);
+      return;
+    }
+
     setSelectedRight(item);
 
     // If left was already selected, check match
@@ -146,7 +181,10 @@ export default function MatchingQuiz() {
       showToast("Định nghĩa chưa tương thích. Hãy thử lại!", "error");
       setScore(prev => Math.max(0, prev - 5));
 
-      setTimeout(() => {
+      if (errorTimeoutRef.current) {
+        clearTimeout(errorTimeoutRef.current);
+      }
+      errorTimeoutRef.current = setTimeout(() => {
         setErrors({});
         setSelectedLeft(null);
         setSelectedRight(null);

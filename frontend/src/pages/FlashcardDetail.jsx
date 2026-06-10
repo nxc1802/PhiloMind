@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageShell, { PageHero } from "../components/PageShell";
 import { useToast } from "../components/Toast";
@@ -23,6 +23,17 @@ const FlashcardDetail = () => {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [selectedDesc, setSelectedDesc] = useState(null);
   const [mismatched, setMismatched] = useState(null); // { termId, descId }
+
+  const mismatchTimeoutRef = useRef(null);
+
+  // Clean up mismatch timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (mismatchTimeoutRef.current) {
+        clearTimeout(mismatchTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Fetch dynamic flashcards and chapter title
   useEffect(() => {
@@ -104,7 +115,19 @@ const FlashcardDetail = () => {
   };
 
   const handleSelectTerm = (item) => {
-    if (matchedPairs.includes(item.pairId) || mismatched) return;
+    if (matchedPairs.includes(item.pairId)) return;
+
+    // If there is currently a mismatch error active, clear it and select this new card immediately
+    if (mismatched) {
+      if (mismatchTimeoutRef.current) {
+        clearTimeout(mismatchTimeoutRef.current);
+      }
+      setMismatched(null);
+      setSelectedDesc(null);
+      setSelectedTerm(item);
+      return;
+    }
+
     setSelectedTerm(item);
 
     if (selectedDesc) {
@@ -118,7 +141,7 @@ const FlashcardDetail = () => {
       } else {
         setMismatched({ termId: item.id, descId: selectedDesc.id });
         showToast("Chưa chính xác, hãy thử lại!", "error");
-        setTimeout(() => {
+        mismatchTimeoutRef.current = setTimeout(() => {
           setMismatched(null);
           setSelectedTerm(null);
           setSelectedDesc(null);
@@ -128,7 +151,19 @@ const FlashcardDetail = () => {
   };
 
   const handleSelectDesc = (item) => {
-    if (matchedPairs.includes(item.pairId) || mismatched) return;
+    if (matchedPairs.includes(item.pairId)) return;
+
+    // If there is currently a mismatch error active, clear it and select this new card immediately
+    if (mismatched) {
+      if (mismatchTimeoutRef.current) {
+        clearTimeout(mismatchTimeoutRef.current);
+      }
+      setMismatched(null);
+      setSelectedTerm(null);
+      setSelectedDesc(item);
+      return;
+    }
+
     setSelectedDesc(item);
 
     if (selectedTerm) {
@@ -142,7 +177,7 @@ const FlashcardDetail = () => {
       } else {
         setMismatched({ termId: selectedTerm.id, descId: item.id });
         showToast("Chưa chính xác, hãy thử lại!", "error");
-        setTimeout(() => {
+        mismatchTimeoutRef.current = setTimeout(() => {
           setMismatched(null);
           setSelectedTerm(null);
           setSelectedDesc(null);

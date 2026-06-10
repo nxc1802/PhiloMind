@@ -258,13 +258,21 @@ export default function Practice() {
                   />
                 </div>
 
-                <div className="flex justify-between items-center mb-6 text-sm text-gray-500 mt-2">
+                <div className="flex justify-between items-center mb-4 text-sm text-gray-500 mt-2">
                   <span className="bg-red-55 text-red-850 px-3 py-1 rounded-full font-bold uppercase tracking-wider text-xs">
                     {reviewTitle}
                   </span>
                   <span className="font-bold text-gray-600">
                     Thẻ thứ {currentReviewIndex + 1} / {reviewCards.length}
                   </span>
+                </div>
+
+                {/* Hướng dẫn cách sử dụng */}
+                <div className="bg-blue-50 border border-blue-150 text-blue-800 text-xs rounded-xl p-3 mb-6 text-left leading-relaxed flex gap-2.5">
+                  <span className="material-symbols-outlined text-blue-700 shrink-0 text-lg">info</span>
+                  <div>
+                    <strong className="font-bold">Hướng dẫn học:</strong> Nhấp trực tiếp vào thẻ hoặc nút <span className="font-bold">Lật thẻ</span> bên dưới để xem đáp án. Click <span className="font-bold">Dễ</span> hoặc <span className="font-bold">Khó</span> để ghi nhận mức độ ghi nhớ và tự động chuyển thẻ, hoặc sử dụng các nút <span className="font-bold">Trước đó</span> / <span className="font-bold">Tiếp theo</span> để chuyển thẻ tự do.
+                  </div>
                 </div>
 
                 {/* Flipping card container */}
@@ -335,18 +343,18 @@ export default function Practice() {
                             e.stopPropagation();
                             handleReviewEase(2);
                           }}
-                          className="bg-amber-50 hover:bg-amber-100 text-amber-800 border-2 border-amber-200 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm"
+                          className="bg-amber-55 hover:bg-amber-100 text-amber-900 border-2 border-amber-300 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
                         >
-                          🟡 Khó (Cần học lại)
+                          <span>🟡 Khó</span> <span className="text-xs font-normal text-amber-800">(Học lại)</span>
                         </button>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleReviewEase(4);
                           }}
-                          className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-2 border-emerald-200 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm"
+                          className="bg-emerald-55 hover:bg-emerald-100 text-emerald-900 border-2 border-emerald-300 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
                         >
-                          🟢 Dễ (Đã học được)
+                          <span>🟢 Dễ</span> <span className="text-xs font-normal text-emerald-800">(Thuộc bài)</span>
                         </button>
                       </div>
                     </div>
@@ -358,15 +366,56 @@ export default function Practice() {
                   )}
                 </div>
 
-                <div className="border-t border-gray-150 pt-4 text-center">
+                {/* Dãy điều hướng thủ công */}
+                <div className="flex justify-between items-center max-w-md mx-auto mt-6 pt-4 border-t border-gray-150">
+                  <button
+                    onClick={() => {
+                      if (currentReviewIndex > 0) {
+                        setIsFlipped(false);
+                        setCurrentReviewIndex(prev => prev - 1);
+                      }
+                    }}
+                    disabled={currentReviewIndex === 0}
+                    className="flex items-center gap-1 px-4 py-2.5 text-sm font-bold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-gray-200/50"
+                  >
+                    <span className="material-symbols-outlined text-sm">arrow_back</span>
+                    Trước đó
+                  </button>
+
+                  <button
+                    onClick={() => setIsFlipped(!isFlipped)}
+                    className="flex items-center gap-1 px-4 py-2.5 text-sm font-bold rounded-xl bg-red-50 hover:bg-red-100 text-red-850 transition-all border border-red-200/40"
+                  >
+                    <span className="material-symbols-outlined text-sm">sync_alt</span>
+                    Lật thẻ
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      if (currentReviewIndex < reviewCards.length - 1) {
+                        setIsFlipped(false);
+                        setCurrentReviewIndex(prev => prev + 1);
+                      } else {
+                        showToast("Đồng chí đã ở thẻ cuối cùng của phiên ôn tập này.", "info");
+                      }
+                    }}
+                    disabled={currentReviewIndex === reviewCards.length - 1}
+                    className="flex items-center gap-1 px-4 py-2.5 text-sm font-bold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-gray-200/50"
+                  >
+                    Tiếp theo
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
+
+                <div className="mt-6 text-center">
                   <button
                     onClick={() => {
                       setIsReviewMode(false);
                       setIsFlipped(false);
                     }}
-                    className="text-gray-500 hover:text-red-800 text-xs font-semibold underline"
+                    className="text-gray-500 hover:text-red-850 text-xs font-bold underline"
                   >
-                    Dừng ôn tập và quay ra ngoài
+                    Dừng ôn tập và quay lại danh sách
                   </button>
                 </div>
               </div>
