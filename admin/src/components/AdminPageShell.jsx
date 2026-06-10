@@ -9,7 +9,7 @@ const SIDEBAR_ITEMS = [
   { key: 'practice', label: 'Luyện tập (Practice)', icon: 'fitness_center', to: '/practice' },
   { key: 'debates', label: 'Tranh luận AI', icon: 'forum', to: '/debates' },
 
-  { key: 'philosofun', label: 'Philosofun', icon: 'smart_display', to: '/philosofun' },
+  { key: 'philosofun', label: 'PhilosoFUN', icon: 'smart_display', to: '/philosofun' },
 ];
 
 export default function AdminPageShell({ activeKey, children }) {

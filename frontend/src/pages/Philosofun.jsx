@@ -37,7 +37,7 @@ export default function Philosofun() {
             <span className="material-symbols-outlined text-3xl">smart_display</span>
             <span className="text-sm uppercase tracking-wider opacity-80">Góc Giải Trí Triết Học</span>
           </div>
-          <h1 className="font-bold text-4xl md:text-5xl mb-4">Philosofun</h1>
+          <h1 className="font-bold text-4xl md:text-5xl mb-4">PhilosoFUN</h1>
           <p className="text-white/80 max-w-2xl mb-6">
             Thư viện video tình huống triết học trực quan, sinh động giúp khơi dậy hứng thú học tập và tư duy phản biện xã hội sâu sắc.
           </p>

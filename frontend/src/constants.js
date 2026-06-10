@@ -9,7 +9,7 @@ export const PODCAST_SKIP_SECONDS = 10;        // Bước tua nhanh/lùi của p
 
 // --- Trò chơi lật thẻ ghi nhớ (Shinkei-suijaku) ---
 export const MEMORY_MATCH_DELAY_MS = 450;      // Thời gian giữ trước khi loại bỏ 2 thẻ khớp
-export const MEMORY_FLIP_BACK_MS = 1000;       // Thời gian giữ trước khi úp lại 2 thẻ không khớp
+export const MEMORY_FLIP_BACK_MS = 5000;       // Thời gian giữ trước khi úp lại 2 thẻ không khớp
 
 // --- Cấu hình sidebar dùng chung cho mọi trang ---
 // Mỗi item có key để xác định trang đang active
@@ -19,6 +19,6 @@ export const SIDEBAR_NAV_ITEMS = [
   { key: "lessons",    to: "/lessons",    icon: "menu_book",      label: "Lesson"      },
   { key: "practice",   to: "/practice",   icon: "fitness_center", label: "Practice"    },
   { key: "debate",     to: "/debate",     icon: "diversity_3",    label: "Debate"      },
-  { key: "philosofun", to: "/philosofun", icon: "smart_display",  label: "Philosofun"  },
+  { key: "philosofun", to: "/philosofun", icon: "smart_display",  label: "PhilosoFUN"  },
   { key: "docs",       to: "/docs",       icon: "description",    label: "PDF docs"    },
 ];

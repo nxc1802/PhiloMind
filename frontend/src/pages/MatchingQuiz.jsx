@@ -150,7 +150,7 @@ export default function MatchingQuiz() {
         setErrors({});
         setSelectedLeft(null);
         setSelectedRight(null);
-      }, 1000);
+      }, 5000);
     }
   };
 

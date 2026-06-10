@@ -347,25 +347,25 @@ const DebateCorner = () => {
                 </div>
 
                 {/* Input form */}
-                <form onSubmit={handleSendMessage} className="border-t border-gray-100 pt-4 flex items-center gap-3 shrink-0">
-                  <div className="h-10 w-10 rounded-full bg-slate-100 border border-slate-200 text-gray-600 flex items-center justify-center font-bold text-sm shrink-0 uppercase">
+                <form onSubmit={handleSendMessage} className="border-t border-gray-100 pt-4 flex items-center gap-2 sm:gap-3 shrink-0">
+                  <div className="hidden sm:flex h-10 w-10 rounded-full bg-slate-100 border border-slate-200 text-gray-600 items-center justify-center font-bold text-sm shrink-0 uppercase">
                     {user?.name ? user.name[0] : "U"}
                   </div>
                   <input
                     type="text"
-                    placeholder={sendingMsg ? "AI đang suy nghĩ..." : "Nhập lập luận hoặc luận điểm bảo vệ ý kiến của đồng chí..."}
+                    placeholder={sendingMsg ? "AI đang suy nghĩ..." : "Nhập lập luận..."}
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     disabled={sendingMsg || loadingChat}
-                    className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 focus:border-red-800 focus:ring-1 focus:ring-red-800 outline-none"
+                    className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-gray-800 focus:border-red-800 focus:ring-1 focus:ring-red-800 outline-none"
                   />
                   <button
                     type="submit"
                     disabled={sendingMsg || loadingChat || !inputValue.trim()}
-                    className="bg-red-800 hover:bg-red-950 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-md shrink-0 flex items-center gap-1 disabled:opacity-50 font-bold"
+                    className="bg-red-800 hover:bg-red-950 text-white px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl transition-all shadow-md shrink-0 flex items-center gap-1 disabled:opacity-50 font-bold text-xs sm:text-sm"
                   >
                     <span className="material-symbols-outlined text-sm">send</span>
-                    Tranh biện
+                    <span className="hidden sm:inline">Tranh biện</span>
                   </button>
                 </form>
               </div>

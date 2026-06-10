@@ -49,26 +49,27 @@ export default function Docs() {
             {displayDocs.map((doc) => (
               <article
                 key={doc.id}
-                className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex items-start gap-5 hover:shadow-md transition-shadow text-left"
+                className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col sm:flex-row items-stretch sm:items-start gap-4 sm:gap-5 hover:shadow-md transition-shadow text-left"
               >
-                <div className="h-14 w-14 rounded-xl bg-red-50 text-red-800 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-3xl">
-                    picture_as_pdf
-                  </span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h2 className="font-bold text-lg text-gray-900 mb-1 truncate" title={doc.title}>
-                    {doc.title}
-                  </h2>
-                  <p className="text-gray-600 text-sm mb-3">
-                    {doc.description}
-                  </p>
-
+                <div className="flex gap-4 items-start">
+                  <div className="h-14 w-14 rounded-xl bg-red-50 text-red-800 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-3xl">
+                      picture_as_pdf
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="font-bold text-lg text-gray-900 mb-1 truncate" title={doc.title}>
+                      {doc.title}
+                    </h2>
+                    <p className="text-gray-600 text-sm">
+                      {doc.description}
+                    </p>
+                  </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleDownload(doc)}
-                  className="bg-red-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-red-900 transition-colors flex items-center gap-2 shrink-0"
+                  className="bg-red-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-red-900 transition-colors flex items-center justify-center gap-2 shrink-0 w-full sm:w-auto mt-2 sm:mt-0"
                 >
                   <span className="material-symbols-outlined text-base">
                     download

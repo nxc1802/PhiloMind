@@ -105,7 +105,7 @@ export default function Philosofun() {
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
             <span className="material-symbols-outlined text-red-500 text-4xl">smart_display</span>
-            Quản lý Philosofun
+            Quản lý PhilosoFUN
           </h1>
           <p className="text-slate-400 mt-1 text-sm">
             Nơi đăng tải và quản lý các video tình huống, kịch bản triết học hấp dẫn cho học viên.

@@ -34,7 +34,7 @@ const TOP_NAV_ITEMS = [
   { to: "/lessons",    label: "Lesson",      Icon: BookOpen },
   { to: "/practice",   label: "Practice",    Icon: Dumbbell },
   { to: "/debate",     label: "Debate",      Icon: MessagesSquare },
-  { to: "/philosofun", label: "Philosofun",  Icon: Play },
+  { to: "/philosofun", label: "PhilosoFUN",  Icon: Play },
   { to: "/docs",       label: "PDF docs",    Icon: FileText },
 ];
 

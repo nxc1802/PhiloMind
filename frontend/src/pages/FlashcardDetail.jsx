@@ -122,7 +122,7 @@ const FlashcardDetail = () => {
           setMismatched(null);
           setSelectedTerm(null);
           setSelectedDesc(null);
-        }, 1000);
+        }, 5000);
       }
     }
   };
@@ -146,7 +146,7 @@ const FlashcardDetail = () => {
           setMismatched(null);
           setSelectedTerm(null);
           setSelectedDesc(null);
-        }, 1000);
+        }, 5000);
       }
     }
   };

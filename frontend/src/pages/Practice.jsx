@@ -145,7 +145,8 @@ export default function Practice() {
           nextCard();
         },
         onError: (err) => {
-          showToast("Gửi đánh giá thất bại: " + err.message, "error");
+          showToast("Ghi chú: Đã xảy ra lỗi đồng bộ (" + err.message + "), tiến trình học vẫn tiếp tục.", "warning");
+          nextCard();
         }
       }
     );
@@ -328,24 +329,24 @@ export default function Practice() {
                   {isFlipped ? (
                     <div className="space-y-4">
                       <p className="text-sm font-semibold text-gray-600">Đánh giá mức độ nhớ của đồng chí:</p>
-                      <div className="grid grid-cols-3 gap-3 max-w-md mx-auto">
+                      <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
                         <button
-                          onClick={() => handleReviewEase(1)}
-                          className="bg-rose-50 hover:bg-rose-100 text-rose-800 border-2 border-rose-200 px-4 py-2.5 rounded-xl text-xs font-bold transition-all"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleReviewEase(2);
+                          }}
+                          className="bg-amber-50 hover:bg-amber-100 text-amber-800 border-2 border-amber-200 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm"
                         >
-                          🔴 Học lại
+                          🟡 Khó (Cần học lại)
                         </button>
                         <button
-                          onClick={() => handleReviewEase(2)}
-                          className="bg-amber-50 hover:bg-amber-100 text-amber-800 border-2 border-amber-200 px-4 py-2.5 rounded-xl text-xs font-bold transition-all"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleReviewEase(4);
+                          }}
+                          className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-2 border-emerald-200 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm"
                         >
-                          🟡 Khó
-                        </button>
-                        <button
-                          onClick={() => handleReviewEase(4)}
-                          className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-2 border-emerald-200 px-4 py-2.5 rounded-xl text-xs font-bold transition-all"
-                        >
-                          🟢 Dễ
+                          🟢 Dễ (Đã học được)
                         </button>
                       </div>
                     </div>
