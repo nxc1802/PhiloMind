@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, Suspense, lazy } from "react";
+import React, { useMemo, useRef, Suspense, lazy, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
 import LessonMindmap from "../components/LessonMindmap";
@@ -26,6 +26,44 @@ const Lesson = () => {
   // Load course journey using query hook
   const { data: journeyData } = useJourney(user);
   const dbJourney = useMemo(() => journeyData?.journey || [], [journeyData]);
+
+  const hasAutoRedirected = useRef(false);
+
+  // Auto-redirect to first active or available lesson on initial page access
+  useEffect(() => {
+    if (dbJourney.length > 0 && !lessonSlug && !hasAutoRedirected.current) {
+      hasAutoRedirected.current = true;
+      let targetNode = null;
+
+      // Find the first node in the journey that is 'in_progress' or 'available'
+      for (const chap of dbJourney) {
+        if (chap.nodes) {
+          const found = chap.nodes.find(n => {
+            const status = n.progress && n.progress[0]?.status;
+            return status === 'in_progress' || status === 'available';
+          });
+          if (found) {
+            targetNode = found;
+            break;
+          }
+        }
+      }
+
+      // If no node has explicit progress status, pick the very first node of the syllabus
+      if (!targetNode) {
+        for (const chap of dbJourney) {
+          if (chap.nodes && chap.nodes.length > 0) {
+            targetNode = chap.nodes[0];
+            break;
+          }
+        }
+      }
+
+      if (targetNode) {
+        setSearchParams({ lesson: getSlugFromTitle(targetNode.title) });
+      }
+    }
+  }, [dbJourney, lessonSlug, setSearchParams]);
 
 
   // Match active lesson node
