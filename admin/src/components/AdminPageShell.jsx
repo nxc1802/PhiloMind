@@ -6,7 +6,10 @@ const SIDEBAR_ITEMS = [
   { key: 'users', label: 'Học viên', icon: 'group', to: '/users' },
   { key: 'courses', label: 'Tài liệu PDF', icon: 'picture_as_pdf', to: '/courses' },
   { key: 'nodes', label: 'Giáo trình & Bài học', icon: 'auto_stories', to: '/nodes' },
+  { key: 'flashcards', label: 'Thẻ nhớ (Flashcards)', icon: 'layers', to: '/flashcards' },
+  { key: 'quizzes', label: 'Bài tập & Quizzes', icon: 'quiz', to: '/quizzes' },
   { key: 'debates', label: 'Tranh luận AI', icon: 'forum', to: '/debates' },
+
   { key: 'philosofun', label: 'Philosofun', icon: 'smart_display', to: '/philosofun' },
 ];
 

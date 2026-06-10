@@ -8,6 +8,9 @@ import Courses from './pages/Courses';
 import Nodes from './pages/Nodes';
 import Debates from './pages/Debates';
 import Philosofun from './pages/Philosofun';
+import Flashcards from './pages/Flashcards';
+import Quizzes from './pages/Quizzes';
+
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('token');
@@ -38,8 +41,11 @@ export default function App() {
         <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
         <Route path="/nodes" element={<ProtectedRoute><Nodes /></ProtectedRoute>} />
+        <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />
+        <Route path="/quizzes" element={<ProtectedRoute><Quizzes /></ProtectedRoute>} />
         <Route path="/debates" element={<ProtectedRoute><Debates /></ProtectedRoute>} />
         <Route path="/philosofun" element={<ProtectedRoute><Philosofun /></ProtectedRoute>} />
+
       </Routes>
     </ToastProvider>
   );
