@@ -280,14 +280,21 @@ const FlashcardDetail = () => {
                 const isMatched = matchedPairs.includes(item.pairId);
                 const isSelected = selectedTerm?.id === item.id;
                 const hasError = mismatched?.termId === item.id;
+                const isRevealed = isMatched || isSelected || hasError;
 
-                let cardClass = "bg-white border-gray-200 text-gray-800 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
-                if (isMatched) {
-                  cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
-                } else if (hasError) {
-                  cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
-                } else if (isSelected) {
-                  cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
+                let cardClass = "";
+                if (isRevealed) {
+                  if (isMatched) {
+                    cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
+                  } else if (hasError) {
+                    cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
+                  } else if (isSelected) {
+                    cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
+                  } else {
+                    cardClass = "bg-white border-gray-200 text-gray-800 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
+                  }
+                } else {
+                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-red-550 hover:shadow-md transition-all cursor-pointer";
                 }
 
                 return (
@@ -298,12 +305,20 @@ const FlashcardDetail = () => {
                     disabled={isMatched}
                     className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
                   >
-                    <div className="flex flex-col gap-1 w-full text-left">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Khái niệm</span>
-                      <span className="font-bold text-sm md:text-base leading-snug">{item.text}</span>
-                    </div>
-                    {isMatched && (
-                      <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
+                    {isRevealed ? (
+                      <>
+                        <div className="flex flex-col gap-1 w-full text-left">
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Khái niệm</span>
+                          <span className="font-bold text-sm md:text-base leading-snug">{item.text}</span>
+                        </div>
+                        {isMatched && (
+                          <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex items-center justify-center w-full py-2.5">
+                        <span className="material-symbols-outlined text-2xl text-slate-400 group-hover:scale-110 transition-transform">psychology</span>
+                      </div>
                     )}
                   </button>
                 );
@@ -322,14 +337,21 @@ const FlashcardDetail = () => {
                 const isMatched = matchedPairs.includes(item.pairId);
                 const isSelected = selectedDesc?.id === item.id;
                 const hasError = mismatched?.descId === item.id;
+                const isRevealed = isMatched || isSelected || hasError;
 
-                let cardClass = "bg-white border-gray-200 text-gray-700 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
-                if (isMatched) {
-                  cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
-                } else if (hasError) {
-                  cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
-                } else if (isSelected) {
-                  cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
+                let cardClass = "";
+                if (isRevealed) {
+                  if (isMatched) {
+                    cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
+                  } else if (hasError) {
+                    cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
+                  } else if (isSelected) {
+                    cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
+                  } else {
+                    cardClass = "bg-white border-gray-200 text-gray-700 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
+                  }
+                } else {
+                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-red-550 hover:shadow-md transition-all cursor-pointer";
                 }
 
                 return (
@@ -340,12 +362,20 @@ const FlashcardDetail = () => {
                     disabled={isMatched}
                     className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
                   >
-                    <div className="flex flex-col gap-1 w-full text-left">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Định nghĩa</span>
-                      <span className="text-xs md:text-sm leading-relaxed pr-2">{item.text}</span>
-                    </div>
-                    {isMatched && (
-                      <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
+                    {isRevealed ? (
+                      <>
+                        <div className="flex flex-col gap-1 w-full text-left">
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Định nghĩa</span>
+                          <span className="text-xs md:text-sm leading-relaxed pr-2">{item.text}</span>
+                        </div>
+                        {isMatched && (
+                          <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex items-center justify-center w-full py-2.5">
+                        <span className="material-symbols-outlined text-2xl text-slate-400 group-hover:scale-110 transition-transform">menu_book</span>
+                      </div>
                     )}
                   </button>
                 );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard,
+  Home,
   BookOpen,
   Dumbbell,
   MessagesSquare,
@@ -30,7 +30,7 @@ const getInitials = (name) =>
 // Tren desktop: hien thi 6 NavLink + icon o phia phai
 // Tren mobile: nut hamburger mo drawer chua cac muc sidebar
 const TOP_NAV_ITEMS = [
-  { to: "/dashboard",  label: "Dashboard",   Icon: LayoutDashboard },
+  { to: "/",  label: "Home",   Icon: Home },
   { to: "/lessons",    label: "Lesson",      Icon: BookOpen },
   { to: "/practice",   label: "Practice",    Icon: Dumbbell },
   { to: "/debate",     label: "Debate",      Icon: MessagesSquare },
@@ -49,7 +49,7 @@ export default function Navbar() {
   const handleLogout = () => {
     logout();
     setIsUserMenuOpen(false);
-    navigate("/dashboard");
+    navigate("/");
   };
 
   return (
@@ -67,7 +67,7 @@ export default function Navbar() {
             <Menu size={24} />
           </button>
 
-          <Link to="/dashboard" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <img
               alt="Dialectic Academy Logo"
               className="h-9 w-9 md:h-10 md:w-10 object-contain rounded-md"

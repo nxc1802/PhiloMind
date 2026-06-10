@@ -15,7 +15,7 @@ export const MEMORY_FLIP_BACK_MS = 1000;       // Thời gian giữ trước khi
 // Mỗi item có key để xác định trang đang active
 // Mindmap đã được tích hợp thẳng vào trang Lessons nên không còn mục riêng
 export const SIDEBAR_NAV_ITEMS = [
-  { key: "dashboard",  to: "/dashboard",  icon: "dashboard",      label: "Dashboard"   },
+  { key: "home",  to: "/",  icon: "home",      label: "Home"   },
   { key: "lessons",    to: "/lessons",    icon: "menu_book",      label: "Lesson"      },
   { key: "practice",   to: "/practice",   icon: "fitness_center", label: "Practice"    },
   { key: "debate",     to: "/debate",     icon: "diversity_3",    label: "Debate"      },

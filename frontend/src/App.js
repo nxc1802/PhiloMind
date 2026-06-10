@@ -5,7 +5,7 @@ import { useAuth } from "./context/AuthContext";
 import { api } from "./services/api";
 import { queryKeys } from "./services/queryKeys";
 
-import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 import Practice from "./pages/Practice";
 import FlashcardDetail from "./pages/FlashcardDetail";
 import DebateCorner from "./pages/DebateCorner";
@@ -74,11 +74,9 @@ function App() {
 
   return (
     <Routes>
-      {/* Default -> /dashboard */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
-      {/* Main pages */}
-      <Route path="/dashboard" element={<Dashboard />} />
+      {/* Default -> / */}
+      <Route path="/" element={<Home />} />
+      <Route path="/dashboard" element={<Navigate to="/" replace />} />
       <Route path="/practice" element={<Practice />} />
       <Route path="/practice/shinkei/:id" element={<FlashcardDetail />} />
       <Route path="/debate" element={<DebateCorner />} />

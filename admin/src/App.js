@@ -8,8 +8,7 @@ import Courses from './pages/Courses';
 import Nodes from './pages/Nodes';
 import Debates from './pages/Debates';
 import Philosofun from './pages/Philosofun';
-import Flashcards from './pages/Flashcards';
-import Quizzes from './pages/Quizzes';
+import Practice from './pages/Practice';
 
 
 function ProtectedRoute({ children }) {
@@ -41,8 +40,9 @@ export default function App() {
         <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
         <Route path="/nodes" element={<ProtectedRoute><Nodes /></ProtectedRoute>} />
-        <Route path="/flashcards" element={<ProtectedRoute><Flashcards /></ProtectedRoute>} />
-        <Route path="/quizzes" element={<ProtectedRoute><Quizzes /></ProtectedRoute>} />
+        <Route path="/practice" element={<ProtectedRoute><Practice /></ProtectedRoute>} />
+        <Route path="/flashcards" element={<Navigate to="/practice" replace />} />
+        <Route path="/quizzes" element={<Navigate to="/practice" replace />} />
         <Route path="/debates" element={<ProtectedRoute><Debates /></ProtectedRoute>} />
         <Route path="/philosofun" element={<ProtectedRoute><Philosofun /></ProtectedRoute>} />
 

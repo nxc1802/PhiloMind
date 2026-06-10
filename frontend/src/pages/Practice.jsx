@@ -115,24 +115,34 @@ export default function Practice() {
 
   // Handle Spaced Repetition Review Submission
   const handleReviewEase = async (ease) => {
-    if (!user || reviewCards.length === 0) return;
+    if (reviewCards.length === 0) return;
     const card = reviewCards[currentReviewIndex];
     
+    const nextCard = () => {
+      setIsFlipped(false);
+      // Move to next card
+      if (currentReviewIndex < reviewCards.length - 1) {
+        setCurrentReviewIndex(prev => prev + 1);
+      } else {
+        // Finished all cards!
+        showToast("Tuyệt vời! Bạn đã hoàn thành tất cả các thẻ ôn tập trong phiên này.", "success");
+        setIsReviewMode(false);
+        setCurrentReviewIndex(0);
+      }
+    };
+
+    if (!user) {
+      showToast("Ghi chú: Đồng chí đang học ở chế độ Khách. Tiến trình sẽ tiếp tục nhưng lịch sử ôn tập không được lưu.", "info");
+      nextCard();
+      return;
+    }
+
     submitReviewMutation.mutate(
       { userId: user.id, flashcardId: card.id, ease },
       {
         onSuccess: () => {
           showToast("Đã ghi nhận phản hồi và cập nhật lịch ôn tập!", "success");
-          setIsFlipped(false);
-          // Move to next card
-          if (currentReviewIndex < reviewCards.length - 1) {
-            setCurrentReviewIndex(prev => prev + 1);
-          } else {
-            // Finished all cards!
-            showToast("Tuyệt vời! Bạn đã hoàn thành tất cả các thẻ ôn tập trong phiên này.", "success");
-            setIsReviewMode(false);
-            setCurrentReviewIndex(0);
-          }
+          nextCard();
         },
         onError: (err) => {
           showToast("Gửi đánh giá thất bại: " + err.message, "error");
