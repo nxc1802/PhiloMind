@@ -35,7 +35,7 @@ const TOP_NAV_ITEMS = [
   { to: "/practice",   label: "Practice",    Icon: Dumbbell },
   { to: "/debate",     label: "Debate",      Icon: MessagesSquare },
   { to: "/philosofun", label: "PhilosoFUN",  Icon: Play },
-  { to: "/docs",       label: "PDF docs",    Icon: FileText },
+  { to: "/docs",       label: "Document",    Icon: FileText },
 ];
 
 export default function Navbar() {

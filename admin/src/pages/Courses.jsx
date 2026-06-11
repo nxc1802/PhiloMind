@@ -78,7 +78,7 @@ export default function Courses() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Bạn có chắc chắn muốn xóa tài liệu PDF này? Học viên sẽ không thể tải tài liệu này ở giao diện PDF Docs nữa.')) return;
+    if (!window.confirm('Bạn có chắc chắn muốn xóa tài liệu PDF này? Học viên sẽ không thể tải tài liệu này ở giao diện Document nữa.')) return;
     try {
       await api.documents.delete(id);
       showToast('Xóa tài liệu thành công!', 'success');
@@ -97,7 +97,7 @@ export default function Courses() {
               <span className="material-symbols-outlined text-red-500 text-3xl">picture_as_pdf</span>
               Quản lý Tài liệu PDF
             </h1>
-            <p className="text-slate-400 mt-1">Đăng tải sách giáo trình, tài liệu tham khảo PDF cho học viên tải về ở mục PDF Docs.</p>
+            <p className="text-slate-400 mt-1">Đăng tải sách giáo trình, tài liệu tham khảo PDF cho học viên tải về ở mục Document.</p>
           </div>
           <button onClick={openUploadModal} className="flex items-center gap-2 bg-red-800 hover:bg-red-900 text-white px-4 py-2.5 rounded-xl font-semibold shadow-lg transition-colors">
             <span className="material-symbols-outlined text-sm">cloud_upload</span> Tải lên PDF mới

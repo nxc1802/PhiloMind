@@ -20,5 +20,5 @@ export const SIDEBAR_NAV_ITEMS = [
   { key: "practice",   to: "/practice",   icon: "fitness_center", label: "Practice"    },
   { key: "debate",     to: "/debate",     icon: "diversity_3",    label: "Debate"      },
   { key: "philosofun", to: "/philosofun", icon: "smart_display",  label: "PhilosoFUN"  },
-  { key: "docs",       to: "/docs",       icon: "description",    label: "PDF docs"    },
+  { key: "docs",       to: "/docs",       icon: "description",    label: "Document"    },
 ];

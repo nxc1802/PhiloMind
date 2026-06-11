@@ -34,7 +34,7 @@ export default function Docs() {
       <PageHero
         eyebrow="Thư viện tài liệu"
         icon="description"
-        title="PDF Docs"
+        title="Document"
         subtitle=""
       />
 
@@ -49,9 +49,9 @@ export default function Docs() {
             {displayDocs.map((doc) => (
               <article
                 key={doc.id}
-                className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col sm:flex-row items-stretch sm:items-start gap-4 sm:gap-5 hover:shadow-md transition-shadow text-left"
+                className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sm:gap-5 hover:shadow-md transition-shadow text-left"
               >
-                <div className="flex gap-4 items-start">
+                <div className="flex gap-4 items-start flex-1 min-w-0">
                   <div className="h-14 w-14 rounded-xl bg-red-50 text-red-800 flex items-center justify-center shrink-0">
                     <span className="material-symbols-outlined text-3xl">
                       picture_as_pdf
