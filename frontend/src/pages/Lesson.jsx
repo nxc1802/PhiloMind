@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, Suspense, lazy, useState, useEffect } from "react";
+import React, { useMemo, useRef, Suspense, lazy, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
 import LessonMindmap from "../components/LessonMindmap";
@@ -29,18 +29,7 @@ const Lesson = () => {
   const { data: journeyData } = useJourney(user);
   const dbJourney = useMemo(() => journeyData?.journey || [], [journeyData]);
 
-  // Auto-redirect if no lesson selected
-  useEffect(() => {
-    if (!lessonSlug && dbJourney && dbJourney.length > 0) {
-      const firstChap = dbJourney[0];
-      if (firstChap && firstChap.nodes && firstChap.nodes.length > 0) {
-        const firstNode = firstChap.nodes[0];
-        if (firstNode) {
-          setSearchParams({ lesson: getSlugFromTitle(firstNode.title) });
-        }
-      }
-    }
-  }, [lessonSlug, dbJourney, setSearchParams]);
+
 
 
   // Match active lesson node
