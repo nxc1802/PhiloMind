@@ -9,12 +9,12 @@
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    @apply bg-[#f0f9ff] text-slate-900 transition-colors duration-300 font-sans;
+    @apply bg-slate-50 text-slate-900 transition-colors duration-300 font-sans;
   }
 
   /* Dark mode class-based override */
   .dark body {
-    @apply bg-[#001F28] text-slate-100;
+    @apply bg-[#0b0f19] text-slate-100;
   }
 
   code {
@@ -38,3 +38,30 @@
     @apply bg-primary-800/50 hover:bg-primary-700/50;
   }
 }
+
+/* Overrides for hardcoded dark backgrounds in JSX files to reduce eye strain and give a premium feel */
+.dark .dark\:bg-\[\#001F28\] {
+  background-color: #0b0f19 !important; /* Premium deep dark navy */
+}
+.dark .dark\:bg-\[\#001F28\]\/50 {
+  background-color: rgba(11, 15, 25, 0.5) !important;
+}
+.dark .dark\:bg-\[\#002b37\] {
+  background-color: #070a12 !important; /* Even darker for sidebar contrast */
+}
+.dark .dark\:bg-primary-900\/10 {
+  background-color: rgba(15, 23, 42, 0.1) !important; /* Slate-900/10 */
+}
+.dark .dark\:bg-primary-900\/30 {
+  background-color: rgba(15, 23, 42, 0.3) !important; /* Slate-900/30 */
+}
+.dark .dark\:bg-primary-900\/35 {
+  background-color: rgba(15, 23, 42, 0.35) !important; /* Slate-900/35 */
+}
+.dark .dark\:bg-primary-900\/40 {
+  background-color: rgba(15, 23, 42, 0.4) !important; /* Slate-900/40 */
+}
+.dark .dark\:bg-primary-900\/15 {
+  background-color: rgba(15, 23, 42, 0.15) !important; /* Slate-900/15 */
+}
+
