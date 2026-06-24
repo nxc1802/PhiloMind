@@ -11,12 +11,12 @@ function getOptionClassName({ submitted, picked, isCorrect, base, sizing }) {
   let cls = `${base} ${sizing} transition-all `;
   if (!submitted) {
     cls += picked
-      ? "border-red-800 bg-red-50"
+      ? "border-primary-800 bg-primary-50 dark:bg-primary-900/35"
       : "border-gray-200 hover:border-red-300";
   } else if (isCorrect) {
     cls += "border-green-500 bg-green-50 text-green-900";
   } else if (picked) {
-    cls += "border-red-400 bg-red-50 text-red-900";
+    cls += "border-red-400 bg-primary-50 dark:bg-primary-900/35 text-primary-850 dark:text-primary-100";
   } else {
     cls += "border-gray-200 opacity-60";
   }
@@ -119,25 +119,25 @@ function WorldviewFilterGame({ onDone }) {
 
   if (!isPlaying) {
     return (
-      <div className="bg-slate-900 text-white rounded-2xl p-8 border border-red-500/20 shadow-xl text-center space-y-5 relative overflow-hidden">
+      <div className="bg-slate-900 text-white rounded-3xl p-8 border border-red-500/20 shadow-xl text-center space-y-5 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(239,68,68,0.1),transparent)] pointer-events-none" />
-        <div className="inline-flex items-center justify-center h-16 w-16 bg-red-800/20 rounded-2xl text-red-500 border border-red-800/30 mb-2">
+        <div className="inline-flex items-center justify-center h-16 w-16 bg-primary-600/20 rounded-3xl text-primary-500 border border-primary-800/30 mb-2">
           <span className="material-symbols-outlined text-4xl">travel_explore</span>
         </div>
-        <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-amber-300">
+        <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-450 to-primary-200">
           TRÒ CHƠI: KÍNH LỌC CUỘC ĐỜI (The Worldview Filter)
         </h3>
         <p className="text-gray-300 text-sm max-w-xl mx-auto leading-relaxed">
           Đồng chí hãy nhập vai thành một nhà biện chứng thực tế! Nhiệm vụ của đồng chí là phân loại đúng <strong>5 tình huống/phát ngôn thực tế</strong> vào 3 nhóm thế giới quan khác nhau trong vòng <strong>60 giây</strong> để mở khóa danh hiệu huyền thoại:
         </p>
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl py-3 px-6 text-amber-300 font-bold inline-block text-base tracking-wide">
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-3xl py-3 px-6 text-amber-300 font-bold inline-block text-base tracking-wide">
           ✨ Bậc Thầy Nhìn Thấu Nhân Sinh ✨
         </div>
         <div>
           <button
             type="button"
             onClick={startGame}
-            className="bg-gradient-to-r from-red-700 to-red-900 hover:from-red-800 hover:to-red-950 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition-transform hover:scale-105"
+            className="bg-gradient-to-r from-primary-700 to-primary-900 hover:from-red-800 hover:to-red-950 text-white font-bold px-8 py-3.5 rounded-3xl shadow-lg transition-transform hover:scale-105"
           >
             Bắt đầu thử thách →
           </button>
@@ -148,7 +148,7 @@ function WorldviewFilterGame({ onDone }) {
 
   if (isWon) {
     return (
-      <div className="bg-gradient-to-br from-amber-950 via-slate-900 to-slate-900 text-white rounded-2xl p-8 border-2 border-amber-500 shadow-2xl text-center space-y-6 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-amber-950 via-slate-900 to-slate-900 text-white rounded-3xl p-8 border-2 border-amber-500 shadow-2xl text-center space-y-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.15),transparent)] pointer-events-none" />
         <div className="animate-bounce inline-block text-6xl">🏆</div>
         <h3 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 tracking-wider">
@@ -157,7 +157,7 @@ function WorldviewFilterGame({ onDone }) {
         <p className="text-gray-300 text-sm max-w-md mx-auto leading-relaxed">
           Đồng chí đã xuất sắc phân loại chính xác tất cả các tình huống thực tế và chứng minh năng lực tư duy biện chứng sắc bén của mình!
         </p>
-        <div className="bg-slate-950/80 border-2 border-amber-400 rounded-2xl p-6 shadow-inner max-w-md mx-auto">
+        <div className="bg-slate-950/80 border-2 border-amber-400 rounded-3xl p-6 shadow-inner max-w-md mx-auto">
           <span className="text-xs uppercase tracking-[0.2em] text-amber-500 font-bold block mb-1">Chứng nhận danh hiệu</span>
           <h4 className="text-2xl font-black text-white tracking-wide">BẬC THẦY NHÌN THẤU NHÂN SINH</h4>
           <p className="text-[10px] text-gray-500 mt-2 font-mono">Được cấp bởi Ban giảng huấn học thuật PhiloMind</p>
@@ -166,7 +166,7 @@ function WorldviewFilterGame({ onDone }) {
           <button
             type="button"
             onClick={startGame}
-            className="border border-amber-500 text-amber-500 font-bold px-6 py-3 rounded-xl hover:bg-amber-500 hover:text-slate-950 transition-colors"
+            className="border border-amber-500 text-amber-500 font-bold px-6 py-3 rounded-3xl hover:bg-amber-500 hover:text-slate-950 transition-colors"
           >
             Chơi lại
           </button>
@@ -174,7 +174,7 @@ function WorldviewFilterGame({ onDone }) {
             <button
               type="button"
               onClick={onDone}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition-transform hover:scale-105"
+              className="bg-gradient-to-r from-primary-600 to-primary-800 hover:from-red-700 hover:to-red-900 text-white font-bold px-8 py-3 rounded-3xl shadow-lg transition-transform hover:scale-105"
             >
               Bắt đầu bài học →
             </button>
@@ -186,9 +186,9 @@ function WorldviewFilterGame({ onDone }) {
 
   if (isGameOver) {
     return (
-      <div className="bg-slate-950 text-white rounded-2xl p-8 border border-red-600/30 shadow-xl text-center space-y-5">
-        <div className="text-red-500 inline-block text-5xl">☠️</div>
-        <h3 className="text-2xl font-bold text-red-500">THỬ THÁCH THẤT BẠI!</h3>
+      <div className="bg-slate-950 text-white rounded-3xl p-8 border border-red-600/30 shadow-xl text-center space-y-5">
+        <div className="text-primary-500 inline-block text-5xl">☠️</div>
+        <h3 className="text-2xl font-bold text-primary-500">THỬ THÁCH THẤT BẠI!</h3>
         <p className="text-gray-400 text-sm max-w-md mx-auto">
           {feedback ? feedback.text : "Đồng chí đã hết thời gian hoặc lựa chọn nhầm thế giới quan cảm tính!"}
         </p>
@@ -196,7 +196,7 @@ function WorldviewFilterGame({ onDone }) {
           <button
             type="button"
             onClick={startGame}
-            className="bg-red-800 hover:bg-red-900 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all inline-flex items-center gap-2"
+            className="bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-3 rounded-3xl shadow-md transition-all inline-flex items-center gap-2"
           >
             <span className="material-symbols-outlined">refresh</span>
             Thử lại lần nữa
@@ -209,20 +209,20 @@ function WorldviewFilterGame({ onDone }) {
   const currentQuestion = SITUATIONS[currentIdx];
 
   return (
-    <div className="bg-slate-900 text-white rounded-2xl p-6 md:p-8 border border-slate-800 shadow-xl space-y-6 text-left relative overflow-hidden">
+    <div className="bg-slate-900 text-white rounded-3xl p-6 md:p-8 border border-slate-800 shadow-xl space-y-6 text-left relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(239,68,68,0.05),transparent)] pointer-events-none" />
       {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-800 pb-4">
         <div className="space-y-1">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-red-500">Tình huống thực tế</span>
+          <span className="text-[10px] uppercase font-bold tracking-widest text-primary-500">Tình huống thực tế</span>
           <h4 className="font-extrabold text-lg text-amber-400">Kính Lọc Cuộc Đời</h4>
         </div>
         <div className="flex items-center gap-3">
-          <div className="bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-sm text-red-500 animate-pulse">timer</span>
+          <div className="bg-slate-950 px-3 py-1.5 rounded-3xl border border-slate-800 flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-sm text-primary-500 animate-pulse">timer</span>
             <span className="font-mono text-sm font-bold text-red-400">{timeLeft}s</span>
           </div>
-          <div className="bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-bold text-slate-400">
+          <div className="bg-slate-950 px-3 py-1.5 rounded-3xl border border-slate-800 text-xs font-bold text-slate-400">
             {currentIdx + 1} / {SITUATIONS.length} (Đúng: {score})
           </div>
         </div>
@@ -230,7 +230,7 @@ function WorldviewFilterGame({ onDone }) {
 
       {/* Main card representation */}
       {feedback ? (
-        <div className="bg-slate-950 p-6 rounded-xl border border-slate-800 space-y-4">
+        <div className="bg-slate-950 p-6 rounded-3xl border border-slate-800 space-y-4">
           <div className="flex items-center gap-2 text-green-400">
             <span className="material-symbols-outlined text-2xl">check_circle</span>
             <h5 className="font-bold">Chính xác!</h5>
@@ -239,14 +239,14 @@ function WorldviewFilterGame({ onDone }) {
           <button
             type="button"
             onClick={nextQuestion}
-            className="bg-red-800 hover:bg-red-950 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-1"
+            className="bg-primary-600 hover:bg-primary-900 text-white px-5 py-2.5 rounded-3xl text-sm font-bold transition-all flex items-center gap-1"
           >
             Tiếp tục <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
         </div>
       ) : (
         <div className="space-y-5">
-          <div className="bg-slate-950 p-6 rounded-xl border-l-4 border-red-500 shadow-inner">
+          <div className="bg-slate-950 p-6 rounded-3xl border-l-4 border-red-500 shadow-inner">
             <p className="text-gray-200 text-base font-semibold leading-relaxed">
               {currentQuestion.text}
             </p>
@@ -258,15 +258,15 @@ function WorldviewFilterGame({ onDone }) {
               <button
                 type="button"
                 onClick={() => handleChoose('myth')}
-                className="bg-red-950/40 hover:bg-red-900/60 text-red-400 border border-red-900/50 py-3.5 px-4 rounded-xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="bg-primary-900/40 hover:bg-primary-700/60 text-red-400 border border-red-900/50 py-3.5 px-4 rounded-3xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
               >
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
+                <span className="w-2.5 h-2.5 rounded-full bg-primary-400 animate-ping" />
                 Huyền thoại
               </button>
               <button
                 type="button"
                 onClick={() => handleChoose('religion')}
-                className="bg-amber-950/40 hover:bg-amber-900/60 text-amber-400 border border-amber-900/50 py-3.5 px-4 rounded-xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="bg-amber-950/40 hover:bg-amber-900/60 text-amber-400 border border-amber-900/50 py-3.5 px-4 rounded-3xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
               >
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                 Tôn giáo
@@ -274,7 +274,7 @@ function WorldviewFilterGame({ onDone }) {
               <button
                 type="button"
                 onClick={() => handleChoose('philosophy')}
-                className="bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-900/50 py-3.5 px-4 rounded-xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-900/50 py-3.5 px-4 rounded-3xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
               >
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                 Triết học
@@ -298,11 +298,11 @@ function WarmupImageGuess({ data, onDone }) {
       <img
         src={data.image}
         alt="warmup"
-        className="w-full h-64 object-cover rounded-xl shadow-md border border-gray-150"
+        className="w-full h-64 object-cover rounded-3xl shadow-md border border-gray-150"
       />
       <div>
         <p className="text-sm text-gray-650 mb-2 font-medium">{data.hint}</p>
-        <div className="font-mono text-3xl tracking-[0.4em] text-red-800 mb-4 bg-red-50/70 px-4 py-3 rounded-lg border border-red-100/50 inline-block font-semibold">
+        <div className="font-mono text-3xl tracking-[0.4em] text-primary-650 dark:text-primary-300 mb-4 bg-primary-50 dark:bg-primary-900/35/70 px-4 py-3 rounded-3xl border border-primary-100 dark:border-primary-850/50 inline-block font-semibold">
           {data.blanks}
         </div>
         <input
@@ -310,10 +310,10 @@ function WarmupImageGuess({ data, onDone }) {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Gõ đáp án của bạn..."
           disabled={isCorrect}
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-red-800 outline-none mb-3 text-gray-800"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-3xl focus:border-primary-800 outline-none mb-3 text-gray-800"
         />
         {isCorrect ? (
-          <div className="bg-green-50 border border-green-200 text-green-800 p-4 rounded-xl text-sm leading-relaxed">
+          <div className="bg-green-50 border border-green-200 text-green-800 p-4 rounded-3xl text-sm leading-relaxed">
             <div className="flex items-center gap-1.5 font-bold mb-1.5">
               <span className="material-symbols-outlined text-green-600">
                 check_circle
@@ -323,7 +323,7 @@ function WarmupImageGuess({ data, onDone }) {
             {data.reveal}
             <button
               onClick={onDone}
-              className="block mt-4 bg-red-800 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-red-900 transition-colors shadow-md"
+              className="block mt-4 bg-primary-600 text-white px-5 py-2.5 rounded-3xl text-sm font-semibold hover:bg-primary-700 transition-colors shadow-md"
             >
               Bắt đầu bài học →
             </button>
@@ -331,7 +331,7 @@ function WarmupImageGuess({ data, onDone }) {
         ) : (
           <button
             onClick={() => setRevealed(true)}
-            className="text-sm text-gray-500 hover:text-red-800 underline transition-colors"
+            className="text-sm text-gray-500 hover:text-primary-650 dark:text-primary-300 underline transition-colors"
           >
             Bỏ qua / xem đáp án
           </button>
@@ -348,7 +348,7 @@ function WarmupStory({ data, onDone }) {
 
   return (
     <div className="text-left">
-      <blockquote className="border-l-4 border-red-800 bg-red-50/40 pl-5 pr-3 py-4 italic text-gray-800 mb-5 rounded-r-lg font-serif">
+      <blockquote className="border-l-4 border-primary-800 bg-primary-50 dark:bg-primary-900/35/40 pl-5 pr-3 py-4 italic text-gray-800 mb-5 rounded-r-lg font-serif">
         "{data.story}"
       </blockquote>
       <p className="font-semibold mb-3 text-gray-900">{data.question}</p>
@@ -362,7 +362,7 @@ function WarmupStory({ data, onDone }) {
               submitted,
               picked: index === selectedIndex,
               isCorrect: index === data.correctIndex,
-              base: "block w-full text-left rounded-lg border-2 text-gray-800 bg-white hover:bg-gray-50/50 transition-colors",
+              base: "block w-full text-left rounded-3xl border-2 text-gray-800 bg-white dark:bg-[#002b37] hover:bg-gray-50/50 transition-colors",
               sizing: "px-4 py-3",
             })}
           >
@@ -372,10 +372,10 @@ function WarmupStory({ data, onDone }) {
       </div>
       {submitted && (
         <div
-          className={`p-4 rounded-xl text-sm leading-relaxed border ${
+          className={`p-4 rounded-3xl text-sm leading-relaxed border ${
             isCorrect
               ? "bg-green-50 border-green-200 text-green-800"
-              : "bg-red-50 border-red-200 text-red-800"
+              : "bg-primary-50 dark:bg-primary-900/35 border-primary-200 dark:border-primary-800 text-primary-650 dark:text-primary-300"
           }`}
         >
           <div className="flex items-center gap-1.5 font-bold mb-1.5">
@@ -387,7 +387,7 @@ function WarmupStory({ data, onDone }) {
           {data.reveal}
           <button
             onClick={onDone}
-            className="block mt-4 bg-red-800 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-red-900 transition-colors shadow-md"
+            className="block mt-4 bg-primary-600 text-white px-5 py-2.5 rounded-3xl text-sm font-semibold hover:bg-primary-700 transition-colors shadow-md"
           >
             Bắt đầu bài học →
           </button>
@@ -405,7 +405,7 @@ function WarmupVideo({ data, onDone }) {
 
   return (
     <div className="text-left">
-      <div className="relative rounded-xl overflow-hidden shadow-md mb-5 aspect-video max-w-lg mx-auto">
+      <div className="relative rounded-3xl overflow-hidden shadow-md mb-5 aspect-video max-w-lg mx-auto">
         <iframe
           title="warmup-video"
           width="100%"
@@ -428,7 +428,7 @@ function WarmupVideo({ data, onDone }) {
               submitted,
               picked: index === selectedIndex,
               isCorrect: index === data.correctIndex,
-              base: "block w-full text-left rounded-lg border-2 text-gray-800 bg-white hover:bg-gray-50/50 transition-colors",
+              base: "block w-full text-left rounded-3xl border-2 text-gray-800 bg-white dark:bg-[#002b37] hover:bg-gray-50/50 transition-colors",
               sizing: "px-4 py-3",
             })}
           >
@@ -438,7 +438,7 @@ function WarmupVideo({ data, onDone }) {
       </div>
       {submitted && (
         <div
-          className={`p-4 rounded-xl text-sm leading-relaxed border ${
+          className={`p-4 rounded-3xl text-sm leading-relaxed border ${
             isCorrect
               ? "bg-green-50 border-green-200 text-green-800"
               : "bg-amber-50 border-amber-200 text-amber-800"
@@ -453,7 +453,7 @@ function WarmupVideo({ data, onDone }) {
           {data.reveal}
           <button
             onClick={onDone}
-            className="block mt-4 bg-red-800 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-red-900 transition-colors shadow-md"
+            className="block mt-4 bg-primary-600 text-white px-5 py-2.5 rounded-3xl text-sm font-semibold hover:bg-primary-700 transition-colors shadow-md"
           >
             Bắt đầu bài học →
           </button>
@@ -489,7 +489,7 @@ export function WarmupSection({ dbWarmups, onDone }) {
   if (!normalizedWarmup) return null;
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-amber-200 p-7 mb-8 relative overflow-hidden">
+    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-amber-200 p-7 mb-8 relative overflow-hidden">
       <div className="absolute -right-8 -top-8 w-32 h-32 bg-amber-100/50 rounded-full opacity-50" />
       <div className="relative text-left">
         <div className="flex items-center gap-2 mb-1">
@@ -500,7 +500,7 @@ export function WarmupSection({ dbWarmups, onDone }) {
             Làm nóng / Đặt vấn đề
           </span>
         </div>
-        <h2 className="text-2xl font-bold text-red-900 mb-5">{normalizedWarmup.title}</h2>
+        <h2 className="text-2xl font-bold text-primary-850 dark:text-primary-100 mb-5">{normalizedWarmup.title}</h2>
         {normalizedWarmup.type === "image-guess" ? (
           <WarmupImageGuess data={normalizedWarmup} onDone={onDone} />
         ) : normalizedWarmup.type === "video" ? (

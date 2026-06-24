@@ -69,7 +69,6 @@ export default function FeedbackWidget() {
   };
 
   const handleMouseDown = (e) => {
-    // Only drag with left click
     if (e.button !== 0) return;
     handleDragStart(e.clientX, e.clientY);
   };
@@ -91,12 +90,9 @@ export default function FeedbackWidget() {
         hasDragged.current = true;
       }
 
-      // Compute new right/bottom values (moving right deltaX > 0 reduces 'right' value)
       const newRight = Math.max(16, dragStart.current.right - deltaX);
       const newBottom = Math.max(16, dragStart.current.bottom - deltaY);
 
-      // Boundaries (constrain within bottom/right quadrant or safely within window)
-      // To satisfy "di chuyển quanh vùng dưới đáy và mép phải" -> we can allow dragging up to 400px from right/bottom
       const maxRight = window.innerWidth - 80;
       const maxBottom = window.innerHeight - 80;
 
@@ -135,7 +131,6 @@ export default function FeedbackWidget() {
   const handleButtonClick = (e) => {
     e.preventDefault();
     if (hasDragged.current) {
-      // Prevent click action if it was a drag
       hasDragged.current = false;
       return;
     }
@@ -154,16 +149,16 @@ export default function FeedbackWidget() {
       }}
     >
       {isOpen && (
-        <div className="absolute bottom-20 right-0 w-[22rem] max-w-[calc(100vw-4rem)] bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-red-100 overflow-hidden mb-2 flex flex-col transition-all duration-300 select-text">
+        <div className="absolute bottom-20 right-0 w-[22rem] max-w-[calc(100vw-4rem)] bg-white/95 dark:bg-[#002b37]/95 backdrop-blur-md rounded-3xl shadow-2xl border border-primary-100 dark:border-primary-850 overflow-hidden mb-2 flex flex-col transition-all duration-300 select-text text-slate-800 dark:text-slate-100">
           {/* Header */}
-          <div className="bg-gradient-to-r from-red-800 to-red-950 text-white px-5 py-4 flex items-center justify-between shrink-0">
+          <div className="bg-gradient-to-r from-primary-750 to-primary-900 text-white px-5 py-4 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-3xl bg-white/10 flex items-center justify-center">
                 <span className="material-symbols-outlined text-lg font-bold">rate_review</span>
               </div>
               <div>
                 <p className="font-bold text-sm">Góp ý & Báo lỗi</p>
-                <p className="text-[10px] text-red-200 uppercase tracking-wider font-bold">Feedback Hub</p>
+                <p className="text-[10px] text-primary-200 uppercase tracking-wider font-bold">Feedback Hub</p>
               </div>
             </div>
             <button
@@ -180,25 +175,25 @@ export default function FeedbackWidget() {
           </div>
 
           {/* Form / Content area */}
-          <div className="p-5 bg-gray-50/50">
+          <div className="p-5 bg-slate-50 dark:bg-[#001F28]/50 dark:bg-primary-900/10">
             {submitted ? (
               <div className="text-center py-6">
                 <span className="material-symbols-outlined text-green-600 text-5xl animate-bounce">recommend</span>
-                <h4 className="font-bold text-gray-900 mt-3 text-base">Đã nhận phản hồi!</h4>
-                <p className="text-xs text-gray-500 mt-2 leading-relaxed px-4">
+                <h4 className="font-bold text-slate-900 dark:text-primary-100 mt-3 text-base">Đã nhận phản hồi!</h4>
+                <p className="text-xs text-slate-500 dark:text-primary-300 mt-2 leading-relaxed px-4">
                   Ý kiến của đồng chí đã được lưu trực tiếp vào cơ sở dữ liệu quản trị để cải thiện chất lượng học liệu.
                 </p>
                 <button
                   type="button"
                   onClick={() => setSubmitted(false)}
-                  className="mt-4 text-xs font-bold text-red-850 underline hover:text-red-950"
+                  className="mt-4 text-xs font-bold text-primary-600 dark:text-primary-400 underline hover:text-primary-800"
                 >
                   Gửi thêm góp ý khác
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <p className="text-xs text-gray-500 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-primary-350 leading-relaxed">
                   Chúng tôi luôn lắng nghe ý kiến phản hồi biện chứng từ đồng chí để không ngừng cải tiến học viện số PhiloMind.
                 </p>
                 <textarea
@@ -208,12 +203,12 @@ export default function FeedbackWidget() {
                   rows={4}
                   required
                   placeholder="Nhập nội dung góp ý, báo lỗi học cụ hoặc ý tưởng cải tiến..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:border-red-850 outline-none text-xs leading-relaxed text-gray-800 bg-white"
+                  className="w-full px-3 py-2 border border-slate-350 dark:border-primary-800 rounded-3xl focus:border-primary-600 outline-none text-xs leading-relaxed text-slate-800 dark:text-slate-100 bg-white dark:bg-primary-900/10"
                 />
                 <button
                   type="submit"
                   disabled={loading || !content.trim() || !user}
-                  className="w-full bg-red-800 hover:bg-red-950 text-white font-bold py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 disabled:opacity-50 text-xs"
+                  className="w-full bg-primary-600 hover:bg-primary-750 text-white font-bold py-3 rounded-3xl shadow-md transition-all flex items-center justify-center gap-1 disabled:opacity-50 text-xs"
                 >
                   {loading ? (
                     <span className="material-symbols-outlined animate-spin text-sm">sync</span>
@@ -237,7 +232,7 @@ export default function FeedbackWidget() {
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
         onClick={handleButtonClick}
-        className="h-14 w-14 bg-gradient-to-br from-red-800 to-red-950 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all relative overflow-hidden"
+        className="h-14 w-14 bg-gradient-to-br from-primary-600 to-primary-800 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity" />
         <span className="material-symbols-outlined text-2xl font-bold">

@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import PageShell, { PageHero } from "../components/PageShell";
+import OnboardingGuide from "../components/OnboardingGuide";
 import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../components/Toast";
@@ -201,6 +202,15 @@ export default function Practice() {
 
   return (
     <PageShell activeKey="practice">
+      <OnboardingGuide
+        tabKey="practice"
+        steps={[
+          "Đấu trường Luyện tập: Nơi rèn luyện kiến thức qua các trò chơi tương tác. Bạn có thể chuyển đổi giữa 3 chế độ ở menu tab phía trên.",
+          "Thẻ ghi nhớ (Flashcard): Đọc câu hỏi ở mặt trước -> Click vào thẻ để lật xem đáp án ở mặt sau -> Đánh giá mức độ nhớ của bạn để thuật toán Spaced Repetition tự động ôn tập.",
+          "Trò chơi Ghép cặp (Shinkei): Ghép nối nhanh các thuật ngữ triết học với định nghĩa chính xác để triệt tiêu toàn bộ thẻ bài trên bảng.",
+          "Đề thi thử (Quiz): Làm bài kiểm tra trắc nghiệm theo chương học hoặc Đề thi thử tổng hợp để kiểm tra và củng cố năng lực trước kỳ thi."
+        ]}
+      />
       <PageHero
         eyebrow="Tự luyện kiến thức"
         icon="fitness_center"
@@ -211,27 +221,27 @@ export default function Practice() {
       <div className="px-6 md:px-12 py-10 max-w-6xl mx-auto">
         {/* Navigation Tabs */}
         <div className="flex justify-center mb-8">
-          <div className="flex gap-1.5 p-1 bg-gray-100 rounded-xl border border-gray-200">
+          <div className="flex gap-1.5 p-1 bg-slate-100 dark:bg-primary-900/20 rounded-3xl border border-slate-200 dark:border-primary-800">
             <button
               onClick={() => setActiveTab("flashcard")}
-              className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all ${
-                activeTab === "flashcard" ? "bg-white text-red-800 shadow-sm" : "text-gray-600 hover:text-gray-800"
+              className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
+                activeTab === "flashcard" ? "bg-white text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 hover:text-gray-800"
               }`}
             >
               🎴 Flashcard Ôn Tập
             </button>
             <button
               onClick={() => setActiveTab("shinkei")}
-              className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all ${
-                activeTab === "shinkei" ? "bg-white text-red-800 shadow-sm" : "text-gray-600 hover:text-gray-800"
+              className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
+                activeTab === "shinkei" ? "bg-white text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 hover:text-gray-800"
               }`}
             >
               🧩 Ghép Cặp (Shinkei)
             </button>
             <button
               onClick={() => setActiveTab("quiz")}
-              className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all ${
-                activeTab === "quiz" ? "bg-white text-red-800 shadow-sm" : "text-gray-600 hover:text-gray-800"
+              className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
+                activeTab === "quiz" ? "bg-white text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 hover:text-gray-800"
               }`}
             >
               📝 Quiz Tổng Hợp
@@ -243,27 +253,27 @@ export default function Practice() {
         {activeTab === "flashcard" && (
           <section className="space-y-6 text-left">
             <h2 className="font-bold text-2xl text-gray-900 mb-2 flex items-center gap-2">
-              <span className="material-symbols-outlined text-red-800">auto_stories</span>
+              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">auto_stories</span>
               Thẻ nhớ học tập (Spaced Repetition)
             </h2>
 
             {loadingDue || loadingAllFlashcards ? (
-              <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm flex items-center justify-center">
-                <span className="material-symbols-outlined animate-spin text-red-800 text-3xl">sync</span>
+              <div className="bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 p-8 shadow-sm flex items-center justify-center">
+                <span className="material-symbols-outlined animate-spin text-primary-650 dark:text-primary-300 text-3xl">sync</span>
                 <span className="ml-2 text-gray-500 font-semibold">Đang tải dữ liệu thẻ...</span>
               </div>
             ) : isReviewMode && activeReviewCard ? (
-              <div className="bg-white rounded-3xl border border-red-100 p-8 shadow-2xl max-w-4xl mx-auto text-center animate-fadeIn relative overflow-hidden">
+              <div className="bg-white dark:bg-[#002b37] rounded-[2rem] border border-primary-100 dark:border-primary-850 p-8 shadow-2xl max-w-4xl mx-auto text-center animate-fadeIn relative overflow-hidden">
                 {/* Progress Bar */}
                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-gray-100">
                   <div 
-                    className="h-full bg-red-800 transition-all duration-300"
+                    className="h-full bg-primary-600 transition-all duration-300"
                     style={{ width: `${((currentReviewIndex + 1) / reviewCards.length) * 100}%` }}
                   />
                 </div>
 
                 <div className="flex justify-between items-center mb-6 text-sm text-gray-500 mt-2 px-2">
-                  <span className="bg-red-55 text-red-850 px-3 py-1 rounded-full font-bold uppercase tracking-wider text-xs">
+                  <span className="bg-primary-50 dark:bg-primary-900/20 text-primary-800 dark:text-primary-250 px-3 py-1 rounded-full font-bold uppercase tracking-wider text-xs">
                     {reviewTitle}
                   </span>
                   <span className="font-bold text-gray-600">
@@ -303,14 +313,14 @@ export default function Practice() {
                     >
                       {/* Front Face */}
                       <div
-                        className={`absolute inset-0 bg-gradient-to-br from-red-800 via-red-900 to-red-950 text-white rounded-2xl p-8 flex flex-col justify-between items-center shadow-xl border border-red-700 transition-opacity duration-300 ${
+                        className={`absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 text-white rounded-3xl p-8 flex flex-col justify-between items-center shadow-xl border border-primary-600 transition-opacity duration-300 ${
                           isFlipped ? "opacity-0 pointer-events-none" : "opacity-100"
                         }`}
                         style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                       >
                         <div className="w-full flex justify-between items-center opacity-75">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-200">Câu hỏi / Thuật ngữ</span>
-                          <span className="material-symbols-outlined text-lg text-red-200">help</span>
+                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary-200">Câu hỏi / Thuật ngữ</span>
+                          <span className="material-symbols-outlined text-lg text-primary-200">help</span>
                         </div>
                         <div className="w-full overflow-y-auto max-h-[220px] pr-1 my-auto scrollbar-thin flex flex-col justify-center items-center">
                           <p className="text-lg md:text-xl font-bold leading-relaxed font-serif text-center">{activeReviewCard.question}</p>
@@ -320,7 +330,7 @@ export default function Practice() {
 
                       {/* Back Face */}
                       <div
-                        className={`absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-red-800 text-gray-900 rounded-2xl p-8 flex flex-col justify-between items-center shadow-xl transition-opacity duration-300 ${
+                        className={`absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-primary-800 text-gray-900 rounded-3xl p-8 flex flex-col justify-between items-center shadow-xl transition-opacity duration-300 ${
                           isFlipped ? "opacity-100" : "opacity-0 pointer-events-none"
                         }`}
                         style={{
@@ -329,9 +339,9 @@ export default function Practice() {
                           transform: "rotateY(180deg)"
                         }}
                       >
-                        <div className="w-full flex justify-between items-center border-b border-red-200/50 pb-2">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-red-850">Giải nghĩa / Đáp án</span>
-                          <span className="material-symbols-outlined text-lg text-red-800">menu_book</span>
+                        <div className="w-full flex justify-between items-center border-b border-primary-200 dark:border-primary-800/50 pb-2">
+                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary-800 dark:text-primary-250">Giải nghĩa / Đáp án</span>
+                          <span className="material-symbols-outlined text-lg text-primary-650 dark:text-primary-300">menu_book</span>
                         </div>
                         <div className="w-full overflow-y-auto max-h-[220px] pr-1 my-auto scrollbar-thin text-left">
                           <p className="text-base md:text-lg font-semibold leading-relaxed text-gray-800 font-serif">{activeReviewCard.answer}</p>
@@ -369,7 +379,7 @@ export default function Practice() {
                         }
                       }}
                       disabled={currentReviewIndex === 0}
-                      className="flex items-center gap-1 px-4 py-2.5 text-sm font-bold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                      className="flex items-center gap-1 px-4 py-2.5 text-sm font-bold rounded-3xl bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                     >
                       <span className="material-symbols-outlined text-sm">arrow_back_ios_new</span>
                       Trước
@@ -385,7 +395,7 @@ export default function Practice() {
                         }
                       }}
                       disabled={currentReviewIndex === reviewCards.length - 1}
-                      className="flex items-center gap-1 px-4 py-2.5 text-sm font-bold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                      className="flex items-center gap-1 px-4 py-2.5 text-sm font-bold rounded-3xl bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                     >
                       Tiếp
                       <span className="material-symbols-outlined text-sm">arrow_forward_ios</span>
@@ -401,7 +411,7 @@ export default function Practice() {
                           e.stopPropagation();
                           handleReviewEase(2);
                         }}
-                        className="bg-amber-55 hover:bg-amber-100 text-amber-900 border-2 border-amber-300 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm flex flex-col items-center justify-center gap-0.5"
+                        className="bg-amber-55 hover:bg-amber-100 text-amber-900 border-2 border-amber-300 px-6 py-3 rounded-3xl text-sm font-bold transition-all shadow-sm flex flex-col items-center justify-center gap-0.5"
                       >
                         <span className="text-base flex items-center gap-1">🟡 Khó</span> 
                         <span className="text-[10px] font-normal text-amber-800 uppercase tracking-wide">Học lại</span>
@@ -411,7 +421,7 @@ export default function Practice() {
                           e.stopPropagation();
                           handleReviewEase(4);
                         }}
-                        className="bg-emerald-55 hover:bg-emerald-100 text-emerald-900 border-2 border-emerald-300 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-sm flex flex-col items-center justify-center gap-0.5"
+                        className="bg-emerald-55 hover:bg-emerald-100 text-emerald-900 border-2 border-emerald-300 px-6 py-3 rounded-3xl text-sm font-bold transition-all shadow-sm flex flex-col items-center justify-center gap-0.5"
                       >
                         <span className="text-base flex items-center gap-1">🟢 Dễ</span> 
                         <span className="text-[10px] font-normal text-emerald-800 uppercase tracking-wide">Thuộc bài</span>
@@ -426,7 +436,7 @@ export default function Practice() {
                       setIsReviewMode(false);
                       setIsFlipped(false);
                     }}
-                    className="text-gray-500 hover:text-red-850 text-sm font-bold flex items-center justify-center gap-1 mx-auto transition-colors"
+                    className="text-gray-500 hover:text-primary-800 dark:text-primary-250 text-sm font-bold flex items-center justify-center gap-1 mx-auto transition-colors"
                   >
                     <span className="material-symbols-outlined text-lg">close</span>
                     Dừng ôn tập và quay lại danh sách
@@ -437,16 +447,16 @@ export default function Practice() {
 
               <div className="space-y-8">
                 {/* Tổng hợp card */}
-                <div className="bg-gradient-to-br from-red-50 to-amber-50 border border-red-200 rounded-2xl p-6 flex flex-col sm:flex-row justify-between items-center gap-6 shadow-md">
+                <div className="bg-gradient-to-br from-red-50 to-amber-50 border border-primary-200 dark:border-primary-800 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-6 shadow-md">
                   <div className="flex items-center gap-4 text-left">
-                    <div className="h-14 w-14 bg-red-800 text-white rounded-2xl flex items-center justify-center shadow-lg shrink-0">
+                    <div className="h-14 w-14 bg-primary-600 text-white rounded-3xl flex items-center justify-center shadow-lg shrink-0">
                       <span className="material-symbols-outlined text-3xl">auto_stories</span>
                     </div>
                     <div>
                       <h3 className="font-bold text-lg text-gray-900">Ôn tập tổng hợp</h3>
                       <p className="text-sm text-gray-600 mt-0.5">
                         {dueCards.length > 0 ? (
-                          <>Đồng chí có <strong className="text-red-850 font-bold">{dueCards.length} thẻ</strong> đến hạn cần ôn tập hôm nay để củng cố dài hạn.</>
+                          <>Đồng chí có <strong className="text-primary-800 dark:text-primary-250 font-bold">{dueCards.length} thẻ</strong> đến hạn cần ôn tập hôm nay để củng cố dài hạn.</>
                         ) : (
                           "Không còn thẻ nhớ nào đến hạn hôm nay. Hãy học theo từng chương học bên dưới."
                         )}
@@ -456,7 +466,7 @@ export default function Practice() {
                   <button
                     onClick={startGeneralReview}
                     disabled={dueCards.length === 0}
-                    className="bg-red-800 hover:bg-red-950 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all shrink-0 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-primary-600 hover:bg-primary-900 text-white font-bold px-6 py-3 rounded-3xl shadow-md transition-all shrink-0 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Bắt đầu ôn tập tổng hợp →
                   </button>
@@ -472,7 +482,7 @@ export default function Practice() {
                         value={searchKeyword}
                         onChange={(e) => setSearchKeyword(e.target.value)}
                         placeholder="Tìm kiếm chương..."
-                        className="w-full bg-white border border-gray-200 text-gray-800 rounded-xl pl-10 pr-4 py-2 outline-none focus:border-red-800 text-sm"
+                        className="w-full bg-white border border-gray-200 text-gray-800 rounded-3xl pl-10 pr-4 py-2 outline-none focus:border-primary-800 text-sm"
                       />
                       <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
                         search
@@ -481,7 +491,7 @@ export default function Practice() {
                   </div>
 
                   {visibleChapters.length === 0 ? (
-                    <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-300">
+                    <div className="bg-white rounded-3xl p-12 text-center border border-dashed border-gray-300">
                       <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">search_off</span>
                       <p className="text-gray-500 text-sm">Không tìm thấy chương học nào tương thích.</p>
                     </div>
@@ -491,11 +501,11 @@ export default function Practice() {
                         <div
                           key={chapter.id}
                           onClick={() => startChapterReview(chapter)}
-                          className="bg-white p-5 rounded-xl shadow-md border border-gray-200 hover:border-red-800/50 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between cursor-pointer"
+                          className="bg-white p-5 rounded-3xl shadow-md border border-gray-200 hover:border-primary-800/50 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between cursor-pointer"
                         >
                           <div>
                             <div className="flex items-center justify-between mb-4">
-                              <div className="h-12 w-12 rounded-xl bg-red-50 text-red-800 flex items-center justify-center">
+                              <div className="h-12 w-12 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 flex items-center justify-center">
                                 <span className="material-symbols-outlined text-2xl">{chapter.icon}</span>
                               </div>
                               <span className="text-xs font-bold uppercase text-gray-450">{chapter.chapter}</span>
@@ -509,7 +519,7 @@ export default function Practice() {
                               {chapter.cardCount > 0 ? (
                                 <>
                                   <span className="text-gray-500">{chapter.cardCount} Flashcards</span>
-                                  <span className="text-red-850">{chapter.progress}% Hoàn thành</span>
+                                  <span className="text-primary-800 dark:text-primary-250">{chapter.progress}% Hoàn thành</span>
                                 </>
                               ) : (
                                 <span className="text-amber-600 font-bold bg-amber-50 px-2.5 py-0.5 rounded-md">Đang cập nhật</span>
@@ -517,7 +527,7 @@ export default function Practice() {
                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-1.5">
                               <div
-                                className="bg-red-800 h-1.5 rounded-full transition-all"
+                                className="bg-primary-600 h-1.5 rounded-full transition-all"
                                 style={{ width: `${chapter.cardCount > 0 ? chapter.progress : 0}%` }}
                               />
                             </div>
@@ -538,7 +548,7 @@ export default function Practice() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
               <div>
                 <h2 className="font-bold text-2xl text-gray-900 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-red-800">extension</span>
+                  <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">extension</span>
                   Trò chơi ghép cặp (Socratic Matching)
                 </h2>
                 <p className="text-gray-500 text-sm mt-0.5">Nối các khái niệm ở cột bên trái với mô tả tương ứng ở cột bên phải theo từng chương học.</p>
@@ -549,7 +559,7 @@ export default function Practice() {
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
                   placeholder="Tìm kiếm chương..."
-                  className="w-full bg-white border border-gray-200 text-gray-800 rounded-xl pl-10 pr-4 py-2.5 outline-none focus:border-red-800 text-sm"
+                  className="w-full bg-white border border-gray-200 text-gray-800 rounded-3xl pl-10 pr-4 py-2.5 outline-none focus:border-primary-800 text-sm"
                 />
                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                   search
@@ -559,16 +569,16 @@ export default function Practice() {
 
             {loadingChapters ? (
               <div className="text-center py-12">
-                <span className="material-symbols-outlined animate-spin text-4xl text-red-800">sync</span>
+                <span className="material-symbols-outlined animate-spin text-4xl text-primary-650 dark:text-primary-300">sync</span>
                 <p className="text-gray-500 mt-2 font-semibold">Đang tải chương học...</p>
               </div>
             ) : dbChapters.length === 0 ? (
-              <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-300">
+              <div className="bg-white rounded-3xl p-12 text-center border border-dashed border-gray-300">
                 <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">layers_clear</span>
                 <p className="text-gray-500 text-sm">Chưa có dữ liệu chương học trên hệ thống.</p>
               </div>
             ) : visibleChapters.length === 0 ? (
-              <div className="bg-white rounded-2xl p-12 text-center border border-dashed border-gray-300">
+              <div className="bg-white rounded-3xl p-12 text-center border border-dashed border-gray-300">
                 <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">search_off</span>
                 <p className="text-gray-500 text-sm">Không tìm thấy chương nào khớp với "{searchKeyword}".</p>
               </div>
@@ -578,11 +588,11 @@ export default function Practice() {
                   <Link
                     key={chapter.id}
                     to={`/practice/shinkei/${chapter.id}`}
-                    className="bg-white p-5 rounded-xl shadow-md border border-gray-200 hover:border-red-800/50 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between"
+                    className="bg-white p-5 rounded-3xl shadow-md border border-gray-200 hover:border-primary-800/50 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <div className="h-12 w-12 rounded-xl bg-red-50 text-red-800 flex items-center justify-center">
+                        <div className="h-12 w-12 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 flex items-center justify-center">
                           <span className="material-symbols-outlined text-2xl">{chapter.icon}</span>
                         </div>
                         <span className="text-xs font-bold uppercase text-gray-450">{chapter.chapter}</span>
@@ -596,7 +606,7 @@ export default function Practice() {
                         {chapter.cardCount > 0 ? (
                           <>
                             <span className="text-gray-500">{chapter.cardCount} Flashcards</span>
-                            <span className="text-red-850">{chapter.progress}% Hoàn thành</span>
+                            <span className="text-primary-800 dark:text-primary-250">{chapter.progress}% Hoàn thành</span>
                           </>
                         ) : (
                           <span className="text-amber-600 font-bold bg-amber-50 px-2.5 py-0.5 rounded-md">Đang cập nhật</span>
@@ -604,7 +614,7 @@ export default function Practice() {
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-1.5">
                         <div
-                          className="bg-red-850 h-1.5 rounded-full transition-all"
+                          className="bg-primary-800 h-1.5 rounded-full transition-all"
                           style={{ width: `${chapter.cardCount > 0 ? chapter.progress : 0}%` }}
                         />
                       </div>
@@ -623,7 +633,7 @@ export default function Practice() {
           <section className="space-y-8 text-left animate-fadeIn">
             <div>
               <h2 className="font-bold text-2xl text-gray-900 flex items-center gap-2">
-                <span className="material-symbols-outlined text-red-800">quiz</span>
+                <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">quiz</span>
                 Ngân hàng đề thi & Quiz trắc nghiệm
               </h2>
               <p className="text-gray-500 text-sm mt-0.5">Làm quiz từng chương để xem kết quả ngay lập tức, hoặc thi thử toàn diện để tự đánh giá.</p>
@@ -631,28 +641,28 @@ export default function Practice() {
 
             {loadingQuizzes || loadingChapters ? (
               <div className="text-center py-12">
-                <span className="material-symbols-outlined animate-spin text-4xl text-red-800">sync</span>
+                <span className="material-symbols-outlined animate-spin text-4xl text-primary-650 dark:text-primary-300">sync</span>
                 <p className="text-gray-500 mt-2 font-semibold">Đang tải đề thi...</p>
               </div>
             ) : (
               <>
                 {/* 1. Chapter Quizzes */}
                 <div className="space-y-4">
-                  <h3 className="font-bold text-lg text-gray-900 border-l-4 border-red-800 pl-3">Trắc nghiệm theo Chương học</h3>
+                  <h3 className="font-bold text-lg text-gray-900 border-l-4 border-primary-800 pl-3">Trắc nghiệm theo Chương học</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {dbChapters.map((chapter) => {
                       const quiz = getChapterQuiz(chapter);
                       return (
                         <div
                           key={chapter.id}
-                          className="bg-white p-5 rounded-xl shadow-md border border-gray-200 flex flex-col justify-between"
+                          className="bg-white p-5 rounded-3xl shadow-md border border-gray-200 flex flex-col justify-between"
                         >
                           <div>
                             <div className="flex items-center justify-between mb-4">
-                              <div className="h-10 w-10 rounded-lg bg-red-50 text-red-800 flex items-center justify-center">
+                              <div className="h-10 w-10 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 flex items-center justify-center">
                                 <span className="material-symbols-outlined text-xl">{chapter.icon}</span>
                               </div>
-                              <span className="text-[10px] font-extrabold uppercase bg-red-100 text-red-800 px-2 py-0.5 rounded-full">
+                              <span className="text-[10px] font-extrabold uppercase bg-primary-100 dark:bg-primary-900/30 text-primary-650 dark:text-primary-300 px-2 py-0.5 rounded-full">
                                 Chương Quiz
                               </span>
                             </div>
@@ -669,14 +679,14 @@ export default function Practice() {
                             {quiz ? (
                               <Link
                                 to={`/quiz/mcq/${quiz.id}`}
-                                className="bg-red-800 hover:bg-red-950 text-white text-xs font-bold px-3.5 py-2 rounded-lg shadow-sm transition-all inline-flex items-center gap-1"
+                                className="bg-primary-600 hover:bg-primary-900 text-white text-xs font-bold px-3.5 py-2 rounded-3xl shadow-sm transition-all inline-flex items-center gap-1"
                               >
                                 Làm Quiz →
                               </Link>
                             ) : (
                               <button
                                 disabled
-                                className="bg-gray-100 text-gray-400 text-xs font-bold px-3 py-2 rounded-lg cursor-not-allowed"
+                                className="bg-gray-100 text-gray-400 text-xs font-bold px-3 py-2 rounded-3xl cursor-not-allowed"
                               >
                                 Sắp ra mắt
                               </button>
@@ -690,9 +700,9 @@ export default function Practice() {
 
                 {/* 2. Mock Exams */}
                 <div className="space-y-4 pt-4">
-                  <h3 className="font-bold text-lg text-gray-900 border-l-4 border-red-800 pl-3">Đề thi thử học thuật (Mock Exams)</h3>
+                  <h3 className="font-bold text-lg text-gray-900 border-l-4 border-primary-800 pl-3">Đề thi thử học thuật (Mock Exams)</h3>
                   {mockExams.length === 0 ? (
-                    <div className="bg-white rounded-2xl p-8 text-center border border-dashed border-gray-300 max-w-md">
+                    <div className="bg-white rounded-3xl p-8 text-center border border-dashed border-gray-300 max-w-md">
                       <span className="material-symbols-outlined text-4xl text-gray-300 mb-2">assignment_late</span>
                       <p className="text-gray-500 text-sm">Chưa có đề thi thử tổng hợp nào được thiết lập.</p>
                     </div>
@@ -701,12 +711,12 @@ export default function Practice() {
                       {mockExams.map((quiz) => (
                         <div
                           key={quiz.id}
-                          className="bg-slate-900 text-white p-6 rounded-2xl shadow-lg border border-slate-800 flex flex-col justify-between hover:border-red-800/40 transition-all relative overflow-hidden"
+                          className="bg-slate-900 dark:bg-[#001F28] text-white p-6 rounded-3xl shadow-lg border border-slate-800 dark:border-primary-850 flex flex-col justify-between hover:border-primary-800/40 transition-all relative overflow-hidden"
                         >
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(185,28,28,0.1),transparent)] pointer-events-none" />
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,157,193,0.1),transparent)] pointer-events-none" />
                           <div className="space-y-3 relative z-10">
                             <div className="flex items-center justify-between">
-                              <span className="text-2xs font-extrabold uppercase bg-red-850 text-red-200 px-2.5 py-1 rounded-full tracking-wider border border-red-800/35">
+                              <span className="text-2xs font-extrabold uppercase bg-primary-800 text-primary-200 px-2.5 py-1 rounded-full tracking-wider border border-primary-800/35">
                                 Thi thử
                               </span>
                               <span className="text-2xs text-slate-450 font-mono">
@@ -725,7 +735,7 @@ export default function Practice() {
                             </span>
                             <Link
                               to={`/quiz/mcq/${quiz.id}`}
-                              className="bg-gradient-to-r from-red-700 to-red-900 hover:from-red-800 hover:to-red-950 text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow-sm transition-all inline-flex items-center gap-1"
+                              className="bg-gradient-to-r from-primary-700 to-primary-900 hover:from-primary-750 hover:to-primary-950 text-white text-xs font-bold px-4 py-2.5 rounded-3xl shadow-sm transition-all inline-flex items-center gap-1"
                             >
                               Làm đề thi thử <span className="material-symbols-outlined text-xs">arrow_forward</span>
                             </Link>

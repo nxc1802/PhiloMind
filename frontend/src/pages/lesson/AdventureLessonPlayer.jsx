@@ -17,11 +17,11 @@ const STAGE_LABELS = {
 
 function getOptionClass({ resolved, isCorrect, isWrongPick }) {
   const base =
-    "w-full text-left rounded-xl border-2 px-4 py-3.5 font-medium transition-all flex items-center gap-3 ";
+    "w-full text-left rounded-3xl border-2 px-4 py-3.5 font-medium transition-all flex items-center gap-3 ";
   if (resolved && isCorrect) return base + "border-green-500 bg-green-50 text-green-900";
-  if (isWrongPick) return base + "border-red-500 bg-red-50 text-red-900";
+  if (isWrongPick) return base + "border-red-500 bg-primary-50 dark:bg-primary-900/35 text-primary-850 dark:text-primary-100";
   if (resolved) return base + "border-gray-200 opacity-60";
-  return base + "border-gray-200 hover:border-red-400 hover:bg-red-50 bg-white";
+  return base + "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-[#002b37]";
 }
 
 function GradedQuestion({ prompt, options, correctFeedback, wrongFeedback, onPass, passLabel = "Tiếp tục" }) {
@@ -43,7 +43,7 @@ function GradedQuestion({ prompt, options, correctFeedback, wrongFeedback, onPas
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left">
+    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 text-left">
       <p className="font-semibold text-lg mb-4 text-gray-900">{prompt}</p>
       <div className="space-y-2.5">
         {options.map((opt, index) => (
@@ -71,14 +71,14 @@ function GradedQuestion({ prompt, options, correctFeedback, wrongFeedback, onPas
       </div>
 
       {!solved && wrongPicks.length > 0 && (
-        <div className="mt-4 bg-red-50 border border-red-200 text-red-800 p-3 rounded-lg text-base flex items-start gap-2 j-bubble-in">
+        <div className="mt-4 bg-primary-50 dark:bg-primary-900/35 border border-primary-200 dark:border-primary-800 text-primary-650 dark:text-primary-300 p-3 rounded-3xl text-base flex items-start gap-2 j-bubble-in">
           <span className="material-symbols-outlined text-base shrink-0">error</span>
           <span>{wrongFeedback}</span>
         </div>
       )}
 
       {solved && (
-        <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-lg j-bubble-in">
+        <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-3xl j-bubble-in">
           <p className="font-bold text-green-800 flex items-center gap-2 mb-1">
             <span className="material-symbols-outlined text-base">lightbulb</span>
             Chính xác!
@@ -87,7 +87,7 @@ function GradedQuestion({ prompt, options, correctFeedback, wrongFeedback, onPas
           <button
             type="button"
             onClick={onPass}
-            className="mt-4 inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+            className="mt-4 inline-flex items-center gap-1.5 bg-primary-600 text-white px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
           >
             {passLabel}
             <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -100,12 +100,12 @@ function GradedQuestion({ prompt, options, correctFeedback, wrongFeedback, onPas
 
 function SceneBanner({ scene, badge, title, subtitle }) {
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-md mb-5 h-24 md:h-32">
+    <div className="relative rounded-3xl overflow-hidden shadow-md mb-5 h-24 md:h-32">
       <SceneArt scene={scene} className="absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
       <div className="absolute bottom-0 left-0 p-3.5 md:p-4 text-white text-left">
         {badge && (
-          <span className="inline-block bg-white/20 backdrop-blur text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded mb-1">
+          <span className="inline-block bg-white dark:bg-[#002b37]/20 backdrop-blur text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded mb-1">
             {badge}
           </span>
         )}
@@ -127,7 +127,7 @@ function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay = true
   const ytId = getYoutubeId(src);
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-md mb-5 bg-black">
+    <div className="rounded-3xl overflow-hidden shadow-md mb-5 bg-black">
       <div className="relative w-full aspect-video bg-black">
         {ytId ? (
           <iframe
@@ -160,7 +160,7 @@ function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay = true
           </span>
         )}
       </div>
-      <div className="bg-gradient-to-r from-red-900 to-red-800 px-4 md:px-5 py-2.5 text-white text-left">
+      <div className="bg-gradient-to-r from-primary-700 to-primary-600 px-4 md:px-5 py-2.5 text-white text-left">
         <h2 className="text-base md:text-xl font-bold leading-tight">{title}</h2>
         {subtitle && <p className="text-white/80 text-xs md:text-sm">{subtitle}</p>}
       </div>
@@ -170,7 +170,7 @@ function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay = true
 
 function PieceReward({ label, onNext }) {
   return (
-    <div className="bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-6 text-center text-white shadow-xl j-unlock">
+    <div className="bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl p-6 text-center text-white shadow-xl j-unlock">
       <span className="material-symbols-outlined text-5xl">extension</span>
       <p className="text-sm uppercase tracking-wider font-semibold mt-1 opacity-90">
         Mảnh ghép tri thức
@@ -179,7 +179,7 @@ function PieceReward({ label, onNext }) {
       <button
         type="button"
         onClick={onNext}
-        className="bg-white text-orange-700 px-6 py-2.5 rounded-lg font-bold hover:bg-orange-50 transition-colors inline-flex items-center gap-1.5"
+        className="bg-white dark:bg-[#002b37] text-orange-700 px-6 py-2.5 rounded-3xl font-bold hover:bg-orange-50 transition-colors inline-flex items-center gap-1.5"
       >
         Tiếp tục hành trình
         <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -208,7 +208,7 @@ function IntroStage({ introData, onComplete }) {
         title={introData?.title || "Cỗ Máy Thời Gian"} 
       />
       {phase === 0 && introLines.length > 0 && (
-        <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 md:p-6">
+        <div className="bg-gray-50 rounded-3xl border border-gray-200 p-5 md:p-6">
           <DialogueSequence
             lines={introLines}
             onComplete={() => setPhase(1)}
@@ -218,7 +218,7 @@ function IntroStage({ introData, onComplete }) {
       )}
 
       {phase === 1 && (
-        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left">
+        <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 text-left">
           <p className="font-semibold text-lg mb-1 text-gray-900">
             Bạn muốn bắt đầu hành trình từ đâu?
           </p>
@@ -231,13 +231,13 @@ function IntroStage({ introData, onComplete }) {
                 key={sp.id}
                 type="button"
                 onClick={() => setChosen(sp.id)}
-                className={`rounded-xl border-2 p-4 text-center transition-all ${
+                className={`rounded-3xl border-2 p-4 text-center transition-all ${
                   chosen === sp.id
-                    ? "border-red-800 bg-red-50 shadow-md"
-                    : "border-gray-200 hover:border-red-300 hover:bg-red-50/40"
+                    ? "border-primary-800 bg-primary-50 dark:bg-primary-900/35 shadow-md"
+                    : "border-gray-200 hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/30/40"
                 }`}
               >
-                <span className="material-symbols-outlined text-3xl text-red-800">
+                <span className="material-symbols-outlined text-3xl text-primary-650 dark:text-primary-300">
                   {sp.icon}
                 </span>
                 <p className="font-bold text-gray-900 mt-1">{sp.label}</p>
@@ -247,14 +247,14 @@ function IntroStage({ introData, onComplete }) {
           </div>
 
           {chosen && (
-            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 j-bubble-in">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-3xl p-4 j-bubble-in">
               <p className="text-sm text-indigo-900 leading-relaxed mb-3">
                 {introData?.startConfirm}
               </p>
               <button
                 type="button"
                 onClick={() => onComplete(chosen)}
-                className="inline-flex items-center gap-1.5 bg-red-800 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+                className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-6 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
               >
                 Lên đường
                 <span className="material-symbols-outlined text-base">rocket_launch</span>
@@ -290,7 +290,7 @@ function CognitiveStage({ cognitiveData, onComplete }) {
       />
 
       {phase === 0 && (
-        <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 md:p-6">
+        <div className="bg-gray-50 rounded-3xl border border-gray-200 p-5 md:p-6">
           <DialogueSequence 
             lines={cognitiveData?.setup || []} 
             onComplete={() => setPhase(1)} 
@@ -311,7 +311,7 @@ function CognitiveStage({ cognitiveData, onComplete }) {
       )}
 
       {phase === 2 && (
-        <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 md:p-6">
+        <div className="bg-gray-50 rounded-3xl border border-gray-200 p-5 md:p-6">
           <DialogueSequence 
             lines={cognitiveData?.twist || []} 
             onComplete={() => setPhase(3)} 
@@ -332,8 +332,8 @@ function CognitiveStage({ cognitiveData, onComplete }) {
       )}
 
       {phase === 4 && (
-        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left animate-fadeIn">
-          <h3 className="text-xl font-bold text-red-900 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 text-left animate-fadeIn">
+          <h3 className="text-xl font-bold text-primary-850 dark:text-primary-100 mb-4 flex items-center gap-2">
             <span className="material-symbols-outlined">timeline</span>
             {cognitiveData?.conclusion?.title}
           </h3>
@@ -341,13 +341,13 @@ function CognitiveStage({ cognitiveData, onComplete }) {
             {steps.slice(0, revealedSteps).map((step, index) => (
               <div
                 key={index}
-                className="flex items-start gap-4 bg-gradient-to-r from-red-50 to-amber-50 border border-red-100 rounded-xl p-4 j-card-reveal"
+                className="flex items-start gap-4 bg-gradient-to-r from-primary-50 to-primary-100/10 border border-primary-100 dark:border-primary-850 rounded-3xl p-4 j-card-reveal"
               >
-                <div className="h-11 w-11 rounded-lg bg-red-800 text-white flex items-center justify-center shrink-0">
+                <div className="h-11 w-11 rounded-3xl bg-primary-600 text-white flex items-center justify-center shrink-0">
                   <span className="material-symbols-outlined">{step.icon}</span>
                 </div>
                 <div>
-                  <p className="font-bold text-red-900">{step.head}</p>
+                  <p className="font-bold text-primary-850 dark:text-primary-100">{step.head}</p>
                   <p className="text-sm text-gray-700 leading-relaxed">{step.body}</p>
                 </div>
               </div>
@@ -406,8 +406,8 @@ function ChainGame({ chain, onSuccess }) {
   const itemById = (id) => chain?.items?.find((it) => it.id === id);
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 text-left animate-fadeIn">
-      <h3 className="text-xl font-bold text-red-900 mb-1 flex items-center gap-2">
+    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 text-left animate-fadeIn">
+      <h3 className="text-xl font-bold text-primary-850 dark:text-primary-100 mb-1 flex items-center gap-2">
         <span className="material-symbols-outlined">link</span>
         {chain?.title || "Lắp ráp chuỗi nhân quả"}
       </h3>
@@ -418,7 +418,7 @@ function ChainGame({ chain, onSuccess }) {
           const item = itemById(id);
           return (
             <div key={id}>
-              <div className="flex items-center gap-3 bg-green-50 border-2 border-green-400 rounded-xl px-4 py-3 j-unlock">
+              <div className="flex items-center gap-3 bg-green-50 border-2 border-green-400 rounded-3xl px-4 py-3 j-unlock">
                 <span className="h-7 w-7 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold shrink-0">
                   {index + 1}
                 </span>
@@ -449,13 +449,13 @@ function ChainGame({ chain, onSuccess }) {
                 key={item.id}
                 type="button"
                 onClick={() => handlePick(item)}
-                className={`flex items-center gap-3 text-left rounded-xl border-2 px-4 py-3 transition-all ${
+                className={`flex items-center gap-3 text-left rounded-3xl border-2 px-4 py-3 transition-all ${
                   wrongId === item.id
-                    ? "border-red-500 bg-red-50 j-shake"
-                    : "border-gray-200 bg-white hover:border-red-400 hover:bg-red-50"
+                    ? "border-red-500 bg-primary-50 dark:bg-primary-900/35 j-shake"
+                    : "border-gray-200 bg-white dark:bg-[#002b37] hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30"
                 }`}
               >
-                <span className="material-symbols-outlined text-red-800 shrink-0">{item.icon || "radio_button_unchecked"}</span>
+                <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 shrink-0">{item.icon || "radio_button_unchecked"}</span>
                 <span className="text-sm text-gray-800">{item.text}</span>
               </button>
             ))}
@@ -500,7 +500,7 @@ function SocialStage({ socialData, minigameData, onComplete }) {
           <button
             type="button"
             onClick={() => setPhase(1)}
-            className="inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+            className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
           >
             Vào vai trải nghiệm
             <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -510,11 +510,11 @@ function SocialStage({ socialData, minigameData, onComplete }) {
 
       {phase === 1 && role && (
         <div className="space-y-4 text-left animate-fadeIn">
-          <div className="bg-gray-900 text-white rounded-xl px-4 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
+          <div className="bg-gray-900 text-white rounded-3xl px-4 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
             <span className="material-symbols-outlined text-base">theater_comedy</span>
             {role.label}
           </div>
-          <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+          <div className="bg-gray-50 rounded-3xl border border-gray-200 p-5">
             <SpeechBubble who={role.who} text={role.intro} animate={false} />
           </div>
           <GradedQuestion
@@ -564,7 +564,7 @@ function SocialStage({ socialData, minigameData, onComplete }) {
             <button
               type="button"
               onClick={() => setPhase(4)}
-              className="inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+              className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
             >
               Lắp ráp chuỗi nhân quả
               <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -585,11 +585,11 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
     return (
       <div className="animate-fadeIn">
         <SceneBanner scene="synthesis" badge="Hợp nhất tri thức" title={summaryData?.title || "Hợp nhất tri thức"} />
-        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 md:p-8 text-center">
-          <div className="inline-flex h-16 w-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white items-center justify-center shadow-lg j-glow">
+        <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 md:p-8 text-center">
+          <div className="inline-flex h-16 w-16 rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 text-white items-center justify-center shadow-lg j-glow">
             <span className="material-symbols-outlined text-4xl">extension</span>
           </div>
-          <h3 className="text-xl md:text-2xl font-bold text-red-900 mt-4">
+          <h3 className="text-xl md:text-2xl font-bold text-primary-850 dark:text-primary-100 mt-4">
             Bạn đã thu thập đủ 2 mảnh ghép tri thức!
           </h3>
           <p className="text-gray-600 mt-2 max-w-lg mx-auto leading-relaxed">
@@ -600,7 +600,7 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
           <button
             type="button"
             onClick={onMerge}
-            className="mt-6 inline-flex items-center gap-2 bg-red-800 text-white px-7 py-3.5 rounded-xl font-bold text-lg hover:bg-red-900 transition-colors shadow-md active:scale-95"
+            className="mt-6 inline-flex items-center gap-2 bg-primary-600 text-white px-7 py-3.5 rounded-3xl font-bold text-lg hover:bg-primary-700 transition-colors shadow-md active:scale-95"
           >
             <span className="material-symbols-outlined">join_full</span>
             Ghép 2 mảnh tri thức
@@ -613,9 +613,9 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
   return (
     <div className="animate-fadeIn">
       <SceneBanner scene="synthesis" badge="Đúc kết hoàn chỉnh" title={summaryData?.title || "Hợp nhất tri thức"} />
-      <div className="bg-gradient-to-br from-red-50 via-white to-amber-50 border border-red-100 rounded-2xl p-6 md:p-7 shadow-md j-unlock text-left">
+      <div className="bg-gradient-to-br from-primary-50 via-white to-primary-100/10 border border-primary-100 dark:border-primary-850 rounded-3xl p-6 md:p-7 shadow-md j-unlock text-left">
         <div className="text-center">
-          <div className="inline-block rounded-2xl px-6 py-4 text-white bg-gradient-to-br from-red-700 to-red-900 shadow-lg j-glow">
+          <div className="inline-block rounded-3xl px-6 py-4 text-white bg-gradient-to-br from-primary-700 to-primary-900 shadow-lg j-glow">
             <span className="material-symbols-outlined text-3xl">hub</span>
             <p className="font-bold text-xl mt-1">{summaryData?.center}</p>
             <p className="text-xs text-white/80 mt-0.5">{summaryData?.centerNote}</p>
@@ -626,7 +626,7 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
           {(summaryData?.branches || []).map((b) => (
             <div
               key={b.id}
-              className={`rounded-xl p-4 text-white bg-gradient-to-br ${b.color} shadow`}
+              className={`rounded-3xl p-4 text-white bg-gradient-to-br ${b.color} shadow`}
             >
               <div className="flex items-center gap-2 mb-2">
                 <span className="material-symbols-outlined">{b.icon}</span>
@@ -644,8 +644,8 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
           ))}
         </div>
 
-        <div className="mt-6 bg-white border-l-4 border-red-700 rounded-r-xl p-4 shadow-sm">
-          <p className="text-xs uppercase tracking-wider text-red-700 font-bold mb-1 flex items-center gap-1.5">
+        <div className="mt-6 bg-white dark:bg-[#002b37] border-l-4 border-primary-600 rounded-r-xl p-4 shadow-sm">
+          <p className="text-xs uppercase tracking-wider text-primary-700 dark:text-primary-300 font-bold mb-1 flex items-center gap-1.5">
             <span className="material-symbols-outlined text-base">auto_awesome</span>
             Đúc kết hoàn chỉnh
           </p>
@@ -656,7 +656,7 @@ function SummaryStage({ summaryData, merged, onMerge, onComplete }) {
           <button
             type="button"
             onClick={onComplete}
-            className="inline-flex items-center gap-1.5 bg-red-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-900 transition-colors shadow-md active:scale-95"
+            className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-6 py-3 rounded-3xl font-bold hover:bg-primary-700 transition-colors shadow-md active:scale-95"
           >
             Làm bài kiểm tra tổng kết
             <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -710,18 +710,18 @@ function FinalQuizStage({ questions = [], onComplete }) {
   if (!q) return null;
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-red-200 p-6 md:p-7 text-left animate-fadeIn">
+    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-primary-200 dark:border-primary-800 p-6 md:p-7 text-left animate-fadeIn">
       <div className="flex items-center gap-2 mb-1">
-        <span className="material-symbols-outlined text-red-800">assignment</span>
-        <span className="text-xs uppercase tracking-wider text-red-800 font-bold">
+        <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">assignment</span>
+        <span className="text-xs uppercase tracking-wider text-primary-650 dark:text-primary-300 font-bold">
           Kiểm tra tổng kết hành trình
         </span>
       </div>
-      <h2 className="text-2xl font-bold text-red-900 mb-4">Bạn đã hiểu nguồn gốc triết học?</h2>
+      <h2 className="text-2xl font-bold text-primary-850 dark:text-primary-100 mb-4">Bạn đã hiểu nguồn gốc triết học?</h2>
 
       <div className="flex items-center gap-3 mb-6">
         <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-red-800 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
+          <div className="h-full bg-primary-600 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
         </div>
         <span className="text-sm text-gray-500 tabular-nums shrink-0">{index + 1}/{total}</span>
       </div>
@@ -755,14 +755,14 @@ function FinalQuizStage({ questions = [], onComplete }) {
       </div>
 
       {!solved && wrongPicks.length > 0 && (
-        <div className="mt-4 bg-red-50 border border-red-200 text-red-800 p-3 rounded-lg text-sm flex items-center gap-2">
+        <div className="mt-4 bg-primary-50 dark:bg-primary-900/35 border border-primary-200 dark:border-primary-800 text-primary-650 dark:text-primary-300 p-3 rounded-3xl text-sm flex items-center gap-2">
           <span className="material-symbols-outlined text-base">error</span>
           Chưa chính xác — hãy thử một đáp án khác.
         </div>
       )}
 
       {solved && (
-        <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-lg j-bubble-in">
+        <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-3xl j-bubble-in">
           <p className="font-bold text-green-800 flex items-center gap-2 mb-1">
             <span className="material-symbols-outlined text-base">lightbulb</span>
             Chính xác!
@@ -771,7 +771,7 @@ function FinalQuizStage({ questions = [], onComplete }) {
           <button
             type="button"
             onClick={goNext}
-            className="mt-4 inline-flex items-center gap-1.5 bg-red-800 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors"
+            className="mt-4 inline-flex items-center gap-1.5 bg-primary-600 text-white px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
           >
             {index === total - 1 ? "Xem kết quả" : "Câu tiếp theo"}
             <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -789,7 +789,7 @@ function CompletionStage({ score, total, completionData, xpReward, badgeReward, 
       <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-amber-300/15 rounded-full blur-3xl" />
 
       <div className="relative p-8 md:p-10">
-        <div className="inline-flex items-center gap-1.5 bg-white/15 border border-white/25 backdrop-blur px-4 py-1.5 rounded-full text-sm font-bold mb-6">
+        <div className="inline-flex items-center gap-1.5 bg-white dark:bg-[#002b37]/15 border border-white/25 backdrop-blur px-4 py-1.5 rounded-full text-sm font-bold mb-6">
           <span className="material-symbols-outlined text-base">verified</span>
           Hoàn thành hành trình
         </div>
@@ -803,7 +803,7 @@ function CompletionStage({ score, total, completionData, xpReward, badgeReward, 
           <p className="text-white/75 text-sm">{completionData?.badgeNote || "Hành trình hoàn thành!"}</p>
         </div>
 
-        <div className="bg-white/12 border border-white/20 backdrop-blur rounded-2xl px-6 py-4 mt-6 inline-block">
+        <div className="bg-white dark:bg-[#002b37]/12 border border-white/20 backdrop-blur rounded-3xl px-6 py-4 mt-6 inline-block">
           <p className="text-sm text-blue-50/90">Kết quả kiểm tra</p>
           <p className="text-2xl font-bold tabular-nums">{score}/{total} câu đúng ngay lần đầu</p>
         </div>
@@ -821,7 +821,7 @@ function CompletionStage({ score, total, completionData, xpReward, badgeReward, 
           <button
             type="button"
             onClick={onReplay}
-            className="inline-flex items-center gap-1.5 bg-white/15 border border-white/30 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/25 transition-colors active:scale-95"
+            className="inline-flex items-center gap-1.5 bg-white dark:bg-[#002b37]/15 border border-white/30 text-white px-6 py-3 rounded-3xl font-bold hover:bg-white dark:bg-[#002b37]/25 transition-colors active:scale-95"
           >
             <span className="material-symbols-outlined text-base">replay</span>
             Chơi lại hành trình
@@ -830,7 +830,7 @@ function CompletionStage({ score, total, completionData, xpReward, badgeReward, 
           <button
             type="button"
             onClick={onBackToMindmap}
-            className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-300 to-orange-400 text-blue-950 px-6 py-3 rounded-xl font-bold hover:from-amber-400 hover:to-orange-500 transition-colors shadow-lg active:scale-95"
+            className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-300 to-orange-400 text-blue-950 px-6 py-3 rounded-3xl font-bold hover:from-amber-400 hover:to-orange-500 transition-colors shadow-lg active:scale-95"
           >
             Hoàn thành & Quay lại sơ đồ
             <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -848,16 +848,16 @@ function JourneyHeader({ stage, pieces, onBack, onReset }) {
   const currentLabel = STAGE_LABELS[steps[Math.min(activeIndex, steps.length - 1)]];
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-4 md:p-5 mb-6 text-left">
+    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-4 md:p-5 mb-6 text-left">
       <div className="flex items-center justify-between gap-3 mb-5">
         <button
           type="button"
           onClick={onBack}
           disabled={!canGoBack}
           title="Quay lại chặng trước"
-          className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-bold border-2 transition-all ${
+          className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-3xl text-sm font-bold border-2 transition-all ${
             canGoBack
-              ? "border-red-800 text-red-800 bg-white hover:bg-red-800 hover:text-white shadow-sm active:scale-95"
+              ? "border-primary-800 text-primary-650 dark:text-primary-300 bg-white dark:bg-[#002b37] hover:bg-primary-600 hover:text-white shadow-sm active:scale-95"
               : "border-gray-100 text-gray-300 cursor-not-allowed"
           }`}
         >
@@ -869,7 +869,7 @@ function JourneyHeader({ stage, pieces, onBack, onReset }) {
           <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold leading-none">
             Chặng {Math.min(activeIndex + 1, steps.length)}/{steps.length}
           </p>
-          <p className="text-sm md:text-base font-bold text-red-900 truncate leading-tight mt-0.5">
+          <p className="text-sm md:text-base font-bold text-primary-850 dark:text-primary-100 truncate leading-tight mt-0.5">
             {currentLabel}
           </p>
         </div>
@@ -888,7 +888,7 @@ function JourneyHeader({ stage, pieces, onBack, onReset }) {
             type="button"
             onClick={onReset}
             title="Bắt đầu lại từ đầu"
-            className="inline-flex items-center justify-center h-9 w-9 rounded-full text-gray-400 hover:text-white hover:bg-red-700 border border-gray-200 hover:border-red-700 transition-all active:scale-95"
+            className="inline-flex items-center justify-center h-9 w-9 rounded-full text-gray-400 hover:text-white hover:bg-primary-600 border border-gray-200 hover:border-primary-600 transition-all active:scale-95"
           >
             <span className="material-symbols-outlined text-lg">restart_alt</span>
           </button>
@@ -907,8 +907,8 @@ function JourneyHeader({ stage, pieces, onBack, onReset }) {
                     done
                       ? "bg-green-500 text-white shadow-sm"
                       : active
-                      ? "bg-red-800 text-white ring-4 ring-red-100 shadow-md scale-110"
-                      : "bg-white text-gray-400 border-2 border-gray-200"
+                      ? "bg-primary-600 text-white ring-4 ring-primary-100 shadow-md scale-110"
+                      : "bg-white dark:bg-[#002b37] text-gray-400 border-2 border-gray-200"
                   }`}
                 >
                   {done ? (
@@ -919,7 +919,7 @@ function JourneyHeader({ stage, pieces, onBack, onReset }) {
                 </div>
                 <span
                   className={`text-[11px] md:text-xs font-semibold text-center leading-tight ${
-                    active ? "text-red-800" : done ? "text-green-600" : "text-gray-400"
+                    active ? "text-primary-650 dark:text-primary-300" : done ? "text-green-600" : "text-gray-400"
                   }`}
                 >
                   {STAGE_LABELS[s]}
@@ -1048,7 +1048,7 @@ export default function AdventureLessonPlayer({
           <span className="material-symbols-outlined text-base">explore</span>
           Bài học tương tác
         </div>
-        <h1 className="font-bold text-3xl md:text-4xl text-red-950 leading-tight">
+        <h1 className="font-bold text-3xl md:text-4xl text-primary-950 leading-tight">
           Hành trình Khai Sáng: {nodeDetails?.title || "Nguồn gốc của Triết học"}
         </h1>
         <p className="text-gray-500 mt-1">

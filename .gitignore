@@ -118,3 +118,7 @@ build/
 # Uploaded files
 **/public/uploads/*
 !**/public/uploads/.gitkeep
+
+# Philosophy training raw text/PDF data folder
+data/
+

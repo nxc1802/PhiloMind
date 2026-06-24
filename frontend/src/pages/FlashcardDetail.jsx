@@ -190,7 +190,7 @@ const FlashcardDetail = () => {
     return (
       <PageShell activeKey="practice">
         <div className="text-center py-20">
-          <span className="material-symbols-outlined animate-spin text-5xl text-red-800">sync</span>
+          <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
           <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị trò chơi học tập...</p>
         </div>
       </PageShell>
@@ -209,7 +209,7 @@ const FlashcardDetail = () => {
           </h1>
           <Link
             to="/practice"
-            className="inline-block mt-6 bg-red-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-900"
+            className="inline-block mt-6 bg-primary-600 text-white px-6 py-3 rounded-3xl font-semibold hover:bg-primary-700"
           >
             ← Quay lại danh sách
           </Link>
@@ -228,8 +228,8 @@ const FlashcardDetail = () => {
           subtitle="Nối các khái niệm ở cột bên trái với định nghĩa tương ứng ở cột bên phải."
         />
         <div className="px-6 md:px-12 py-16 max-w-4xl mx-auto text-center">
-          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-12 text-center border border-gray-200 shadow-xl max-w-2xl mx-auto animate-fadeIn">
-            <div className="h-16 w-16 bg-red-50 text-red-800 rounded-2xl flex items-center justify-center shadow-md mx-auto mb-6">
+          <div className="bg-white dark:bg-[#002b37]/80 backdrop-blur-md rounded-3xl p-12 text-center border border-gray-200 shadow-xl max-w-2xl mx-auto animate-fadeIn">
+            <div className="h-16 w-16 bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 rounded-3xl flex items-center justify-center shadow-md mx-auto mb-6">
               <span className="material-symbols-outlined text-3xl">hourglass_empty</span>
             </div>
             <h3 className="font-bold text-gray-900 text-2xl mb-2 font-serif">Đang cập nhật</h3>
@@ -238,7 +238,7 @@ const FlashcardDetail = () => {
             </p>
             <Link
               to="/practice"
-              className="inline-block mt-8 bg-red-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-red-900 shadow-md hover:shadow-lg transition-all"
+              className="inline-block mt-8 bg-primary-600 text-white px-8 py-3 rounded-3xl font-bold hover:bg-primary-700 shadow-md hover:shadow-lg transition-all"
             >
               ← Quay lại danh sách thực hành
             </Link>
@@ -261,17 +261,17 @@ const FlashcardDetail = () => {
         {/* Bảng điểm */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div className="flex gap-3">
-            <div className="bg-white rounded-xl border border-gray-200 px-5 py-3 shadow-sm">
+            <div className="bg-white dark:bg-[#002b37] rounded-3xl border border-gray-200 px-5 py-3 shadow-sm">
               <p className="text-xs uppercase tracking-wider text-gray-500">
                 Số lượt ghép
               </p>
-              <p className="text-2xl font-bold text-red-800">{moves}</p>
+              <p className="text-2xl font-bold text-primary-650 dark:text-primary-300">{moves}</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-200 px-5 py-3 shadow-sm">
+            <div className="bg-white dark:bg-[#002b37] rounded-3xl border border-gray-200 px-5 py-3 shadow-sm">
               <p className="text-xs uppercase tracking-wider text-gray-500">
                 Đã khớp
               </p>
-              <p className="text-2xl font-bold text-red-800">
+              <p className="text-2xl font-bold text-primary-650 dark:text-primary-300">
                 {matchedPairs.length}/{totalPairs}
               </p>
             </div>
@@ -279,7 +279,7 @@ const FlashcardDetail = () => {
           <button
             type="button"
             onClick={restartGame}
-            className="inline-flex items-center gap-2 border-2 border-red-800 text-red-800 px-5 py-2.5 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 border-2 border-primary-800 text-primary-650 dark:text-primary-300 px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-600 hover:text-white transition-colors shadow-sm"
           >
             <span className="material-symbols-outlined text-base">refresh</span>
             Chơi lại / Xáo bài
@@ -288,7 +288,7 @@ const FlashcardDetail = () => {
 
         {/* Thông báo thắng */}
         {isWon && (
-          <div className="bg-green-50 border-2 border-green-300 rounded-2xl p-6 mb-6 text-center animate-fadeIn shadow-sm">
+          <div className="bg-green-50 border-2 border-green-300 rounded-3xl p-6 mb-6 text-center animate-fadeIn shadow-sm">
             <span className="material-symbols-outlined text-5xl text-green-600">
               celebration
             </span>
@@ -306,8 +306,8 @@ const FlashcardDetail = () => {
           
           {/* Cột Trái: Khái niệm */}
           <div className="space-y-4">
-            <h3 className="font-bold text-base text-red-950 flex items-center gap-2 pb-2 border-b border-gray-100">
-              <span className="material-symbols-outlined text-red-800 text-lg">psychology</span>
+            <h3 className="font-bold text-base text-primary-950 flex items-center gap-2 pb-2 border-b border-gray-100">
+              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">psychology</span>
               Khái niệm Triết học
             </h3>
             <div className="space-y-3">
@@ -324,12 +324,12 @@ const FlashcardDetail = () => {
                   } else if (hasError) {
                     cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
                   } else if (isSelected) {
-                    cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
+                    cardClass = "bg-primary-50 dark:bg-primary-900/35 border-primary-800 text-primary-850 dark:text-primary-100 ring-2 ring-primary-500 shadow-md -translate-y-0.5";
                   } else {
-                    cardClass = "bg-white border-gray-200 text-gray-800 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
+                    cardClass = "bg-white dark:bg-[#002b37] border-gray-200 text-gray-800 hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
                   }
                 } else {
-                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-red-550 hover:shadow-md transition-all cursor-pointer";
+                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-primary-500 hover:shadow-md transition-all cursor-pointer";
                 }
 
                 return (
@@ -338,12 +338,12 @@ const FlashcardDetail = () => {
                     type="button"
                     onClick={() => handleSelectTerm(item)}
                     disabled={isMatched}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
+                    className={`w-full text-left p-4 rounded-3xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
                   >
                     {isRevealed ? (
                       <>
                         <div className="flex flex-col gap-1 w-full text-left">
-                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Khái niệm</span>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-650 dark:text-primary-300/60 mb-0.5">Khái niệm</span>
                           <span className="font-bold text-sm md:text-base leading-snug">{item.text}</span>
                         </div>
                         {isMatched && (
@@ -363,8 +363,8 @@ const FlashcardDetail = () => {
 
           {/* Cột Phải: Định nghĩa */}
           <div className="space-y-4">
-            <h3 className="font-bold text-base text-red-950 flex items-center gap-2 pb-2 border-b border-gray-100">
-              <span className="material-symbols-outlined text-red-800 text-lg">menu_book</span>
+            <h3 className="font-bold text-base text-primary-950 flex items-center gap-2 pb-2 border-b border-gray-100">
+              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">menu_book</span>
               Định nghĩa / Ý nghĩa khoa học
             </h3>
             <div className="space-y-3">
@@ -381,12 +381,12 @@ const FlashcardDetail = () => {
                   } else if (hasError) {
                     cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
                   } else if (isSelected) {
-                    cardClass = "bg-red-50 border-red-800 text-red-900 ring-2 ring-red-850 shadow-md -translate-y-0.5";
+                    cardClass = "bg-primary-50 dark:bg-primary-900/35 border-primary-800 text-primary-850 dark:text-primary-100 ring-2 ring-primary-500 shadow-md -translate-y-0.5";
                   } else {
-                    cardClass = "bg-white border-gray-200 text-gray-700 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
+                    cardClass = "bg-white dark:bg-[#002b37] border-gray-200 text-gray-700 hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
                   }
                 } else {
-                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-red-550 hover:shadow-md transition-all cursor-pointer";
+                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-primary-500 hover:shadow-md transition-all cursor-pointer";
                 }
 
                 return (
@@ -395,12 +395,12 @@ const FlashcardDetail = () => {
                     type="button"
                     onClick={() => handleSelectDesc(item)}
                     disabled={isMatched}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
+                    className={`w-full text-left p-4 rounded-3xl border-2 transition-all duration-300 flex items-center justify-between gap-4 ${cardClass}`}
                   >
                     {isRevealed ? (
                       <>
                         <div className="flex flex-col gap-1 w-full text-left">
-                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-red-800/60 mb-0.5">Định nghĩa</span>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-650 dark:text-primary-300/60 mb-0.5">Định nghĩa</span>
                           <span className="text-xs md:text-sm leading-relaxed pr-2">{item.text}</span>
                         </div>
                         {isMatched && (
@@ -424,7 +424,7 @@ const FlashcardDetail = () => {
         <div className="mt-8 text-center">
           <Link
             to="/practice"
-            className="text-sm text-gray-500 underline hover:text-red-800 font-semibold"
+            className="text-sm text-gray-500 underline hover:text-primary-650 dark:text-primary-300 font-semibold"
           >
             ← Quay lại danh sách thực hành
           </Link>

@@ -64,9 +64,9 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
 
   if (questions.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-8 text-center space-y-4 mt-8">
-        <h3 className="text-2xl font-bold text-red-900 flex items-center justify-center gap-2">
-          <span className="material-symbols-outlined text-red-800 text-3xl">task_alt</span>
+      <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-8 text-center space-y-4 mt-8">
+        <h3 className="text-2xl font-bold text-primary-850 dark:text-primary-100 flex items-center justify-center gap-2">
+          <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-3xl">task_alt</span>
           Hoàn thành bài học
         </h3>
         <p className="text-gray-600 text-sm max-w-md mx-auto">
@@ -74,7 +74,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
         </p>
         <button
           onClick={() => onComplete && onComplete(100, 100)}
-          className="bg-red-800 hover:bg-red-950 text-white font-bold px-8 py-3.5 rounded-xl shadow-md transition-all inline-flex items-center gap-2"
+          className="bg-primary-600 hover:bg-primary-900 text-white font-bold px-8 py-3.5 rounded-3xl shadow-md transition-all inline-flex items-center gap-2"
         >
           <span className="material-symbols-outlined">verified</span>
           Xác nhận Hoàn thành
@@ -89,17 +89,17 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
 
   if (quizState === "start") {
     return (
-      <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-8 text-center space-y-5 mt-8">
-        <div className="inline-flex items-center justify-center h-16 w-16 bg-red-50 rounded-2xl text-red-800 border border-red-100 mb-2">
+      <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-8 text-center space-y-5 mt-8">
+        <div className="inline-flex items-center justify-center h-16 w-16 bg-primary-50 dark:bg-primary-900/35 rounded-3xl text-primary-650 dark:text-primary-300 border border-primary-100 dark:border-primary-850 mb-2">
           <span className="material-symbols-outlined text-4xl">assignment</span>
         </div>
-        <h3 className="text-2xl font-bold text-red-900">Bài kiểm tra Tổng kết</h3>
+        <h3 className="text-2xl font-bold text-primary-850 dark:text-primary-100">Bài kiểm tra Tổng kết</h3>
         <p className="text-gray-600 text-sm max-w-md mx-auto leading-relaxed">
           Đồng chí cần hoàn thành bài kiểm tra gồm <strong>{questions.length} câu hỏi</strong> trắc nghiệm để chứng minh độ thấu hiểu kiến thức. Điểm đạt tối thiểu là <strong>{QUIZ_PASS_THRESHOLD}%</strong> để mở khóa bài học tiếp theo.
         </p>
         <button
           onClick={handleStart}
-          className="bg-red-800 hover:bg-red-900 text-white font-bold px-8 py-3.5 rounded-xl shadow-md transition-transform hover:scale-105 inline-flex items-center gap-2"
+          className="bg-primary-600 hover:bg-primary-700 text-white font-bold px-8 py-3.5 rounded-3xl shadow-md transition-transform hover:scale-105 inline-flex items-center gap-2"
         >
           <span className="material-symbols-outlined">play_circle</span>
           Bắt đầu kiểm tra
@@ -110,10 +110,10 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
 
   if (quizState === "result") {
     return (
-      <div className={`rounded-2xl p-8 border text-center space-y-6 mt-8 shadow-lg transition-all ${
+      <div className={`rounded-3xl p-8 border text-center space-y-6 mt-8 shadow-lg transition-all ${
         passed
           ? "bg-gradient-to-br from-emerald-50 to-green-50/30 border-green-200 text-green-950"
-          : "bg-gradient-to-br from-rose-50 to-red-50/30 border-red-200 text-red-950"
+          : "bg-gradient-to-br from-rose-50 to-red-50/30 border-primary-200 dark:border-primary-800 text-primary-950"
       }`}>
         <div className="text-5xl animate-bounce">
           {passed ? "🏆" : "❌"}
@@ -127,13 +127,13 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
             : `Đồng chí chỉ đạt ${scorePercent}% câu trả lời đúng (yêu cầu tối thiểu ${QUIZ_PASS_THRESHOLD}%). Vui lòng nghiên cứu kỹ lại giáo trình và thử lại.`}
         </p>
 
-        <div className="bg-white/80 backdrop-blur border border-gray-150 rounded-2xl p-5 shadow-inner max-w-xs mx-auto">
+        <div className="bg-white dark:bg-[#002b37]/80 backdrop-blur border border-gray-150 rounded-3xl p-5 shadow-inner max-w-xs mx-auto">
           <span className="text-xs uppercase tracking-wider text-gray-500 font-bold block mb-1">Kết quả đạt được</span>
           <h4 className="text-3xl font-black text-slate-800">
             {correctCount} / {questions.length}
           </h4>
           <span className={`text-xs font-bold px-2 py-0.5 rounded mt-2 inline-block ${
-            passed ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+            passed ? "bg-green-100 text-green-800" : "bg-red-100 text-primary-650 dark:text-primary-300"
           }`}>
             {scorePercent}% - {passed ? "ĐẠT" : "CHƯA ĐẠT"}
           </span>
@@ -143,7 +143,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
           <button
             type="button"
             onClick={handleStart}
-            className="border-2 border-red-800 text-red-800 font-bold px-6 py-3 rounded-xl hover:bg-red-850 hover:text-white transition-all shadow"
+            className="border-2 border-primary-800 text-primary-650 dark:text-primary-300 font-bold px-6 py-3 rounded-3xl hover:bg-primary-800 hover:text-white transition-all shadow"
           >
             Làm lại
           </button>
@@ -155,21 +155,21 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
   const isCurrentQCorrect = selectedOption === currentQ.answer;
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 md:p-8 mt-8 space-y-5 text-left relative overflow-hidden">
+    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 md:p-8 mt-8 space-y-5 text-left relative overflow-hidden">
       {/* Quiz progress */}
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
         <div>
           <span className="text-[10px] uppercase font-bold tracking-widest text-red-700">Bài kiểm tra tổng kết</span>
           <h4 className="font-extrabold text-lg text-slate-800">Câu hỏi trắc nghiệm</h4>
         </div>
-        <div className="bg-slate-50 px-3 py-1.5 rounded-lg border border-gray-150 text-xs font-bold text-slate-600">
+        <div className="bg-slate-50 dark:bg-[#001F28] px-3 py-1.5 rounded-3xl border border-gray-150 text-xs font-bold text-slate-600">
           Câu {currentIdx + 1} / {questions.length} (Đúng: {correctCount})
         </div>
       </div>
 
       <div className="space-y-4">
         {/* Question Text */}
-        <div className="bg-slate-50 p-5 rounded-xl border-l-4 border-red-800 shadow-inner">
+        <div className="bg-slate-50 dark:bg-[#001F28] p-5 rounded-3xl border-l-4 border-primary-800 shadow-inner">
           <p className="text-slate-800 text-base font-semibold leading-relaxed">
             {currentQ.question}
           </p>
@@ -179,11 +179,11 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
         <div className="space-y-2">
           {currentQ.options.map((option, idx) => {
             const isSelected = selectedOption === option;
-            let optionCls = "w-full text-left rounded-xl border-2 px-4 py-3.5 text-sm font-semibold transition-all hover:scale-[1.01] block bg-white ";
+            let optionCls = "w-full text-left rounded-3xl border-2 px-4 py-3.5 text-sm font-semibold transition-all hover:scale-[1.01] block bg-white dark:bg-[#002b37] ";
             
             if (!isAnswered) {
               if (isSelected) {
-                optionCls += "border-red-800 bg-red-50 text-red-950";
+                optionCls += "border-primary-800 bg-primary-50 dark:bg-primary-900/35 text-primary-950";
               } else {
                 optionCls += "border-gray-200 text-gray-700 hover:border-red-300";
               }
@@ -192,7 +192,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
               if (isCorrectAnswer) {
                 optionCls += "border-green-500 bg-green-50 text-green-900";
               } else if (isSelected) {
-                optionCls += "border-red-400 bg-red-50 text-red-900";
+                optionCls += "border-red-400 bg-primary-50 dark:bg-primary-900/35 text-primary-850 dark:text-primary-100";
               } else {
                 optionCls += "border-gray-100 opacity-60 text-gray-400";
               }
@@ -220,7 +220,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
             type="button"
             disabled={selectedOption === null}
             onClick={handleCheckAnswer}
-            className="bg-red-800 hover:bg-red-900 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl transition-all shadow flex items-center gap-1.5"
+            className="bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-3xl transition-all shadow flex items-center gap-1.5"
           >
             <span className="material-symbols-outlined text-sm font-bold">fact_check</span>
             Kiểm tra đáp án
@@ -238,7 +238,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
             <button
               type="button"
               onClick={handleNext}
-              className="bg-red-800 hover:bg-red-900 text-white font-bold px-6 py-3 rounded-xl transition-all shadow flex items-center gap-1"
+              className="bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-3 rounded-3xl transition-all shadow flex items-center gap-1"
             >
               Tiếp tục
               <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import PageShell, { PageHero } from "../components/PageShell";
+import OnboardingGuide from "../components/OnboardingGuide";
 import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../components/Toast";
@@ -127,6 +128,15 @@ const DebateCorner = () => {
 
   return (
     <PageShell activeKey="debate">
+      <OnboardingGuide
+        tabKey="debate"
+        steps={[
+          "Tranh biện Socratic: Nơi phản biện tư duy trực tiếp với AI. AI đóng vai trò người phản biện sắc bén để thử thách độ chặt chẽ trong luận điểm của bạn.",
+          "Chọn chủ đề: Chọn một chủ đề tranh biện sẵn có như \"Vấn đề cơ bản của triết học\" hay \"Ý thức quyết định vật chất?\".",
+          "Luận điểm phản hồi: Đưa ra câu trả lời chứa đựng lập trường, lý lẽ cá nhân rõ ràng thay vì chỉ hỏi đáp thông thường (ví dụ: \"Tôi tin là vật chất quyết định ý thức vì...\").",
+          "Quy tắc: Cố gắng bảo vệ lập luận của bạn trước các câu hỏi truy vấn sâu mà không tự mâu thuẫn với chính mình."
+        ]}
+      />
       <PageHero
         eyebrow="Đấu trường Socratic AI phản biện liên tục"
         icon="diversity_3"
@@ -134,7 +144,7 @@ const DebateCorner = () => {
           <>
             Tranh biện Triết học Biện chứng
             {activeDebate && (
-              <span className="block text-2xl md:text-3xl mt-2 opacity-95 text-amber-200">
+              <span className="block text-2xl md:text-3xl mt-2 opacity-95 text-primary-100">
                 {activeDebate.type === "topic"
                   ? (activeTopic ? `Kịch bản: ${activeTopic.title}` : "Tranh luận Kịch bản")
                   : (activeNode ? `Khái niệm: ${activeNode.title}` : "Tranh luận Bài học")}
@@ -150,12 +160,12 @@ const DebateCorner = () => {
           // ==================== SELECTION GRID DASHBOARD ====================
           <div>
             <div className="flex justify-center mb-8">
-              <div className="flex gap-1.5 p-1 bg-gray-100 rounded-xl border border-gray-200">
+              <div className="flex gap-1.5 p-1 bg-slate-100 dark:bg-primary-900/20 rounded-3xl border border-slate-200 dark:border-primary-800">
                 <button
                   type="button"
                   onClick={() => setDebateType("topic")}
-                  className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all ${
-                    debateType === "topic" ? "bg-white text-red-800 shadow-sm" : "text-gray-600 hover:text-gray-800"
+                  className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
+                    debateType === "topic" ? "bg-white text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 hover:text-gray-800"
                   }`}
                 >
                   🎭 Kịch bản có sẵn
@@ -163,8 +173,8 @@ const DebateCorner = () => {
                 <button
                   type="button"
                   onClick={() => setDebateType("concept")}
-                  className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all ${
-                    debateType === "concept" ? "bg-white text-red-800 shadow-sm" : "text-gray-600 hover:text-gray-800"
+                  className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
+                    debateType === "concept" ? "bg-white text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 hover:text-gray-800"
                   }`}
                 >
                   📚 Khái niệm bài học
@@ -173,13 +183,13 @@ const DebateCorner = () => {
             </div>
 
             {loadingLists ? (
-              <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-gray-200 shadow-md">
-                <span className="material-symbols-outlined animate-spin text-5xl text-red-800">sync</span>
+              <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 shadow-md">
+                <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
                 <p className="text-gray-500 mt-4 font-semibold">Đang tải danh sách đấu trường tranh biện...</p>
               </div>
             ) : debateType === "topic" ? (
               topics.length === 0 ? (
-                <div className="bg-white p-12 text-center border border-dashed border-gray-300 rounded-2xl">
+                <div className="bg-white p-12 text-center border border-dashed border-gray-300 rounded-3xl">
                   <span className="material-symbols-outlined text-5xl text-gray-300">chat_bubble_outline</span>
                   <p className="text-gray-500 mt-2 font-semibold">Chưa có kịch bản tranh luận nào trên DB.</p>
                 </div>
@@ -188,11 +198,11 @@ const DebateCorner = () => {
                   {topics.map((t) => (
                     <div
                       key={t.id}
-                      className="bg-white p-6 rounded-2xl shadow-md border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between"
+                      className="bg-white dark:bg-[#002b37] p-6 rounded-3xl shadow-md border border-slate-200 dark:border-primary-850 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between"
                     >
                       <div>
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="material-symbols-outlined text-red-800">theater_comedy</span>
+                          <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">theater_comedy</span>
                           <span className="text-xs uppercase tracking-wider text-gray-500 font-bold">Kịch bản Socratic</span>
                         </div>
                         <h3 className="font-bold text-lg text-gray-900 mb-2 leading-snug">{t.title}</h3>
@@ -203,7 +213,7 @@ const DebateCorner = () => {
                           setSelectedTopicId(t.id);
                           setActiveDebate({ type: "topic", id: t.id });
                         }}
-                        className="w-full bg-red-800 hover:bg-red-950 text-white font-bold py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 mt-2"
+                        className="w-full bg-primary-600 hover:bg-primary-900 text-white font-bold py-3 rounded-3xl shadow-md transition-all flex items-center justify-center gap-1 mt-2"
                       >
                         <span className="material-symbols-outlined text-sm font-bold">forum</span>
                         Bắt đầu phản biện
@@ -214,7 +224,7 @@ const DebateCorner = () => {
               )
             ) : (
               nodes.length === 0 ? (
-                <div className="bg-white p-12 text-center border border-dashed border-gray-300 rounded-2xl">
+                <div className="bg-white p-12 text-center border border-dashed border-gray-300 rounded-3xl">
                   <span className="material-symbols-outlined text-5xl text-gray-300">menu_book</span>
                   <p className="text-gray-500 mt-2 font-semibold">Chưa có khái niệm bài học nào được upload.</p>
                 </div>
@@ -223,7 +233,7 @@ const DebateCorner = () => {
                   {nodes.map((n) => (
                     <div
                       key={n.id}
-                      className="bg-white p-6 rounded-2xl shadow-md border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between"
+                      className="bg-white dark:bg-[#002b37] p-6 rounded-3xl shadow-md border border-slate-200 dark:border-primary-850 hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col justify-between"
                     >
                       <div>
                         <div className="flex items-center gap-2 mb-3">
@@ -241,7 +251,7 @@ const DebateCorner = () => {
                           setSelectedNodeId(n.id);
                           setActiveDebate({ type: "concept", id: n.id });
                         }}
-                        className="w-full bg-red-800 hover:bg-red-950 text-white font-bold py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 mt-2"
+                        className="w-full bg-primary-600 hover:bg-primary-900 text-white font-bold py-3 rounded-3xl shadow-md transition-all flex items-center justify-center gap-1 mt-2"
                       >
                         <span className="material-symbols-outlined text-sm font-bold">forum</span>
                         Tranh luận bài học
@@ -259,7 +269,7 @@ const DebateCorner = () => {
               <button
                 type="button"
                 onClick={() => setActiveDebate(null)}
-                className="inline-flex items-center gap-1 text-sm font-bold text-red-800 hover:text-red-900 transition-colors"
+                className="inline-flex items-center gap-1 text-sm font-bold text-primary-650 dark:text-primary-300 hover:text-primary-850 dark:text-primary-100 transition-colors"
               >
                 <span className="material-symbols-outlined text-base">arrow_back</span>
                 Quay lại danh sách kịch bản
@@ -268,16 +278,16 @@ const DebateCorner = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Main Interactive Chat Panel */}
-              <div className="lg:col-span-2 bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col h-[580px]">
+              <div className="lg:col-span-2 bg-white rounded-3xl shadow-md border border-gray-200 p-6 flex flex-col h-[580px]">
                 <div className="flex items-center justify-between pb-4 border-b border-gray-100 shrink-0">
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-red-800">smart_toy</span>
+                    <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">smart_toy</span>
                     <h3 className="font-bold text-base text-gray-900">
                       Đối thoại Socratic với AI triết học
                     </h3>
                   </div>
-                  <span className="bg-red-50 text-red-800 text-[10px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 uppercase tracking-wider">
-                    <span className="inline-block w-1.5 h-1.5 bg-red-600 rounded-full animate-ping" />
+                  <span className="bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 text-[10px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 uppercase tracking-wider">
+                    <span className="inline-block w-1.5 h-1.5 bg-primary-500 rounded-full animate-ping" />
                     Live Session
                   </span>
                 </div>
@@ -286,7 +296,7 @@ const DebateCorner = () => {
                 <div className="flex-1 overflow-y-auto py-4 px-2 space-y-4">
                   {loadingChat ? (
                     <div className="h-full flex items-center justify-center flex-col">
-                      <span className="material-symbols-outlined animate-spin text-red-800 text-4xl">sync</span>
+                      <span className="material-symbols-outlined animate-spin text-primary-650 dark:text-primary-300 text-4xl">sync</span>
                       <p className="text-gray-500 mt-2 text-sm font-semibold">Đang tổng hợp lịch sử đối thoại phản biện...</p>
                     </div>
                   ) : messages.length === 0 ? (
@@ -302,8 +312,8 @@ const DebateCorner = () => {
                           className={`flex gap-3 max-w-[85%] ${isAi ? "self-start text-left" : "self-end flex-row-reverse text-right ml-auto"}`}
                         >
                           <div
-                            className={`h-9 w-9 rounded-xl flex items-center justify-center text-white font-bold text-xs shrink-0 ${
-                              isAi ? "bg-red-800 shadow-sm" : "bg-indigo-900 shadow-sm"
+                            className={`h-9 w-9 rounded-3xl flex items-center justify-center text-white font-bold text-xs shrink-0 ${
+                              isAi ? "bg-primary-600 shadow-sm" : "bg-indigo-900 shadow-sm"
                             }`}
                           >
                             {isAi ? "AI" : "SV"}
@@ -313,10 +323,10 @@ const DebateCorner = () => {
                               {isAi ? "Socratic AI (Phản biện)" : (user?.name || "Sinh viên")}
                             </span>
                             <div
-                              className={`p-3.5 rounded-2xl shadow-sm text-sm leading-relaxed ${
+                              className={`p-3.5 rounded-3xl shadow-sm text-sm leading-relaxed ${
                                 isAi
                                   ? "bg-gray-100 text-gray-800 border border-gray-200 rounded-tl-sm"
-                                  : "bg-red-800 text-white border border-red-900 rounded-tr-sm"
+                                  : "bg-primary-600 text-white border border-primary-700 rounded-tr-sm"
                               }`}
                             >
                               {msg.text}
@@ -329,15 +339,15 @@ const DebateCorner = () => {
 
                   {sendingMsg && (
                     <div className="flex gap-3 max-w-[85%] self-start text-left">
-                      <div className="h-9 w-9 rounded-xl bg-red-800 text-white flex items-center justify-center font-bold text-xs animate-pulse">
+                      <div className="h-9 w-9 rounded-3xl bg-primary-600 text-white flex items-center justify-center font-bold text-xs animate-pulse">
                         AI
                       </div>
                       <div>
                         <span className="text-[10px] text-gray-400 font-bold block mb-1">
                           Socratic AI (Phản biện)
                         </span>
-                        <div className="bg-gray-100 text-gray-800 border border-gray-200 p-3.5 rounded-2xl shadow-sm text-sm flex items-center gap-2">
-                          <span className="material-symbols-outlined animate-spin text-sm text-red-800">sync</span>
+                        <div className="bg-gray-100 text-gray-800 border border-gray-200 p-3.5 rounded-3xl shadow-sm text-sm flex items-center gap-2">
+                          <span className="material-symbols-outlined animate-spin text-sm text-primary-650 dark:text-primary-300">sync</span>
                           <span className="italic text-gray-500 text-xs">AI đang phân tích lập luận biện chứng của đồng chí để phản biện...</span>
                         </div>
                       </div>
@@ -357,12 +367,12 @@ const DebateCorner = () => {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     disabled={sendingMsg || loadingChat}
-                    className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-gray-800 focus:border-red-800 focus:ring-1 focus:ring-red-800 outline-none"
+                    className="flex-1 bg-slate-50 dark:bg-[#001F28] border border-slate-200 dark:border-primary-850 rounded-3xl px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-gray-800 focus:border-primary-800 focus:ring-1 focus:ring-primary-600 outline-none"
                   />
                   <button
                     type="submit"
                     disabled={sendingMsg || loadingChat || !inputValue.trim()}
-                    className="bg-red-800 hover:bg-red-950 text-white px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl transition-all shadow-md shrink-0 flex items-center gap-1 disabled:opacity-50 font-bold text-xs sm:text-sm"
+                    className="bg-primary-600 hover:bg-primary-900 text-white px-4 py-2.5 sm:px-6 sm:py-3 rounded-3xl transition-all shadow-md shrink-0 flex items-center gap-1 disabled:opacity-50 font-bold text-xs sm:text-sm"
                   >
                     <span className="material-symbols-outlined text-sm">send</span>
                     <span className="hidden sm:inline">Tranh biện</span>
@@ -373,7 +383,7 @@ const DebateCorner = () => {
               {/* Right sidebar info */}
               <div className="space-y-6">
                 {/* Context analysis panel */}
-                <div className="bg-blue-50/70 p-6 rounded-2xl shadow-md border-l-4 border-amber-500 text-left space-y-4">
+                <div className="bg-blue-50/70 p-6 rounded-3xl shadow-md border-l-4 border-amber-500 text-left space-y-4">
                   <div className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-amber-650 font-bold">
                       psychology

@@ -12,7 +12,7 @@ export function parseInlineMarkdown(text) {
       parts.push(text.slice(lastIndex, matchIndex));
     }
     parts.push(
-      <strong key={matchIndex} className="font-bold text-red-950">
+      <strong key={matchIndex} className="font-bold text-primary-950">
         {match[1]}
       </strong>
     );
@@ -37,7 +37,7 @@ export function parseMarkdownToReact(text) {
     if (line.startsWith("# ") || /^\d+\.\s+/.test(line)) {
       const cleanText = line.startsWith("# ") ? line.slice(2) : line;
       return (
-        <h2 key={index} className="text-xl md:text-2xl font-bold text-red-950 border-b-2 border-red-200/60 pb-2 mt-8 mb-4 font-serif">
+        <h2 key={index} className="text-xl md:text-2xl font-bold text-primary-950 border-b-2 border-primary-200 dark:border-primary-800/60 pb-2 mt-8 mb-4 font-serif">
           {parseInlineMarkdown(cleanText)}
         </h2>
       );
@@ -47,7 +47,7 @@ export function parseMarkdownToReact(text) {
     if (line.startsWith("## ") || /^[a-z]\)\s+/.test(line)) {
       const cleanText = line.startsWith("## ") ? line.slice(3) : line;
       return (
-        <h3 key={index} className="text-lg md:text-xl font-bold text-red-800 mt-6 mb-3 font-serif">
+        <h3 key={index} className="text-lg md:text-xl font-bold text-primary-650 dark:text-primary-300 mt-6 mb-3 font-serif">
           {parseInlineMarkdown(cleanText)}
         </h3>
       );
@@ -58,8 +58,8 @@ export function parseMarkdownToReact(text) {
       const cleanText = line.startsWith("### ") ? line.slice(4) : line.slice(2).trim();
       return (
         <div key={index} className="flex items-start gap-2.5 mt-5 mb-3 pl-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-red-800 mt-2.5 shrink-0" />
-          <span className="text-base font-bold text-red-900">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary-600 mt-2.5 shrink-0" />
+          <span className="text-base font-bold text-primary-850 dark:text-primary-100">
             {parseInlineMarkdown(cleanText)}
           </span>
         </div>
@@ -70,7 +70,7 @@ export function parseMarkdownToReact(text) {
     if (line.startsWith("> ")) {
       const cleanText = line.slice(2).trim();
       return (
-        <blockquote key={index} className="border-l-4 border-red-800 bg-red-50/40 pl-5 pr-3 py-4 my-5 italic text-red-950 rounded-r-lg font-serif">
+        <blockquote key={index} className="border-l-4 border-primary-800 bg-primary-50 dark:bg-primary-900/35/40 pl-5 pr-3 py-4 my-5 italic text-primary-950 rounded-r-lg font-serif">
           {parseInlineMarkdown(cleanText)}
         </blockquote>
       );

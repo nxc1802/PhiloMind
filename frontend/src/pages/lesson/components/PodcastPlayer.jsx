@@ -65,13 +65,13 @@ export function PodcastPlayer({ dbPodcast }) {
 
   if (!dbPodcast) {
     return (
-      <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm text-center text-gray-500 mt-8">
+      <div className="bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 p-8 shadow-sm text-center text-gray-500 dark:text-primary-400 mt-8">
         <div className="flex flex-col items-center py-6">
           <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">
             podcasts
           </span>
-          <h4 className="font-bold text-gray-800 mb-1">Chưa có Podcast thuyết minh</h4>
-          <p className="text-gray-500 text-sm max-w-sm">
+          <h4 className="font-bold text-gray-800 dark:text-primary-150 mb-1">Chưa có Podcast thuyết minh</h4>
+          <p className="text-gray-500 dark:text-primary-400 text-sm max-w-sm">
             Bài học này chưa có bản AI Podcast thuyết minh học thuật chính thức. Ban quản trị sẽ cập nhật nội dung âm thanh trong thời gian sớm nhất.
           </p>
         </div>
@@ -118,7 +118,7 @@ export function PodcastPlayer({ dbPodcast }) {
   };
 
   return (
-    <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-fuchsia-900 rounded-2xl shadow-xl p-7 mt-8 text-white relative overflow-hidden text-left">
+    <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-fuchsia-900 rounded-3xl shadow-xl p-7 mt-8 text-white relative overflow-hidden text-left">
       <div className="absolute -right-20 -top-20 w-64 h-64 bg-fuchsia-500/20 rounded-full blur-3xl" />
       <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-indigo-500/30 rounded-full blur-3xl" />
 
@@ -137,7 +137,7 @@ export function PodcastPlayer({ dbPodcast }) {
           <img
             src={episode.cover}
             alt="cover"
-            className="h-20 w-20 rounded-xl object-cover shadow-lg shrink-0"
+            className="h-20 w-20 rounded-3xl object-cover shadow-lg shrink-0"
           />
           <div className="min-w-0">
             <h2 className="text-2xl font-bold truncate">{episode.title}</h2>
@@ -146,7 +146,7 @@ export function PodcastPlayer({ dbPodcast }) {
         </div>
 
         {/* Transcript đồng bộ */}
-        <div className="bg-black/30 backdrop-blur rounded-xl p-5 mb-5 max-h-72 overflow-y-auto scroll-smooth">
+        <div className="bg-black/30 backdrop-blur rounded-3xl p-5 mb-5 max-h-72 overflow-y-auto scroll-smooth">
           <div className="space-y-3">
             {episode.transcript.map((line, index) => (
               <button
@@ -162,7 +162,7 @@ export function PodcastPlayer({ dbPodcast }) {
         </div>
 
         {/* Thanh điều khiển */}
-        <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+        <div className="bg-white/10 backdrop-blur rounded-3xl p-4">
           <div className="flex items-center gap-2 mb-2 text-xs text-indigo-200">
             <span className="tabular-nums">{formatTime(currentTime)}</span>
             <input

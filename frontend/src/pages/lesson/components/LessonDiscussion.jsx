@@ -43,12 +43,12 @@ export function LessonDiscussion({ nodeId }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-7 mt-8 text-left">
+    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-7 mt-8 text-left">
       <div className="flex items-center gap-2 mb-4">
-        <span className="material-symbols-outlined text-red-800">
+        <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
           forum
         </span>
-        <h3 className="text-xl font-bold text-red-900">Diễn đàn Thảo luận</h3>
+        <h3 className="text-xl font-bold text-primary-850 dark:text-primary-100">Diễn đàn Thảo luận</h3>
       </div>
       
       <p className="text-sm text-gray-500 mb-6">
@@ -59,7 +59,7 @@ export function LessonDiscussion({ nodeId }) {
       <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 mb-6">
         {isLoading ? (
           <div className="text-center py-8 text-gray-400 flex items-center justify-center">
-            <span className="material-symbols-outlined animate-spin text-red-800 text-2xl mr-2">sync</span>
+            <span className="material-symbols-outlined animate-spin text-primary-650 dark:text-primary-300 text-2xl mr-2">sync</span>
             Đang tải thảo luận...
           </div>
         ) : comments.length === 0 ? (
@@ -73,9 +73,9 @@ export function LessonDiscussion({ nodeId }) {
             return (
               <div 
                 key={comment.id} 
-                className={`p-4 rounded-xl border transition-all ${
+                className={`p-4 rounded-3xl border transition-all ${
                   isAdmin 
-                    ? "bg-red-50/70 border-red-200" 
+                    ? "bg-primary-50 dark:bg-primary-900/35/70 border-primary-200 dark:border-primary-800" 
                     : "bg-gray-50 border-gray-100"
                 }`}
               >
@@ -84,11 +84,11 @@ export function LessonDiscussion({ nodeId }) {
                     <span className="material-symbols-outlined text-lg text-gray-600">
                       {isAdmin ? "shield_person" : "account_circle"}
                     </span>
-                    <span className={`text-sm font-bold ${isAdmin ? "text-red-900" : "text-gray-800"}`}>
+                    <span className={`text-sm font-bold ${isAdmin ? "text-primary-850 dark:text-primary-100" : "text-gray-800"}`}>
                       {comment.userName || "Học viên"}
                     </span>
                     {isAdmin && (
-                      <span className="bg-red-800 text-white text-[10px] uppercase font-bold px-1.5 py-0.5 rounded">
+                      <span className="bg-primary-600 text-white text-[10px] uppercase font-bold px-1.5 py-0.5 rounded">
                         Triết gia / Admin
                       </span>
                     )}
@@ -118,12 +118,12 @@ export function LessonDiscussion({ nodeId }) {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             disabled={loading}
-            className="flex-grow px-4 py-3 border border-gray-300 rounded-xl focus:border-red-800 outline-none text-sm text-gray-855 bg-gray-50/50"
+            className="flex-grow px-4 py-3 border border-gray-300 rounded-3xl focus:border-primary-800 outline-none text-sm text-gray-855 bg-gray-50/50"
           />
           <button
             type="submit"
             disabled={loading || !newComment.trim()}
-            className="bg-red-800 text-white px-5 py-3 rounded-xl font-bold hover:bg-red-900 transition-colors flex items-center justify-center gap-1 disabled:opacity-50"
+            className="bg-primary-600 text-white px-5 py-3 rounded-3xl font-bold hover:bg-primary-700 transition-colors flex items-center justify-center gap-1 disabled:opacity-50"
           >
             {loading ? (
               <span className="material-symbols-outlined animate-spin text-lg">sync</span>

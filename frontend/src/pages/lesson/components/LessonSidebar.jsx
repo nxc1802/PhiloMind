@@ -8,7 +8,7 @@ const SYLLABUS_STATUS_CONFIG = {
   },
   active: {
     icon: "play_circle",
-    className: "bg-red-50 text-red-800 border-red-300 font-semibold cursor-pointer hover:bg-red-100",
+    className: "bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 border-red-300 font-semibold cursor-pointer hover:bg-red-100",
   },
   locked: {
     icon: "lock",
@@ -31,12 +31,12 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
 
   return (
     <aside className="lg:col-span-1 text-left w-full">
-      <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden w-full">
-        <div className="bg-red-800 text-white p-5">
+      <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 overflow-hidden w-full">
+        <div className="bg-primary-600 text-white p-5">
           <h3 className="font-bold text-lg mb-3">Nội dung khóa học</h3>
-          <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+          <div className="h-2 bg-white dark:bg-[#002b37]/20 rounded-full overflow-hidden">
             <div
-              className="h-full bg-white rounded-full transition-all duration-300"
+              className="h-full bg-white dark:bg-[#002b37] rounded-full transition-all duration-300"
               style={{ width: `${progressStats.percentage}%` }}
             />
           </div>
@@ -54,7 +54,7 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
                 key={index}
                 onClick={() => handleSyllabusClick(item)}
                 type="button"
-                className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border text-left text-sm ${config.className} ${
+                className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-3xl border text-left text-sm ${config.className} ${
                   isActiveLesson ? "ring-2 ring-red-800 ring-offset-1 font-bold" : ""
                 }`}
               >
@@ -85,7 +85,7 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
           </button>
           
           {showDocsDropdown && documents.length > 1 && (
-            <div className="absolute bottom-full left-0 right-0 mb-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden divide-y divide-gray-100">
+            <div className="absolute bottom-full left-0 right-0 mb-1 bg-white dark:bg-[#002b37] border border-gray-200 rounded-3xl shadow-lg z-50 overflow-hidden divide-y divide-gray-100">
               {documents.map((doc) => (
                 <a
                   key={doc.id}
@@ -95,7 +95,7 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
                   className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 text-xs text-gray-700 transition-colors font-medium text-left"
                   onClick={() => setShowDocsDropdown(false)}
                 >
-                  <span className="material-symbols-outlined text-sm text-red-800">picture_as_pdf</span>
+                  <span className="material-symbols-outlined text-sm text-primary-650 dark:text-primary-300">picture_as_pdf</span>
                   <span className="truncate flex-1">{doc.fileName}</span>
                 </a>
               ))}

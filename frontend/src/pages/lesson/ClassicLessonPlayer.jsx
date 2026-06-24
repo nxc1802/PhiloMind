@@ -38,9 +38,9 @@ export default function ClassicLessonPlayer({
 
       {/* Gated state: Yêu cầu xem video */}
       {!isVideoWatched && !isRevisit && (
-        <div className="bg-slate-900 text-white rounded-2xl p-8 border border-red-800/20 shadow-xl text-center space-y-4">
-          <div className="inline-flex items-center justify-center h-12 w-12 bg-red-800/20 rounded-full text-red-500 border border-red-850/30">
-            <span className="material-symbols-outlined text-2xl animate-pulse text-red-500">play_circle</span>
+        <div className="bg-slate-900 text-white rounded-3xl p-8 border border-primary-800/20 shadow-xl text-center space-y-4">
+          <div className="inline-flex items-center justify-center h-12 w-12 bg-primary-600/20 rounded-full text-primary-500 border border-primary-800/30">
+            <span className="material-symbols-outlined text-2xl animate-pulse text-primary-500">play_circle</span>
           </div>
           <h4 className="text-lg font-bold">Hãy xem video để bắt đầu bài học</h4>
           <p className="text-gray-400 text-sm max-w-md mx-auto">
@@ -49,7 +49,7 @@ export default function ClassicLessonPlayer({
           <button
             type="button"
             onClick={() => setIsVideoWatched(true)}
-            className="bg-red-800 hover:bg-red-900 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md transform hover:scale-105"
+            className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-3xl font-bold transition-all shadow-md transform hover:scale-105"
           >
             Tôi đã xem xong video
           </button>
@@ -68,30 +68,30 @@ export default function ClassicLessonPlayer({
       {(isWarmupDone || isRevisit || !hasWarmups) && (
         <>
           {/* Giáo trình */}
-          <article className="bg-white rounded-2xl shadow-md border border-gray-200 p-8 space-y-6 text-left">
+          <article className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-8 space-y-6 text-left">
             <div className="flex items-center gap-2 mb-2 border-b border-gray-100 pb-3">
-              <span className="material-symbols-outlined text-red-800">menu_book</span>
-              <span className="text-xs uppercase tracking-wider text-red-800 font-bold">Giáo trình chính thức</span>
+              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">menu_book</span>
+              <span className="text-xs uppercase tracking-wider text-primary-650 dark:text-primary-300 font-bold">Giáo trình chính thức</span>
             </div>
             <div className="prose max-w-none text-gray-800">
               {parseMarkdownToReact(nodeDetails?.originalText || "")}
             </div>
 
-            <div className="bg-blue-50 rounded-xl p-6 text-center mt-8">
+            <div className="bg-blue-50 rounded-3xl p-6 text-center mt-8">
               <h4 className="font-bold text-gray-900 mb-3">Sơ đồ tư duy minh họa</h4>
               <img
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2T0oKzFgSs41_uPl7DH2lLOTYb3SxDZB_kd8GpeTjioOwrYtiKCHxMgA988xiG38bbJ6kHsbcaZ6NB5fwVhU-hX_fuk1yMDbzNQlf7hVZ55UPqUd7F8NC9JKADq4NeFoNN0S_dhU3TjhBNdbUIQGm28SveS2d-P7aiKpHJiufcGzd1wxH_9SoofRYAN_LDJsikyZtKm4WUEIn_R8NblvXegmi4LrZflrHd4Uz2wH7Y9W_TOWXBmiRAPWefJZFVQFDn-sJDNu7M6s"
                 alt="So do tu duy bài học"
-                className="w-full rounded-lg shadow-sm"
+                className="w-full rounded-3xl shadow-sm"
               />
             </div>
           </article>
 
           {/* Tóm tắt */}
-          <div className="bg-gradient-to-br from-amber-50 to-orange-50/50 rounded-2xl shadow-md border border-amber-200 p-8 space-y-5 text-left">
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50/50 rounded-3xl shadow-md border border-amber-200 p-8 space-y-5 text-left">
             <div className="flex items-center gap-2 mb-1 border-b border-amber-200/60 pb-3">
               <span className="material-symbols-outlined text-amber-700">summarize</span>
-              <h3 className="text-xl font-bold text-red-950">Tóm tắt bài học (Summary & Quick Take)</h3>
+              <h3 className="text-xl font-bold text-primary-950">Tóm tắt bài học (Summary & Quick Take)</h3>
             </div>
             
             <div className="space-y-4">
@@ -102,8 +102,8 @@ export default function ClassicLessonPlayer({
                 </p>
               </div>
 
-              <div className="bg-white p-5 rounded-xl border border-amber-200 shadow-sm mt-2">
-                <strong className="text-red-900 block mb-1 text-sm md:text-base flex items-center gap-1.5">
+              <div className="bg-white dark:bg-[#002b37] p-5 rounded-3xl border border-amber-200 shadow-sm mt-2">
+                <strong className="text-primary-850 dark:text-primary-100 block mb-1 text-sm md:text-base flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-amber-600 text-lg">lightbulb</span>
                   💡 Quick Take / Ý chính rút ra:
                 </strong>
@@ -119,7 +119,7 @@ export default function ClassicLessonPlayer({
 
           {/* Quiz (Hiển thị badge "Đã hoàn thành" hoặc quiz nếu là Revisit) */}
           {isRevisit ? (
-            <div className="bg-green-50 border border-green-200 text-green-800 p-6 rounded-2xl shadow-sm text-center space-y-3 mt-8">
+            <div className="bg-green-50 border border-green-200 text-green-800 p-6 rounded-3xl shadow-sm text-center space-y-3 mt-8">
               <h3 className="text-xl font-bold flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined text-2xl">verified</span>
                 Bài kiểm tra đã hoàn thành!
@@ -130,7 +130,7 @@ export default function ClassicLessonPlayer({
               <div className="pt-2">
                 <Link
                   to="/debate"
-                  className="bg-red-800 hover:bg-red-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow inline-flex items-center gap-1"
+                  className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-3xl text-sm font-semibold transition-colors shadow inline-flex items-center gap-1"
                 >
                   Tham gia Phản biện Socratic →
                 </Link>
@@ -160,13 +160,13 @@ export default function ClassicLessonPlayer({
         <button
           type="button"
           onClick={onBackToMindmap}
-          className="border-2 border-red-800 text-red-800 px-5 py-3 rounded-lg font-bold hover:bg-red-800 hover:text-white transition-colors"
+          className="border-2 border-primary-800 text-primary-650 dark:text-primary-300 px-5 py-3 rounded-3xl font-bold hover:bg-primary-600 hover:text-white transition-colors"
         >
           ← Sơ đồ tư duy
         </button>
         <Link
           to="/debate"
-          className="bg-red-800 text-white px-5 py-3 rounded-lg font-bold hover:bg-red-900 transition-colors flex items-center gap-1"
+          className="bg-primary-600 text-white px-5 py-3 rounded-3xl font-bold hover:bg-primary-700 transition-colors flex items-center gap-1"
         >
           Phản biện AI Socratic →
         </Link>

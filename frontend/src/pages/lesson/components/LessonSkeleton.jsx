@@ -7,7 +7,7 @@ export function LessonSkeleton() {
         {/* Title area skeleton */}
         <div className="space-y-3">
           <div className="h-6 w-32 bg-gray-250 rounded-full" />
-          <div className="h-10 w-2/3 bg-gray-350 rounded-lg" />
+          <div className="h-10 w-2/3 bg-gray-350 rounded-3xl" />
           <div className="flex gap-2">
             <div className="h-5 w-20 bg-gray-200 rounded-full" />
             <div className="h-5 w-24 bg-gray-200 rounded-full" />
@@ -16,10 +16,10 @@ export function LessonSkeleton() {
         </div>
 
         {/* Video placeholder skeleton */}
-        <div className="w-full aspect-video bg-gray-300 rounded-2xl" />
+        <div className="w-full aspect-video bg-gray-300 rounded-3xl" />
 
         {/* Text body skeleton */}
-        <div className="bg-white rounded-2xl border border-gray-150 p-8 space-y-4">
+        <div className="bg-white dark:bg-[#002b37] rounded-3xl border border-gray-150 p-8 space-y-4">
           <div className="h-4 w-1/4 bg-gray-250 rounded mb-6" />
           <div className="h-4 w-full bg-gray-200 rounded" />
           <div className="h-4 w-5/6 bg-gray-200 rounded" />
@@ -31,7 +31,7 @@ export function LessonSkeleton() {
 
       {/* Sidebar skeleton */}
       <div className="lg:col-span-1">
-        <div className="bg-white rounded-2xl border border-gray-150 overflow-hidden space-y-4 pb-4">
+        <div className="bg-white dark:bg-[#002b37] rounded-3xl border border-gray-150 overflow-hidden space-y-4 pb-4">
           <div className="bg-gray-300 p-5 space-y-3">
             <div className="h-5 w-1/2 bg-gray-200 rounded" />
             <div className="h-2 w-full bg-gray-200 rounded-full" />

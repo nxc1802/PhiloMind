@@ -2,12 +2,14 @@ import { Injectable, NotFoundException, BadRequestException, Inject, forwardRef 
 import { PrismaService } from '../database/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
+import { SupabaseService } from '../supabase/supabase.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private prisma: PrismaService,
     @Inject(forwardRef(() => JwtService)) private jwtService: JwtService,
+    private supabaseService: SupabaseService,
   ) {}
 
   async findById(id: string) {
@@ -135,6 +137,60 @@ export class UsersService {
       return { user, token };
     } catch (err: any) {
       throw new BadRequestException(`Google login failed: ${err.message}`);
+    }
+  }
+
+  async supabaseLogin(token: string) {
+    const supabaseClient = this.supabaseService.getClient();
+
+    // If Supabase is not initialized (e.g. running in mock mode)
+    if (!supabaseClient) {
+      // In local development or mock mode, we accept a mock token
+      if (token === 'mock-supabase-jwt-token-string') {
+        const email = 'philosopher.beginner@gmail.com';
+        const name = 'Tân thủ Triết học';
+        
+        let user = await this.prisma.user.findUnique({ where: { email } });
+        if (!user) {
+          user = await this.prisma.user.create({
+            data: {
+              email,
+              name,
+              role: 'student',
+              streak: 1,
+            },
+          });
+        }
+        const jwtToken = this.generateToken(user);
+        return { user, token: jwtToken };
+      }
+      throw new BadRequestException('Supabase URL/Key missing and invalid mock token');
+    }
+
+    try {
+      const { data: { user: sbUser }, error } = await supabaseClient.auth.getUser(token);
+      if (error || !sbUser) {
+        throw new BadRequestException(`Invalid Supabase token: ${error?.message || 'User not found'}`);
+      }
+
+      const email = sbUser.email.trim().toLowerCase();
+      const name = sbUser.user_metadata?.full_name || email.split('@')[0];
+
+      let user = await this.prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        user = await this.prisma.user.create({
+          data: {
+            email,
+            name,
+            role: 'student',
+            streak: 1,
+          },
+        });
+      }
+      const jwtToken = this.generateToken(user);
+      return { user, token: jwtToken };
+    } catch (err: any) {
+      throw new BadRequestException(`Supabase auth failed: ${err.message}`);
     }
   }
 

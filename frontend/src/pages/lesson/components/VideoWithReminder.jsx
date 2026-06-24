@@ -22,7 +22,7 @@ export function VideoWithReminder({ dbVideoUrl, isRevisit, onWatched }) {
 
   return (
     <div className="text-left">
-      <div className="relative rounded-2xl overflow-hidden shadow-md">
+      <div className="relative rounded-3xl overflow-hidden shadow-md">
         {!isPlaying ? (
           <>
             <img
@@ -37,7 +37,7 @@ export function VideoWithReminder({ dbVideoUrl, isRevisit, onWatched }) {
               type="button"
               onClick={() => setIsPlaying(true)}
               aria-label="Phat video bai hoc"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full bg-red-800/90 hover:bg-red-900 text-white flex items-center justify-center transition-transform hover:scale-110"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full bg-primary-600/90 hover:bg-primary-700 text-white flex items-center justify-center transition-transform hover:scale-110"
             >
               <span className="material-symbols-outlined text-4xl">
                 play_arrow
@@ -60,7 +60,7 @@ export function VideoWithReminder({ dbVideoUrl, isRevisit, onWatched }) {
       {isPlaying && !hasWatched && !isRevisit && (
         <button
           onClick={handleWatchedClick}
-          className="mt-3 bg-red-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-900 text-sm flex items-center gap-1"
+          className="mt-3 bg-primary-600 text-white px-4 py-2 rounded-3xl font-semibold hover:bg-primary-700 text-sm flex items-center gap-1"
         >
           <span className="material-symbols-outlined align-middle text-base">
             check
@@ -69,7 +69,7 @@ export function VideoWithReminder({ dbVideoUrl, isRevisit, onWatched }) {
         </button>
       )}
       {(hasWatched || isRevisit) && (
-        <div className="mt-3 bg-green-50 border border-green-200 rounded-xl p-4 text-green-800 flex items-center gap-2">
+        <div className="mt-3 bg-green-50 border border-green-200 rounded-3xl p-4 text-green-800 flex items-center gap-2">
           <span className="material-symbols-outlined">check_circle</span>
           <span className="font-semibold text-sm">Tuyệt vời! Đồng chí đã hoàn thành việc xem video bài học bổ trợ này.</span>
         </div>

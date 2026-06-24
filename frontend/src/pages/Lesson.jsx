@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, Suspense, lazy, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
+import OnboardingGuide from "../components/OnboardingGuide";
 import LessonMindmap from "../components/LessonMindmap";
 import { useToast } from "../components/Toast";
 import { useAuth } from "../context/AuthContext";
@@ -29,9 +30,6 @@ const Lesson = () => {
   const { data: journeyData } = useJourney(user);
   const dbJourney = useMemo(() => journeyData?.journey || [], [journeyData]);
 
-
-
-
   // Match active lesson node
   const activeLesson = useMemo(() => {
     if (!lessonSlug || dbJourney.length === 0) return null;
@@ -49,7 +47,6 @@ const Lesson = () => {
 
   // Complete node mutation
   const completeNodeMutation = useCompleteNodeMutation();
-
 
   // Flattened syllabus list with real DB progress statuses
   const flatSyllabusItems = useMemo(() => {
@@ -119,12 +116,13 @@ const Lesson = () => {
     const mainChapters = dbJourney.filter(chap => !chap.parentChapterId);
     const subChapters = dbJourney.filter(chap => chap.parentChapterId);
     
+    // Updated color gradients to use custom cyan/blue theme scale
     const colors = [
-      "from-red-700 to-red-900",
-      "from-amber-700 to-amber-900",
-      "from-emerald-700 to-emerald-900",
-      "from-blue-700 to-blue-900",
-      "from-purple-700 to-purple-900"
+      "from-primary-750 to-primary-900",
+      "from-[#00677F] to-[#003543]",
+      "from-[#00829F] to-[#004E60]",
+      "from-[#009DC1] to-[#00677F]",
+      "from-[#00BAE3] to-[#00829F]"
     ];
 
     return mainChapters.map((chap, idx) => {
@@ -218,25 +216,35 @@ const Lesson = () => {
 
   return (
     <PageShell activeKey="lessons">
-      <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto">
+      <OnboardingGuide
+        tabKey="lesson"
+        steps={[
+          "Tương tác với Sơ đồ (Mindmap): Giữ chuột trái và kéo để di chuyển bản đồ tư duy; cuộn chuột để thu phóng (zoom) phóng to/thu nhỏ các chương.",
+          "Chọn Bài học (Concept Node): Click vào một ô trên sơ đồ bài học để mở bảng thông tin chi tiết ở cạnh phải màn hình.",
+          "Bài học & Podcast AI: Trong bảng thông tin, bạn có thể chọn đọc lý thuyết tóm tắt, hoặc bật \"Conversational Podcast\" để nghe hai học giả thảo luận sinh động về chủ đề.",
+          "Kiểm tra kiến thức: Hoàn thành các câu hỏi ôn tập nhanh cuối bài học để tích lũy điểm streak và mở khóa các bài học tiếp theo."
+        ]}
+      />
+
+      <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto text-left transition-colors duration-300 bg-slate-50 dark:bg-[#001F28] rounded-3xl min-h-screen">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
+        <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-primary-350 mb-6 flex-wrap">
           <span>Trang chủ</span>
           <span>›</span>
-          <strong className={activeLesson ? "" : "text-red-800"}>
+          <strong className={activeLesson ? "text-slate-650 dark:text-primary-300" : "text-primary-800 dark:text-primary-300"}>
             Bài học
           </strong>
           {activeLesson && (
             <>
               <span>›</span>
-              <strong className="text-red-800">{activeLesson.title}</strong>
+              <strong className="text-primary-800 dark:text-primary-300">{activeLesson.title}</strong>
             </>
           )}
         </div>
 
         {/* Mindmap view if no active lesson */}
         {!activeLesson && (
-          <div className="mb-10">
+          <div className="mb-10 rounded-3xl overflow-hidden shadow-sm border border-slate-200 dark:border-primary-850">
             <LessonMindmap
               chapters={mindmapChapters}
               activeSlug={lessonSlug}
@@ -253,35 +261,36 @@ const Lesson = () => {
               <button
                 type="button"
                 onClick={handleBackToMindmap}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-red-800 hover:text-red-900 mb-5"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-850 dark:text-primary-300 dark:hover:text-primary-100 mb-5"
               >
                 <span className="material-symbols-outlined text-base">
                   arrow_back
                 </span>
                 Quay lại sơ đồ bài học
               </button>
+              
               <header className="mb-8 text-left">
-                <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1.5 rounded-full text-xs font-bold mb-3">
-                  <span className="material-symbols-outlined text-base">
+                <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/35 border border-primary-150 dark:border-primary-800 text-primary-800 dark:text-primary-250 px-4 py-2 rounded-full text-xs font-bold mb-3 shadow-sm">
+                  <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-300">
                     bookmark
                   </span>
                   Đang học: {activeLesson.title}
                 </div>
-                <h1 className="font-bold text-3xl md:text-4xl text-red-900 mb-3">
+                <h1 className="font-bold text-3xl md:text-4xl text-primary-800 dark:text-primary-100 mb-3" style={{ fontFamily: '"Libre Caslon Text", serif' }}>
                   {activeLesson.title}
                 </h1>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                  <span className="bg-primary-100 dark:bg-primary-900/35 text-primary-750 dark:text-primary-300 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">
                     Triết học
                   </span>
-                  <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                  <span className="bg-slate-150 dark:bg-primary-900/10 text-slate-700 dark:text-primary-350 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
                     <span className="material-symbols-outlined text-sm">
                       schedule
                     </span>
                     {currentNodeDetails?.timeToRead || "10 phút"}
                   </span>
-                  <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase">
-                    Độ khó: {currentNodeDetails?.difficulty || "Medium"}
+                  <span className="bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">
+                    Độ khó: {currentNodeDetails?.difficulty || "Trung bình"}
                   </span>
                 </div>
               </header>

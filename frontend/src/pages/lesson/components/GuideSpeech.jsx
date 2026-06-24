@@ -72,11 +72,11 @@ export function SpeechBubble({ who, text, animate, onTypingDone }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-bold text-sm text-gray-900">{character.name}</span>
+          <span className="font-bold text-sm text-gray-900 dark:text-primary-100">{character.name}</span>
           <span className="text-[11px] text-gray-400">{character.role}</span>
         </div>
         <div
-          className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm text-gray-800 leading-relaxed cursor-pointer"
+          className="bg-white dark:bg-[#002b37] border border-gray-200 rounded-3xl rounded-tl-sm px-4 py-3 shadow-sm text-gray-800 dark:text-primary-150 leading-relaxed cursor-pointer"
           onClick={() => !done && finishNow()}
         >
           {shown}
@@ -143,7 +143,7 @@ export default function DialogueSequence({ lines, onComplete, ctaLabel = "Tiếp
               type="button"
               onClick={showNextLine}
               disabled={!currentTypingDone || isLastVisible}
-              className="inline-flex items-center gap-1.5 bg-gray-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-1.5 bg-gray-800 text-white px-5 py-2.5 rounded-3xl font-semibold hover:bg-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Tiếp
               <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -153,7 +153,7 @@ export default function DialogueSequence({ lines, onComplete, ctaLabel = "Tiếp
           <button
             type="button"
             onClick={onComplete}
-            className="inline-flex items-center gap-1.5 bg-red-800 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-red-900 transition-colors j-bubble-in"
+            className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-6 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors j-bubble-in"
           >
             {ctaLabel}
             <span className="material-symbols-outlined text-base">arrow_forward</span>

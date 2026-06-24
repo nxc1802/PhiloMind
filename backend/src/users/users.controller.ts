@@ -36,6 +36,12 @@ class GoogleLoginDto {
   idToken: string;
 }
 
+class SupabaseLoginDto {
+  @IsString()
+  @IsNotEmpty()
+  token: string;
+}
+
 class UpdateUserDto {
   @IsString()
   @IsOptional()
@@ -83,6 +89,13 @@ export class UsersController {
   @ApiOperation({ summary: 'Authenticate with Google ID Token' })
   async googleLogin(@Body() dto: GoogleLoginDto) {
     return this.usersService.googleLogin(dto.idToken);
+  }
+
+  @Post('auth/supabase')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Authenticate with Supabase JWT Token' })
+  async supabaseLogin(@Body() dto: SupabaseLoginDto) {
+    return this.usersService.supabaseLogin(dto.token);
   }
 
   @Get('users')

@@ -27,6 +27,10 @@ export class SupabaseService {
     }
   }
 
+  getClient() {
+    return this.supabase;
+  }
+
   /**
    * Uploads file to Supabase storage bucket, falls back to local virtual storage URL.
    */

@@ -93,7 +93,7 @@ export default function MCQQuiz() {
     return (
       <PageShell activeKey="practice">
         <div className="text-center py-20">
-          <span className="material-symbols-outlined animate-spin text-5xl text-red-800">sync</span>
+          <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
           <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị đề thi trắc nghiệm...</p>
         </div>
       </PageShell>
@@ -104,8 +104,8 @@ export default function MCQQuiz() {
     return (
       <PageShell activeKey="practice">
         <div className="px-6 md:px-12 py-16 max-w-4xl mx-auto text-center">
-          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-12 text-center border border-gray-200 shadow-xl max-w-2xl mx-auto animate-fadeIn">
-            <div className="h-16 w-16 bg-red-50 text-red-800 rounded-2xl flex items-center justify-center shadow-md mx-auto mb-6">
+          <div className="bg-white/80 backdrop-blur-md rounded-3xl p-12 text-center border border-gray-200 shadow-xl max-w-2xl mx-auto animate-fadeIn">
+            <div className="h-16 w-16 bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 rounded-3xl flex items-center justify-center shadow-md mx-auto mb-6">
               <span className="material-symbols-outlined text-3xl">hourglass_empty</span>
             </div>
             <h3 className="font-bold text-gray-900 text-2xl mb-2 font-serif">Đang cập nhật</h3>
@@ -114,7 +114,7 @@ export default function MCQQuiz() {
             </p>
             <Link
               to="/practice"
-              className="inline-block mt-8 bg-red-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-red-900 shadow-md hover:shadow-lg transition-all"
+              className="inline-block mt-8 bg-primary-600 text-white px-8 py-3 rounded-3xl font-bold hover:bg-primary-700 shadow-md hover:shadow-lg transition-all"
             >
               ← Quay lại trang thực hành
             </Link>
@@ -140,20 +140,20 @@ export default function MCQQuiz() {
         {!isFinished ? (
           <div className="space-y-6 max-w-3xl mx-auto">
             {/* Status bar */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 flex justify-between items-center text-sm">
+            <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-200 flex justify-between items-center text-sm">
               <span className="text-gray-500 font-bold">
                 Câu hỏi {currentIndex + 1} / {quiz.questions.length}
               </span>
               <div className="flex items-center gap-3">
                 <span className="text-gray-500">Tiến trình:</span>
                 <div className="w-32 bg-gray-200 rounded-full h-2">
-                  <div className="bg-red-800 h-2 rounded-full transition-all" style={{ width: `${progressPercent}%` }} />
+                  <div className="bg-primary-600 h-2 rounded-full transition-all" style={{ width: `${progressPercent}%` }} />
                 </div>
               </div>
             </div>
 
             {/* Question card */}
-            <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-8 space-y-6">
+            <div className="bg-white rounded-3xl shadow-md border border-gray-200 p-8 space-y-6">
               <h3 className="font-bold text-xl text-gray-900 leading-relaxed font-serif">
                 {currentQuestion.question}
               </h3>
@@ -164,7 +164,7 @@ export default function MCQQuiz() {
                   const isSelected = selectedOption === idx;
                   const isCorrect = idx === currentQuestion.correctIndex;
                   
-                  let optionClass = "border-gray-200 hover:border-red-800 hover:bg-red-50/20";
+                  let optionClass = "border-gray-200 hover:border-primary-800 hover:bg-primary-50/20 dark:bg-primary-900/10";
                   if (isChapterQuiz && isAnswered) {
                     if (isCorrect) {
                       optionClass = "border-emerald-500 bg-emerald-50 text-emerald-800 font-bold";
@@ -174,7 +174,7 @@ export default function MCQQuiz() {
                       optionClass = "border-gray-200 opacity-60";
                     }
                   } else if (isSelected) {
-                    optionClass = "border-red-800 bg-red-50 text-red-800 font-bold ring-2 ring-red-800";
+                    optionClass = "border-primary-800 bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 font-bold ring-2 ring-primary-600";
                   }
 
                   return (
@@ -182,12 +182,12 @@ export default function MCQQuiz() {
                       key={idx}
                       onClick={() => handleOptionClick(idx)}
                       disabled={isChapterQuiz && isAnswered}
-                      className={`w-full text-left p-4 rounded-xl border-2 transition-all flex items-start gap-3 text-sm md:text-base ${optionClass}`}
+                      className={`w-full text-left p-4 rounded-3xl border-2 transition-all flex items-start gap-3 text-sm md:text-base ${optionClass}`}
                     >
                       <span className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
                         isChapterQuiz && isAnswered && isCorrect ? "bg-emerald-500 text-white" :
                         isChapterQuiz && isAnswered && isSelected ? "bg-rose-500 text-white" :
-                        isSelected ? "bg-red-800 text-white" : "bg-gray-100 text-gray-600"
+                        isSelected ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-600"
                       }`}>
                         {String.fromCharCode(65 + idx)}
                       </span>
@@ -199,7 +199,7 @@ export default function MCQQuiz() {
 
               {/* Explanation (Shown immediately ONLY in Chapter Quiz mode) */}
               {isChapterQuiz && isAnswered && (
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4 animate-fadeIn">
+                <div className="bg-amber-50 border border-amber-200 rounded-3xl p-4 mt-4 animate-fadeIn">
                   <p className="font-bold text-amber-900 flex items-center gap-1.5 mb-1.5">
                     <span className="material-symbols-outlined text-lg">lightbulb</span>
                     Giải thích đáp án:
@@ -215,14 +215,14 @@ export default function MCQQuiz() {
                     <button
                       onClick={handleConfirmAnswer}
                       disabled={selectedOption === null}
-                      className="bg-red-800 text-white font-bold px-8 py-3 rounded-xl shadow-md hover:bg-red-950 transition-colors disabled:opacity-50"
+                      className="bg-primary-600 text-white font-bold px-8 py-3 rounded-3xl shadow-md hover:bg-primary-900 transition-colors disabled:opacity-50"
                     >
                       Xác nhận đáp án
                     </button>
                   ) : (
                     <button
                       onClick={handleNextQuestion}
-                      className="bg-red-800 text-white font-bold px-8 py-3 rounded-xl shadow-md hover:bg-red-950 transition-colors"
+                      className="bg-primary-600 text-white font-bold px-8 py-3 rounded-3xl shadow-md hover:bg-primary-900 transition-colors"
                     >
                       {currentIndex < quiz.questions.length - 1 ? "Câu tiếp theo →" : "Xem kết quả"}
                     </button>
@@ -231,7 +231,7 @@ export default function MCQQuiz() {
                   <button
                     onClick={handleNextQuestion}
                     disabled={selectedOption === null}
-                    className="bg-red-800 text-white font-bold px-8 py-3 rounded-xl shadow-md hover:bg-red-950 transition-colors disabled:opacity-50"
+                    className="bg-primary-600 text-white font-bold px-8 py-3 rounded-3xl shadow-md hover:bg-primary-900 transition-colors disabled:opacity-50"
                   >
                     {currentIndex < quiz.questions.length - 1 ? "Câu tiếp theo →" : "Xem kết quả"}
                   </button>
@@ -243,28 +243,28 @@ export default function MCQQuiz() {
           /* Finished Screen */
           <div className="space-y-8 max-w-3xl mx-auto">
             {/* Victory Score Board */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 text-center space-y-6 max-w-xl mx-auto">
+            <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8 text-center space-y-6 max-w-xl mx-auto">
               <span className="material-symbols-outlined text-7xl text-amber-500 animate-bounce">emoji_events</span>
               <h2 className="text-3xl font-extrabold text-gray-900">Kết quả bài làm</h2>
               <p className="text-gray-500 text-sm">
-                Đồng chí đã trả lời chính xác <strong className="text-red-850 text-lg">{score}</strong> trên tổng số <strong className="text-gray-800 text-lg">{quiz.questions.length}</strong> câu hỏi.
+                Đồng chí đã trả lời chính xác <strong className="text-primary-800 dark:text-primary-250 text-lg">{score}</strong> trên tổng số <strong className="text-gray-800 text-lg">{quiz.questions.length}</strong> câu hỏi.
               </p>
 
-              <div className="bg-slate-50 border border-gray-200 rounded-2xl p-5 max-w-xs mx-auto">
+              <div className="bg-slate-50 dark:bg-[#001F28] border border-gray-200 rounded-3xl p-5 max-w-xs mx-auto">
                 <span className="text-xs uppercase tracking-widest text-gray-500 font-bold block mb-1">Tỷ lệ chính xác</span>
-                <h4 className="text-3xl font-black text-red-850">{Math.round((score / quiz.questions.length) * 100)}%</h4>
+                <h4 className="text-3xl font-black text-primary-800 dark:text-primary-250">{Math.round((score / quiz.questions.length) * 100)}%</h4>
               </div>
 
               <div className="flex justify-center gap-3 pt-2">
                 <Link
                   to="/practice"
-                  className="border-2 border-red-800 text-red-800 font-bold px-5 py-2.5 rounded-xl hover:bg-red-50 transition-colors text-sm"
+                  className="border-2 border-primary-800 text-primary-650 dark:text-primary-300 font-bold px-5 py-2.5 rounded-3xl hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors text-sm"
                 >
                   Trở lại Thư viện
                 </Link>
                 <button
                   onClick={restartQuiz}
-                  className="bg-red-800 hover:bg-red-950 text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition-all text-sm"
+                  className="bg-primary-600 hover:bg-primary-900 text-white font-bold px-5 py-2.5 rounded-3xl shadow-md transition-all text-sm"
                 >
                   Làm lại bài
                 </button>
@@ -274,7 +274,7 @@ export default function MCQQuiz() {
             {/* Detailed Questions Review for Mock Exam (Thi thử) */}
             {!isChapterQuiz && (
               <div className="space-y-4 pt-4">
-                <h3 className="font-bold text-xl text-gray-900 border-l-4 border-red-800 pl-3 mb-6">
+                <h3 className="font-bold text-xl text-gray-900 border-l-4 border-primary-800 pl-3 mb-6">
                   Chi tiết bài thi thử & Giải thích học thuật
                 </h3>
                 <div className="space-y-6">
@@ -283,10 +283,10 @@ export default function MCQQuiz() {
                     const isCorrect = chosenIdx === q.correctIndex;
 
                     return (
-                      <div key={qIdx} className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm space-y-4 text-left">
+                      <div key={qIdx} className="bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 p-6 md:p-8 shadow-sm space-y-4 text-left">
                         <div className="flex items-center gap-2">
                           <span className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs ${
-                            isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                            isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800 dark:text-red-300"
                           }`}>
                             {qIdx + 1}
                           </span>
@@ -312,7 +312,7 @@ export default function MCQQuiz() {
                             return (
                               <div
                                 key={optIdx}
-                                className={`p-3.5 rounded-xl border-2 flex items-start gap-3 text-sm md:text-base ${optStyle}`}
+                                className={`p-3.5 rounded-3xl border-2 flex items-start gap-3 text-sm md:text-base ${optStyle}`}
                               >
                                 <span className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
                                   isSelectedOpt && isCorrectOpt ? "bg-emerald-500 text-white" :
@@ -328,7 +328,7 @@ export default function MCQQuiz() {
                         </div>
 
                         {/* Explanation Box */}
-                        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-2">
+                        <div className="bg-amber-50 border border-amber-200 rounded-3xl p-4 mt-2">
                           <p className="font-bold text-amber-900 flex items-center gap-1.5 mb-1 text-sm">
                             <span className="material-symbols-outlined text-base">lightbulb</span>
                             Đọc thêm & Giải thích lý luận:

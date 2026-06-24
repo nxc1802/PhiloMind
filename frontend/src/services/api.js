@@ -62,6 +62,15 @@ export const api = {
       return handleResponse(response);
     },
 
+    supabaseLogin: async (token) => {
+      const response = await fetch(`${API_BASE_URL}/auth/supabase`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
+      return handleResponse(response);
+    },
+
     getUser: async (userId) => {
       const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
         headers: getHeaders()
