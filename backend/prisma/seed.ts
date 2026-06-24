@@ -1,10 +1,29 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
+import * as path from 'path';
+import * as fs from 'fs';
+import { createClient } from '@supabase/supabase-js';
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log('Seeding PhiloMind philosophy sanctuary database with Vietnamese Marxist-Leninist Philosophy...');
+
+  const seedingDataPath = path.join(__dirname, 'data', 'seeding_data.json');
+  const seedingData = JSON.parse(fs.readFileSync(seedingDataPath, 'utf8'));
+
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+  let supabaseClient: any = null;
+
+  if (supabaseUrl && supabaseUrl !== 'https://your-supabase-project.supabase.co' && supabaseKey) {
+    try {
+      supabaseClient = createClient(supabaseUrl, supabaseKey);
+      console.log('Supabase client initialized for seeding storage uploads.');
+    } catch (e: any) {
+      console.warn('Failed to initialize Supabase client for storage uploads:', e.message);
+    }
+  }
 
   const userId = 'default-user-id';
   const adminId = 'default-admin-id';
@@ -360,6 +379,7 @@ async function main() {
 
   const createdCh1Nodes = [];
   for (const n of ch1Nodes) {
+    const isNode2 = n.title === 'Khái niệm triết học';
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -371,11 +391,11 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter1.id,
-        lessonType: n.lessonType || 'classic',
-        storyIntro: n.storyIntro ? (n.storyIntro as any) : undefined,
-        lessonContents: n.lessonContents ? (n.lessonContents as any) : undefined,
-        minigame: n.minigame ? (n.minigame as any) : undefined,
-        finalSummary: n.finalSummary ? (n.finalSummary as any) : undefined,
+        lessonType: isNode2 ? 'adventure' : (n.lessonType || 'classic'),
+        storyIntro: isNode2 ? seedingData.lesson_1b.storyIntro : (n.storyIntro ? (n.storyIntro as any) : undefined),
+        lessonContents: isNode2 ? seedingData.lesson_1b.lessonContents : (n.lessonContents ? (n.lessonContents as any) : undefined),
+        minigame: isNode2 ? seedingData.lesson_1b.minigame : (n.minigame ? (n.minigame as any) : undefined),
+        finalSummary: isNode2 ? seedingData.lesson_1b.finalSummary : (n.finalSummary ? (n.finalSummary as any) : undefined),
       }
     });
     createdCh1Nodes.push(node);
@@ -633,37 +653,176 @@ async function main() {
   }
 
   // ==================== SEED: MCQ QUIZZES & MOCK EXAMS ====================
-  if (ch1FirstNode) {
+  if (createdCh1Nodes[0]) {
     await prisma.quiz.create({
       data: {
-        nodeId: ch1FirstNode.id,
+        nodeId: createdCh1Nodes[0].id,
         type: 'mcq',
         title: 'Trắc nghiệm Chương 1: Triết học và vai trò của triết học',
-        description: 'Bài trắc nghiệm 10 câu hỏi tổng hợp kiến thức Chương 1 từ prompts.txt.',
-        questions: promptsQuestions.map(item => ({
-          question: item.question,
-          options: item.options,
-          correctIndex: item.correctIndex,
-          explanation: item.explanation
-        })) as any
+        description: 'Bài trắc nghiệm ôn tập tổng hợp kiến thức Chương 1.',
+        questions: seedingData.ch1_quizzes as any
       }
     });
   }
 
+  if (createdCh2Nodes[0]) {
+    await prisma.quiz.create({
+      data: {
+        nodeId: createdCh2Nodes[0].id,
+        type: 'mcq',
+        title: 'Trắc nghiệm Chương 2: Chủ nghĩa duy vật biện chứng',
+        description: 'Bài trắc nghiệm ôn tập tổng hợp kiến thức Chương 2.',
+        questions: seedingData.ch2_quizzes as any
+      }
+    });
+  }
+
+  if (createdCh3Nodes[0]) {
+    await prisma.quiz.create({
+      data: {
+        nodeId: createdCh3Nodes[0].id,
+        type: 'mcq',
+        title: 'Trắc nghiệm Chương 3: Chủ nghĩa duy vật lịch sử',
+        description: 'Bài trắc nghiệm ôn tập tổng hợp kiến thức Chương 3.',
+        questions: seedingData.ch3_quizzes as any
+      }
+    });
+  }
+
+  // Combined Mock Exam
   await prisma.quiz.create({
     data: {
       nodeId: null,
       type: 'mcq',
       title: 'Đề thi thử học thuật số 1: Tổng hợp Triết học Mác - Lênin',
       description: 'Đề thi thử mô phỏng kỳ thi chính thức. Không có kết quả lập tức sau mỗi câu, điểm số và giải thích chi tiết sẽ hiển thị sau khi hoàn thành toàn bộ bài thi.',
-      questions: promptsQuestions.map(item => ({
-        question: item.question,
-        options: item.options,
-        correctIndex: item.correctIndex,
-        explanation: item.explanation
-      })) as any
+      questions: seedingData.mock_exam as any
     }
   });
+
+  // ==================== SEED: PDF REFERENCE DOCUMENTS ====================
+  console.log('Seeding PDF reference documents...');
+  const docFiles = [
+    {
+      fileName: 'Book_full.pdf',
+      title: 'Giáo trình Triết học Mác - Lênin (Bản đầy đủ)',
+      description: 'Toàn bộ nội dung giáo trình chính thức của Bộ Giáo dục và Đào tạo.',
+    },
+    {
+      fileName: 'Chuong_1.pdf',
+      title: 'Giáo trình Chương 1: Triết học và vai trò của triết học',
+      description: 'Tài liệu học tập chi tiết cho Chương 1.',
+    },
+    {
+      fileName: 'Chuong_2.pdf',
+      title: 'Giáo trình Chương 2: Chủ nghĩa duy vật biện chứng',
+      description: 'Tài liệu học tập chi tiết cho Chương 2.',
+    },
+    {
+      fileName: 'Chuong_3.pdf',
+      title: 'Giáo trình Chương 3: Chủ nghĩa duy vật lịch sử',
+      description: 'Tài liệu học tập chi tiết cho Chương 3.',
+    },
+    {
+      fileName: 'sum_chuong1_dai.pdf',
+      title: 'Tóm tắt chi tiết Chương 1',
+      description: 'Bản tóm tắt hệ thống kiến thức trọng tâm Chương 1.',
+    },
+    {
+      fileName: 'sum_chuong2_dai.pdf',
+      title: 'Tóm tắt chi tiết Chương 2',
+      description: 'Bản tóm tắt hệ thống kiến thức trọng tâm Chương 2.',
+    },
+    {
+      fileName: 'sum_chuong3_dai.pdf',
+      title: 'Tóm tắt chi tiết Chương 3',
+      description: 'Bản tóm tắt hệ thống kiến thức trọng tâm Chương 3.',
+    }
+  ];
+
+  const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+
+  // Create documents bucket if not exist
+  if (supabaseClient) {
+    try {
+      const { data: bucketData, error: bucketError } = await supabaseClient.storage.createBucket('documents', {
+        public: true,
+        fileSizeLimit: 52428800 // 50MB
+      });
+      if (bucketError) {
+        if (!bucketError.message.includes('already exists') && !bucketError.message.includes('Already exists')) {
+          console.warn('Failed to create bucket "documents":', bucketError.message);
+        } else {
+          console.log('Supabase storage bucket "documents" already exists.');
+        }
+      } else {
+        console.log('Created Supabase storage bucket "documents" with public access.');
+      }
+    } catch (e: any) {
+      console.warn('Error verifying/creating bucket "documents":', e.message);
+    }
+  }
+
+  for (const doc of docFiles) {
+    const srcPath = path.join('/Volumes/WorkSpace/Project/PhiloMind/data', doc.fileName);
+    if (!fs.existsSync(srcPath)) {
+      console.warn(`Source PDF file not found: ${srcPath}`);
+      continue;
+    }
+
+    // 1. Copy to local public uploads
+    const destPath = path.join(uploadsDir, doc.fileName);
+    try {
+      fs.copyFileSync(srcPath, destPath);
+      console.log(`Copied ${doc.fileName} to local uploads folder.`);
+    } catch (err: any) {
+      console.warn(`Failed to copy ${doc.fileName} to local uploads: ${err.message}`);
+    }
+
+    // 2. Default relative public URL
+    let fileUrl = `/public/uploads/${doc.fileName}`;
+
+    // 3. Try uploading to Supabase Storage if active
+    if (supabaseClient) {
+      try {
+        const fileBuffer = fs.readFileSync(srcPath);
+        const { data, error } = await supabaseClient.storage
+          .from('documents')
+          .upload(doc.fileName, fileBuffer, {
+            contentType: 'application/pdf',
+            upsert: true
+          });
+
+        if (error) throw error;
+
+        const { data: urlData } = supabaseClient.storage
+          .from('documents')
+          .getPublicUrl(doc.fileName);
+
+        if (urlData?.publicUrl) {
+          fileUrl = urlData.publicUrl;
+          console.log(`Uploaded ${doc.fileName} to Supabase Storage: ${fileUrl}`);
+        }
+      } catch (e: any) {
+        console.warn(`Supabase storage upload failed for ${doc.fileName}: ${e.message}. Falling back to local URL.`);
+      }
+    }
+
+    // 4. Create Document record in DB
+    await prisma.document.create({
+      data: {
+        fileName: doc.fileName,
+        fileUrl: fileUrl,
+        courseId: course.id,
+        status: 'completed',
+        title: doc.title,
+        description: doc.description
+      }
+    });
+  }
 
 
   // ==================== NEW SEED: DEBATE TOPICS / SCENARIOS ====================

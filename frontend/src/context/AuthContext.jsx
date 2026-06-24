@@ -82,7 +82,7 @@ export function AuthProvider({ children }) {
   const loginWithGoogle = useCallback(async () => {
     try {
       localStorage.setItem("auth_provider", "google");
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: window.location.origin,
