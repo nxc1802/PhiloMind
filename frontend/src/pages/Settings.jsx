@@ -51,29 +51,29 @@ export default function Settings() {
 
       <div className="px-6 md:px-12 py-10 max-w-3xl mx-auto space-y-6">
         {/* Account */}
-        <section className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6">
-          <h2 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white dark:bg-[#1E293B] rounded-3xl shadow-md border border-blue-100 dark:border-slate-700/70 p-6">
+          <h2 className="font-bold text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
               person
             </span>
             Hồ sơ
           </h2>
           <label className="block">
-            <span className="text-sm font-semibold text-gray-700 mb-1 block">
+            <span className="text-sm font-semibold text-gray-700 dark:text-slate-200 mb-1 block">
               Tên hiển thị
             </span>
             <input
               type="text"
               value={settings.displayName}
               onChange={(e) => updateField("displayName", e.target.value)}
-              className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-3xl focus:border-primary-800 outline-none"
+              className="w-full px-4 py-2.5 border-2 border-blue-100 dark:border-slate-600 bg-white dark:bg-slate-900/60 text-slate-900 dark:text-white rounded-3xl focus:border-primary-600 dark:focus:border-primary-300 outline-none"
             />
           </label>
         </section>
 
         {/* Notifications */}
-        <section className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 space-y-4">
-          <h2 className="font-bold text-lg text-gray-900 mb-2 flex items-center gap-2">
+        <section className="bg-white dark:bg-[#1E293B] rounded-3xl shadow-md border border-blue-100 dark:border-slate-700/70 p-6 space-y-4">
+          <h2 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex items-center gap-2">
             <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
               notifications
             </span>
@@ -89,10 +89,10 @@ export default function Settings() {
 
           <label className="flex items-center justify-between gap-4 py-2">
             <div>
-              <div className="font-semibold text-gray-800">
+              <div className="font-semibold text-gray-800 dark:text-slate-100">
                 Giờ nhắc học hàng ngày
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-500 dark:text-slate-400">
                 Hệ thống sẽ ping nhắc bạn vào giờ này
               </div>
             </div>
@@ -100,14 +100,14 @@ export default function Settings() {
               type="time"
               value={settings.studyReminderTime}
               onChange={(e) => updateField("studyReminderTime", e.target.value)}
-              className="px-3 py-2 border-2 border-gray-200 rounded-3xl focus:border-primary-800 outline-none"
+              className="px-3 py-2 border-2 border-blue-100 dark:border-slate-600 bg-white dark:bg-slate-900/60 text-slate-900 dark:text-white rounded-3xl focus:border-primary-600 dark:focus:border-primary-300 outline-none"
             />
           </label>
         </section>
 
         {/* Playback */}
-        <section className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 space-y-4">
-          <h2 className="font-bold text-lg text-gray-900 mb-2 flex items-center gap-2">
+        <section className="bg-white dark:bg-[#1E293B] rounded-3xl shadow-md border border-blue-100 dark:border-slate-700/70 p-6 space-y-4">
+          <h2 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex items-center gap-2">
             <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
               play_circle
             </span>
@@ -134,7 +134,7 @@ export default function Settings() {
           <button
             type="button"
             onClick={handleReset}
-            className="text-sm text-gray-500 underline hover:text-primary-650 dark:text-primary-300"
+            className="text-sm text-gray-500 dark:text-slate-400 underline hover:text-primary-650 dark:hover:text-primary-300"
           >
             Khôi phục mặc định
           </button>
@@ -166,8 +166,8 @@ function ToggleRow({ label, description, checked, onChange }) {
   return (
     <label className="flex items-center justify-between gap-4 py-2 cursor-pointer">
       <div>
-        <div className="font-semibold text-gray-800">{label}</div>
-        <div className="text-sm text-gray-500">{description}</div>
+        <div className="font-semibold text-gray-800 dark:text-slate-100">{label}</div>
+        <div className="text-sm text-gray-500 dark:text-slate-400">{description}</div>
       </div>
       <button
         type="button"
@@ -179,7 +179,7 @@ function ToggleRow({ label, description, checked, onChange }) {
         }`}
       >
         <span
-          className={`absolute top-1 left-1 h-5 w-5 rounded-full bg-white dark:bg-[#002b37] shadow transition-transform ${
+          className={`absolute top-1 left-1 h-5 w-5 rounded-full bg-white dark:bg-slate-100 shadow transition-transform ${
             checked ? "translate-x-5" : "translate-x-0"
           }`}
         />

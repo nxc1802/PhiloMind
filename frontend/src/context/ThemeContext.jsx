@@ -1,47 +1,61 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
 
 const ThemeContext = createContext(null);
 const THEME_STORAGE_KEY = "philomind_theme";
+const VALID_THEMES = ["light", "dark", "system"];
+
+function getSystemThemeQuery() {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return null;
+  }
+  return window.matchMedia("(prefers-color-scheme: dark)");
+}
+
+function getStoredTheme() {
+  if (typeof window === "undefined") {
+    return "system";
+  }
+
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  return VALID_THEMES.includes(savedTheme) ? savedTheme : "system";
+}
+
+function resolveTheme(theme) {
+  if (theme === "system") {
+    return getSystemThemeQuery()?.matches ? "dark" : "light";
+  }
+  return theme === "dark" ? "dark" : "light";
+}
+
+function applyThemeToDocument(theme) {
+  if (typeof document === "undefined") {
+    return resolveTheme(theme);
+  }
+
+  const resolvedTheme = resolveTheme(theme);
+  const root = document.documentElement;
+  root.classList.toggle("dark", resolvedTheme === "dark");
+  root.dataset.theme = resolvedTheme;
+  root.style.colorScheme = resolvedTheme;
+  return resolvedTheme;
+}
 
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => {
-    return localStorage.getItem(THEME_STORAGE_KEY) || "system";
-  });
+  const [theme, setThemeState] = useState(getStoredTheme);
+  const [resolvedTheme, setResolvedTheme] = useState(() => resolveTheme(getStoredTheme()));
 
   const setTheme = (newTheme) => {
-    if (newTheme === "light" || newTheme === "dark" || newTheme === "system") {
-      localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+    if (VALID_THEMES.includes(newTheme)) {
+      window.localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+      setResolvedTheme(applyThemeToDocument(newTheme));
       setThemeState(newTheme);
     }
   };
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-    const getSystemThemeQuery = () => {
-      if (typeof window.matchMedia !== "function") {
-        return null;
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)");
-    };
-    
-    const applyTheme = () => {
-      let isDark = false;
-      if (theme === "system") {
-        isDark = Boolean(getSystemThemeQuery()?.matches);
-      } else {
-        isDark = theme === "dark";
-      }
-
-      if (isDark) {
-        root.classList.add("dark");
-      } else {
-        root.classList.remove("dark");
-      }
-    };
+  useLayoutEffect(() => {
+    const applyTheme = () => setResolvedTheme(applyThemeToDocument(theme));
 
     applyTheme();
-
-    // Listen for system theme changes if set to system
     if (theme === "system") {
       const mediaQuery = getSystemThemeQuery();
       const listener = () => applyTheme();
@@ -66,8 +80,23 @@ export function ThemeProvider({ children }) {
     }
   }, [theme]);
 
+  useEffect(() => {
+    const syncStoredTheme = (event) => {
+      if (event.key !== THEME_STORAGE_KEY) {
+        return;
+      }
+
+      const nextTheme = VALID_THEMES.includes(event.newValue) ? event.newValue : "system";
+      setThemeState(nextTheme);
+      setResolvedTheme(applyThemeToDocument(nextTheme));
+    };
+
+    window.addEventListener("storage", syncStoredTheme);
+    return () => window.removeEventListener("storage", syncStoredTheme);
+  }, []);
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

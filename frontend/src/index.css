@@ -7,35 +7,38 @@
 @layer base {
   /* CSS custom properties for surface colors — easy to maintain */
   :root {
-    --surface:           #ffffff;
-    --surface-secondary: #f8fafc;
+    --surface:           #f8fbff;
+    --surface-secondary: #f1f6fd;
     --surface-elevated:  #ffffff;
-    --border-color:      #e2e8f0;
+    --border-color:      #dbe7f7;
     --text-primary:      #0f172a;
     --text-secondary:    #475569;
-    --accent:            #0f766e;
+    --text-muted:        #64748b;
+    --accent:            #2563eb;
+    --accent-soft:       #eff6ff;
   }
 
   .dark {
-    --surface:           #0D1117;
-    --surface-secondary: #161B22;
-    --surface-elevated:  #1C2230;
-    --border-color:      rgba(148, 163, 184, 0.18);
-    --text-primary:      #f1f5f9;
-    --text-secondary:    #94a3b8;
-    --accent:            #5eead4;
+    --surface:           #0f172a;
+    --surface-secondary: #111827;
+    --surface-elevated:  #1e293b;
+    --border-color:      rgba(148, 163, 184, 0.24);
+    --text-primary:      #f8fafc;
+    --text-secondary:    #cbd5e1;
+    --text-muted:        #94a3b8;
+    --accent:            #93c5fd;
+    --accent-soft:       rgba(37, 99, 235, 0.16);
   }
 
   body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Light mode: TRUE white background */
-    @apply bg-white text-slate-900 transition-colors duration-300 font-sans;
+    @apply bg-surface text-slate-900 transition-colors duration-300 font-sans;
   }
 
   .dark body {
-    @apply bg-[#0D1117] text-slate-100;
+    @apply bg-surface-dark text-slate-100;
   }
 
   code {
@@ -68,27 +71,84 @@
 }
 
 /* Compatibility pass for older JSX classes that used blue-green page surfaces. */
+/* Compatibility pass for older JSX classes that used blue-green page surfaces. */
 .dark .dark\:bg-\[\#001F28\] {
-  background-color: #0D1117 !important;
+  background-color: #0f172a !important;
 }
 .dark .dark\:bg-\[\#001F28\]\/50 {
-  background-color: rgba(13, 17, 23, 0.5) !important;
+  background-color: rgba(15, 23, 42, 0.72) !important;
 }
 .dark .dark\:bg-\[\#002b37\] {
-  background-color: #1C2230 !important;
+  background-color: #1e293b !important;
+}
+.dark .dark\:bg-\[\#002b37\]\/80 {
+  background-color: rgba(30, 41, 59, 0.8) !important;
 }
 .dark .dark\:bg-\[\#002b37\]\/95 {
-  background-color: rgba(28, 34, 48, 0.95) !important;
+  background-color: rgba(30, 41, 59, 0.95) !important;
 }
 .dark .dark\:bg-\[\#002b37\]\/25 {
-  background-color: rgba(28, 34, 48, 0.25) !important;
+  background-color: rgba(30, 41, 59, 0.25) !important;
 }
 .dark .dark\:bg-\[\#002b37\]\/20 {
-  background-color: rgba(28, 34, 48, 0.2) !important;
+  background-color: rgba(30, 41, 59, 0.2) !important;
 }
 .dark .dark\:bg-\[\#002b37\]\/15 {
-  background-color: rgba(28, 34, 48, 0.15) !important;
+  background-color: rgba(30, 41, 59, 0.15) !important;
 }
 .dark .dark\:bg-\[\#002b37\]\/12 {
-  background-color: rgba(28, 34, 48, 0.12) !important;
+  background-color: rgba(30, 41, 59, 0.12) !important;
+}
+
+/* Dark-mode safety net for legacy classes that forgot a dark:text or dark:bg pair. */
+.dark .bg-white:not([class*="dark:bg-"]) {
+  background-color: var(--surface-elevated) !important;
+}
+.dark .bg-slate-50:not([class*="dark:bg-"]),
+.dark .bg-gray-50:not([class*="dark:bg-"]) {
+  background-color: var(--surface-secondary) !important;
+}
+.dark .border-gray-200:not([class*="dark:border-"]),
+.dark .border-slate-200:not([class*="dark:border-"]),
+.dark .border-gray-150:not([class*="dark:border-"]) {
+  border-color: var(--border-color) !important;
+}
+.dark .text-gray-900:not([class*="dark:text-"]),
+.dark .text-gray-800:not([class*="dark:text-"]),
+.dark .text-slate-900:not([class*="dark:text-"]),
+.dark .text-primary-950:not([class*="dark:text-"]),
+.dark .text-primary-900:not([class*="dark:text-"]),
+.dark .text-primary-850:not([class*="dark:text-"]),
+.dark .text-primary-800:not([class*="dark:text-"]) {
+  color: var(--text-primary) !important;
+}
+.dark .text-gray-700:not([class*="dark:text-"]),
+.dark .text-gray-650:not([class*="dark:text-"]),
+.dark .text-gray-600:not([class*="dark:text-"]),
+.dark .text-slate-800:not([class*="dark:text-"]),
+.dark .text-slate-700:not([class*="dark:text-"]),
+.dark .text-slate-650:not([class*="dark:text-"]) {
+  color: var(--text-secondary) !important;
+}
+.dark .text-gray-500:not([class*="dark:text-"]),
+.dark .text-gray-400:not([class*="dark:text-"]),
+.dark .text-slate-500:not([class*="dark:text-"]),
+.dark .text-slate-450:not([class*="dark:text-"]),
+.dark .text-slate-400:not([class*="dark:text-"]) {
+  color: var(--text-muted) !important;
+}
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--surface-elevated);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-muted);
+}
+.dark .prose,
+.dark .prose :where(p, li, strong, h1, h2, h3, h4, blockquote) {
+  color: var(--text-primary);
 }
