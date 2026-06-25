@@ -68,7 +68,7 @@ export function PageHero({ eyebrow, icon, title, subtitle, children }) {
             )}
           </div>
         )}
-        <h1 className="font-bold text-3xl md:text-4xl mb-3 text-slate-900 dark:text-white" style={{ fontFamily: '"Libre Caslon Text", serif' }}>{title}</h1>
+        <h1 className="font-bold text-3xl md:text-4xl mb-3 text-slate-900 dark:text-white">{title}</h1>
         {subtitle && <p className="text-slate-500 dark:text-slate-400 max-w-2xl font-light leading-relaxed">{subtitle}</p>}
         {children}
       </div>

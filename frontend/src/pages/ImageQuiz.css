@@ -1,7 +1,6 @@
 body {
   margin: 0;
-  font-family: "Hanken Grotesk",
-    sans-serif;
+  font-family: "Be Vietnam Pro", Inter, system-ui, sans-serif;
   background: #f7f7fb;
 }
 
@@ -32,8 +31,7 @@ body {
   font-size: 34px;
   font-weight: 700;
   color: #570013;
-  font-family: "Libre Caslon Text",
-    serif;
+  font-family: "Be Vietnam Pro", Inter, system-ui, sans-serif;
 }
 
 .imagequiz-nav {

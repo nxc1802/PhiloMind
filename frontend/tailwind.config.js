@@ -70,7 +70,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['"Be Vietnam Pro"', 'Inter', 'system-ui', 'sans-serif'],
-        serif: ['"Libre Caslon Text"', 'Georgia', 'serif'],
+        serif: ['"Be Vietnam Pro"', 'Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         'xl':  '1rem',

@@ -276,7 +276,7 @@ const Lesson = () => {
                   </span>
                   Đang học: {activeLesson.title}
                 </div>
-                <h1 className="font-bold text-3xl md:text-4xl text-primary-800 dark:text-primary-100 mb-3" style={{ fontFamily: '"Libre Caslon Text", serif' }}>
+                <h1 className="font-bold text-3xl md:text-4xl text-primary-800 dark:text-primary-100 mb-3">
                   {activeLesson.title}
                 </h1>
                 <div className="flex flex-wrap gap-2">

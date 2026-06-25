@@ -1,6 +1,7 @@
 .matching-page {
   min-height: 100vh;
-  background: #f5f4f7;
+  background: var(--surface);
+  color: var(--text-primary);
   padding: 40px;
 }
 
@@ -16,19 +17,19 @@
 }
 
 .matching-subtitle {
-  color: #800020;
+  color: #1d4ed8;
   font-size: 12px;
   font-weight: bold;
 }
 
 .matching-header h1 {
   font-size: 48px;
-  color: #570013;
+  color: var(--text-primary);
   margin: 10px 0;
 }
 
 .matching-desc {
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .matching-stats {
@@ -37,7 +38,8 @@
 }
 
 .matching-stats div {
-  background: white;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-color);
   padding: 20px;
   border-radius: 14px;
   min-width: 120px;
@@ -52,12 +54,13 @@
 
 .matching-column h4 {
   margin-bottom: 18px;
-  color: #570013;
+  color: #1d4ed8;
 }
 
 .matching-card {
-  background: white;
-  border: 1px solid #e5dede;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   border-radius: 14px;
   padding: 20px;
   margin-bottom: 18px;
@@ -66,7 +69,7 @@
 }
 
 .matching-card:hover {
-  border-color: #800020;
+  border-color: #2563eb;
   transform: translateY(-2px);
 }
 
@@ -86,9 +89,9 @@
   height: 46px;
   padding: 0 22px;
   border-radius: 12px;
-  border: 1px solid #800020;
-  background: white;
-  color: #800020;
+  border: 1px solid #2563eb;
+  background: var(--surface-elevated);
+  color: #1d4ed8;
   font-weight: bold;
 }
 
@@ -97,9 +100,15 @@
   padding: 0 22px;
   border-radius: 12px;
   border: none;
-  background: #800020;
+  background: #2563eb;
   color: white;
   font-weight: bold;
+}
+
+.dark .matching-subtitle,
+.dark .matching-column h4,
+.dark .outline-btn {
+  color: #dbeafe;
 }
 
 /* Premium Shake Animation for incorrect matches */

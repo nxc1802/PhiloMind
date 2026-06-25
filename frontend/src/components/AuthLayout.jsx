@@ -17,7 +17,7 @@ export default function AuthLayout({ icon, title, subtitle, children, footer }) 
             <div className="inline-flex h-14 w-14 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 items-center justify-center mb-3">
               <span className="material-symbols-outlined text-3xl">{icon}</span>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-primary-100" style={{ fontFamily: '"Libre Caslon Text", serif' }}>{title}</h1>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-primary-100">{title}</h1>
             <p className="text-slate-550 dark:text-primary-300 text-sm mt-1">{subtitle}</p>
           </div>
 

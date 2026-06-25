@@ -116,7 +116,7 @@ function ChapterMap({ chapter, activeSlug, onOpenLesson, progressMap }) {
             <span className="inline-block bg-white/20 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md mb-3">
               {chapter.title}
             </span>
-            <h3 className="font-bold text-xl leading-tight mb-3" style={{ fontFamily: '"Libre Caslon Text", serif' }}>
+            <h3 className="font-bold text-xl leading-tight mb-3">
               {chapter.subtitle}
             </h3>
             <div className="flex items-center gap-2 text-sm text-white/80">

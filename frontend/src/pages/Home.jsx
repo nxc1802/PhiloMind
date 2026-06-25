@@ -102,7 +102,7 @@ export default function Home() {
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800/50 text-primary-700 dark:text-primary-300 font-bold text-xs uppercase tracking-wider">
               <span className="material-symbols-outlined text-xs">bolt</span> Sanctuary Học Thuật AI
             </span>
-            <h1 className="font-extrabold text-4xl md:text-5xl tracking-tight leading-tight text-slate-950 dark:text-white" style={{ fontFamily: '"Libre Caslon Text", serif' }}>
+            <h1 className="font-extrabold text-4xl md:text-5xl tracking-tight leading-tight text-slate-950 dark:text-white">
               PhiloMind
             </h1>
             <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">

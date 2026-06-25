@@ -32,7 +32,7 @@ export default function OnboardingGuide({ tabKey, steps }) {
       <div className="bg-white dark:bg-[#002b37] rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 dark:border-primary-850 relative animate-scaleUp">
         
         {/* Header */}
-        <h3 className="text-xl font-bold text-primary-800 dark:text-primary-200 flex items-center gap-2 mb-3" style={{ fontFamily: '"Libre Caslon Text", serif' }}>
+        <h3 className="text-xl font-bold text-primary-800 dark:text-primary-200 flex items-center gap-2 mb-3">
           <span className="material-symbols-outlined text-2xl text-primary-600 dark:text-primary-300">explore</span>
           Hướng dẫn nhanh
         </h3>
