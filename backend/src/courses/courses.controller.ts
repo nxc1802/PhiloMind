@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Param, Query, Patch, Put, Delete, UseInterceptors, UploadedFile, BadRequestException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Patch, Put, Delete, UseInterceptors, UploadedFile, BadRequestException, UseGuards, Req } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
 
 class CreateCourseDto {
   @IsString()
@@ -41,7 +43,7 @@ class UploadDocDto {
 
 class UpdateProgressDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   userId: string;
 
   @IsString()
@@ -271,7 +273,7 @@ class UpdatePodcastDto {
 
 @ApiTags('Courses & Roadmaps')
 @Controller()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class CoursesController {
   constructor(private coursesService: CoursesService) {}
@@ -279,6 +281,7 @@ export class CoursesController {
   // ==================== COURSES ====================
 
   @Post('courses')
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new course workspace' })
   async createCourse(@Body() dto: CreateCourseDto) {
     return this.coursesService.createCourse(dto.userId, dto.title, dto.description);
@@ -291,24 +294,28 @@ export class CoursesController {
   }
 
   @Get('courses/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Retrieve single course details (Admin)' })
   async getCourseById(@Param('id') id: string) {
     return this.coursesService.getCourseById(id);
   }
 
   @Put('courses/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update course details (Admin)' })
   async updateCourse(@Param('id') id: string, @Body() dto: UpdateCourseDto) {
     return this.coursesService.updateCourse(id, dto.title, dto.description);
   }
 
   @Delete('courses/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a course (Admin)' })
   async deleteCourse(@Param('id') id: string) {
     return this.coursesService.deleteCourse(id);
   }
 
   @Post('courses/:id/upload')
+  @Roles('admin')
   @ApiOperation({ summary: 'Upload textbook parsed content to generate roadmap mindmap structure' })
   async uploadDocument(@Param('id') courseId: string, @Body() dto: UploadDocDto) {
     return this.coursesService.processDocumentUpload(courseId, dto.fileName, dto.content);
@@ -317,6 +324,7 @@ export class CoursesController {
   // ==================== CHAPTERS ====================
 
   @Post('chapters')
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new chapter (Admin)' })
   async createChapter(@Body() dto: CreateChapterDto) {
     return this.coursesService.createChapter(dto.title, dto.orderIndex, dto.courseId, dto.parentChapterId);
@@ -329,18 +337,21 @@ export class CoursesController {
   }
 
   @Get('chapters/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Get single chapter details (Admin)' })
   async getChapterById(@Param('id') id: string) {
     return this.coursesService.getChapterById(id);
   }
 
   @Put('chapters/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update a chapter (Admin)' })
   async updateChapter(@Param('id') id: string, @Body() dto: UpdateChapterDto) {
     return this.coursesService.updateChapter(id, dto.title, dto.orderIndex, dto.parentChapterId);
   }
 
   @Delete('chapters/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a chapter (Admin)' })
   async deleteChapter(@Param('id') id: string) {
     return this.coursesService.deleteChapter(id);
@@ -350,29 +361,29 @@ export class CoursesController {
 
   @Get('courses/:id/journey')
   @ApiOperation({ summary: 'Get course journey roadmap nodes' })
-  async getCourseJourney(@Param('id') courseId: string, @Query('userId') userId: string) {
-    return this.coursesService.getCourseJourney(courseId, userId);
+  async getCourseJourney(@Param('id') courseId: string, @Req() req: any) {
+    return this.coursesService.getCourseJourney(courseId, req.user.id);
   }
 
   @Get('courses/nodes/:nodeId')
   @ApiOperation({ summary: 'Retrieve comprehensive learn detail for a concept node' })
-  async getNodeDetails(@Param('nodeId') nodeId: string, @Query('userId') userId: string) {
-    return this.coursesService.getNodeDetails(nodeId, userId);
+  async getNodeDetails(@Param('nodeId') nodeId: string, @Req() req: any) {
+    return this.coursesService.getNodeDetails(nodeId, req.user.id);
   }
 
   @Get('courses/nodes/:nodeId/core')
   @ApiOperation({ summary: 'Retrieve core progress and type info for a concept node' })
-  async getNodeCore(@Param('nodeId') nodeId: string, @Query('userId') userId: string) {
-    return this.coursesService.getNodeCore(nodeId, userId);
+  async getNodeCore(@Param('nodeId') nodeId: string, @Req() req: any) {
+    return this.coursesService.getNodeCore(nodeId, req.user.id);
   }
 
   @Post('courses/nodes/:nodeId/complete')
   @ApiOperation({ summary: 'Mark node as completed and auto-unlock next node' })
   async completeNode(
     @Param('nodeId') nodeId: string,
-    @Body() dto: { userId: string },
+    @Req() req: any,
   ) {
-    return this.coursesService.completeNode(nodeId, dto.userId);
+    return this.coursesService.completeNode(nodeId, req.user.id);
   }
 
   @Patch('courses/nodes/:nodeId/progress')
@@ -380,9 +391,10 @@ export class CoursesController {
   async updateNodeProgress(
     @Param('nodeId') nodeId: string,
     @Body() dto: UpdateProgressDto,
+    @Req() req: any,
   ) {
     return this.coursesService.updateNodeProgress(
-      dto.userId,
+      req.user.id,
       nodeId,
       dto.status,
       dto.lessonCompleted,
@@ -393,24 +405,28 @@ export class CoursesController {
   }
 
   @Post('nodes')
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new concept node (Admin)' })
   async createNode(@Body() dto: CreateNodeDto) {
     return this.coursesService.createNode(dto);
   }
 
   @Get('nodes')
+  @Roles('admin')
   @ApiOperation({ summary: 'List all concept nodes (Admin)' })
   async getNodes(@Query('chapterId') chapterId?: string) {
     return this.coursesService.getNodes(chapterId);
   }
 
   @Put('nodes/:nodeId')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update a concept node (Admin)' })
   async updateNode(@Param('nodeId') nodeId: string, @Body() dto: UpdateNodeDto) {
     return this.coursesService.updateNode(nodeId, dto);
   }
 
   @Delete('nodes/:nodeId')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a concept node (Admin)' })
   async deleteNode(@Param('nodeId') nodeId: string) {
     return this.coursesService.deleteNode(nodeId);
@@ -419,36 +435,42 @@ export class CoursesController {
   // ==================== PODCASTS ====================
 
   @Get('podcasts')
+  @Roles('admin')
   @ApiOperation({ summary: 'List all podcasts (Admin)' })
   async getPodcasts() {
     return this.coursesService.getPodcasts();
   }
 
   @Get('podcasts/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Get single podcast details (Admin)' })
   async getPodcastById(@Param('id') id: string) {
     return this.coursesService.getPodcastById(id);
   }
 
   @Post('podcasts')
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new podcast manually (Admin)' })
   async createPodcast(@Body() dto: CreatePodcastDto) {
     return this.coursesService.createPodcast(dto);
   }
 
   @Put('podcasts/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Update a podcast (Admin)' })
   async updatePodcast(@Param('id') id: string, @Body() dto: UpdatePodcastDto) {
     return this.coursesService.updatePodcast(id, dto);
   }
 
   @Delete('podcasts/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a podcast (Admin)' })
   async deletePodcast(@Param('id') id: string) {
     return this.coursesService.deletePodcast(id);
   }
 
   @Post('podcasts/synthesize')
+  @Roles('admin')
   @ApiOperation({ summary: 'Synthesize script text via TTS and return public audio URL for preview' })
   async synthesizePodcast(@Body() dto: SynthesizePodcastDto) {
     return this.coursesService.synthesizePodcast(dto.nodeId, dto.scriptText);
@@ -457,6 +479,7 @@ export class CoursesController {
   // ==================== WARMUPS ====================
 
   @Post('nodes/:nodeId/warmups')
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new warmup for a concept node (Admin)' })
   async createWarmup(@Param('nodeId') nodeId: string, @Body() dto: CreateWarmupDto) {
     return this.coursesService.createWarmup(nodeId, dto);
@@ -469,6 +492,7 @@ export class CoursesController {
   }
 
   @Delete('warmups/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a warmup by ID (Admin)' })
   async deleteWarmup(@Param('id') id: string) {
     return this.coursesService.deleteWarmup(id);
@@ -481,8 +505,10 @@ export class CoursesController {
   async createComment(
     @Param('nodeId') nodeId: string,
     @Body() dto: { userId: string; content: string; role?: string },
+    @Req() req: any,
   ) {
-    return this.coursesService.createComment(nodeId, dto.userId, dto.content, dto.role);
+    const role = req.user.role === 'admin' ? 'admin' : 'student';
+    return this.coursesService.createComment(nodeId, req.user.id, dto.content, role);
   }
 
   @Get('courses/nodes/:nodeId/comments')
@@ -494,6 +520,7 @@ export class CoursesController {
   // ==================== BUCKET FILE UPLOADER ====================
 
   @Post('files/upload')
+  @Roles('admin')
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({ summary: 'Upload an arbitrary file to the storage bucket' })
   async uploadFile(@UploadedFile() file: any) {
@@ -506,6 +533,7 @@ export class CoursesController {
   // ==================== PDF REFERENCE DOCUMENTS CRUD ====================
 
   @Post('documents')
+  @Roles('admin')
   @ApiOperation({ summary: 'Save a PDF document reference' })
   async createDocument(
     @Body() dto: { courseId: string; fileName: string; fileUrl: string; status?: string; title?: string; description?: string },
@@ -520,6 +548,7 @@ export class CoursesController {
   }
 
   @Delete('documents/:id')
+  @Roles('admin')
   @ApiOperation({ summary: 'Delete a PDF reference document by ID' })
   async deleteDocument(@Param('id') id: string) {
     return this.coursesService.deleteDocument(id);

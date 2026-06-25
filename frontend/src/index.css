@@ -5,16 +5,37 @@
 @tailwind utilities;
 
 @layer base {
+  /* CSS custom properties for surface colors — easy to maintain */
+  :root {
+    --surface:           #ffffff;
+    --surface-secondary: #f8fafc;
+    --surface-elevated:  #ffffff;
+    --border-color:      #e2e8f0;
+    --text-primary:      #0f172a;
+    --text-secondary:    #475569;
+    --accent:            #0f766e;
+  }
+
+  .dark {
+    --surface:           #0D1117;
+    --surface-secondary: #161B22;
+    --surface-elevated:  #1C2230;
+    --border-color:      rgba(148, 163, 184, 0.18);
+    --text-primary:      #f1f5f9;
+    --text-secondary:    #94a3b8;
+    --accent:            #5eead4;
+  }
+
   body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    @apply bg-slate-50 text-slate-900 transition-colors duration-300 font-sans;
+    /* Light mode: TRUE white background */
+    @apply bg-white text-slate-900 transition-colors duration-300 font-sans;
   }
 
-  /* Dark mode class-based override */
   .dark body {
-    @apply bg-[#0b0f19] text-slate-100;
+    @apply bg-[#0D1117] text-slate-100;
   }
 
   code {
@@ -22,10 +43,10 @@
   }
 }
 
-/* Custom scrollbar to match the premium theme */
+/* Custom scrollbar — thin, uses primary accent */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -33,35 +54,41 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary-300/50 rounded-full transition-colors duration-200 hover:bg-primary-400/50;
-  .dark & {
-    @apply bg-primary-800/50 hover:bg-primary-700/50;
-  }
+  @apply bg-primary-200 rounded-full transition-colors duration-200;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-400;
 }
 
-/* Overrides for hardcoded dark backgrounds in JSX files to reduce eye strain and give a premium feel */
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-primary-800/60;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-700;
+}
+
+/* Compatibility pass for older JSX classes that used blue-green page surfaces. */
 .dark .dark\:bg-\[\#001F28\] {
-  background-color: #0b0f19 !important; /* Premium deep dark navy */
+  background-color: #0D1117 !important;
 }
 .dark .dark\:bg-\[\#001F28\]\/50 {
-  background-color: rgba(11, 15, 25, 0.5) !important;
+  background-color: rgba(13, 17, 23, 0.5) !important;
 }
 .dark .dark\:bg-\[\#002b37\] {
-  background-color: #070a12 !important; /* Even darker for sidebar contrast */
+  background-color: #1C2230 !important;
 }
-.dark .dark\:bg-primary-900\/10 {
-  background-color: rgba(15, 23, 42, 0.1) !important; /* Slate-900/10 */
+.dark .dark\:bg-\[\#002b37\]\/95 {
+  background-color: rgba(28, 34, 48, 0.95) !important;
 }
-.dark .dark\:bg-primary-900\/30 {
-  background-color: rgba(15, 23, 42, 0.3) !important; /* Slate-900/30 */
+.dark .dark\:bg-\[\#002b37\]\/25 {
+  background-color: rgba(28, 34, 48, 0.25) !important;
 }
-.dark .dark\:bg-primary-900\/35 {
-  background-color: rgba(15, 23, 42, 0.35) !important; /* Slate-900/35 */
+.dark .dark\:bg-\[\#002b37\]\/20 {
+  background-color: rgba(28, 34, 48, 0.2) !important;
 }
-.dark .dark\:bg-primary-900\/40 {
-  background-color: rgba(15, 23, 42, 0.4) !important; /* Slate-900/40 */
+.dark .dark\:bg-\[\#002b37\]\/15 {
+  background-color: rgba(28, 34, 48, 0.15) !important;
 }
-.dark .dark\:bg-primary-900\/15 {
-  background-color: rgba(15, 23, 42, 0.15) !important; /* Slate-900/15 */
+.dark .dark\:bg-\[\#002b37\]\/12 {
+  background-color: rgba(28, 34, 48, 0.12) !important;
 }
-

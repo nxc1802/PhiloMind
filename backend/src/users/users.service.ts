@@ -12,18 +12,13 @@ export class UsersService {
     private supabaseService: SupabaseService,
   ) {}
 
-  async findById(id: string) {
-    // Emergency Hardcoded Admin Fallback (in case database seeding is not possible)
-    if (id === 'default-admin-id') {
-      return {
-        id: 'default-admin-id',
-        email: 'admin@philomind.local',
-        name: 'Admin PhiloMind',
-        role: 'admin',
-        streak: 1,
-      };
-    }
+  private withoutPassword(user: any) {
+    if (!user) return user;
+    const { password, ...safeUser } = user;
+    return safeUser;
+  }
 
+  async findById(id: string) {
     const user = await this.prisma.user.findUnique({
       where: { id },
       include: {
@@ -32,7 +27,7 @@ export class UsersService {
       },
     });
     if (!user) throw new NotFoundException('User not found');
-    return user;
+    return this.withoutPassword(user);
   }
 
   async findByEmail(email: string) {
@@ -69,24 +64,11 @@ export class UsersService {
     });
 
     const token = this.generateToken(user);
-    return { user, token };
+    return { user: this.withoutPassword(user), token };
   }
 
   async login(email: string, password?: string) {
     const normalizedEmail = email.trim().toLowerCase();
-
-    // Emergency Hardcoded Admin Fallback (in case database seeding is not possible)
-    if (normalizedEmail === 'admin@philomind.local' && password === 'adminpassword') {
-      const fallbackAdmin = {
-        id: 'default-admin-id',
-        email: 'admin@philomind.local',
-        name: 'Admin PhiloMind',
-        role: 'admin',
-        streak: 1,
-      };
-      const token = this.generateToken(fallbackAdmin);
-      return { user: fallbackAdmin, token };
-    }
 
     const user = await this.findByEmail(normalizedEmail);
     if (!user) {
@@ -103,7 +85,7 @@ export class UsersService {
     }
 
     const token = this.generateToken(user);
-    return { user, token };
+    return { user: this.withoutPassword(user), token };
   }
 
   async googleLogin(idToken: string) {
@@ -134,7 +116,7 @@ export class UsersService {
         });
       }
       const token = this.generateToken(user);
-      return { user, token };
+      return { user: this.withoutPassword(user), token };
     } catch (err: any) {
       throw new BadRequestException(`Google login failed: ${err.message}`);
     }
@@ -162,7 +144,7 @@ export class UsersService {
           });
         }
         const jwtToken = this.generateToken(user);
-        return { user, token: jwtToken };
+        return { user: this.withoutPassword(user), token: jwtToken };
       }
       throw new BadRequestException('Supabase URL/Key missing and invalid mock token');
     }
@@ -188,7 +170,7 @@ export class UsersService {
         });
       }
       const jwtToken = this.generateToken(user);
-      return { user, token: jwtToken };
+      return { user: this.withoutPassword(user), token: jwtToken };
     } catch (err: any) {
       throw new BadRequestException(`Supabase auth failed: ${err.message}`);
     }
@@ -199,6 +181,14 @@ export class UsersService {
       take,
       skip,
       orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        name: true,
+        streak: true,
+        createdAt: true,
+      },
     });
   }
 

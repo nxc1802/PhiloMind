@@ -1,14 +1,14 @@
-import { Controller, Get, Post, Body, Param, Query, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Delete, Put, UseGuards, Req } from '@nestjs/common';
 import { DebatesService } from './debates.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 
 class DebateMessageDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   userId: string;
 
   @IsString()
@@ -70,8 +70,8 @@ export class DebatesController {
 
   @Get('topic/:topicId')
   @ApiOperation({ summary: 'Get or initialize a debate topic session' })
-  async getTopicDebate(@Param('topicId') topicId: string, @Query('userId') userId: string) {
-    return this.debatesService.getOrCreateTopicDebate(topicId, userId);
+  async getTopicDebate(@Param('topicId') topicId: string, @Req() req: any) {
+    return this.debatesService.getOrCreateTopicDebate(topicId, req.user.id);
   }
 
   @Post('topic/:topicId/message')
@@ -79,8 +79,9 @@ export class DebatesController {
   async sendTopicDebateMessage(
     @Param('topicId') topicId: string,
     @Body() dto: DebateMessageDto,
+    @Req() req: any,
   ) {
-    return this.debatesService.sendTopicDebateMessage(topicId, dto.userId, dto.message);
+    return this.debatesService.sendTopicDebateMessage(topicId, req.user.id, dto.message);
   }
 
   // ==================== CONCEPT NODE DEBATE WORKFLOW ====================
@@ -94,8 +95,8 @@ export class DebatesController {
 
   @Get(':nodeId')
   @ApiOperation({ summary: 'Get or initialize a Socratic debate session transcript' })
-  async getDebateTranscript(@Param('nodeId') nodeId: string, @Query('userId') userId: string) {
-    return this.debatesService.getOrCreateDebate(nodeId, userId);
+  async getDebateTranscript(@Param('nodeId') nodeId: string, @Req() req: any) {
+    return this.debatesService.getOrCreateDebate(nodeId, req.user.id);
   }
 
   @Post(':nodeId/message')
@@ -103,8 +104,9 @@ export class DebatesController {
   async sendDebateMessage(
     @Param('nodeId') nodeId: string,
     @Body() dto: DebateMessageDto,
+    @Req() req: any,
   ) {
-    return this.debatesService.sendDebateMessage(nodeId, dto.userId, dto.message);
+    return this.debatesService.sendDebateMessage(nodeId, req.user.id, dto.message);
   }
 
   @Delete(':id')

@@ -17,11 +17,17 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     const root = window.document.documentElement;
+    const getSystemThemeQuery = () => {
+      if (typeof window.matchMedia !== "function") {
+        return null;
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)");
+    };
     
     const applyTheme = () => {
       let isDark = false;
       if (theme === "system") {
-        isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        isDark = Boolean(getSystemThemeQuery()?.matches);
       } else {
         isDark = theme === "dark";
       }
@@ -37,12 +43,25 @@ export function ThemeProvider({ children }) {
 
     // Listen for system theme changes if set to system
     if (theme === "system") {
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const mediaQuery = getSystemThemeQuery();
       const listener = () => applyTheme();
+
+      if (!mediaQuery) {
+        return undefined;
+      }
       
-      mediaQuery.addEventListener("change", listener);
+      if (typeof mediaQuery.addEventListener === "function") {
+        mediaQuery.addEventListener("change", listener);
+      } else if (typeof mediaQuery.addListener === "function") {
+        mediaQuery.addListener(listener);
+      }
+
       return () => {
-        mediaQuery.removeEventListener("change", listener);
+        if (typeof mediaQuery.removeEventListener === "function") {
+          mediaQuery.removeEventListener("change", listener);
+        } else if (typeof mediaQuery.removeListener === "function") {
+          mediaQuery.removeListener(listener);
+        }
       };
     }
   }, [theme]);

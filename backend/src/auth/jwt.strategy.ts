@@ -3,13 +3,21 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 
+const getJwtSecret = () => {
+  if (process.env.JWT_SECRET) return process.env.JWT_SECRET;
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('JWT_SECRET must be configured in production');
+  }
+  return 'philomind-dev-only-secret-change-me';
+};
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private usersService: UsersService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET || 'philomind-super-secret-key-12345',
+      secretOrKey: getJwtSecret(),
     });
   }
 

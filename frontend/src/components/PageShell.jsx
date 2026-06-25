@@ -11,14 +11,14 @@ export const SettingsButton = (
       href="https://forms.gle/9AXVDRqzcAnTbdU39"
       target="_blank"
       rel="noopener noreferrer"
-      className="w-full border border-primary-800/30 dark:border-primary-750/30 text-primary-800 dark:text-primary-300 hover:bg-primary-600 dark:hover:bg-primary-750 hover:text-white font-semibold py-3 rounded-3xl shadow-sm transition-all flex items-center justify-center gap-2 bg-primary-50/50 dark:bg-primary-900/10"
+      className="w-full border border-primary-200 dark:border-primary-800/40 text-primary-700 dark:text-primary-300 hover:bg-primary-600 dark:hover:bg-primary-800 hover:text-white font-semibold py-3 rounded-3xl shadow-sm transition-all flex items-center justify-center gap-2 bg-primary-50 dark:bg-primary-900/10"
     >
       <span className="material-symbols-outlined text-lg">rate_review</span>
       Thực hiện khảo sát
     </a>
     <Link
       to="/settings"
-      className="w-full border border-primary-800/30 dark:border-primary-750/30 text-primary-800 dark:text-primary-300 hover:bg-primary-600 dark:hover:bg-primary-750 hover:text-white font-semibold py-3 rounded-3xl shadow-sm transition-all flex items-center justify-center gap-2 bg-primary-50/50 dark:bg-primary-900/10"
+      className="w-full border border-primary-200 dark:border-primary-800/40 text-primary-700 dark:text-primary-300 hover:bg-primary-600 dark:hover:bg-primary-800 hover:text-white font-semibold py-3 rounded-3xl shadow-sm transition-all flex items-center justify-center gap-2 bg-primary-50 dark:bg-primary-900/10"
     >
       <span className="material-symbols-outlined text-lg">settings</span>
       Cài đặt tài khoản
@@ -33,7 +33,7 @@ export default function PageShell({ activeKey, footer = SettingsButton, children
       <Navbar />
       <div className="flex">
         <StudyModulesSidebar activeKey={activeKey} footer={footer} />
-        <main className="flex-1 lg:ml-72 min-h-screen bg-slate-50 dark:bg-[#001F28] transition-colors duration-300">
+        <main className="flex-1 lg:ml-72 min-h-screen bg-white dark:bg-[#0D1117] transition-colors duration-300">
           {children}
         </main>
       </div>
@@ -43,26 +43,33 @@ export default function PageShell({ activeKey, footer = SettingsButton, children
   );
 }
 
-// Hero do thong nhat
+// PageHero — nền sáng, accent xanh tập trung ở icon/eyebrow/border
+// Không còn gradient xanh đậm chiếm toàn màn hình
 export function PageHero({ eyebrow, icon, title, subtitle, children }) {
   return (
-    <section className="bg-gradient-to-br from-primary-850 via-primary-750 to-primary-900 py-12 px-12 text-white relative overflow-hidden rounded-b-[2.5rem] shadow-lg transition-colors duration-300">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(76,214,255,0.1),transparent)] pointer-events-none" />
-      <div className="max-w-5xl mx-auto relative z-10">
+    <section className="bg-white dark:bg-[#0D1117] border-b border-slate-100 dark:border-primary-900/30 py-10 px-12 relative overflow-hidden transition-colors duration-300">
+      {/* Subtle blue decorative gradient — chỉ góc phải, rất nhạt */}
+      <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-bl from-primary-50 via-transparent to-transparent dark:from-primary-950/30 dark:via-transparent pointer-events-none" />
+      {/* Subtle left accent bar */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-400 to-primary-700 rounded-r-full opacity-80" />
+
+      <div className="max-w-5xl mx-auto relative z-10 pl-4">
         {(eyebrow || icon) && (
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-3 mb-4">
             {icon && (
-              <span className="material-symbols-outlined text-3xl text-primary-200">{icon}</span>
+              <div className="h-10 w-10 rounded-2xl bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center shadow-sm">
+                <span className="material-symbols-outlined text-xl text-primary-700 dark:text-primary-300">{icon}</span>
+              </div>
             )}
             {eyebrow && (
-              <span className="text-sm uppercase tracking-wider opacity-85 text-primary-100">
+              <span className="text-xs font-bold uppercase tracking-widest text-primary-700 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-3 py-1 rounded-full border border-primary-100 dark:border-primary-800/30">
                 {eyebrow}
               </span>
             )}
           </div>
         )}
-        <h1 className="font-bold text-4xl md:text-5xl mb-4" style={{ fontFamily: '"Libre Caslon Text", serif' }}>{title}</h1>
-        {subtitle && <p className="text-primary-100/90 max-w-2xl mb-6 font-light">{subtitle}</p>}
+        <h1 className="font-bold text-3xl md:text-4xl mb-3 text-slate-900 dark:text-white" style={{ fontFamily: '"Libre Caslon Text", serif' }}>{title}</h1>
+        {subtitle && <p className="text-slate-500 dark:text-slate-400 max-w-2xl font-light leading-relaxed">{subtitle}</p>}
         {children}
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Delete, HttpCode, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Put, Delete, HttpCode, UseGuards, Req, ForbiddenException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional, IsEmail, IsNumber } from 'class-validator';
@@ -58,7 +58,7 @@ class UpdateUserDto {
 
 class CreateFeedbackDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   userId: string;
 
   @IsString()
@@ -116,7 +116,10 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get details of a single user' })
-  async getUserById(@Param('id') id: string) {
+  async getUserById(@Param('id') id: string, @Req() req: any) {
+    if (req.user.role !== 'admin' && req.user.id !== id) {
+      throw new ForbiddenException('You can only access your own user profile');
+    }
     return this.usersService.findById(id);
   }
 
@@ -145,8 +148,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Submit feedback (Student)' })
-  async createFeedback(@Body() dto: CreateFeedbackDto) {
-    return this.usersService.createFeedback(dto.userId, dto.content);
+  async createFeedback(@Body() dto: CreateFeedbackDto, @Req() req: any) {
+    return this.usersService.createFeedback(req.user.id, dto.content);
   }
 
   @Get('feedbacks')

@@ -58,7 +58,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="flex justify-between items-center w-full px-4 md:px-12 h-16 sticky top-0 z-50 bg-white dark:bg-[#001F28] border-b border-gray-200 dark:border-primary-800 shadow-sm transition-colors duration-300">
+      <header className="flex justify-between items-center w-full px-4 md:px-12 h-16 sticky top-0 z-50 bg-white dark:bg-[#0D1117] border-b border-slate-100 dark:border-primary-900/20 shadow-sm transition-colors duration-300">
         {/* Logo */}
         <div className="flex items-center gap-3 md:gap-4">
           {/* Hamburger — chi hien tren mobile */}
@@ -95,8 +95,8 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `group relative p-2 transition-all duration-200 rounded-3xl ${
                   isActive
-                    ? "text-primary-650 dark:text-primary-300 font-semibold bg-primary-50/50 dark:bg-primary-900/30"
-                    : "text-gray-600 hover:text-primary-650 dark:text-gray-300 dark:hover:text-primary-300 hover:bg-gray-50 dark:hover:bg-primary-900/10"
+                    ? "text-primary-600 dark:text-primary-400 font-semibold bg-primary-50 dark:bg-primary-900/20"
+                    : "text-slate-500 hover:text-primary-600 dark:text-slate-400 dark:hover:text-primary-300 hover:bg-slate-50 dark:hover:bg-primary-900/10"
                 }`
               }
             >
@@ -124,7 +124,7 @@ export default function Navbar() {
             {isThemeMenuOpen && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setIsThemeMenuOpen(false)} />
-                <div className="absolute right-0 mt-2 z-50 w-36 bg-white dark:bg-[#002b37] border border-gray-200 dark:border-primary-850 rounded-3xl shadow-xl overflow-hidden py-1">
+                <div className="absolute right-0 mt-2 z-50 w-36 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-primary-900/30 rounded-3xl shadow-xl overflow-hidden py-1">
                   <button
                     onClick={() => { setTheme("light"); setIsThemeMenuOpen(false); }}
                     className={`w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-primary-50 dark:hover:bg-primary-900/30 ${theme === "light" ? "text-primary-600 dark:text-primary-400 font-semibold" : "text-gray-700 dark:text-gray-300"}`}
@@ -174,7 +174,7 @@ export default function Navbar() {
                     className="fixed inset-0 z-40"
                     onClick={() => setIsUserMenuOpen(false)}
                   />
-                  <div className="absolute right-0 top-12 z-50 w-60 bg-white dark:bg-[#002b37] rounded-3xl shadow-2xl border border-gray-200 dark:border-primary-850 overflow-hidden">
+                  <div className="absolute right-0 top-12 z-50 w-60 bg-white dark:bg-[#161B22] rounded-3xl shadow-2xl border border-slate-100 dark:border-primary-900/30 overflow-hidden">
                     <div className="px-4 py-3 border-b border-gray-100 dark:border-primary-850">
                       <p className="font-bold text-gray-900 dark:text-primary-100 truncate">
                         {user.name}
@@ -225,7 +225,7 @@ export default function Navbar() {
           onClick={closeMobileMenu}
         >
           <aside
-            className="absolute left-0 top-0 bottom-0 w-72 bg-white dark:bg-[#001F28] shadow-2xl flex flex-col transition-all duration-300 animate-slide-in rounded-r-3xl"
+            className="absolute left-0 top-0 bottom-0 w-72 bg-white dark:bg-[#161B22] shadow-2xl flex flex-col transition-all duration-300 animate-slide-in rounded-r-3xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-primary-850">

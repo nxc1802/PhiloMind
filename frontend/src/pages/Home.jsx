@@ -94,30 +94,30 @@ export default function Home() {
         ]}
       />
       
-      <div className="min-h-screen bg-slate-50 dark:bg-[#001F28] text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300">
-        {/* Premium Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary-850 via-primary-750 to-primary-900 text-white py-24 px-6 md:px-12 text-center rounded-b-[3rem] shadow-xl">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(76,214,255,0.15),transparent)] pointer-events-none" />
-          <div className="max-w-4xl mx-auto space-y-6 relative z-10">
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-100/10 border border-primary-150 text-primary-100 font-bold text-xs uppercase tracking-wider animate-pulse">
+      <div className="min-h-screen bg-white dark:bg-[#0D1117] text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300">
+        {/* Hero Section — neutral surface, brand color is an accent only */}
+        <section className="relative overflow-hidden bg-slate-50 dark:bg-[#161B22] py-16 px-6 md:px-12 text-center border-b border-slate-100 dark:border-slate-800/70">
+          <div className="absolute inset-y-0 left-0 w-1 bg-primary-600 pointer-events-none" />
+          <div className="max-w-4xl mx-auto space-y-5 relative z-10">
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800/50 text-primary-700 dark:text-primary-300 font-bold text-xs uppercase tracking-wider">
               <span className="material-symbols-outlined text-xs">bolt</span> Sanctuary Học Thuật AI
             </span>
-            <h1 className="font-extrabold text-5xl md:text-6xl tracking-tight leading-tight" style={{ fontFamily: '"Libre Caslon Text", serif' }}>
+            <h1 className="font-extrabold text-4xl md:text-5xl tracking-tight leading-tight text-slate-950 dark:text-white" style={{ fontFamily: '"Libre Caslon Text", serif' }}>
               PhiloMind
             </h1>
-            <p className="text-xl md:text-2xl text-primary-100/90 font-light max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
               Trải nghiệm học tập triết học duy vật biện chứng tương tác trực quan với sự hỗ trợ của trí tuệ nhân tạo.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 pt-6">
+            <div className="flex flex-wrap justify-center gap-4 pt-4">
               <Link
                 to="/lessons"
-                className="bg-white text-primary-800 font-bold px-8 py-4 rounded-3xl shadow-lg hover:bg-primary-50 hover:shadow-xl transition-all hover:-translate-y-0.5"
+                className="bg-primary-600 text-white font-bold px-7 py-3.5 rounded-3xl shadow-md hover:bg-primary-700 transition-all hover:-translate-y-0.5"
               >
                 Khám phá Sơ đồ giáo trình
               </Link>
               <Link
                 to="/practice"
-                className="bg-primary-900/40 text-white border border-white/20 font-bold px-8 py-4 rounded-3xl hover:bg-primary-900/60 transition-all shadow-md"
+                className="bg-white dark:bg-[#1C2230] text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 font-bold px-7 py-3.5 rounded-3xl hover:border-primary-300 dark:hover:border-primary-700 transition-all shadow-sm"
               >
                 Khu luyện tập (Practice)
               </Link>
@@ -125,22 +125,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Features Showcase Section */}
-        <section className="py-20 px-6 md:px-12 max-w-6xl mx-auto text-left w-full">
+        {/* Features Showcase Section — nền trắng sạch */}
+        <section className="py-16 px-6 md:px-12 max-w-6xl mx-auto text-left w-full">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-primary-100">Tính năng cốt lõi</h2>
-            <p className="text-slate-500 dark:text-primary-300 text-lg">Chuyển đổi giáo trình Triết học Mác - Lênin khô khan thành trải nghiệm học tập đa giác quan.</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white">Tính năng cốt lõi</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-lg">Chuyển đổi giáo trình Triết học Mác - Lênin khô khan thành trải nghiệm học tập đa giác quan.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Feature 1: Mindmap */}
-            <div className="bg-white dark:bg-[#002b37] p-8 rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm hover:shadow-md transition-all flex gap-5">
+            <div className="bg-white dark:bg-[#1C2230] p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex gap-5">
               <div className="h-12 w-12 bg-primary-50 dark:bg-primary-900/35 text-primary-800 dark:text-primary-300 rounded-3xl flex items-center justify-center shrink-0 shadow-inner">
                 <span className="material-symbols-outlined text-2xl">account_tree</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-bold text-xl text-slate-900 dark:text-primary-100">Sơ đồ tri thức trực quan</h3>
-                <p className="text-slate-650 dark:text-primary-200 text-sm leading-relaxed">
+                <h3 className="font-bold text-xl text-slate-900 dark:text-white">Sơ đồ tri thức trực quan</h3>
+                <p className="text-slate-650 dark:text-slate-400 text-sm leading-relaxed">
                   Trực quan hóa cấu trúc giáo trình bằng mindmap thu phóng động (React Flow). Dễ dàng nắm bắt mối quan hệ biện chứng giữa các quy luật, phạm trù.
                 </p>
                 <Link to="/lessons" className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-750 dark:text-primary-300 dark:hover:text-primary-100 pt-2">
@@ -150,13 +150,13 @@ export default function Home() {
             </div>
 
             {/* Feature 2: Podcasts */}
-            <div className="bg-white dark:bg-[#002b37] p-8 rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm hover:shadow-md transition-all flex gap-5">
+            <div className="bg-white dark:bg-[#1C2230] p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex gap-5">
               <div className="h-12 w-12 bg-primary-50 dark:bg-primary-900/35 text-primary-800 dark:text-primary-300 rounded-3xl flex items-center justify-center shrink-0 shadow-inner">
                 <span className="material-symbols-outlined text-2xl">podcasts</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-bold text-xl text-slate-900 dark:text-primary-100">Conversational Podcasts</h3>
-                <p className="text-slate-650 dark:text-primary-200 text-sm leading-relaxed">
+                <h3 className="font-bold text-xl text-slate-900 dark:text-white">Conversational Podcasts</h3>
+                <p className="text-slate-650 dark:text-slate-400 text-sm leading-relaxed">
                   Nghe các cuộc đối thoại triết học sống động giữa các học giả do AI tổng hợp nội dung và đọc bằng giọng nói tự nhiên của Kokoro ONNX TTS.
                 </p>
                 <Link to="/lessons" className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-750 dark:text-primary-300 dark:hover:text-primary-100 pt-2">
@@ -166,13 +166,13 @@ export default function Home() {
             </div>
 
             {/* Feature 3: Debate */}
-            <div className="bg-white dark:bg-[#002b37] p-8 rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm hover:shadow-md transition-all flex gap-5">
+            <div className="bg-white dark:bg-[#1C2230] p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex gap-5">
               <div className="h-12 w-12 bg-primary-50 dark:bg-primary-900/35 text-primary-800 dark:text-primary-300 rounded-3xl flex items-center justify-center shrink-0 shadow-inner">
                 <span className="material-symbols-outlined text-2xl">diversity_3</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-bold text-xl text-slate-900 dark:text-primary-100">Đấu trường Socratic</h3>
-                <p className="text-slate-650 dark:text-primary-200 text-sm leading-relaxed">
+                <h3 className="font-bold text-xl text-slate-900 dark:text-white">Đấu trường Socratic</h3>
+                <p className="text-slate-650 dark:text-slate-400 text-sm leading-relaxed">
                   Tranh luận trực tiếp với AI đóng vai nhà tư tưởng. Rèn luyện tư duy phản biện bằng cách phản hồi các câu hỏi dẫn dắt mang tính Socratic.
                 </p>
                 <Link to="/debate" className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-750 dark:text-primary-300 dark:hover:text-primary-100 pt-2">
@@ -182,13 +182,13 @@ export default function Home() {
             </div>
 
             {/* Feature 4: Flashcards */}
-            <div className="bg-white dark:bg-[#002b37] p-8 rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm hover:shadow-md transition-all flex gap-5">
+            <div className="bg-white dark:bg-[#1C2230] p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex gap-5">
               <div className="h-12 w-12 bg-primary-50 dark:bg-primary-900/35 text-primary-800 dark:text-primary-300 rounded-3xl flex items-center justify-center shrink-0 shadow-inner">
                 <span className="material-symbols-outlined text-2xl">auto_stories</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-bold text-xl text-slate-900 dark:text-primary-100">Thẻ nhớ thông minh SM-2</h3>
-                <p className="text-slate-650 dark:text-primary-200 text-sm leading-relaxed">
+                <h3 className="font-bold text-xl text-slate-900 dark:text-white">Thẻ nhớ thông minh SM-2</h3>
+                <p className="text-slate-650 dark:text-slate-400 text-sm leading-relaxed">
                   Hệ thống ôn tập lặp lại ngắt quãng (Spaced Repetition) tự động tính toán thời điểm học lại tối ưu để củng cố kiến thức vào trí nhớ dài hạn.
                 </p>
                 <Link to="/practice" className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-750 dark:text-primary-300 dark:hover:text-primary-100 pt-2">
@@ -199,14 +199,14 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Philosophical Context & Timeline */}
-        <section className="bg-primary-50/20 dark:bg-primary-900/10 border-t border-b border-primary-100 dark:border-primary-850 py-20 px-6 md:px-12 w-full font-sans">
+        {/* Philosophical Context — neutral subtle bg, không còn primary-50 xanh */}
+        <section className="bg-slate-50 dark:bg-[#161B22] border-t border-b border-slate-100 dark:border-primary-900/20 py-16 px-6 md:px-12 w-full font-sans">
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 text-left">
             <div className="space-y-6 flex flex-col justify-center">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-primary-100 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
                 Khoa học của những Quy luật Phổ biến
               </h2>
-              <p className="text-slate-650 dark:text-primary-250 leading-relaxed">
+              <p className="text-slate-650 dark:text-slate-400 leading-relaxed">
                 Triết học Mác - Lênin là hệ thống lý luận khoa học cung cấp thế giới quan duy vật biện chứng và phương pháp luận khoa học sắc bén để nhận thức và cải tạo thế giới. PhiloMind giúp bạn tiếp cận kho tàng tri thức này một cách tự nhiên, chủ động.
               </p>
               <div>
@@ -217,23 +217,23 @@ export default function Home() {
             </div>
 
             {/* Timeline Widget */}
-            <div className="bg-white dark:bg-[#002b37] p-8 rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm">
-              <h3 className="font-bold text-lg text-slate-905 dark:text-primary-100 mb-6 flex items-center gap-2">
+            <div className="bg-white dark:bg-[#1C2230] p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="font-bold text-lg text-slate-905 dark:text-white mb-6 flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary-600 dark:text-primary-300">schedule</span>
                 Mốc Lịch Sử Triết Học Quan Trọng
               </h3>
-              <div className="relative pl-6 space-y-8 before:absolute before:left-[9px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200 dark:before:bg-primary-850">
+              <div className="relative pl-6 space-y-8 before:absolute before:left-[9px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-700">
                 <div className="relative">
-                  <div className="absolute -left-8 top-1 w-4 h-4 rounded-full bg-primary-600 border-2 border-white dark:border-[#002b37] shadow-sm z-10" />
+                  <div className="absolute -left-8 top-1 w-4 h-4 rounded-full bg-primary-600 border-2 border-white dark:border-[#1C2230] shadow-sm z-10" />
                   <span className="text-xs text-primary-600 dark:text-primary-350 font-bold">1848</span>
-                  <h4 className="font-bold text-slate-900 dark:text-primary-100 mt-0.5">Tuyên ngôn của Đảng Cộng sản</h4>
-                  <p className="text-slate-500 dark:text-primary-300 text-xs mt-1">Tác phẩm kinh điển đặt nền móng lý luận cho chủ nghĩa Mác, do Karl Marx và Friedrich Engels soạn thảo.</p>
+                  <h4 className="font-bold text-slate-900 dark:text-white mt-0.5">Tuyên ngôn của Đảng Cộng sản</h4>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Tác phẩm kinh điển đặt nền móng lý luận cho chủ nghĩa Mác, do Karl Marx và Friedrich Engels soạn thảo.</p>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-8 top-1 w-4 h-4 rounded-full bg-primary-600 border-2 border-white dark:border-[#002b37] shadow-sm z-10" />
+                  <div className="absolute -left-8 top-1 w-4 h-4 rounded-full bg-primary-600 border-2 border-white dark:border-[#1C2230] shadow-sm z-10" />
                   <span className="text-xs text-primary-600 dark:text-primary-350 font-bold">1867</span>
-                  <h4 className="font-bold text-slate-900 dark:text-primary-100 mt-0.5">Bộ Tư bản (Tập 1)</h4>
-                  <p className="text-slate-500 dark:text-primary-300 text-xs mt-1">Karl Marx công bố tập đầu tiên của tác phẩm kinh tế - triết học vĩ đại nhất, phân tích bản chất phương thức sản xuất tư bản.</p>
+                  <h4 className="font-bold text-slate-900 dark:text-white mt-0.5">Bộ Tư bản (Tập 1)</h4>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Karl Marx công bố tập đầu tiên của tác phẩm kinh tế - triết học vĩ đại nhất, phân tích bản chất phương thức sản xuất tư bản.</p>
                 </div>
               </div>
             </div>
@@ -244,7 +244,7 @@ export default function Home() {
       {/* AI Chat Bubble */}
       <div className="fixed bottom-8 right-8 z-50 animate-bounce-slow">
         {isChatOpen && (
-          <div className="absolute bottom-20 right-0 w-80 bg-white dark:bg-[#002b37] rounded-3xl shadow-2xl border border-slate-200 dark:border-primary-850 overflow-hidden mb-4 animate-fadeIn">
+          <div className="absolute bottom-20 right-0 w-80 bg-white dark:bg-[#1C2230] rounded-3xl shadow-2xl border border-slate-100 dark:border-primary-900/20 overflow-hidden mb-4 animate-fadeIn">
             <div className="bg-primary-600 p-4 text-white flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-3xl bg-white/20 flex items-center justify-center">
@@ -259,21 +259,21 @@ export default function Home() {
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
-            <div className="h-64 p-4 overflow-y-auto bg-slate-50 dark:bg-[#001F28] text-sm space-y-3 flex flex-col">
+            <div className="h-64 p-4 overflow-y-auto bg-slate-50 dark:bg-[#0D1117] text-sm space-y-3 flex flex-col">
               {chatMessages.map((msg, i) => (
                 <div
                   key={i}
                   className={`p-3 rounded-3xl shadow-sm border text-xs max-w-[85%] ${
                     msg.role === 'user'
                       ? 'bg-primary-600 text-white self-end border-primary-750'
-                      : 'bg-white dark:bg-[#002b37] text-slate-800 dark:text-slate-100 self-start border-slate-200 dark:border-primary-850'
+                      : 'bg-white dark:bg-[#1C2230] text-slate-800 dark:text-slate-100 self-start border-slate-200 dark:border-slate-800'
                   }`}
                 >
                   {msg.content}
                 </div>
               ))}
             </div>
-            <form onSubmit={handleAiSend} className="p-4 bg-white dark:bg-[#002b37] border-t border-slate-200 dark:border-primary-850 flex gap-2">
+            <form onSubmit={handleAiSend} className="p-4 bg-white dark:bg-[#1C2230] border-t border-slate-200 dark:border-slate-800 flex gap-2">
               <input
                 className="flex-1 bg-slate-100 dark:bg-primary-900/30 border-none rounded-3xl px-3 py-2 text-xs focus:ring-1 focus:ring-primary-600 outline-none text-slate-800 dark:text-slate-100"
                 placeholder="Hỏi về duy vật..."

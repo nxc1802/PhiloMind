@@ -63,15 +63,18 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: ${FRONTEND_REACT_APP_API_URL:-http://localhost:3001/api}
+        REACT_APP_SUPABASE_URL: ${SUPABASE_URL}
+        REACT_APP_SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
     container_name: philomind-frontend
     ports:
       - "3000:3000"
     environment:
       - PORT=${PORT:-3000}
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3001/api}
-      - NEXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}
-      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
-      - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}
+      - REACT_APP_API_URL=${FRONTEND_REACT_APP_API_URL:-http://localhost:3001/api}
+      - REACT_APP_SUPABASE_URL=${SUPABASE_URL}
+      - REACT_APP_SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
     depends_on:
       - backend
 

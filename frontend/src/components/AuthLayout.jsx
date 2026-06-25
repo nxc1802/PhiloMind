@@ -7,11 +7,12 @@ export default function AuthLayout({ icon, title, subtitle, children, footer }) 
   return (
     <>
       <Navbar />
-      <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-primary-850 via-primary-750 to-primary-900 flex items-center justify-center px-4 py-12 relative overflow-hidden transition-colors duration-300">
-        <div className="absolute -right-24 -top-24 w-96 h-96 bg-white/5 rounded-full" />
-        <div className="absolute -left-24 -bottom-24 w-96 h-96 bg-white/5 rounded-full" />
+      <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-primary-50 via-white to-primary-100/30 dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] flex items-center justify-center px-4 py-12 relative overflow-hidden transition-colors duration-300">
+        {/* Decorative circles — nhạt và tinh tế */}
+        <div className="absolute -right-32 -top-32 w-96 h-96 bg-primary-100/50 dark:bg-primary-900/20 rounded-full blur-3xl" />
+        <div className="absolute -left-32 -bottom-32 w-96 h-96 bg-primary-200/30 dark:bg-primary-950/30 rounded-full blur-3xl" />
 
-        <div className="relative w-full max-w-md bg-white dark:bg-[#002b37] rounded-3xl shadow-2xl p-8 border border-slate-100 dark:border-primary-850">
+        <div className="relative w-full max-w-md bg-white dark:bg-[#161B22] rounded-3xl shadow-2xl p-8 border border-slate-200 dark:border-primary-900/30">
           <div className="text-center mb-6">
             <div className="inline-flex h-14 w-14 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 items-center justify-center mb-3">
               <span className="material-symbols-outlined text-3xl">{icon}</span>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query, Put, Delete, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Put, Delete, Param, UseGuards, Req } from '@nestjs/common';
 import { FlashcardsService } from './flashcards.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsNumber, Min, Max, IsOptional } from 'class-validator';
@@ -8,7 +8,7 @@ import { Roles } from '../auth/roles.decorator';
 
 class ReviewCardDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   userId: string;
 
   @IsString()
@@ -63,16 +63,16 @@ export class FlashcardsController {
   @Get('due')
   @ApiOperation({ summary: 'Retrieve due flashcards for study' })
   async getDueFlashcards(
-    @Query('userId') userId: string,
     @Query('courseId') courseId?: string,
+    @Req() req?: any,
   ) {
-    return this.flashcardsService.getDueFlashcards(userId, courseId);
+    return this.flashcardsService.getDueFlashcards(req.user.id, courseId);
   }
 
   @Post('review')
   @ApiOperation({ summary: 'Submit review scores to update spaced repetition times' })
-  async recordReviewScore(@Body() dto: ReviewCardDto) {
-    return this.flashcardsService.recordReviewScore(dto.userId, dto.flashcardId, dto.ease);
+  async recordReviewScore(@Body() dto: ReviewCardDto, @Req() req: any) {
+    return this.flashcardsService.recordReviewScore(req.user.id, dto.flashcardId, dto.ease);
   }
 
   @Post()
