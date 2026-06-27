@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -27,5 +27,5 @@ RUN npm run build
 
 EXPOSE 3000
 
-# Serve static build on port 3000
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Serve static build on port 3000 (Vite outputs to 'dist')
+CMD ["serve", "-s", "dist", "-l", "3000"]

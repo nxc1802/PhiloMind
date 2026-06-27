@@ -56,7 +56,14 @@ const SITUATIONS = [
   }
 ];
 
-function WorldviewFilterGame({ onDone }) {
+function WorldviewFilterGame({ data, onDone }) {
+  const situations = useMemo(() => {
+    if (data?.options && Array.isArray(data.options) && data.options.length > 0) {
+      return data.options;
+    }
+    return SITUATIONS;
+  }, [data]);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [score, setScore] = useState(0);
@@ -92,7 +99,7 @@ function WorldviewFilterGame({ onDone }) {
   };
 
   const handleChoose = (category) => {
-    const currentQuestion = SITUATIONS[currentIdx];
+    const currentQuestion = situations[currentIdx];
     if (category === currentQuestion.category) {
       setFeedback({
         isCorrect: true,
@@ -110,7 +117,7 @@ function WorldviewFilterGame({ onDone }) {
 
   const nextQuestion = () => {
     setFeedback(null);
-    if (currentIdx < SITUATIONS.length - 1) {
+    if (currentIdx < situations.length - 1) {
       setCurrentIdx((prev) => prev + 1);
     } else {
       setIsWon(true);
@@ -206,7 +213,7 @@ function WorldviewFilterGame({ onDone }) {
     );
   }
 
-  const currentQuestion = SITUATIONS[currentIdx];
+  const currentQuestion = situations[currentIdx];
 
   return (
     <div className="bg-slate-900 text-white rounded-3xl p-6 md:p-8 border border-slate-800 shadow-xl space-y-6 text-left relative overflow-hidden">
@@ -223,7 +230,7 @@ function WorldviewFilterGame({ onDone }) {
             <span className="font-mono text-sm font-bold text-red-400">{timeLeft}s</span>
           </div>
           <div className="bg-slate-950 px-3 py-1.5 rounded-3xl border border-slate-800 text-xs font-bold text-slate-400">
-            {currentIdx + 1} / {SITUATIONS.length} (Đúng: {score})
+            {currentIdx + 1} / {situations.length} (Đúng: {score})
           </div>
         </div>
       </div>
@@ -506,7 +513,7 @@ export function WarmupSection({ dbWarmups, onDone }) {
         ) : normalizedWarmup.type === "video" ? (
           <WarmupVideo data={normalizedWarmup} onDone={onDone} />
         ) : normalizedWarmup.type === "game" ? (
-          <WorldviewFilterGame onDone={onDone} />
+          <WorldviewFilterGame data={normalizedWarmup} onDone={onDone} />
         ) : (
           <WarmupStory data={normalizedWarmup} onDone={onDone} />
         )}

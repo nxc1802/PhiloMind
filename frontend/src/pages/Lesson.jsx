@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, Suspense, lazy, useState } from "react";
+import React, { useMemo, useRef, Suspense, lazy } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
 import OnboardingGuide from "../components/OnboardingGuide";
@@ -12,17 +12,14 @@ import { useCompleteNodeMutation } from "../hooks/useMutations";
 import { getTitleFromSlug, getSlugFromTitle } from "../utils/slug";
 import { LessonSkeleton } from "./lesson/components/LessonSkeleton";
 import { LessonSidebar } from "./lesson/components/LessonSidebar";
-import { KnowledgePanel } from "./lesson/components/KnowledgePanel";
 
-const ClassicLessonPlayer = lazy(() => import("./lesson/ClassicLessonPlayer"));
-const AdventureLessonPlayer = lazy(() => import("./lesson/AdventureLessonPlayer"));
+const FlowLessonPlayer = lazy(() => import("./lesson/flow/FlowLessonPlayer"));
 
 const Lesson = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const lessonSlug = searchParams.get("lesson");
   const { showToast } = useToast();
   const { user } = useAuth();
-  const [adventurePlayerState, setAdventurePlayerState] = useState(null);
 
   const lessonContentRef = useRef(null);
 
@@ -301,22 +298,11 @@ const Lesson = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-2 space-y-6">
                     <Suspense fallback={<LessonSkeleton />}>
-                      {currentNodeDetails?.lessonType === 'adventure' ? (
-                        <AdventureLessonPlayer 
-                          nodeDetails={currentNodeDetails} 
-                          isRevisit={isRevisit}
-                          onComplete={handleCompleteLesson} 
-                          onBackToMindmap={handleBackToMindmap}
-                          onStateChange={setAdventurePlayerState}
-                        />
-                      ) : (
-                        <ClassicLessonPlayer 
-                          nodeDetails={currentNodeDetails} 
-                          isRevisit={isRevisit}
-                          onComplete={handleCompleteLesson} 
-                          onBackToMindmap={handleBackToMindmap}
-                        />
-                      )}
+                      <FlowLessonPlayer
+                        nodeDetails={currentNodeDetails}
+                        isRevisit={isRevisit}
+                        onComplete={handleCompleteLesson}
+                      />
                     </Suspense>
                   </div>
 
@@ -328,16 +314,6 @@ const Lesson = () => {
                       handleSyllabusClick={handleSyllabusClick}
                       currentNodeDetails={currentNodeDetails}
                     />
-                    {adventurePlayerState?.showPanel && (
-                      <KnowledgePanel
-                        branches={adventurePlayerState.branches}
-                        pieces={adventurePlayerState.pieces}
-                        activePieceId={adventurePlayerState.activePieceId}
-                        canMerge={adventurePlayerState.canMerge}
-                        merged={adventurePlayerState.merged}
-                        onMerge={adventurePlayerState.onMerge}
-                      />
-                    )}
                   </div>
                 </div>
               )}

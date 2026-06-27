@@ -6,6 +6,270 @@ import { createClient } from '@supabase/supabase-js';
 
 const prisma = new PrismaClient();
 
+function buildDefaultLessonFlow(node: any) {
+  const flow: any[] = [];
+
+  if (node.videoUrl) {
+    flow.push({
+      id: 'lesson-video',
+      type: 'media',
+      title: 'Video nhập môn',
+      config: {
+        mediaType: 'video',
+        url: node.videoUrl,
+        title: node.title,
+        subtitle: node.quickTake,
+      },
+      completionRule: { type: 'viewed' },
+    });
+  }
+
+  flow.push({
+    id: 'main-reading',
+    type: 'markdown',
+    title: node.title,
+    config: {
+      content: node.originalText,
+    },
+    completionRule: { type: 'viewed' },
+  });
+
+  flow.push({
+    id: 'quick-check',
+    type: 'mcq',
+    title: 'Kiểm tra nhanh',
+    config: {
+      question: `Ý chính của bài "${node.title}" là gì?`,
+      options: [
+        { id: 'a', text: node.quickTake, isCorrect: true, explanation: node.summary },
+        { id: 'b', text: 'Đây chỉ là một nội dung phụ, chưa phản ánh trọng tâm bài học.', isCorrect: false },
+        { id: 'c', text: 'Bài học này không có mối liên hệ với thế giới quan và phương pháp luận.', isCorrect: false },
+      ],
+    },
+    completionRule: { type: 'correct' },
+  });
+
+  flow.push({
+    id: 'final-summary',
+    type: 'final_summary',
+    title: 'Đúc kết bài học',
+    config: {
+      message: node.quickTake,
+      keyTakeaways: [node.summary],
+      rewards: { xp: 80, badge: 'Hoàn thành bài học' },
+    },
+    completionRule: { type: 'viewed' },
+  });
+
+  return flow;
+}
+
+function buildOriginLessonFlow(node: any) {
+  return [
+    {
+      id: 'origin-intro',
+      type: 'dialogue',
+      title: 'Nhiệm vụ khai sáng',
+      config: {
+        lines: [
+          {
+            who: 'guide',
+            text: 'Nhiệm vụ của bạn: đi tìm nguồn gốc khai sinh của triết học. Hành trình này có hai mảnh ghép: nguồn gốc nhận thức và nguồn gốc xã hội.',
+          },
+        ],
+      },
+      completionRule: { type: 'viewed' },
+    },
+    {
+      id: 'origin-video',
+      type: 'media',
+      title: 'Bối cảnh cổ đại',
+      config: {
+        mediaType: 'video',
+        url: node.videoUrl,
+        title: 'Triết học ra đời trong bước ngoặt tư duy của nhân loại',
+        subtitle: 'Từ huyền thoại đến lý luận',
+      },
+      completionRule: { type: 'viewed' },
+    },
+    {
+      id: 'cognitive-origin',
+      type: 'mcq',
+      title: 'Nguồn gốc nhận thức',
+      config: {
+        question: 'Điều gì làm cho tư duy triết học bắt đầu thay thế tư duy huyền thoại?',
+        options: [
+          { id: 'a', text: 'Con người bắt đầu tìm quy luật và lý lẽ để giải thích thế giới.', isCorrect: true, explanation: 'Đây là bước chuyển từ niềm tin huyền thoại sang tư duy lý luận.' },
+          { id: 'b', text: 'Con người từ bỏ hoàn toàn nhu cầu hiểu biết thế giới.', isCorrect: false },
+          { id: 'c', text: 'Con người chỉ tăng cường nghi lễ cúng bái.', isCorrect: false },
+        ],
+      },
+      completionRule: { type: 'correct' },
+    },
+    {
+      id: 'social-origin-chain',
+      type: 'sequence_sorting',
+      title: 'Chuỗi nhân quả xã hội',
+      config: {
+        instruction: 'Chọn các mắt xích theo đúng thứ tự hình thành điều kiện xã hội của triết học.',
+        items: [
+          { id: 'c1', order: 0, text: 'Sản xuất phát triển, của cải dư thừa và chế độ tư hữu hình thành.' },
+          { id: 'c2', order: 1, text: 'Xã hội phân chia giai cấp.' },
+          { id: 'c3', order: 2, text: 'Lao động trí óc tách khỏi lao động chân tay.' },
+          { id: 'c4', order: 3, text: 'Tầng lớp trí thức hệ thống hóa tri thức thành triết học.' },
+        ],
+        successFeedback: 'Chuỗi nhân quả đã hoàn chỉnh: đây là nguồn gốc xã hội của triết học.',
+      },
+      completionRule: { type: 'correct' },
+    },
+    {
+      id: 'origin-reading',
+      type: 'markdown',
+      title: 'Đúc kết hai nguồn gốc',
+      config: {
+        content: node.originalText,
+      },
+      completionRule: { type: 'viewed' },
+    },
+    {
+      id: 'origin-final',
+      type: 'final_summary',
+      title: 'Hoàn thành bài học',
+      config: {
+        message: node.quickTake,
+        keyTakeaways: [
+          'Nguồn gốc nhận thức: nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng.',
+          'Nguồn gốc xã hội: phân công lao động, giai cấp và tầng lớp trí thức.',
+        ],
+        rewards: { xp: 120, badge: 'Nhà Khai Sáng' },
+      },
+      completionRule: { type: 'viewed' },
+    },
+  ];
+}
+
+function buildLesson1bFlow(source: any) {
+  return [
+    {
+      id: 'ancient-origin-map',
+      type: 'target_matching',
+      title: 'Nguồn gốc thuật ngữ triết học',
+      config: {
+        targets: [
+          { id: 'china', label: 'Trung Quốc', icon: 'temple_buddhist' },
+          { id: 'india', label: 'Ấn Độ', icon: 'water' },
+          { id: 'greece', label: 'Hy Lạp', icon: 'account_balance' },
+        ],
+        items: [
+          { id: 'zhe', text: '哲', targetId: 'china' },
+          { id: 'darsana', text: "Dar'sana", targetId: 'india' },
+          { id: 'philosophia', text: 'φιλοσοφία', targetId: 'greece' },
+        ],
+        summary: 'Triết học xuất hiện ở nhiều trung tâm văn minh lớn và biểu hiện nhu cầu nhận thức bậc cao của con người.',
+      },
+      completionRule: { type: 'correct' },
+    },
+    {
+      id: 'worldview-sorting',
+      type: 'category_sorting',
+      title: 'Phân loại thế giới quan',
+      config: {
+        categories: [
+          { id: 'myth-religion', label: 'Thần thoại - Tôn giáo' },
+          { id: 'philosophy', label: 'Triết học' },
+        ],
+        cards: [
+          { id: 'faith', text: 'Niềm tin', categoryId: 'myth-religion' },
+          { id: 'ritual', text: 'Nghi lễ', categoryId: 'myth-religion' },
+          { id: 'reason', text: 'Công cụ lý tính', categoryId: 'philosophy' },
+          { id: 'law', text: 'Quy luật', categoryId: 'philosophy' },
+        ],
+        summary: 'Triết học tìm cách lý giải thế giới bằng lý tính, logic và khái quát hóa.',
+      },
+      completionRule: { type: 'correct' },
+    },
+    {
+      id: 'philosophy-features',
+      type: 'mindmap_reveal',
+      title: 'Bốn đặc trưng cốt lõi',
+      config: {
+        center: 'Triết học',
+        nodes: [
+          { id: 'social-consciousness', label: 'Hình thái ý thức xã hội', detail: 'Triết học là một hình thái ý thức xã hội bậc cao.' },
+          { id: 'whole', label: 'Chỉnh thể toàn vẹn', detail: 'Triết học xem xét thế giới trong tính chỉnh thể.' },
+          { id: 'universal-laws', label: 'Quy luật phổ biến', detail: 'Triết học hướng tới các quy luật chung nhất của tự nhiên, xã hội và tư duy.' },
+          { id: 'worldview-core', label: 'Hạt nhân thế giới quan', detail: 'Triết học là hạt nhân lý luận của thế giới quan.' },
+        ],
+      },
+      completionRule: { type: 'viewed' },
+    },
+    {
+      id: 'marxist-definition',
+      type: 'mcq',
+      title: 'Định nghĩa triết học Mác - Lênin',
+      config: {
+        question: 'Định nghĩa nào phù hợp nhất với triết học Mác - Lênin?',
+        options: [
+          { id: 'a', text: 'Tập hợp các niềm tin tôn giáo.', isCorrect: false },
+          { id: 'b', text: 'Hệ thống tri thức lý luận chung nhất về thế giới, vị trí con người trong thế giới và phương pháp nhận thức, cải tạo thế giới.', isCorrect: true, explanation: 'Đây là cách hiểu khái quát về chức năng thế giới quan và phương pháp luận của triết học.' },
+          { id: 'c', text: 'Một khoa học thực nghiệm nghiên cứu riêng một lĩnh vực.', isCorrect: false },
+        ],
+      },
+      completionRule: { type: 'correct' },
+    },
+    {
+      id: 'philosophy-science-matching',
+      type: 'matching_columns',
+      title: 'Phân biệt tri thức triết học và khoa học cụ thể',
+      config: {
+        leftColumn: [
+          { id: 'philosophy', text: 'Tri thức triết học' },
+          { id: 'specific-science', text: 'Khoa học cụ thể' },
+          { id: 'worldview', text: 'Thế giới quan' },
+        ],
+        rightColumn: [
+          { id: 'general', text: 'Khái quát những vấn đề chung nhất' },
+          { id: 'domain', text: 'Nghiên cứu một lĩnh vực, đối tượng cụ thể' },
+          { id: 'orientation', text: 'Định hướng cách con người nhìn nhận thế giới' },
+        ],
+        correctPairs: [
+          { leftId: 'philosophy', rightId: 'general' },
+          { leftId: 'specific-science', rightId: 'domain' },
+          { leftId: 'worldview', rightId: 'orientation' },
+        ],
+      },
+      completionRule: { type: 'correct' },
+    },
+    {
+      id: 'all-philosophy-is-science',
+      type: 'true_false',
+      title: 'Mọi học thuyết triết học đều là khoa học?',
+      config: {
+        statement: 'Mọi học thuyết triết học đều là khoa học.',
+        correctAnswer: false,
+        explanation: 'Không phải mọi học thuyết triết học đều khoa học; tính khoa học phụ thuộc vào cơ sở lý luận, phương pháp và khả năng phản ánh đúng hiện thực.',
+      },
+      completionRule: { type: 'correct' },
+    },
+    {
+      id: 'lesson-1b-final',
+      type: 'final_summary',
+      title: 'Hoàn thành bài 1.b',
+      config: {
+        message: source.finalSummary?.summary?.finalStatement || 'Bạn đã nắm được khái niệm triết học.',
+        keyTakeaways: [
+          'Triết học là hệ thống tri thức lý luận chung nhất về thế giới.',
+          'Triết học là hạt nhân lý luận của thế giới quan.',
+          'Cần phân biệt tri thức triết học với tri thức của các khoa học cụ thể.',
+        ],
+        rewards: source.finalSummary?.rewards || { xp: 120, badge: 'Người khai mở tư duy' },
+        quiz: source.finalSummary?.quiz || [],
+      },
+      completionRule: { type: 'viewed' },
+    },
+  ];
+}
+
 async function main() {
   console.log('Seeding PhiloMind philosophy sanctuary database with Vietnamese Marxist-Leninist Philosophy...');
 
@@ -380,6 +644,11 @@ async function main() {
   const createdCh1Nodes = [];
   for (const n of ch1Nodes) {
     const isNode2 = n.title === 'Khái niệm triết học';
+    const lessonFlow = isNode2
+      ? buildLesson1bFlow(seedingData.lesson_1b)
+      : n.title === 'Nguồn gốc của triết học'
+        ? buildOriginLessonFlow(n)
+        : buildDefaultLessonFlow(n);
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -391,11 +660,8 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter1.id,
-        lessonType: isNode2 ? 'adventure' : (n.lessonType || 'classic'),
-        storyIntro: isNode2 ? seedingData.lesson_1b.storyIntro : (n.storyIntro ? (n.storyIntro as any) : undefined),
-        lessonContents: isNode2 ? seedingData.lesson_1b.lessonContents : (n.lessonContents ? (n.lessonContents as any) : undefined),
-        minigame: isNode2 ? seedingData.lesson_1b.minigame : (n.minigame ? (n.minigame as any) : undefined),
-        finalSummary: isNode2 ? seedingData.lesson_1b.finalSummary : (n.finalSummary ? (n.finalSummary as any) : undefined),
+        lessonType: 'flow',
+        lessonFlow: lessonFlow as any,
       }
     });
     createdCh1Nodes.push(node);
@@ -439,7 +705,8 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter2.id,
-        lessonType: 'classic',
+        lessonType: 'flow',
+        lessonFlow: buildDefaultLessonFlow(n) as any,
       }
     });
     createdCh2Nodes.push(node);
@@ -481,7 +748,8 @@ async function main() {
         videoUrl: n.videoUrl,
         orderIndex: n.orderIndex,
         chapterId: chapter3.id,
-        lessonType: 'classic',
+        lessonType: 'flow',
+        lessonFlow: buildDefaultLessonFlow(n) as any,
       }
     });
     createdCh3Nodes.push(node);

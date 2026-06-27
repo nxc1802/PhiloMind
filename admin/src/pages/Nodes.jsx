@@ -2,6 +2,11 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import AdminPageShell from '../components/AdminPageShell';
 import { api } from '../services/api';
 import { useToast } from '../components/Toast';
+import NodeWarmupTab from '../components/nodes/NodeWarmupTab';
+import NodeFlashcardTab from '../components/nodes/NodeFlashcardTab';
+import NodeQuizTab from '../components/nodes/NodeQuizTab';
+import NodePodcastTab from '../components/nodes/NodePodcastTab';
+import NodeDocumentTab from '../components/nodes/NodeDocumentTab';
 
 export default function Nodes() {
   const { showToast } = useToast();
@@ -44,13 +49,10 @@ export default function Nodes() {
     difficulty: 'Medium',
     timeToRead: '10 min read',
     videoUrl: '', 
-    lessonType: '', 
+    lessonType: 'flow',
     orderIndex: 1,
     chapterId: '',
-    storyIntro: '',
-    lessonContents: '',
-    minigame: '',
-    finalSummary: '',
+    lessonFlow: '',
   });
 
   const [chapterForm, setChapterForm] = useState({
@@ -235,13 +237,10 @@ export default function Nodes() {
       difficulty: 'Medium',
       timeToRead: '10 min read',
       videoUrl: '',
-      lessonType: '',
+      lessonType: 'flow',
       orderIndex: nodes.filter(n => n.chapterId === chapterId).length + 1,
       chapterId: chapterId || (chapters.length > 0 ? chapters[0].id : ''),
-      storyIntro: '',
-      lessonContents: '',
-      minigame: '',
-      finalSummary: '',
+      lessonFlow: '',
     });
   };
 
@@ -255,23 +254,16 @@ export default function Nodes() {
       difficulty: node.difficulty || 'Medium',
       timeToRead: node.timeToRead || '10 min read',
       videoUrl: node.videoUrl || '',
-      lessonType: node.lessonType || '',
+      lessonType: 'flow',
       orderIndex: node.orderIndex,
       chapterId: node.chapterId,
-      storyIntro: node.storyIntro ? JSON.stringify(node.storyIntro, null, 2) : '',
-      lessonContents: node.lessonContents ? JSON.stringify(node.lessonContents, null, 2) : '',
-      minigame: node.minigame ? JSON.stringify(node.minigame, null, 2) : '',
-      finalSummary: node.finalSummary ? JSON.stringify(node.finalSummary, null, 2) : '',
+      lessonFlow: node.lessonFlow ? JSON.stringify(node.lessonFlow, null, 2) : '',
     });
     setActiveRightTab('warmups');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.lessonType) {
-      showToast('Vui lòng chọn loại bài học (Lesson Type) bắt buộc!', 'error');
-      return;
-    }
     try {
       const parseJsonField = (fieldVal, fieldName) => {
         if (!fieldVal || !fieldVal.trim()) return null;
@@ -282,18 +274,13 @@ export default function Nodes() {
         }
       };
 
-      const storyIntroJson = parseJsonField(form.storyIntro, 'Dẫn truyện (Story Intro)');
-      const lessonContentsJson = parseJsonField(form.lessonContents, 'Nội dung bài học (Lesson Contents)');
-      const minigameJson = parseJsonField(form.minigame, 'Trò chơi (Minigame)');
-      const finalSummaryJson = parseJsonField(form.finalSummary, 'Đúc kết cuối bài (Final Summary)');
+      const lessonFlowJson = parseJsonField(form.lessonFlow, 'Lesson Flow');
 
       const payload = {
         ...form,
+        lessonType: 'flow',
         orderIndex: Number(form.orderIndex),
-        storyIntro: storyIntroJson,
-        lessonContents: lessonContentsJson,
-        minigame: minigameJson,
-        finalSummary: finalSummaryJson,
+        lessonFlow: lessonFlowJson,
       };
 
       if (modal.type === 'create') {
@@ -897,32 +884,17 @@ export default function Nodes() {
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Loại bài học <span className="text-red-505">*</span></label>
-                      <select
-                        required
-                        value={form.lessonType}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          setForm({ ...form, lessonType: val });
-                          if (val === 'classic' && activeRightTab === 'framework') {
-                            setActiveRightTab('warmups');
-                          }
-                        }}
-                        className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-red-500 transition-colors"
-                      >
-                        <option value="">-- Chọn chế độ bài học --</option>
-                        <option value="classic">📖 Cổ điển (Video → Câu hỏi → Giáo trình)</option>
-                        <option value="adventure">🗺️ Phiêu lưu (Tương tác RPG đa giai đoạn)</option>
-                      </select>
+                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Kiến trúc bài học</label>
+                      <div className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100">
+                        Component Flow
+                      </div>
                     </div>
 
-                    {form.lessonType !== 'adventure' && (
-                      <>
                         <div className="space-y-1">
                           <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Tóm tắt bài học (Summary)</label>
                           <textarea
                             rows="3"
-                            required={form.lessonType === 'classic'}
+                            required
                             placeholder="Tóm tắt lý thuyết bài học..."
                             value={form.summary}
                             onChange={(e) => setForm({ ...form, summary: e.target.value })}
@@ -934,7 +906,7 @@ export default function Nodes() {
                           <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Ý chính nhanh (Quick Take)</label>
                           <input
                             type="text"
-                            required={form.lessonType === 'classic'}
+                            required
                             placeholder="Ý chính rút gọn cô đọng..."
                             value={form.quickTake}
                             onChange={(e) => setForm({ ...form, quickTake: e.target.value })}
@@ -946,15 +918,13 @@ export default function Nodes() {
                           <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Trích dẫn giáo trình gốc (Original Text)</label>
                           <textarea
                             rows="4"
-                            required={form.lessonType === 'classic'}
+                            required
                             placeholder="Trích dẫn chính văn giáo trình học thuật..."
                             value={form.originalText}
                             onChange={(e) => setForm({ ...form, originalText: e.target.value })}
                             className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 placeholder:text-slate-650 focus:outline-none focus:border-red-500 transition-colors resize-none"
                           />
                         </div>
-                      </>
-                    )}
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
@@ -1015,17 +985,15 @@ export default function Nodes() {
                         >
                           🔥 Làm nóng (Warmups)
                         </button>
-                        {form.lessonType === 'adventure' && (
-                          <button
-                            type="button"
-                            onClick={() => setActiveRightTab('framework')}
-                            className={`px-3 py-1.5 rounded-lg text-2xs font-bold transition-all shrink-0 ${
-                              activeRightTab === 'framework' ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-905 text-slate-400 hover:text-slate-200'
-                            }`}
-                          >
-                            ⚡ Khung đồng bộ
-                          </button>
-                        )}
+                        <button
+                          type="button"
+                          onClick={() => setActiveRightTab('framework')}
+                          className={`px-3 py-1.5 rounded-lg text-2xs font-bold transition-all shrink-0 ${
+                            activeRightTab === 'framework' ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-905 text-slate-400 hover:text-slate-200'
+                          }`}
+                        >
+                          ⚡ Lesson Flow
+                        </button>
                         <button
                           type="button"
                           onClick={() => setActiveRightTab('flashcards')}
@@ -1066,453 +1034,69 @@ export default function Nodes() {
 
                       {/* Tab Panels */}
                       <div className="flex-1 overflow-y-auto pr-1 min-h-0">
-                        {/* Tab 1: Warmups */}
                         {activeRightTab === 'warmups' && (
-                          <div className="space-y-6">
-                            <h4 className="text-base font-semibold text-amber-500 flex items-center gap-2">
-                              <span className="material-symbols-outlined">explore</span> Khởi động ngẫu nhiên (Warmups)
-                            </h4>
-
-                            <div className="space-y-3 max-h-[20vh] overflow-y-auto pr-1 bg-slate-900/40 p-3 rounded-xl border border-slate-800/80">
-                              {warmups.length === 0 ? (
-                                <p className="text-xs text-slate-500 italic">Chưa có phần khởi động nào được cấu hình cho bài này.</p>
-                              ) : (
-                                <div className="space-y-2">
-                                  {warmups.map((w, idx) => (
-                                    <div key={w.id} className="flex justify-between items-start bg-slate-950 p-2.5 rounded-lg border border-slate-800/60 hover:border-amber-900/40 text-xs">
-                                      <div className="space-y-0.5">
-                                        <div className="flex items-center gap-2">
-                                          <span className="font-bold text-slate-300">#{idx + 1}: {w.title}</span>
-                                          <span className="text-[10px] text-amber-400 bg-amber-950/60 border border-amber-900/40 px-1 rounded">
-                                            {w.type}
-                                          </span>
-                                        </div>
-                                        <p className="text-slate-400 line-clamp-1 italic">"{w.type === 'image-guess' ? `Đáp án: ${w.answer}` : w.question}"</p>
-                                      </div>
-                                      <button onClick={() => handleDeleteWarmup(w.id)} className="text-red-500 hover:text-red-400 p-1 rounded" title="Xóa Warmup">
-                                        <span className="material-symbols-outlined text-sm">delete</span>
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Add Warmup Form */}
-                            <form onSubmit={handleAddWarmup} className="bg-slate-900/40 p-4 rounded-xl border border-slate-800 space-y-3">
-                              <h5 className="text-xs font-bold text-amber-550 uppercase tracking-wider flex items-center gap-1">
-                                <span className="material-symbols-outlined text-xs">add_circle</span> Thêm Warmup mới
-                              </h5>
-                              <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase">Loại Khởi động</label>
-                                  <select
-                                    value={warmupForm.type}
-                                    onChange={(e) => setWarmupForm({ ...warmupForm, type: e.target.value })}
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none"
-                                  >
-                                    <option value="image-guess">Nhìn hình đoán chữ (image-guess)</option>
-                                    <option value="story">Đọc truyện chọn đáp án (story)</option>
-                                    <option value="video">Video ngắn & câu hỏi (video)</option>
-                                    <option value="game">Trò chơi tương tác (game)</option>
-                                  </select>
-                                </div>
-                                <div className="space-y-1">
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase">Tiêu đề</label>
-                                  <input
-                                    type="text"
-                                    placeholder="Tùy chọn"
-                                    value={warmupForm.title}
-                                    onChange={(e) => setWarmupForm({ ...warmupForm, title: e.target.value })}
-                                    className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none"
-                                  />
-                                </div>
-                              </div>
-
-                              {warmupForm.type === 'image-guess' && (
-                                <div className="space-y-2 p-3 bg-indigo-950/20 border border-indigo-900/30 rounded-lg">
-                                  <input
-                                    type="url"
-                                    required
-                                    placeholder="Ảnh minh họa URL"
-                                    value={warmupForm.image}
-                                    onChange={(e) => setWarmupForm({ ...warmupForm, image: e.target.value })}
-                                    className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                                  />
-                                  <div className="grid grid-cols-2 gap-3">
-                                    <input
-                                      type="text"
-                                      required
-                                      placeholder="Từ khóa (V _ T _ C H _ T)"
-                                      value={warmupForm.blanks}
-                                      onChange={(e) => setWarmupForm({ ...warmupForm, blanks: e.target.value })}
-                                      className="bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                                    />
-                                    <input
-                                      type="text"
-                                      required
-                                      placeholder="Đáp án đúng"
-                                      value={warmupForm.answer}
-                                      onChange={(e) => setWarmupForm({ ...warmupForm, answer: e.target.value })}
-                                      className="bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                                    />
-                                  </div>
-                                </div>
-                              )}
-
-                              {(warmupForm.type === 'story' || warmupForm.type === 'video') && (
-                                <div className="space-y-2 p-3 bg-orange-950/10 border border-orange-900/30 rounded-lg text-xs space-y-2">
-                                  {warmupForm.type === 'story' ? (
-                                    <textarea
-                                      rows="2"
-                                      required
-                                      placeholder="Viết câu chuyện ẩn dụ triết học..."
-                                      value={warmupForm.story}
-                                      onChange={(e) => setWarmupForm({ ...warmupForm, story: e.target.value })}
-                                      className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 resize-none focus:outline-none"
-                                    />
-                                  ) : (
-                                    <input
-                                      type="text"
-                                      required
-                                      placeholder="YouTube Video URL khởi động"
-                                      value={warmupForm.image || ''}
-                                      onChange={(e) => setWarmupForm({ ...warmupForm, image: e.target.value })}
-                                      className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                                    />
-                                  )}
-                                  <input
-                                    type="text"
-                                    required
-                                    placeholder="Câu hỏi chiêm nghiệm..."
-                                    value={warmupForm.question || ''}
-                                    onChange={(e) => setWarmupForm({ ...warmupForm, question: e.target.value })}
-                                    className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                                  />
-                                  <div className="grid grid-cols-3 gap-2">
-                                    <input
-                                      type="text"
-                                      required
-                                      placeholder="Lựa chọn (phân cách bằng dấu phẩy)"
-                                      value={warmupForm.optionsString || ''}
-                                      onChange={(e) => setWarmupForm({ ...warmupForm, optionsString: e.target.value })}
-                                      className="col-span-2 bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                                    />
-                                    <input
-                                      type="number"
-                                      min="0"
-                                      max="3"
-                                      required
-                                      value={warmupForm.correctIndex || 0}
-                                      onChange={(e) => setWarmupForm({ ...warmupForm, correctIndex: e.target.value })}
-                                      className="bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none"
-                                      placeholder="ID Đáp án đúng"
-                                    />
-                                  </div>
-                                </div>
-                              )}
-
-                              <div className="space-y-1">
-                                <label className="text-[10px] font-bold text-slate-400 uppercase">Kiến giải khoa học (Reveal)</label>
-                                <textarea
-                                  rows="2"
-                                  required
-                                  placeholder="Lời giải thích sâu sắc hiển thị khi click mở đáp án..."
-                                  value={warmupForm.reveal}
-                                  onChange={(e) => setWarmupForm({ ...warmupForm, reveal: e.target.value })}
-                                  className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2 py-1 text-xs text-slate-200 placeholder:text-slate-700 resize-none focus:outline-none"
-                                />
-                              </div>
-
-                              <button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-lg text-xs transition-colors flex items-center justify-center gap-1">
-                                <span className="material-symbols-outlined text-sm">done</span> Thêm Warmup
-                              </button>
-                            </form>
-                          </div>
+                          <NodeWarmupTab
+                            warmups={warmups}
+                            handleDeleteWarmup={handleDeleteWarmup}
+                            handleAddWarmup={handleAddWarmup}
+                            warmupForm={warmupForm}
+                            setWarmupForm={setWarmupForm}
+                          />
                         )}
 
-                        {/* Tab 2: Framework (adventure lessons config) */}
                         {activeRightTab === 'framework' && (
                           <FrameworkAdminPanel form={form} setForm={setForm} />
                         )}
 
-                        {/* Tab 3: Flashcards Panel */}
                         {activeRightTab === 'flashcards' && (
-                          <div className="space-y-6">
-                            <div className="flex justify-between items-center">
-                              <h4 className="text-base font-semibold text-red-500 flex items-center gap-2">
-                                <span className="material-symbols-outlined">layers</span> Danh sách Thẻ nhớ ({flashcards.length})
-                              </h4>
-                              <button
-                                type="button"
-                                onClick={openCreateFc}
-                                className="bg-red-800 hover:bg-red-950 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1"
-                              >
-                                <span className="material-symbols-outlined text-xs">add</span> Thêm thẻ
-                              </button>
-                            </div>
-
-                            {/* Flashcards List */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[35vh] overflow-y-auto pr-1 bg-slate-900/40 p-3 rounded-xl border border-slate-800/80">
-                              {flashcards.length === 0 ? (
-                                <p className="col-span-2 text-xs text-slate-500 italic text-center py-4">Chưa có thẻ nhớ nào cho bài này.</p>
-                              ) : (
-                                flashcards.map(fc => {
-                                  const parsed = parseFlashcardQuestion(fc.question);
-                                  return (
-                                    <div key={fc.id} className="bg-slate-950 border border-slate-850 p-3 rounded-xl flex flex-col justify-between text-xs space-y-2">
-                                      <div className="flex justify-between items-start">
-                                        <span className="bg-slate-900 px-2 py-0.5 rounded border border-slate-800 text-[10px] text-slate-400 font-bold uppercase">
-                                          {fc.tag}
-                                        </span>
-                                        <div className="flex gap-1 shrink-0">
-                                          <button onClick={() => openEditFc(fc)} className="p-1 hover:bg-slate-800 text-blue-405 rounded" title="Sửa">
-                                            <span className="material-symbols-outlined text-base">edit</span>
-                                          </button>
-                                          <button onClick={() => handleFcDelete(fc.id)} className="p-1 hover:bg-slate-800 text-red-405 rounded" title="Xóa">
-                                            <span className="material-symbols-outlined text-base">delete</span>
-                                          </button>
-                                        </div>
-                                      </div>
-                                      <div className="text-left space-y-1">
-                                        <p className="text-[10px] text-slate-500 uppercase font-bold">Mặt trước (Q):</p>
-                                        <p className="font-semibold text-slate-200 leading-snug">{parsed.question}</p>
-                                        {parsed.isMcq && (
-                                          <div className="pl-2 border-l border-slate-800 text-slate-400 space-y-0.5 mt-1">
-                                            {parsed.options.map((o, idx) => (
-                                              <p key={idx}>{o}</p>
-                                            ))}
-                                          </div>
-                                        )}
-                                        <div className="h-px bg-slate-800/60 my-1" />
-                                        <p className="text-[10px] text-slate-500 uppercase font-bold">Mặt sau (A):</p>
-                                        <p className="text-slate-350 italic leading-snug">{fc.answer}</p>
-                                      </div>
-                                    </div>
-                                  );
-                                })
-                              )}
-                            </div>
-
-                            {/* Bulk Import Section */}
-                            <div className="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-3 text-left">
-                              <h5 className="text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-1">
-                                <span className="material-symbols-outlined text-sm">upload_file</span> Nhập hàng loạt Flashcards (JSON)
-                              </h5>
-                              <input
-                                type="file"
-                                accept=".json"
-                                onChange={handleJsonUpload}
-                                className="text-xs text-slate-400 file:bg-slate-950 file:border-slate-800 file:text-slate-300 file:rounded-lg file:px-3 file:py-1 file:mr-3 hover:file:bg-slate-900 focus:outline-none"
-                              />
-                              <textarea
-                                rows="3"
-                                value={jsonText}
-                                onChange={(e) => setJsonText(e.target.value)}
-                                placeholder='Ví dụ: \n[\n  { "question": "Vật chất là gì?", "answer": "Là phạm trù..." }\n]'
-                                className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-slate-200 placeholder:text-slate-700 font-mono resize-none focus:outline-none"
-                              />
-                              <button
-                                type="button"
-                                onClick={handleBulkImport}
-                                disabled={importingFlashcards || !jsonText.trim()}
-                                className="w-full bg-red-800 hover:bg-red-950 text-white font-bold py-2 rounded-lg text-xs transition-colors flex items-center justify-center gap-1 disabled:opacity-50"
-                              >
-                                {importingFlashcards ? "Đang nhập..." : "Nhập hàng loạt thẻ nhớ"}
-                              </button>
-                            </div>
-                          </div>
+                          <NodeFlashcardTab
+                            flashcards={flashcards}
+                            openCreateFc={openCreateFc}
+                            openEditFc={openEditFc}
+                            handleFcDelete={handleFcDelete}
+                            parseFlashcardQuestion={parseFlashcardQuestion}
+                            handleJsonUpload={handleJsonUpload}
+                            jsonText={jsonText}
+                            setJsonText={setJsonText}
+                            handleBulkImport={handleBulkImport}
+                            importingFlashcards={importingFlashcards}
+                          />
                         )}
 
-                        {/* Tab 4: Quizzes Panel */}
                         {activeRightTab === 'quizzes' && (
-                          <div className="space-y-6">
-                            <div className="flex justify-between items-center">
-                              <h4 className="text-base font-semibold text-emerald-500 flex items-center gap-2">
-                                <span className="material-symbols-outlined">quiz</span> Đề kiểm tra & Quiz bài tập ({nodeQuizzes.length})
-                              </h4>
-                              <button
-                                type="button"
-                                onClick={openCreateQuiz}
-                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1"
-                              >
-                                <span className="material-symbols-outlined text-xs">add</span> Tạo bộ Quiz
-                              </button>
-                            </div>
-
-                            {/* Quizzes List */}
-                            <div className="space-y-2 max-h-[40vh] overflow-y-auto pr-1 bg-slate-900/40 p-3 rounded-xl border border-slate-800/80">
-                              {nodeQuizzes.length === 0 ? (
-                                <p className="text-xs text-slate-500 italic text-center py-4">Chưa có bài tập hay game ghép cặp nào cho bài học này.</p>
-                              ) : (
-                                nodeQuizzes.map(q => (
-                                  <div key={q.id} className="flex justify-between items-center bg-slate-950 p-3 rounded-xl border border-slate-850 hover:border-slate-800 transition-all text-xs">
-                                    <div>
-                                      <div className="flex items-center gap-2">
-                                        <span className="material-symbols-outlined text-emerald-500 text-sm">
-                                          {q.type === 'matching' ? 'grid_view' : 'quiz'}
-                                        </span>
-                                        <span className="font-bold text-slate-205">{q.title}</span>
-                                      </div>
-                                      <p className="text-slate-400 mt-1 line-clamp-1 italic">{q.description || 'Không có mô tả'}</p>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                      <span className="bg-slate-900 px-2 py-0.5 border border-slate-800 rounded font-mono text-slate-400 text-[10px]">
-                                        {Array.isArray(q.questions) ? `${q.questions.length} câu` : '0 câu'}
-                                      </span>
-                                      <button onClick={() => openEditQuiz(q)} className="p-1 hover:bg-slate-800 text-blue-400 rounded">
-                                        <span className="material-symbols-outlined text-base">edit</span>
-                                      </button>
-                                      <button onClick={() => handleQuizDelete(q.id)} className="p-1 hover:bg-slate-800 text-red-400 rounded">
-                                        <span className="material-symbols-outlined text-base">delete</span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                ))
-                              )}
-                            </div>
-                          </div>
+                          <NodeQuizTab
+                            nodeQuizzes={nodeQuizzes}
+                            openCreateQuiz={openCreateQuiz}
+                            openEditQuiz={openEditQuiz}
+                            handleQuizDelete={handleQuizDelete}
+                          />
                         )}
 
-                        {/* Tab 5: Podcast Integration */}
                         {activeRightTab === 'podcast' && (
-                          <div className="space-y-6">
-                            <h4 className="text-base font-semibold text-purple-400 flex items-center gap-2">
-                              <span className="material-symbols-outlined">mic</span> Tích hợp Audio Podcast
-                            </h4>
-
-                            {nodePodcast ? (
-                              <div className="bg-slate-900/40 p-4 border border-slate-800 rounded-xl space-y-4">
-                                <div className="flex justify-between items-center">
-                                  <span className="text-xs text-green-400 font-bold flex items-center gap-1">
-                                    <span className="material-symbols-outlined text-sm">check_circle</span>
-                                    Đã phát hành Podcast cho bài học này
-                                  </span>
-                                  <button
-                                    type="button"
-                                    onClick={handlePodcastDelete}
-                                    className="bg-red-950 hover:bg-red-900 text-red-400 px-2.5 py-1 rounded text-2xs font-semibold border border-red-900/40 flex items-center gap-0.5"
-                                  >
-                                    <span className="material-symbols-outlined text-xs">delete</span> Xóa Podcast
-                                  </button>
-                                </div>
-                                <audio src={nodePodcast.audioUrl} controls className="w-full h-9 accent-purple-600" />
-                              </div>
-                            ) : (
-                              <div className="bg-purple-950/10 p-4 border border-purple-900/30 rounded-xl text-center text-xs text-slate-400 space-y-2">
-                                <span className="material-symbols-outlined text-3xl text-purple-500">volume_up</span>
-                                <p>Bài học này hiện chưa được cấu hình Podcast audio. Nhập kịch bản để tạo giọng nói AI ở dưới.</p>
-                              </div>
-                            )}
-
-                            {/* Podcast Create/Edit Form */}
-                            <form onSubmit={handlePodcastSubmit} className="bg-slate-900/40 p-4 rounded-xl border border-slate-800 space-y-4 text-xs">
-                              <div className="space-y-1">
-                                <label className="text-[10px] font-bold text-purple-400 uppercase block mb-1">Kịch bản đàm thoại để Sinh TTS (Tiếng Việt)</label>
-                                <textarea
-                                  rows="3"
-                                  placeholder="Nhập kịch bản thoại để tự động sinh file âm thanh bài học..."
-                                  value={podcastScript}
-                                  onChange={(e) => setPodcastScript(e.target.value)}
-                                  className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2.5 py-1.5 text-slate-200 resize-none focus:outline-none"
-                                />
-                                <button
-                                  type="button"
-                                  disabled={synthesizingPodcast}
-                                  onClick={handlePodcastSynthesize}
-                                  className="w-full bg-purple-800 hover:bg-purple-900 disabled:bg-slate-850 text-white font-bold py-2 rounded-lg text-xs transition-colors flex items-center justify-center gap-1 mt-1 shadow-md"
-                                >
-                                  {synthesizingPodcast ? "Đang sinh audio..." : "Chạy giọng nói TTS AI & Preview"}
-                                </button>
-                              </div>
-
-                              {podcastAudioUrl && (
-                                <div className="space-y-2 bg-purple-950/20 border border-purple-900/30 p-3 rounded-lg">
-                                  <p className="text-[10px] font-bold uppercase text-purple-400">Nghe thử bản Preview:</p>
-                                  <audio src={podcastAudioUrl} controls className="w-full h-8" />
-                                </div>
-                              )}
-
-                              <div className="space-y-3">
-                                <div className="space-y-1">
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase">Đường dẫn tệp âm thanh (Audio URL)</label>
-                                  <input
-                                    type="text"
-                                    required
-                                    placeholder="Điền tự động từ TTS hoặc nhập URL thủ công..."
-                                    value={podcastAudioUrl}
-                                    onChange={(e) => setPodcastAudioUrl(e.target.value)}
-                                    className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2.5 py-1.5 text-slate-200 font-mono"
-                                  />
-                                </div>
-                                <div className="space-y-1">
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase">Phân cảnh đàm thoại JSON (Transcript)</label>
-                                  <textarea
-                                    rows="4"
-                                    required
-                                    value={podcastTranscript}
-                                    onChange={(e) => setPodcastTranscript(e.target.value)}
-                                    className="w-full bg-slate-955 border border-slate-800 rounded-lg px-2.5 py-1.5 text-slate-200 font-mono resize-none focus:outline-none"
-                                  />
-                                </div>
-                              </div>
-
-                              <button
-                                type="submit"
-                                disabled={!podcastAudioUrl}
-                                className="w-full bg-purple-800 hover:bg-purple-900 disabled:opacity-50 text-white font-bold py-2.5 rounded-lg text-xs transition-all shadow"
-                              >
-                                {!nodePodcast ? "Tạo và Phát hành Podcast" : "Cập nhật Podcast"}
-                              </button>
-                            </form>
-                          </div>
+                          <NodePodcastTab
+                            nodePodcast={nodePodcast}
+                            podcastScript={podcastScript}
+                            setPodcastScript={setPodcastScript}
+                            podcastAudioUrl={podcastAudioUrl}
+                            setPodcastAudioUrl={setPodcastAudioUrl}
+                            podcastTranscript={podcastTranscript}
+                            setPodcastTranscript={setPodcastTranscript}
+                            synthesizingPodcast={synthesizingPodcast}
+                            handlePodcastDelete={handlePodcastDelete}
+                            handlePodcastSynthesize={handlePodcastSynthesize}
+                            handlePodcastSubmit={handlePodcastSubmit}
+                          />
                         )}
 
-                        {/* Tab 6: PDF upload panel */}
                         {activeRightTab === 'pdf' && (
-                          <div className="space-y-6">
-                            <h4 className="text-base font-semibold text-blue-500 flex items-center gap-2">
-                              <span className="material-symbols-outlined">picture_as_pdf</span> Tài liệu PDF học bổ trợ
-                            </h4>
-
-                            <div className="space-y-2 max-h-[30vh] overflow-y-auto pr-1 bg-slate-900/40 p-3 rounded-xl border border-slate-800/80">
-                              {nodeDocuments.length === 0 ? (
-                                <p className="text-xs text-slate-500 italic text-center py-4">Chưa có tài liệu PDF nào cho khóa học này.</p>
-                              ) : (
-                                nodeDocuments.map(doc => (
-                                  <div key={doc.id} className="flex justify-between items-center bg-slate-950 p-2.5 rounded-lg border border-slate-850 text-xs">
-                                    <div className="flex items-center gap-2">
-                                      <span className="material-symbols-outlined text-red-500 text-sm">picture_as_pdf</span>
-                                      <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline font-semibold max-w-[200px] truncate">{doc.fileName}</a>
-                                    </div>
-                                    <button onClick={() => handleDocumentDelete(doc.id)} className="text-red-500 hover:text-red-400 p-1">
-                                      <span className="material-symbols-outlined text-sm">delete</span>
-                                    </button>
-                                  </div>
-                                ))
-                              )}
-                            </div>
-
-                            <form onSubmit={handlePdfUploadSubmit} className="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-3 text-left">
-                              <h5 className="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1">
-                                <span className="material-symbols-outlined text-sm">cloud_upload</span> Upload tài liệu PDF bổ trợ
-                              </h5>
-                              <input
-                                type="file"
-                                accept=".pdf"
-                                required
-                                onChange={(e) => setPdfFile(e.target.files[0])}
-                                className="text-xs text-slate-400 file:bg-slate-955 file:border-slate-800 file:text-slate-350 file:rounded-lg file:px-3 file:py-1 file:mr-3 hover:file:bg-slate-900 focus:outline-none"
-                              />
-                              <button
-                                type="submit"
-                                disabled={uploadingPdf || !pdfFile}
-                                className="w-full bg-blue-750 hover:bg-blue-800 disabled:opacity-50 text-white font-bold py-2 rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5"
-                              >
-                                {uploadingPdf ? "Đang tải lên..." : "Tải lên tài liệu PDF"}
-                              </button>
-                            </form>
-                          </div>
+                          <NodeDocumentTab
+                            nodeDocuments={nodeDocuments}
+                            handleDocumentDelete={handleDocumentDelete}
+                            handlePdfUploadSubmit={handlePdfUploadSubmit}
+                            pdfFile={pdfFile}
+                            setPdfFile={setPdfFile}
+                            uploadingPdf={uploadingPdf}
+                          />
                         )}
                       </div>
 
@@ -1903,120 +1487,78 @@ export default function Nodes() {
   );
 }
 
-// ==================== FRAMEWORK ADMIN PANEL (STORY, CONTENTS, MINIGAME, FINAL) ====================
+// ==================== LESSON FLOW ADMIN PANEL ====================
 function FrameworkAdminPanel({ form, setForm }) {
-  const loadTemplate = (field, type = '') => {
-    let tpl = {};
-    if (field === 'storyIntro') {
-      tpl = {
-        enable: true,
-        background: "",
-        character: { name: "Narrator", avatar: "", position: "left" },
-        dialogs: [{ id: "dialog_01", text: "Xin chào, hôm nay chúng ta sẽ khám phá...", animation: "fade" }],
-        nextButton: { text: "Bắt đầu bài học", style: "primary" }
-      };
-    } else if (field === 'lessonContents') {
-      tpl = [{
-        conceptId: "concept_01",
-        title: "Khái niệm 1",
-        media: { type: "video", url: "https://www.youtube.com/watch?v=Mzg-AdRrjGY", autoplay: false },
-        questions: [{
-          questionId: "q_01",
-          type: "single_choice",
-          question: "Câu hỏi trắc nghiệm kiểm tra nhận thức ở đây?",
-          answers: [
-            { answerId: "a_01", text: "Đáp án sai", isCorrect: false, explanation: "Vì chưa phản ánh đúng..." },
-            { answerId: "a_02", text: "Đáp án đúng", isCorrect: true, explanation: "Giải thích khoa học..." }
+  const loadTemplate = () => {
+    const tpl = [
+      {
+        id: "intro-dialogue",
+        type: "dialogue",
+        title: "Dẫn nhập",
+        config: {
+          lines: [
+            { who: "guide", text: "Xin chào, hôm nay chúng ta sẽ khám phá một khái niệm triết học trọng tâm." }
           ]
-        }],
-        conceptSummary: { title: "Đúc kết khái niệm 1", content: ["Ý chính 1 cần ghi nhớ", "Ý chính 2 cần ghi nhớ"] }
-      }];
-    } else if (field === 'minigame') {
-      if (type === 'sorting') {
-        tpl = {
-          enable: true,
-          type: "single_column_sorting",
-          config: {
-            title: "Sắp xếp theo trình tự phát triển lịch sử",
-            items: [
-              { id: "item_01", text: "Duy vật Chất phác" },
-              { id: "item_02", text: "Duy vật Siêu hình" },
-              { id: "item_03", text: "Duy vật Biện chứng" }
-            ],
-            correctOrder: ["item_01", "item_02", "item_03"]
-          }
-        };
-      } else if (type === 'tree') {
-        tpl = {
-          enable: true,
-          type: "mindmap_tree",
-          config: {
-            title: "Gắn khái niệm vào đúng nhánh sơ đồ",
-            treeNodes: [
-              { id: "node_root", label: "Chủ nghĩa Duy vật", parentId: null },
-              { id: "node_sub", label: "Duy vật Biện chứng", parentId: "node_root" }
-            ],
-            options: [{ id: "opt_01", text: "Lênin phát triển", matchNodeId: "node_sub" }]
-          }
-        };
-      } else {
-        tpl = {
-          enable: true,
-          type: "matching_2_columns",
-          config: {
-            title: "Nối khái niệm biện chứng phù hợp",
-            leftColumn: [{ id: "left_01", text: "Vật chất" }],
-            rightColumn: [{ id: "right_01", text: "Thực tại khách quan độc lập với ý thức" }],
-            correctPairs: [{ leftId: "left_01", rightId: "right_01" }]
-          }
-        };
+        },
+        completionRule: { type: "viewed" }
+      },
+      {
+        id: "main-reading",
+        type: "markdown",
+        title: "Nội dung chính",
+        config: {
+          content: form.originalText || "Nội dung bài học đang được cập nhật."
+        },
+        completionRule: { type: "viewed" }
+      },
+      {
+        id: "checkpoint-mcq",
+        type: "mcq",
+        title: "Kiểm tra nhanh",
+        config: {
+          question: "Chọn nhận định đúng nhất về nội dung vừa học.",
+          options: [
+            { id: "a", text: "Nhận định chưa chính xác.", isCorrect: false },
+            { id: "b", text: "Nhận định đúng.", isCorrect: true }
+          ]
+        },
+        completionRule: { type: "correct" }
+      },
+      {
+        id: "final-summary",
+        type: "final_summary",
+        title: "Đúc kết",
+        config: {
+          message: form.quickTake || "Bạn đã hoàn thành bài học.",
+          keyTakeaways: [form.summary || "Nắm được nội dung trọng tâm của bài học."],
+          rewards: { xp: 80, badge: "Hoàn thành bài học" }
+        },
+        completionRule: { type: "viewed" }
       }
-    } else if (field === 'finalSummary') {
-      tpl = {
-        title: "Hoàn thành bài học",
-        description: "Bạn đã hoàn thành xuất sắc bài học.",
-        keyTakeaways: ["Lập luận cốt lõi 1", "Lập luận cốt lõi 2"],
-        rewards: { xp: 100, badge: "Lý luận gia" },
-        actions: { retryButton: true, nextLessonButton: true }
-      };
-    }
-    
-    setForm(prev => ({ ...prev, [field]: JSON.stringify(tpl, null, 2) }));
+    ];
+
+    setForm(prev => ({ ...prev, lessonFlow: JSON.stringify(tpl, null, 2) }));
+  };
+
+  const formatJson = () => {
+    const parsed = JSON.parse(form.lessonFlow || "[]");
+    setForm(prev => ({ ...prev, lessonFlow: JSON.stringify(parsed, null, 2) }));
   };
 
   return (
     <div className="space-y-4 text-left text-xs">
       <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 space-y-2">
-        <div className="flex justify-between items-center">
-          <span className="font-bold text-indigo-400 uppercase block">1. Dẫn truyện (Story Intro JSON)</span>
-          <button type="button" onClick={() => loadTemplate('storyIntro')} className="text-[10px] bg-slate-950 border border-slate-800 hover:bg-slate-900 text-indigo-400 px-2 py-0.5 rounded">Nạp mẫu</button>
-        </div>
-        <textarea rows="4" value={form.storyIntro} onChange={(e) => setForm({ ...form, storyIntro: e.target.value })} className="w-full bg-slate-955 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono resize-none focus:outline-none" />
-      </div>
-      <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 space-y-2">
-        <div className="flex justify-between items-center">
-          <span className="font-bold text-amber-500 uppercase block">2. Vòng lặp lý thuyết (Lesson Contents JSON)</span>
-          <button type="button" onClick={() => loadTemplate('lessonContents')} className="text-[10px] bg-slate-955 border border-slate-800 hover:bg-slate-900 text-amber-500 px-2 py-0.5 rounded">Nạp mẫu</button>
-        </div>
-        <textarea rows="4" value={form.lessonContents} onChange={(e) => setForm({ ...form, lessonContents: e.target.value })} className="w-full bg-slate-955 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono resize-none focus:outline-none" />
-      </div>
-      <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 space-y-2">
         <div className="flex justify-between items-center flex-wrap gap-2">
-          <span className="font-bold text-indigo-400 uppercase block">3. Trò chơi củng cố (Minigame JSON)</span>
+          <span className="font-bold text-indigo-400 uppercase block">Lesson Flow JSON</span>
           <div className="flex gap-1">
-            <button type="button" onClick={() => loadTemplate('minigame', 'matching')} className="text-[9px] bg-slate-950 border border-slate-800 hover:bg-slate-900 text-indigo-400 px-1.5 py-0.5 rounded">Ghép</button>
-            <button type="button" onClick={() => loadTemplate('minigame', 'sorting')} className="text-[9px] bg-slate-950 border border-slate-800 hover:bg-slate-900 text-indigo-400 px-1.5 py-0.5 rounded">Xếp</button>
-            <button type="button" onClick={() => loadTemplate('minigame', 'tree')} className="text-[9px] bg-slate-950 border border-slate-800 hover:bg-slate-900 text-indigo-400 px-1.5 py-0.5 rounded">Sơ đồ</button>
+            <button type="button" onClick={loadTemplate} className="text-[10px] bg-slate-950 border border-slate-800 hover:bg-slate-900 text-indigo-400 px-2 py-0.5 rounded">Nạp mẫu</button>
+            <button type="button" onClick={formatJson} className="text-[10px] bg-slate-950 border border-slate-800 hover:bg-slate-900 text-emerald-400 px-2 py-0.5 rounded">Format</button>
           </div>
         </div>
-        <textarea rows="4" value={form.minigame} onChange={(e) => setForm({ ...form, minigame: e.target.value })} className="w-full bg-slate-955 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono resize-none focus:outline-none" />
-      </div>
-      <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 space-y-2">
-        <div className="flex justify-between items-center">
-          <span className="font-bold text-emerald-400 uppercase block">4. Đúc kết & Huy hiệu (Final Summary JSON)</span>
-          <button type="button" onClick={() => loadTemplate('finalSummary')} className="text-[10px] bg-slate-955 border border-slate-800 hover:bg-slate-900 text-emerald-400 px-2 py-0.5 rounded">Nạp mẫu</button>
-        </div>
-        <textarea rows="4" value={form.finalSummary} onChange={(e) => setForm({ ...form, finalSummary: e.target.value })} className="w-full bg-slate-955 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono resize-none focus:outline-none" />
+        <p className="text-slate-500 leading-relaxed">
+          Mỗi phần tử cần có `id`, `type`, `config`. Các type hiện hỗ trợ: dialogue, media, markdown, target_matching, category_sorting, mindmap_reveal, mcq, matching_columns, true_false, sequence_sorting, final_summary.
+        </p>
+        <textarea rows="22" value={form.lessonFlow} onChange={(e) => setForm({ ...form, lessonFlow: e.target.value })} className="w-full bg-slate-955 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono resize-y focus:outline-none" />
       </div>
     </div>
   );

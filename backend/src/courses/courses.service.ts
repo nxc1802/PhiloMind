@@ -6,6 +6,7 @@ import { SupabaseService } from '../supabase/supabase.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import { randomUUID } from 'crypto';
+import { NodeSchemaValidator } from './validators/node-schema.validator';
 
 @Injectable()
 export class CoursesService {
@@ -196,6 +197,10 @@ export class CoursesService {
                 flashcardCompleted: true,
                 podcastCompleted: true,
                 quizCompleted: true,
+                activeComponentId: true,
+                currentComponentIndex: true,
+                completedComponentIds: true,
+                componentResults: true,
               }
             },
             _count: { select: { flashcards: true } },
@@ -245,6 +250,10 @@ export class CoursesService {
             flashcardCompleted: true,
             podcastCompleted: true,
             quizCompleted: true,
+            activeComponentId: true,
+            currentComponentIndex: true,
+            completedComponentIds: true,
+            componentResults: true,
           }
         },
       },
@@ -519,6 +528,8 @@ export class CoursesService {
 
   async createNode(dto: any) {
     await this.getChapterById(dto.chapterId);
+    const lessonFlow = dto.lessonFlow || this.buildDefaultLessonFlow(dto);
+    NodeSchemaValidator.validateNode(lessonFlow);
     return this.prisma.conceptNode.create({
       data: {
         title: dto.title,
@@ -530,11 +541,8 @@ export class CoursesService {
         videoUrl: dto.videoUrl || null,
         orderIndex: dto.orderIndex,
         chapterId: dto.chapterId,
-        lessonType: dto.lessonType,
-        storyIntro: dto.storyIntro !== undefined ? dto.storyIntro : null,
-        lessonContents: dto.lessonContents !== undefined ? dto.lessonContents : null,
-        minigame: dto.minigame !== undefined ? dto.minigame : null,
-        finalSummary: dto.finalSummary !== undefined ? dto.finalSummary : null,
+        lessonType: 'flow',
+        lessonFlow: lessonFlow as any,
       },
     });
   }
@@ -553,6 +561,9 @@ export class CoursesService {
 
   async updateNode(nodeId: string, dto: any) {
     await this.getNodeDetails(nodeId, 'admin-user');
+    if (dto.lessonFlow !== undefined) {
+      NodeSchemaValidator.validateNode(dto.lessonFlow);
+    }
     return this.prisma.conceptNode.update({
       where: { id: nodeId },
       data: {
@@ -564,11 +575,103 @@ export class CoursesService {
         timeToRead: dto.timeToRead,
         videoUrl: dto.videoUrl !== undefined ? dto.videoUrl : undefined,
         orderIndex: dto.orderIndex,
-        lessonType: dto.lessonType !== undefined ? dto.lessonType : undefined,
-        storyIntro: dto.storyIntro !== undefined ? dto.storyIntro : undefined,
-        lessonContents: dto.lessonContents !== undefined ? dto.lessonContents : undefined,
-        minigame: dto.minigame !== undefined ? dto.minigame : undefined,
-        finalSummary: dto.finalSummary !== undefined ? dto.finalSummary : undefined,
+        lessonType: 'flow',
+        lessonFlow: dto.lessonFlow !== undefined ? (dto.lessonFlow as any) : undefined,
+      },
+    });
+  }
+
+  private buildDefaultLessonFlow(dto: any) {
+    const flow: any[] = [];
+
+    if (dto.videoUrl) {
+      flow.push({
+        id: 'lesson-video',
+        type: 'media',
+        title: 'Video nhập môn',
+        config: {
+          mediaType: 'video',
+          url: dto.videoUrl,
+          title: dto.title,
+        },
+        completionRule: { type: 'viewed' },
+      });
+    }
+
+    flow.push({
+      id: 'main-reading',
+      type: 'markdown',
+      title: dto.title || 'Nội dung bài học',
+      config: {
+        content: dto.originalText || dto.summary || 'Nội dung bài học đang được cập nhật.',
+      },
+      completionRule: { type: 'viewed' },
+    });
+
+    flow.push({
+      id: 'final-summary',
+      type: 'final_summary',
+      title: 'Đúc kết bài học',
+      config: {
+        message: dto.quickTake || dto.summary || 'Hoàn thành bài học.',
+        keyTakeaways: [dto.summary || dto.quickTake || 'Nắm được nội dung trọng tâm của bài học.'],
+        rewards: { xp: 80, badge: 'Hoàn thành bài học' },
+      },
+      completionRule: { type: 'viewed' },
+    });
+
+    return flow;
+  }
+
+  async updateComponentProgress(
+    userId: string,
+    nodeId: string,
+    activeComponentId?: string,
+    currentComponentIndex?: number,
+    completedComponentIds?: string[],
+    componentResult?: any,
+  ) {
+    const existing = await this.prisma.progress.findFirst({
+      where: { userId, nodeId },
+    });
+
+    const previousResults = Array.isArray(existing?.componentResults)
+      ? (existing?.componentResults as any[])
+      : [];
+    const nextResults = componentResult
+      ? [
+          ...previousResults.filter((result) => result.componentId !== componentResult.componentId),
+          {
+            ...componentResult,
+            completedAt: componentResult.completedAt || new Date().toISOString(),
+          },
+        ]
+      : previousResults;
+
+    const updateData: any = {
+      status: existing?.status === 'completed' ? 'completed' : 'in_progress',
+    };
+    if (activeComponentId !== undefined) updateData.activeComponentId = activeComponentId;
+    if (currentComponentIndex !== undefined) updateData.currentComponentIndex = currentComponentIndex;
+    if (completedComponentIds !== undefined) updateData.completedComponentIds = completedComponentIds as any;
+    if (componentResult !== undefined) updateData.componentResults = nextResults as any;
+
+    if (existing) {
+      return this.prisma.progress.update({
+        where: { id: existing.id },
+        data: updateData,
+      });
+    }
+
+    return this.prisma.progress.create({
+      data: {
+        userId,
+        nodeId,
+        status: 'in_progress',
+        activeComponentId: activeComponentId || null,
+        currentComponentIndex: currentComponentIndex || 0,
+        completedComponentIds: (completedComponentIds || []) as any,
+        componentResults: nextResults as any,
       },
     });
   }

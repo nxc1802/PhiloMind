@@ -78,6 +78,21 @@ services:
     depends_on:
       - backend
 
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: ${FRONTEND_REACT_APP_API_URL:-http://localhost:3001/api}
+    container_name: philomind-admin
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - REACT_APP_API_URL=${FRONTEND_REACT_APP_API_URL:-http://localhost:3001/api}
+    depends_on:
+      - backend
+
 volumes:
   pgdata:
   tts_cache:

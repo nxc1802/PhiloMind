@@ -1,34 +1,12 @@
 import { Controller, Get, Post, Body, Param, Query, Delete, Put, UseGuards, Req } from '@nestjs/common';
 import { DebatesService } from './debates.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-
-class DebateMessageDto {
-  @IsString()
-  @IsOptional()
-  userId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  message: string;
-}
-
-class CreateDebateTopicDto {
-  @IsString()
-  @IsNotEmpty()
-  title: string;
-
-  @IsString()
-  @IsNotEmpty()
-  description: string;
-
-  @IsString()
-  @IsNotEmpty()
-  initialPrompt: string;
-}
+import { DebateMessageDto } from './dto/debate-message.dto';
+import { CreateDebateTopicDto } from './dto/create-debate-topic.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @ApiTags('Socratic AI Debate')
 @Controller('debates')
@@ -75,6 +53,7 @@ export class DebatesController {
   }
 
   @Post('topic/:topicId/message')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @ApiOperation({ summary: 'Post a user argument to a topic debate session and get rebuttal' })
   async sendTopicDebateMessage(
     @Param('topicId') topicId: string,
@@ -100,6 +79,7 @@ export class DebatesController {
   }
 
   @Post(':nodeId/message')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @ApiOperation({ summary: 'Post a user argument and get a Socratic rebuttal' })
   async sendDebateMessage(
     @Param('nodeId') nodeId: string,

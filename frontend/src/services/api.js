@@ -1,5 +1,5 @@
 // API client service for PhiloMind frontend to communicate with backend
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = (import.meta.env && import.meta.env.REACT_APP_API_URL) || 'http://localhost:3001/api';
 
 function getHeaders(customHeaders = {}) {
   const token = localStorage.getItem('token');
@@ -127,6 +127,15 @@ export const api = {
         method: 'PATCH',
         headers: getHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ userId, status, ...extraFields }),
+      });
+      return handleResponse(response);
+    },
+
+    updateComponentProgress: async (nodeId, payload) => {
+      const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/component-progress`, {
+        method: 'PATCH',
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify(payload),
       });
       return handleResponse(response);
     },

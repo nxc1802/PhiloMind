@@ -29,6 +29,19 @@ export function useUpdateProgressMutation() {
   });
 }
 
+export function useUpdateComponentProgressMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ nodeId, userId, payload }) =>
+      api.courses.updateComponentProgress(nodeId, payload),
+    onSuccess: (data, { nodeId, userId }) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.journey('main', userId) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.nodeDetails(nodeId, userId) });
+    },
+  });
+}
+
 export function useSubmitReviewMutation() {
   const queryClient = useQueryClient();
 

@@ -1,38 +1,11 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { PhilosofunService } from './philosofun.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-
-class CreatePhilosofunDto {
-  @IsString()
-  @IsNotEmpty()
-  title: string;
-
-  @IsString()
-  @IsOptional()
-  description?: string;
-
-  @IsString()
-  @IsNotEmpty()
-  videoUrl: string;
-}
-
-class UpdatePhilosofunDto {
-  @IsString()
-  @IsOptional()
-  title?: string;
-
-  @IsString()
-  @IsOptional()
-  description?: string;
-
-  @IsString()
-  @IsOptional()
-  videoUrl?: string;
-}
+import { CreatePhilosofunDto } from './dto/create-philosofun.dto';
+import { UpdatePhilosofunDto } from './dto/update-philosofun.dto';
 
 @ApiTags('Philosofun')
 @Controller('philosofun')

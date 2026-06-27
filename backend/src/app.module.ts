@@ -12,12 +12,18 @@ import { UsersModule } from './users/users.module';
 import { PhilosofunModule } from './philosofun/philosofun.module';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 100, // 100 requests per minute by default
+    }]),
     DatabaseModule,
     AIModule,
     SupabaseModule,
@@ -31,5 +37,11 @@ import { AppController } from './app.controller';
     AuthModule,
   ],
   controllers: [AppController],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}

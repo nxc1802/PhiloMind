@@ -109,7 +109,7 @@ export default function Dashboard() {
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="material-symbols-outlined text-amber-500 text-sm">account_tree</span>
-                      <span>Phân cấp Chương -> Sub-chương -> Bài học</span>
+                      <span>Phân cấp Chương &rarr; Sub-chương &rarr; Bài học</span>
                     </div>
                   </div>
                 </div>

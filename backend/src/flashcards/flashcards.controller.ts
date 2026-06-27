@@ -1,57 +1,12 @@
 import { Controller, Get, Post, Body, Query, Put, Delete, Param, UseGuards, Req } from '@nestjs/common';
 import { FlashcardsService } from './flashcards.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsNumber, Min, Max, IsOptional } from 'class-validator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-
-class ReviewCardDto {
-  @IsString()
-  @IsOptional()
-  userId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  flashcardId: string;
-
-  @IsNumber()
-  @Min(1)
-  @Max(4)
-  ease: number; // 1 | 2 | 3 | 4
-}
-
-class CreateFlashcardDto {
-  @IsString()
-  @IsNotEmpty()
-  nodeId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  tag: string;
-
-  @IsString()
-  @IsNotEmpty()
-  question: string;
-
-  @IsString()
-  @IsNotEmpty()
-  answer: string;
-}
-
-class UpdateFlashcardDto {
-  @IsString()
-  @IsOptional()
-  tag?: string;
-
-  @IsString()
-  @IsOptional()
-  question?: string;
-
-  @IsString()
-  @IsOptional()
-  answer?: string;
-}
+import { ReviewCardDto } from './dto/review-card.dto';
+import { CreateFlashcardDto } from './dto/create-flashcard.dto';
+import { UpdateFlashcardDto } from './dto/update-flashcard.dto';
 
 @ApiTags('Spaced Repetition Flashcards')
 @Controller('flashcards')

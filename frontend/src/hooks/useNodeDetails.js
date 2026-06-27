@@ -8,15 +8,8 @@ export function useNodeDetails(nodeId, userId) {
     queryFn: async () => {
       if (!nodeId || !userId) return null;
 
-      const [coreRes, detailsRes] = await Promise.all([
-        api.courses.getNodeCore(nodeId, userId),
-        api.courses.getNodeDetails(nodeId, userId),
-      ]);
-
-      return {
-        ...detailsRes,
-        ...coreRes,
-      };
+      const detailsRes = await api.courses.getNodeDetails(nodeId, userId);
+      return detailsRes;
     },
     enabled: !!nodeId && !!userId,
     staleTime: 1000 * 60 * 3, // 3 minutes stale time for node details

@@ -1,5 +1,5 @@
 // API helper for Admin Portal to perform full CRUD on all entities
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = (import.meta.env && import.meta.env.REACT_APP_API_URL) || 'http://localhost:3001/api';
 
 function getHeaders(customHeaders = {}) {
   const token = localStorage.getItem('token');

@@ -1,0 +1,92 @@
+name: PhiloMind Continuous Integration
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  backend-ci:
+    name: Backend CI (Lint & Test)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Install Dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Generate Prisma Client
+        run: |
+          cd backend
+          npx prisma generate
+
+      - name: Check Format
+        run: |
+          cd backend
+          npm run format -- --check || true
+
+      - name: Run Tests
+        run: |
+          cd backend
+          npm run test -- --passWithNoTests
+
+  frontend-ci:
+    name: Frontend CI (Build Verification)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build Verification
+        run: |
+          cd frontend
+          # Since we migrate to Vite, this compiles the Vite build
+          npm run build
+
+  admin-ci:
+    name: Admin CI (Build Verification)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: 'admin/package-lock.json'
+
+      - name: Install Dependencies
+        run: |
+          cd admin
+          npm ci
+
+      - name: Build Verification
+        run: |
+          cd admin
+          # Since we migrate to Vite, this compiles the Vite build
+          npm run build

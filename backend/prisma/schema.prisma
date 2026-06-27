@@ -84,12 +84,9 @@ model ConceptNode {
   comments      Comment[]
   quizzes       Quiz[]
 
-  // Synchronized Lesson Framework Fields
-  storyIntro     Json?
-  lessonContents Json?
-  minigame       Json?
-  finalSummary   Json?
-  lessonType     String?            // "classic" | "adventure"
+  // Component-based Lesson Flow
+  lessonFlow     Json?
+  lessonType     String             @default("flow")
 
   @@index([chapterId, orderIndex])
 }
@@ -179,6 +176,10 @@ model Progress {
   flashcardCompleted Boolean     @default(false)
   podcastCompleted   Boolean     @default(false)
   quizCompleted      Boolean     @default(false)
+  activeComponentId  String?
+  currentComponentIndex Int      @default(0)
+  completedComponentIds Json?
+  componentResults   Json?
   updatedAt          DateTime    @updatedAt
   user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   node               ConceptNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)

@@ -1,70 +1,15 @@
 import { Controller, Get, Post, Body, Param, Query, Put, Delete, HttpCode, UseGuards, Req, ForbiddenException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, IsEmail, IsNumber } from 'class-validator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-
-class RegisterDto {
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  @IsString()
-  @IsOptional()
-  password?: string;
-}
-
-class LoginDto {
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
-
-  @IsString()
-  @IsOptional()
-  password?: string;
-}
-
-class GoogleLoginDto {
-  @IsString()
-  @IsNotEmpty()
-  idToken: string;
-}
-
-class SupabaseLoginDto {
-  @IsString()
-  @IsNotEmpty()
-  token: string;
-}
-
-class UpdateUserDto {
-  @IsString()
-  @IsOptional()
-  name?: string;
-
-  @IsString()
-  @IsOptional()
-  email?: string;
-
-  @IsNumber()
-  @IsOptional()
-  streak?: number;
-}
-
-class CreateFeedbackDto {
-  @IsString()
-  @IsOptional()
-  userId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  content: string;
-}
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { GoogleLoginDto } from './dto/google-login.dto';
+import { SupabaseLoginDto } from './dto/supabase-login.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateFeedbackDto } from './dto/create-feedback.dto';
 
 @ApiTags('Authentication & User Management')
 @Controller()
