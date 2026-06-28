@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthLayout, { AuthField } from "../components/AuthLayout";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../components/Toast";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, loginWithGoogle } = useAuth();
+  const location = useLocation();
+  const { authReady, isAuthenticated, login, loginWithGoogle } = useAuth();
   const { showToast } = useToast();
+  const redirectTo = location.state?.from?.pathname || "/";
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -16,11 +18,21 @@ const Login = () => {
   const updateField = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
+  useEffect(() => {
+    if (authReady && isAuthenticated) {
+      navigate(redirectTo, { replace: true });
+    }
+  }, [authReady, isAuthenticated, navigate, redirectTo]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     if (!form.email.trim()) {
       setError("Vui lòng nhập email.");
+      return;
+    }
+    if (!form.password.trim()) {
+      setError("Vui lòng nhập mật khẩu.");
       return;
     }
     setLoading(true);
@@ -31,7 +43,7 @@ const Login = () => {
       return;
     }
     showToast("Đăng nhập thành công!", "success");
-    navigate("/home");
+    navigate(redirectTo, { replace: true });
   };
 
   const handleGoogleLogin = async () => {
@@ -66,6 +78,14 @@ const Login = () => {
           value={form.email}
           onChange={updateField("email")}
           placeholder="ban@example.com"
+        />
+        <AuthField
+          label="Mật khẩu"
+          icon="lock"
+          type="password"
+          value={form.password}
+          onChange={updateField("password")}
+          placeholder="Nhập mật khẩu"
         />
 
         {error && (

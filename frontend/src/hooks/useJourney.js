@@ -12,18 +12,8 @@ export function useJourney(user) {
     queryFn: async () => {
       if (!userId) return { courses: [], mainCourse: null, journey: [] };
 
-      const cachedCourseId = localStorage.getItem(MAIN_COURSE_ID_KEY);
-
-      // Fire both calls in parallel if we have a cached course ID
       const coursesPromise = api.courses.list();
-      const journeyPromise = cachedCourseId
-        ? api.courses.getJourney(cachedCourseId, userId)
-        : Promise.resolve(null);
-
-      const [courses, preFetchedJourney] = await Promise.all([
-        coursesPromise,
-        journeyPromise
-      ]);
+      const courses = await coursesPromise;
 
       const mainCourse = courses.find(c => c.title.includes('Triết học')) || courses[0];
 
@@ -31,11 +21,20 @@ export function useJourney(user) {
         return { courses, mainCourse: null, journey: [] };
       }
 
-      let journey = preFetchedJourney;
+      const cachedCourseId = localStorage.getItem(MAIN_COURSE_ID_KEY);
+      const cachedCourseStillExists = cachedCourseId && courses.some((course) => course.id === cachedCourseId);
+      const courseId = cachedCourseStillExists ? cachedCourseId : mainCourse.id;
 
-      // If there was no cached ID, or the cached ID did not match the resolved main course,
-      // fetch the correct journey sequentially and update the cache.
-      if (!cachedCourseId || mainCourse.id !== cachedCourseId) {
+      if (!cachedCourseStillExists || courseId !== cachedCourseId) {
+        localStorage.setItem(MAIN_COURSE_ID_KEY, courseId);
+      }
+
+      let journey;
+      try {
+        journey = await api.courses.getJourney(courseId, userId);
+      } catch (err) {
+        localStorage.removeItem(MAIN_COURSE_ID_KEY);
+        if (courseId === mainCourse.id) throw err;
         localStorage.setItem(MAIN_COURSE_ID_KEY, mainCourse.id);
         journey = await api.courses.getJourney(mainCourse.id, userId);
       }

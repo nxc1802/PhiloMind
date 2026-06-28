@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthLayout, { AuthField } from "../components/AuthLayout";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../components/Toast";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register, loginWithGoogle } = useAuth();
+  const location = useLocation();
+  const { authReady, isAuthenticated, register, loginWithGoogle } = useAuth();
   const { showToast } = useToast();
+  const redirectTo = location.state?.from?.pathname || "/";
 
   const [form, setForm] = useState({
     name: "",
@@ -21,6 +23,12 @@ const Register = () => {
   const updateField = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
+  useEffect(() => {
+    if (authReady && isAuthenticated) {
+      navigate(redirectTo, { replace: true });
+    }
+  }, [authReady, isAuthenticated, navigate, redirectTo]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -28,10 +36,19 @@ const Register = () => {
       setError("Vui lòng điền đầy đủ các trường.");
       return;
     }
+    if (!form.password.trim()) {
+      setError("Vui lòng nhập mật khẩu.");
+      return;
+    }
+    if (form.password !== form.confirm) {
+      setError("Mật khẩu xác nhận chưa khớp.");
+      return;
+    }
     setLoading(true);
     const result = await register({
       name: form.name,
       email: form.email,
+      password: form.password,
     });
     setLoading(false);
     if (!result.ok) {
@@ -39,7 +56,7 @@ const Register = () => {
       return;
     }
     showToast("Đăng ký thành công! Chào mừng bạn.", "success");
-    navigate("/home");
+    navigate(redirectTo, { replace: true });
   };
 
   const handleGoogleLogin = async () => {
@@ -82,6 +99,22 @@ const Register = () => {
           value={form.email}
           onChange={updateField("email")}
           placeholder="ban@example.com"
+        />
+        <AuthField
+          label="Mật khẩu"
+          icon="lock"
+          type="password"
+          value={form.password}
+          onChange={updateField("password")}
+          placeholder="Tạo mật khẩu"
+        />
+        <AuthField
+          label="Xác nhận mật khẩu"
+          icon="lock_reset"
+          type="password"
+          value={form.confirm}
+          onChange={updateField("confirm")}
+          placeholder="Nhập lại mật khẩu"
         />
 
         {error && (

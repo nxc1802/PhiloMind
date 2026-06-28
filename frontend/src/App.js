@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "./context/AuthContext";
 import { api } from "./services/api";
@@ -26,12 +26,11 @@ import MCQQuiz from "./pages/MCQQuiz";
 
 function App() {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   // Prefetch resources when accessing the website with an active session, or upon logging in
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!user && !token) return; // Wait until authenticated to avoid 401 errors on protected routes
+    if (!isAuthenticated || !user) return; // Wait until authenticated to avoid 401 errors on protected routes
 
     // 1. Prefetch public resources (shared across all authenticated users)
     queryClient.prefetchQuery({
@@ -70,36 +69,62 @@ function App() {
         staleTime: 1000 * 60 * 2,
       });
     }
-  }, [user, queryClient]);
+  }, [isAuthenticated, user, queryClient]);
 
   return (
     <Routes>
       {/* Default -> / */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<ProtectedPage><Home /></ProtectedPage>} />
       <Route path="/dashboard" element={<Navigate to="/" replace />} />
-      <Route path="/practice" element={<Practice />} />
-      <Route path="/practice/shinkei/:id" element={<FlashcardDetail />} />
-      <Route path="/debate" element={<DebateCorner />} />
-      <Route path="/lessons" element={<Lesson />} />
-      <Route path="/philosofun" element={<Philosofun />} />
-      <Route path="/docs" element={<Docs />} />
-      <Route path="/settings" element={<Settings />} />
+      <Route path="/practice" element={<ProtectedPage><Practice /></ProtectedPage>} />
+      <Route path="/practice/shinkei/:id" element={<ProtectedPage><FlashcardDetail /></ProtectedPage>} />
+      <Route path="/debate" element={<ProtectedPage><DebateCorner /></ProtectedPage>} />
+      <Route path="/lessons" element={<ProtectedPage><Lesson /></ProtectedPage>} />
+      <Route path="/philosofun" element={<ProtectedPage><Philosofun /></ProtectedPage>} />
+      <Route path="/docs" element={<ProtectedPage><Docs /></ProtectedPage>} />
+      <Route path="/settings" element={<ProtectedPage><Settings /></ProtectedPage>} />
 
       {/* Auth */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
       {/* Quiz sub-pages */}
-      <Route path="/quiz/matching/:id" element={<MatchingQuiz />} />
-      <Route path="/quiz/analysis/:id" element={<AnalysisQuiz />} />
-      <Route path="/quiz/essay/:id" element={<EssayQuiz />} />
-      <Route path="/quiz/mcq/:id" element={<MCQQuiz />} />
-      <Route path="/image-quiz/:id" element={<ImageQuiz />} />
+      <Route path="/quiz/matching/:id" element={<ProtectedPage><MatchingQuiz /></ProtectedPage>} />
+      <Route path="/quiz/analysis/:id" element={<ProtectedPage><AnalysisQuiz /></ProtectedPage>} />
+      <Route path="/quiz/essay/:id" element={<ProtectedPage><EssayQuiz /></ProtectedPage>} />
+      <Route path="/quiz/mcq/:id" element={<ProtectedPage><MCQQuiz /></ProtectedPage>} />
+      <Route path="/image-quiz/:id" element={<ProtectedPage><ImageQuiz /></ProtectedPage>} />
 
       {/* Catch-all 404 */}
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<ProtectedPage><NotFound /></ProtectedPage>} />
     </Routes>
   );
+}
+
+function RequireAuth({ children }) {
+  const { authReady, isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  if (!authReady) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-700 dark:bg-slate-950 dark:text-slate-200">
+        <div className="flex items-center gap-3 text-sm font-semibold">
+          <span className="material-symbols-outlined animate-spin">progress_activity</span>
+          Đang kiểm tra phiên đăng nhập...
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  return children;
+}
+
+function ProtectedPage({ children }) {
+  return <RequireAuth>{children}</RequireAuth>;
 }
 
 export default App;
