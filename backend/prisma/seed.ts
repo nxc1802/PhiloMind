@@ -6,6 +6,48 @@ import { createClient } from '@supabase/supabase-js';
 
 const prisma = new PrismaClient();
 
+function stripOptionPrefix(value: string) {
+  return value.replace(/^[A-D]\.\s*/i, '').trim();
+}
+
+function getQuestionAnswer(item: any) {
+  if (item.cleanAnswer) return item.cleanAnswer;
+  if (Array.isArray(item.options) && Number.isInteger(item.correctIndex)) {
+    return stripOptionPrefix(item.options[item.correctIndex] || '');
+  }
+  return '';
+}
+
+function buildFlashcardsFromQuestionBank(questions: any[], nodeId: string, tag: string, limit = 30) {
+  const seen = new Set<string>();
+
+  return questions
+    .filter((item) => item?.question && Array.isArray(item.options))
+    .filter((item) => {
+      if (seen.has(item.question)) return false;
+      seen.add(item.question);
+      return true;
+    })
+    .slice(0, limit)
+    .map((item) => {
+      const answer = getQuestionAnswer(item);
+      const explanation = item.explanation ? ` Giải thích: ${item.explanation}` : '';
+
+      return {
+        nodeId,
+        tag,
+        question: item.question,
+        answer: `Đáp án: ${answer}.${explanation}`.trim(),
+      };
+    });
+}
+
+function buildConceptDebateTranscript(node: any) {
+  const prompt = `Chúng ta hãy cùng thảo luận về khái niệm "${node.title}". Hãy xem xét luận điểm sau: "${node.quickTake}". Đồng chí có đồng ý với quan điểm này không, hay đồng chí nhận thấy có điểm nào chưa nhất quán trong lập luận cốt lõi này? Tại sao?`;
+
+  return [{ speaker: 'Host', text: prompt, time: 0 }];
+}
+
 function buildDefaultLessonFlow(node: any) {
   const flow: any[] = [];
 
@@ -784,7 +826,7 @@ async function main() {
     console.log('Seeded Marxist-Leninist Philosophy main podcast episode.');
   }
 
-  // 5. Seed Flashcards from prompts.txt (Chapter 1 node only, Chapter 2 & 3 empty)
+  // 5. Seed Flashcards from real question banks bundled in prisma/data.
   const promptsQuestions = [
     {
       question: "Tư duy triết học ra đời thay thế cho loại hình tư duy nào trước đó trong lịch sử tư tưởng nhân loại?",
@@ -919,6 +961,17 @@ async function main() {
       }
     });
   }
+
+  const questionBankFlashcards = [
+    ...buildFlashcardsFromQuestionBank(seedingData.ch1_quizzes, createdCh1Nodes[0].id, 'Ngân hàng câu hỏi Chương 1'),
+    ...buildFlashcardsFromQuestionBank(seedingData.ch2_quizzes, createdCh2Nodes[0].id, 'Ngân hàng câu hỏi Chương 2'),
+    ...buildFlashcardsFromQuestionBank(seedingData.ch3_quizzes, createdCh3Nodes[0].id, 'Ngân hàng câu hỏi Chương 3'),
+  ];
+
+  await prisma.flashcard.createMany({
+    data: questionBankFlashcards,
+  });
+  console.log(`Seeded ${questionBankFlashcards.length + promptsQuestions.length} flashcards from bundled lesson/question-bank data.`);
 
   // ==================== SEED: MCQ QUIZZES & MOCK EXAMS ====================
   if (createdCh1Nodes[0]) {
@@ -1094,26 +1147,53 @@ async function main() {
 
 
   // ==================== NEW SEED: DEBATE TOPICS / SCENARIOS ====================
-  await prisma.debateTopic.createMany({
-    data: [
-      {
-        title: 'Chủ nghĩa Duy vật vs Chủ nghĩa Duy tâm',
-        description: 'Cuộc đối đầu kinh điển về bản chất thế giới. Liệu vật chất quyết định ý thức biện chứng hay thế giới chỉ là ảo ảnh cảm giác của ta?',
-        initialPrompt: 'Chào đồng chí! Chào mừng đến với đấu trường luận biện duy vật. Giới duy tâm chủ quan khẳng định: "Sự vật chỉ là sự phức hợp của các cảm giác". Đồng chí dùng lập luận duy vật biện chứng nào để bẻ gãy giả định phản khoa học này?',
-      },
-      {
-        title: 'Giá trị thặng dư trong kỷ nguyên số & AI',
-        description: 'Robot, thuật toán AI và hệ thống Cloud Automation có trực tiếp tạo ra giá trị thặng dư dôi ra không? Hay sức lao động của lập trình viên vẫn là nguồn sống duy nhất bị bóc lột?',
-        initialPrompt: 'Chào đồng chí! Thời đại tự động hóa làm dấy lên luồng ý kiến rằng "AI tạo ra mọi giá trị, học thuyết Marx đã lỗi thời". Theo thế giới quan kinh tế Mác-Lênin, máy móc chỉ chuyển dịch giá trị vào sản phẩm chứ không tạo thêm giá trị thặng dư. Lập trường của đồng chí thế nào?',
-      },
-      {
-        title: 'Ý thức và Trí tuệ nhân tạo (AI)',
-        description: 'Trí tuệ nhân tạo (AI) chạy trên linh kiện silicon có thể đạt tới trạng thái có ý thức thật sự hay không? Hay nó chỉ là một dạng phản ánh vật chất cấp cao?',
-        initialPrompt: 'Chào đồng chí! Triết học khẳng định ý thức là thuộc tính đặc hữu của bộ não người - một dạng vật chất sống tổ chức siêu việt. Vậy AI bán dẫn có thể có tâm lý, cảm xúc hay ý thức thực sự không? Phân tích biện chứng của đồng chí là gì?',
-      }
-    ]
-  });
+  const debateTopicSeedData = [
+    {
+      title: 'Chủ nghĩa Duy vật vs Chủ nghĩa Duy tâm',
+      description: 'Cuộc đối đầu kinh điển về bản chất thế giới. Liệu vật chất quyết định ý thức biện chứng hay thế giới chỉ là ảo ảnh cảm giác của ta?',
+      initialPrompt: 'Chào đồng chí! Chào mừng đến với đấu trường luận biện duy vật. Giới duy tâm chủ quan khẳng định: "Sự vật chỉ là sự phức hợp của các cảm giác". Đồng chí dùng lập luận duy vật biện chứng nào để bẻ gãy giả định phản khoa học này?',
+    },
+    {
+      title: 'Giá trị thặng dư trong kỷ nguyên số & AI',
+      description: 'Robot, thuật toán AI và hệ thống Cloud Automation có trực tiếp tạo ra giá trị thặng dư dôi ra không? Hay sức lao động của lập trình viên vẫn là nguồn sống duy nhất bị bóc lột?',
+      initialPrompt: 'Chào đồng chí! Thời đại tự động hóa làm dấy lên luồng ý kiến rằng "AI tạo ra mọi giá trị, học thuyết Marx đã lỗi thời". Theo thế giới quan kinh tế Mác-Lênin, máy móc chỉ chuyển dịch giá trị vào sản phẩm chứ không tạo thêm giá trị thặng dư. Lập trường của đồng chí thế nào?',
+    },
+    {
+      title: 'Ý thức và Trí tuệ nhân tạo (AI)',
+      description: 'Trí tuệ nhân tạo (AI) chạy trên linh kiện silicon có thể đạt tới trạng thái có ý thức thật sự hay không? Hay nó chỉ là một dạng phản ánh vật chất cấp cao?',
+      initialPrompt: 'Chào đồng chí! Triết học khẳng định ý thức là thuộc tính đặc hữu của bộ não người - một dạng vật chất sống tổ chức siêu việt. Vậy AI bán dẫn có thể có tâm lý, cảm xúc hay ý thức thực sự không? Phân tích biện chứng của đồng chí là gì?',
+    }
+  ];
+
+  const createdDebateTopics = [];
+  for (const topic of debateTopicSeedData) {
+    createdDebateTopics.push(
+      await prisma.debateTopic.create({
+        data: topic,
+      }),
+    );
+  }
   console.log('Seeded standard Debate Topics.');
+
+  const allConceptNodes = [...createdCh1Nodes, ...createdCh2Nodes, ...createdCh3Nodes];
+  await prisma.debate.createMany({
+    data: allConceptNodes.map((node) => ({
+      nodeId: node.id,
+      userId: user.id,
+      transcript: buildConceptDebateTranscript(node) as any,
+    })),
+  });
+
+  await prisma.debate.createMany({
+    data: createdDebateTopics.map((topic) => ({
+      topicId: topic.id,
+      userId: user.id,
+      transcript: [
+        { speaker: 'Host', text: topic.initialPrompt, time: 0 },
+      ] as any,
+    })),
+  });
+  console.log(`Seeded ${allConceptNodes.length} concept debates and ${createdDebateTopics.length} topic debates.`);
 
   // ==================== NEW SEED: MULTIPLE WARMUPS FOR FIRST LESSON ====================
   if (ch1FirstNode) {

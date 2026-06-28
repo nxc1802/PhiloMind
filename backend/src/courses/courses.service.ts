@@ -182,6 +182,8 @@ export class CoursesService {
           select: {
             id: true,
             title: true,
+            summary: true,
+            quickTake: true,
             orderIndex: true,
             difficulty: true,
             timeToRead: true,
