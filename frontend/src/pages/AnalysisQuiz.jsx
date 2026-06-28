@@ -13,7 +13,7 @@ const AnalysisQuiz = () => {
       />
 
       <div className="px-6 md:px-12 py-12 max-w-3xl mx-auto text-center">
-        <div className="bg-white dark:bg-[#002b37] rounded-3xl p-12 text-center border border-dashed border-gray-300">
+        <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl p-12 text-center border border-dashed border-gray-300">
           <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">
             article
           </span>

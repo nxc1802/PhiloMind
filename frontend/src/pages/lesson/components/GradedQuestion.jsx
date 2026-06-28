@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 export function getOptionClass({ resolved, isCorrect, isWrongPick }) {
   const base =
     "w-full text-left rounded-3xl border-2 px-4 py-3.5 font-medium transition-all flex items-center gap-3 ";
-  if (resolved && isCorrect) return base + "border-green-500 bg-green-50 text-green-900";
-  if (isWrongPick) return base + "border-red-500 bg-primary-50 dark:bg-primary-900/35 text-primary-850 dark:text-primary-100";
+  if (resolved && isCorrect) return base + "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold";
+  if (isWrongPick) return base + "border-red-500 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold";
   if (resolved) return base + "border-gray-200 opacity-60";
-  return base + "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-[#002b37]";
+  return base + "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100";
 }
 
 export default function GradedQuestion({ prompt, options, correctFeedback, wrongFeedback, onPass, passLabel = "Tiếp tục" }) {
@@ -28,7 +28,7 @@ export default function GradedQuestion({ prompt, options, correctFeedback, wrong
   };
 
   return (
-    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 text-left">
+    <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-6 text-left">
       <p className="font-semibold text-lg mb-4 text-gray-900">{prompt}</p>
       <div className="space-y-2.5">
         {options.map((opt, index) => (
@@ -63,12 +63,12 @@ export default function GradedQuestion({ prompt, options, correctFeedback, wrong
       )}
 
       {solved && (
-        <div className="mt-4 bg-green-50 border border-green-200 p-4 rounded-3xl j-bubble-in">
+        <div className="mt-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 text-green-900 dark:text-green-300 p-4 rounded-3xl j-bubble-in">
           <p className="font-bold text-green-800 flex items-center gap-2 mb-1">
             <span className="material-symbols-outlined text-base">lightbulb</span>
             Chính xác!
           </p>
-          <p className="text-base text-green-900/90 leading-relaxed">{correctFeedback}</p>
+          <p className="text-base leading-relaxed">{correctFeedback}</p>
           <button
             type="button"
             onClick={onPass}

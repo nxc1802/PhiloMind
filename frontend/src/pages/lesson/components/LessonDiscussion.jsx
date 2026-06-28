@@ -43,7 +43,7 @@ export function LessonDiscussion({ nodeId }) {
   };
 
   return (
-    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-7 mt-8 text-left">
+    <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 p-7 mt-8 text-left">
       <div className="flex items-center gap-2 mb-4">
         <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
           forum

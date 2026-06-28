@@ -68,12 +68,12 @@ export default function Philosofun() {
 
       <div className="px-6 md:px-12 py-10 max-w-6xl mx-auto">
         {loading ? (
-          <div className="text-center py-20 bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm">
+          <div className="text-center py-20 bg-white dark:bg-surface-dark-elevated rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm">
             <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
             <p className="text-slate-500 dark:text-primary-350 mt-4 font-semibold">Đang chuẩn bị rạp chiếu phim triết học...</p>
           </div>
         ) : filteredVideos.length === 0 ? (
-          <div className="bg-white dark:bg-[#002b37] rounded-3xl p-16 text-center border border-dashed border-slate-350 dark:border-primary-800">
+          <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl p-16 text-center border border-dashed border-slate-350 dark:border-primary-800">
             <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">video_library</span>
             <h3 className="font-bold text-primary-850 dark:text-primary-100 text-lg">Hộp phim trống</h3>
             <p className="text-slate-500 dark:text-primary-350 text-sm max-w-md mx-auto mt-1">
@@ -88,7 +88,7 @@ export default function Philosofun() {
                 <div
                   key={video.id}
                   onClick={() => setActiveVideo(video)}
-                  className="bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 overflow-hidden flex flex-col shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer"
+                  className="bg-white dark:bg-surface-dark-elevated rounded-3xl border border-slate-200 dark:border-primary-850 overflow-hidden flex flex-col shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer"
                 >
                   <div className="aspect-video bg-slate-100 dark:bg-[#001F28] relative overflow-hidden group">
                     {ytId ? (
@@ -138,7 +138,7 @@ export default function Philosofun() {
       {/* POPUP WATCH VIDEO MODAL */}
       {activeVideo && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setActiveVideo(null)}>
-          <div className="bg-white dark:bg-[#002b37] rounded-3xl w-full max-w-4xl overflow-hidden shadow-2xl text-left flex flex-col border border-slate-200 dark:border-primary-850" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl w-full max-w-4xl overflow-hidden shadow-2xl text-left flex flex-col border border-slate-200 dark:border-primary-850" onClick={(e) => e.stopPropagation()}>
             <div className="px-6 py-4 border-b border-slate-200 dark:border-primary-850 flex justify-between items-center shrink-0">
               <h3 className="font-bold text-slate-900 dark:text-primary-100 text-lg leading-normal truncate pr-4">
                 {activeVideo.title}

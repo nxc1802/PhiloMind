@@ -20,7 +20,7 @@ function normalizeOptions(options = []) {
 
 function ComponentFrame({ component, children }) {
   return (
-    <section className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 dark:border-primary-850 p-5 md:p-6 text-left">
+    <section className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-5 md:p-6 text-left">
       <div className="flex items-center gap-2 mb-4">
         <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">widgets</span>
         <div>
@@ -122,10 +122,10 @@ function McqComponent({ component, onComplete }) {
               onClick={() => handlePick(option)}
               className={`w-full text-left rounded-3xl border-2 px-4 py-3.5 font-medium transition-all flex items-center gap-3 ${
                 correctVisible
-                  ? "border-green-500 bg-green-50 text-green-900"
+                  ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold"
                   : wrong
-                  ? "border-red-500 bg-primary-50 dark:bg-primary-900/35 text-primary-850 dark:text-primary-100"
-                  : "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-[#002b37]"
+                  ? "border-red-500 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold"
+                  : "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100"
               }`}
             >
               <span className="material-symbols-outlined text-xl shrink-0">
@@ -137,7 +137,7 @@ function McqComponent({ component, onComplete }) {
         })}
       </div>
       {selected && (
-        <div className={`mt-4 border p-4 rounded-3xl ${solved ? "bg-green-50 border-green-200" : "bg-primary-50 dark:bg-primary-900/35 border-primary-200 dark:border-primary-800"}`}>
+        <div className={`mt-4 border p-4 rounded-3xl ${solved ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-primary-50 dark:bg-primary-900/35 border-primary-200 dark:border-primary-800 text-primary-850 dark:text-primary-150"}`}>
           <p className={`font-bold flex items-center gap-2 mb-1 ${solved ? "text-green-800" : "text-primary-700 dark:text-primary-250"}`}>
             <span className="material-symbols-outlined text-base">{solved ? "lightbulb" : "error"}</span>
             {solved ? "Chính xác" : "Chưa đúng"}
@@ -167,9 +167,9 @@ function TrueFalseComponent({ component, onComplete }) {
             className={`rounded-3xl border-2 px-5 py-4 font-bold transition-colors ${
               picked === value
                 ? value === component.config.correctAnswer
-                  ? "border-green-500 bg-green-50 text-green-900"
-                  : "border-red-500 bg-red-50 text-red-900"
-                : "border-gray-200 bg-white dark:bg-[#002b37] hover:border-primary-400"
+                  ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300"
+                  : "border-red-500 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300"
+                : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30"
             }`}
           >
             {value ? "Đúng" : "Sai"}
@@ -177,7 +177,7 @@ function TrueFalseComponent({ component, onComplete }) {
         ))}
       </div>
       {picked !== null && (
-        <div className={`mt-4 rounded-3xl border p-4 ${correct ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}`}>
+        <div className={`mt-4 rounded-3xl border p-4 ${correct ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800 text-red-900 dark:text-red-300"}`}>
           <p className={`font-bold ${correct ? "text-green-800" : "text-red-800"}`}>{correct ? "Chính xác" : "Chưa đúng"}</p>
           <p className="text-sm text-gray-800 leading-relaxed mt-1">{component.config.explanation}</p>
           {correct && <ContinueButton onComplete={() => onComplete({ score: 100, answer: picked, status: "completed" })} label="Tiếp tục" />}
@@ -211,7 +211,7 @@ function MatchingColumnsComponent({ component, onComplete }) {
               type="button"
               onClick={() => setActiveLeft(left.id)}
               className={`w-full rounded-3xl border-2 px-4 py-3 text-left font-semibold ${
-                activeLeft === left.id ? "border-primary-600 bg-primary-50" : pairs[left.id] === expected[left.id] ? "border-green-500 bg-green-50" : "border-gray-200 bg-white dark:bg-[#002b37]"
+                activeLeft === left.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : pairs[left.id] === expected[left.id] ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-300 font-semibold" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
               {left.text}
@@ -224,7 +224,7 @@ function MatchingColumnsComponent({ component, onComplete }) {
               key={right.id}
               type="button"
               onClick={() => chooseRight(right.id)}
-              className="w-full rounded-3xl border-2 border-gray-200 bg-white dark:bg-[#002b37] px-4 py-3 text-left hover:border-primary-400"
+              className="w-full rounded-3xl border-2 border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 px-4 py-3 text-left hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
             >
               {right.text}
             </button>
@@ -265,7 +265,7 @@ function CategorySortingComponent({ component, onComplete }) {
               type="button"
               onClick={() => setSelectedCard(card.id)}
               className={`px-4 py-2 rounded-3xl border-2 font-semibold ${
-                selectedCard === card.id ? "border-primary-600 bg-primary-50" : placed === card.categoryId ? "border-green-500 bg-green-50 text-green-900" : placed ? "border-red-400 bg-red-50 text-red-900" : "border-gray-200 bg-white dark:bg-[#002b37]"
+                selectedCard === card.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placed === card.categoryId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : placed ? "border-red-400 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
               {card.text}
@@ -321,7 +321,7 @@ function TargetMatchingComponent({ component, onComplete }) {
             type="button"
             onClick={() => setSelectedItem(item.id)}
             className={`px-4 py-2 rounded-3xl border-2 font-bold text-lg ${
-              selectedItem === item.id ? "border-primary-600 bg-primary-50" : placements[item.id] === item.targetId ? "border-green-500 bg-green-50 text-green-900" : "border-gray-200 bg-white dark:bg-[#002b37]"
+              selectedItem === item.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placements[item.id] === item.targetId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
             }`}
           >
             {item.text}
@@ -334,7 +334,7 @@ function TargetMatchingComponent({ component, onComplete }) {
             key={target.id}
             type="button"
             onClick={() => placeItem(target.id)}
-            className="rounded-3xl border-2 border-primary-200 bg-gradient-to-br from-primary-50 to-white dark:from-primary-900/30 dark:to-[#002b37] px-4 py-5 text-center hover:border-primary-500"
+            className="rounded-3xl border-2 border-primary-200 bg-gradient-to-br from-primary-50 to-white dark:from-primary-900/30 dark:to-surface-dark-elevated px-4 py-5 text-center hover:border-primary-500 text-gray-800 dark:text-primary-100"
           >
             <span className="material-symbols-outlined text-3xl text-primary-650 dark:text-primary-300">{target.icon || "public"}</span>
             <p className="font-bold text-primary-900 dark:text-primary-100">{target.label}</p>
@@ -374,7 +374,7 @@ function MindmapRevealComponent({ component, onComplete }) {
               type="button"
               onClick={() => setRevealed((prev) => (prev.includes(node.id) ? prev : [...prev, node.id]))}
               className={`rounded-3xl border-2 p-4 text-left min-h-28 transition-colors ${
-                open ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30" : "border-gray-200 bg-white dark:bg-[#002b37] hover:border-primary-400"
+                open ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-900 dark:text-primary-100" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
               <p className="font-bold text-primary-900 dark:text-primary-100">{open ? node.label : "Mảnh ghép chưa mở"}</p>
@@ -476,7 +476,7 @@ function FinalSummaryComponent({ component, onComplete }) {
                     type="button"
                     onClick={() => setAnswers((prev) => ({ ...prev, [index]: optionIndex }))}
                     className={`rounded-3xl border px-4 py-2 text-left ${
-                      answers[index] === optionIndex ? "border-primary-600 bg-primary-50 font-semibold" : "border-gray-200"
+                      answers[index] === optionIndex ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-bold shadow-sm" : "border-gray-250 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
                     }`}
                   >
                     {option}
@@ -525,7 +525,7 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
   useEffect(() => {
     setActiveIndex(initialIndex);
     setCompletedIds(Array.isArray(progress?.completedComponentIds) ? progress.completedComponentIds : []);
-  }, [nodeDetails?.id, initialIndex, progress?.completedComponentIds]);
+  }, [nodeDetails?.id]);
 
   if (!flow.length) {
     return (
@@ -573,7 +573,7 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
 
   return (
     <div className="space-y-5">
-      <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 dark:border-primary-850 p-4">
+      <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-4">
         <div className="flex items-center justify-between gap-3 mb-3">
           <div>
             <p className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">Component Flow</p>

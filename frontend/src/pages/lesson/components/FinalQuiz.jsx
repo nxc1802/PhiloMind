@@ -64,7 +64,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
 
   if (questions.length === 0) {
     return (
-      <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-8 text-center space-y-4 mt-8">
+      <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-8 text-center space-y-4 mt-8">
         <h3 className="text-2xl font-bold text-primary-850 dark:text-primary-100 flex items-center justify-center gap-2">
           <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-3xl">task_alt</span>
           Hoàn thành bài học
@@ -89,7 +89,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
 
   if (quizState === "start") {
     return (
-      <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-8 text-center space-y-5 mt-8">
+      <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-8 text-center space-y-5 mt-8">
         <div className="inline-flex items-center justify-center h-16 w-16 bg-primary-50 dark:bg-primary-900/35 rounded-3xl text-primary-650 dark:text-primary-300 border border-primary-100 dark:border-primary-850 mb-2">
           <span className="material-symbols-outlined text-4xl">assignment</span>
         </div>
@@ -127,7 +127,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
             : `Đồng chí chỉ đạt ${scorePercent}% câu trả lời đúng (yêu cầu tối thiểu ${QUIZ_PASS_THRESHOLD}%). Vui lòng nghiên cứu kỹ lại giáo trình và thử lại.`}
         </p>
 
-        <div className="bg-white dark:bg-[#002b37]/80 backdrop-blur border border-gray-150 rounded-3xl p-5 shadow-inner max-w-xs mx-auto">
+        <div className="bg-white dark:bg-surface-dark-elevated/80 backdrop-blur border border-gray-150 dark:border-primary-850/50 rounded-3xl p-5 shadow-inner max-w-xs mx-auto">
           <span className="text-xs uppercase tracking-wider text-gray-500 font-bold block mb-1">Kết quả đạt được</span>
           <h4 className="text-3xl font-black text-slate-800">
             {correctCount} / {questions.length}
@@ -155,7 +155,7 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
   const isCurrentQCorrect = selectedOption === currentQ.answer;
 
   return (
-    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-6 md:p-8 mt-8 space-y-5 text-left relative overflow-hidden">
+    <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-6 md:p-8 mt-8 space-y-5 text-left relative overflow-hidden">
       {/* Quiz progress */}
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
         <div>
@@ -179,20 +179,20 @@ export function FinalQuiz({ dbFlashcards, onComplete }) {
         <div className="space-y-2">
           {currentQ.options.map((option, idx) => {
             const isSelected = selectedOption === option;
-            let optionCls = "w-full text-left rounded-3xl border-2 px-4 py-3.5 text-sm font-semibold transition-all hover:scale-[1.01] block bg-white dark:bg-[#002b37] ";
+            let optionCls = "w-full text-left rounded-3xl border-2 px-4 py-3.5 text-sm font-semibold transition-all hover:scale-[1.01] block bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100 ";
             
             if (!isAnswered) {
               if (isSelected) {
-                optionCls += "border-primary-800 bg-primary-50 dark:bg-primary-900/35 text-primary-950";
+                optionCls += "border-primary-800 bg-primary-50 dark:bg-primary-900/35 text-primary-950 dark:text-primary-100 font-bold shadow-sm";
               } else {
-                optionCls += "border-gray-200 text-gray-700 hover:border-red-300";
+                optionCls += "border-gray-205 text-gray-650 hover:border-red-300";
               }
             } else {
               const isCorrectAnswer = option === currentQ.answer;
               if (isCorrectAnswer) {
-                optionCls += "border-green-500 bg-green-50 text-green-900";
+                optionCls += "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold";
               } else if (isSelected) {
-                optionCls += "border-red-400 bg-primary-50 dark:bg-primary-900/35 text-primary-850 dark:text-primary-100";
+                optionCls += "border-red-500 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold";
               } else {
                 optionCls += "border-gray-100 opacity-60 text-gray-400";
               }

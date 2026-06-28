@@ -203,7 +203,7 @@ export default function MatchingQuiz() {
 
       <div className="px-6 md:px-12 py-10 max-w-5xl mx-auto">
         {loading ? (
-          <div className="text-center py-20 bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm">
+          <div className="text-center py-20 bg-white dark:bg-surface-dark-elevated rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm">
             <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
             <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị đấu trường ghép cặp...</p>
           </div>

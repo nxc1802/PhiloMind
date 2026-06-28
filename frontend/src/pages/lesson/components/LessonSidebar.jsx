@@ -4,15 +4,15 @@ import { getSlugFromTitle } from "../../../utils/slug";
 const SYLLABUS_STATUS_CONFIG = {
   completed: {
     icon: "check_circle",
-    className: "bg-green-50 text-green-800 border-green-200 cursor-pointer hover:bg-green-100",
+    className: "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-200 dark:border-green-800/30 cursor-pointer hover:bg-green-100 dark:hover:bg-green-950/30",
   },
   active: {
     icon: "play_circle",
-    className: "bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 border-red-300 font-semibold cursor-pointer hover:bg-red-100",
+    className: "bg-primary-50 dark:bg-primary-900/30 text-primary-750 dark:text-primary-300 border-primary-250 dark:border-primary-800/50 font-semibold cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/50",
   },
   locked: {
     icon: "lock",
-    className: "bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed opacity-60",
+    className: "bg-gray-50 dark:bg-primary-900/10 text-gray-400 dark:text-primary-600 border-gray-200 dark:border-primary-950/30 cursor-not-allowed opacity-60",
   },
 };
 
@@ -31,12 +31,12 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
 
   return (
     <aside className="lg:col-span-1 text-left w-full">
-      <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 overflow-hidden w-full">
+      <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 overflow-hidden w-full">
         <div className="bg-primary-600 text-white p-5">
           <h3 className="font-bold text-lg mb-3">Nội dung khóa học</h3>
-          <div className="h-2 bg-white dark:bg-[#002b37]/20 rounded-full overflow-hidden">
+          <div className="h-2 bg-white/20 rounded-full overflow-hidden">
             <div
-              className="h-full bg-white dark:bg-[#002b37] rounded-full transition-all duration-300"
+              className="h-full bg-white rounded-full transition-all duration-300"
               style={{ width: `${progressStats.percentage}%` }}
             />
           </div>
@@ -85,7 +85,7 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
           </button>
           
           {showDocsDropdown && documents.length > 1 && (
-            <div className="absolute bottom-full left-0 right-0 mb-1 bg-white dark:bg-[#002b37] border border-gray-200 rounded-3xl shadow-lg z-50 overflow-hidden divide-y divide-gray-100">
+            <div className="absolute bottom-full left-0 right-0 mb-1 bg-white dark:bg-surface-dark-elevated border border-gray-200 dark:border-primary-850/50 rounded-3xl shadow-lg z-50 overflow-hidden divide-y divide-gray-100 dark:divide-primary-850/30">
               {documents.map((doc) => (
                 <a
                   key={doc.id}

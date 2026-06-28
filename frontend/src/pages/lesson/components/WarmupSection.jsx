@@ -369,7 +369,7 @@ function WarmupStory({ data, onDone }) {
               submitted,
               picked: index === selectedIndex,
               isCorrect: index === data.correctIndex,
-              base: "block w-full text-left rounded-3xl border-2 text-gray-800 bg-white dark:bg-[#002b37] hover:bg-gray-50/50 transition-colors",
+              base: "block w-full text-left rounded-3xl border-2 text-gray-700 dark:text-primary-100 bg-white dark:bg-surface-dark-elevated hover:bg-gray-50/50 dark:hover:bg-primary-900/10 border-gray-200 dark:border-primary-850/50 transition-colors",
               sizing: "px-4 py-3",
             })}
           >
@@ -435,7 +435,7 @@ function WarmupVideo({ data, onDone }) {
               submitted,
               picked: index === selectedIndex,
               isCorrect: index === data.correctIndex,
-              base: "block w-full text-left rounded-3xl border-2 text-gray-800 bg-white dark:bg-[#002b37] hover:bg-gray-50/50 transition-colors",
+              base: "block w-full text-left rounded-3xl border-2 text-gray-700 dark:text-primary-100 bg-white dark:bg-surface-dark-elevated hover:bg-gray-50/50 dark:hover:bg-primary-900/10 border-gray-200 dark:border-primary-850/50 transition-colors",
               sizing: "px-4 py-3",
             })}
           >

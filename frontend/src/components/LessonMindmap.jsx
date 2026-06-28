@@ -43,7 +43,7 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
         {/* Click đề mục -> mở bài học đầu tiên của đề mục đó */}
         <button
           onClick={() => onOpenLesson((section.lessons || [])[0]?.slug)}
-          className="group inline-flex items-center gap-2 bg-white dark:bg-[#002b37] border-2 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-5 py-2.5 rounded-3xl shadow-sm hover:bg-primary-650 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-lg hover:-translate-y-0.5"
+          className="group inline-flex items-center gap-2 bg-white dark:bg-surface-dark-elevated border-2 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-5 py-2.5 rounded-3xl shadow-sm hover:bg-primary-650 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-lg hover:-translate-y-0.5"
         >
           <span className="material-symbols-outlined text-base">topic</span>
           {section.title}
@@ -107,7 +107,7 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
 // Sơ đồ 1 chương: node gốc bên trái, các nhánh bên phải
 function ChapterMap({ chapter, activeSlug, onOpenLesson, progressMap }) {
   return (
-    <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-slate-250 dark:border-primary-850 p-6 md:p-8 mb-6">
+    <div className="py-6 mb-10 text-left border-b border-slate-205 dark:border-primary-900/20 last:border-0">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-72 shrink-0">
           <div
@@ -184,7 +184,7 @@ export default function LessonMindmap({ chapters = [], activeSlug, onOpenLesson,
       </div>
 
       {visibleChapters.length === 0 ? (
-        <div className="bg-white dark:bg-[#002b37] rounded-3xl p-10 text-center border border-dashed border-slate-350 dark:border-primary-800 animate-fadeIn">
+        <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl p-10 text-center border border-dashed border-slate-350 dark:border-primary-800/40 animate-fadeIn">
           <span className="material-symbols-outlined text-5xl text-slate-300 dark:text-primary-650 mb-3">
             search_off
           </span>

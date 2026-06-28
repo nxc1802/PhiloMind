@@ -283,7 +283,7 @@ export default function MCQQuiz() {
                     const isCorrect = chosenIdx === q.correctIndex;
 
                     return (
-                      <div key={qIdx} className="bg-white dark:bg-[#002b37] rounded-3xl border border-slate-200 dark:border-primary-850 p-6 md:p-8 shadow-sm space-y-4 text-left">
+                      <div key={qIdx} className="bg-white dark:bg-surface-dark-elevated rounded-3xl border border-slate-200 dark:border-primary-850 p-6 md:p-8 shadow-sm space-y-4 text-left">
                         <div className="flex items-center gap-2">
                           <span className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs ${
                             isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800 dark:text-red-300"
