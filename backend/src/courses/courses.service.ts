@@ -31,7 +31,14 @@ export class CoursesService {
 
   async getCourses(userId?: string) {
     return this.prisma.course.findMany({
-      where: userId ? { userId } : undefined,
+      where: userId
+        ? {
+            OR: [
+              { userId },
+              { title: 'Triết học Mác – Lênin' },
+            ],
+          }
+        : undefined,
       include: {
         documents: true,
         _count: {
