@@ -19,7 +19,7 @@ export default function OnboardingGuide({ tabKey, steps }) {
     return (
       <button 
         onClick={handleReset}
-        className="fixed bottom-28 right-6 z-40 bg-white dark:bg-[#002b37] border border-gray-200 dark:border-primary-800 text-slate-700 dark:text-primary-250 hover:text-primary-600 dark:hover:text-primary-300 p-3 rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95"
+        className="fixed bottom-28 right-6 z-40 bg-white dark:bg-surface-dark-elevated border border-gray-200 dark:border-primary-800 text-slate-700 dark:text-primary-250 hover:text-primary-600 dark:hover:text-primary-300 p-3 rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95"
         title="Xem hướng dẫn sử dụng trang này"
       >
         <span className="material-symbols-outlined text-2xl">explore</span>
@@ -29,7 +29,7 @@ export default function OnboardingGuide({ tabKey, steps }) {
 
   return (
     <div className="fixed inset-0 bg-slate-900/50 dark:bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 transition-all duration-300">
-      <div className="bg-white dark:bg-[#002b37] rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 dark:border-primary-850 relative animate-scaleUp">
+      <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 dark:border-primary-850 relative animate-scaleUp">
         
         {/* Header */}
         <h3 className="text-xl font-bold text-primary-800 dark:text-primary-200 flex items-center gap-2 mb-3">

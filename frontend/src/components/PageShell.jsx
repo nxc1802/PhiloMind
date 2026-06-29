@@ -43,33 +43,36 @@ export default function PageShell({ activeKey, footer = SettingsButton, children
   );
 }
 
-// PageHero — nền sáng, accent xanh tập trung ở icon/eyebrow/border
-// Không còn gradient xanh đậm chiếm toàn màn hình
+// PageHero — Giao diện gradient tối cao cấp thống nhất như PhilosoFUN tab
 export function PageHero({ eyebrow, icon, title, subtitle, children }) {
   return (
-    <section className="bg-white dark:bg-[#0D1117] border-b border-slate-100 dark:border-primary-900/30 py-10 px-12 relative overflow-hidden transition-colors duration-300">
-      {/* Subtle blue decorative gradient — chỉ góc phải, rất nhạt */}
-      <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-bl from-primary-50 via-transparent to-transparent dark:from-primary-950/30 dark:via-transparent pointer-events-none" />
-      {/* Subtle left accent bar */}
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-400 to-primary-700 rounded-r-full opacity-80" />
-
-      <div className="max-w-5xl mx-auto relative z-10 pl-4">
+    <section className="bg-gradient-to-br from-primary-850 via-primary-750 to-primary-900 py-12 px-12 text-white text-left relative overflow-hidden rounded-b-[2.5rem] shadow-lg transition-all duration-300">
+      {/* Subtle light reflection glow in top right */}
+      <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-bl from-white/10 via-transparent to-transparent pointer-events-none" />
+      
+      <div className="max-w-5xl mx-auto relative z-10">
         {(eyebrow || icon) && (
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-3 text-white">
             {icon && (
-              <div className="h-10 w-10 rounded-2xl bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center shadow-sm">
-                <span className="material-symbols-outlined text-xl text-primary-700 dark:text-primary-300">{icon}</span>
-              </div>
+              <span className="material-symbols-outlined text-3xl text-white/90">
+                {icon}
+              </span>
             )}
             {eyebrow && (
-              <span className="text-xs font-bold uppercase tracking-widest text-primary-700 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-3 py-1 rounded-full border border-primary-100 dark:border-primary-800/30">
+              <span className="text-sm uppercase tracking-wider text-white/80 font-bold">
                 {eyebrow}
               </span>
             )}
           </div>
         )}
-        <h1 className="font-bold text-3xl md:text-4xl mb-3 text-slate-900 dark:text-white">{title}</h1>
-        {subtitle && <p className="text-slate-500 dark:text-slate-400 max-w-2xl font-light leading-relaxed">{subtitle}</p>}
+        <h1 className="font-bold text-4xl md:text-5xl mb-4 text-white leading-tight">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="text-white/80 max-w-2xl mb-6 font-light leading-relaxed">
+            {subtitle}
+          </p>
+        )}
         {children}
       </div>
     </section>

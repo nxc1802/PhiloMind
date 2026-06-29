@@ -169,7 +169,7 @@ function TrueFalseComponent({ component, onComplete }) {
                 ? value === component.config.correctAnswer
                   ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300"
                   : "border-red-500 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300"
-                : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30"
+                : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30"
             }`}
           >
             {value ? "Đúng" : "Sai"}
@@ -211,7 +211,7 @@ function MatchingColumnsComponent({ component, onComplete }) {
               type="button"
               onClick={() => setActiveLeft(left.id)}
               className={`w-full rounded-3xl border-2 px-4 py-3 text-left font-semibold ${
-                activeLeft === left.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : pairs[left.id] === expected[left.id] ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-300 font-semibold" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                activeLeft === left.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : pairs[left.id] === expected[left.id] ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-300 font-semibold" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
               {left.text}
@@ -224,7 +224,7 @@ function MatchingColumnsComponent({ component, onComplete }) {
               key={right.id}
               type="button"
               onClick={() => chooseRight(right.id)}
-              className="w-full rounded-3xl border-2 border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 px-4 py-3 text-left hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+              className="w-full rounded-3xl border-2 border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 px-4 py-3 text-left hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
             >
               {right.text}
             </button>
@@ -265,7 +265,7 @@ function CategorySortingComponent({ component, onComplete }) {
               type="button"
               onClick={() => setSelectedCard(card.id)}
               className={`px-4 py-2 rounded-3xl border-2 font-semibold ${
-                selectedCard === card.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placed === card.categoryId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : placed ? "border-red-400 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                selectedCard === card.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placed === card.categoryId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : placed ? "border-red-400 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
               {card.text}
@@ -321,7 +321,7 @@ function TargetMatchingComponent({ component, onComplete }) {
             type="button"
             onClick={() => setSelectedItem(item.id)}
             className={`px-4 py-2 rounded-3xl border-2 font-bold text-lg ${
-              selectedItem === item.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placements[item.id] === item.targetId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+              selectedItem === item.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placements[item.id] === item.targetId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
             }`}
           >
             {item.text}
@@ -374,7 +374,7 @@ function MindmapRevealComponent({ component, onComplete }) {
               type="button"
               onClick={() => setRevealed((prev) => (prev.includes(node.id) ? prev : [...prev, node.id]))}
               className={`rounded-3xl border-2 p-4 text-left min-h-28 transition-colors ${
-                open ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-900 dark:text-primary-100" : "border-gray-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                open ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-900 dark:text-primary-100" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
               <p className="font-bold text-primary-900 dark:text-primary-100">{open ? node.label : "Mảnh ghép chưa mở"}</p>

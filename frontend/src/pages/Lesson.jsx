@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, Suspense, lazy } from "react";
 import { useSearchParams } from "react-router-dom";
-import PageShell from "../components/PageShell";
+import PageShell, { PageHero } from "../components/PageShell";
 import OnboardingGuide from "../components/OnboardingGuide";
 import LessonMindmap from "../components/LessonMindmap";
 import { useToast } from "../components/Toast";
@@ -223,7 +223,16 @@ const Lesson = () => {
         ]}
       />
 
-      <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto text-left transition-colors duration-300 bg-slate-50 dark:bg-[#001F28] rounded-3xl min-h-screen">
+      {!activeLesson && (
+        <PageHero
+          eyebrow="Khám phá Tri thức"
+          icon="account_tree"
+          title="Sơ đồ Bài học"
+          subtitle="Hệ thống bài học Triết học Mác – Lênin được trực quan hóa bằng sơ đồ tư duy tương tác giúp bạn dễ dàng theo dõi và chinh phục lộ trình học tập."
+        />
+      )}
+
+      <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto text-left transition-colors duration-300 bg-slate-50 dark:bg-primary-950/10 rounded-3xl min-h-screen mt-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-primary-350 mb-6 flex-wrap">
           <span>Trang chủ</span>
@@ -241,7 +250,7 @@ const Lesson = () => {
 
         {/* Mindmap view if no active lesson */}
         {!activeLesson && (
-          <div className="mb-10 rounded-3xl overflow-hidden shadow-sm border border-slate-200 dark:border-primary-850">
+          <div className="mb-10">
             <LessonMindmap
               chapters={mindmapChapters}
               activeSlug={lessonSlug}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PageShell from '../components/PageShell';
+import PageShell, { PageHero } from '../components/PageShell';
 import OnboardingGuide from '../components/OnboardingGuide';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../services/api';
@@ -40,31 +40,25 @@ export default function Philosofun() {
         ]}
       />
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-850 via-primary-750 to-primary-900 py-12 px-12 text-white text-left relative overflow-hidden rounded-b-[2.5rem] shadow-lg">
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="material-symbols-outlined text-3xl">smart_display</span>
-            <span className="text-sm uppercase tracking-wider opacity-80">Góc Giải Trí Triết Học</span>
-          </div>
-          <h1 className="font-bold text-4xl md:text-5xl mb-4">PhilosoFUN</h1>
-          <p className="text-white/80 max-w-2xl mb-6">
-            Thư viện video tình huống triết học trực quan, sinh động giúp khơi dậy hứng thú học tập và tư duy phản biện xã hội sâu sắc.
-          </p>
-          
-          <div className="relative max-w-md">
-            <input
-              type="text"
-              placeholder="Tìm video tình huống..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/70 rounded-full focus:bg-white/20 pl-11 pr-4 py-2.5 focus:ring-2 focus:ring-white focus:border-transparent outline-none backdrop-blur-sm"
-            />
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/70">
-              search
-            </span>
-          </div>
+      <PageHero
+        eyebrow="Góc Giải Trí Triết Học"
+        icon="smart_display"
+        title="PhilosoFUN"
+        subtitle="Thư viện video tình huống triết học trực quan, sinh động giúp khơi dậy hứng thú học tập và tư duy phản biện xã hội sâu sắc."
+      >
+        <div className="relative max-w-md">
+          <input
+            type="text"
+            placeholder="Tìm video tình huống..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/70 rounded-full focus:bg-white/20 pl-11 pr-4 py-2.5 focus:ring-2 focus:ring-white focus:border-transparent outline-none backdrop-blur-sm"
+          />
+          <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/70">
+            search
+          </span>
         </div>
-      </section>
+      </PageHero>
 
       <div className="px-6 md:px-12 py-10 max-w-6xl mx-auto">
         {loading ? (

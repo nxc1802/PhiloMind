@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import PageShell from '../components/PageShell';
+import PageShell, { PageHero } from '../components/PageShell';
 import OnboardingGuide from '../components/OnboardingGuide';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
@@ -95,35 +95,28 @@ export default function Home() {
       />
       
       <div className="min-h-screen bg-white dark:bg-[#0D1117] text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300">
-        {/* Hero Section — neutral surface, brand color is an accent only */}
-        <section className="relative overflow-hidden bg-slate-50 dark:bg-[#161B22] py-16 px-6 md:px-12 text-center border-b border-slate-100 dark:border-slate-800/70">
-          <div className="absolute inset-y-0 left-0 w-1 bg-primary-600 pointer-events-none" />
-          <div className="max-w-4xl mx-auto space-y-5 relative z-10">
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800/50 text-primary-700 dark:text-primary-300 font-bold text-xs uppercase tracking-wider">
-              <span className="material-symbols-outlined text-xs">bolt</span> Sanctuary Học Thuật AI
-            </span>
-            <h1 className="font-extrabold text-4xl md:text-5xl tracking-tight leading-tight text-slate-950 dark:text-white">
-              PhiloMind
-            </h1>
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
-              Trải nghiệm học tập triết học duy vật biện chứng tương tác trực quan với sự hỗ trợ của trí tuệ nhân tạo.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
-              <Link
-                to="/lessons"
-                className="bg-primary-600 text-white font-bold px-7 py-3.5 rounded-3xl shadow-md hover:bg-primary-700 transition-all hover:-translate-y-0.5"
-              >
-                Khám phá Sơ đồ giáo trình
-              </Link>
-              <Link
-                to="/practice"
-                className="bg-white dark:bg-[#1C2230] text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 font-bold px-7 py-3.5 rounded-3xl hover:border-primary-300 dark:hover:border-primary-700 transition-all shadow-sm"
-              >
-                Khu luyện tập (Practice)
-              </Link>
-            </div>
+        {/* Hero Section — unified premium PageHero */}
+        <PageHero
+          eyebrow="Sanctuary Học Thuật AI"
+          icon="bolt"
+          title="PhiloMind"
+          subtitle="Trải nghiệm học tập triết học duy vật biện chứng tương tác trực quan với sự hỗ trợ của trí tuệ nhân tạo."
+        >
+          <div className="flex flex-wrap gap-4 pt-2">
+            <Link
+              to="/lessons"
+              className="bg-white text-primary-850 hover:bg-primary-50 font-bold px-7 py-3.5 rounded-3xl shadow-md transition-all hover:-translate-y-0.5"
+            >
+              Khám phá Sơ đồ giáo trình
+            </Link>
+            <Link
+              to="/practice"
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-7 py-3.5 rounded-3xl transition-all shadow-sm"
+            >
+              Khu luyện tập (Practice)
+            </Link>
           </div>
-        </section>
+        </PageHero>
 
         {/* Features Showcase Section — nền trắng sạch */}
         <section className="py-16 px-6 md:px-12 max-w-6xl mx-auto text-left w-full">
