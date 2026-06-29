@@ -686,6 +686,7 @@ async function main() {
   const createdCh1Nodes = [];
   for (const n of ch1Nodes) {
     const isNode2 = n.title === 'Khái niệm triết học';
+    const hasSeededLessonContent = isNode2 || n.title === 'Nguồn gốc của triết học';
     const lessonFlow = isNode2
       ? buildLesson1bFlow(seedingData.lesson_1b)
       : n.title === 'Nguồn gốc của triết học'
@@ -704,6 +705,8 @@ async function main() {
         chapterId: chapter1.id,
         lessonType: 'flow',
         lessonFlow: lessonFlow as any,
+        contentReady: hasSeededLessonContent,
+        lessonStatus: hasSeededLessonContent ? 'published' : 'draft',
       }
     });
     createdCh1Nodes.push(node);
@@ -749,6 +752,8 @@ async function main() {
         chapterId: chapter2.id,
         lessonType: 'flow',
         lessonFlow: buildDefaultLessonFlow(n) as any,
+        contentReady: false,
+        lessonStatus: 'draft',
       }
     });
     createdCh2Nodes.push(node);
@@ -792,6 +797,8 @@ async function main() {
         chapterId: chapter3.id,
         lessonType: 'flow',
         lessonFlow: buildDefaultLessonFlow(n) as any,
+        contentReady: false,
+        lessonStatus: 'draft',
       }
     });
     createdCh3Nodes.push(node);

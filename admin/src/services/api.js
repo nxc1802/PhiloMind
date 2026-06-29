@@ -262,6 +262,16 @@ export const api = {
         body: formData
       });
       return handleResponse(response);
+    },
+    uploadLessonAsset: async (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await fetch(`${API_BASE_URL}/files/lesson-assets/upload`, {
+        method: 'POST',
+        headers: getHeaders(),
+        body: formData
+      });
+      return handleResponse(response);
     }
   },
   

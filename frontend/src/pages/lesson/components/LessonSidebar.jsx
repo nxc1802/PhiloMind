@@ -14,6 +14,10 @@ const SYLLABUS_STATUS_CONFIG = {
     icon: "lock",
     className: "bg-gray-50 dark:bg-primary-900/10 text-gray-400 dark:text-primary-600 border-gray-200 dark:border-primary-950/30 cursor-not-allowed opacity-60",
   },
+  content_locked: {
+    icon: "lock_clock",
+    className: "bg-gray-50 dark:bg-primary-900/10 text-gray-400 dark:text-primary-600 border-gray-200 dark:border-primary-950/30 cursor-not-allowed opacity-60",
+  },
 };
 
 export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, handleSyllabusClick, currentNodeDetails }) {
@@ -62,6 +66,9 @@ export function LessonSidebar({ flatSyllabusItems, progressStats, lessonSlug, ha
                   {config.icon}
                 </span>
                 <span className="flex-1 truncate">{item.title}</span>
+                {item.status === "content_locked" && (
+                  <span className="text-[10px] font-bold uppercase tracking-wide">Sắp có</span>
+                )}
               </button>
             );
           })}

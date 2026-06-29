@@ -19,6 +19,9 @@ import { LessonSidebar } from "./lesson/components/LessonSidebar";
 
 const FlowLessonPlayer = lazy(() => import("./lesson/flow/FlowLessonPlayer"));
 
+const isLessonContentLocked = (node) =>
+  !node?.contentReady || (node.lessonStatus && node.lessonStatus !== "published");
+
 const Lesson = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const lessonSlug = searchParams.get("lesson");
@@ -66,7 +69,9 @@ const Lesson = () => {
       (chap.nodes || []).map(n => {
         let status = 'locked';
         const progressStatus = n.progress && n.progress[0]?.status;
-        if (unlockAll) {
+        if (isLessonContentLocked(n)) {
+          status = 'content_locked';
+        } else if (unlockAll) {
           status = progressStatus === 'completed' ? 'completed' : 'active';
         } else {
           if (progressStatus === 'completed') {
@@ -109,7 +114,9 @@ const Lesson = () => {
     dbJourney.forEach(chap => {
       (chap.nodes || []).forEach(n => {
         let status = (n.progress && n.progress[0]?.status) || 'locked';
-        if (unlockAll) {
+        if (isLessonContentLocked(n)) {
+          status = 'content_locked';
+        } else if (unlockAll) {
           if (status !== 'completed') {
             status = 'available';
           }
@@ -210,6 +217,11 @@ const Lesson = () => {
     const title = getTitleFromSlug(slug);
     const status = progressMap[title] || 'locked';
     
+    if (status === 'content_locked') {
+      showToast("Bài học này chưa có nội dung chính thức, đang được biên soạn.", "warning");
+      return;
+    }
+
     if (status === 'locked') {
       showToast("Bài học này đang khóa. Đồng chí vui lòng hoàn thành bài học trước để tiếp tục!", "warning");
       return;
@@ -219,6 +231,10 @@ const Lesson = () => {
   };
 
   const handleSyllabusClick = (item) => {
+    if (item.status === 'content_locked') {
+      showToast("Bài học này chưa có nội dung chính thức, đang được biên soạn.", "warning");
+      return;
+    }
     if (item.status === 'locked') {
       showToast("Bài học này đang bị khóa!", "warning");
       return;

@@ -105,4 +105,19 @@ export class CoursesController {
       file.mimetype,
     );
   }
+
+  @Post("files/lesson-assets/upload")
+  @Roles("admin")
+  @UseInterceptors(FileInterceptor("file"))
+  @ApiOperation({ summary: "Upload an image asset for lesson flow components" })
+  async uploadLessonAsset(@UploadedFile() file: any) {
+    if (!file) {
+      throw new BadRequestException("No file uploaded");
+    }
+    return this.coursesService.saveLessonAsset(
+      file.originalname,
+      file.buffer,
+      file.mimetype,
+    );
+  }
 }

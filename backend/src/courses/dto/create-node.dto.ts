@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
+import { IsBoolean, IsString, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateNodeDto {
   @IsString()
@@ -42,4 +42,12 @@ export class CreateNodeDto {
 
   @IsOptional()
   lessonFlow?: any;
+
+  @IsBoolean()
+  @IsOptional()
+  contentReady?: boolean;
+
+  @IsString()
+  @IsOptional()
+  lessonStatus?: string;
 }

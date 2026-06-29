@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Logger } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException, Logger } from "@nestjs/common";
 import { PrismaService } from "../database/prisma.service";
 import { AIService } from "../ai/ai.service";
 import { TTSService } from "../tts/tts.service";
@@ -239,6 +239,8 @@ export class CoursesService {
             videoUrl: true,
             chapterId: true,
             lessonType: true,
+            contentReady: true,
+            lessonStatus: true,
             progress: {
               where: { userId },
               select: {
@@ -292,6 +294,8 @@ export class CoursesService {
         orderIndex: true,
         chapterId: true,
         lessonType: true,
+        contentReady: true,
+        lessonStatus: true,
         progress: {
           where: { userId },
           select: {
@@ -613,7 +617,14 @@ export class CoursesService {
 
   async createNode(dto: any) {
     await this.getChapterById(dto.chapterId);
-    const lessonFlow = dto.lessonFlow || this.buildDefaultLessonFlow(dto);
+    const hasExplicitLessonFlow =
+      Array.isArray(dto.lessonFlow) && dto.lessonFlow.length > 0;
+    const contentReady = dto.contentReady ?? hasExplicitLessonFlow;
+    const lessonStatus =
+      dto.lessonStatus || (contentReady ? "published" : "draft");
+    const lessonFlow = hasExplicitLessonFlow
+      ? dto.lessonFlow
+      : this.buildDefaultLessonFlow(dto);
     NodeSchemaValidator.validateNode(lessonFlow);
     const node = await this.prisma.conceptNode.create({
       data: {
@@ -628,6 +639,8 @@ export class CoursesService {
         chapterId: dto.chapterId,
         lessonType: "flow",
         lessonFlow: lessonFlow as any,
+        contentReady,
+        lessonStatus,
       },
     });
     this.coursesCache.clear();
@@ -648,9 +661,18 @@ export class CoursesService {
 
   async updateNode(nodeId: string, dto: any) {
     await this.getNodeDetails(nodeId, "admin-user");
-    if (dto.lessonFlow !== undefined) {
+    const hasLessonFlowUpdate = dto.lessonFlow !== undefined && dto.lessonFlow !== null;
+    if (hasLessonFlowUpdate) {
       NodeSchemaValidator.validateNode(dto.lessonFlow);
     }
+    const explicitContentReady =
+      dto.contentReady !== undefined ? dto.contentReady : undefined;
+    const inferredContentReady =
+      explicitContentReady !== undefined
+        ? explicitContentReady
+        : hasLessonFlowUpdate
+          ? true
+          : undefined;
     const node = await this.prisma.conceptNode.update({
       where: { id: nodeId },
       data: {
@@ -663,8 +685,9 @@ export class CoursesService {
         videoUrl: dto.videoUrl !== undefined ? dto.videoUrl : undefined,
         orderIndex: dto.orderIndex,
         lessonType: "flow",
-        lessonFlow:
-          dto.lessonFlow !== undefined ? (dto.lessonFlow as any) : undefined,
+        lessonFlow: hasLessonFlowUpdate ? (dto.lessonFlow as any) : undefined,
+        contentReady: inferredContentReady,
+        lessonStatus: dto.lessonStatus,
       },
     });
     this.coursesCache.clear();
@@ -991,6 +1014,62 @@ export class CoursesService {
       url: publicUrl,
       fileName: originalname,
       mimetype,
+    };
+  }
+
+  async saveLessonAsset(
+    originalname: string,
+    buffer: Buffer,
+    mimetype: string,
+  ) {
+    if (!mimetype.startsWith("image/")) {
+      throw new BadRequestException("Only image lesson assets are supported by this endpoint");
+    }
+
+    const rootDir = path.resolve(__dirname, "..", "..", "..");
+    const publicDir = path.join(rootDir, "public");
+    const assetDir = path.join(publicDir, "lesson-assets");
+
+    if (!fs.existsSync(assetDir)) {
+      fs.mkdirSync(assetDir, { recursive: true });
+    }
+
+    const uniqueId = randomUUID();
+    const ext = path.extname(originalname);
+    const uniqueFilename = `${uniqueId}${ext}`;
+    const filePath = path.join(assetDir, uniqueFilename);
+
+    fs.writeFileSync(filePath, buffer);
+
+    let publicUrl = `/public/lesson-assets/${uniqueFilename}`;
+
+    try {
+      const supabaseUrl = await this.supabase.uploadFile(
+        "lesson-assets",
+        uniqueFilename,
+        buffer,
+        mimetype,
+      );
+      if (
+        supabaseUrl &&
+        !supabaseUrl.includes("philomind-mock-storage.local")
+      ) {
+        publicUrl = supabaseUrl;
+        this.logger.log(
+          `Lesson asset uploaded to Supabase Storage bucket [lesson-assets] -> Public URL: ${publicUrl}`,
+        );
+      }
+    } catch (err) {
+      this.logger.error(
+        `Failed to upload lesson asset to Supabase storage: ${err.message}. Using local storage fallback.`,
+      );
+    }
+
+    return {
+      url: publicUrl,
+      fileName: originalname,
+      mimetype,
+      bucket: "lesson-assets",
     };
   }
 

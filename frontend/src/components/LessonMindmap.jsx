@@ -57,7 +57,8 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
           {(section.lessons || []).map((lesson) => {
             const isActive = lesson.slug === activeSlug;
             const status = progressMap[lesson.title] || 'locked';
-            const isLocked = status === 'locked';
+            const isLocked = status === 'locked' || status === 'content_locked';
+            const isContentLocked = status === 'content_locked';
             const isCompleted = status === 'completed';
 
             return (
@@ -86,9 +87,14 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
                             : "text-primary-600 dark:text-primary-300 group-hover:text-white"
                     }`}
                   >
-                    {isLocked ? "lock" : isCompleted ? "check_circle" : "menu_book"}
+                    {isContentLocked ? "lock_clock" : isLocked ? "lock" : isCompleted ? "check_circle" : "menu_book"}
                   </span>
                   {lesson.title}
+                  {isContentLocked && (
+                    <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
+                      Sắp có
+                    </span>
+                  )}
                   {!isLocked && (
                     <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
                       chevron_right

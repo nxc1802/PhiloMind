@@ -88,6 +88,8 @@ model ConceptNode {
   // Component-based Lesson Flow
   lessonFlow     Json?
   lessonType     String             @default("flow")
+  contentReady   Boolean            @default(false)
+  lessonStatus   String             @default("draft") // "draft" | "published" | "archived"
 
   @@index([chapterId, orderIndex])
 }

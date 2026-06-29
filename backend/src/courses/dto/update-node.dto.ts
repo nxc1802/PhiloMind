@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber } from 'class-validator';
+import { IsBoolean, IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class UpdateNodeDto {
   @IsString()
@@ -39,4 +39,12 @@ export class UpdateNodeDto {
 
   @IsOptional()
   lessonFlow?: any;
+
+  @IsBoolean()
+  @IsOptional()
+  contentReady?: boolean;
+
+  @IsString()
+  @IsOptional()
+  lessonStatus?: string;
 }

@@ -50,6 +50,8 @@ export default function Nodes() {
     timeToRead: '10 min read',
     videoUrl: '', 
     lessonType: 'flow',
+    contentReady: false,
+    lessonStatus: 'draft',
     orderIndex: 1,
     chapterId: '',
     lessonFlow: '',
@@ -238,6 +240,8 @@ export default function Nodes() {
       timeToRead: '10 min read',
       videoUrl: '',
       lessonType: 'flow',
+      contentReady: false,
+      lessonStatus: 'draft',
       orderIndex: nodes.filter(n => n.chapterId === chapterId).length + 1,
       chapterId: chapterId || (chapters.length > 0 ? chapters[0].id : ''),
       lessonFlow: '',
@@ -255,6 +259,8 @@ export default function Nodes() {
       timeToRead: node.timeToRead || '10 min read',
       videoUrl: node.videoUrl || '',
       lessonType: 'flow',
+      contentReady: Boolean(node.contentReady),
+      lessonStatus: node.lessonStatus || (node.contentReady ? 'published' : 'draft'),
       orderIndex: node.orderIndex,
       chapterId: node.chapterId,
       lessonFlow: node.lessonFlow ? JSON.stringify(node.lessonFlow, null, 2) : '',
@@ -890,6 +896,38 @@ export default function Nodes() {
                       </div>
                     </div>
 
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <label className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-900 px-4 py-3 text-slate-200">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(form.contentReady)}
+                          onChange={(e) => setForm({
+                            ...form,
+                            contentReady: e.target.checked,
+                            lessonStatus: e.target.checked && form.lessonStatus === 'draft' ? 'published' : form.lessonStatus,
+                          })}
+                          className="mt-1 h-4 w-4 accent-red-700"
+                        />
+                        <span>
+                          <span className="block text-xs font-bold uppercase tracking-wider text-slate-300">Nội dung chính thức</span>
+                          <span className="block text-xs text-slate-500">Bỏ chọn để bài mờ/khóa ngoài frontend.</span>
+                        </span>
+                      </label>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Trạng thái xuất bản</label>
+                        <select
+                          value={form.lessonStatus}
+                          onChange={(e) => setForm({ ...form, lessonStatus: e.target.value })}
+                          className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-red-500"
+                        >
+                          <option value="draft">Draft</option>
+                          <option value="published">Published</option>
+                          <option value="archived">Archived</option>
+                        </select>
+                      </div>
+                    </div>
+
                         <div className="space-y-1">
                           <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Tóm tắt bài học (Summary)</label>
                           <textarea
@@ -1489,6 +1527,10 @@ export default function Nodes() {
 
 // ==================== LESSON FLOW ADMIN PANEL ====================
 function FrameworkAdminPanel({ form, setForm }) {
+  const [assetUploading, setAssetUploading] = useState(false);
+  const [assetError, setAssetError] = useState('');
+  const [lastAsset, setLastAsset] = useState(null);
+
   const loadTemplate = () => {
     const tpl = [
       {
@@ -1545,6 +1587,40 @@ function FrameworkAdminPanel({ form, setForm }) {
     setForm(prev => ({ ...prev, lessonFlow: JSON.stringify(parsed, null, 2) }));
   };
 
+  const appendImageAssetComponent = (asset) => {
+    const parsed = JSON.parse(form.lessonFlow || "[]");
+    const nextFlow = Array.isArray(parsed) ? parsed : [];
+    nextFlow.push({
+      id: `image-${Date.now()}`,
+      type: "media",
+      title: asset.fileName || "Ảnh minh họa",
+      config: {
+        mediaType: "image",
+        url: asset.url,
+        title: asset.fileName || "Ảnh minh họa",
+      },
+      completionRule: { type: "viewed" },
+    });
+    setForm(prev => ({ ...prev, lessonFlow: JSON.stringify(nextFlow, null, 2) }));
+  };
+
+  const uploadLessonImage = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setAssetUploading(true);
+    setAssetError('');
+    try {
+      const asset = await api.files.uploadLessonAsset(file);
+      setLastAsset(asset);
+      appendImageAssetComponent(asset);
+    } catch (err) {
+      setAssetError(err.message);
+    } finally {
+      setAssetUploading(false);
+      event.target.value = '';
+    }
+  };
+
   return (
     <div className="space-y-4 text-left text-xs">
       <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 space-y-2">
@@ -1558,6 +1634,31 @@ function FrameworkAdminPanel({ form, setForm }) {
         <p className="text-slate-500 leading-relaxed">
           Mỗi phần tử cần có `id`, `type`, `config`. Các type hiện hỗ trợ: dialogue, media, markdown, target_matching, category_sorting, mindmap_reveal, mcq, matching_columns, true_false, sequence_sorting, final_summary.
         </p>
+        <div className="rounded-xl border border-slate-800 bg-slate-950 p-3 space-y-2">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Upload ảnh component</p>
+              <p className="text-[11px] text-slate-500">Ảnh sẽ được upload vào bucket lesson-assets và tự thêm vào flow dưới dạng media image.</p>
+            </div>
+            <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-[11px] font-bold text-slate-200 hover:border-indigo-500 hover:text-indigo-300">
+              <span className="material-symbols-outlined text-sm">image</span>
+              {assetUploading ? "Đang upload..." : "Chọn ảnh"}
+              <input
+                type="file"
+                accept="image/*"
+                disabled={assetUploading}
+                onChange={uploadLessonImage}
+                className="hidden"
+              />
+            </label>
+          </div>
+          {lastAsset?.url && (
+            <p className="break-all text-[11px] text-emerald-400">Đã thêm ảnh: {lastAsset.url}</p>
+          )}
+          {assetError && (
+            <p className="break-all text-[11px] text-red-400">Upload thất bại: {assetError}</p>
+          )}
+        </div>
         <textarea rows="22" value={form.lessonFlow} onChange={(e) => setForm({ ...form, lessonFlow: e.target.value })} className="w-full bg-slate-955 border border-slate-800 rounded px-2.5 py-1.5 text-xs text-slate-200 font-mono resize-y focus:outline-none" />
       </div>
     </div>
@@ -1772,6 +1873,13 @@ function LessonNodeItem({ node, openEdit, handleDelete }) {
             </span>
             <span className="text-slate-500">{node.timeToRead}</span>
             <span className="text-slate-400">({(node._count && node._count.flashcards) || 0} thẻ)</span>
+            <span className={`px-1 rounded border font-bold uppercase ${
+              node.contentReady && node.lessonStatus === 'published'
+                ? 'bg-emerald-950/30 text-emerald-400 border-emerald-900/30'
+                : 'bg-slate-950 text-slate-500 border-slate-900'
+            }`}>
+              {node.contentReady && node.lessonStatus === 'published' ? 'published' : 'draft'}
+            </span>
             {node.videoUrl && (
               <span className="text-blue-400 flex items-center gap-0.5">
                 <span className="material-symbols-outlined text-[10px]">smart_display</span> YouTube
