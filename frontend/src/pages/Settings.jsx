@@ -1,26 +1,7 @@
 import React, { useState } from "react";
 import PageShell, { PageHero } from "../components/PageShell";
 
-// Trang Settings stub — luu cau hinh vao localStorage tam thoi
-// Khi co BE se chuyen sang sync voi server
-const STORAGE_KEY = "mln_web_settings";
-
-const DEFAULT_SETTINGS = {
-  displayName: "Học viên",
-  emailNotification: true,
-  autoplayVideo: false,
-  showTranscriptByDefault: true,
-  studyReminderTime: "19:00",
-};
-
-function loadSettings() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? { ...DEFAULT_SETTINGS, ...JSON.parse(raw) } : DEFAULT_SETTINGS;
-  } catch {
-    return DEFAULT_SETTINGS;
-  }
-}
+import { STORAGE_KEY, DEFAULT_SETTINGS, loadSettings } from "../utils/settings";
 
 export default function Settings() {
   const [settings, setSettings] = useState(loadSettings);
@@ -126,6 +107,23 @@ export default function Settings() {
             description="Lời thoại của podcast sẽ luôn hiển thị khi mở"
             checked={settings.showTranscriptByDefault}
             onChange={(v) => updateField("showTranscriptByDefault", v)}
+          />
+        </section>
+
+        {/* Study */}
+        <section className="bg-white dark:bg-[#1E293B] rounded-3xl shadow-md border border-blue-100 dark:border-slate-700/70 p-6 space-y-4">
+          <h2 className="font-bold text-lg text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
+              school
+            </span>
+            Tiến trình học tập
+          </h2>
+
+          <ToggleRow
+            label="Mở khóa toàn bộ bài học"
+            description="Mở khóa tất cả các bài học trong sơ đồ học tập theo mặc định"
+            checked={settings.unlockAllLessons}
+            onChange={(v) => updateField("unlockAllLessons", v)}
           />
         </section>
 

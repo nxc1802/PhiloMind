@@ -10,6 +10,7 @@ import { useNodeDetails } from "../hooks/useNodeDetails";
 import { useCompleteNodeMutation } from "../hooks/useMutations";
 
 import { getTitleFromSlug, getSlugFromTitle } from "../utils/slug";
+import { loadSettings } from "../utils/settings";
 import { LessonSkeleton } from "./lesson/components/LessonSkeleton";
 import { LessonSidebar } from "./lesson/components/LessonSidebar";
 
@@ -54,17 +55,23 @@ const Lesson = () => {
     const hasAnyProgress = dbJourney.some(chap =>
       (chap.nodes || []).some(n => n.progress && n.progress.length > 0 && n.progress[0]?.status)
     );
+    const settings = loadSettings();
+    const unlockAll = settings.unlockAllLessons;
     let isFirstNode = true;
     const allItems = dbJourney.flatMap(chap => 
       (chap.nodes || []).map(n => {
         let status = 'locked';
         const progressStatus = n.progress && n.progress[0]?.status;
-        if (progressStatus === 'completed') {
-          status = 'completed';
-        } else if (progressStatus === 'available' || progressStatus === 'in_progress') {
-          status = 'active';
-        } else if (!hasAnyProgress && isFirstNode) {
-          status = 'active';
+        if (unlockAll) {
+          status = progressStatus === 'completed' ? 'completed' : 'active';
+        } else {
+          if (progressStatus === 'completed') {
+            status = 'completed';
+          } else if (progressStatus === 'available' || progressStatus === 'in_progress') {
+            status = 'active';
+          } else if (!hasAnyProgress && isFirstNode) {
+            status = 'active';
+          }
         }
         isFirstNode = false;
         return {
@@ -92,12 +99,20 @@ const Lesson = () => {
     const hasAnyProgress = dbJourney.some(chap =>
       (chap.nodes || []).some(n => n.progress && n.progress.length > 0 && n.progress[0]?.status)
     );
+    const settings = loadSettings();
+    const unlockAll = settings.unlockAllLessons;
     let isFirstNode = true;
     dbJourney.forEach(chap => {
       (chap.nodes || []).forEach(n => {
         let status = (n.progress && n.progress[0]?.status) || 'locked';
-        if (!hasAnyProgress && isFirstNode) {
-          status = 'available';
+        if (unlockAll) {
+          if (status !== 'completed') {
+            status = 'available';
+          }
+        } else {
+          if (!hasAnyProgress && isFirstNode) {
+            status = 'available';
+          }
         }
         map[n.title] = status;
         isFirstNode = false;
