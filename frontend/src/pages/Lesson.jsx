@@ -1,5 +1,6 @@
-import React, { useMemo, useRef, Suspense, lazy } from "react";
+import React, { useEffect, useMemo, useRef, Suspense, lazy } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import PageShell, { PageHero } from "../components/PageShell";
 import OnboardingGuide from "../components/OnboardingGuide";
 import LessonMindmap from "../components/LessonMindmap";
@@ -8,6 +9,8 @@ import { useAuth } from "../context/AuthContext";
 import { useJourney } from "../hooks/useJourney";
 import { useNodeDetails } from "../hooks/useNodeDetails";
 import { useCompleteNodeMutation } from "../hooks/useMutations";
+import { api } from "../services/api";
+import { queryKeys } from "../services/queryKeys";
 
 import { getTitleFromSlug, getSlugFromTitle } from "../utils/slug";
 import { loadSettings } from "../utils/settings";
@@ -21,6 +24,7 @@ const Lesson = () => {
   const lessonSlug = searchParams.get("lesson");
   const { showToast } = useToast();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const lessonContentRef = useRef(null);
 
@@ -121,6 +125,35 @@ const Lesson = () => {
     return map;
   }, [dbJourney]);
 
+  const allJourneyNodes = useMemo(
+    () => dbJourney.flatMap((chap) => chap.nodes || []),
+    [dbJourney]
+  );
+
+  const nextLesson = useMemo(() => {
+    if (!activeLesson) return null;
+    const currentIndex = allJourneyNodes.findIndex((node) => node.id === activeLesson.id);
+    return currentIndex >= 0 ? allJourneyNodes[currentIndex + 1] || null : null;
+  }, [activeLesson, allJourneyNodes]);
+
+  useEffect(() => {
+    if (!user?.id || allJourneyNodes.length === 0) return;
+
+    const activeIndex = activeLesson
+      ? allJourneyNodes.findIndex((node) => node.id === activeLesson.id)
+      : 0;
+    const startIndex = Math.max(0, activeIndex - 1);
+    const nodesToWarm = allJourneyNodes.slice(startIndex, startIndex + 5);
+
+    nodesToWarm.forEach((node) => {
+      queryClient.prefetchQuery({
+        queryKey: queryKeys.courses.nodeDetails(node.id, user.id),
+        queryFn: () => api.courses.getNodeDetails(node.id),
+        staleTime: 1000 * 60 * 8,
+      });
+    });
+  }, [activeLesson, allJourneyNodes, queryClient, user?.id]);
+
   // Transform dbJourney to hierarchical chapters/sections/lessons for Mindmap
   const mindmapChapters = useMemo(() => {
     if (!dbJourney || dbJourney.length === 0) return [];
@@ -204,6 +237,21 @@ const Lesson = () => {
       { nodeId: currentNodeDetails.id, userId: user.id },
       {
         onSuccess: (result) => {
+          const nextTitle = result?.nextNodeTitle || nextLesson?.title;
+          if (nextTitle) {
+            const nextSlug = getSlugFromTitle(nextTitle);
+            const nextNodeId = result?.nextNodeId || nextLesson?.id;
+            if (nextNodeId) {
+              queryClient.prefetchQuery({
+                queryKey: queryKeys.courses.nodeDetails(nextNodeId, user.id),
+                queryFn: () => api.courses.getNodeDetails(nextNodeId),
+                staleTime: 1000 * 60 * 8,
+              });
+            }
+            setSearchParams({ lesson: nextSlug });
+            return;
+          }
+
           if (result && result.nextNodeTitle) {
             showToast(`Chúc mừng! Bạn đã hoàn thành bài học và mở khóa bài tiếp theo: "${result.nextNodeTitle}"`, "success");
           } else {

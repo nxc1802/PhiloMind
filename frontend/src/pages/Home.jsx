@@ -235,7 +235,7 @@ export default function Home() {
       </div>
 
       {/* AI Chat Bubble */}
-      <div className="fixed bottom-8 right-8 z-50 animate-bounce-slow">
+      <div className="fixed bottom-24 right-6 z-50 animate-bounce-slow">
         {isChatOpen && (
           <div className="absolute bottom-20 right-0 w-80 bg-white dark:bg-[#1C2230] rounded-3xl shadow-2xl border border-slate-100 dark:border-primary-900/20 overflow-hidden mb-4 animate-fadeIn">
             <div className="bg-primary-600 p-4 text-white flex items-center justify-between">

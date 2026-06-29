@@ -14,12 +14,6 @@ export default function FeedbackWidget() {
 
   const containerRef = useRef(null);
 
-  // Dragging States & Refs
-  const [position, setPosition] = useState({ bottom: 32, right: 32 });
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStart = useRef({ x: 0, y: 0, bottom: 0, right: 0 });
-  const hasDragged = useRef(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!content.trim() || !user) return;
@@ -56,84 +50,8 @@ export default function FeedbackWidget() {
     };
   }, [isOpen]);
 
-  // Handle Dragging
-  const handleDragStart = (clientX, clientY) => {
-    setIsDragging(true);
-    hasDragged.current = false;
-    dragStart.current = {
-      x: clientX,
-      y: clientY,
-      bottom: position.bottom,
-      right: position.right,
-    };
-  };
-
-  const handleMouseDown = (e) => {
-    if (e.button !== 0) return;
-    handleDragStart(e.clientX, e.clientY);
-  };
-
-  const handleTouchStart = (e) => {
-    const touch = e.touches[0];
-    handleDragStart(touch.clientX, touch.clientY);
-  };
-
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleDragMove = (clientX, clientY) => {
-      const deltaX = clientX - dragStart.current.x;
-      const deltaY = clientY - dragStart.current.y;
-      
-      const dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      if (dist > 5) {
-        hasDragged.current = true;
-      }
-
-      const newRight = Math.max(16, dragStart.current.right - deltaX);
-      const newBottom = Math.max(16, dragStart.current.bottom - deltaY);
-
-      const maxRight = window.innerWidth - 80;
-      const maxBottom = window.innerHeight - 80;
-
-      setPosition({
-        right: Math.min(newRight, maxRight),
-        bottom: Math.min(newBottom, maxBottom),
-      });
-    };
-
-    const handleMouseMove = (e) => {
-      handleDragMove(e.clientX, e.clientY);
-    };
-
-    const handleTouchMove = (e) => {
-      const touch = e.touches[0];
-      handleDragMove(touch.clientX, touch.clientY);
-    };
-
-    const handleDragEnd = () => {
-      setIsDragging(false);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleDragEnd);
-    document.addEventListener("touchmove", handleTouchMove, { passive: true });
-    document.addEventListener("touchend", handleDragEnd);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleDragEnd);
-      document.removeEventListener("touchmove", handleTouchMove);
-      document.removeEventListener("touchend", handleDragEnd);
-    };
-  }, [isDragging]);
-
   const handleButtonClick = (e) => {
     e.preventDefault();
-    if (hasDragged.current) {
-      hasDragged.current = false;
-      return;
-    }
     setIsOpen((prev) => !prev);
     if (!isOpen) setSubmitted(false);
   };
@@ -141,12 +59,7 @@ export default function FeedbackWidget() {
   return (
     <div 
       ref={containerRef}
-      className="fixed z-50 transition-shadow select-none"
-      style={{
-        bottom: `${position.bottom}px`,
-        right: `${position.right}px`,
-        cursor: isDragging ? "grabbing" : "grab",
-      }}
+      className="fixed bottom-6 right-6 z-50 transition-shadow select-none"
     >
       {isOpen && (
         <div className="absolute bottom-20 right-0 w-[22rem] max-w-[calc(100vw-4rem)] bg-white/95 dark:bg-[#002b37]/95 backdrop-blur-md rounded-3xl shadow-2xl border border-primary-100 dark:border-primary-850 overflow-hidden mb-2 flex flex-col transition-all duration-300 select-text text-slate-800 dark:text-slate-100">
@@ -229,8 +142,6 @@ export default function FeedbackWidget() {
       <button
         type="button"
         aria-label="Mở góp ý"
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
         onClick={handleButtonClick}
         className="h-14 w-14 bg-gradient-to-br from-primary-600 to-primary-800 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all relative overflow-hidden"
       >
