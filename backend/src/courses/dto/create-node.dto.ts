@@ -1,4 +1,10 @@
-import { IsBoolean, IsString, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
+import {
+  IsBoolean,
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsNumber,
+} from "class-validator";
 
 export class CreateNodeDto {
   @IsString()

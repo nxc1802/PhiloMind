@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException, Logger } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  Logger,
+} from "@nestjs/common";
 import { PrismaService } from "../database/prisma.service";
 import { AIService } from "../ai/ai.service";
 import { TTSService } from "../tts/tts.service";
@@ -661,7 +666,8 @@ export class CoursesService {
 
   async updateNode(nodeId: string, dto: any) {
     await this.getNodeDetails(nodeId, "admin-user");
-    const hasLessonFlowUpdate = dto.lessonFlow !== undefined && dto.lessonFlow !== null;
+    const hasLessonFlowUpdate =
+      dto.lessonFlow !== undefined && dto.lessonFlow !== null;
     if (hasLessonFlowUpdate) {
       NodeSchemaValidator.validateNode(dto.lessonFlow);
     }
@@ -1023,7 +1029,9 @@ export class CoursesService {
     mimetype: string,
   ) {
     if (!mimetype.startsWith("image/")) {
-      throw new BadRequestException("Only image lesson assets are supported by this endpoint");
+      throw new BadRequestException(
+        "Only image lesson assets are supported by this endpoint",
+      );
     }
 
     const rootDir = path.resolve(__dirname, "..", "..", "..");
