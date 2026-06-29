@@ -1,8 +1,14 @@
-import { Injectable, NotFoundException, BadRequestException, Inject, forwardRef } from '@nestjs/common';
-import { PrismaService } from '../database/prisma.service';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcryptjs';
-import { SupabaseService } from '../supabase/supabase.service';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  Inject,
+  forwardRef,
+} from "@nestjs/common";
+import { PrismaService } from "../database/prisma.service";
+import { JwtService } from "@nestjs/jwt";
+import * as bcrypt from "bcryptjs";
+import { SupabaseService } from "../supabase/supabase.service";
 
 @Injectable()
 export class UsersService {
@@ -26,8 +32,24 @@ export class UsersService {
         reviews: true,
       },
     });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) throw new NotFoundException("User not found");
     return this.withoutPassword(user);
+  }
+
+  async findAuthUserById(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        name: true,
+        streak: true,
+        createdAt: true,
+      },
+    });
+    if (!user) throw new NotFoundException("User not found");
+    return user;
   }
 
   async findByEmail(email: string) {
@@ -41,24 +63,21 @@ export class UsersService {
     return this.jwtService.sign(payload);
   }
 
-  async register(email: string, name: string, password?: string) {
+  async register(email: string, name: string, password: string) {
     const normalizedEmail = email.trim().toLowerCase();
     const exists = await this.findByEmail(normalizedEmail);
     if (exists) {
-      throw new BadRequestException('Email already registered');
+      throw new BadRequestException("Email already registered");
     }
 
-    let hashedPassword = null;
-    if (password) {
-      hashedPassword = await bcrypt.hash(password, 10);
-    }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.prisma.user.create({
       data: {
         email: normalizedEmail,
         name: name.trim(),
         password: hashedPassword,
-        role: 'student',
+        role: "student",
         streak: 0,
       },
     });
@@ -67,21 +86,23 @@ export class UsersService {
     return { user: this.withoutPassword(user), token };
   }
 
-  async login(email: string, password?: string) {
+  async login(email: string, password: string) {
     const normalizedEmail = email.trim().toLowerCase();
 
     const user = await this.findByEmail(normalizedEmail);
     if (!user) {
-      throw new NotFoundException('User not found. Please register first.');
+      throw new NotFoundException("User not found. Please register first.");
     }
 
-    if (user.password && password) {
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        throw new BadRequestException('Invalid credentials');
-      }
-    } else if (user.password && !password) {
-      throw new BadRequestException('Password required');
+    if (!user.password) {
+      throw new BadRequestException(
+        "This account uses an external sign-in provider. Please use Google/Supabase login.",
+      );
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new BadRequestException("Invalid credentials");
     }
 
     const token = this.generateToken(user);
@@ -90,18 +111,36 @@ export class UsersService {
 
   async googleLogin(idToken: string) {
     try {
-      const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${idToken}`);
+      const response = await fetch(
+        `https://oauth2.googleapis.com/tokeninfo?id_token=${idToken}`,
+      );
       if (!response.ok) {
-        throw new BadRequestException('Invalid Google ID Token');
+        throw new BadRequestException("Invalid Google ID Token");
       }
 
       const payload = await response.json();
       if (!payload.email) {
-        throw new BadRequestException('Google token does not contain email');
+        throw new BadRequestException("Google token does not contain email");
+      }
+      if (
+        payload.email_verified !== true &&
+        payload.email_verified !== "true"
+      ) {
+        throw new BadRequestException("Google email is not verified");
+      }
+
+      const googleClientId = process.env.GOOGLE_CLIENT_ID;
+      if (googleClientId && payload.aud !== googleClientId) {
+        throw new BadRequestException("Google token audience mismatch");
+      }
+      if (!googleClientId && process.env.NODE_ENV === "production") {
+        throw new BadRequestException(
+          "GOOGLE_CLIENT_ID must be configured in production",
+        );
       }
 
       const email = payload.email.trim().toLowerCase();
-      const name = payload.name || email.split('@')[0];
+      const name = payload.name || email.split("@")[0];
 
       // Upsert User by email
       let user = await this.prisma.user.findUnique({ where: { email } });
@@ -110,7 +149,7 @@ export class UsersService {
           data: {
             email,
             name,
-            role: 'student',
+            role: "student",
             streak: 1,
           },
         });
@@ -128,17 +167,20 @@ export class UsersService {
     // If Supabase is not initialized (e.g. running in mock mode)
     if (!supabaseClient) {
       // In local development or mock mode, we accept a mock token
-      if (token === 'mock-supabase-jwt-token-string') {
-        const email = 'philosopher.beginner@gmail.com';
-        const name = 'Tân thủ Triết học';
-        
+      const allowMockAuth =
+        process.env.NODE_ENV !== "production" &&
+        token === "mock-supabase-jwt-token-string";
+      if (allowMockAuth) {
+        const email = "philosopher.beginner@gmail.com";
+        const name = "Tân thủ Triết học";
+
         let user = await this.prisma.user.findUnique({ where: { email } });
         if (!user) {
           user = await this.prisma.user.create({
             data: {
               email,
               name,
-              role: 'student',
+              role: "student",
               streak: 1,
             },
           });
@@ -146,17 +188,28 @@ export class UsersService {
         const jwtToken = this.generateToken(user);
         return { user: this.withoutPassword(user), token: jwtToken };
       }
-      throw new BadRequestException('Supabase URL/Key missing and invalid mock token');
+      throw new BadRequestException(
+        "Supabase URL/Key missing and invalid mock token",
+      );
     }
 
     try {
-      const { data: { user: sbUser }, error } = await supabaseClient.auth.getUser(token);
+      const {
+        data: { user: sbUser },
+        error,
+      } = await supabaseClient.auth.getUser(token);
       if (error || !sbUser) {
-        throw new BadRequestException(`Invalid Supabase token: ${error?.message || 'User not found'}`);
+        throw new BadRequestException(
+          `Invalid Supabase token: ${error?.message || "User not found"}`,
+        );
+      }
+
+      if (!sbUser.email) {
+        throw new BadRequestException("Supabase user does not contain email");
       }
 
       const email = sbUser.email.trim().toLowerCase();
-      const name = sbUser.user_metadata?.full_name || email.split('@')[0];
+      const name = sbUser.user_metadata?.full_name || email.split("@")[0];
 
       let user = await this.prisma.user.findUnique({ where: { email } });
       if (!user) {
@@ -164,7 +217,7 @@ export class UsersService {
           data: {
             email,
             name,
-            role: 'student',
+            role: "student",
             streak: 1,
           },
         });
@@ -180,7 +233,7 @@ export class UsersService {
     return this.prisma.user.findMany({
       take,
       skip,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       select: {
         id: true,
         email: true,
@@ -208,7 +261,7 @@ export class UsersService {
 
   async remove(id: string) {
     await this.findById(id);
-    
+
     // Clean up related data inside a transaction
     return this.prisma.$transaction(async (tx) => {
       await tx.progress.deleteMany({ where: { userId: id } });
@@ -233,7 +286,7 @@ export class UsersService {
 
   async findAllFeedbacks() {
     return this.prisma.feedback.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       include: {
         user: true,
       },

@@ -9,8 +9,8 @@
 ```mermaid
 graph TD
     subgraph "Client Layer"
-        FE["Frontend (React + CRA)<br/>Port 3000"]
-        ADMIN["Admin Panel (React + CRA)<br/>Port 3002"]
+        FE["Frontend (Vite React)<br/>Port 3000"]
+        ADMIN["Admin Panel (Vite React)<br/>Port 3002"]
     end
 
     subgraph "API Layer"
@@ -41,8 +41,8 @@ Dự án được tổ chức dưới dạng **monorepo** gồm **4 service chí
 
 | Service | Công nghệ | Vai trò | Port |
 |---------|-----------|---------|------|
-| [frontend](file:///d:/Workspace/Project/PhiloMind/frontend) | React 18 + CRA + TailwindCSS | Giao diện người dùng | 3000 |
-| [admin](file:///d:/Workspace/Project/PhiloMind/admin) | React 18 + CRA + TailwindCSS | Bảng quản trị | 3002 |
+| [frontend](file:///d:/Workspace/Project/PhiloMind/frontend) | React 18 + Vite + TailwindCSS | Giao diện người dùng | 3000 |
+| [admin](file:///d:/Workspace/Project/PhiloMind/admin) | React 18 + Vite + TailwindCSS | Bảng quản trị | 3002 |
 | [backend](file:///d:/Workspace/Project/PhiloMind/backend) | NestJS 11 + Prisma + TypeScript | REST API server | 3001 |
 | [tts_worker](file:///d:/Workspace/Project/PhiloMind/tts_worker) | FastAPI + Kokoro-82M ONNX | Text-to-Speech microservice | 8000 |
 
@@ -172,7 +172,7 @@ Tại [courses.controller.ts](file:///d:/Workspace/Project/PhiloMind/backend/src
 ## 🎨 Frontend (React)
 
 ### Tech Stack
-- **React 18** + Create React App (CRA)
+- **React 18** + Vite
 - **TailwindCSS 3** cho styling
 - **React Router v6** cho routing
 - **TanStack React Query** cho data fetching + caching
@@ -361,7 +361,7 @@ Dashboard quản trị riêng biệt tại [admin/](file:///d:/Workspace/Project
 | 2 | **Thiếu CI workflow** — Không có linting, formatting check, test automation | 🔴 Cao | Thêm `ci.yml` với ESLint, Prettier, Jest |
 | 3 | **DTO inline trong controller** — DTOs định nghĩa trực tiếp trong controller file | 🟡 Trung bình | Tách thành `dto/` folder riêng |
 | 4 | **CoursesController quá lớn** (557 lines, 20+ endpoints) | 🟡 Trung bình | Tách thành sub-controllers (chapters, nodes, podcasts, warmups) |
-| 5 | **Frontend dùng CRA** — Create React App đã deprecated | 🟡 Trung bình | Migrate sang Vite hoặc Next.js |
+| 5 | **Frontend đã migrate sang Vite** — cần duy trì test/build/audit để tránh lệch dependency | 🟢 Thấp | Giữ Vitest và Vite config đồng bộ |
 | 6 | **Thiếu rate limiting** — Không có throttle cho AI/TTS endpoints | 🟡 Trung bình | Thêm `@nestjs/throttler` |
 | 7 | **userId truyền qua body/query** thay vì extract từ JWT token | 🟡 Trung bình | Sử dụng `req.user.id` nhất quán (đã bắt đầu migrate tại controller) |
 | 8 | **Admin panel không có Dockerfile** trong docker-compose | 🟢 Thấp | Thêm nếu cần deploy admin |

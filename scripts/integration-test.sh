@@ -42,7 +42,7 @@ check_endpoint "TTS Worker Health Endpoint" "http://localhost:8000/health" 200 |
 check_endpoint "Backend Swagger API Docs" "http://localhost:3001/docs" 200 || be_fail=1
 
 # 3. Check Frontend Server
-check_endpoint "Frontend React Next.js Web App" "http://localhost:3000" 200 || fe_fail=1
+check_endpoint "Frontend Vite React Web App" "http://localhost:3000" 200 || fe_fail=1
 
 # Integration Assessment Summary
 echo "============================================="

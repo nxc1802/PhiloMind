@@ -1,19 +1,40 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
+import { vi } from 'vitest';
+
+function createStorageMock() {
+  const store = new Map();
+
+  return {
+    get length() {
+      return store.size;
+    },
+    clear: vi.fn(() => store.clear()),
+    getItem: vi.fn((key) => {
+      const normalizedKey = String(key);
+      return store.has(normalizedKey) ? store.get(normalizedKey) : null;
+    }),
+    key: vi.fn((index) => Array.from(store.keys())[index] ?? null),
+    removeItem: vi.fn((key) => store.delete(String(key))),
+    setItem: vi.fn((key, value) => store.set(String(key), String(value))),
+  };
+}
+
+Object.defineProperty(window, 'localStorage', {
+  configurable: true,
+  value: createStorageMock(),
+});
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation((query) => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
   })),
 });
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;

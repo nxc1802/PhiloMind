@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -32,14 +34,29 @@ jobs:
           npx prisma generate
 
       - name: Check Format
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           cd backend
-          npm run format -- --check || true
+          if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then
+            BASE_SHA="HEAD~1"
+          fi
+          FILES=$(git diff --name-only --relative=backend --diff-filter=ACMRT "$BASE_SHA" HEAD -- src prisma | grep -E '\.ts$' || true)
+          if [ -n "$FILES" ]; then
+            printf '%s\n' "$FILES" | xargs npx prettier --check
+          else
+            echo "No changed backend TypeScript files to format-check."
+          fi
 
       - name: Run Tests
         run: |
           cd backend
-          npm run test -- --passWithNoTests
+          npm run test -- --runInBand
+
+      - name: Audit Dependencies
+        run: |
+          cd backend
+          npm audit --audit-level=high
 
   frontend-ci:
     name: Frontend CI (Build Verification)
@@ -60,11 +77,20 @@ jobs:
           cd frontend
           npm ci
 
+      - name: Run Tests
+        run: |
+          cd frontend
+          npm run test -- --run
+
       - name: Build Verification
         run: |
           cd frontend
-          # Since we migrate to Vite, this compiles the Vite build
           npm run build
+
+      - name: Audit Dependencies
+        run: |
+          cd frontend
+          npm audit --audit-level=high
 
   admin-ci:
     name: Admin CI (Build Verification)
@@ -85,8 +111,17 @@ jobs:
           cd admin
           npm ci
 
+      - name: Run Tests
+        run: |
+          cd admin
+          npm run test -- --run
+
       - name: Build Verification
         run: |
           cd admin
-          # Since we migrate to Vite, this compiles the Vite build
           npm run build
+
+      - name: Audit Dependencies
+        run: |
+          cd admin
+          npm audit --audit-level=high

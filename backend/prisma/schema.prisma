@@ -62,6 +62,7 @@ model Chapter {
   nodes           ConceptNode[]
 
   @@index([courseId, orderIndex])
+  @@index([parentChapterId])
 }
 
 model ConceptNode {
@@ -114,6 +115,7 @@ model FlashcardReview {
   flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([userId, nextReview])
   @@index([flashcardId])
 }
 
@@ -145,6 +147,8 @@ model Debate {
   topic      DebateTopic? @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([userId, nodeId])
+  @@index([userId, topicId])
   @@index([nodeId])
   @@index([topicId])
 }
@@ -186,6 +190,7 @@ model Progress {
 
   @@unique([userId, nodeId])
   @@index([userId])
+  @@index([nodeId])
 }
 
 model Feedback {

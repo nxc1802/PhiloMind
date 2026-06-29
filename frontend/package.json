@@ -21,12 +21,6 @@
     "test": "vitest",
     "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -40,11 +34,13 @@
     ]
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^5.2.0",
     "autoprefixer": "^10.5.0",
+    "jsdom": "^29.1.1",
     "postcss": "^8.5.15",
     "tailwindcss": "^3.4.19",
-    "vite": "^5.2.2"
+    "vite": "^7.3.6",
+    "vitest": "^4.1.9"
   },
   "overrides": {
     "@tootallnate/once": "^2.0.1",

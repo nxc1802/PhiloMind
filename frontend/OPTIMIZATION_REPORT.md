@@ -143,8 +143,8 @@ Ket qua cuoi: `webpack compiled successfully` — KHONG con warning nao.
   - De xuat: chuyen anh ve thu muc public/images/
 - **Cac file CSS** (Lesson.css, Flashcards.css, ...) chua duoc kiem tra — pham vi nay chi tap trung JS/JSX
   - De xuat: lan sau ra soat CSS tach module hoac dung Tailwind dong nhat
-- **Dependency npm** co 28 vulnerability tu npm install (react-scripts cu)
-  - De xuat: nang react-scripts hoac chuyen sang Vite
+- **Dependency npm** da duoc chuyen tu react-scripts sang Vite
+  - Ket qua: `npm audit --audit-level=high` khong con vulnerability
 
 ---
 
@@ -156,7 +156,7 @@ Ket qua cuoi: `webpack compiled successfully` — KHONG con warning nao.
 4. Them React.memo cho cac component lon (PodcastPlayer, FinalQuiz) — re-render khong can thiet khi state cha thay doi
 5. Goi `localStorage` luu tien do quiz / podcast position de user khong mat khi reload
 6. Tao trang `/docs` thuc su hoac bo navlink
-7. Nang `react-scripts` (5.0.1) hoac di chuyen sang Vite + ESLint Flat Config
+7. Tiep tuc theo doi canh bao bundle size cua Vite va tach chunk khi can
 8. Them `prop-types` cho cac component duoc tach (StudyModulesSidebar, ChapterMap, Branch, VideoQuiz, ...) — hien tai dang dua vao destructuring khong validation
 
 ---
@@ -341,7 +341,7 @@ Tong: 8 van de ton dong da xu ly. Webpack compile successfully khong warning.
 Van de chua dong:
 - `package.json` name la "fe" — khong doi vi co the lam break npm install/cache trong tuong lai. De nguyen.
 - README.md van la default CRA — chua tao moi vi user khong yeu cau tao tai lieu moi.
-- 28 npm vulnerability tu react-scripts cu — can quyet dinh nang version (rui ro cao, de cho lan major upgrade).
+- 28 npm vulnerability tu react-scripts cu — da xu ly bang cach chuyen sang Vite; `npm audit --audit-level=high` sach.
 
 ---
 

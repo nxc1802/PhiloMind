@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: pgvector/pgvector:pg15
@@ -42,6 +40,15 @@ services:
     environment:
       - PORT=${PORT:-3001}
       - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:${POSTGRES_PASSWORD:-postgrespassword}@db:5432/philomind?schema=public}
+      - PRISMA_CONNECTION_LIMIT=${PRISMA_CONNECTION_LIMIT:-5}
+      - PRISMA_POOL_TIMEOUT=${PRISMA_POOL_TIMEOUT:-60}
+      - PRISMA_CONNECT_TIMEOUT=${PRISMA_CONNECT_TIMEOUT:-30}
+      - PRISMA_TRANSACTION_MAX_WAIT_MS=${PRISMA_TRANSACTION_MAX_WAIT_MS:-20000}
+      - PRISMA_TRANSACTION_TIMEOUT_MS=${PRISMA_TRANSACTION_TIMEOUT_MS:-60000}
+      - DB_QUERY_CONCURRENCY=${DB_QUERY_CONCURRENCY:-5}
+      - DB_QUEUE_TIMEOUT_MS=${DB_QUEUE_TIMEOUT_MS:-30000}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - ENABLE_SWAGGER=${ENABLE_SWAGGER:-true}
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
       - SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}
@@ -71,7 +78,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PORT=${PORT:-3000}
+      - PORT=${FRONTEND_PORT:-3000}
       - REACT_APP_API_URL=${FRONTEND_REACT_APP_API_URL:-http://localhost:3001/api}
       - REACT_APP_SUPABASE_URL=${SUPABASE_URL}
       - REACT_APP_SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
@@ -83,13 +90,13 @@ services:
       context: ./admin
       dockerfile: Dockerfile
       args:
-        REACT_APP_API_URL: ${FRONTEND_REACT_APP_API_URL:-http://localhost:3001/api}
+        REACT_APP_API_URL: ${ADMIN_REACT_APP_API_URL:-http://localhost:3001/api}
     container_name: philomind-admin
     ports:
       - "3002:3002"
     environment:
       - PORT=3002
-      - REACT_APP_API_URL=${FRONTEND_REACT_APP_API_URL:-http://localhost:3001/api}
+      - REACT_APP_API_URL=${ADMIN_REACT_APP_API_URL:-http://localhost:3001/api}
     depends_on:
       - backend
 

@@ -81,43 +81,41 @@ export const api = {
 
   // ==================== COURSES & MINDMAP ====================
   courses: {
-    list: async (userId) => {
-      const url = userId ? `${API_BASE_URL}/courses?userId=${encodeURIComponent(userId)}` : `${API_BASE_URL}/courses`;
-      const response = await fetch(url, {
+    list: async () => {
+      const response = await fetch(`${API_BASE_URL}/courses`, {
         headers: getHeaders()
       });
       return handleResponse(response);
     },
 
-    getJourney: async (courseId, userId) => {
+    getJourney: async (courseId) => {
       const response = await fetch(
-        `${API_BASE_URL}/courses/${courseId}/journey?userId=${encodeURIComponent(userId)}`,
+        `${API_BASE_URL}/courses/${courseId}/journey`,
         { headers: getHeaders() }
       );
       return handleResponse(response);
     },
 
-    getNodeDetails: async (nodeId, userId) => {
+    getNodeDetails: async (nodeId) => {
       const response = await fetch(
-        `${API_BASE_URL}/courses/nodes/${nodeId}?userId=${encodeURIComponent(userId)}`,
+        `${API_BASE_URL}/courses/nodes/${nodeId}`,
         { headers: getHeaders() }
       );
       return handleResponse(response);
     },
 
-    getNodeCore: async (nodeId, userId) => {
+    getNodeCore: async (nodeId) => {
       const response = await fetch(
-        `${API_BASE_URL}/courses/nodes/${nodeId}/core?userId=${encodeURIComponent(userId)}`,
+        `${API_BASE_URL}/courses/nodes/${nodeId}/core`,
         { headers: getHeaders() }
       );
       return handleResponse(response);
     },
 
-    completeNode: async (nodeId, userId) => {
+    completeNode: async (nodeId) => {
       const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/complete`, {
         method: 'POST',
         headers: getHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ userId }),
       });
       return handleResponse(response);
     },
@@ -126,7 +124,7 @@ export const api = {
       const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/progress`, {
         method: 'PATCH',
         headers: getHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ userId, status, ...extraFields }),
+        body: JSON.stringify({ status, ...extraFields }),
       });
       return handleResponse(response);
     },
@@ -155,11 +153,11 @@ export const api = {
         });
         return handleResponse(response);
       },
-      create: async (nodeId, userId, content, role = 'student') => {
+      create: async (nodeId, userId, content) => {
         const response = await fetch(`${API_BASE_URL}/courses/nodes/${nodeId}/comments`, {
           method: 'POST',
           headers: getHeaders({ 'Content-Type': 'application/json' }),
-          body: JSON.stringify({ userId, content, role }),
+          body: JSON.stringify({ content }),
         });
         return handleResponse(response);
       }
@@ -169,9 +167,9 @@ export const api = {
   // ==================== FLASHCARDS ====================
   flashcards: {
     getDue: async (userId, courseId) => {
-      let url = `${API_BASE_URL}/flashcards/due?userId=${encodeURIComponent(userId)}`;
+      let url = `${API_BASE_URL}/flashcards/due`;
       if (courseId) {
-        url += `&courseId=${encodeURIComponent(courseId)}`;
+        url += `?courseId=${encodeURIComponent(courseId)}`;
       }
       const response = await fetch(url, {
         headers: getHeaders()
@@ -183,7 +181,7 @@ export const api = {
       const response = await fetch(`${API_BASE_URL}/flashcards/review`, {
         method: 'POST',
         headers: getHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ userId, flashcardId, ease }),
+        body: JSON.stringify({ flashcardId, ease }),
       });
       return handleResponse(response);
     },
@@ -199,9 +197,9 @@ export const api = {
 
   // ==================== DEBATES ====================
   debates: {
-    getTranscript: async (nodeId, userId) => {
+    getTranscript: async (nodeId) => {
       const response = await fetch(
-        `${API_BASE_URL}/debates/${nodeId}?userId=${encodeURIComponent(userId)}`,
+        `${API_BASE_URL}/debates/${nodeId}`,
         { headers: getHeaders() }
       );
       return handleResponse(response);
@@ -211,7 +209,7 @@ export const api = {
       const response = await fetch(`${API_BASE_URL}/debates/${nodeId}/message`, {
         method: 'POST',
         headers: getHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ userId, message }),
+        body: JSON.stringify({ message }),
       });
       return handleResponse(response);
     },
@@ -223,9 +221,9 @@ export const api = {
         });
         return handleResponse(response);
       },
-      getTranscript: async (topicId, userId) => {
+      getTranscript: async (topicId) => {
         const response = await fetch(
-          `${API_BASE_URL}/debates/topic/${topicId}?userId=${encodeURIComponent(userId)}`,
+          `${API_BASE_URL}/debates/topic/${topicId}`,
           { headers: getHeaders() }
         );
         return handleResponse(response);
@@ -234,7 +232,7 @@ export const api = {
         const response = await fetch(`${API_BASE_URL}/debates/topic/${topicId}/message`, {
           method: 'POST',
           headers: getHeaders({ 'Content-Type': 'application/json' }),
-          body: JSON.stringify({ userId, message }),
+          body: JSON.stringify({ message }),
         });
         return handleResponse(response);
       }
@@ -270,7 +268,7 @@ export const api = {
       const response = await fetch(`${API_BASE_URL}/feedbacks`, {
         method: 'POST',
         headers: getHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ userId, content }),
+        body: JSON.stringify({ content }),
       });
       return handleResponse(response);
     }

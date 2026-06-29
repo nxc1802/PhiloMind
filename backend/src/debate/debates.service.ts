@@ -1,9 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../database/prisma.service';
-import { AIService } from '../ai/ai.service';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "../database/prisma.service";
+import { AIService } from "../ai/ai.service";
+import { TtlCache } from "../common/ttl-cache";
 
 @Injectable()
 export class DebatesService {
+  private readonly topicsCache = new TtlCache<any[]>();
+
   constructor(
     private prisma: PrismaService,
     private ai: AIService,
@@ -12,23 +15,27 @@ export class DebatesService {
   // ==================== DEBATE TOPICS CRUD ====================
 
   async getTopics() {
-    return this.prisma.debateTopic.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
+    return this.topicsCache.getOrSet("debate-topics", 60000, () =>
+      this.prisma.debateTopic.findMany({
+        orderBy: { createdAt: "desc" },
+      }),
+    );
   }
 
   async createTopic(dto: any) {
-    return this.prisma.debateTopic.create({
+    const topic = await this.prisma.debateTopic.create({
       data: {
         title: dto.title,
         description: dto.description,
         initialPrompt: dto.initialPrompt,
       },
     });
+    this.topicsCache.clear();
+    return topic;
   }
 
   async updateTopic(id: string, dto: any) {
-    return this.prisma.debateTopic.update({
+    const topic = await this.prisma.debateTopic.update({
       where: { id },
       data: {
         title: dto.title,
@@ -36,14 +43,18 @@ export class DebatesService {
         initialPrompt: dto.initialPrompt,
       },
     });
+    this.topicsCache.clear();
+    return topic;
   }
 
   async deleteTopic(id: string) {
-    return this.prisma.$transaction(async (tx) => {
+    const topic = await this.prisma.$transaction(async (tx) => {
       // Cascade delete debates associated with this topic
       await tx.debate.deleteMany({ where: { topicId: id } });
       return tx.debateTopic.delete({ where: { id } });
     });
+    this.topicsCache.clear();
+    return topic;
   }
 
   // ==================== TOPIC DEBATE WORKFLOW ====================
@@ -57,14 +68,14 @@ export class DebatesService {
       const topic = await this.prisma.debateTopic.findUnique({
         where: { id: topicId },
       });
-      if (!topic) throw new NotFoundException('Debate topic not found');
+      if (!topic) throw new NotFoundException("Debate topic not found");
 
       debate = await this.prisma.debate.create({
         data: {
           topicId,
           userId,
           transcript: [
-            { speaker: 'Host', text: topic.initialPrompt, time: 0 },
+            { speaker: "Host", text: topic.initialPrompt, time: 0 },
           ] as any,
         },
       });
@@ -73,17 +84,24 @@ export class DebatesService {
     return debate;
   }
 
-  async sendTopicDebateMessage(topicId: string, userId: string, message: string) {
+  async sendTopicDebateMessage(
+    topicId: string,
+    userId: string,
+    message: string,
+  ) {
     const debate = await this.getOrCreateTopicDebate(topicId, userId);
     const transcript = debate.transcript as any[];
 
     // Build chat history with full conversation continuous flow
     const chatHistory = transcript.map((t) => ({
-      role: t.speaker === 'Host' ? 'assistant' : ('user' as 'user' | 'assistant'),
+      role:
+        t.speaker === "Host" ? "assistant" : ("user" as "user" | "assistant"),
       content: t.text,
     }));
 
-    const topic = await this.prisma.debateTopic.findUnique({ where: { id: topicId } });
+    const topic = await this.prisma.debateTopic.findUnique({
+      where: { id: topicId },
+    });
     const reply = await this.ai.getSocraticDebateReply(
       topic?.title || "Tranh luận biện chứng",
       message,
@@ -92,8 +110,8 @@ export class DebatesService {
 
     const updatedTranscript = [
       ...transcript,
-      { speaker: 'User', text: message, time: Date.now() },
-      { speaker: 'Host', text: reply, time: Date.now() },
+      { speaker: "User", text: message, time: Date.now() },
+      { speaker: "Host", text: reply, time: Date.now() },
     ];
 
     return this.prisma.debate.update({
@@ -113,18 +131,16 @@ export class DebatesService {
       const node = await this.prisma.conceptNode.findUnique({
         where: { id: nodeId },
       });
-      if (!node) throw new NotFoundException('Concept node not found');
+      if (!node) throw new NotFoundException("Concept node not found");
 
       // Initialize default prompt in Vietnamese
       const prompt = `Chúng ta hãy cùng thảo luận về khái niệm "${node.title}". Hãy xem xét luận điểm sau: "${node.quickTake}". Đồng chí có đồng ý với quan điểm này không, hay đồng chí nhận thấy có điểm nào chưa nhất quán trong lập luận cốt lõi này? Tại sao?`;
-      
+
       debate = await this.prisma.debate.create({
         data: {
           nodeId,
           userId,
-          transcript: [
-            { speaker: 'Host', text: prompt, time: 0 },
-          ] as any,
+          transcript: [{ speaker: "Host", text: prompt, time: 0 }] as any,
         },
       });
     }
@@ -138,11 +154,14 @@ export class DebatesService {
 
     // Build chat history with full conversation continuous flow
     const chatHistory = transcript.map((t) => ({
-      role: t.speaker === 'Host' ? 'assistant' : ('user' as 'user' | 'assistant'),
+      role:
+        t.speaker === "Host" ? "assistant" : ("user" as "user" | "assistant"),
       content: t.text,
     }));
 
-    const node = await this.prisma.conceptNode.findUnique({ where: { id: nodeId } });
+    const node = await this.prisma.conceptNode.findUnique({
+      where: { id: nodeId },
+    });
     const reply = await this.ai.getSocraticDebateReply(
       node?.title || "Tranh luận biện chứng",
       message,
@@ -151,8 +170,8 @@ export class DebatesService {
 
     const updatedTranscript = [
       ...transcript,
-      { speaker: 'User', text: message, time: Date.now() },
-      { speaker: 'Host', text: reply, time: Date.now() },
+      { speaker: "User", text: message, time: Date.now() },
+      { speaker: "Host", text: reply, time: Date.now() },
     ];
 
     return this.prisma.debate.update({

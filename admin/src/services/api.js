@@ -67,7 +67,7 @@ export const api = {
     create: async (data) => handleResponse(await fetch(`${API_BASE_URL}/courses`, {
       method: 'POST',
       headers: getHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({ ...data, userId: 'default-user-id' })
+      body: JSON.stringify(data)
     })),
     update: async (id, data) => handleResponse(await fetch(`${API_BASE_URL}/courses/${id}`, {
       method: 'PUT',

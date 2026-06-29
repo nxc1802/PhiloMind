@@ -1,11 +1,12 @@
 import React, { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import { MemoryRouter } from 'react-router-dom';
+import { expect, test, vi } from 'vitest';
 import App from './App';
 
-jest.mock('./services/api', () => ({
+vi.mock('./services/api', () => ({
   api: {
-    auth: { login: jest.fn() },
+    auth: { login: vi.fn() },
   },
 }));
 

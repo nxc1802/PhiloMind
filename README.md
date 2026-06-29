@@ -22,9 +22,11 @@ This repository is organized as a clean, containerized monorepo.
 PhiloMind/
 ├── .github/workflows/
 │   ├── ci.yml            # CI validation (formatting, compilation, linting)
-│   └── deploy.yml        # CD deployment pushing to Hugging Face Spaces
+│   ├── deploy_backend.yml # CD deployment for the backend Hugging Face Space
+│   └── deploy_tts.yml     # CD deployment for the TTS Hugging Face Space
 ├── backend/              # NestJS REST API with Prisma and Supabase connections
-├── frontend/             # Next.js web application utilizing React Flow
+├── frontend/             # Vite React learner web application
+├── admin/                # Vite React admin portal
 ├── tts_worker/           # FastAPI Text-to-Speech worker (Kokoro-82M ONNX model)
 ├── docs/                 # Architectural and deployment guides
 └── scripts/              # Integration and health test utilities
@@ -38,6 +40,8 @@ This repository includes continuous deployment pipelines that automatically buil
 
 1. **Backend API Server (NestJS)**: Pushed to [Cuong2004/PhiloMind](https://huggingface.co/spaces/Cuong2004/PhiloMind) (runs 24/7 on Hugging Face Docker Space, listening on port 7860).
 2. **TTS Worker (FastAPI)**: Pushed to [Cuong2004/PhiloMind_TTSworker](https://huggingface.co/spaces/Cuong2004/PhiloMind_TTSworker) (ONNX speech synthesis microservice).
-3. **Frontend Application (Next.js)**: Deployed to **Vercel** (connected directly to the `/frontend` directory of this repo for fast global edge serving and native React/Next rendering).
+3. **Frontend Application (Vite React)**: Deployed to **Vercel** (connected directly to the `/frontend` directory of this repo, output directory `dist`).
 
 *To enable deployment, ensure you have added your Hugging Face write token to the GitHub Repository Secrets as `HF_TOKEN`.*
+
+For Supabase/Postgres connection pool sizing on Cloud, see [docs/DATABASE_POOLING.md](docs/DATABASE_POOLING.md).

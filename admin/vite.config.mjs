@@ -19,4 +19,9 @@ export default defineConfig({
     port: 3002,
   },
   envPrefix: 'REACT_APP_',
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/setupTests.js',
+  },
 });
