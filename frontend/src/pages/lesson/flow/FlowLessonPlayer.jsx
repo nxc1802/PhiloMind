@@ -18,22 +18,60 @@ function normalizeOptions(options = []) {
   }));
 }
 
+function normalizeFlow(rawFlow) {
+  if (!Array.isArray(rawFlow)) return [];
+
+  return rawFlow
+    .filter((component) => component && typeof component === "object")
+    .map((component, index) => ({
+      ...component,
+      id: component.id || `component_${index}`,
+      type: component.type || "unsupported",
+      title: component.title || "Hoạt động bài học",
+      config: component.config && typeof component.config === "object" ? component.config : {},
+    }));
+}
+
 function ComponentFrame({ component, children }) {
+  const safeComponent = component || {};
+  const typeLabel = String(safeComponent.type || "lesson_flow").replaceAll("_", " ");
+
   return (
-    <section className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-5 md:p-6 text-left">
+    <section className="bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-3xl shadow-md border border-slate-200 dark:border-primary-800 p-5 md:p-6 text-left">
       <div className="flex items-center gap-2 mb-4">
         <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">widgets</span>
         <div>
           <p className="text-[11px] uppercase tracking-wider text-primary-650 dark:text-primary-300 font-bold">
-            {component.type.replaceAll("_", " ")}
+            {typeLabel}
           </p>
           <h2 className="text-xl font-bold text-primary-900 dark:text-primary-100 leading-tight">
-            {component.title || "Hoạt động bài học"}
+            {safeComponent.title || "Hoạt động bài học"}
           </h2>
         </div>
       </div>
       {children}
     </section>
+  );
+}
+
+function LessonHint({ title = "Cách chơi", steps = [] }) {
+  return (
+    <div className="mb-5 rounded-2xl border border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-primary-950/50 p-4 text-primary-900 dark:text-primary-100">
+      <p className="flex items-center gap-2 text-sm font-bold">
+        <span className="material-symbols-outlined text-base">tips_and_updates</span>
+        {title}
+      </p>
+      <div className="mt-3 grid gap-2 sm:grid-cols-3">
+        {steps.map((step, index) => (
+          <div key={step} className="flex items-start gap-2 rounded-xl bg-white dark:bg-[#15313e] border border-primary-100 dark:border-primary-850 px-3 py-2">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">
+              {index + 1}
+            </span>
+            <span className="text-xs font-semibold leading-snug text-slate-700 dark:text-primary-100">{step}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -179,7 +217,7 @@ function TrueFalseComponent({ component, onComplete }) {
       {picked !== null && (
         <div className={`mt-4 rounded-3xl border p-4 ${correct ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800 text-red-900 dark:text-red-300"}`}>
           <p className={`font-bold ${correct ? "text-green-800" : "text-red-800"}`}>{correct ? "Chính xác" : "Chưa đúng"}</p>
-          <p className="text-sm text-gray-800 leading-relaxed mt-1">{component.config.explanation}</p>
+          <p className="text-sm text-slate-800 dark:text-primary-100 leading-relaxed mt-1">{component.config.explanation}</p>
           {correct && <ContinueButton onComplete={() => onComplete({ score: 100, answer: picked, status: "completed" })} label="Tiếp tục" />}
         </div>
       )}
@@ -192,6 +230,9 @@ function MatchingColumnsComponent({ component, onComplete }) {
   const [activeLeft, setActiveLeft] = useState(null);
   const [pairs, setPairs] = useState({});
   const expected = Object.fromEntries(correctPairs.map((pair) => [pair.leftId, pair.rightId]));
+  const rightById = Object.fromEntries(rightColumn.map((right) => [right.id, right]));
+  const leftById = Object.fromEntries(leftColumn.map((left) => [left.id, left]));
+  const pairedRightIds = new Set(Object.values(pairs));
   const complete = leftColumn.length > 0 && leftColumn.every((left) => pairs[left.id] === expected[left.id]);
 
   const chooseRight = (rightId) => {
@@ -202,21 +243,69 @@ function MatchingColumnsComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      <p className="text-sm text-gray-500 dark:text-primary-350 mb-4">Chọn một khái niệm bên trái, rồi chọn mô tả đúng ở bên phải.</p>
-      <div className="grid md:grid-cols-2 gap-4">
+      <LessonHint
+        steps={[
+          "Chọn một khái niệm ở cột trái.",
+          "Chọn định nghĩa tương ứng ở cột phải.",
+          "Quan sát đường nối và sửa lại nếu cặp chưa đúng.",
+        ]}
+      />
+      <div className="mb-4 flex flex-wrap items-center gap-2 text-xs font-bold">
+        <span className="rounded-full bg-slate-100 dark:bg-[#15313e] text-slate-700 dark:text-primary-100 px-3 py-1">
+          Đã nối {Object.keys(pairs).length}/{leftColumn.length}
+        </span>
+        {activeLeft && (
+          <span className="rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-800 dark:text-primary-100 px-3 py-1">
+            Đang chọn: {leftById[activeLeft]?.text}
+          </span>
+        )}
+      </div>
+      <div className="grid md:grid-cols-[minmax(0,1fr)_120px_minmax(0,1fr)] gap-3 md:gap-4">
         <div className="space-y-2">
           {leftColumn.map((left) => (
             <button
               key={left.id}
               type="button"
               onClick={() => setActiveLeft(left.id)}
-              className={`w-full rounded-3xl border-2 px-4 py-3 text-left font-semibold ${
-                activeLeft === left.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : pairs[left.id] === expected[left.id] ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-300 font-semibold" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+              className={`w-full rounded-2xl border-2 px-4 py-3 text-left font-semibold transition-all ${
+                activeLeft === left.id
+                  ? "border-primary-600 bg-primary-100 dark:bg-primary-900/60 text-primary-950 dark:text-white shadow-md"
+                  : pairs[left.id] === expected[left.id]
+                    ? "border-green-500 bg-green-50 dark:bg-green-950/40 text-green-900 dark:text-green-100"
+                    : pairs[left.id]
+                      ? "border-amber-400 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-100"
+                      : "border-slate-250 bg-white dark:bg-[#132d39] text-slate-800 dark:text-primary-100 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/35"
               }`}
             >
-              {left.text}
+              <span className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-lg shrink-0">
+                  {pairs[left.id] === expected[left.id] ? "check_circle" : activeLeft === left.id ? "radio_button_checked" : "radio_button_unchecked"}
+                </span>
+                <span>{left.text}</span>
+              </span>
             </button>
           ))}
+        </div>
+        <div className="hidden md:flex flex-col justify-around py-1">
+          {leftColumn.map((left) => {
+            const paired = pairs[left.id];
+            const correct = paired && paired === expected[left.id];
+            return (
+              <div key={left.id} className="flex items-center justify-center gap-1">
+                <span className={`h-1.5 w-10 rounded-full ${paired ? (correct ? "bg-green-500" : "bg-amber-500") : "bg-slate-250 dark:bg-primary-850"}`} />
+                <span className={`flex h-7 w-7 items-center justify-center rounded-full border-2 text-xs font-bold ${
+                  paired
+                    ? correct
+                      ? "border-green-500 bg-green-50 text-green-700"
+                      : "border-amber-500 bg-amber-50 text-amber-700"
+                    : "border-slate-250 bg-white dark:bg-[#132d39] text-slate-400"
+                }`}>
+                  {paired ? "→" : "•"}
+                </span>
+                <span className={`h-1.5 w-10 rounded-full ${paired ? (correct ? "bg-green-500" : "bg-amber-500") : "bg-slate-250 dark:bg-primary-850"}`} />
+              </div>
+            );
+          })}
         </div>
         <div className="space-y-2">
           {rightColumn.map((right) => (
@@ -224,16 +313,48 @@ function MatchingColumnsComponent({ component, onComplete }) {
               key={right.id}
               type="button"
               onClick={() => chooseRight(right.id)}
-              className="w-full rounded-3xl border-2 border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 px-4 py-3 text-left hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+              className={`w-full rounded-2xl border-2 px-4 py-3 text-left font-medium transition-all ${
+                pairedRightIds.has(right.id)
+                  ? "border-primary-400 bg-primary-50 dark:bg-primary-950/50 text-primary-900 dark:text-primary-100"
+                  : activeLeft
+                    ? "border-primary-300 bg-white dark:bg-[#132d39] text-slate-800 dark:text-primary-100 hover:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/35"
+                    : "border-slate-250 bg-white dark:bg-[#132d39] text-slate-700 dark:text-primary-150 hover:border-primary-400"
+              }`}
             >
-              {right.text}
+              <span className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-lg shrink-0">
+                  {pairedRightIds.has(right.id) ? "link" : "notes"}
+                </span>
+                <span>{right.text}</span>
+              </span>
             </button>
           ))}
         </div>
       </div>
+      {Object.keys(pairs).length > 0 && (
+        <div className="mt-5 rounded-2xl border border-slate-200 dark:border-primary-850 bg-slate-50 dark:bg-[#102733] p-4">
+          <p className="mb-3 text-sm font-bold text-slate-800 dark:text-primary-100">Các đường nối đã chọn</p>
+          <div className="grid gap-2">
+            {Object.entries(pairs).map(([leftId, rightId]) => {
+              const correct = rightId === expected[leftId];
+              return (
+                <div key={leftId} className={`flex flex-col gap-2 rounded-xl border px-3 py-2 text-sm sm:flex-row sm:items-center ${
+                  correct
+                    ? "border-green-200 bg-green-50 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100"
+                    : "border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-800 dark:bg-amber-950/35 dark:text-amber-100"
+                }`}>
+                  <span className="font-semibold">{leftById[leftId]?.text}</span>
+                  <span className="hidden h-px flex-1 bg-current opacity-30 sm:block" />
+                  <span className="font-semibold">{rightById[rightId]?.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
       {complete && (
-        <div className="mt-4 bg-green-50 border border-green-200 rounded-3xl p-4">
-          <p className="font-bold text-green-800">Các cặp nối đã chính xác.</p>
+        <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
+          <p className="font-bold">Các cặp nối đã chính xác.</p>
           <ContinueButton onComplete={() => onComplete({ score: 100, answer: pairs, status: "completed" })} label="Tiếp tục" />
         </div>
       )}
@@ -255,7 +376,13 @@ function CategorySortingComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      <p className="text-sm text-gray-500 dark:text-primary-350 mb-4">Chọn một thẻ, sau đó chọn hộp phân loại phù hợp.</p>
+      <LessonHint
+        steps={[
+          "Bấm vào một thẻ tình huống/khái niệm.",
+          "Bấm vào nhóm phù hợp để đặt thẻ.",
+          "Thẻ xanh là đúng, thẻ đỏ là cần chuyển lại.",
+        ]}
+      />
       <div className="flex flex-wrap gap-2 mb-4">
         {cards.map((card) => {
           const placed = placements[card.id];
@@ -279,19 +406,19 @@ function CategorySortingComponent({ component, onComplete }) {
             key={category.id}
             type="button"
             onClick={() => placeCard(category.id)}
-            className="min-h-28 rounded-3xl border-2 border-primary-200 bg-primary-50/60 dark:bg-primary-900/20 px-4 py-4 text-left hover:border-primary-500"
+            className="min-h-28 rounded-2xl border-2 border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-[#132d39] px-4 py-4 text-left hover:border-primary-500 transition-colors"
           >
             <p className="font-bold text-primary-850 dark:text-primary-100">{category.label}</p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs font-medium text-slate-600 dark:text-primary-200 mt-1">
               {cards.filter((card) => placements[card.id] === category.id).map((card) => card.text).join(", ") || "Chưa có thẻ"}
             </p>
           </button>
         ))}
       </div>
       {complete && (
-        <div className="mt-4 bg-green-50 border border-green-200 rounded-3xl p-4">
-          <p className="font-bold text-green-800">Phân loại chính xác.</p>
-          {summary && <p className="text-sm text-green-900 mt-1">{summary}</p>}
+        <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
+          <p className="font-bold">Phân loại chính xác.</p>
+          {summary && <p className="text-sm mt-1">{summary}</p>}
           <ContinueButton onComplete={() => onComplete({ score: 100, answer: placements, status: "completed" })} label="Tiếp tục" />
         </div>
       )}
@@ -313,7 +440,13 @@ function TargetMatchingComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      <p className="text-sm text-gray-500 dark:text-primary-350 mb-4">Chọn thuật ngữ, rồi chọn vùng văn minh tương ứng.</p>
+      <LessonHint
+        steps={[
+          "Chọn một thuật ngữ ở hàng trên.",
+          "Đưa thuật ngữ vào vùng/đích tương ứng.",
+          "Có thể chọn lại thuật ngữ để sửa vị trí.",
+        ]}
+      />
       <div className="flex flex-wrap gap-2 mb-5">
         {items.map((item) => (
           <button
@@ -334,18 +467,18 @@ function TargetMatchingComponent({ component, onComplete }) {
             key={target.id}
             type="button"
             onClick={() => placeItem(target.id)}
-            className="rounded-3xl border-2 border-primary-200 bg-gradient-to-br from-primary-50 to-white dark:from-primary-900/30 dark:to-surface-dark-elevated px-4 py-5 text-center hover:border-primary-500 text-gray-800 dark:text-primary-100"
+            className="rounded-2xl border-2 border-primary-200 dark:border-primary-800 bg-gradient-to-br from-primary-50 to-white dark:from-[#14313f] dark:to-[#102733] px-4 py-5 text-center hover:border-primary-500 text-slate-800 dark:text-primary-100 transition-colors"
           >
             <span className="material-symbols-outlined text-3xl text-primary-650 dark:text-primary-300">{target.icon || "public"}</span>
             <p className="font-bold text-primary-900 dark:text-primary-100">{target.label}</p>
-            <p className="text-xs text-gray-500">{items.filter((item) => placements[item.id] === target.id).map((item) => item.text).join(", ")}</p>
+            <p className="text-xs font-medium text-slate-600 dark:text-primary-200">{items.filter((item) => placements[item.id] === target.id).map((item) => item.text).join(", ") || "Chưa có thuật ngữ"}</p>
           </button>
         ))}
       </div>
       {complete && (
-        <div className="mt-4 bg-green-50 border border-green-200 rounded-3xl p-4">
-          <p className="font-bold text-green-800">Bản đồ thuật ngữ đã hoàn chỉnh.</p>
-          {summary && <p className="text-sm text-green-900 mt-1">{summary}</p>}
+        <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
+          <p className="font-bold">Bản đồ thuật ngữ đã hoàn chỉnh.</p>
+          {summary && <p className="text-sm mt-1">{summary}</p>}
           <ContinueButton onComplete={() => onComplete({ score: 100, answer: placements, status: "completed" })} label="Tiếp tục" />
         </div>
       )}
@@ -402,14 +535,21 @@ function SequenceSortingComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      {component.config.instruction && <p className="text-sm text-gray-500 mb-4">{component.config.instruction}</p>}
+      <LessonHint
+        steps={[
+          "Đọc yêu cầu và tìm bước đầu tiên.",
+          "Bấm các thẻ theo đúng trình tự.",
+          "Thẻ đã chọn đúng sẽ chuyển vào dòng thời gian.",
+        ]}
+      />
+      {component.config.instruction && <p className="text-sm font-medium text-slate-600 dark:text-primary-200 mb-4">{component.config.instruction}</p>}
       <div className="space-y-2 mb-4">
         {placed.map((id, index) => {
           const item = items.find((it) => it.id === id);
           return (
-            <div key={id} className="flex items-center gap-3 rounded-3xl border-2 border-green-400 bg-green-50 px-4 py-3">
+            <div key={id} className="flex items-center gap-3 rounded-2xl border-2 border-green-400 dark:border-green-800 bg-green-50 dark:bg-green-950/35 px-4 py-3">
               <span className="h-7 w-7 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold">{index + 1}</span>
-              <span className="text-sm text-green-900 font-medium">{item?.text}</span>
+              <span className="text-sm text-green-950 dark:text-green-100 font-medium">{item?.text}</span>
             </div>
           );
         })}
@@ -417,15 +557,15 @@ function SequenceSortingComponent({ component, onComplete }) {
       {!complete && (
         <div className="grid sm:grid-cols-2 gap-3">
           {items.filter((item) => !placed.includes(item.id)).map((item) => (
-            <button key={item.id} type="button" onClick={() => pick(item)} className="rounded-3xl border-2 border-gray-200 px-4 py-3 text-left hover:border-primary-400">
+            <button key={item.id} type="button" onClick={() => pick(item)} className="rounded-2xl border-2 border-slate-250 dark:border-primary-850 bg-white dark:bg-[#132d39] px-4 py-3 text-left text-slate-800 dark:text-primary-100 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/35 transition-colors">
               {item.text}
             </button>
           ))}
         </div>
       )}
       {complete && (
-        <div className="mt-4 bg-green-50 border border-green-200 rounded-3xl p-4">
-          <p className="font-bold text-green-800">{component.config.successFeedback || "Sắp xếp chính xác."}</p>
+        <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
+          <p className="font-bold">{component.config.successFeedback || "Sắp xếp chính xác."}</p>
           <ContinueButton onComplete={() => onComplete({ score: 100, answer: placed, status: "completed" })} label="Tiếp tục" />
         </div>
       )}
@@ -448,17 +588,17 @@ function FinalSummaryComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-3xl p-5">
-        <p className="text-lg font-bold text-primary-950 mb-2">{message || "Bạn đã hoàn thành bài học."}</p>
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-primary-950/60 border border-amber-200 dark:border-amber-800 rounded-3xl p-5 text-slate-900 dark:text-amber-50">
+        <p className="text-lg font-bold text-primary-950 dark:text-amber-50 mb-2">{message || "Bạn đã hoàn thành bài học."}</p>
         <ul className="space-y-2">
           {keyTakeaways.map((item, index) => (
-            <li key={index} className="flex items-start gap-2 text-gray-800">
+            <li key={index} className="flex items-start gap-2 text-slate-800 dark:text-amber-50">
               <span className="material-symbols-outlined text-amber-600 text-base mt-0.5">check_circle</span>
               <span>{item}</span>
             </li>
           ))}
         </ul>
-        <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-amber-800 border border-amber-200">
+        <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white dark:bg-[#182d35] px-4 py-2 text-sm font-bold text-amber-800 dark:text-amber-100 border border-amber-200 dark:border-amber-800">
           <span className="material-symbols-outlined text-base">military_tech</span>
           {rewards.badge || "Hoàn thành"} · {rewards.xp || 100} XP
         </div>
@@ -467,8 +607,8 @@ function FinalSummaryComponent({ component, onComplete }) {
       {quiz.length > 0 && (
         <div className="mt-5 space-y-4">
           {quiz.map((question, index) => (
-            <div key={index} className="rounded-3xl border border-gray-200 p-4">
-              <p className="font-semibold text-gray-900 mb-3">{question.question}</p>
+            <div key={index} className="rounded-3xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-[#132d39] p-4">
+              <p className="font-semibold text-slate-900 dark:text-primary-100 mb-3">{question.question}</p>
               <div className="grid gap-2">
                 {(question.options || []).map((option, optionIndex) => (
                   <button
@@ -485,7 +625,7 @@ function FinalSummaryComponent({ component, onComplete }) {
               </div>
             </div>
           ))}
-          {quizDone && <p className="text-sm font-bold text-green-700">Điểm tổng kết: {score}%</p>}
+          {quizDone && <p className="text-sm font-bold text-green-700 dark:text-green-300">Điểm tổng kết: {score}%</p>}
         </div>
       )}
 
@@ -516,7 +656,7 @@ const registry = {
 export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete }) {
   const { user } = useAuth();
   const progress = getProgress(nodeDetails?.progress);
-  const flow = useMemo(() => (Array.isArray(nodeDetails?.lessonFlow) ? nodeDetails.lessonFlow : []), [nodeDetails]);
+  const flow = useMemo(() => normalizeFlow(nodeDetails?.lessonFlow), [nodeDetails?.lessonFlow]);
   const initialIndex = isRevisit ? 0 : Math.min(progress?.currentComponentIndex || 0, Math.max(flow.length - 1, 0));
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [completedIds, setCompletedIds] = useState(() => Array.isArray(progress?.completedComponentIds) ? progress.completedComponentIds : []);
@@ -535,15 +675,17 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
     );
   }
 
-  const activeComponent = flow[activeIndex];
+  const safeActiveIndex = Math.min(Math.max(activeIndex, 0), flow.length - 1);
+  const activeComponent = flow[safeActiveIndex];
   const Renderer = registry[activeComponent.type];
-  const percentage = Math.round(((completedIds.length + (completedIds.includes(activeComponent.id) ? 0 : 0)) / flow.length) * 100);
+  const completedCount = Math.min(new Set(completedIds).size, flow.length);
+  const percentage = Math.round((completedCount / flow.length) * 100);
 
   const markComplete = (result = {}) => {
     const nextCompletedIds = completedIds.includes(activeComponent.id)
       ? completedIds
       : [...completedIds, activeComponent.id];
-    const nextIndex = Math.min(activeIndex + 1, flow.length - 1);
+    const nextIndex = Math.min(safeActiveIndex + 1, flow.length - 1);
     const componentResult = {
       componentId: activeComponent.id,
       type: activeComponent.type,
@@ -564,7 +706,7 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
       },
     });
 
-    if (nextCompletedIds.length >= flow.length) {
+    if (safeActiveIndex >= flow.length - 1) {
       onComplete?.();
       return;
     }
@@ -578,7 +720,7 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
           <div>
             <p className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">Component Flow</p>
             <p className="font-bold text-primary-850 dark:text-primary-100">
-              Bước {activeIndex + 1}/{flow.length}: {activeComponent.title || activeComponent.type}
+              Bước {safeActiveIndex + 1}/{flow.length}: {activeComponent.title || activeComponent.type}
             </p>
           </div>
           <button
@@ -600,6 +742,7 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
       ) : (
         <ComponentFrame component={activeComponent}>
           <p className="text-red-700">Component type "{activeComponent.type}" chưa có renderer.</p>
+          <ContinueButton onComplete={markComplete} label="Bỏ qua bước này" />
         </ComponentFrame>
       )}
     </div>
