@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useUpdateComponentProgressMutation } from "../../../hooks/useMutations";
+import { loadSettings } from "../../../utils/settings";
 import { parseMarkdownToReact } from "../components/MarkdownRenderer";
 import DialogueSequence from "../components/GuideSpeech";
 import { VideoScene } from "../adventure/components/AdventureCommon";
@@ -21,7 +22,7 @@ function normalizeOptions(options = []) {
 function normalizeFlow(rawFlow) {
   if (!Array.isArray(rawFlow)) return [];
 
-  return rawFlow
+  const normalized = rawFlow
     .filter((component) => component && typeof component === "object")
     .map((component, index) => ({
       ...component,
@@ -33,6 +34,30 @@ function normalizeFlow(rawFlow) {
           ? component.config
           : {},
     }));
+
+  return normalized.flatMap((component) => {
+    const finalQuiz = component.config.quiz;
+    if (
+      component.type === "final_summary" &&
+      Array.isArray(finalQuiz) &&
+      finalQuiz.length > 0
+    ) {
+      const finalConfig = { ...component.config };
+      delete finalConfig.quiz;
+      return [
+        {
+          id: `${component.id}-quiz`,
+          type: "quiz_sequence",
+          title: component.config.quizTitle || "Kiểm tra cuối bài",
+          config: { questions: finalQuiz },
+          completionRule: { type: "correct" },
+        },
+        { ...component, config: finalConfig },
+      ];
+    }
+
+    return [component];
+  });
 }
 
 function ComponentFrame({ component, children }) {
@@ -47,6 +72,7 @@ function ComponentFrame({ component, children }) {
       dialogue: "forum",
       markdown: "menu_book",
       mcq: "quiz",
+      quiz_sequence: "quiz",
       multi_select: "checklist",
       true_false: "rule",
       matching_columns: "conversion_path",
@@ -182,6 +208,7 @@ function ContinueButton({ onComplete, label = "Hoàn thành bước này" }) {
 function MediaComponent({ component, onComplete }) {
   const { config } = component;
   const mediaType = config.mediaType || "video";
+  const { autoplayVideo } = loadSettings();
   return (
     <ComponentFrame component={component}>
       {mediaType === "image" ? (
@@ -208,6 +235,7 @@ function MediaComponent({ component, onComplete }) {
           badge={config.badge}
           title={config.title || component.title}
           subtitle={config.subtitle}
+          autoPlay={autoplayVideo}
         />
       )}
       {config.description && (
@@ -221,11 +249,14 @@ function MediaComponent({ component, onComplete }) {
 }
 
 function DialogueComponent({ component, onComplete }) {
-  const lines = (component.config.lines || component.config.dialogs || []).map(
-    (line) => ({
-      who: line.who || "guide",
-      text: line.text,
-    }),
+  const sourceLines = component.config.lines || component.config.dialogs || [];
+  const lines = useMemo(
+    () =>
+      sourceLines.map((line) => ({
+        who: line.who || "guide",
+        text: line.text,
+      })),
+    [sourceLines],
   );
   return (
     <ComponentFrame component={component}>
@@ -243,9 +274,29 @@ function DialogueComponent({ component, onComplete }) {
 function MarkdownComponent({ component, onComplete }) {
   return (
     <ComponentFrame component={component}>
-      <article className="prose max-w-none text-gray-800 dark:text-primary-100">
-        {parseMarkdownToReact(component.config.content || "")}
-      </article>
+      <div className="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-sm dark:border-primary-850 dark:bg-[#102733]">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-primary-100 bg-gradient-to-r from-primary-50 via-white to-amber-50 px-5 py-4 dark:border-primary-850 dark:from-primary-950/70 dark:via-[#102733] dark:to-amber-950/25">
+          <div className="flex items-center gap-3">
+            <span className="material-symbols-outlined flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-primary-650 shadow-sm dark:bg-primary-900/40 dark:text-primary-200">
+              menu_book
+            </span>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
+                Tài liệu đọc
+              </p>
+              <p className="text-sm font-semibold text-slate-650 dark:text-primary-150">
+                Đọc chậm, ghi nhớ các luận điểm chính.
+              </p>
+            </div>
+          </div>
+          <span className="rounded-full border border-primary-150 bg-white px-3 py-1 text-xs font-bold text-primary-750 dark:border-primary-800 dark:bg-primary-950/50 dark:text-primary-150">
+            Nội dung trọng tâm
+          </span>
+        </div>
+        <article className="prose max-w-none p-5 text-gray-800 prose-headings:text-primary-950 prose-p:leading-8 prose-li:leading-7 dark:text-primary-100 dark:prose-headings:text-primary-100 md:p-6">
+          {parseMarkdownToReact(component.config.content || "")}
+        </article>
+      </div>
       <ContinueButton onComplete={onComplete} />
     </ComponentFrame>
   );
@@ -274,7 +325,7 @@ function McqComponent({ component, onComplete }) {
       <div className="space-y-2.5">
         {options.map((option) => {
           const wrong = wrongIds.includes(option.id);
-          const correctVisible = solved && option.isCorrect;
+          const correctVisible = solved && option.id === selectedId;
           return (
             <button
               key={option.id}
@@ -331,6 +382,182 @@ function McqComponent({ component, onComplete }) {
               }
               label="Tiếp tục"
             />
+          )}
+        </div>
+      )}
+    </ComponentFrame>
+  );
+}
+
+function normalizeQuizQuestions(questions = []) {
+  return questions.map((question, questionIndex) => {
+    const options = (question.options || []).map((option, optionIndex) => {
+      if (typeof option === "string") {
+        return {
+          id: `q${questionIndex}_option_${optionIndex}`,
+          text: option,
+          isCorrect: optionIndex === question.correctIndex,
+        };
+      }
+
+      return {
+        id: option.id || `q${questionIndex}_option_${optionIndex}`,
+        text: option.text || option.label || "",
+        isCorrect:
+          option.isCorrect === true ||
+          option.correct === true ||
+          optionIndex === question.correctIndex,
+        explanation: option.explanation,
+      };
+    });
+
+    return {
+      id: question.id || `question_${questionIndex}`,
+      question: question.question || question.prompt || "Câu hỏi",
+      options,
+      explanation: question.explanation,
+    };
+  });
+}
+
+function QuizSequenceComponent({ component, onComplete }) {
+  const questions = normalizeQuizQuestions(component.config.questions || []);
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [wrongAnswers, setWrongAnswers] = useState({});
+  const activeQuestion = questions[activeQuestionIndex];
+  const selectedId = answers[activeQuestionIndex];
+  const solved = Boolean(selectedId);
+  const isLastQuestion = activeQuestionIndex >= questions.length - 1;
+  const score =
+    questions.length > 0
+      ? Math.round((Object.keys(answers).length / questions.length) * 100)
+      : 100;
+
+  const pickOption = (option) => {
+    if (solved) return;
+
+    if (option.isCorrect) {
+      setAnswers((prev) => ({ ...prev, [activeQuestionIndex]: option.id }));
+      return;
+    }
+
+    setWrongAnswers((prev) => ({
+      ...prev,
+      [activeQuestionIndex]: [...(prev[activeQuestionIndex] || []), option.id],
+    }));
+  };
+
+  if (!questions.length) {
+    return (
+      <ComponentFrame component={component}>
+        <p className="text-sm font-medium text-slate-600 dark:text-primary-150">
+          Cụm câu hỏi này chưa có dữ liệu.
+        </p>
+        <ContinueButton onComplete={onComplete} label="Tiếp tục" />
+      </ComponentFrame>
+    );
+  }
+
+  return (
+    <ComponentFrame component={component}>
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-primary-100 bg-primary-50 px-4 py-3 dark:border-primary-850 dark:bg-primary-950/35">
+        <div className="flex items-center gap-2 text-sm font-bold text-primary-850 dark:text-primary-100">
+          <span className="material-symbols-outlined text-lg">quiz</span>
+          Câu {activeQuestionIndex + 1}/{questions.length}
+        </div>
+        <div className="h-2 w-full overflow-hidden rounded-full bg-white dark:bg-primary-950 sm:w-52">
+          <div
+            className="h-full rounded-full bg-primary-600 transition-all"
+            style={{
+              width: `${((activeQuestionIndex + (solved ? 1 : 0)) / questions.length) * 100}%`,
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-primary-850 dark:bg-[#132d39]">
+        <p className="text-lg font-bold leading-relaxed text-slate-950 dark:text-primary-100">
+          {activeQuestion.question}
+        </p>
+        <div className="mt-4 grid gap-3">
+          {activeQuestion.options.map((option) => {
+            const wrong = (wrongAnswers[activeQuestionIndex] || []).includes(
+              option.id,
+            );
+            const correctVisible = solved && option.id === selectedId;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => pickOption(option)}
+                className={`flex w-full items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left font-semibold transition-all ${
+                  correctVisible
+                    ? "border-green-500 bg-green-50 text-green-950 dark:bg-green-950/35 dark:text-green-100"
+                    : wrong
+                      ? "border-red-400 bg-red-50 text-red-950 dark:bg-red-950/35 dark:text-red-100"
+                      : "border-slate-200 bg-slate-50 text-slate-750 hover:border-primary-400 hover:bg-primary-50 dark:border-primary-850 dark:bg-[#102733] dark:text-primary-100 dark:hover:bg-primary-900/35"
+                }`}
+              >
+                <span className="material-symbols-outlined mt-0.5 text-xl">
+                  {correctVisible
+                    ? "check_circle"
+                    : wrong
+                      ? "cancel"
+                      : "radio_button_unchecked"}
+                </span>
+                <span>{option.text}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {(solved || wrongAnswers[activeQuestionIndex]?.length > 0) && (
+          <div
+            className={`mt-4 rounded-2xl border px-4 py-3 text-sm leading-relaxed ${
+              solved
+                ? "border-green-200 bg-green-50 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100"
+                : "border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-800 dark:bg-amber-950/35 dark:text-amber-100"
+            }`}
+          >
+            <p className="font-bold">{solved ? "Chính xác" : "Thử lại"}</p>
+            <p className="mt-1">
+              {solved
+                ? activeQuestion.explanation ||
+                  activeQuestion.options.find(
+                    (option) => option.id === selectedId,
+                  )?.explanation ||
+                  "Bạn đã chọn đúng."
+                : "Đáp án này chưa đúng. Hãy đọc kỹ câu hỏi và chọn lại."}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {solved && (
+        <div className="mt-5 flex justify-end">
+          {isLastQuestion ? (
+            <ContinueButton
+              onComplete={() =>
+                onComplete({
+                  score,
+                  answer: answers,
+                  status: "completed",
+                })
+              }
+              label="Hoàn thành cụm câu hỏi"
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setActiveQuestionIndex((prev) => prev + 1)}
+              className="inline-flex items-center gap-1.5 rounded-3xl bg-primary-600 px-5 py-2.5 font-bold text-white transition-colors hover:bg-primary-700"
+            >
+              Câu tiếp theo
+              <span className="material-symbols-outlined text-base">
+                arrow_forward
+              </span>
+            </button>
           )}
         </div>
       )}
@@ -902,16 +1129,50 @@ function MindmapRevealComponent({ component, onComplete }) {
   const nodes = component.config.nodes || [];
   const [revealed, setRevealed] = useState([]);
   const complete = nodes.length > 0 && revealed.length === nodes.length;
+  const revealedCount = revealed.length;
 
   return (
     <ComponentFrame component={component}>
-      <div className="text-center mb-5">
-        <span className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-primary-600 text-white font-bold shadow-lg">
-          {component.config.center || "Triết học"}
-        </span>
+      <div className="mb-5 overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-amber-50 p-5 dark:border-primary-850 dark:from-primary-950/60 dark:via-[#102733] dark:to-amber-950/25">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            <span className="material-symbols-outlined flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-primary-600 text-3xl text-white shadow-lg">
+              hub
+            </span>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
+                Bản đồ tư duy
+              </p>
+              <h3 className="text-2xl font-extrabold leading-tight text-primary-950 dark:text-primary-100">
+                {component.config.center || "Triết học"}
+              </h3>
+              <p className="mt-1 text-sm font-medium text-slate-600 dark:text-primary-150">
+                Mở từng mảnh ghép để hoàn thiện bức tranh khái niệm.
+              </p>
+            </div>
+          </div>
+          <div className="rounded-2xl border border-primary-150 bg-white px-4 py-3 text-left shadow-sm dark:border-primary-800 dark:bg-primary-950/45">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-primary-250">
+              Tiến độ mở
+            </p>
+            <p className="text-2xl font-extrabold text-primary-800 dark:text-primary-100">
+              {revealedCount}/{nodes.length}
+            </p>
+          </div>
+        </div>
+        <div className="mt-5 h-2 overflow-hidden rounded-full bg-white/80 dark:bg-primary-950">
+          <div
+            className="h-full rounded-full bg-primary-600 transition-all"
+            style={{
+              width: nodes.length
+                ? `${(revealedCount / nodes.length) * 100}%`
+                : "0%",
+            }}
+          />
+        </div>
       </div>
       <div className="grid sm:grid-cols-2 gap-3">
-        {nodes.map((node) => {
+        {nodes.map((node, index) => {
           const open = revealed.includes(node.id);
           return (
             <button
@@ -924,27 +1185,56 @@ function MindmapRevealComponent({ component, onComplete }) {
               }
               className={`rounded-3xl border-2 p-4 text-left min-h-28 transition-colors ${
                 open
-                  ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-900 dark:text-primary-100"
-                  : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                  ? "border-primary-500 bg-primary-50 shadow-sm dark:bg-primary-900/30 text-primary-900 dark:text-primary-100"
+                  : "border-dashed border-slate-300 bg-white text-gray-750 hover:border-primary-400 hover:bg-primary-50 dark:border-primary-850 dark:bg-[#132d39] dark:text-primary-150 dark:hover:bg-primary-900/20"
               }`}
             >
-              <p className="font-bold text-primary-900 dark:text-primary-100">
-                {open ? node.label : "Mảnh ghép chưa mở"}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-primary-200 mt-2">
-                {open ? node.detail : "Bấm để lật mở nội dung."}
-              </p>
+              <div className="flex items-start gap-3">
+                <span
+                  className={`material-symbols-outlined flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl ${
+                    open
+                      ? "bg-primary-600 text-white"
+                      : "bg-slate-100 text-slate-400 dark:bg-primary-950/60 dark:text-primary-250"
+                  }`}
+                >
+                  {open ? "check_circle" : "add"}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-primary-300">
+                    Mảnh ghép {index + 1}
+                  </p>
+                  <p className="mt-1 font-bold text-primary-900 dark:text-primary-100">
+                    {open ? node.label : "Bấm để mở nội dung"}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-primary-200">
+                    {open
+                      ? node.detail
+                      : "Nội dung sẽ hiện sau khi bạn mở thẻ này."}
+                  </p>
+                </div>
+              </div>
             </button>
           );
         })}
       </div>
       {complete && (
-        <ContinueButton
-          onComplete={() =>
-            onComplete({ score: 100, answer: revealed, status: "completed" })
-          }
-          label="Tiếp tục"
-        />
+        <div className="mt-5 rounded-3xl border border-green-200 bg-green-50 p-4 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
+          <p className="flex items-center gap-2 font-bold">
+            <span className="material-symbols-outlined text-lg">task_alt</span>
+            Bản đồ đã hoàn chỉnh.
+          </p>
+          {component.config.summary && (
+            <p className="mt-2 text-sm leading-relaxed">
+              {component.config.summary}
+            </p>
+          )}
+          <ContinueButton
+            onComplete={() =>
+              onComplete({ score: 100, answer: revealed, status: "completed" })
+            }
+            label="Tiếp tục"
+          />
+        </div>
       )}
     </ComponentFrame>
   );
@@ -1149,6 +1439,7 @@ const registry = {
   dialogue: DialogueComponent,
   markdown: MarkdownComponent,
   mcq: McqComponent,
+  quiz_sequence: QuizSequenceComponent,
   multi_select: MultiSelectComponent,
   true_false: TrueFalseComponent,
   matching_columns: MatchingColumnsComponent,

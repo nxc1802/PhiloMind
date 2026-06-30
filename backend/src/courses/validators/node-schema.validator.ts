@@ -8,6 +8,7 @@ const SUPPORTED_COMPONENT_TYPES = new Set([
   "category_sorting",
   "mindmap_reveal",
   "mcq",
+  "quiz_sequence",
   "multi_select",
   "matching_columns",
   "true_false",
@@ -117,6 +118,31 @@ export class NodeSchemaValidator {
           `${label}.options must contain at least one correct option`,
         );
       }
+    }
+
+    if (component.type === "quiz_sequence") {
+      requireArray(config.questions, `${label}.questions`);
+      config.questions.forEach((question: any, questionIdx: number) => {
+        requireString(
+          question.question || question.prompt,
+          `${label}.questions[${questionIdx}].question`,
+        );
+        requireArray(
+          question.options,
+          `${label}.questions[${questionIdx}].options`,
+        );
+        if (
+          typeof question.correctIndex !== "number" &&
+          !question.options.some(
+            (option: any) =>
+              option?.isCorrect === true || option?.correct === true,
+          )
+        ) {
+          throw new BadRequestException(
+            `${label}.questions[${questionIdx}] must define correctIndex or a correct option`,
+          );
+        }
+      });
     }
 
     if (component.type === "multi_select") {

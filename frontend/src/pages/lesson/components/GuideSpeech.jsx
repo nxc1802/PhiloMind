@@ -1,12 +1,43 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { Avatar } from "./JourneyArt";
 
 export const CHARACTERS = {
-  guide: { name: "Sophia", role: "Người Khai Sáng dẫn đường", avatar: "guide", color: "from-indigo-500 to-violet-600" },
-  elder: { name: "Già làng Kael", role: "Trưởng bộ tộc", avatar: "elder", color: "from-amber-500 to-orange-600" },
-  skeptic: { name: "Người hoài nghi Lyra", role: "Kẻ phản biện trong bộ tộc", avatar: "skeptic", color: "from-cyan-500 to-blue-600" },
-  slave: { name: "Người lao động Borin", role: "Tầng lớp lao động chân tay", avatar: "slave", color: "from-stone-500 to-stone-700" },
-  noble: { name: "Quý tộc Theon", role: "Tầng lớp lao động trí óc", avatar: "noble", color: "from-fuchsia-500 to-purple-600" }
+  guide: {
+    name: "Sophia",
+    role: "Người Khai Sáng dẫn đường",
+    avatar: "guide",
+    color: "from-indigo-500 to-violet-600",
+  },
+  elder: {
+    name: "Già làng Kael",
+    role: "Trưởng bộ tộc",
+    avatar: "elder",
+    color: "from-amber-500 to-orange-600",
+  },
+  skeptic: {
+    name: "Người hoài nghi Lyra",
+    role: "Kẻ phản biện trong bộ tộc",
+    avatar: "skeptic",
+    color: "from-cyan-500 to-blue-600",
+  },
+  slave: {
+    name: "Người lao động Borin",
+    role: "Tầng lớp lao động chân tay",
+    avatar: "slave",
+    color: "from-stone-500 to-stone-700",
+  },
+  noble: {
+    name: "Quý tộc Theon",
+    role: "Tầng lớp lao động trí óc",
+    avatar: "noble",
+    color: "from-fuchsia-500 to-purple-600",
+  },
 };
 
 const TYPEWRITER_SPEED_MS = 18;
@@ -58,9 +89,17 @@ function useTypewriter(fullText, enabled = true) {
 export function SpeechBubble({ who, text, animate, onTypingDone }) {
   const character = CHARACTERS[who] || CHARACTERS.guide;
   const { shown, done, finishNow } = useTypewriter(text, animate);
+  const notifiedRef = useRef(false);
 
   useEffect(() => {
-    if (done) onTypingDone?.();
+    notifiedRef.current = false;
+  }, [text, animate]);
+
+  useEffect(() => {
+    if (done && !notifiedRef.current) {
+      notifiedRef.current = true;
+      onTypingDone?.();
+    }
   }, [done, onTypingDone]);
 
   return (
@@ -72,7 +111,9 @@ export function SpeechBubble({ who, text, animate, onTypingDone }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-bold text-sm text-gray-900 dark:text-primary-100">{character.name}</span>
+          <span className="font-bold text-sm text-gray-900 dark:text-primary-100">
+            {character.name}
+          </span>
           <span className="text-[11px] text-gray-400">{character.role}</span>
         </div>
         <div
@@ -80,35 +121,63 @@ export function SpeechBubble({ who, text, animate, onTypingDone }) {
           onClick={() => !done && finishNow()}
         >
           {shown}
-          {!done && <span className="j-caret" aria-hidden>▋</span>}
+          {!done && (
+            <span className="j-caret" aria-hidden>
+              ▋
+            </span>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-export default function DialogueSequence({ lines, onComplete, ctaLabel = "Tiếp tục", autoPlay = true }) {
+export default function DialogueSequence({
+  lines,
+  onComplete,
+  ctaLabel = "Tiếp tục",
+  autoPlay = true,
+}) {
   const [visibleCount, setVisibleCount] = useState(1);
   const [currentTypingDone, setCurrentTypingDone] = useState(false);
   const scrollAnchorRef = useRef(null);
   const advanceTimerRef = useRef(null);
+  const linesKey = useMemo(
+    () => JSON.stringify(lines.map((line) => [line.who, line.text])),
+    [lines],
+  );
 
   const isLastVisible = visibleCount >= lines.length;
   const allDone = isLastVisible && currentTypingDone;
 
-  useEffect(() => {
-    scrollAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [visibleCount, currentTypingDone]);
+  const scrollToLatest = useCallback(() => {
+    requestAnimationFrame(() => {
+      scrollAnchorRef.current?.scrollIntoView({
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+        block: "end",
+      });
+    });
+  }, []);
 
   useEffect(() => {
     setVisibleCount(1);
     setCurrentTypingDone(false);
-  }, [lines]);
+  }, [linesKey]);
+
+  useEffect(() => {
+    scrollToLatest();
+  }, [visibleCount, currentTypingDone, allDone, scrollToLatest]);
+
+  useEffect(() => {
+    if (!allDone) return undefined;
+    const timer = setTimeout(scrollToLatest, 80);
+    return () => clearTimeout(timer);
+  }, [allDone, scrollToLatest]);
 
   const showNextLine = useCallback(() => {
     setCurrentTypingDone(false);
-    setVisibleCount((c) => c + 1);
-  }, []);
+    setVisibleCount((c) => Math.min(c + 1, lines.length));
+  }, [lines.length]);
 
   useEffect(() => {
     clearTimeout(advanceTimerRef.current);
@@ -129,11 +198,12 @@ export default function DialogueSequence({ lines, onComplete, ctaLabel = "Tiếp
               who={line.who}
               text={line.text}
               animate={isCurrent}
-              onTypingDone={isCurrent ? () => setCurrentTypingDone(true) : undefined}
+              onTypingDone={
+                isCurrent ? () => setCurrentTypingDone(true) : undefined
+              }
             />
           );
         })}
-        <div ref={scrollAnchorRef} />
       </div>
 
       <div className="mt-5 flex justify-end">
@@ -146,7 +216,9 @@ export default function DialogueSequence({ lines, onComplete, ctaLabel = "Tiếp
               className="inline-flex items-center gap-1.5 bg-gray-800 text-white px-5 py-2.5 rounded-3xl font-semibold hover:bg-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Tiếp
-              <span className="material-symbols-outlined text-base">arrow_forward</span>
+              <span className="material-symbols-outlined text-base">
+                arrow_forward
+              </span>
             </button>
           )
         ) : (
@@ -156,10 +228,13 @@ export default function DialogueSequence({ lines, onComplete, ctaLabel = "Tiếp
             className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-6 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors j-bubble-in"
           >
             {ctaLabel}
-            <span className="material-symbols-outlined text-base">arrow_forward</span>
+            <span className="material-symbols-outlined text-base">
+              arrow_forward
+            </span>
           </button>
         )}
       </div>
+      <div ref={scrollAnchorRef} />
     </div>
   );
 }

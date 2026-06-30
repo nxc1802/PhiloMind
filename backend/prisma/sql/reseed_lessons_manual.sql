@@ -39,9 +39,19 @@ declare
   ]$json$::jsonb;
   origin_flow jsonb := $json$[
     {"id":"origin-video","type":"media","title":"Video giới thiệu","config":{"mediaType":"video","url":"https://www.youtube.com/watch?v=k_jbTWq-u50","title":"Triết học ra đời trong bước ngoặt tư duy của nhân loại"},"completionRule":{"type":"viewed"}},
-    {"id":"origin-intro","type":"dialogue","title":"Nhiệm vụ khai sáng","config":{"lines":[{"who":"guide","text":"Triết học ra đời từ hai nguồn gốc: nhận thức và xã hội. Hãy lần lượt mở hai mảnh ghép này."}]},"completionRule":{"type":"viewed"}},
-    {"id":"origin-cognitive","type":"mcq","title":"Nguồn gốc nhận thức","config":{"question":"Điều gì làm cho tư duy triết học bắt đầu thay thế tư duy huyền thoại?","options":[{"id":"a","text":"Con người bắt đầu tìm quy luật và lý lẽ để giải thích thế giới.","isCorrect":true,"explanation":"Đây là bước chuyển từ niềm tin huyền thoại sang tư duy lý luận."},{"id":"b","text":"Con người tế lễ nhiều hơn để xoa dịu thần linh.","isCorrect":false},{"id":"c","text":"Con người từ bỏ nhu cầu hiểu biết thế giới.","isCorrect":false}]},"completionRule":{"type":"correct"}},
-    {"id":"origin-social","type":"sequence_sorting","title":"Chuỗi nhân quả xã hội","config":{"instruction":"Chọn theo đúng thứ tự hình thành điều kiện xã hội của triết học.","items":[{"id":"c1","order":0,"text":"Sản xuất phát triển, của cải dư thừa và tư hữu hình thành."},{"id":"c2","order":1,"text":"Xã hội phân chia giai cấp."},{"id":"c3","order":2,"text":"Lao động trí óc tách khỏi lao động chân tay."},{"id":"c4","order":3,"text":"Tầng lớp trí thức hệ thống hóa tri thức thành triết học."}],"successFeedback":"Đây là nguồn gốc xã hội của triết học."},"completionRule":{"type":"correct"}},
+    {"id":"origin-intro","type":"dialogue","title":"Nhiệm vụ khai sáng","config":{"lines":[{"who":"guide","text":"Chào mừng nhà du hành! Mình là Sophia, người sẽ đồng hành cùng bạn."},{"who":"guide","text":"Chúng ta vừa quay ngược kim đồng hồ về thế kỷ VIII - VI trước Công nguyên. Hy Lạp, Ấn Độ, Trung Hoa đang bừng nở."},{"who":"guide","text":"Nhiệm vụ của bạn là tìm vũ khí tư duy có tên TRIẾT HỌC qua hai mảnh ghép: nguồn gốc nhận thức và nguồn gốc xã hội."}]},"completionRule":{"type":"viewed"}},
+    {"id":"cognitive-video","type":"media","title":"Giải mã sấm truyền","config":{"mediaType":"video","url":"https://www.youtube.com/watch?v=1VwbmgMTbkk","title":"Bối cảnh thảm họa thiên nhiên cổ đại","subtitle":"Động đất, mưa giông và cách con người cổ đại lý giải tự nhiên"},"completionRule":{"type":"viewed"}},
+    {"id":"cognitive-scene","type":"dialogue","title":"Hội đồng bộ tộc","config":{"lines":[{"who":"elder","text":"Tai họa này từ đâu mà ra?! Hỡi người trẻ kia, hãy giải thích cho cả bộ tộc!"},{"who":"guide","text":"Hãy quên kiến thức hiện đại đi, đặt mình vào tâm trí người cổ đại. Bạn sẽ giải thích thế nào?"}]},"completionRule":{"type":"viewed"}},
+    {"id":"lyra-doubt","type":"dialogue","title":"Bước ngoặt hoài nghi","config":{"lines":[{"who":"skeptic","text":"Khoan đã! Năm ngoái chúng ta đã tế rất nhiều lễ vật, vậy mà năm nay động đất vẫn xảy ra."},{"who":"skeptic","text":"Liệu có quy luật tự nhiên nào dưới lòng đất, không phụ thuộc vào tâm trạng của các vị thần?"}]},"completionRule":{"type":"viewed"}},
+    {"id":"cognitive-origin-quiz","type":"quiz_sequence","title":"Nguồn gốc nhận thức: chuỗi câu hỏi","config":{"questions":[{"question":"Theo lối tư duy cổ đại, trận động đất thường được giải thích theo cách nào?","options":["Ý chí thần linh hoặc lực lượng siêu nhiên đang chi phối tự nhiên.","Một mô hình địa chất hiện đại đã được đo đạc đầy đủ.","Một hiện tượng không cần nguyên nhân."],"correctIndex":0,"explanation":"Tư duy huyền thoại quy hiện tượng tự nhiên về thần linh hoặc lực lượng siêu nhiên."},{"question":"Nếu nguyên nhân là ý chí thần linh, giải pháp hợp logic với tư duy đó là gì?","options":["Tổ chức tế lễ, cúng bái để xoa dịu thần linh.","Đo đạc địa chất và xây dựng giả thuyết khoa học.","Tìm quy luật tự nhiên bằng khái niệm và lý lẽ."],"correctIndex":0,"explanation":"Khi nguyên nhân được đặt vào lực lượng siêu nhiên, giải pháp thường là nghi lễ."},{"question":"Câu hỏi của Lyra hé lộ điều gì đang bắt đầu thay đổi?","options":["Con người bắt đầu tìm quy luật và lý lẽ để giải thích thế giới.","Con người quyết định tế lễ nhiều hơn nữa.","Con người từ bỏ việc tìm hiểu thế giới."],"correctIndex":0,"explanation":"Đây là lúc tư duy lý luận, tức triết học, bắt đầu nảy mầm."}]},"completionRule":{"type":"correct"}},
+    {"id":"cognitive-summary","type":"mindmap_reveal","title":"Bốn bước tiến hóa nhận thức","config":{"center":"Nguồn gốc nhận thức","nodes":[{"id":"need","label":"Nhu cầu tự nhiên","detail":"Nhận thức thế giới là nhu cầu tự nhiên để sinh tồn."},{"id":"myth","label":"Tư duy huyền thoại","detail":"Thần thoại và tín ngưỡng là loại hình triết lý đầu tiên."},{"id":"abstraction","label":"Tư duy trừu tượng","detail":"Con người biết khái quát tri thức riêng lẻ thành cái chung."},{"id":"philosophy","label":"Triết học ra đời","detail":"Triết học thay thế huyền thoại bằng khái niệm, phạm trù, quy luật."}]},"completionRule":{"type":"viewed"}},
+    {"id":"social-video","type":"media","title":"Đại hội bộ tộc","config":{"mediaType":"video","url":"https://www.youtube.com/watch?v=JNutDwj92is","title":"Bối cảnh biến đổi xã hội","subtitle":"Phân công lao động, của cải dư thừa và phân chia giai cấp"},"completionRule":{"type":"viewed"}},
+    {"id":"social-setup","type":"dialogue","title":"Một ngày trong xã hội cổ đại","config":{"lines":[{"who":"guide","text":"Con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành chủ nô và nô lệ."},{"who":"guide","text":"Để hiểu ai đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau."}]},"completionRule":{"type":"viewed"}},
+    {"id":"social-condition-quiz","type":"quiz_sequence","title":"Nguồn gốc xã hội: trải nghiệm vai","config":{"questions":[{"question":"Borin lao động kiệt sức cả ngày. Cuối ngày, Borin có điều kiện suy ngẫm nguồn gốc vũ trụ không?","options":["Không. Borin chỉ kịp ăn vội rồi ngủ để mai lại lao động.","Có. Borin thức trắng đêm để viết học thuyết triết học."],"correctIndex":0,"explanation":"Lao động chân tay và nỗi lo sinh tồn không để lại điều kiện nghiên cứu lý luận."},{"question":"Theon có của cải dư thừa, không phải lao động chân tay. Với điều kiện ấy, Theon có thể làm gì?","options":["Quan sát, suy ngẫm và hệ thống hóa tri thức thành học thuyết.","Cũng chẳng làm được gì vì quá bận đi cày."],"correctIndex":0,"explanation":"Tầng lớp trí óc có thời gian và điều kiện nghiên cứu lý luận."},{"question":"Nhóm nào đủ điều kiện hệ thống hóa tri thức thành học thuyết?","options":["Tầng lớp lao động trí óc: quý tộc, trí thức.","Tầng lớp lao động chân tay: nô lệ.","Cả hai nhóm đều như nhau."],"correctIndex":0,"explanation":"Khi lao động trí óc tách khỏi lao động chân tay, tầng lớp trí thức có điều kiện tạo lập triết học."}]},"completionRule":{"type":"correct"}},
+    {"id":"social-warning","type":"markdown","title":"Ghi nhớ về nguồn gốc xã hội","config":{"content":"Triết học không thể ra đời trong một xã hội mông muội. Nó cần trình độ sản xuất tương đối cao, phân công lao động, giai cấp, nhà nước và tầng lớp trí thức có điều kiện hệ thống hóa tri thức."},"completionRule":{"type":"viewed"}},
+    {"id":"origin-social","type":"sequence_sorting","title":"Chuỗi nhân quả xã hội","config":{"instruction":"Chọn theo đúng thứ tự hình thành điều kiện xã hội của triết học.","items":[{"id":"c1","order":0,"text":"Sản xuất phát triển, của cải dư thừa và tư hữu hình thành."},{"id":"c2","order":1,"text":"Xã hội phân chia giai cấp."},{"id":"c3","order":2,"text":"Lao động trí óc tách khỏi lao động chân tay."},{"id":"c4","order":3,"text":"Tầng lớp trí thức hệ thống hóa tri thức thành triết học."}],"successFeedback":"Chuỗi nhân quả đã sáng lên. Đây là nguồn gốc xã hội của triết học."},"completionRule":{"type":"correct"}},
+    {"id":"origin-union","type":"mindmap_reveal","title":"Hợp nhất hai mảnh ghép","config":{"center":"Triết học ra đời","nodes":[{"id":"cognitive","label":"Nguồn gốc nhận thức","detail":"Nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng."},{"id":"social","label":"Nguồn gốc xã hội","detail":"Phân công lao động, giai cấp và tầng lớp trí thức."}]},"completionRule":{"type":"viewed"}},
+    {"id":"origin-final-quiz","type":"quiz_sequence","title":"Kiểm tra cuối bài","config":{"questions":[{"question":"Triết học ra đời vào khoảng thời gian nào?","options":["Thế kỷ XV - XVI sau CN","Thế kỷ VIII - VI trước CN","Thế kỷ I sau CN","Thời kỳ đồ đá cũ"],"correctIndex":1,"explanation":"Triết học ra đời khoảng thế kỷ VIII - VI trước Công nguyên."},{"question":"Triết học có mấy nguồn gốc cơ bản?","options":["Một: nguồn gốc thần thánh","Hai: nhận thức và xã hội","Ba: kinh tế, chính trị, văn hóa","Không có nguồn gốc xác định"],"correctIndex":1,"explanation":"Triết học có hai nguồn gốc cơ bản: nhận thức và xã hội."},{"question":"Điều kiện xã hội nào là tiền đề cho triết học ra đời?","options":["Xã hội mông muội, chưa phân hóa","Phân công lao động, giai cấp xuất hiện, lao động trí óc tách khỏi lao động chân tay","Mọi người đều làm nông nghiệp như nhau","Xã hội không có của cải dư thừa"],"correctIndex":1,"explanation":"Triết học ra đời khi xã hội có phân công lao động, giai cấp và tầng lớp trí thức."}]},"completionRule":{"type":"correct"}},
     {"id":"origin-final","type":"final_summary","title":"Hoàn thành bài học","config":{"message":"Triết học xuất hiện khoảng thế kỷ VIII-VI TCN từ nguồn gốc nhận thức và nguồn gốc xã hội.","keyTakeaways":["Nguồn gốc nhận thức: nhu cầu hiểu biết và tư duy trừu tượng.","Nguồn gốc xã hội: phân công lao động, giai cấp và tầng lớp trí thức."],"rewards":{"xp":120,"badge":"Nhà Khai Sáng"}},"completionRule":{"type":"viewed"}}
   ]$json$::jsonb;
   concept_flow jsonb := $json$[
@@ -152,6 +162,90 @@ begin
   from "ConceptNode" n
   join _lesson_seed s on s.title = n."title"
   where n."chapterId" = s.chapter_id;
+
+  insert into "Podcast" ("id", "nodeId", "audioUrl", "transcript")
+  select
+    gen_random_uuid()::text,
+    n."id",
+    'https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e3edee2cd.mp3',
+    case n."title"
+      when 'Nguồn gốc của triết học' then
+        '[{"time":0,"speaker":"Host","text":"Xin chào các bạn, hôm nay chúng ta bắt đầu với câu hỏi: triết học ra đời từ đâu?"},{"time":6,"speaker":"Host","text":"Trước hết là nguồn gốc nhận thức: con người có nhu cầu hiểu biết thế giới và dần vượt qua cách giải thích bằng thần thoại."},{"time":14,"speaker":"Guest","text":"Khi con người đặt câu hỏi về quy luật tự nhiên thay vì chỉ quy mọi thứ cho thần linh, tư duy lý luận bắt đầu xuất hiện."},{"time":23,"speaker":"Host","text":"Nhưng triết học cũng cần nguồn gốc xã hội: sản xuất phát triển, của cải dư thừa, giai cấp hình thành và lao động trí óc tách khỏi lao động chân tay."}]'::jsonb
+      else
+        '[{"time":0,"speaker":"Host","text":"Xin chào các bạn, chào mừng đến với podcast Triết học Mác - Lênin."},{"time":4,"speaker":"Host","text":"Trong tập hôm nay, chúng ta cùng đi sâu vào phạm trù vật chất."},{"time":14,"speaker":"Host","text":"Vật chất là thực tại khách quan, tồn tại độc lập với ý thức và được con người phản ánh trong cảm giác."}]'::jsonb
+    end
+  from "ConceptNode" n
+  join _lesson_seed s on s.title = n."title"
+  where s.content_ready = true
+    and n."title" in ('Nguồn gốc của triết học', 'Phạm trù vật chất');
+
+  insert into "Warmup" ("id", "nodeId", "type", "title", "image", "blanks", "answer", "story", "question", "options", "correctIndex", "reveal")
+  select gen_random_uuid()::text, n."id", 'game', 'KÍNH LỌC CUỘC ĐỜI', null, null, null, null, null, null, null,
+    'Hoàn thành trò chơi khởi động và sẵn sàng tiếp cận nguồn gốc triết học.'
+  from "ConceptNode" n
+  where n."title" = 'Nguồn gốc của triết học'
+  union all
+  select gen_random_uuid()::text, n."id", 'story', 'Từ sấm sét đến quy luật', null, null, null,
+    'Một bộ tộc cổ đại tin rằng sấm sét là cơn giận của thần linh. Sau nhiều lần tế lễ mà thiên tai vẫn xảy ra, một người trẻ bắt đầu hỏi: liệu có quy luật tự nhiên nào đứng sau hiện tượng này không?',
+    'Câu hỏi này thể hiện nguồn gốc nào của triết học?',
+    '["Nguồn gốc nhận thức","Nguồn gốc kinh tế thị trường","Nguồn gốc nghệ thuật"]'::jsonb,
+    0,
+    'Đúng. Đó là nguồn gốc nhận thức: nhu cầu hiểu biết thế giới và vượt qua tư duy huyền thoại bằng lý lẽ.'
+  from "ConceptNode" n
+  where n."title" = 'Nguồn gốc của triết học'
+  union all
+  select gen_random_uuid()::text, n."id", 'image-guess', 'Hai mảnh ghép khai sinh triết học',
+    'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=900&auto=format&fit=crop',
+    'N H _ N   T H _ C   &   X _   H _ I',
+    'nhận thức và xã hội',
+    null, null, null, null,
+    'Chính xác. Triết học ra đời từ hai nguồn gốc cơ bản: nguồn gốc nhận thức và nguồn gốc xã hội.'
+  from "ConceptNode" n
+  where n."title" = 'Nguồn gốc của triết học'
+  union all
+  select gen_random_uuid()::text, n."id", 'image-guess', 'Nhìn hình đoán khái niệm',
+    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&auto=format&fit=crop',
+    'V _ T   C H _ T',
+    'vật chất',
+    null, null, null, null,
+    'Vật chất là phạm trù trung tâm của chủ nghĩa duy vật biện chứng, tồn tại khách quan và độc lập với ý thức.'
+  from "ConceptNode" n
+  where n."title" = 'Phạm trù vật chất';
+
+  insert into "Flashcard" ("id", "nodeId", "tag", "question", "answer")
+  select gen_random_uuid()::text, n."id", 'Nguồn gốc triết học', 'Triết học ra đời vào khoảng thời gian nào?', 'Khoảng thế kỷ VIII - VI trước Công nguyên.'
+  from "ConceptNode" n where n."title" = 'Nguồn gốc của triết học'
+  union all
+  select gen_random_uuid()::text, n."id", 'Nguồn gốc triết học', 'Triết học có hai nguồn gốc cơ bản nào?', 'Nguồn gốc nhận thức và nguồn gốc xã hội.'
+  from "ConceptNode" n where n."title" = 'Nguồn gốc của triết học'
+  union all
+  select gen_random_uuid()::text, n."id", 'Khái niệm triết học', 'Triết học là gì?', 'Hệ thống tri thức lý luận chung nhất về thế giới, con người và vị trí con người trong thế giới.'
+  from "ConceptNode" n where n."title" = 'Khái niệm triết học'
+  union all
+  select gen_random_uuid()::text, n."id", 'Phạm trù vật chất', 'Theo Lênin, vật chất là gì?', 'Thực tại khách quan được đem lại cho con người trong cảm giác và tồn tại không lệ thuộc vào cảm giác.'
+  from "ConceptNode" n where n."title" = 'Phạm trù vật chất';
+
+  insert into "Quiz" ("id", "nodeId", "type", "title", "description", "questions")
+  select gen_random_uuid()::text, n."id", 'mcq', 'Trắc nghiệm Bài 1: Nguồn gốc triết học', 'Ôn tập nhanh nội dung nguồn gốc triết học.',
+    '[{"question":"Triết học có mấy nguồn gốc cơ bản?","options":["Một","Hai: nhận thức và xã hội","Ba","Không xác định"],"correctIndex":1},{"question":"Nguồn gốc xã hội của triết học gắn với điều kiện nào?","options":["Xã hội chưa phân hóa","Lao động trí óc tách khỏi lao động chân tay và giai cấp xuất hiện","Mọi người đều làm nông nghiệp","Không có của cải dư thừa"],"correctIndex":1}]'::jsonb
+  from "ConceptNode" n
+  where n."title" = 'Nguồn gốc của triết học';
+
+  insert into "DebateTopic" ("id", "title", "description", "initialPrompt")
+  values
+    (gen_random_uuid()::text, 'Chủ nghĩa Duy vật vs Chủ nghĩa Duy tâm', 'Cuộc đối đầu kinh điển về bản chất thế giới.', 'Giới duy tâm cho rằng sự vật chỉ là phức hợp cảm giác. Hãy dùng lập luận duy vật biện chứng để phản biện.'),
+    (gen_random_uuid()::text, 'Giá trị thặng dư trong kỷ nguyên số và AI', 'Robot, thuật toán và tự động hóa có tạo ra giá trị thặng dư không?', 'Theo kinh tế chính trị Mác - Lênin, máy móc chuyển dịch giá trị chứ không tự tạo giá trị thặng dư. Lập trường của bạn là gì?'),
+    (gen_random_uuid()::text, 'Ý thức và Trí tuệ nhân tạo', 'AI có thể có ý thức thật sự hay không?', 'Triết học xem ý thức là thuộc tính của bộ não người trong đời sống xã hội. Vậy AI có thể có ý thức không?');
+
+  insert into "Debate" ("id", "nodeId", "topicId", "userId", "transcript")
+  select gen_random_uuid()::text, n."id", null, student_id,
+    jsonb_build_array(jsonb_build_object('speaker','Host','text','Hãy thảo luận luận điểm: ' || n."quickTake", 'time', 0))
+  from "ConceptNode" n;
+
+  insert into "Debate" ("id", "nodeId", "topicId", "userId", "transcript")
+  select gen_random_uuid()::text, null, t."id", student_id,
+    jsonb_build_array(jsonb_build_object('speaker','Host','text',t."initialPrompt", 'time', 0))
+  from "DebateTopic" t;
 end;
 $$;
 

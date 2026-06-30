@@ -3,7 +3,7 @@ export const STORAGE_KEY = "mln_web_settings";
 export const DEFAULT_SETTINGS = {
   displayName: "Học viên",
   emailNotification: true,
-  autoplayVideo: false,
+  autoplayVideo: true,
   showTranscriptByDefault: true,
   studyReminderTime: "19:00",
   unlockAllLessons: true, // Default to true as requested

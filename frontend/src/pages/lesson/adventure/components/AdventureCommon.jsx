@@ -81,6 +81,7 @@ export function VideoScene({
   const youtubeWatchUrl = ytId
     ? `https://www.youtube.com/watch?v=${ytId}`
     : src;
+  const youtubePlaybackParams = autoPlay ? "&autoplay=1&mute=1" : "";
 
   return (
     <div className="rounded-3xl overflow-hidden shadow-md mb-5 bg-black">
@@ -91,7 +92,7 @@ export function VideoScene({
             width="100%"
             height="100%"
             className="w-full h-full"
-            src={`https://www.youtube-nocookie.com/embed/${ytId}?rel=0&modestbranding=1&playsinline=1`}
+            src={`https://www.youtube-nocookie.com/embed/${ytId}?rel=0&modestbranding=1&playsinline=1${youtubePlaybackParams}`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

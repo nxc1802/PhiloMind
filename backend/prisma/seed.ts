@@ -136,52 +136,245 @@ function buildOriginLessonFlow(node: any) {
         lines: [
           {
             who: "guide",
-            text: "Nhiệm vụ của bạn: đi tìm nguồn gốc khai sinh của triết học. Hành trình này có hai mảnh ghép: nguồn gốc nhận thức và nguồn gốc xã hội.",
+            text: "Chào mừng nhà du hành! Mình là Sophia, người sẽ đồng hành cùng bạn.",
+          },
+          {
+            who: "guide",
+            text: "Chúng ta vừa quay ngược kim đồng hồ về thế kỷ VIII - VI trước Công nguyên. Quanh ta, các nền văn minh lớn đang bừng nở: Hy Lạp, Ấn Độ, Trung Hoa.",
+          },
+          {
+            who: "guide",
+            text: "Nhiệm vụ của bạn: đi tìm một thứ vũ khí tư duy hoàn toàn mới có tên là TRIẾT HỌC. Để tìm thấy nó, ta phải vượt qua 2 thử thách đại diện cho 2 nguồn gốc khai sinh ra triết học.",
           },
         ],
       },
       completionRule: { type: "viewed" },
     },
     {
-      id: "origin-video",
+      id: "origin-opening-video",
       type: "media",
-      title: "Bối cảnh cổ đại",
+      title: "Video mở đầu hành trình",
       config: {
         mediaType: "video",
-        url: node.videoUrl,
+        url: "https://www.youtube.com/watch?v=k_jbTWq-u50",
         title: "Triết học ra đời trong bước ngoặt tư duy của nhân loại",
-        subtitle: "Từ huyền thoại đến lý luận",
+        subtitle: "Thế kỷ VIII - VI TCN, từ huyền thoại đến tư duy lý luận",
       },
       completionRule: { type: "viewed" },
     },
     {
-      id: "cognitive-origin",
-      type: "mcq",
-      title: "Nguồn gốc nhận thức",
+      id: "cognitive-video",
+      type: "media",
+      title: "Giải mã sấm truyền",
       config: {
-        question:
-          "Điều gì làm cho tư duy triết học bắt đầu thay thế tư duy huyền thoại?",
-        options: [
+        mediaType: "video",
+        url: "https://www.youtube.com/watch?v=1VwbmgMTbkk",
+        title: "Bối cảnh thảm họa thiên nhiên cổ đại",
+        subtitle:
+          "Động đất, mưa giông và cách con người cổ đại lý giải tự nhiên",
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "cognitive-scene",
+      type: "dialogue",
+      title: "Hội đồng bộ tộc",
+      config: {
+        lines: [
           {
-            id: "a",
-            text: "Con người bắt đầu tìm quy luật và lý lẽ để giải thích thế giới.",
-            isCorrect: true,
+            who: "elder",
+            text: "Tai họa này từ đâu mà ra?! Hỡi người trẻ kia, hãy giải thích cho cả bộ tộc!",
+          },
+          {
+            who: "guide",
+            text: "Bạn vừa chứng kiến tất cả. Hãy quên kiến thức hiện đại đi, đặt mình vào tâm trí người cổ đại. Bạn sẽ giải thích thế nào?",
+          },
+        ],
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "lyra-doubt",
+      type: "dialogue",
+      title: "Bước ngoặt hoài nghi",
+      config: {
+        lines: [
+          {
+            who: "skeptic",
+            text: "Khoan đã! Năm ngoái chúng ta đã tế tới 10 con cừu cho thần linh, vậy mà năm nay động đất vẫn xảy ra.",
+          },
+          {
+            who: "skeptic",
+            text: "Liệu có phải dưới lòng đất tồn tại một quy luật tự nhiên nào đó, không hề phụ thuộc vào tâm trạng của các vị thần?",
+          },
+        ],
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "cognitive-origin-quiz",
+      type: "quiz_sequence",
+      title: "Nguồn gốc nhận thức: chuỗi câu hỏi",
+      config: {
+        questions: [
+          {
+            question:
+              "Theo lối tư duy cổ đại, trận động đất thường được giải thích theo cách nào?",
+            options: [
+              "Ý chí thần linh hoặc lực lượng siêu nhiên đang chi phối tự nhiên.",
+              "Một mô hình địa chất hiện đại đã được đo đạc đầy đủ.",
+              "Một hiện tượng không cần nguyên nhân.",
+            ],
+            correctIndex: 0,
             explanation:
-              "Đây là bước chuyển từ niềm tin huyền thoại sang tư duy lý luận.",
+              "Tư duy huyền thoại quy các hiện tượng tự nhiên về thần linh, linh hồn hoặc lực lượng siêu nhiên.",
           },
           {
-            id: "b",
-            text: "Con người từ bỏ hoàn toàn nhu cầu hiểu biết thế giới.",
-            isCorrect: false,
+            question:
+              "Nếu bộ tộc giải thích thảm họa bằng ý chí thần linh, giải pháp hợp logic với tư duy đó là gì?",
+            options: [
+              "Tổ chức tế lễ, cúng bái để xoa dịu thần linh.",
+              "Đo đạc địa chất và xây dựng giả thuyết khoa học.",
+              "Tìm quy luật tự nhiên bằng khái niệm và lý lẽ.",
+            ],
+            correctIndex: 0,
+            explanation:
+              "Khi nguyên nhân được đặt vào lực lượng siêu nhiên, giải pháp thường là nghi lễ và hiến tế.",
           },
           {
-            id: "c",
-            text: "Con người chỉ tăng cường nghi lễ cúng bái.",
-            isCorrect: false,
+            question:
+              "Câu hỏi của Lyra hé lộ điều gì đang bắt đầu thay đổi trong cách con người suy nghĩ?",
+            options: [
+              "Con người bắt đầu tìm quy luật và lý lẽ để giải thích thế giới.",
+              "Con người quyết định tế lễ nhiều hơn nữa cho chắc chắn.",
+              "Con người từ bỏ hoàn toàn việc tìm hiểu thế giới.",
+            ],
+            correctIndex: 0,
+            explanation:
+              "Khoảnh khắc con người ngờ vực thần thoại và đi tìm quy luật bằng lý lẽ là lúc tư duy lý luận, tức triết học, bắt đầu nảy mầm.",
           },
         ],
       },
       completionRule: { type: "correct" },
+    },
+    {
+      id: "cognitive-summary",
+      type: "mindmap_reveal",
+      title: "Bốn bước tiến hóa nhận thức",
+      config: {
+        center: "Nguồn gốc nhận thức",
+        nodes: [
+          {
+            id: "need",
+            label: "Nhu cầu tự nhiên",
+            detail:
+              "Nhận thức, hiểu biết thế giới xung quanh là nhu cầu tự nhiên của con người để sinh tồn.",
+          },
+          {
+            id: "myth",
+            label: "Tư duy huyền thoại",
+            detail:
+              "Thần thoại và tín ngưỡng nguyên thủy là loại hình triết lý đầu tiên để giải thích thế giới.",
+          },
+          {
+            id: "abstraction",
+            label: "Tư duy trừu tượng",
+            detail:
+              "Con người biết trừu tượng hóa, khái quát hóa tri thức riêng lẻ thành cái chung.",
+          },
+          {
+            id: "philosophy",
+            label: "Triết học ra đời",
+            detail:
+              "Triết học thay thế tư duy huyền thoại bằng khái niệm, phạm trù và quy luật phổ quát.",
+          },
+        ],
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "social-video",
+      type: "media",
+      title: "Đại hội bộ tộc",
+      config: {
+        mediaType: "video",
+        url: "https://www.youtube.com/watch?v=JNutDwj92is",
+        title: "Bối cảnh biến đổi xã hội",
+        subtitle: "Phân công lao động, của cải dư thừa và phân chia giai cấp",
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "social-setup",
+      type: "dialogue",
+      title: "Một ngày trong xã hội cổ đại",
+      config: {
+        lines: [
+          {
+            who: "guide",
+            text: "Nhiều thế hệ trôi qua. Con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành chủ nô và nô lệ.",
+          },
+          {
+            who: "guide",
+            text: "Để hiểu ai mới đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau.",
+          },
+        ],
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "social-condition-quiz",
+      type: "quiz_sequence",
+      title: "Nguồn gốc xã hội: trải nghiệm vai",
+      config: {
+        questions: [
+          {
+            question:
+              "Trời chưa sáng, Borin đã ra đồng cày cuốc, vác đá tới kiệt sức. Cuối ngày, Borin có thời gian và sức lực để suy ngẫm nguồn gốc vũ trụ không?",
+            options: [
+              "Không. Borin chỉ kịp ăn vội rồi ngủ để mai lại lao động.",
+              "Có. Borin thức trắng đêm để viết một học thuyết triết học.",
+            ],
+            correctIndex: 0,
+            explanation:
+              "Lao động chân tay nặng nhọc và nỗi lo sinh tồn không để lại điều kiện cho nghiên cứu lý luận.",
+          },
+          {
+            question:
+              "Theon có của cải dư thừa, không phải lao động chân tay. Chiều đến, ông thong dong ngắm sao trời và đàm đạo cùng bạn hữu. Với điều kiện ấy, Theon có thể làm gì?",
+            options: [
+              "Dành thời gian quan sát, suy ngẫm và hệ thống hóa tri thức thành học thuyết.",
+              "Cũng chẳng làm được gì vì quá bận đi cày.",
+            ],
+            correctIndex: 0,
+            explanation:
+              "Có của cải dư thừa và thời gian rảnh, tầng lớp trí óc mới đủ điều kiện nghiên cứu và sáng tạo lý luận.",
+          },
+          {
+            question:
+              "Nhóm nào đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết?",
+            options: [
+              "Tầng lớp lao động trí óc: quý tộc, trí thức.",
+              "Tầng lớp lao động chân tay: nô lệ.",
+              "Cả hai nhóm đều như nhau.",
+            ],
+            correctIndex: 0,
+            explanation:
+              "Chỉ khi lao động trí óc tách khỏi lao động chân tay, tầng lớp trí thức mới có điều kiện hệ thống hóa tri thức thành triết học.",
+          },
+        ],
+      },
+      completionRule: { type: "correct" },
+    },
+    {
+      id: "social-warning",
+      type: "markdown",
+      title: "Ghi nhớ về nguồn gốc xã hội",
+      config: {
+        content:
+          "Triết học không thể ra đời trong một xã hội mông muội, dã man. Nó chỉ ra đời khi xã hội đạt đến trình độ tương đối cao của sản xuất xã hội: phân công lao động hình thành, giai cấp phân hóa rõ, nhà nước ra đời, và tầng lớp trí thức có điều kiện hệ thống hóa tri thức của thời đại.\n\nNgay từ khi xuất hiện, triết học đã gắn với những điều kiện xã hội nhất định và mang trong mình tính giai cấp sâu sắc.",
+      },
+      completionRule: { type: "viewed" },
     },
     {
       id: "social-origin-chain",
@@ -214,13 +407,109 @@ function buildOriginLessonFlow(node: any) {
       completionRule: { type: "correct" },
     },
     {
+      id: "origin-union",
+      type: "mindmap_reveal",
+      title: "Hợp nhất hai mảnh ghép",
+      config: {
+        center: "Triết học ra đời",
+        nodes: [
+          {
+            id: "cognitive",
+            label: "Nguồn gốc nhận thức",
+            detail:
+              "Nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng làm nảy sinh tư duy lý luận.",
+          },
+          {
+            id: "social",
+            label: "Nguồn gốc xã hội",
+            detail:
+              "Phân công lao động, giai cấp và tầng lớp trí thức tạo điều kiện xã hội cho triết học ra đời.",
+          },
+        ],
+        summary:
+          "Triết học không từ trên trời rơi xuống. Nó nảy sinh từ nhu cầu hiểu biết của con người và những điều kiện xã hội chín muồi.",
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
       id: "origin-reading",
       type: "markdown",
-      title: "Đúc kết hai nguồn gốc",
+      title: "Nội dung giáo trình",
       config: {
         content: node.originalText,
       },
       completionRule: { type: "viewed" },
+    },
+    {
+      id: "origin-final-quiz",
+      type: "quiz_sequence",
+      title: "Kiểm tra cuối bài",
+      config: {
+        questions: [
+          {
+            question: "Triết học ra đời vào khoảng thời gian nào?",
+            options: [
+              "Thế kỷ XV - XVI sau CN",
+              "Thế kỷ VIII - VI trước CN",
+              "Thế kỷ I sau CN",
+              "Thời kỳ đồ đá cũ",
+            ],
+            correctIndex: 1,
+            explanation:
+              "Triết học ra đời khoảng thế kỷ VIII - VI trước Công nguyên tại các trung tâm văn minh lớn.",
+          },
+          {
+            question: "Triết học có mấy nguồn gốc cơ bản?",
+            options: [
+              "Một: nguồn gốc thần thánh",
+              "Hai: nhận thức và xã hội",
+              "Ba: kinh tế, chính trị, văn hóa",
+              "Không có nguồn gốc xác định",
+            ],
+            correctIndex: 1,
+            explanation:
+              "Triết học có hai nguồn gốc cơ bản: nguồn gốc nhận thức và nguồn gốc xã hội.",
+          },
+          {
+            question:
+              "Về nguồn gốc nhận thức, triết học là hình thức tư duy thay thế cho cái gì?",
+            options: [
+              "Thay thế khoa học tự nhiên",
+              "Thay thế tư duy huyền thoại và tôn giáo",
+              "Thay thế lao động chân tay",
+              "Thay thế nghệ thuật",
+            ],
+            correctIndex: 1,
+            explanation:
+              "Triết học thay thế tư duy huyền thoại và tôn giáo bằng tư duy lý luận.",
+          },
+          {
+            question: "Điều kiện xã hội nào là tiền đề cho triết học ra đời?",
+            options: [
+              "Xã hội mông muội, chưa phân hóa",
+              "Phân công lao động, giai cấp xuất hiện, lao động trí óc tách khỏi lao động chân tay",
+              "Mọi người đều làm nông nghiệp như nhau",
+              "Xã hội không có của cải dư thừa",
+            ],
+            correctIndex: 1,
+            explanation:
+              "Triết học ra đời khi xã hội có phân công lao động, giai cấp và tầng lớp trí thức.",
+          },
+          {
+            question: "Vì sao tầng lớp trí thức có vai trò sáng tạo triết học?",
+            options: [
+              "Vì họ khỏe mạnh hơn",
+              "Vì họ có thời gian, điều kiện và nhu cầu nghiên cứu, hệ thống hóa tri thức",
+              "Vì họ được thần linh ban cho",
+              "Vì họ làm nhiều việc chân tay hơn",
+            ],
+            correctIndex: 1,
+            explanation:
+              "Tầng lớp trí thức có điều kiện và năng lực hệ thống hóa quan niệm thành học thuyết, lý luận.",
+          },
+        ],
+      },
+      completionRule: { type: "correct" },
     },
     {
       id: "origin-final",
@@ -231,6 +520,8 @@ function buildOriginLessonFlow(node: any) {
         keyTakeaways: [
           "Nguồn gốc nhận thức: nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng.",
           "Nguồn gốc xã hội: phân công lao động, giai cấp và tầng lớp trí thức.",
+          "Triết học ra đời khoảng thế kỷ VIII - VI TCN ở cả phương Đông và phương Tây.",
+          "Triết học là hình thức tư duy lý luận đầu tiên thay thế tư duy huyền thoại và tôn giáo.",
         ],
         rewards: { xp: 120, badge: "Nhà Khai Sáng" },
       },
@@ -376,6 +667,15 @@ function buildLesson1bFlow(source: any) {
       completionRule: { type: "correct" },
     },
     {
+      id: "lesson-1b-final-quiz",
+      type: "quiz_sequence",
+      title: "Kiểm tra cuối bài 1.b",
+      config: {
+        questions: source.finalSummary?.quiz || [],
+      },
+      completionRule: { type: "correct" },
+    },
+    {
       id: "lesson-1b-final",
       type: "final_summary",
       title: "Hoàn thành bài 1.b",
@@ -392,7 +692,6 @@ function buildLesson1bFlow(source: any) {
           xp: 120,
           badge: "Người khai mở tư duy",
         },
-        quiz: source.finalSummary?.quiz || [],
       },
       completionRule: { type: "viewed" },
     },
@@ -1689,7 +1988,53 @@ async function main() {
     });
   }
 
-  // 4. Seed Specific Podcast for 'Phạm trù vật chất'
+  const ch1FirstNode = createdCh1Nodes[0];
+
+  // 4. Seed sample podcasts for published lessons
+  if (ch1FirstNode) {
+    await prisma.podcast.create({
+      data: {
+        nodeId: ch1FirstNode.id,
+        audioUrl:
+          "https://cdn.pixabay.com/download/audio/2022/03/15/audio_5e3edee2cd.mp3",
+        transcript: [
+          {
+            time: 0,
+            speaker: "Host",
+            text: "Xin chào các bạn, hôm nay chúng ta bắt đầu với câu hỏi: triết học ra đời từ đâu?",
+          },
+          {
+            time: 6,
+            speaker: "Host",
+            text: "Trước hết là nguồn gốc nhận thức: con người có nhu cầu hiểu biết thế giới và dần vượt qua cách giải thích bằng thần thoại.",
+          },
+          {
+            time: 14,
+            speaker: "Guest",
+            text: "Khi con người đặt câu hỏi về quy luật tự nhiên thay vì chỉ quy mọi thứ cho thần linh, tư duy lý luận bắt đầu xuất hiện.",
+          },
+          {
+            time: 23,
+            speaker: "Host",
+            text: "Nhưng triết học cũng cần nguồn gốc xã hội: sản xuất phát triển, của cải dư thừa, giai cấp hình thành và lao động trí óc tách khỏi lao động chân tay.",
+          },
+          {
+            time: 35,
+            speaker: "Guest",
+            text: "Chỉ khi có tầng lớp trí thức đủ điều kiện suy ngẫm, tri thức rời rạc mới được hệ thống hóa thành học thuyết.",
+          },
+          {
+            time: 45,
+            speaker: "Host",
+            text: "Vì vậy, triết học ra đời từ sự gặp nhau giữa nhu cầu nhận thức và những điều kiện xã hội chín muồi.",
+          },
+        ] as any,
+      },
+    });
+    console.log("Seeded sample podcast for first lesson.");
+  }
+
+  // 4.1 Seed Specific Podcast for 'Phạm trù vật chất'
   const materialNode = createdCh2Nodes.find(
     (n) => n.title === "Phạm trù vật chất",
   );
@@ -1905,7 +2250,6 @@ async function main() {
     },
   ];
 
-  const ch1FirstNode = createdCh1Nodes[0];
   for (const item of promptsQuestions) {
     await prisma.flashcard.create({
       data: {
@@ -2204,6 +2548,40 @@ async function main() {
         title: "KÍNH LỌC CUỘC ĐỜI (The Worldview Filter)",
         reveal:
           "Đồng chí đã hoàn thành xuất sắc trò chơi Kính Lọc Cuộc Đời và sẵn sàng tiếp cận tri thức triết học chính thức!",
+      },
+    });
+
+    await prisma.warmup.create({
+      data: {
+        nodeId: ch1FirstNode.id,
+        type: "story",
+        title: "Từ sấm sét đến quy luật",
+        story:
+          "Một bộ tộc cổ đại tin rằng sấm sét là cơn giận của thần linh. Sau nhiều lần tế lễ mà thiên tai vẫn xảy ra, một người trẻ bắt đầu hỏi: liệu có quy luật tự nhiên nào đứng sau hiện tượng này không?",
+        question:
+          "Câu hỏi của người trẻ trong câu chuyện thể hiện nguồn gốc nào của triết học?",
+        options: [
+          "Nguồn gốc nhận thức",
+          "Nguồn gốc kinh tế thị trường",
+          "Nguồn gốc nghệ thuật",
+        ] as any,
+        correctIndex: 0,
+        reveal:
+          "Đúng. Đó là nguồn gốc nhận thức: nhu cầu hiểu biết thế giới và khuynh hướng vượt qua tư duy huyền thoại bằng lý lẽ.",
+      },
+    });
+
+    await prisma.warmup.create({
+      data: {
+        nodeId: ch1FirstNode.id,
+        type: "image-guess",
+        title: "Hai mảnh ghép khai sinh triết học",
+        image:
+          "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=900&auto=format&fit=crop",
+        blanks: "N H _ N   T H _ C   &   X _   H _ I",
+        answer: "nhận thức và xã hội",
+        reveal:
+          "Chính xác. Triết học ra đời từ hai nguồn gốc cơ bản: nguồn gốc nhận thức và nguồn gốc xã hội.",
       },
     });
   }
