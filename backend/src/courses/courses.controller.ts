@@ -120,4 +120,30 @@ export class CoursesController {
       file.mimetype,
     );
   }
+
+  @Post("files/lesson-videos/upload")
+  @Roles("admin")
+  @UseInterceptors(FileInterceptor("file"))
+  @ApiOperation({ summary: "Upload a lesson video file to YouTube" })
+  async uploadLessonVideo(@UploadedFile() file: any, @Body() body: any) {
+    if (!file) {
+      throw new BadRequestException("No file uploaded");
+    }
+    return this.coursesService.uploadLessonVideoToYoutube(
+      file.originalname,
+      file.buffer,
+      file.mimetype,
+      body?.title,
+    );
+  }
+
+  @Post("files/lesson-videos/url")
+  @Roles("admin")
+  @ApiOperation({ summary: "Store a lesson video URL reference in Supabase" })
+  async storeLessonVideoUrl(@Body() body: any) {
+    if (!body?.url) {
+      throw new BadRequestException("Video URL is required");
+    }
+    return this.coursesService.storeLessonVideoUrl(body.url, body.title);
+  }
 }

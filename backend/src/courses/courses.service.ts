@@ -322,6 +322,60 @@ export class CoursesService {
     return node;
   }
 
+  private async getOrderedCourseNodes(courseId: string) {
+    const chapters = await this.prisma.chapter.findMany({
+      where: { courseId },
+      orderBy: { orderIndex: "asc" },
+      include: {
+        nodes: {
+          orderBy: { orderIndex: "asc" },
+        },
+      },
+    });
+
+    const sorted = [...chapters].sort((a, b) => {
+      if (a.orderIndex !== b.orderIndex) return a.orderIndex - b.orderIndex;
+      return a.title.localeCompare(b.title);
+    });
+    const mainChapters = sorted.filter((chapter) => !chapter.parentChapterId);
+    const orderedNodes = [];
+
+    for (const mainChapter of mainChapters) {
+      const subChapters = sorted.filter(
+        (chapter) => chapter.parentChapterId === mainChapter.id,
+      );
+
+      if (subChapters.length > 0) {
+        for (const subChapter of subChapters) {
+          orderedNodes.push(...subChapter.nodes);
+        }
+      } else {
+        orderedNodes.push(...mainChapter.nodes);
+      }
+    }
+
+    return orderedNodes;
+  }
+
+  private async findNextPublishedNode(currentNode: any) {
+    const orderedNodes = await this.getOrderedCourseNodes(
+      currentNode.chapter.courseId,
+    );
+    const currentIndex = orderedNodes.findIndex(
+      (node) => node.id === currentNode.id,
+    );
+    if (currentIndex < 0) return null;
+
+    return (
+      orderedNodes
+        .slice(currentIndex + 1)
+        .find(
+          (node) =>
+            node.contentReady === true && node.lessonStatus === "published",
+        ) || null
+    );
+  }
+
   async completeNode(nodeId: string, userId: string) {
     // 1. Get the current node with its chapter
     const currentNode = await this.prisma.conceptNode.findUnique({
@@ -347,35 +401,10 @@ export class CoursesService {
       },
     });
 
-    // 3. Find the next node in the course
-    let nextNode = null;
-
-    // Try to find next node in the same chapter
-    nextNode = await this.prisma.conceptNode.findFirst({
-      where: {
-        chapterId: currentNode.chapterId,
-        orderIndex: { gt: currentNode.orderIndex },
-      },
-      orderBy: { orderIndex: "asc" },
-    });
-
-    // If not found in the same chapter, look in the next chapter
-    if (!nextNode) {
-      const nextChapter = await this.prisma.chapter.findFirst({
-        where: {
-          courseId: currentNode.chapter.courseId,
-          orderIndex: { gt: currentNode.chapter.orderIndex },
-        },
-        orderBy: { orderIndex: "asc" },
-      });
-
-      if (nextChapter) {
-        nextNode = await this.prisma.conceptNode.findFirst({
-          where: { chapterId: nextChapter.id },
-          orderBy: { orderIndex: "asc" },
-        });
-      }
-    }
+    // 3. Find the next seeded/published lesson in the course hierarchy.
+    // Draft lessons can still exist in the mindmap, but they should remain
+    // content-locked even when progression unlocks later published content.
+    const nextNode = await this.findNextPublishedNode(currentNode);
 
     // 4. If next node is found, unlock it (set progress status to 'available')
     if (nextNode) {
@@ -1078,6 +1107,140 @@ export class CoursesService {
       fileName: originalname,
       mimetype,
       bucket: "lesson-assets",
+    };
+  }
+
+  async uploadLessonVideoToYoutube(
+    originalname: string,
+    buffer: Buffer,
+    mimetype: string,
+    title?: string,
+  ) {
+    if (!mimetype.startsWith("video/")) {
+      throw new BadRequestException(
+        "Only video files are supported by this endpoint",
+      );
+    }
+
+    const accessToken = process.env.YOUTUBE_OAUTH_ACCESS_TOKEN;
+    if (!accessToken) {
+      throw new BadRequestException(
+        "Missing YOUTUBE_OAUTH_ACCESS_TOKEN. Configure a YouTube OAuth access token with youtube.upload scope before uploading video files.",
+      );
+    }
+
+    const videoTitle =
+      typeof title === "string" && title.trim()
+        ? title.trim()
+        : path.parse(originalname).name || "PhiloMind lesson video";
+    const privacyStatus = process.env.YOUTUBE_PRIVACY_STATUS || "unlisted";
+
+    const initResponse = await fetch(
+      "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json; charset=UTF-8",
+          "X-Upload-Content-Type": mimetype,
+          "X-Upload-Content-Length": String(buffer.length),
+        },
+        body: JSON.stringify({
+          snippet: {
+            title: videoTitle,
+            description: "Uploaded from PhiloMind admin lesson editor.",
+            categoryId: "27",
+          },
+          status: {
+            privacyStatus,
+            selfDeclaredMadeForKids: false,
+          },
+        }),
+      },
+    );
+
+    if (!initResponse.ok) {
+      const errorText = await initResponse.text();
+      throw new BadRequestException(
+        `YouTube upload session failed: ${errorText}`,
+      );
+    }
+
+    const uploadUrl = initResponse.headers.get("location");
+    if (!uploadUrl) {
+      throw new BadRequestException(
+        "YouTube upload session did not return an upload URL",
+      );
+    }
+
+    const uploadResponse = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": mimetype,
+        "Content-Length": String(buffer.length),
+      },
+      body: buffer as unknown as BodyInit,
+    });
+    const payload = await uploadResponse.json().catch(() => null);
+
+    if (!uploadResponse.ok || !payload?.id) {
+      throw new BadRequestException(
+        `YouTube video upload failed: ${JSON.stringify(payload)}`,
+      );
+    }
+
+    const youtubeUrl = `https://www.youtube.com/watch?v=${payload.id}`;
+    await this.storeLessonVideoUrl(youtubeUrl, videoTitle);
+
+    return {
+      url: youtubeUrl,
+      youtubeId: payload.id,
+      fileName: originalname,
+      mimetype,
+      provider: "youtube",
+      privacyStatus,
+    };
+  }
+
+  async storeLessonVideoUrl(videoUrl: string, title?: string) {
+    let parsedUrl: URL;
+    try {
+      parsedUrl = new URL(videoUrl);
+    } catch {
+      throw new BadRequestException("Video URL is not valid");
+    }
+
+    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+      throw new BadRequestException("Video URL must use http or https");
+    }
+
+    const uniqueFilename = `${randomUUID()}.json`;
+    const metadata = {
+      url: parsedUrl.toString(),
+      title: typeof title === "string" && title.trim() ? title.trim() : null,
+      provider:
+        parsedUrl.hostname.includes("youtube") ||
+        parsedUrl.hostname.includes("youtu.be")
+          ? "youtube"
+          : "external",
+      storedAt: new Date().toISOString(),
+    };
+
+    const storedUrl = await this.supabase.uploadFile(
+      "lesson-videos",
+      uniqueFilename,
+      Buffer.from(JSON.stringify(metadata, null, 2), "utf8"),
+      "application/json",
+    );
+
+    return {
+      url: metadata.url,
+      title: metadata.title,
+      provider: metadata.provider,
+      storedUrl,
+      fileName: uniqueFilename,
+      mimetype: "application/json",
+      bucket: "lesson-videos",
     };
   }
 

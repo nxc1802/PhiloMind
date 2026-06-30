@@ -20,7 +20,8 @@ import { LessonSidebar } from "./lesson/components/LessonSidebar";
 const FlowLessonPlayer = lazy(() => import("./lesson/flow/FlowLessonPlayer"));
 
 const isLessonContentLocked = (node) =>
-  !node?.contentReady || (node.lessonStatus && node.lessonStatus !== "published");
+  !node?.contentReady ||
+  (node.lessonStatus && node.lessonStatus !== "published");
 
 const Lesson = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,7 +41,9 @@ const Lesson = () => {
     if (!lessonSlug || dbJourney.length === 0) return null;
     for (const chap of dbJourney) {
       if (chap.nodes) {
-        const found = chap.nodes.find(n => getSlugFromTitle(n.title) === lessonSlug);
+        const found = chap.nodes.find(
+          (n) => getSlugFromTitle(n.title) === lessonSlug,
+        );
         if (found) return found;
       }
     }
@@ -48,7 +51,10 @@ const Lesson = () => {
   }, [lessonSlug, dbJourney]);
 
   // Node details query hook
-  const { data: currentNodeDetails, isLoading: loadingNode } = useNodeDetails(activeLesson?.id, user?.id);
+  const { data: currentNodeDetails, isLoading: loadingNode } = useNodeDetails(
+    activeLesson?.id,
+    user?.id,
+  );
 
   // Complete node mutation
   const completeNodeMutation = useCompleteNodeMutation();
@@ -59,27 +65,32 @@ const Lesson = () => {
       return [];
     }
     const currentChapterId = activeLesson.chapterId;
-    const hasAnyProgress = dbJourney.some(chap =>
-      (chap.nodes || []).some(n => n.progress && n.progress.length > 0 && n.progress[0]?.status)
+    const hasAnyProgress = dbJourney.some((chap) =>
+      (chap.nodes || []).some(
+        (n) => n.progress && n.progress.length > 0 && n.progress[0]?.status,
+      ),
     );
     const settings = loadSettings();
     const unlockAll = settings.unlockAllLessons;
     let isFirstNode = true;
-    const allItems = dbJourney.flatMap(chap => 
-      (chap.nodes || []).map(n => {
-        let status = 'locked';
+    const allItems = dbJourney.flatMap((chap) =>
+      (chap.nodes || []).map((n) => {
+        let status = "locked";
         const progressStatus = n.progress && n.progress[0]?.status;
         if (isLessonContentLocked(n)) {
-          status = 'content_locked';
+          status = "content_locked";
         } else if (unlockAll) {
-          status = progressStatus === 'completed' ? 'completed' : 'active';
+          status = progressStatus === "completed" ? "completed" : "active";
         } else {
-          if (progressStatus === 'completed') {
-            status = 'completed';
-          } else if (progressStatus === 'available' || progressStatus === 'in_progress') {
-            status = 'active';
+          if (progressStatus === "completed") {
+            status = "completed";
+          } else if (
+            progressStatus === "available" ||
+            progressStatus === "in_progress"
+          ) {
+            status = "active";
           } else if (!hasAnyProgress && isFirstNode) {
-            status = 'active';
+            status = "active";
           }
         }
         isFirstNode = false;
@@ -87,17 +98,19 @@ const Lesson = () => {
           id: n.id,
           chapterId: chap.id,
           title: n.title,
-          status: status
+          status: status,
         };
-      })
+      }),
     );
-    return allItems.filter(item => item.chapterId === currentChapterId);
+    return allItems.filter((item) => item.chapterId === currentChapterId);
   }, [dbJourney, activeLesson]);
 
   // Real progress statistics
   const progressStats = useMemo(() => {
     const total = flatSyllabusItems.length;
-    const completed = flatSyllabusItems.filter(item => item.status === 'completed').length;
+    const completed = flatSyllabusItems.filter(
+      (item) => item.status === "completed",
+    ).length;
     const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
     return { completed, total, percentage };
   }, [flatSyllabusItems]);
@@ -105,24 +118,26 @@ const Lesson = () => {
   // Progress mapping for the Mindmap
   const progressMap = useMemo(() => {
     const map = {};
-    const hasAnyProgress = dbJourney.some(chap =>
-      (chap.nodes || []).some(n => n.progress && n.progress.length > 0 && n.progress[0]?.status)
+    const hasAnyProgress = dbJourney.some((chap) =>
+      (chap.nodes || []).some(
+        (n) => n.progress && n.progress.length > 0 && n.progress[0]?.status,
+      ),
     );
     const settings = loadSettings();
     const unlockAll = settings.unlockAllLessons;
     let isFirstNode = true;
-    dbJourney.forEach(chap => {
-      (chap.nodes || []).forEach(n => {
-        let status = (n.progress && n.progress[0]?.status) || 'locked';
+    dbJourney.forEach((chap) => {
+      (chap.nodes || []).forEach((n) => {
+        let status = (n.progress && n.progress[0]?.status) || "locked";
         if (isLessonContentLocked(n)) {
-          status = 'content_locked';
+          status = "content_locked";
         } else if (unlockAll) {
-          if (status !== 'completed') {
-            status = 'available';
+          if (status !== "completed") {
+            status = "available";
           }
         } else {
           if (!hasAnyProgress && isFirstNode) {
-            status = 'available';
+            status = "available";
           }
         }
         map[n.title] = status;
@@ -132,15 +147,36 @@ const Lesson = () => {
     return map;
   }, [dbJourney]);
 
-  const allJourneyNodes = useMemo(
-    () => dbJourney.flatMap((chap) => chap.nodes || []),
-    [dbJourney]
-  );
+  const allJourneyNodes = useMemo(() => {
+    const mainChapters = dbJourney
+      .filter((chap) => !chap.parentChapterId)
+      .sort((a, b) => a.orderIndex - b.orderIndex);
+    const subChapters = dbJourney.filter((chap) => chap.parentChapterId);
 
-  const nextLesson = useMemo(() => {
+    return mainChapters.flatMap((chapter) => {
+      const children = subChapters
+        .filter((sub) => sub.parentChapterId === chapter.id)
+        .sort((a, b) => a.orderIndex - b.orderIndex);
+
+      if (children.length > 0) {
+        return children.flatMap((sub) => sub.nodes || []);
+      }
+
+      return chapter.nodes || [];
+    });
+  }, [dbJourney]);
+
+  const nextPlayableLesson = useMemo(() => {
     if (!activeLesson) return null;
-    const currentIndex = allJourneyNodes.findIndex((node) => node.id === activeLesson.id);
-    return currentIndex >= 0 ? allJourneyNodes[currentIndex + 1] || null : null;
+    const currentIndex = allJourneyNodes.findIndex(
+      (node) => node.id === activeLesson.id,
+    );
+    if (currentIndex < 0) return null;
+    return (
+      allJourneyNodes
+        .slice(currentIndex + 1)
+        .find((node) => !isLessonContentLocked(node)) || null
+    );
   }, [activeLesson, allJourneyNodes]);
 
   useEffect(() => {
@@ -164,41 +200,45 @@ const Lesson = () => {
   // Transform dbJourney to hierarchical chapters/sections/lessons for Mindmap
   const mindmapChapters = useMemo(() => {
     if (!dbJourney || dbJourney.length === 0) return [];
-    
-    const mainChapters = dbJourney.filter(chap => !chap.parentChapterId);
-    const subChapters = dbJourney.filter(chap => chap.parentChapterId);
-    
+
+    const mainChapters = dbJourney
+      .filter((chap) => !chap.parentChapterId)
+      .sort((a, b) => a.orderIndex - b.orderIndex);
+    const subChapters = dbJourney
+      .filter((chap) => chap.parentChapterId)
+      .sort((a, b) => a.orderIndex - b.orderIndex);
+
     // Updated color gradients to use custom cyan/blue theme scale
     const colors = [
       "from-primary-750 to-primary-900",
       "from-[#00677F] to-[#003543]",
       "from-[#00829F] to-[#004E60]",
       "from-[#009DC1] to-[#00677F]",
-      "from-[#00BAE3] to-[#00829F]"
+      "from-[#00BAE3] to-[#00829F]",
     ];
 
     return mainChapters.map((chap, idx) => {
       const sections = subChapters
-        .filter(sub => sub.parentChapterId === chap.id)
-        .map(sub => ({
+        .filter((sub) => sub.parentChapterId === chap.id)
+        .map((sub) => ({
           id: sub.id,
           title: sub.title,
-          lessons: (sub.nodes || []).map(node => ({
+          lessons: (sub.nodes || []).map((node) => ({
             id: node.id,
             title: node.title,
             slug: getSlugFromTitle(node.title),
-          }))
+          })),
         }));
-      
+
       if (sections.length === 0 && chap.nodes && chap.nodes.length > 0) {
         sections.push({
           id: `${chap.id}-default`,
           title: "Bài học chi tiết",
-          lessons: chap.nodes.map(node => ({
+          lessons: chap.nodes.map((node) => ({
             id: node.id,
             title: node.title,
             slug: getSlugFromTitle(node.title),
-          }))
+          })),
         });
       }
 
@@ -207,7 +247,7 @@ const Lesson = () => {
         title: `Chương ${idx + 1}`,
         subtitle: chap.title,
         color: colors[idx % colors.length],
-        sections
+        sections,
       };
     });
   }, [dbJourney]);
@@ -215,15 +255,21 @@ const Lesson = () => {
   const handleOpenLesson = (slug) => {
     if (!slug) return;
     const title = getTitleFromSlug(slug);
-    const status = progressMap[title] || 'locked';
-    
-    if (status === 'content_locked') {
-      showToast("Bài học này chưa có nội dung chính thức, đang được biên soạn.", "warning");
+    const status = progressMap[title] || "locked";
+
+    if (status === "content_locked") {
+      showToast(
+        "Bài học này chưa có nội dung chính thức, đang được biên soạn.",
+        "warning",
+      );
       return;
     }
 
-    if (status === 'locked') {
-      showToast("Bài học này đang khóa. Đồng chí vui lòng hoàn thành bài học trước để tiếp tục!", "warning");
+    if (status === "locked") {
+      showToast(
+        "Bài học này đang khóa. Đồng chí vui lòng hoàn thành bài học trước để tiếp tục!",
+        "warning",
+      );
       return;
     }
 
@@ -231,11 +277,14 @@ const Lesson = () => {
   };
 
   const handleSyllabusClick = (item) => {
-    if (item.status === 'content_locked') {
-      showToast("Bài học này chưa có nội dung chính thức, đang được biên soạn.", "warning");
+    if (item.status === "content_locked") {
+      showToast(
+        "Bài học này chưa có nội dung chính thức, đang được biên soạn.",
+        "warning",
+      );
       return;
     }
-    if (item.status === 'locked') {
+    if (item.status === "locked") {
       showToast("Bài học này đang bị khóa!", "warning");
       return;
     }
@@ -253,10 +302,17 @@ const Lesson = () => {
       { nodeId: currentNodeDetails.id, userId: user.id },
       {
         onSuccess: (result) => {
-          const nextTitle = result?.nextNodeTitle || nextLesson?.title;
-          if (nextTitle) {
-            const nextSlug = getSlugFromTitle(nextTitle);
-            const nextNodeId = result?.nextNodeId || nextLesson?.id;
+          const resultNode = result?.nextNodeId
+            ? allJourneyNodes.find((node) => node.id === result.nextNodeId)
+            : null;
+          const nextNode =
+            resultNode && !isLessonContentLocked(resultNode)
+              ? resultNode
+              : nextPlayableLesson;
+
+          if (nextNode) {
+            const nextSlug = getSlugFromTitle(nextNode.title);
+            const nextNodeId = nextNode.id;
             if (nextNodeId) {
               queryClient.prefetchQuery({
                 queryKey: queryKeys.courses.nodeDetails(nextNodeId, user.id),
@@ -265,29 +321,37 @@ const Lesson = () => {
               });
             }
             setSearchParams({ lesson: nextSlug });
+            showToast(
+              `Chúc mừng! Bạn đã hoàn thành bài học và mở khóa bài tiếp theo: "${nextNode.title}"`,
+              "success",
+            );
             return;
           }
 
-          if (result && result.nextNodeTitle) {
-            showToast(`Chúc mừng! Bạn đã hoàn thành bài học và mở khóa bài tiếp theo: "${result.nextNodeTitle}"`, "success");
-          } else {
-            showToast("Xuất sắc! Bạn đã hoàn thành tất cả các bài học trong khóa học này!", "success");
-          }
+          setSearchParams({});
+          showToast(
+            "Xuất sắc! Bạn đã hoàn thành tất cả các bài học đã được seed trong khóa học này!",
+            "success",
+          );
         },
         onError: (err) => {
           console.error("Error completing lesson:", err);
           showToast("Có lỗi xảy ra khi cập nhật tiến độ bài học.", "error");
-        }
-      }
+        },
+      },
     );
   };
 
   const isRevisit = useMemo(() => {
-    if (!currentNodeDetails || !currentNodeDetails.progress || currentNodeDetails.progress.length === 0) {
+    if (
+      !currentNodeDetails ||
+      !currentNodeDetails.progress ||
+      currentNodeDetails.progress.length === 0
+    ) {
       return false;
     }
     const prog = currentNodeDetails.progress[0];
-    return prog.status === 'completed' || prog.lessonCompleted === true;
+    return prog.status === "completed" || prog.lessonCompleted === true;
   }, [currentNodeDetails]);
 
   return (
@@ -297,8 +361,8 @@ const Lesson = () => {
         steps={[
           "Tương tác với Sơ đồ (Mindmap): Giữ chuột trái và kéo để di chuyển bản đồ tư duy; cuộn chuột để thu phóng (zoom) phóng to/thu nhỏ các chương.",
           "Chọn Bài học (Concept Node): Click vào một ô trên sơ đồ bài học để mở bảng thông tin chi tiết ở cạnh phải màn hình.",
-          "Bài học & Podcast AI: Trong bảng thông tin, bạn có thể chọn đọc lý thuyết tóm tắt, hoặc bật \"Conversational Podcast\" để nghe hai học giả thảo luận sinh động về chủ đề.",
-          "Kiểm tra kiến thức: Hoàn thành các câu hỏi ôn tập nhanh cuối bài học để tích lũy điểm streak và mở khóa các bài học tiếp theo."
+          'Bài học & Podcast AI: Trong bảng thông tin, bạn có thể chọn đọc lý thuyết tóm tắt, hoặc bật "Conversational Podcast" để nghe hai học giả thảo luận sinh động về chủ đề.',
+          "Kiểm tra kiến thức: Hoàn thành các câu hỏi ôn tập nhanh cuối bài học để tích lũy điểm streak và mở khóa các bài học tiếp theo.",
         ]}
       />
 
@@ -316,13 +380,21 @@ const Lesson = () => {
         <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-primary-350 mb-6 flex-wrap">
           <span>Trang chủ</span>
           <span>›</span>
-          <strong className={activeLesson ? "text-slate-650 dark:text-primary-300" : "text-primary-800 dark:text-primary-300"}>
+          <strong
+            className={
+              activeLesson
+                ? "text-slate-650 dark:text-primary-300"
+                : "text-primary-800 dark:text-primary-300"
+            }
+          >
             Bài học
           </strong>
           {activeLesson && (
             <>
               <span>›</span>
-              <strong className="text-primary-800 dark:text-primary-300">{activeLesson.title}</strong>
+              <strong className="text-primary-800 dark:text-primary-300">
+                {activeLesson.title}
+              </strong>
             </>
           )}
         </div>
@@ -353,7 +425,7 @@ const Lesson = () => {
                 </span>
                 Quay lại sơ đồ bài học
               </button>
-              
+
               <header className="mb-8 text-left">
                 <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/35 border border-primary-150 dark:border-primary-800 text-primary-800 dark:text-primary-250 px-4 py-2 rounded-full text-xs font-bold mb-3 shadow-sm">
                   <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-300">
@@ -395,7 +467,7 @@ const Lesson = () => {
                   </div>
 
                   <div className="lg:col-span-1 flex flex-col gap-6 lg:sticky lg:top-20">
-                    <LessonSidebar 
+                    <LessonSidebar
                       flatSyllabusItems={flatSyllabusItems}
                       progressStats={progressStats}
                       lessonSlug={lessonSlug}

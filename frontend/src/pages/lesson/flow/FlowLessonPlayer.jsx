@@ -28,18 +28,41 @@ function normalizeFlow(rawFlow) {
       id: component.id || `component_${index}`,
       type: component.type || "unsupported",
       title: component.title || "Hoạt động bài học",
-      config: component.config && typeof component.config === "object" ? component.config : {},
+      config:
+        component.config && typeof component.config === "object"
+          ? component.config
+          : {},
     }));
 }
 
 function ComponentFrame({ component, children }) {
   const safeComponent = component || {};
-  const typeLabel = String(safeComponent.type || "lesson_flow").replaceAll("_", " ");
+  const typeLabel = String(safeComponent.type || "lesson_flow").replaceAll(
+    "_",
+    " ",
+  );
+  const typeIcon =
+    {
+      media: "play_circle",
+      dialogue: "forum",
+      markdown: "menu_book",
+      mcq: "quiz",
+      multi_select: "checklist",
+      true_false: "rule",
+      matching_columns: "conversion_path",
+      category_sorting: "category",
+      target_matching: "ads_click",
+      mindmap_reveal: "hub",
+      sequence_sorting: "format_list_numbered",
+      final_summary: "military_tech",
+    }[safeComponent.type] || "widgets";
 
   return (
-    <section className="bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-3xl shadow-md border border-slate-200 dark:border-primary-800 p-5 md:p-6 text-left">
-      <div className="flex items-center gap-2 mb-4">
-        <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">widgets</span>
+    <section className="bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-4 md:p-6 text-left">
+      <div className="flex items-center gap-3 mb-4">
+        <span className="material-symbols-outlined flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300">
+          {typeIcon}
+        </span>
         <div>
           <p className="text-[11px] uppercase tracking-wider text-primary-650 dark:text-primary-300 font-bold">
             {typeLabel}
@@ -55,15 +78,23 @@ function ComponentFrame({ component, children }) {
 }
 
 function LessonHint({ title = "Cách chơi", steps = [] }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <div className="mb-5 flex justify-end">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-650 dark:border-primary-850 dark:bg-primary-950/25 dark:text-primary-150">
+        <div className="flex min-w-0 items-start gap-2">
+          <span className="material-symbols-outlined mt-0.5 text-base text-primary-600 dark:text-primary-300">
+            tips_and_updates
+          </span>
+          <p className="min-w-0 leading-relaxed">
+            {steps[0] || "Hoàn thành tương tác để tiếp tục bài học."}
+          </p>
+        </div>
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="inline-flex items-center gap-2 rounded-full border border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-primary-950/50 px-4 py-2 text-sm font-bold text-primary-800 dark:text-primary-100 hover:border-primary-500"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full border border-primary-200 dark:border-primary-800 bg-white dark:bg-primary-950/50 px-3 py-1.5 text-xs font-bold text-primary-800 dark:text-primary-100 hover:border-primary-500"
         >
           <span className="material-symbols-outlined text-base">help</span>
           Cách chơi
@@ -92,7 +123,9 @@ function LessonHint({ title = "Cách chơi", steps = [] }) {
             </button>
 
             <h3 className="mb-2 flex items-center gap-2 pr-8 text-xl font-bold text-primary-850 dark:text-primary-100">
-              <span className="material-symbols-outlined text-primary-600 dark:text-primary-300">tips_and_updates</span>
+              <span className="material-symbols-outlined text-primary-600 dark:text-primary-300">
+                tips_and_updates
+              </span>
               {title}
             </h3>
             <p className="mb-5 text-sm text-slate-500 dark:text-primary-250">
@@ -101,11 +134,16 @@ function LessonHint({ title = "Cách chơi", steps = [] }) {
 
             <div className="space-y-3">
               {steps.map((step, index) => (
-                <div key={step} className="flex items-start gap-3 rounded-2xl border border-primary-100 dark:border-primary-850 bg-primary-50 dark:bg-[#15313e] p-3">
+                <div
+                  key={step}
+                  className="flex items-start gap-3 rounded-2xl border border-primary-100 dark:border-primary-850 bg-primary-50 dark:bg-[#15313e] p-3"
+                >
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-600 text-sm font-bold text-white">
                     {index + 1}
                   </span>
-                  <span className="pt-1 text-sm font-semibold leading-relaxed text-slate-700 dark:text-primary-100">{step}</span>
+                  <span className="pt-1 text-sm font-semibold leading-relaxed text-slate-700 dark:text-primary-100">
+                    {step}
+                  </span>
                 </div>
               ))}
             </div>
@@ -133,7 +171,9 @@ function ContinueButton({ onComplete, label = "Hoàn thành bước này" }) {
         className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
       >
         {label}
-        <span className="material-symbols-outlined text-base">arrow_forward</span>
+        <span className="material-symbols-outlined text-base">
+          arrow_forward
+        </span>
       </button>
     </div>
   );
@@ -153,7 +193,11 @@ function MediaComponent({ component, onComplete }) {
           />
           {(config.title || config.subtitle) && (
             <figcaption className="border-t border-slate-200 px-4 py-3 text-sm text-slate-600 dark:border-primary-850 dark:text-primary-200">
-              {config.title && <p className="font-bold text-slate-900 dark:text-primary-100">{config.title}</p>}
+              {config.title && (
+                <p className="font-bold text-slate-900 dark:text-primary-100">
+                  {config.title}
+                </p>
+              )}
               {config.subtitle && <p>{config.subtitle}</p>}
             </figcaption>
           )}
@@ -166,21 +210,31 @@ function MediaComponent({ component, onComplete }) {
           subtitle={config.subtitle}
         />
       )}
-      {config.description && <p className="text-gray-700 dark:text-primary-150 leading-relaxed">{config.description}</p>}
+      {config.description && (
+        <p className="text-gray-700 dark:text-primary-150 leading-relaxed">
+          {config.description}
+        </p>
+      )}
       <ContinueButton onComplete={onComplete} label="Tôi đã xem xong" />
     </ComponentFrame>
   );
 }
 
 function DialogueComponent({ component, onComplete }) {
-  const lines = (component.config.lines || component.config.dialogs || []).map((line) => ({
-    who: line.who || "guide",
-    text: line.text,
-  }));
+  const lines = (component.config.lines || component.config.dialogs || []).map(
+    (line) => ({
+      who: line.who || "guide",
+      text: line.text,
+    }),
+  );
   return (
     <ComponentFrame component={component}>
       <div className="bg-gray-50 dark:bg-primary-950/30 rounded-3xl border border-gray-200 dark:border-primary-850 p-5">
-        <DialogueSequence lines={lines} onComplete={() => onComplete({ score: 100, status: "completed" })} ctaLabel="Tiếp tục" />
+        <DialogueSequence
+          lines={lines}
+          onComplete={() => onComplete({ score: 100, status: "completed" })}
+          ctaLabel="Tiếp tục"
+        />
       </div>
     </ComponentFrame>
   );
@@ -214,7 +268,9 @@ function McqComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      <p className="font-semibold text-lg mb-4 text-gray-900 dark:text-primary-100">{component.config.question}</p>
+      <p className="font-semibold text-lg mb-4 text-gray-900 dark:text-primary-100">
+        {component.config.question}
+      </p>
       <div className="space-y-2.5">
         {options.map((option) => {
           const wrong = wrongIds.includes(option.id);
@@ -228,12 +284,16 @@ function McqComponent({ component, onComplete }) {
                 correctVisible
                   ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold"
                   : wrong
-                  ? "border-red-500 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold"
-                  : "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100"
+                    ? "border-red-500 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold"
+                    : "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100"
               }`}
             >
               <span className="material-symbols-outlined text-xl shrink-0">
-                {correctVisible ? "check_circle" : wrong ? "cancel" : "radio_button_unchecked"}
+                {correctVisible
+                  ? "check_circle"
+                  : wrong
+                    ? "cancel"
+                    : "radio_button_unchecked"}
               </span>
               {option.text}
             </button>
@@ -241,17 +301,144 @@ function McqComponent({ component, onComplete }) {
         })}
       </div>
       {selected && (
-        <div className={`mt-4 border p-4 rounded-3xl ${solved ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-primary-50 dark:bg-primary-900/35 border-primary-200 dark:border-primary-800 text-primary-850 dark:text-primary-150"}`}>
-          <p className={`font-bold flex items-center gap-2 mb-1 ${solved ? "text-green-800" : "text-primary-700 dark:text-primary-250"}`}>
-            <span className="material-symbols-outlined text-base">{solved ? "lightbulb" : "error"}</span>
+        <div
+          className={`mt-4 border p-4 rounded-3xl ${solved ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-primary-50 dark:bg-primary-900/35 border-primary-200 dark:border-primary-800 text-primary-850 dark:text-primary-150"}`}
+        >
+          <p
+            className={`font-bold flex items-center gap-2 mb-1 ${solved ? "text-green-800" : "text-primary-700 dark:text-primary-250"}`}
+          >
+            <span className="material-symbols-outlined text-base">
+              {solved ? "lightbulb" : "error"}
+            </span>
             {solved ? "Chính xác" : "Chưa đúng"}
           </p>
           <p className="text-sm leading-relaxed text-gray-800 dark:text-primary-100">
-            {selected.explanation || (solved ? component.feedback?.correct : component.feedback?.incorrect) || component.config.explanation}
+            {selected.explanation ||
+              (solved
+                ? component.feedback?.correct
+                : component.feedback?.incorrect) ||
+              component.config.explanation}
           </p>
-          {solved && <ContinueButton onComplete={() => onComplete({ score: 100, attempts: wrongIds.length + 1, answer: selectedId, status: "completed" })} label="Tiếp tục" />}
+          {solved && (
+            <ContinueButton
+              onComplete={() =>
+                onComplete({
+                  score: 100,
+                  attempts: wrongIds.length + 1,
+                  answer: selectedId,
+                  status: "completed",
+                })
+              }
+              label="Tiếp tục"
+            />
+          )}
         </div>
       )}
+    </ComponentFrame>
+  );
+}
+
+function MultiSelectComponent({ component, onComplete }) {
+  const options = normalizeOptions(component.config.options);
+  const correctIds = options
+    .filter((option) => option.isCorrect)
+    .map((option) => option.id)
+    .sort();
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
+  const sortedSelected = [...selectedIds].sort();
+  const solved =
+    submitted &&
+    correctIds.length === sortedSelected.length &&
+    correctIds.every((id, index) => id === sortedSelected[index]);
+
+  const toggle = (optionId) => {
+    if (solved) return;
+    setSubmitted(false);
+    setSelectedIds((prev) =>
+      prev.includes(optionId)
+        ? prev.filter((id) => id !== optionId)
+        : [...prev, optionId],
+    );
+  };
+
+  return (
+    <ComponentFrame component={component}>
+      <p className="mb-4 text-lg font-semibold text-gray-900 dark:text-primary-100">
+        {component.config.question}
+      </p>
+      <div className="grid gap-3">
+        {options.map((option) => {
+          const checked = selectedIds.includes(option.id);
+          const showCorrect = submitted && option.isCorrect;
+          const showWrong = submitted && checked && !option.isCorrect;
+          return (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => toggle(option.id)}
+              className={`flex w-full items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left font-medium transition-all ${
+                showCorrect
+                  ? "border-green-500 bg-green-50 text-green-900 dark:bg-green-950/30 dark:text-green-200"
+                  : showWrong
+                    ? "border-red-400 bg-red-50 text-red-900 dark:bg-red-950/30 dark:text-red-200"
+                    : checked
+                      ? "border-primary-600 bg-primary-50 text-primary-900 shadow-sm dark:bg-primary-900/40 dark:text-primary-100"
+                      : "border-slate-250 bg-white text-slate-750 hover:border-primary-400 hover:bg-primary-50 dark:bg-[#132d39] dark:text-primary-150 dark:hover:bg-primary-900/25"
+              }`}
+            >
+              <span className="material-symbols-outlined mt-0.5 text-xl">
+                {checked ? "check_box" : "check_box_outline_blank"}
+              </span>
+              <span>{option.text}</span>
+            </button>
+          );
+        })}
+      </div>
+      {submitted && (
+        <div
+          className={`mt-4 rounded-2xl border p-4 ${
+            solved
+              ? "border-green-200 bg-green-50 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100"
+              : "border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-800 dark:bg-amber-950/35 dark:text-amber-100"
+          }`}
+        >
+          <p className="font-bold">
+            {solved ? "Chính xác" : "Chưa đủ chính xác"}
+          </p>
+          {component.config.explanation && (
+            <p className="mt-1 text-sm leading-relaxed">
+              {component.config.explanation}
+            </p>
+          )}
+        </div>
+      )}
+      <div className="mt-5 flex justify-end gap-2">
+        {!solved ? (
+          <button
+            type="button"
+            onClick={() => setSubmitted(true)}
+            disabled={selectedIds.length === 0}
+            className="inline-flex items-center gap-1.5 rounded-3xl bg-primary-600 px-5 py-2.5 font-bold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Kiểm tra
+            <span className="material-symbols-outlined text-base">
+              task_alt
+            </span>
+          </button>
+        ) : (
+          <ContinueButton
+            onComplete={() =>
+              onComplete({
+                score: 100,
+                answer: selectedIds,
+                status: "completed",
+              })
+            }
+            label="Tiếp tục"
+          />
+        )}
+      </div>
     </ComponentFrame>
   );
 }
@@ -261,7 +448,9 @@ function TrueFalseComponent({ component, onComplete }) {
   const correct = picked === component.config.correctAnswer;
   return (
     <ComponentFrame component={component}>
-      <p className="font-semibold text-lg text-gray-900 dark:text-primary-100 mb-4">{component.config.statement}</p>
+      <p className="font-semibold text-lg text-gray-900 dark:text-primary-100 mb-4">
+        {component.config.statement}
+      </p>
       <div className="grid sm:grid-cols-2 gap-3">
         {[true, false].map((value) => (
           <button
@@ -281,10 +470,25 @@ function TrueFalseComponent({ component, onComplete }) {
         ))}
       </div>
       {picked !== null && (
-        <div className={`mt-4 rounded-3xl border p-4 ${correct ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800 text-red-900 dark:text-red-300"}`}>
-          <p className={`font-bold ${correct ? "text-green-800" : "text-red-800"}`}>{correct ? "Chính xác" : "Chưa đúng"}</p>
-          <p className="text-sm text-slate-800 dark:text-primary-100 leading-relaxed mt-1">{component.config.explanation}</p>
-          {correct && <ContinueButton onComplete={() => onComplete({ score: 100, answer: picked, status: "completed" })} label="Tiếp tục" />}
+        <div
+          className={`mt-4 rounded-3xl border p-4 ${correct ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800 text-red-900 dark:text-red-300"}`}
+        >
+          <p
+            className={`font-bold ${correct ? "text-green-800" : "text-red-800"}`}
+          >
+            {correct ? "Chính xác" : "Chưa đúng"}
+          </p>
+          <p className="text-sm text-slate-800 dark:text-primary-100 leading-relaxed mt-1">
+            {component.config.explanation}
+          </p>
+          {correct && (
+            <ContinueButton
+              onComplete={() =>
+                onComplete({ score: 100, answer: picked, status: "completed" })
+              }
+              label="Tiếp tục"
+            />
+          )}
         </div>
       )}
     </ComponentFrame>
@@ -292,14 +496,26 @@ function TrueFalseComponent({ component, onComplete }) {
 }
 
 function MatchingColumnsComponent({ component, onComplete }) {
-  const { leftColumn = [], rightColumn = [], correctPairs = [] } = component.config;
+  const {
+    leftColumn = [],
+    rightColumn = [],
+    correctPairs = [],
+  } = component.config;
   const [activeLeft, setActiveLeft] = useState(null);
   const [pairs, setPairs] = useState({});
-  const expected = Object.fromEntries(correctPairs.map((pair) => [pair.leftId, pair.rightId]));
-  const rightById = Object.fromEntries(rightColumn.map((right) => [right.id, right]));
-  const leftById = Object.fromEntries(leftColumn.map((left) => [left.id, left]));
+  const expected = Object.fromEntries(
+    correctPairs.map((pair) => [pair.leftId, pair.rightId]),
+  );
+  const rightById = Object.fromEntries(
+    rightColumn.map((right) => [right.id, right]),
+  );
+  const leftById = Object.fromEntries(
+    leftColumn.map((left) => [left.id, left]),
+  );
   const pairedRightIds = new Set(Object.values(pairs));
-  const complete = leftColumn.length > 0 && leftColumn.every((left) => pairs[left.id] === expected[left.id]);
+  const complete =
+    leftColumn.length > 0 &&
+    leftColumn.every((left) => pairs[left.id] === expected[left.id]);
 
   const chooseRight = (rightId) => {
     if (!activeLeft) return;
@@ -345,7 +561,11 @@ function MatchingColumnsComponent({ component, onComplete }) {
             >
               <span className="flex items-start gap-3">
                 <span className="material-symbols-outlined text-lg shrink-0">
-                  {pairs[left.id] === expected[left.id] ? "check_circle" : activeLeft === left.id ? "radio_button_checked" : "radio_button_unchecked"}
+                  {pairs[left.id] === expected[left.id]
+                    ? "check_circle"
+                    : activeLeft === left.id
+                      ? "radio_button_checked"
+                      : "radio_button_unchecked"}
                 </span>
                 <span>{left.text}</span>
               </span>
@@ -357,18 +577,27 @@ function MatchingColumnsComponent({ component, onComplete }) {
             const paired = pairs[left.id];
             const correct = paired && paired === expected[left.id];
             return (
-              <div key={left.id} className="flex items-center justify-center gap-1">
-                <span className={`h-1.5 w-10 rounded-full ${paired ? (correct ? "bg-green-500" : "bg-amber-500") : "bg-slate-250 dark:bg-primary-850"}`} />
-                <span className={`flex h-7 w-7 items-center justify-center rounded-full border-2 text-xs font-bold ${
-                  paired
-                    ? correct
-                      ? "border-green-500 bg-green-50 text-green-700"
-                      : "border-amber-500 bg-amber-50 text-amber-700"
-                    : "border-slate-250 bg-white dark:bg-[#132d39] text-slate-400"
-                }`}>
+              <div
+                key={left.id}
+                className="flex items-center justify-center gap-1"
+              >
+                <span
+                  className={`h-1.5 w-10 rounded-full ${paired ? (correct ? "bg-green-500" : "bg-amber-500") : "bg-slate-250 dark:bg-primary-850"}`}
+                />
+                <span
+                  className={`flex h-7 w-7 items-center justify-center rounded-full border-2 text-xs font-bold ${
+                    paired
+                      ? correct
+                        ? "border-green-500 bg-green-50 text-green-700"
+                        : "border-amber-500 bg-amber-50 text-amber-700"
+                      : "border-slate-250 bg-white dark:bg-[#132d39] text-slate-400"
+                  }`}
+                >
                   {paired ? "→" : "•"}
                 </span>
-                <span className={`h-1.5 w-10 rounded-full ${paired ? (correct ? "bg-green-500" : "bg-amber-500") : "bg-slate-250 dark:bg-primary-850"}`} />
+                <span
+                  className={`h-1.5 w-10 rounded-full ${paired ? (correct ? "bg-green-500" : "bg-amber-500") : "bg-slate-250 dark:bg-primary-850"}`}
+                />
               </div>
             );
           })}
@@ -399,19 +628,28 @@ function MatchingColumnsComponent({ component, onComplete }) {
       </div>
       {Object.keys(pairs).length > 0 && (
         <div className="mt-5 rounded-2xl border border-slate-200 dark:border-primary-850 bg-slate-50 dark:bg-[#102733] p-4">
-          <p className="mb-3 text-sm font-bold text-slate-800 dark:text-primary-100">Các đường nối đã chọn</p>
+          <p className="mb-3 text-sm font-bold text-slate-800 dark:text-primary-100">
+            Các đường nối đã chọn
+          </p>
           <div className="grid gap-2">
             {Object.entries(pairs).map(([leftId, rightId]) => {
               const correct = rightId === expected[leftId];
               return (
-                <div key={leftId} className={`flex flex-col gap-2 rounded-xl border px-3 py-2 text-sm sm:flex-row sm:items-center ${
-                  correct
-                    ? "border-green-200 bg-green-50 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100"
-                    : "border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-800 dark:bg-amber-950/35 dark:text-amber-100"
-                }`}>
-                  <span className="font-semibold">{leftById[leftId]?.text}</span>
+                <div
+                  key={leftId}
+                  className={`flex flex-col gap-2 rounded-xl border px-3 py-2 text-sm sm:flex-row sm:items-center ${
+                    correct
+                      ? "border-green-200 bg-green-50 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100"
+                      : "border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-800 dark:bg-amber-950/35 dark:text-amber-100"
+                  }`}
+                >
+                  <span className="font-semibold">
+                    {leftById[leftId]?.text}
+                  </span>
                   <span className="hidden h-px flex-1 bg-current opacity-30 sm:block" />
-                  <span className="font-semibold">{rightById[rightId]?.text}</span>
+                  <span className="font-semibold">
+                    {rightById[rightId]?.text}
+                  </span>
                 </div>
               );
             })}
@@ -421,7 +659,12 @@ function MatchingColumnsComponent({ component, onComplete }) {
       {complete && (
         <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
           <p className="font-bold">Các cặp nối đã chính xác.</p>
-          <ContinueButton onComplete={() => onComplete({ score: 100, answer: pairs, status: "completed" })} label="Tiếp tục" />
+          <ContinueButton
+            onComplete={() =>
+              onComplete({ score: 100, answer: pairs, status: "completed" })
+            }
+            label="Tiếp tục"
+          />
         </div>
       )}
     </ComponentFrame>
@@ -432,7 +675,9 @@ function CategorySortingComponent({ component, onComplete }) {
   const { categories = [], cards = [], summary } = component.config;
   const [selectedCard, setSelectedCard] = useState(null);
   const [placements, setPlacements] = useState({});
-  const complete = cards.length > 0 && cards.every((card) => placements[card.id] === card.categoryId);
+  const complete =
+    cards.length > 0 &&
+    cards.every((card) => placements[card.id] === card.categoryId);
 
   const placeCard = (categoryId) => {
     if (!selectedCard) return;
@@ -449,6 +694,14 @@ function CategorySortingComponent({ component, onComplete }) {
           "Thẻ xanh là đúng, thẻ đỏ là cần chuyển lại.",
         ]}
       />
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <p className="text-sm font-bold text-slate-800 dark:text-primary-100">
+          Thẻ cần phân loại
+        </p>
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-650 dark:bg-primary-900/40 dark:text-primary-150">
+          Đã đặt {Object.keys(placements).length}/{cards.length}
+        </span>
+      </div>
       <div className="flex flex-wrap gap-2 mb-4">
         {cards.map((card) => {
           const placed = placements[card.id];
@@ -458,7 +711,13 @@ function CategorySortingComponent({ component, onComplete }) {
               type="button"
               onClick={() => setSelectedCard(card.id)}
               className={`px-4 py-2 rounded-3xl border-2 font-semibold ${
-                selectedCard === card.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placed === card.categoryId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : placed ? "border-red-400 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                selectedCard === card.id
+                  ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm"
+                  : placed === card.categoryId
+                    ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold"
+                    : placed
+                      ? "border-red-400 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-300 font-semibold"
+                      : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
               {card.text}
@@ -466,26 +725,62 @@ function CategorySortingComponent({ component, onComplete }) {
           );
         })}
       </div>
+      <p className="mb-3 text-sm font-bold text-slate-800 dark:text-primary-100">
+        Vùng nhận thẻ
+      </p>
       <div className="grid sm:grid-cols-2 gap-3">
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            type="button"
-            onClick={() => placeCard(category.id)}
-            className="min-h-28 rounded-2xl border-2 border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-[#132d39] px-4 py-4 text-left hover:border-primary-500 transition-colors"
-          >
-            <p className="font-bold text-primary-850 dark:text-primary-100">{category.label}</p>
-            <p className="text-xs font-medium text-slate-600 dark:text-primary-200 mt-1">
-              {cards.filter((card) => placements[card.id] === category.id).map((card) => card.text).join(", ") || "Chưa có thẻ"}
-            </p>
-          </button>
-        ))}
+        {categories.map((category) => {
+          const placedCards = cards.filter(
+            (card) => placements[card.id] === category.id,
+          );
+          return (
+            <button
+              key={category.id}
+              type="button"
+              onClick={() => placeCard(category.id)}
+              className="min-h-36 rounded-2xl border-2 border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-[#132d39] px-4 py-4 text-left hover:border-primary-500 transition-colors"
+            >
+              <p className="font-bold text-primary-850 dark:text-primary-100">
+                {category.label}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {placedCards.length > 0 ? (
+                  placedCards.map((card) => (
+                    <span
+                      key={card.id}
+                      className={`rounded-full border px-2.5 py-1 text-xs font-bold ${
+                        card.categoryId === category.id
+                          ? "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950/35 dark:text-green-200"
+                          : "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950/35 dark:text-red-200"
+                      }`}
+                    >
+                      {card.text}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs font-medium text-slate-500 dark:text-primary-250">
+                    Chưa có thẻ
+                  </span>
+                )}
+              </div>
+            </button>
+          );
+        })}
       </div>
       {complete && (
         <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
           <p className="font-bold">Phân loại chính xác.</p>
           {summary && <p className="text-sm mt-1">{summary}</p>}
-          <ContinueButton onComplete={() => onComplete({ score: 100, answer: placements, status: "completed" })} label="Tiếp tục" />
+          <ContinueButton
+            onComplete={() =>
+              onComplete({
+                score: 100,
+                answer: placements,
+                status: "completed",
+              })
+            }
+            label="Tiếp tục"
+          />
         </div>
       )}
     </ComponentFrame>
@@ -496,7 +791,9 @@ function TargetMatchingComponent({ component, onComplete }) {
   const { targets = [], items = [], summary } = component.config;
   const [selectedItem, setSelectedItem] = useState(null);
   const [placements, setPlacements] = useState({});
-  const complete = items.length > 0 && items.every((item) => placements[item.id] === item.targetId);
+  const complete =
+    items.length > 0 &&
+    items.every((item) => placements[item.id] === item.targetId);
 
   const placeItem = (targetId) => {
     if (!selectedItem) return;
@@ -513,6 +810,14 @@ function TargetMatchingComponent({ component, onComplete }) {
           "Có thể chọn lại thuật ngữ để sửa vị trí.",
         ]}
       />
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <p className="text-sm font-bold text-slate-800 dark:text-primary-100">
+          Thuật ngữ cần ghép
+        </p>
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-650 dark:bg-primary-900/40 dark:text-primary-150">
+          Đã đặt {Object.keys(placements).length}/{items.length}
+        </span>
+      </div>
       <div className="flex flex-wrap gap-2 mb-5">
         {items.map((item) => (
           <button
@@ -520,7 +825,11 @@ function TargetMatchingComponent({ component, onComplete }) {
             type="button"
             onClick={() => setSelectedItem(item.id)}
             className={`px-4 py-2 rounded-3xl border-2 font-bold text-lg ${
-              selectedItem === item.id ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm" : placements[item.id] === item.targetId ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+              selectedItem === item.id
+                ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-semibold shadow-sm"
+                : placements[item.id] === item.targetId
+                  ? "border-green-500 bg-green-50 dark:bg-green-950/30 text-green-900 dark:text-green-300 font-semibold"
+                  : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
             }`}
           >
             {item.text}
@@ -528,24 +837,61 @@ function TargetMatchingComponent({ component, onComplete }) {
         ))}
       </div>
       <div className="grid sm:grid-cols-3 gap-3">
-        {targets.map((target) => (
-          <button
-            key={target.id}
-            type="button"
-            onClick={() => placeItem(target.id)}
-            className="rounded-2xl border-2 border-primary-200 dark:border-primary-800 bg-gradient-to-br from-primary-50 to-white dark:from-[#14313f] dark:to-[#102733] px-4 py-5 text-center hover:border-primary-500 text-slate-800 dark:text-primary-100 transition-colors"
-          >
-            <span className="material-symbols-outlined text-3xl text-primary-650 dark:text-primary-300">{target.icon || "public"}</span>
-            <p className="font-bold text-primary-900 dark:text-primary-100">{target.label}</p>
-            <p className="text-xs font-medium text-slate-600 dark:text-primary-200">{items.filter((item) => placements[item.id] === target.id).map((item) => item.text).join(", ") || "Chưa có thuật ngữ"}</p>
-          </button>
-        ))}
+        {targets.map((target) => {
+          const placedItems = items.filter(
+            (item) => placements[item.id] === target.id,
+          );
+          return (
+            <button
+              key={target.id}
+              type="button"
+              onClick={() => placeItem(target.id)}
+              className="min-h-40 rounded-2xl border-2 border-primary-200 dark:border-primary-800 bg-gradient-to-br from-primary-50 to-white dark:from-[#14313f] dark:to-[#102733] px-4 py-5 text-center hover:border-primary-500 text-slate-800 dark:text-primary-100 transition-colors"
+            >
+              <span className="material-symbols-outlined text-3xl text-primary-650 dark:text-primary-300">
+                {target.icon || "public"}
+              </span>
+              <p className="font-bold text-primary-900 dark:text-primary-100">
+                {target.label}
+              </p>
+              <div className="mt-3 flex flex-wrap justify-center gap-2">
+                {placedItems.length > 0 ? (
+                  placedItems.map((item) => (
+                    <span
+                      key={item.id}
+                      className={`rounded-full border px-2.5 py-1 text-xs font-bold ${
+                        item.targetId === target.id
+                          ? "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950/35 dark:text-green-200"
+                          : "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950/35 dark:text-red-200"
+                      }`}
+                    >
+                      {item.text}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs font-medium text-slate-500 dark:text-primary-250">
+                    Chưa có thuật ngữ
+                  </span>
+                )}
+              </div>
+            </button>
+          );
+        })}
       </div>
       {complete && (
         <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
           <p className="font-bold">Bản đồ thuật ngữ đã hoàn chỉnh.</p>
           {summary && <p className="text-sm mt-1">{summary}</p>}
-          <ContinueButton onComplete={() => onComplete({ score: 100, answer: placements, status: "completed" })} label="Tiếp tục" />
+          <ContinueButton
+            onComplete={() =>
+              onComplete({
+                score: 100,
+                answer: placements,
+                status: "completed",
+              })
+            }
+            label="Tiếp tục"
+          />
         </div>
       )}
     </ComponentFrame>
@@ -571,18 +917,35 @@ function MindmapRevealComponent({ component, onComplete }) {
             <button
               key={node.id}
               type="button"
-              onClick={() => setRevealed((prev) => (prev.includes(node.id) ? prev : [...prev, node.id]))}
+              onClick={() =>
+                setRevealed((prev) =>
+                  prev.includes(node.id) ? prev : [...prev, node.id],
+                )
+              }
               className={`rounded-3xl border-2 p-4 text-left min-h-28 transition-colors ${
-                open ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-900 dark:text-primary-100" : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                open
+                  ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-900 dark:text-primary-100"
+                  : "border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
               }`}
             >
-              <p className="font-bold text-primary-900 dark:text-primary-100">{open ? node.label : "Mảnh ghép chưa mở"}</p>
-              <p className="text-sm text-gray-600 dark:text-primary-200 mt-2">{open ? node.detail : "Bấm để lật mở nội dung."}</p>
+              <p className="font-bold text-primary-900 dark:text-primary-100">
+                {open ? node.label : "Mảnh ghép chưa mở"}
+              </p>
+              <p className="text-sm text-gray-600 dark:text-primary-200 mt-2">
+                {open ? node.detail : "Bấm để lật mở nội dung."}
+              </p>
             </button>
           );
         })}
       </div>
-      {complete && <ContinueButton onComplete={() => onComplete({ score: 100, answer: revealed, status: "completed" })} label="Tiếp tục" />}
+      {complete && (
+        <ContinueButton
+          onComplete={() =>
+            onComplete({ score: 100, answer: revealed, status: "completed" })
+          }
+          label="Tiếp tục"
+        />
+      )}
     </ComponentFrame>
   );
 }
@@ -590,12 +953,19 @@ function MindmapRevealComponent({ component, onComplete }) {
 function SequenceSortingComponent({ component, onComplete }) {
   const items = component.config.items || [];
   const [placed, setPlaced] = useState([]);
+  const [lastWrongId, setLastWrongId] = useState(null);
   const complete = items.length > 0 && placed.length === items.length;
 
   const pick = (item) => {
     if (placed.includes(item.id)) return;
-    if ((item.order ?? items.findIndex((it) => it.id === item.id)) === placed.length) {
+    if (
+      (item.order ?? items.findIndex((it) => it.id === item.id)) ===
+      placed.length
+    ) {
       setPlaced((prev) => [...prev, item.id]);
+      setLastWrongId(null);
+    } else {
+      setLastWrongId(item.id);
     }
   };
 
@@ -608,31 +978,65 @@ function SequenceSortingComponent({ component, onComplete }) {
           "Thẻ đã chọn đúng sẽ chuyển vào dòng thời gian.",
         ]}
       />
-      {component.config.instruction && <p className="text-sm font-medium text-slate-600 dark:text-primary-200 mb-4">{component.config.instruction}</p>}
+      {component.config.instruction && (
+        <p className="text-sm font-medium text-slate-600 dark:text-primary-200 mb-4">
+          {component.config.instruction}
+        </p>
+      )}
       <div className="space-y-2 mb-4">
         {placed.map((id, index) => {
           const item = items.find((it) => it.id === id);
           return (
-            <div key={id} className="flex items-center gap-3 rounded-2xl border-2 border-green-400 dark:border-green-800 bg-green-50 dark:bg-green-950/35 px-4 py-3">
-              <span className="h-7 w-7 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold">{index + 1}</span>
-              <span className="text-sm text-green-950 dark:text-green-100 font-medium">{item?.text}</span>
+            <div
+              key={id}
+              className="flex items-center gap-3 rounded-2xl border-2 border-green-400 dark:border-green-800 bg-green-50 dark:bg-green-950/35 px-4 py-3"
+            >
+              <span className="h-7 w-7 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold">
+                {index + 1}
+              </span>
+              <span className="text-sm text-green-950 dark:text-green-100 font-medium">
+                {item?.text}
+              </span>
             </div>
           );
         })}
       </div>
       {!complete && (
         <div className="grid sm:grid-cols-2 gap-3">
-          {items.filter((item) => !placed.includes(item.id)).map((item) => (
-            <button key={item.id} type="button" onClick={() => pick(item)} className="rounded-2xl border-2 border-slate-250 dark:border-primary-850 bg-white dark:bg-[#132d39] px-4 py-3 text-left text-slate-800 dark:text-primary-100 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/35 transition-colors">
-              {item.text}
-            </button>
-          ))}
+          {items
+            .filter((item) => !placed.includes(item.id))
+            .map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => pick(item)}
+                className={`rounded-2xl border-2 px-4 py-3 text-left transition-colors ${
+                  lastWrongId === item.id
+                    ? "border-red-400 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-950/30 dark:text-red-200"
+                    : "border-slate-250 bg-white text-slate-800 hover:border-primary-400 hover:bg-primary-50 dark:border-primary-850 dark:bg-[#132d39] dark:text-primary-100 dark:hover:bg-primary-900/35"
+                }`}
+              >
+                {item.text}
+              </button>
+            ))}
         </div>
+      )}
+      {lastWrongId && !complete && (
+        <p className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900 dark:border-amber-800 dark:bg-amber-950/35 dark:text-amber-100">
+          Chưa đúng thứ tự. Hãy chọn mắt xích logic tiếp theo trong chuỗi.
+        </p>
       )}
       {complete && (
         <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
-          <p className="font-bold">{component.config.successFeedback || "Sắp xếp chính xác."}</p>
-          <ContinueButton onComplete={() => onComplete({ score: 100, answer: placed, status: "completed" })} label="Tiếp tục" />
+          <p className="font-bold">
+            {component.config.successFeedback || "Sắp xếp chính xác."}
+          </p>
+          <ContinueButton
+            onComplete={() =>
+              onComplete({ score: 100, answer: placed, status: "completed" })
+            }
+            label="Tiếp tục"
+          />
         </div>
       )}
     </ComponentFrame>
@@ -640,13 +1044,24 @@ function SequenceSortingComponent({ component, onComplete }) {
 }
 
 function FinalSummaryComponent({ component, onComplete }) {
-  const { message, keyTakeaways = [], rewards = {}, quiz = [] } = component.config;
+  const {
+    message,
+    keyTakeaways = [],
+    rewards = {},
+    quiz = [],
+  } = component.config;
   const [quizDone, setQuizDone] = useState(quiz.length === 0);
   const [answers, setAnswers] = useState({});
-  const answeredAll = quiz.length > 0 && quiz.every((_, index) => answers[index] !== undefined);
-  const score = quiz.length === 0
-    ? 100
-    : Math.round((quiz.filter((q, index) => answers[index] === q.correctIndex).length / quiz.length) * 100);
+  const answeredAll =
+    quiz.length > 0 && quiz.every((_, index) => answers[index] !== undefined);
+  const score =
+    quiz.length === 0
+      ? 100
+      : Math.round(
+          (quiz.filter((q, index) => answers[index] === q.correctIndex).length /
+            quiz.length) *
+            100,
+        );
 
   useEffect(() => {
     if (answeredAll) setQuizDone(true);
@@ -655,17 +1070,26 @@ function FinalSummaryComponent({ component, onComplete }) {
   return (
     <ComponentFrame component={component}>
       <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-primary-950/60 border border-amber-200 dark:border-amber-800 rounded-3xl p-5 text-slate-900 dark:text-amber-50">
-        <p className="text-lg font-bold text-primary-950 dark:text-amber-50 mb-2">{message || "Bạn đã hoàn thành bài học."}</p>
+        <p className="text-lg font-bold text-primary-950 dark:text-amber-50 mb-2">
+          {message || "Bạn đã hoàn thành bài học."}
+        </p>
         <ul className="space-y-2">
           {keyTakeaways.map((item, index) => (
-            <li key={index} className="flex items-start gap-2 text-slate-800 dark:text-amber-50">
-              <span className="material-symbols-outlined text-amber-600 text-base mt-0.5">check_circle</span>
+            <li
+              key={index}
+              className="flex items-start gap-2 text-slate-800 dark:text-amber-50"
+            >
+              <span className="material-symbols-outlined text-amber-600 text-base mt-0.5">
+                check_circle
+              </span>
               <span>{item}</span>
             </li>
           ))}
         </ul>
         <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white dark:bg-[#182d35] px-4 py-2 text-sm font-bold text-amber-800 dark:text-amber-100 border border-amber-200 dark:border-amber-800">
-          <span className="material-symbols-outlined text-base">military_tech</span>
+          <span className="material-symbols-outlined text-base">
+            military_tech
+          </span>
           {rewards.badge || "Hoàn thành"} · {rewards.xp || 100} XP
         </div>
       </div>
@@ -673,16 +1097,25 @@ function FinalSummaryComponent({ component, onComplete }) {
       {quiz.length > 0 && (
         <div className="mt-5 space-y-4">
           {quiz.map((question, index) => (
-            <div key={index} className="rounded-3xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-[#132d39] p-4">
-              <p className="font-semibold text-slate-900 dark:text-primary-100 mb-3">{question.question}</p>
+            <div
+              key={index}
+              className="rounded-3xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-[#132d39] p-4"
+            >
+              <p className="font-semibold text-slate-900 dark:text-primary-100 mb-3">
+                {question.question}
+              </p>
               <div className="grid gap-2">
                 {(question.options || []).map((option, optionIndex) => (
                   <button
                     key={optionIndex}
                     type="button"
-                    onClick={() => setAnswers((prev) => ({ ...prev, [index]: optionIndex }))}
+                    onClick={() =>
+                      setAnswers((prev) => ({ ...prev, [index]: optionIndex }))
+                    }
                     className={`rounded-3xl border px-4 py-2 text-left ${
-                      answers[index] === optionIndex ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-bold shadow-sm" : "border-gray-250 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                      answers[index] === optionIndex
+                        ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-bold shadow-sm"
+                        : "border-gray-250 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
                     }`}
                   >
                     {option}
@@ -691,13 +1124,19 @@ function FinalSummaryComponent({ component, onComplete }) {
               </div>
             </div>
           ))}
-          {quizDone && <p className="text-sm font-bold text-green-700 dark:text-green-300">Điểm tổng kết: {score}%</p>}
+          {quizDone && (
+            <p className="text-sm font-bold text-green-700 dark:text-green-300">
+              Điểm tổng kết: {score}%
+            </p>
+          )}
         </div>
       )}
 
       {quizDone && (
         <ContinueButton
-          onComplete={() => onComplete({ score, answer: answers, status: "completed" })}
+          onComplete={() =>
+            onComplete({ score, answer: answers, status: "completed" })
+          }
           label="Hoàn thành bài học"
         />
       )}
@@ -710,6 +1149,7 @@ const registry = {
   dialogue: DialogueComponent,
   markdown: MarkdownComponent,
   mcq: McqComponent,
+  multi_select: MultiSelectComponent,
   true_false: TrueFalseComponent,
   matching_columns: MatchingColumnsComponent,
   category_sorting: CategorySortingComponent,
@@ -719,24 +1159,52 @@ const registry = {
   final_summary: FinalSummaryComponent,
 };
 
-export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete }) {
+export default function FlowLessonPlayer({
+  nodeDetails,
+  isRevisit,
+  onComplete,
+}) {
   const { user } = useAuth();
   const progress = getProgress(nodeDetails?.progress);
-  const flow = useMemo(() => normalizeFlow(nodeDetails?.lessonFlow), [nodeDetails?.lessonFlow]);
-  const initialIndex = isRevisit ? 0 : Math.min(progress?.currentComponentIndex || 0, Math.max(flow.length - 1, 0));
+  const flow = useMemo(
+    () => normalizeFlow(nodeDetails?.lessonFlow),
+    [nodeDetails?.lessonFlow],
+  );
+  const initialIndex = isRevisit
+    ? 0
+    : Math.min(
+        progress?.currentComponentIndex || 0,
+        Math.max(flow.length - 1, 0),
+      );
   const [activeIndex, setActiveIndex] = useState(initialIndex);
-  const [completedIds, setCompletedIds] = useState(() => Array.isArray(progress?.completedComponentIds) ? progress.completedComponentIds : []);
+  const [completedIds, setCompletedIds] = useState(() =>
+    Array.isArray(progress?.completedComponentIds)
+      ? progress.completedComponentIds
+      : [],
+  );
   const updateComponentProgress = useUpdateComponentProgressMutation();
 
   useEffect(() => {
     setActiveIndex(initialIndex);
-    setCompletedIds(Array.isArray(progress?.completedComponentIds) ? progress.completedComponentIds : []);
+    setCompletedIds(
+      Array.isArray(progress?.completedComponentIds)
+        ? progress.completedComponentIds
+        : [],
+    );
   }, [nodeDetails?.id]);
 
   if (!flow.length) {
     return (
-      <ComponentFrame component={{ type: "lesson_flow", title: "Bài học chưa có nội dung", config: {} }}>
-        <p className="text-gray-600">Lesson Flow chưa được cấu hình cho bài học này.</p>
+      <ComponentFrame
+        component={{
+          type: "lesson_flow",
+          title: "Bài học chưa có nội dung",
+          config: {},
+        }}
+      >
+        <p className="text-gray-600">
+          Lesson Flow chưa được cấu hình cho bài học này.
+        </p>
       </ComponentFrame>
     );
   }
@@ -784,9 +1252,12 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
       <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-md border border-gray-200 dark:border-primary-850/50 p-4">
         <div className="flex items-center justify-between gap-3 mb-3">
           <div>
-            <p className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">Component Flow</p>
+            <p className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">
+              Component Flow
+            </p>
             <p className="font-bold text-primary-850 dark:text-primary-100">
-              Bước {safeActiveIndex + 1}/{flow.length}: {activeComponent.title || activeComponent.type}
+              Bước {safeActiveIndex + 1}/{flow.length}:{" "}
+              {activeComponent.title || activeComponent.type}
             </p>
           </div>
           <button
@@ -795,19 +1266,30 @@ export default function FlowLessonPlayer({ nodeDetails, isRevisit, onComplete })
             className="inline-flex items-center justify-center h-9 w-9 rounded-full text-gray-400 hover:text-white hover:bg-primary-600 border border-gray-200 hover:border-primary-600 transition-all"
             title="Về bước đầu"
           >
-            <span className="material-symbols-outlined text-lg">restart_alt</span>
+            <span className="material-symbols-outlined text-lg">
+              restart_alt
+            </span>
           </button>
         </div>
         <div className="h-2 rounded-full bg-gray-200 overflow-hidden">
-          <div className="h-full bg-primary-600 rounded-full transition-all" style={{ width: `${percentage}%` }} />
+          <div
+            className="h-full bg-primary-600 rounded-full transition-all"
+            style={{ width: `${percentage}%` }}
+          />
         </div>
       </div>
 
       {Renderer ? (
-        <Renderer key={activeComponent.id} component={activeComponent} onComplete={markComplete} />
+        <Renderer
+          key={activeComponent.id}
+          component={activeComponent}
+          onComplete={markComplete}
+        />
       ) : (
         <ComponentFrame component={activeComponent}>
-          <p className="text-red-700">Component type "{activeComponent.type}" chưa có renderer.</p>
+          <p className="text-red-700">
+            Component type "{activeComponent.type}" chưa có renderer.
+          </p>
           <ContinueButton onComplete={markComplete} label="Bỏ qua bước này" />
         </ComponentFrame>
       )}

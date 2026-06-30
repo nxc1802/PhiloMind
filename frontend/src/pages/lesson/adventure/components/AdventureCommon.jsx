@@ -1,7 +1,14 @@
 import React, { useMemo } from "react";
 import { SceneArt } from "../../components/JourneyArt";
 
-export const STAGES = ["intro", "cognitive", "social", "summary", "quiz", "done"];
+export const STAGES = [
+  "intro",
+  "cognitive",
+  "social",
+  "summary",
+  "quiz",
+  "done",
+];
 export const STAGE_LABELS = {
   intro: "Khởi hành",
   cognitive: "Nhận thức",
@@ -22,22 +29,58 @@ export function SceneBanner({ scene, badge, title, subtitle }) {
             {badge}
           </span>
         )}
-        <h2 className="text-lg md:text-2xl font-bold drop-shadow leading-tight">{title}</h2>
-        {subtitle && <p className="text-white/85 text-xs md:text-sm">{subtitle}</p>}
+        <h2 className="text-lg md:text-2xl font-bold drop-shadow leading-tight">
+          {title}
+        </h2>
+        {subtitle && (
+          <p className="text-white/85 text-xs md:text-sm">{subtitle}</p>
+        )}
       </div>
     </div>
   );
 }
 
-export function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay = true }) {
+export function VideoScene({
+  src,
+  badge,
+  title,
+  subtitle,
+  muted = true,
+  autoPlay = true,
+}) {
   const getYoutubeId = (url) => {
     if (!url) return "";
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : "";
+    try {
+      const parsed = new URL(url);
+      const host = parsed.hostname.replace(/^www\./, "");
+      if (host === "youtu.be") {
+        return parsed.pathname.split("/").filter(Boolean)[0] || "";
+      }
+      if (
+        host === "youtube.com" ||
+        host === "m.youtube.com" ||
+        host === "youtube-nocookie.com"
+      ) {
+        const queryId = parsed.searchParams.get("v");
+        if (queryId) return queryId;
+        const parts = parsed.pathname.split("/").filter(Boolean);
+        if (["embed", "shorts", "live", "v"].includes(parts[0])) {
+          return parts[1] || "";
+        }
+      }
+    } catch {
+      const match = String(url).match(
+        /(?:youtu\.be\/|embed\/|shorts\/|live\/|watch\?v=|&v=)([^#&?/]{11})/,
+      );
+      return match?.[1] || "";
+    }
+    return "";
   };
 
   const ytId = getYoutubeId(src);
+  const youtubeWatchUrl = ytId
+    ? `https://www.youtube.com/watch?v=${ytId}`
+    : src;
 
   return (
     <div className="rounded-3xl overflow-hidden shadow-md mb-5 bg-black">
@@ -48,9 +91,9 @@ export function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay
             width="100%"
             height="100%"
             className="w-full h-full"
-            src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}`}
+            src={`https://www.youtube-nocookie.com/embed/${ytId}?rel=0&modestbranding=1&playsinline=1`}
             frameBorder="0"
-            allow="autoplay; encrypted-media"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           />
         ) : (
@@ -64,7 +107,7 @@ export function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay
             loop
             playsInline
             preload="metadata"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         )}
         {badge && (
@@ -74,8 +117,25 @@ export function VideoScene({ src, badge, title, subtitle, muted = true, autoPlay
         )}
       </div>
       <div className="bg-gradient-to-r from-primary-700 to-primary-600 px-4 md:px-5 py-2.5 text-white text-left">
-        <h2 className="text-base md:text-xl font-bold leading-tight">{title}</h2>
-        {subtitle && <p className="text-white/80 text-xs md:text-sm">{subtitle}</p>}
+        <h2 className="text-base md:text-xl font-bold leading-tight">
+          {title}
+        </h2>
+        {subtitle && (
+          <p className="text-white/80 text-xs md:text-sm">{subtitle}</p>
+        )}
+        {ytId && (
+          <a
+            href={youtubeWatchUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-white/90 underline decoration-white/40 underline-offset-4 hover:text-white"
+          >
+            Mở trực tiếp trên YouTube nếu video bị chặn nhúng
+            <span className="material-symbols-outlined text-sm">
+              open_in_new
+            </span>
+          </a>
+        )}
       </div>
     </div>
   );
@@ -95,7 +155,9 @@ export function PieceReward({ label, onNext }) {
         className="bg-white dark:bg-[#002b37] text-orange-700 px-6 py-2.5 rounded-3xl font-bold hover:bg-orange-50 transition-colors inline-flex items-center gap-1.5"
       >
         Tiếp tục hành trình
-        <span className="material-symbols-outlined text-base">arrow_forward</span>
+        <span className="material-symbols-outlined text-base">
+          arrow_forward
+        </span>
       </button>
     </div>
   );
@@ -105,7 +167,8 @@ export function JourneyHeader({ stage, pieces, onBack, onReset }) {
   const steps = STAGES.slice(0, 5);
   const activeIndex = STAGES.indexOf(stage);
   const canGoBack = activeIndex > 0;
-  const currentLabel = STAGE_LABELS[steps[Math.min(activeIndex, steps.length - 1)]];
+  const currentLabel =
+    STAGE_LABELS[steps[Math.min(activeIndex, steps.length - 1)]];
 
   return (
     <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 p-4 md:p-5 mb-6 text-left">
@@ -139,7 +202,9 @@ export function JourneyHeader({ stage, pieces, onBack, onReset }) {
             className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full"
             title="Mảnh ghép tri thức đã thu thập"
           >
-            <span className="material-symbols-outlined text-amber-600 text-base">extension</span>
+            <span className="material-symbols-outlined text-amber-600 text-base">
+              extension
+            </span>
             <span className="text-sm font-bold text-amber-700 tabular-nums">
               {pieces.length}/2
             </span>
@@ -150,7 +215,9 @@ export function JourneyHeader({ stage, pieces, onBack, onReset }) {
             title="Bắt đầu lại từ đầu"
             className="inline-flex items-center justify-center h-9 w-9 rounded-full text-gray-400 hover:text-white hover:bg-primary-600 border border-gray-200 hover:border-primary-600 transition-all active:scale-95"
           >
-            <span className="material-symbols-outlined text-lg">restart_alt</span>
+            <span className="material-symbols-outlined text-lg">
+              restart_alt
+            </span>
           </button>
         </div>
       </div>
@@ -167,19 +234,25 @@ export function JourneyHeader({ stage, pieces, onBack, onReset }) {
                     done
                       ? "bg-green-500 text-white shadow-sm"
                       : active
-                      ? "bg-primary-600 text-white ring-4 ring-primary-100 shadow-md scale-110"
-                      : "bg-white dark:bg-[#002b37] text-gray-400 border-2 border-gray-200"
+                        ? "bg-primary-600 text-white ring-4 ring-primary-100 shadow-md scale-110"
+                        : "bg-white dark:bg-[#002b37] text-gray-400 border-2 border-gray-200"
                   }`}
                 >
                   {done ? (
-                    <span className="material-symbols-outlined text-lg">check</span>
+                    <span className="material-symbols-outlined text-lg">
+                      check
+                    </span>
                   ) : (
                     i + 1
                   )}
                 </div>
                 <span
                   className={`text-[11px] md:text-xs font-semibold text-center leading-tight ${
-                    active ? "text-primary-650 dark:text-primary-300" : done ? "text-green-600" : "text-gray-400"
+                    active
+                      ? "text-primary-650 dark:text-primary-300"
+                      : done
+                        ? "text-green-600"
+                        : "text-gray-400"
                   }`}
                 >
                   {STAGE_LABELS[s]}

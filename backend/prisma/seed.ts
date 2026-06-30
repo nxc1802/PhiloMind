@@ -399,6 +399,268 @@ function buildLesson1bFlow(source: any) {
   ];
 }
 
+function buildMaterialLessonFlow(node: any) {
+  return [
+    {
+      id: "material-opening",
+      type: "dialogue",
+      title: "Câu hỏi của lịch sử",
+      config: {
+        lines: [
+          {
+            who: "guide",
+            text: "Trước mắt các nhà triết học là câu hỏi lớn: bản chất của thế giới này là gì? Từ đây hình thành hai con đường đối lập: duy tâm và duy vật.",
+          },
+          {
+            who: "guide",
+            text: "Bài học này dẫn bạn đi qua các quan niệm lịch sử về vật chất để hiểu vì sao định nghĩa của Lênin là bước phát triển quyết định.",
+          },
+        ],
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "idealism-room",
+      type: "mindmap_reveal",
+      title: "Cánh cửa duy tâm",
+      config: {
+        center: "Duy tâm",
+        nodes: [
+          {
+            id: "platon",
+            label: "Platon",
+            detail:
+              "Học thuyết ý niệm xem thế giới vật chất chỉ là cái bóng mờ nhạt của thế giới ý niệm thuần túy, vĩnh cửu.",
+          },
+          {
+            id: "protagoras",
+            label: "Protagoras",
+            detail:
+              "Luận điểm 'con người là thước đo của vạn vật' nhấn mạnh sự lệ thuộc của thế giới vào cảm giác và nhận thức cá nhân.",
+          },
+        ],
+        summary:
+          "Các lập trường duy tâm tuy thừa nhận hiện tượng, nhưng phủ nhận đặc tính tồn tại khách quan của vật chất.",
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "ancient-materialism",
+      type: "matching_columns",
+      title: "Chủ nghĩa duy vật thời cổ đại",
+      config: {
+        leftColumn: [
+          { id: "thales", text: "Thales" },
+          { id: "heraclitus", text: "Heraclitus" },
+          { id: "anaximenes", text: "Anaximenes" },
+          { id: "india", text: "Ấn Độ cổ đại - Tứ đại" },
+          { id: "china", text: "Trung Quốc cổ đại - Ngũ hành" },
+        ],
+        rightColumn: [
+          { id: "water", text: "Nước" },
+          { id: "fire", text: "Lửa" },
+          { id: "air", text: "Không khí" },
+          { id: "four", text: "Đất, nước, lửa, gió" },
+          { id: "five", text: "Kim, mộc, thủy, hỏa, thổ" },
+        ],
+        correctPairs: [
+          { leftId: "thales", rightId: "water" },
+          { leftId: "heraclitus", rightId: "fire" },
+          { leftId: "anaximenes", rightId: "air" },
+          { leftId: "india", rightId: "four" },
+          { leftId: "china", rightId: "five" },
+        ],
+      },
+      completionRule: { type: "correct" },
+    },
+    {
+      id: "ancient-message",
+      type: "multi_select",
+      title: "Thông điệp rút ra",
+      config: {
+        question:
+          "Chọn tất cả nhận định đúng về chủ nghĩa duy vật thời cổ đại.",
+        options: [
+          {
+            id: "a",
+            text: "Có giá trị vì dùng các yếu tố tự nhiên để giải thích thế giới thay vì lực lượng siêu nhiên.",
+            isCorrect: true,
+          },
+          {
+            id: "b",
+            text: "Có hạn chế vì đồng nhất vật chất với một hoặc một vài dạng vật thể cụ thể.",
+            isCorrect: true,
+          },
+          {
+            id: "c",
+            text: "Đã xây dựng được khái niệm vật chất hoàn chỉnh như quan niệm hiện đại.",
+            isCorrect: false,
+          },
+        ],
+        explanation:
+          "Duy vật cổ đại là bước tiến chống giải thích siêu nhiên, nhưng còn trực quan và đồng nhất vật chất với dạng vật thể cụ thể.",
+      },
+      completionRule: { type: "correct" },
+    },
+    {
+      id: "apeiron",
+      type: "mcq",
+      title: "Anaximander và Apeiron",
+      config: {
+        question:
+          "Anaximander muốn vượt qua hạn chế nào của các nhà duy vật trước đó?",
+        options: [
+          {
+            id: "a",
+            text: "Đồng nhất vật chất với một vật thể cụ thể.",
+            isCorrect: true,
+            explanation:
+              "Apeiron là nỗ lực tìm một bản chất chung đứng sau nước, lửa, không khí và các dạng vật thể riêng lẻ.",
+          },
+          {
+            id: "b",
+            text: "Phủ nhận sự tồn tại của vật chất.",
+            isCorrect: false,
+          },
+          {
+            id: "c",
+            text: "Giải thích thế giới bằng thần linh.",
+            isCorrect: false,
+          },
+        ],
+      },
+      completionRule: { type: "correct" },
+    },
+    {
+      id: "modern-materialism",
+      type: "matching_columns",
+      title: "Duy vật thế kỷ XV-XVIII",
+      config: {
+        leftColumn: [
+          { id: "telescope", text: "Kính thiên văn và mô hình hệ Mặt Trời" },
+          { id: "lab", text: "Phòng thí nghiệm và dụng cụ đo lường" },
+          { id: "machine", text: "Máy móc và hệ thống bánh răng" },
+          { id: "map", text: "La bàn, bản đồ và tàu hàng hải" },
+        ],
+        rightColumn: [
+          {
+            id: "astronomy",
+            text: "Thiên văn học cho thấy tự nhiên vận động theo quy luật khách quan.",
+          },
+          {
+            id: "experiment",
+            text: "Quan sát, thí nghiệm và kinh nghiệm trở thành phương pháp nhận thức quan trọng.",
+          },
+          {
+            id: "mechanics",
+            text: "Cơ học khiến nhiều nhà tư tưởng hình dung thế giới như một cỗ máy.",
+          },
+          {
+            id: "geography",
+            text: "Phát kiến địa lý mở rộng hiểu biết và làm suy yếu các quan niệm cũ.",
+          },
+        ],
+        correctPairs: [
+          { leftId: "telescope", rightId: "astronomy" },
+          { leftId: "lab", rightId: "experiment" },
+          { leftId: "machine", rightId: "mechanics" },
+          { leftId: "map", rightId: "geography" },
+        ],
+      },
+      completionRule: { type: "correct" },
+    },
+    {
+      id: "modern-progress",
+      type: "multi_select",
+      title: "Điểm tiến bộ nổi bật",
+      config: {
+        question:
+          "Chọn tất cả điểm tiến bộ của chủ nghĩa duy vật thế kỷ XV-XVIII so với thời cổ đại.",
+        options: [
+          {
+            id: "a",
+            text: "Bắt đầu dựa vào thành tựu khoa học tự nhiên thay vì chỉ phỏng đoán về một dạng vật chất đầu tiên.",
+            isCorrect: true,
+          },
+          {
+            id: "b",
+            text: "Đề cao quan sát, thực nghiệm và lý trí.",
+            isCorrect: true,
+          },
+          {
+            id: "c",
+            text: "Tiếp tục giải thích tự nhiên chủ yếu bằng thần linh.",
+            isCorrect: false,
+          },
+          {
+            id: "d",
+            text: "Khẳng định giới tự nhiên tồn tại khách quan và vận động theo quy luật.",
+            isCorrect: true,
+          },
+        ],
+        explanation:
+          "Duy vật cận đại tiến bộ nhờ gắn với khoa học tự nhiên và thực nghiệm, nhưng vẫn còn hạn chế máy móc, siêu hình.",
+      },
+      completionRule: { type: "correct" },
+    },
+    {
+      id: "mechanical-limit",
+      type: "mcq",
+      title: "Hạn chế máy móc",
+      config: {
+        question:
+          "Việc hình dung thế giới giống như một cỗ máy cho thấy hạn chế nào?",
+        options: [
+          {
+            id: "a",
+            text: "Thường xem sự vật tương đối biệt lập và chủ yếu giải thích vận động bằng dịch chuyển cơ học.",
+            isCorrect: true,
+            explanation:
+              "Đây là hạn chế siêu hình của chủ nghĩa duy vật cận đại do ảnh hưởng nổi bật của cơ học cổ điển.",
+          },
+          {
+            id: "b",
+            text: "Cho rằng thế giới không tồn tại khách quan.",
+            isCorrect: false,
+          },
+          {
+            id: "c",
+            text: "Hoàn toàn phủ nhận vai trò của khoa học tự nhiên.",
+            isCorrect: false,
+          },
+        ],
+      },
+      completionRule: { type: "correct" },
+    },
+    {
+      id: "lenin-definition",
+      type: "markdown",
+      title: "Định nghĩa vật chất của Lênin",
+      config: {
+        content: `${node.originalText}\n\nĐịnh nghĩa này nhấn mạnh ba điểm: vật chất tồn tại khách quan; vật chất được đem lại cho con người trong cảm giác; và vật chất không phụ thuộc vào cảm giác, ý thức của con người.`,
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "material-final",
+      type: "final_summary",
+      title: "Hoàn thành bài Phạm trù vật chất",
+      config: {
+        message:
+          "Bạn đã nắm được tiến trình lịch sử của quan niệm vật chất và ý nghĩa định nghĩa của Lênin.",
+        keyTakeaways: [
+          "Chủ nghĩa duy tâm phủ nhận hoặc làm mờ tính tồn tại khách quan của vật chất.",
+          "Chủ nghĩa duy vật cổ đại có giá trị chống thần thoại nhưng còn trực quan.",
+          "Chủ nghĩa duy vật cận đại dựa vào khoa học tự nhiên nhưng còn máy móc, siêu hình.",
+          "Định nghĩa của Lênin xác lập vật chất là thực tại khách quan tồn tại độc lập với ý thức.",
+        ],
+        rewards: { xp: 140, badge: "Người giữ cánh cửa vật chất" },
+      },
+      completionRule: { type: "viewed" },
+    },
+  ];
+}
+
 async function main() {
   console.log(
     "Seeding PhiloMind philosophy sanctuary database with Vietnamese Marxist-Leninist Philosophy...",
@@ -520,8 +782,9 @@ async function main() {
   });
   console.log(`Course created: "${course.title}" (${course.id})`);
 
-  // Default YouTube Video URL
-  const defaultYoutubeUrl = "https://www.youtube.com/watch?v=Mzg-AdRrjGY";
+  // Draft lessons intentionally do not get a placeholder video. Invalid
+  // placeholders surface as "This video is unavailable" in the learner player.
+  const defaultYoutubeUrl = null;
 
   // 3. Create Chapters and Concept Nodes
   // Chapter 1
@@ -531,6 +794,24 @@ async function main() {
         "Chương 1: Triết học và vai trò của triết học trong đời sống xã hội",
       orderIndex: 1,
       courseId: course.id,
+    },
+  });
+
+  const ch1SectionIntro = await prisma.chapter.create({
+    data: {
+      title: "Khái lược về Triết học",
+      orderIndex: 1,
+      courseId: course.id,
+      parentChapterId: chapter1.id,
+    },
+  });
+
+  const ch1SectionMarxism = await prisma.chapter.create({
+    data: {
+      title: "Triết học Mác – Lênin",
+      orderIndex: 2,
+      courseId: course.id,
+      parentChapterId: chapter1.id,
     },
   });
 
@@ -546,7 +827,7 @@ async function main() {
       difficulty: "Medium",
       timeToRead: "8 min read",
       orderIndex: 1,
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=k_jbTWq-u50",
       lessonType: "adventure",
       storyIntro: {
         enable: true,
@@ -995,6 +1276,12 @@ async function main() {
     const isNode2 = n.title === "Khái niệm triết học";
     const hasSeededLessonContent =
       isNode2 || n.title === "Nguồn gốc của triết học";
+    const sectionChapter =
+      n.orderIndex <= 3 ? ch1SectionIntro : ch1SectionMarxism;
+    const sectionOrderIndex =
+      sectionChapter.id === ch1SectionIntro.id
+        ? n.orderIndex
+        : n.orderIndex - 3;
     const lessonFlow = isNode2
       ? buildLesson1bFlow(seedingData.lesson_1b)
       : n.title === "Nguồn gốc của triết học"
@@ -1009,8 +1296,8 @@ async function main() {
         difficulty: n.difficulty,
         timeToRead: n.timeToRead,
         videoUrl: n.videoUrl,
-        orderIndex: n.orderIndex,
-        chapterId: chapter1.id,
+        orderIndex: sectionOrderIndex,
+        chapterId: sectionChapter.id,
         lessonType: "flow",
         lessonFlow: lessonFlow as any,
         contentReady: hasSeededLessonContent,
@@ -1033,6 +1320,33 @@ async function main() {
       title: "Chương 2: Chủ nghĩa duy vật biện chứng",
       orderIndex: 2,
       courseId: course.id,
+    },
+  });
+
+  const ch2SectionMatter = await prisma.chapter.create({
+    data: {
+      title: "Vật chất và ý thức",
+      orderIndex: 1,
+      courseId: course.id,
+      parentChapterId: chapter2.id,
+    },
+  });
+
+  const ch2SectionDialectics = await prisma.chapter.create({
+    data: {
+      title: "Phép biện chứng duy vật",
+      orderIndex: 2,
+      courseId: course.id,
+      parentChapterId: chapter2.id,
+    },
+  });
+
+  const ch2SectionKnowledge = await prisma.chapter.create({
+    data: {
+      title: "Lý luận nhận thức",
+      orderIndex: 3,
+      courseId: course.id,
+      parentChapterId: chapter2.id,
     },
   });
 
@@ -1164,6 +1478,19 @@ async function main() {
 
   const createdCh2Nodes = [];
   for (const n of ch2Nodes) {
+    const hasSeededLessonContent = n.title === "Phạm trù vật chất";
+    const sectionChapter =
+      n.orderIndex <= 4
+        ? ch2SectionMatter
+        : n.orderIndex <= 7
+          ? ch2SectionDialectics
+          : ch2SectionKnowledge;
+    const sectionOrderIndex =
+      sectionChapter.id === ch2SectionMatter.id
+        ? n.orderIndex
+        : sectionChapter.id === ch2SectionDialectics.id
+          ? n.orderIndex - 4
+          : n.orderIndex - 7;
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -1173,12 +1500,14 @@ async function main() {
         difficulty: n.difficulty,
         timeToRead: n.timeToRead,
         videoUrl: n.videoUrl,
-        orderIndex: n.orderIndex,
-        chapterId: chapter2.id,
+        orderIndex: sectionOrderIndex,
+        chapterId: sectionChapter.id,
         lessonType: "flow",
-        lessonFlow: buildDefaultLessonFlow(n) as any,
-        contentReady: false,
-        lessonStatus: "draft",
+        lessonFlow: hasSeededLessonContent
+          ? (buildMaterialLessonFlow(n) as any)
+          : (buildDefaultLessonFlow(n) as any),
+        contentReady: hasSeededLessonContent,
+        lessonStatus: hasSeededLessonContent ? "published" : "draft",
       },
     });
     createdCh2Nodes.push(node);
@@ -1193,6 +1522,33 @@ async function main() {
       title: "Chương 3: Chủ nghĩa duy vật lịch sử",
       orderIndex: 3,
       courseId: course.id,
+    },
+  });
+
+  const ch3SectionFormation = await prisma.chapter.create({
+    data: {
+      title: "Hình thái kinh tế – xã hội",
+      orderIndex: 1,
+      courseId: course.id,
+      parentChapterId: chapter3.id,
+    },
+  });
+
+  const ch3SectionClass = await prisma.chapter.create({
+    data: {
+      title: "Giai cấp và đấu tranh giai cấp",
+      orderIndex: 2,
+      courseId: course.id,
+      parentChapterId: chapter3.id,
+    },
+  });
+
+  const ch3SectionHuman = await prisma.chapter.create({
+    data: {
+      title: "Con người và vai trò của quần chúng",
+      orderIndex: 3,
+      courseId: course.id,
+      parentChapterId: chapter3.id,
     },
   });
 
@@ -1222,7 +1578,7 @@ async function main() {
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Cơ sở hạ tầng & kiến trúc thượng tầng",
+      title: "Cơ sở hạ tầng và kiến trúc thượng tầng",
       summary:
         "Cơ sở hạ tầng quyết định kiến trúc thượng tầng chính trị, pháp lý tương ứng.",
       originalText:
@@ -1298,6 +1654,18 @@ async function main() {
 
   const createdCh3Nodes = [];
   for (const n of ch3Nodes) {
+    const sectionChapter =
+      n.orderIndex <= 3
+        ? ch3SectionFormation
+        : n.orderIndex <= 6
+          ? ch3SectionClass
+          : ch3SectionHuman;
+    const sectionOrderIndex =
+      sectionChapter.id === ch3SectionFormation.id
+        ? n.orderIndex
+        : sectionChapter.id === ch3SectionClass.id
+          ? n.orderIndex - 3
+          : n.orderIndex - 6;
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -1307,8 +1675,8 @@ async function main() {
         difficulty: n.difficulty,
         timeToRead: n.timeToRead,
         videoUrl: n.videoUrl,
-        orderIndex: n.orderIndex,
-        chapterId: chapter3.id,
+        orderIndex: sectionOrderIndex,
+        chapterId: sectionChapter.id,
         lessonType: "flow",
         lessonFlow: buildDefaultLessonFlow(n) as any,
         contentReady: false,
