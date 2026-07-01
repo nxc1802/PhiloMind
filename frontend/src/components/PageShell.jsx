@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import StudyModulesSidebar from "./StudyModulesSidebar";
 import FeedbackWidget from "./FeedbackWidget";
 import { Link } from "react-router-dom";
+import { SidebarProvider, useSidebar } from "../context/SidebarContext";
 
 // Nut Settings dung cho footer cua sidebar
 export const SettingsButton = (
@@ -26,20 +27,36 @@ export const SettingsButton = (
   </div>
 );
 
-// Layout chuan dung cho moi trang trong he thong
-export default function PageShell({ activeKey, footer = SettingsButton, children }) {
+// Inner layout — reads sidebar state from context
+function PageShellInner({ activeKey, footer, children }) {
+  const { collapsed } = useSidebar();
   return (
     <>
       <Navbar />
       <div className="flex">
         <StudyModulesSidebar activeKey={activeKey} footer={footer} />
-        <main className="flex-1 lg:ml-72 min-h-screen bg-white dark:bg-[#0D1117] transition-colors duration-300">
+        <main
+          className={`flex-1 min-h-screen bg-white dark:bg-[#0D1117] transition-all duration-300 ${
+            collapsed ? "lg:ml-16" : "lg:ml-72"
+          }`}
+        >
           {children}
         </main>
       </div>
       {/* Bong bóng góp ý nổi — xuất hiện trên mọi trang */}
       <FeedbackWidget />
     </>
+  );
+}
+
+// Layout chuan dung cho moi trang trong he thong
+export default function PageShell({ activeKey, footer = SettingsButton, children }) {
+  return (
+    <SidebarProvider>
+      <PageShellInner activeKey={activeKey} footer={footer}>
+        {children}
+      </PageShellInner>
+    </SidebarProvider>
   );
 }
 

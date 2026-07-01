@@ -91,6 +91,10 @@ model ConceptNode {
   contentReady   Boolean            @default(false)
   lessonStatus   String             @default("draft") // "draft" | "published" | "archived"
 
+  // Media for center column display (videos, images)
+  // Array of: { id, type: "video"|"image", url, title?, subtitle?, alt?, description? }
+  lessonMedia    Json?
+
   @@index([chapterId, orderIndex])
 }
 

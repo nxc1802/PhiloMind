@@ -102,9 +102,6 @@ export class NodeSchemaValidator {
       requireArray(config.cards, `${label}.cards`);
     }
 
-    if (component.type === "mindmap_reveal") {
-      requireArray(config.nodes, `${label}.nodes`);
-    }
 
     if (component.type === "mcq") {
       requireString(config.question, `${label}.question`);
@@ -183,9 +180,70 @@ export class NodeSchemaValidator {
         requireArray(config.keyTakeaways, `${label}.keyTakeaways`);
       }
     }
+
+    if (component.type === "mindmap_reveal") {
+      requireArray(config.nodes, `${label}.nodes`);
+      // Validate each node supports both legacy format and new front/back format
+      config.nodes.forEach((node: any, nodeIdx: number) => {
+        if (!node.id) {
+          throw new BadRequestException(
+            `${label}.nodes[${nodeIdx}].id is required`,
+          );
+        }
+        // Must have either legacy label/detail or new front/back
+        const hasLegacy = node.label !== undefined || node.detail !== undefined;
+        const hasNewFormat = node.front !== undefined || node.back !== undefined;
+        if (!hasLegacy && !hasNewFormat) {
+          throw new BadRequestException(
+            `${label}.nodes[${nodeIdx}] must have either label/detail or front/back fields`,
+          );
+        }
+      });
+      // Validate optional layout config
+      if (config.layoutConfig) {
+        const validTypes = ["vertical", "horizontal", "matrix", "custom"];
+        if (!validTypes.includes(config.layoutConfig.type)) {
+          throw new BadRequestException(
+            `${label}.layoutConfig.type must be one of: ${validTypes.join(", ")}`,
+          );
+        }
+      }
+    }
+  }
+
+  /**
+   * Validate the lessonMedia array (center column media items).
+   * Each item must have id, type, and url.
+   */
+  static validateLessonMedia(data: any) {
+    if (data === null || data === undefined) return; // Optional field
+    requireArray(data, "lessonMedia");
+
+    const ids = new Set<string>();
+    data.forEach((item: any, idx: number) => {
+      requireObject(item, `lessonMedia[${idx}]`);
+      requireString(item.id, `lessonMedia[${idx}].id`);
+      requireString(item.type, `lessonMedia[${idx}].type`);
+      requireString(item.url, `lessonMedia[${idx}].url`);
+
+      if (ids.has(item.id)) {
+        throw new BadRequestException(
+          `lessonMedia[${idx}].id duplicates "${item.id}"`,
+        );
+      }
+      ids.add(item.id);
+
+      const validTypes = ["video", "image"];
+      if (!validTypes.includes(item.type)) {
+        throw new BadRequestException(
+          `lessonMedia[${idx}].type must be one of: ${validTypes.join(", ")}`,
+        );
+      }
+    });
   }
 
   static validateNode(lessonFlow: any) {
     this.validateLessonFlow(lessonFlow);
   }
 }
+

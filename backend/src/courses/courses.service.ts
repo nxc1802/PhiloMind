@@ -660,6 +660,9 @@ export class CoursesService {
       ? dto.lessonFlow
       : this.buildDefaultLessonFlow(dto);
     NodeSchemaValidator.validateNode(lessonFlow);
+    if (dto.lessonMedia !== undefined) {
+      NodeSchemaValidator.validateLessonMedia(dto.lessonMedia);
+    }
     const node = await this.prisma.conceptNode.create({
       data: {
         title: dto.title,
@@ -673,6 +676,7 @@ export class CoursesService {
         chapterId: dto.chapterId,
         lessonType: "flow",
         lessonFlow: lessonFlow as any,
+        lessonMedia: dto.lessonMedia !== undefined ? (dto.lessonMedia as any) : undefined,
         contentReady,
         lessonStatus,
       },
@@ -700,6 +704,9 @@ export class CoursesService {
     if (hasLessonFlowUpdate) {
       NodeSchemaValidator.validateNode(dto.lessonFlow);
     }
+    if (dto.lessonMedia !== undefined) {
+      NodeSchemaValidator.validateLessonMedia(dto.lessonMedia);
+    }
     const explicitContentReady =
       dto.contentReady !== undefined ? dto.contentReady : undefined;
     const inferredContentReady =
@@ -721,6 +728,7 @@ export class CoursesService {
         orderIndex: dto.orderIndex,
         lessonType: "flow",
         lessonFlow: hasLessonFlowUpdate ? (dto.lessonFlow as any) : undefined,
+        lessonMedia: dto.lessonMedia !== undefined ? (dto.lessonMedia as any) : undefined,
         contentReady: inferredContentReady,
         lessonStatus: dto.lessonStatus,
       },

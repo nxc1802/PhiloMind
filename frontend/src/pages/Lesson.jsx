@@ -375,9 +375,9 @@ const Lesson = () => {
         />
       )}
 
-      <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto text-left transition-colors duration-300 bg-slate-50 dark:bg-primary-950/10 rounded-3xl min-h-screen mt-6">
+      <div className={`${!activeLesson ? "px-6 md:px-12 py-8 max-w-6xl mx-auto" : "w-full"} text-left transition-colors duration-300 bg-slate-50 dark:bg-primary-950/10 rounded-3xl min-h-screen mt-6`}>
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-primary-350 mb-6 flex-wrap">
+        <div className={`flex items-center gap-2 text-sm text-slate-500 dark:text-primary-350 mb-6 flex-wrap ${activeLesson ? "px-6 mt-4" : ""}`}>
           <span>Trang chủ</span>
           <span>›</span>
           <strong
@@ -418,7 +418,7 @@ const Lesson = () => {
               <button
                 type="button"
                 onClick={handleBackToMindmap}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-850 dark:text-primary-300 dark:hover:text-primary-100 mb-5"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-850 dark:text-primary-300 dark:hover:text-primary-100 mb-5 pl-6"
               >
                 <span className="material-symbols-outlined text-base">
                   arrow_back
@@ -426,7 +426,7 @@ const Lesson = () => {
                 Quay lại sơ đồ bài học
               </button>
 
-              <header className="mb-8 text-left">
+              <header className="mb-8 text-left px-6">
                 <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/35 border border-primary-150 dark:border-primary-800 text-primary-800 dark:text-primary-250 px-4 py-2 rounded-full text-xs font-bold mb-3 shadow-sm">
                   <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-300">
                     bookmark
@@ -453,28 +453,20 @@ const Lesson = () => {
               </header>
 
               {loadingNode ? (
-                <LessonSkeleton />
+                <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto"><LessonSkeleton /></div>
               ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <div className="lg:col-span-2 space-y-6">
-                    <Suspense fallback={<LessonSkeleton />}>
-                      <FlowLessonPlayer
-                        nodeDetails={currentNodeDetails}
-                        isRevisit={isRevisit}
-                        onComplete={handleCompleteLesson}
-                      />
-                    </Suspense>
-                  </div>
-
-                  <div className="lg:col-span-1 flex flex-col gap-6 lg:sticky lg:top-20">
-                    <LessonSidebar
+                <div className="w-full">
+                  <Suspense fallback={<div className="px-6"><LessonSkeleton /></div>}>
+                    <FlowLessonPlayer
+                      nodeDetails={currentNodeDetails}
+                      isRevisit={isRevisit}
+                      onComplete={handleCompleteLesson}
                       flatSyllabusItems={flatSyllabusItems}
                       progressStats={progressStats}
                       lessonSlug={lessonSlug}
                       handleSyllabusClick={handleSyllabusClick}
-                      currentNodeDetails={currentNodeDetails}
                     />
-                  </div>
+                  </Suspense>
                 </div>
               )}
             </div>
