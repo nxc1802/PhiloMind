@@ -31,11 +31,11 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
   }
 
   return (
-    <div className="h-full flex flex-col bg-slate-50 dark:bg-[#0a1e28] overflow-hidden">
+    <div className="flex h-full flex-col gap-3 overflow-y-auto bg-slate-50 p-3 dark:bg-[#0a1e28]">
       {/* Main media display */}
-      <div className="flex-1 flex flex-col justify-start overflow-y-auto">
+      <div className="min-h-0 shrink-0">
         {activeMedia ? (
-          <div className="p-3">
+          <>
             {activeMedia.type === "video" ? (
               <VideoScene
                 src={activeMedia.url}
@@ -43,6 +43,7 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
                 title={activeMedia.title}
                 subtitle={activeMedia.subtitle}
                 autoPlay={autoplayVideo}
+                className="mb-0"
               />
             ) : (
               <figure className="overflow-hidden rounded-2xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-primary-950/30">
@@ -65,54 +66,54 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
                 )}
               </figure>
             )}
-
-            {activeMedia.description && (
-              <p className="mt-3 text-sm text-slate-600 dark:text-primary-200 leading-relaxed px-1">
-                {activeMedia.description}
-              </p>
-            )}
-          </div>
+          </>
         ) : null}
-
-        {/* Media selector — chỉ hiện nếu có nhiều hơn 1 media */}
-        {lessonMedia.length > 1 && (
-          <div className="p-3 border-t border-slate-200 dark:border-primary-850 mt-auto shrink-0">
-            <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 dark:text-primary-500 mb-2">
-              Nội dung trực quan
-            </p>
-            <div className="flex flex-col gap-1.5">
-              {lessonMedia.map((media) => {
-                const isSelected = media.id === activeMedia?.id;
-                return (
-                  <button
-                    key={media.id}
-                    type="button"
-                    onClick={() => onSelectMedia?.(media.id)}
-                    className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-xl border text-left transition-all ${
-                      isSelected
-                        ? "border-primary-400 bg-primary-50 dark:bg-primary-900/40 text-primary-800 dark:text-primary-100"
-                        : "border-slate-200 dark:border-primary-850 hover:border-primary-300 dark:hover:border-primary-700 text-slate-600 dark:text-primary-300 hover:bg-white dark:hover:bg-primary-950/30"
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-base shrink-0">
-                      {media.type === "video" ? "play_circle" : "image"}
-                    </span>
-                    <span className="text-xs font-semibold truncate">
-                      {media.title ||
-                        (media.type === "video" ? "Video" : "Hình ảnh")}
-                    </span>
-                    {isSelected && (
-                      <span className="material-symbols-outlined text-sm text-primary-600 dark:text-primary-300 ml-auto shrink-0">
-                        visibility
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
       </div>
+
+      {activeMedia?.description && (
+        <p className="shrink-0 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-600 dark:border-primary-850 dark:bg-primary-950/30 dark:text-primary-200">
+          {activeMedia.description}
+        </p>
+      )}
+
+      {/* Media selector — chỉ hiện nếu có nhiều hơn 1 media */}
+      {lessonMedia.length > 1 && (
+        <div className="shrink-0 rounded-2xl border border-slate-200 bg-white p-3 dark:border-primary-850 dark:bg-primary-950/25">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-primary-500">
+            Nội dung trực quan
+          </p>
+          <div className="grid gap-1.5 xl:grid-cols-2">
+            {lessonMedia.map((media) => {
+              const isSelected = media.id === activeMedia?.id;
+              return (
+                <button
+                  key={media.id}
+                  type="button"
+                  onClick={() => onSelectMedia?.(media.id)}
+                  className={`flex min-w-0 items-center gap-2.5 rounded-xl border px-3 py-2 text-left transition-all ${
+                    isSelected
+                      ? "border-primary-400 bg-primary-50 text-primary-800 dark:bg-primary-900/40 dark:text-primary-100"
+                      : "border-slate-200 text-slate-600 hover:border-primary-300 hover:bg-slate-50 dark:border-primary-850 dark:text-primary-300 dark:hover:border-primary-700 dark:hover:bg-primary-950/30"
+                  }`}
+                >
+                  <span className="material-symbols-outlined shrink-0 text-base">
+                    {media.type === "video" ? "play_circle" : "image"}
+                  </span>
+                  <span className="min-w-0 truncate text-xs font-semibold">
+                    {media.title ||
+                      (media.type === "video" ? "Video" : "Hình ảnh")}
+                  </span>
+                  {isSelected && (
+                    <span className="material-symbols-outlined ml-auto shrink-0 text-sm text-primary-600 dark:text-primary-300">
+                      visibility
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

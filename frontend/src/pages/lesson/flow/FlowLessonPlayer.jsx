@@ -206,7 +206,7 @@ export default function FlowLessonPlayer({
 
   // 5. Layout Rendering
   return (
-    <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 overflow-hidden p-3 lg:grid-cols-[300px_minmax(0,1fr)_minmax(360px,0.95fr)]">
+    <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 overflow-hidden p-3 lg:grid-cols-[230px_minmax(0,1fr)_260px] 2xl:grid-cols-[280px_minmax(0,1fr)_320px]">
       {/* Cột 1: Left Panel */}
       <div className="relative z-10 hidden h-full min-h-0 lg:block">
         <LeftPanel

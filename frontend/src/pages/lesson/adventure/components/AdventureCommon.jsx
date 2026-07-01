@@ -45,8 +45,9 @@ export function VideoScene({
   badge,
   title,
   subtitle,
-  muted = true,
+  muted = false,
   autoPlay = true,
+  className = "mb-5",
 }) {
   const getYoutubeId = (url) => {
     if (!url) return "";
@@ -81,10 +82,14 @@ export function VideoScene({
   const youtubeWatchUrl = ytId
     ? `https://www.youtube.com/watch?v=${ytId}`
     : src;
-  const youtubePlaybackParams = autoPlay ? "&autoplay=1&mute=1" : "";
+  const youtubePlaybackParams = `${autoPlay ? "&autoplay=1" : ""}${
+    muted ? "&mute=1" : ""
+  }`;
 
   return (
-    <div className="rounded-3xl overflow-hidden shadow-md mb-5 bg-black">
+    <div
+      className={`rounded-3xl overflow-hidden shadow-md bg-black ${className}`}
+    >
       <div className="relative w-full aspect-video bg-black">
         {ytId ? (
           <iframe

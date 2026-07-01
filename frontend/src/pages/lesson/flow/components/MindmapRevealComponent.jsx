@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
-import { FlipCard } from "./FlipCard";
-import { MindmapLayout } from "./MindmapLayout";
 
 /**
  * MindmapRevealComponent — component mở dần các node của mindmap (front/back card format).
@@ -11,21 +9,21 @@ import { MindmapLayout } from "./MindmapLayout";
  */
 export function MindmapRevealComponent({ component, onComplete }) {
   const nodes = component.config.nodes || [];
-  const layoutStyle = component.config.layout || "grid";
-  const layoutColumns = component.config.columns || 2;
   const [revealed, setRevealed] = useState([]);
-  
+
   const complete = nodes.length > 0 && revealed.length === nodes.length;
   const revealedCount = revealed.length;
 
   // Tự động mở các thẻ tuần tự (2s)
   useEffect(() => {
     if (nodes.length === 0) return;
-    
+
     if (revealed.length < nodes.length) {
       const timer = setTimeout(() => {
-        const nextNode = nodes[revealed.length];
-        setRevealed(prev => [...prev, nextNode.id]);
+        setRevealed((prev) => {
+          const nextNode = nodes.find((node) => !prev.includes(node.id));
+          return nextNode ? [...prev, nextNode.id] : prev;
+        });
       }, 2000);
       return () => clearTimeout(timer);
     }
@@ -78,8 +76,9 @@ export function MindmapRevealComponent({ component, onComplete }) {
           />
         </div>
       </div>
-      
-      <MindmapLayout layout={layoutStyle} columns={layoutColumns}>
+
+      <div className="relative space-y-3">
+        <div className="absolute bottom-4 left-[1.35rem] top-4 hidden w-px bg-primary-150 dark:bg-primary-850 sm:block" />
         {nodes.map((node, index) => {
           const open = revealed.includes(node.id);
           const frontText = node.front?.text || "Bấm để mở nội dung";
@@ -88,63 +87,79 @@ export function MindmapRevealComponent({ component, onComplete }) {
           const detailText = node.back?.detail || node.detail; // Fallback to legacy detail
           const backImageUrl = node.back?.image;
 
-          // Front Face Element
-          const FrontFace = (
-            <div className="w-full h-full min-h-[140px] rounded-3xl border-2 border-dashed border-slate-300 bg-white dark:border-primary-850 dark:bg-[#132d39] p-4 flex flex-col justify-center items-center text-center">
-              {frontImageUrl ? (
-                <img src={frontImageUrl} alt="front cover" className="w-16 h-16 object-cover rounded-full mb-3 shadow-md" />
-              ) : (
-                <span className="material-symbols-outlined text-4xl text-slate-300 dark:text-primary-800 mb-2">lock</span>
-              )}
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-primary-300 mb-1">
-                Mảnh ghép {index + 1}
-              </p>
-              <p className="font-bold text-slate-600 dark:text-primary-200">
-                {frontText}
-              </p>
-            </div>
-          );
-
-          // Back Face Element
-          const BackFace = (
-            <div className="w-full h-full min-h-[140px] rounded-3xl border-2 border-primary-500 bg-primary-50 dark:bg-primary-900/30 p-5 shadow-md flex flex-col justify-center">
-              <div className="flex items-start gap-4">
-                {backImageUrl ? (
-                  <img src={backImageUrl} alt="back illustration" className="w-12 h-12 rounded-xl object-cover shadow-sm shrink-0" />
-                ) : (
-                  <span className="material-symbols-outlined flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-600 text-white shadow-sm">
-                    check_circle
-                  </span>
-                )}
-                <div className="min-w-0">
-                  <p className="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-300">
-                    Mảnh ghép {index + 1}
-                  </p>
-                  <p className="mt-1 font-bold text-primary-900 dark:text-primary-100 text-lg">
-                    {backText}
-                  </p>
-                  {detailText && (
-                    <p className="mt-2 text-sm leading-relaxed text-gray-700 dark:text-primary-200">
-                      {detailText}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          );
-
           return (
-            <div key={node.id} className="min-h-[140px]">
-              <FlipCard
-                flipped={open}
-                onClick={() => handleReveal(node.id)}
-                front={FrontFace}
-                back={BackFace}
-              />
-            </div>
+            <button
+              key={node.id}
+              type="button"
+              onClick={() => handleReveal(node.id)}
+              className={`relative flex w-full min-w-0 items-start gap-3 rounded-3xl border p-4 text-left transition-all ${
+                open
+                  ? "border-primary-250 bg-white shadow-sm dark:border-primary-800 dark:bg-[#132d39]"
+                  : "border-dashed border-slate-250 bg-slate-50 hover:border-primary-300 hover:bg-white dark:border-primary-850 dark:bg-primary-950/25 dark:hover:bg-[#132d39]"
+              }`}
+            >
+              <span
+                className={`relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${
+                  open
+                    ? "bg-primary-600 text-white"
+                    : "bg-white text-slate-300 shadow-sm dark:bg-primary-950 dark:text-primary-650"
+                }`}
+              >
+                <span className="material-symbols-outlined text-xl">
+                  {open ? "check_circle" : "lock_open"}
+                </span>
+              </span>
+
+              <div className="min-w-0 flex-1">
+                <p
+                  className={`text-[11px] font-bold uppercase tracking-wider ${
+                    open
+                      ? "text-primary-650 dark:text-primary-300"
+                      : "text-slate-400 dark:text-primary-500"
+                  }`}
+                >
+                  Mảnh ghép {index + 1}
+                </p>
+
+                {open ? (
+                  <div className="mt-2 flex min-w-0 items-start gap-3">
+                    {backImageUrl && (
+                      <img
+                        src={backImageUrl}
+                        alt="minh họa mảnh ghép"
+                        className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-sm"
+                      />
+                    )}
+                    <div className="min-w-0">
+                      <p className="break-words text-lg font-extrabold leading-snug text-primary-900 dark:text-primary-100">
+                        {backText}
+                      </p>
+                      {detailText && (
+                        <p className="mt-2 whitespace-normal break-words text-sm leading-6 text-slate-650 dark:text-primary-200">
+                          {detailText}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-2 flex min-w-0 items-center gap-3">
+                    {frontImageUrl && (
+                      <img
+                        src={frontImageUrl}
+                        alt="bìa mảnh ghép"
+                        className="h-12 w-12 shrink-0 rounded-2xl object-cover shadow-sm"
+                      />
+                    )}
+                    <p className="min-w-0 break-words text-sm font-bold leading-6 text-slate-600 dark:text-primary-200">
+                      {frontText}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </button>
           );
         })}
-      </MindmapLayout>
+      </div>
 
       {complete && (
         <div className="mt-6 rounded-3xl border border-green-200 bg-green-50 p-4 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">

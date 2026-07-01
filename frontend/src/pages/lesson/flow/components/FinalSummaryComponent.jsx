@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 
@@ -11,6 +11,9 @@ export function FinalSummaryComponent({ component, onComplete }) {
   } = component.config;
   const [quizDone, setQuizDone] = useState(quiz.length === 0);
   const [answers, setAnswers] = useState({});
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [completionStarted, setCompletionStarted] = useState(false);
+  const completionTimerRef = useRef(null);
   const answeredAll =
     quiz.length > 0 && quiz.every((_, index) => answers[index] !== undefined);
   const score =
@@ -26,30 +29,87 @@ export function FinalSummaryComponent({ component, onComplete }) {
     if (answeredAll) setQuizDone(true);
   }, [answeredAll]);
 
+  useEffect(() => {
+    return () => {
+      if (completionTimerRef.current) {
+        window.clearTimeout(completionTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleComplete = () => {
+    if (completionStarted) return;
+    setCompletionStarted(true);
+    setShowCelebration(true);
+    completionTimerRef.current = window.setTimeout(() => {
+      onComplete({ score, answer: answers, status: "completed" });
+    }, 1400);
+  };
+
   return (
     <ComponentFrame component={component}>
-      <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-primary-950/60 border border-amber-200 dark:border-amber-800 rounded-3xl p-5 text-slate-900 dark:text-amber-50">
-        <p className="text-lg font-bold text-primary-950 dark:text-amber-50 mb-2">
-          {message || "Bạn đã hoàn thành bài học."}
-        </p>
-        <ul className="space-y-2">
-          {keyTakeaways.map((item, index) => (
-            <li
-              key={index}
-              className="flex items-start gap-2 text-slate-800 dark:text-amber-50"
-            >
-              <span className="material-symbols-outlined text-amber-600 text-base mt-0.5">
-                check_circle
+      {showCelebration && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/55 px-4 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-[2rem] border border-white/20 bg-white p-6 text-center shadow-2xl dark:bg-[#102733]">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-primary-600 text-white shadow-lg">
+              <span className="material-symbols-outlined text-5xl">
+                workspace_premium
               </span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white dark:bg-[#182d35] px-4 py-2 text-sm font-bold text-amber-800 dark:text-amber-100 border border-amber-200 dark:border-amber-800">
-          <span className="material-symbols-outlined text-base">
-            military_tech
-          </span>
-          {rewards.badge || "Hoàn thành"} · {rewards.xp || 100} XP
+            </div>
+            <p className="mt-4 text-2xl font-extrabold text-primary-950 dark:text-primary-100">
+              Chúc mừng!
+            </p>
+            <p className="mt-2 text-sm font-semibold leading-6 text-slate-600 dark:text-primary-200">
+              Bạn đã hoàn thành bài học và mở khóa phần thưởng tổng kết.
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="overflow-hidden rounded-3xl border border-primary-150 bg-white shadow-sm dark:border-primary-800 dark:bg-[#132d39]">
+        <div className="bg-gradient-to-br from-primary-700 via-primary-650 to-amber-500 px-5 py-5 text-white">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-white/75">
+                Tổng kết bài học
+              </p>
+              <p className="mt-1 break-words text-xl font-extrabold leading-tight">
+                {message || "Bạn đã hoàn thành bài học."}
+              </p>
+            </div>
+            <span className="material-symbols-outlined flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-3xl">
+              military_tech
+            </span>
+          </div>
+        </div>
+
+        <div className="p-5">
+          <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">
+            <ul className="space-y-2">
+              {keyTakeaways.map((item, index) => (
+                <li
+                  key={index}
+                  className="flex min-w-0 items-start gap-2 rounded-2xl bg-slate-50 px-3 py-2 text-slate-800 dark:bg-primary-950/30 dark:text-primary-100"
+                >
+                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-base text-green-600 dark:text-green-300">
+                    check_circle
+                  </span>
+                  <span className="break-words text-sm leading-6">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold text-amber-900 dark:border-amber-800 dark:bg-amber-950/35 dark:text-amber-100">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-base">
+                  stars
+                </span>
+                <span>{rewards.badge || "Hoàn thành"}</span>
+              </div>
+              <p className="mt-1 text-2xl font-extrabold">
+                {rewards.xp || 100} XP
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -93,10 +153,10 @@ export function FinalSummaryComponent({ component, onComplete }) {
 
       {quizDone && (
         <ContinueButton
-          onComplete={() =>
-            onComplete({ score, answer: answers, status: "completed" })
+          onComplete={handleComplete}
+          label={
+            completionStarted ? "Đang hoàn thành..." : "Hoàn thành bài học"
           }
-          label="Hoàn thành bài học"
         />
       )}
     </ComponentFrame>

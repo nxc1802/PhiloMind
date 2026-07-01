@@ -78,26 +78,18 @@ export function LeftPanel({
   completedIds,
   onSelectComponent,
 }) {
-  const documents = currentNodeDetails?.chapter?.course?.documents || [];
   const completedMilestones = (progressItems || []).filter(({ component }) =>
     completedIds?.includes(component.id),
   ).length;
 
-  const handlePdfClick = () => {
-    if (documents.length === 0) return;
-    if (documents.length === 1) {
-      window.open(documents[0].fileUrl, "_blank");
-    }
-  };
-
   return (
-    <aside className="grid h-full min-h-0 grid-rows-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-3">
+    <aside className="grid h-full min-h-0 grid-rows-[minmax(0,1fr)_minmax(0,1.08fr)] gap-3">
       <Panel
         icon="menu_book"
         title="Nội dung khóa học"
         subtitle={`${progressStats?.completed || 0}/${progressStats?.total || 0} bài - ${progressStats?.percentage || 0}%`}
       >
-        <div className="shrink-0 px-4 py-3">
+        <div className="shrink-0 border-b border-slate-100 px-4 pb-3 pt-1 dark:border-primary-850/50">
           <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-primary-950/50">
             <div
               className="h-full rounded-full bg-primary-600 transition-all"
@@ -106,7 +98,7 @@ export function LeftPanel({
           </div>
         </div>
 
-        <div className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 pb-3">
+        <div className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 pb-3 pt-3">
           {(flatSyllabusItems || []).map((item, index) => {
             const config = STATUS_CONFIG[item.status] || STATUS_CONFIG.locked;
             const isActiveLesson = getSlugFromTitle(item.title) === lessonSlug;
@@ -135,21 +127,6 @@ export function LeftPanel({
             );
           })}
         </div>
-
-        {documents.length > 0 && (
-          <div className="shrink-0 border-t border-slate-100 p-3 dark:border-primary-850/50">
-            <button
-              type="button"
-              onClick={handlePdfClick}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-primary-200 px-3 py-2.5 text-xs font-semibold text-primary-700 transition-all hover:bg-primary-50 dark:border-primary-800/40 dark:text-primary-300 dark:hover:bg-primary-900/20"
-            >
-              <span className="material-symbols-outlined text-base">
-                picture_as_pdf
-              </span>
-              Tài liệu PDF
-            </button>
-          </div>
-        )}
       </Panel>
 
       <Panel
@@ -157,7 +134,7 @@ export function LeftPanel({
         title="Nội dung bài học"
         subtitle={`${completedMilestones}/${progressItems?.length || 0} mốc chính`}
       >
-        <div className="shrink-0 px-4 py-3">
+        <div className="shrink-0 border-b border-slate-100 px-4 pb-3 pt-1 dark:border-primary-850/50">
           <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-primary-950/50">
             <div
               className="h-full rounded-full bg-primary-600 transition-all duration-500"
@@ -170,7 +147,7 @@ export function LeftPanel({
           </div>
         </div>
 
-        <div className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 pb-3">
+        <div className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 pb-3 pt-3">
           {(progressItems || []).map(({ component, index }) => {
             const isActive = index === activeIndex;
             const isDone = completedIds?.includes(component.id);

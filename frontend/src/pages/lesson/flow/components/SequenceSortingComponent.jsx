@@ -36,26 +36,8 @@ export function SequenceSortingComponent({ component, onComplete }) {
           {component.config.instruction}
         </p>
       )}
-      <div className="space-y-2 mb-4">
-        {placed.map((id, index) => {
-          const item = items.find((it) => it.id === id);
-          return (
-            <div
-              key={id}
-              className="flex items-center gap-3 rounded-2xl border-2 border-green-400 dark:border-green-800 bg-green-50 dark:bg-green-950/35 px-4 py-3"
-            >
-              <span className="h-7 w-7 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold">
-                {index + 1}
-              </span>
-              <span className="text-sm text-green-950 dark:text-green-100 font-medium">
-                {item?.text}
-              </span>
-            </div>
-          );
-        })}
-      </div>
       {!complete && (
-        <div className="grid sm:grid-cols-2 gap-3">
+        <div className="grid sm:grid-cols-2 gap-3 mb-4">
           {items
             .filter((item) => !placed.includes(item.id))
             .map((item) => (
@@ -79,6 +61,34 @@ export function SequenceSortingComponent({ component, onComplete }) {
           Chưa đúng thứ tự. Hãy chọn mắt xích logic tiếp theo trong chuỗi.
         </p>
       )}
+      <div className="mt-4 rounded-3xl border border-slate-200 bg-slate-50 p-3 dark:border-primary-850 dark:bg-primary-950/25">
+        <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-primary-450">
+          Chuỗi đã chọn
+        </p>
+        <div className="space-y-2">
+          {placed.length === 0 && (
+            <p className="rounded-2xl border border-dashed border-slate-250 bg-white px-4 py-3 text-sm font-semibold text-slate-400 dark:border-primary-850 dark:bg-[#132d39] dark:text-primary-500">
+              Chưa có mắt xích nào được chọn.
+            </p>
+          )}
+          {placed.map((id, index) => {
+            const item = items.find((it) => it.id === id);
+            return (
+              <div
+                key={id}
+                className="flex items-center gap-3 rounded-2xl border-2 border-green-400 dark:border-green-800 bg-green-50 dark:bg-green-950/35 px-4 py-3"
+              >
+                <span className="h-7 w-7 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold">
+                  {index + 1}
+                </span>
+                <span className="text-sm text-green-950 dark:text-green-100 font-medium">
+                  {item?.text}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       {complete && (
         <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
           <p className="font-bold">
