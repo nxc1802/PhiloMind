@@ -126,12 +126,43 @@ function buildDefaultLessonFlow(node: any) {
   return flow;
 }
 
+function extractLessonMedia(lessonFlow: any[], node: any) {
+  const mediaItems = lessonFlow
+    .filter((component) => component?.type === "media" && component.config?.url)
+    .map((component) => ({
+      id: component.id,
+      type: component.config.mediaType || "video",
+      url: component.config.url,
+      title: component.config.title || component.title || node.title,
+      subtitle: component.config.subtitle || node.quickTake,
+      alt: component.config.alt,
+      description: component.config.description,
+      badge: component.config.badge,
+    }));
+
+  if (mediaItems.length > 0) return mediaItems;
+
+  if (!node.videoUrl) return [];
+
+  return [
+    {
+      id: "lesson-video",
+      type: "video",
+      url: node.videoUrl,
+      title: node.title,
+      subtitle: node.quickTake,
+    },
+  ];
+}
+
 function buildOriginLessonFlow(node: any) {
   return [
     {
       id: "origin-intro",
       type: "dialogue",
       title: "Nhiệm vụ khai sáng",
+      linkedMediaId: "origin-opening-video",
+      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -179,6 +210,8 @@ function buildOriginLessonFlow(node: any) {
       id: "cognitive-scene",
       type: "dialogue",
       title: "Hội đồng bộ tộc",
+      linkedMediaId: "cognitive-video",
+      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -197,6 +230,8 @@ function buildOriginLessonFlow(node: any) {
       id: "lyra-doubt",
       type: "dialogue",
       title: "Bước ngoặt hoài nghi",
+      linkedMediaId: "cognitive-video",
+      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -215,6 +250,8 @@ function buildOriginLessonFlow(node: any) {
       id: "cognitive-origin-quiz",
       type: "quiz_sequence",
       title: "Nguồn gốc nhận thức: chuỗi câu hỏi",
+      linkedMediaId: "cognitive-video",
+      navigation_config: { showInProgress: false },
       config: {
         questions: [
           {
@@ -308,6 +345,8 @@ function buildOriginLessonFlow(node: any) {
       id: "social-setup",
       type: "dialogue",
       title: "Một ngày trong xã hội cổ đại",
+      linkedMediaId: "social-video",
+      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -326,6 +365,8 @@ function buildOriginLessonFlow(node: any) {
       id: "social-condition-quiz",
       type: "quiz_sequence",
       title: "Nguồn gốc xã hội: trải nghiệm vai",
+      linkedMediaId: "social-video",
+      navigation_config: { showInProgress: false },
       config: {
         questions: [
           {
@@ -700,10 +741,28 @@ function buildLesson1bFlow(source: any) {
 
 function buildMaterialLessonFlow(node: any) {
   return [
+    ...(node.videoUrl
+      ? [
+          {
+            id: "lesson-video",
+            type: "media",
+            title: "Video nhập môn",
+            config: {
+              mediaType: "video",
+              url: node.videoUrl,
+              title: node.title,
+              subtitle: node.quickTake,
+            },
+            completionRule: { type: "viewed" },
+          },
+        ]
+      : []),
     {
       id: "material-opening",
       type: "dialogue",
       title: "Câu hỏi của lịch sử",
+      linkedMediaId: node.videoUrl ? "lesson-video" : undefined,
+      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -1599,6 +1658,7 @@ async function main() {
         chapterId: sectionChapter.id,
         lessonType: "flow",
         lessonFlow: lessonFlow as any,
+        lessonMedia: extractLessonMedia(lessonFlow, n) as any,
         contentReady: hasSeededLessonContent,
         lessonStatus: hasSeededLessonContent ? "published" : "draft",
       },
@@ -1790,6 +1850,9 @@ async function main() {
         : sectionChapter.id === ch2SectionDialectics.id
           ? n.orderIndex - 4
           : n.orderIndex - 7;
+    const lessonFlow = hasSeededLessonContent
+      ? buildMaterialLessonFlow(n)
+      : buildDefaultLessonFlow(n);
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -1802,9 +1865,8 @@ async function main() {
         orderIndex: sectionOrderIndex,
         chapterId: sectionChapter.id,
         lessonType: "flow",
-        lessonFlow: hasSeededLessonContent
-          ? (buildMaterialLessonFlow(n) as any)
-          : (buildDefaultLessonFlow(n) as any),
+        lessonFlow: lessonFlow as any,
+        lessonMedia: extractLessonMedia(lessonFlow, n) as any,
         contentReady: hasSeededLessonContent,
         lessonStatus: hasSeededLessonContent ? "published" : "draft",
       },
@@ -1965,6 +2027,7 @@ async function main() {
         : sectionChapter.id === ch3SectionClass.id
           ? n.orderIndex - 3
           : n.orderIndex - 6;
+    const lessonFlow = buildDefaultLessonFlow(n);
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -1977,7 +2040,8 @@ async function main() {
         orderIndex: sectionOrderIndex,
         chapterId: sectionChapter.id,
         lessonType: "flow",
-        lessonFlow: buildDefaultLessonFlow(n) as any,
+        lessonFlow: lessonFlow as any,
+        lessonMedia: extractLessonMedia(lessonFlow, n) as any,
         contentReady: false,
         lessonStatus: "draft",
       },

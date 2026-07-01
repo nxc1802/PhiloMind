@@ -36,7 +36,7 @@ function PageShellInner({ activeKey, footer, children }) {
       <div className="flex">
         <StudyModulesSidebar activeKey={activeKey} footer={footer} />
         <main
-          className={`flex-1 min-h-screen bg-white dark:bg-[#0D1117] transition-all duration-300 ${
+          className={`flex-1 min-h-[calc(100vh-64px)] bg-white dark:bg-[#0D1117] transition-all duration-300 ${
             collapsed ? "lg:ml-16" : "lg:ml-72"
           }`}
         >
@@ -50,7 +50,11 @@ function PageShellInner({ activeKey, footer, children }) {
 }
 
 // Layout chuan dung cho moi trang trong he thong
-export default function PageShell({ activeKey, footer = SettingsButton, children }) {
+export default function PageShell({
+  activeKey,
+  footer = SettingsButton,
+  children,
+}) {
   return (
     <SidebarProvider>
       <PageShellInner activeKey={activeKey} footer={footer}>
@@ -66,7 +70,7 @@ export function PageHero({ eyebrow, icon, title, subtitle, children }) {
     <section className="bg-gradient-to-br from-primary-850 via-primary-750 to-primary-900 py-12 px-12 text-white text-left relative overflow-hidden rounded-b-[2.5rem] shadow-lg transition-all duration-300">
       {/* Subtle light reflection glow in top right */}
       <div className="absolute top-0 right-0 w-96 h-full bg-gradient-to-bl from-white/10 via-transparent to-transparent pointer-events-none" />
-      
+
       <div className="max-w-5xl mx-auto relative z-10">
         {(eyebrow || icon) && (
           <div className="flex items-center gap-3 mb-3 text-white">

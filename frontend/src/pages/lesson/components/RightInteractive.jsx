@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ComponentFrame, ContinueButton } from "../flow/components";
 import * as ComponentRegistry from "../flow/components";
 
@@ -9,13 +9,12 @@ import * as ComponentRegistry from "../flow/components";
 export function RightInteractive({
   flow,
   activeIndex,
-  completedIds,
   onCompleteComponent,
   onFinishLesson,
 }) {
   const safeActiveIndex = Math.min(Math.max(activeIndex, 0), flow.length - 1);
   const activeComponent = flow[safeActiveIndex];
-  
+
   if (!activeComponent) {
     return (
       <div className="h-full flex flex-col items-center justify-center p-6 bg-white dark:bg-surface-dark-elevated">
@@ -25,14 +24,13 @@ export function RightInteractive({
   }
 
   // Component name mapping (e.g., 'mindmap_reveal' -> 'MindmapRevealComponent')
-  const componentName = activeComponent.type
-    .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("") + "Component";
+  const componentName =
+    activeComponent.type
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("") + "Component";
 
   const Renderer = ComponentRegistry[componentName];
-  const completedCount = Math.min(new Set(completedIds).size, flow.length);
-  const percentage = Math.round((completedCount / flow.length) * 100);
 
   const handleComponentComplete = (result = {}) => {
     onCompleteComponent(activeComponent, safeActiveIndex, result);
@@ -42,32 +40,35 @@ export function RightInteractive({
   };
 
   return (
-    <div className="h-full flex flex-col bg-slate-100 dark:bg-[#06141b] overflow-y-auto">
-      <div className="p-4 md:p-6 space-y-5 max-w-2xl mx-auto w-full">
-        {/* Progress Header */}
-        <div className="bg-white dark:bg-surface-dark-elevated rounded-3xl shadow-sm border border-slate-200 dark:border-primary-850/50 p-4">
-          <div className="flex items-center justify-between gap-3 mb-3">
-            <div>
-              <p className="text-[11px] uppercase tracking-wider text-slate-400 font-bold">
-                Tiến trình tương tác
-              </p>
-              <p className="font-bold text-primary-850 dark:text-primary-100">
-                Bước {safeActiveIndex + 1}/{flow.length}:{" "}
-                {activeComponent.title || activeComponent.type}
-              </p>
-            </div>
-            {/* Optional: Add restart button here if needed */}
-          </div>
-          <div className="h-2 rounded-full bg-slate-100 dark:bg-primary-950/50 overflow-hidden">
-            <div
-              className="h-full bg-primary-600 rounded-full transition-all duration-500"
-              style={{ width: `${percentage}%` }}
-            />
-          </div>
-        </div>
-
+    <div className="flex h-full min-h-0 flex-col overflow-y-auto bg-slate-100 dark:bg-[#06141b]">
+      <div className="mx-auto w-full max-w-2xl space-y-5 p-4 md:p-5">
         {/* Component Renderer */}
-        {Renderer ? (
+        {activeComponent.type === "media" ? (
+          <ComponentFrame component={activeComponent}>
+            <div className="rounded-3xl border border-primary-100 bg-primary-50 p-5 text-slate-800 dark:border-primary-850 dark:bg-primary-950/35 dark:text-primary-100">
+              <div className="flex items-start gap-3">
+                <span className="material-symbols-outlined flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-600 text-white">
+                  play_circle
+                </span>
+                <div>
+                  <p className="font-bold text-primary-900 dark:text-primary-100">
+                    Video/hình ảnh đang hiển thị ở cột giữa
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-primary-200">
+                    Xem nội dung trực quan ở cột giữa, sau đó xác nhận để tiếp
+                    tục sang hoạt động liên quan ở cột phải.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <ContinueButton
+              onComplete={() =>
+                handleComponentComplete({ score: 100, status: "completed" })
+              }
+              label="Tôi đã xem xong"
+            />
+          </ComponentFrame>
+        ) : Renderer ? (
           <Renderer
             key={activeComponent.id}
             component={activeComponent}

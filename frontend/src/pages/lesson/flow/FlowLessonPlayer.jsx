@@ -10,6 +10,41 @@ function getProgress(progress) {
   return Array.isArray(progress) && progress.length > 0 ? progress[0] : null;
 }
 
+function mediaFromComponent(component) {
+  if (component?.type !== "media" || !component.config?.url) return null;
+
+  return {
+    id: component.id,
+    type: component.config.mediaType || "video",
+    url: component.config.url,
+    title: component.config.title || component.title,
+    subtitle: component.config.subtitle,
+    alt: component.config.alt,
+    description: component.config.description,
+    badge: component.config.badge,
+  };
+}
+
+function getLinkedMediaId(component) {
+  return (
+    component?.linkedMediaId ||
+    component?.linked_media_id ||
+    component?.config?.linkedMediaId ||
+    component?.config?.linked_media_id ||
+    null
+  );
+}
+
+function isVisibleMilestone(component) {
+  const navConfig =
+    component?.navigationConfig ||
+    component?.navigation_config ||
+    component?.config?.navigationConfig ||
+    component?.config?.navigation_config;
+
+  return navConfig?.showInProgress !== false;
+}
+
 export default function FlowLessonPlayer({
   nodeDetails,
   isRevisit,
@@ -21,22 +56,65 @@ export default function FlowLessonPlayer({
 }) {
   const { user } = useAuth();
   const progress = getProgress(nodeDetails?.progress);
-  
+
   // 1. Flow Normalization
   const flow = useMemo(
     () => normalizeFlow(nodeDetails?.lessonFlow),
     [nodeDetails?.lessonFlow],
   );
-  
+
   // 2. Media Extraction
-  // Note: We use lessonMedia if available, otherwise we try to extract media from the current active component if it has media config.
-  // This maintains backward compatibility.
+  // lessonMedia drives the center column. Media components are still accepted
+  // for backward-compatible seed data, but are not rendered in the right column.
+  const flowMedia = useMemo(
+    () => flow.map(mediaFromComponent).filter(Boolean),
+    [flow],
+  );
+
   const lessonMedia = useMemo(() => {
-    if (nodeDetails?.lessonMedia && Array.isArray(nodeDetails.lessonMedia) && nodeDetails.lessonMedia.length > 0) {
-      return nodeDetails.lessonMedia;
-    }
-    return [];
-  }, [nodeDetails?.lessonMedia]);
+    const fromNode = Array.isArray(nodeDetails?.lessonMedia)
+      ? nodeDetails.lessonMedia
+      : [];
+    const seen = new Set();
+    return [...fromNode, ...flowMedia].filter((item) => {
+      if (!item?.id || seen.has(item.id)) return false;
+      seen.add(item.id);
+      return true;
+    });
+  }, [flowMedia, nodeDetails?.lessonMedia]);
+
+  const progressItems = useMemo(
+    () =>
+      flow
+        .map((component, index) => ({ component, index }))
+        .filter(({ component }) => isVisibleMilestone(component)),
+    [flow],
+  );
+
+  const mediaIdByIndex = useMemo(() => {
+    const mediaIds = new Map();
+    let currentMediaId = lessonMedia[0]?.id || null;
+
+    flow.forEach((component, index) => {
+      const linkedMediaId = getLinkedMediaId(component);
+      if (linkedMediaId) {
+        currentMediaId = linkedMediaId;
+      } else if (component.type === "media") {
+        currentMediaId = component.id;
+      }
+      mediaIds.set(index, currentMediaId);
+    });
+
+    return mediaIds;
+  }, [flow, lessonMedia]);
+
+  const getMediaIdForIndex = (index) => {
+    const component = flow[index];
+    const linkedMediaId = getLinkedMediaId(component);
+    if (linkedMediaId) return linkedMediaId;
+    if (component?.type === "media") return component.id;
+    return mediaIdByIndex.get(index) || lessonMedia[0]?.id || null;
+  };
 
   // 3. State Management
   const initialIndex = isRevisit
@@ -55,6 +133,20 @@ export default function FlowLessonPlayer({
 
   const updateComponentProgress = useUpdateComponentProgressMutation();
 
+  const activeMediaForIndex = useMemo(
+    () => getMediaIdForIndex(activeIndex),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeIndex, flow, lessonMedia, mediaIdByIndex],
+  );
+
+  useEffect(() => {
+    if (activeMediaForIndex) {
+      setActiveMediaId(activeMediaForIndex);
+    } else {
+      setActiveMediaId(null);
+    }
+  }, [activeMediaForIndex]);
+
   // Reset state on node change
   useEffect(() => {
     setActiveIndex(initialIndex);
@@ -63,21 +155,22 @@ export default function FlowLessonPlayer({
         ? progress.completedComponentIds
         : [],
     );
-    if (lessonMedia.length > 0) {
-      setActiveMediaId(lessonMedia[0].id);
-    } else {
-      setActiveMediaId(null);
-    }
+    setActiveMediaId(getMediaIdForIndex(initialIndex));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeDetails?.id, lessonMedia]);
 
   // 4. Progress Handlers
-  const handleCompleteComponent = (activeComponent, currentSafeIndex, result = {}) => {
+  const handleCompleteComponent = (
+    activeComponent,
+    currentSafeIndex,
+    result = {},
+  ) => {
     const nextCompletedIds = completedIds.includes(activeComponent.id)
       ? completedIds
       : [...completedIds, activeComponent.id];
-    
+
     const nextIndex = Math.min(currentSafeIndex + 1, flow.length - 1);
-    
+
     const componentResult = {
       componentId: activeComponent.id,
       type: activeComponent.type,
@@ -113,16 +206,16 @@ export default function FlowLessonPlayer({
 
   // 5. Layout Rendering
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1.2fr)] h-[calc(100vh-64px)] w-full overflow-hidden">
+    <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 overflow-hidden p-3 lg:grid-cols-[300px_minmax(0,1fr)_minmax(360px,0.95fr)]">
       {/* Cột 1: Left Panel */}
-      <div className="hidden lg:block h-full z-10 relative">
+      <div className="relative z-10 hidden h-full min-h-0 lg:block">
         <LeftPanel
           flatSyllabusItems={flatSyllabusItems}
           progressStats={progressStats}
           lessonSlug={lessonSlug}
           handleSyllabusClick={handleSyllabusClick}
           currentNodeDetails={nodeDetails}
-          flow={flow}
+          progressItems={progressItems}
           activeIndex={activeIndex}
           completedIds={completedIds}
           onSelectComponent={handleSelectComponent}
@@ -130,7 +223,7 @@ export default function FlowLessonPlayer({
       </div>
 
       {/* Cột 2: Center Media */}
-      <div className="hidden lg:block h-full border-r border-slate-200 dark:border-primary-850/50 z-0 relative">
+      <div className="relative z-0 hidden h-full min-h-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated lg:block">
         <CenterMedia
           lessonMedia={lessonMedia}
           activeMediaId={activeMediaId}
@@ -139,7 +232,7 @@ export default function FlowLessonPlayer({
       </div>
 
       {/* Cột 3: Right Interactive (or full width on mobile) */}
-      <div className="h-full z-20 relative shadow-[-10px_0_30px_-15px_rgba(0,0,0,0.1)] dark:shadow-[-10px_0_30px_-15px_rgba(0,0,0,0.5)]">
+      <div className="relative z-20 h-full min-h-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
         <RightInteractive
           flow={flow}
           activeIndex={activeIndex}

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { getSlugFromTitle } from "../../../utils/slug";
 
-// Status config cho từng bài học trong course content
 const STATUS_CONFIG = {
   completed: {
     icon: "check_circle",
@@ -25,7 +24,6 @@ const STATUS_CONFIG = {
   },
 };
 
-// Component flow item type icons
 const COMPONENT_TYPE_ICONS = {
   media: "play_circle",
   dialogue: "forum",
@@ -42,27 +40,48 @@ const COMPONENT_TYPE_ICONS = {
   final_summary: "military_tech",
 };
 
-/**
- * LeftPanel — Cột trái trong layout 3 cột của lesson.
- * Gồm 2 phần:
- * 1. Course Content: danh sách bài học trong chương
- * 2. Component Flow: timeline tiến trình component trong bài học hiện tại
- */
+function Panel({ icon, title, subtitle, children, className = "" }) {
+  return (
+    <section
+      className={`flex min-h-0 flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated ${className}`}
+    >
+      <div className="shrink-0 border-b border-slate-100 px-4 py-3 dark:border-primary-850/50">
+        <div className="flex items-start gap-2.5">
+          <span className="material-symbols-outlined flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-250">
+            {icon}
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm font-bold leading-tight text-primary-900 dark:text-primary-100">
+              {title}
+            </p>
+            {subtitle && (
+              <p className="mt-0.5 text-[11px] font-semibold text-slate-400 dark:text-primary-400">
+                {subtitle}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+      {children}
+    </section>
+  );
+}
+
 export function LeftPanel({
-  // Course content props
   flatSyllabusItems,
   progressStats,
   lessonSlug,
   handleSyllabusClick,
   currentNodeDetails,
-  // Component flow props
-  flow,           // array of normalized flow components
-  activeIndex,    // index of currently active component
-  completedIds,   // array of completed component IDs
-  onSelectComponent, // callback(index) khi click vào component trong flow
+  progressItems,
+  activeIndex,
+  completedIds,
+  onSelectComponent,
 }) {
-  const [activeTab, setActiveTab] = useState("flow"); // "course" | "flow"
   const documents = currentNodeDetails?.chapter?.course?.documents || [];
+  const completedMilestones = (progressItems || []).filter(({ component }) =>
+    completedIds?.includes(component.id),
+  ).length;
 
   const handlePdfClick = () => {
     if (documents.length === 0) return;
@@ -72,207 +91,156 @@ export function LeftPanel({
   };
 
   return (
-    <aside className="h-full flex flex-col bg-white dark:bg-surface-dark-elevated border-r border-slate-200 dark:border-primary-850/50 overflow-hidden">
-      {/* Tab switcher */}
-      <div className="flex border-b border-slate-200 dark:border-primary-850/50 shrink-0">
-        <button
-          type="button"
-          onClick={() => setActiveTab("flow")}
-          className={`flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-bold uppercase tracking-wider transition-colors ${
-            activeTab === "flow"
-              ? "border-b-2 border-primary-600 text-primary-600 dark:text-primary-300 bg-primary-50/50 dark:bg-primary-900/20"
-              : "text-slate-500 dark:text-primary-400 hover:bg-slate-50 dark:hover:bg-primary-900/10"
-          }`}
-        >
-          <span className="material-symbols-outlined text-base">
-            account_tree
-          </span>
-          Bài học
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("course")}
-          className={`flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-bold uppercase tracking-wider transition-colors ${
-            activeTab === "course"
-              ? "border-b-2 border-primary-600 text-primary-600 dark:text-primary-300 bg-primary-50/50 dark:bg-primary-900/20"
-              : "text-slate-500 dark:text-primary-400 hover:bg-slate-50 dark:hover:bg-primary-900/10"
-          }`}
-        >
-          <span className="material-symbols-outlined text-base">menu_book</span>
-          Chương
-        </button>
-      </div>
-
-      {/* Tab: Component Flow */}
-      {activeTab === "flow" && (
-        <div className="flex-1 overflow-y-auto">
-          {/* Progress header */}
-          <div className="p-3 border-b border-slate-100 dark:border-primary-900/20 bg-primary-50 dark:bg-primary-950/30">
-            <div className="flex items-center justify-between mb-1.5">
-              <p className="text-[10px] uppercase tracking-wider font-bold text-primary-600 dark:text-primary-300">
-                Tiến trình
-              </p>
-              <p className="text-[10px] font-bold text-primary-700 dark:text-primary-200">
-                {completedIds?.length || 0}/{flow?.length || 0}
-              </p>
-            </div>
-            <div className="h-1.5 bg-white dark:bg-primary-950/50 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-primary-600 rounded-full transition-all duration-500"
-                style={{
-                  width:
-                    flow?.length
-                      ? `${((completedIds?.length || 0) / flow.length) * 100}%`
-                      : "0%",
-                }}
-              />
-            </div>
+    <aside className="grid h-full min-h-0 grid-rows-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-3">
+      <Panel
+        icon="menu_book"
+        title="Nội dung khóa học"
+        subtitle={`${progressStats?.completed || 0}/${progressStats?.total || 0} bài - ${progressStats?.percentage || 0}%`}
+      >
+        <div className="shrink-0 px-4 py-3">
+          <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-primary-950/50">
+            <div
+              className="h-full rounded-full bg-primary-600 transition-all"
+              style={{ width: `${progressStats?.percentage || 0}%` }}
+            />
           </div>
+        </div>
 
-          {/* Flow steps */}
-          <div className="p-2 space-y-1">
-            {(flow || []).map((component, index) => {
-              const isActive = index === activeIndex;
-              const isDone = completedIds?.includes(component.id);
-              const isPast = index < (activeIndex || 0);
-              const typeIcon =
-                COMPONENT_TYPE_ICONS[component.type] || "widgets";
+        <div className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 pb-3">
+          {(flatSyllabusItems || []).map((item, index) => {
+            const config = STATUS_CONFIG[item.status] || STATUS_CONFIG.locked;
+            const isActiveLesson = getSlugFromTitle(item.title) === lessonSlug;
 
-              return (
-                <button
-                  key={component.id}
-                  type="button"
-                  onClick={() => onSelectComponent?.(index)}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-2xl border text-left transition-all ${
+            return (
+              <button
+                key={`${item.id || item.title}-${index}`}
+                onClick={() => handleSyllabusClick?.(item)}
+                type="button"
+                className={`flex w-full items-center gap-2 rounded-2xl border px-3 py-2.5 text-left text-xs ${config.className} ${
+                  isActiveLesson
+                    ? "ring-2 ring-primary-600 ring-offset-1 dark:ring-offset-[#0D1117]"
+                    : ""
+                }`}
+              >
+                <span className="material-symbols-outlined text-sm">
+                  {config.icon}
+                </span>
+                <span className="min-w-0 flex-1 truncate">{item.title}</span>
+                {item.status === "content_locked" && (
+                  <span className="shrink-0 text-[9px] font-bold uppercase tracking-wide opacity-70">
+                    Sắp có
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {documents.length > 0 && (
+          <div className="shrink-0 border-t border-slate-100 p-3 dark:border-primary-850/50">
+            <button
+              type="button"
+              onClick={handlePdfClick}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-primary-200 px-3 py-2.5 text-xs font-semibold text-primary-700 transition-all hover:bg-primary-50 dark:border-primary-800/40 dark:text-primary-300 dark:hover:bg-primary-900/20"
+            >
+              <span className="material-symbols-outlined text-base">
+                picture_as_pdf
+              </span>
+              Tài liệu PDF
+            </button>
+          </div>
+        )}
+      </Panel>
+
+      <Panel
+        icon="account_tree"
+        title="Nội dung bài học"
+        subtitle={`${completedMilestones}/${progressItems?.length || 0} mốc chính`}
+      >
+        <div className="shrink-0 px-4 py-3">
+          <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-primary-950/50">
+            <div
+              className="h-full rounded-full bg-primary-600 transition-all duration-500"
+              style={{
+                width: progressItems?.length
+                  ? `${(completedMilestones / progressItems.length) * 100}%`
+                  : "0%",
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 pb-3">
+          {(progressItems || []).map(({ component, index }) => {
+            const isActive = index === activeIndex;
+            const isDone = completedIds?.includes(component.id);
+            const isPast = index < (activeIndex || 0);
+            const typeIcon = COMPONENT_TYPE_ICONS[component.type] || "widgets";
+
+            return (
+              <button
+                key={component.id}
+                type="button"
+                onClick={() => {
+                  if (isDone || isPast || isActive) onSelectComponent?.(index);
+                }}
+                className={`flex w-full items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all ${
+                  isActive
+                    ? "border-primary-400 bg-primary-50 shadow-sm dark:bg-primary-900/40"
+                    : isDone
+                      ? "cursor-pointer border-green-200 bg-green-50/50 hover:bg-green-50 dark:border-green-800/40 dark:bg-green-950/15 dark:hover:bg-green-950/25"
+                      : isPast
+                        ? "cursor-pointer border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-primary-850/50 dark:bg-primary-950/20"
+                        : "cursor-not-allowed border-slate-150 bg-white opacity-60 dark:border-primary-900/30 dark:bg-transparent"
+                }`}
+              >
+                <span
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl ${
                     isActive
-                      ? "border-primary-400 bg-primary-50 dark:bg-primary-900/40 shadow-sm"
+                      ? "bg-primary-600 text-white"
                       : isDone
-                        ? "border-green-200 dark:border-green-800/40 bg-green-50/50 dark:bg-green-950/15 hover:bg-green-50 dark:hover:bg-green-950/25 cursor-pointer"
-                        : isPast
-                          ? "border-slate-200 dark:border-primary-850/50 bg-slate-50 dark:bg-primary-950/20 hover:bg-slate-100 cursor-pointer"
-                          : "border-slate-150 dark:border-primary-900/30 bg-white dark:bg-transparent opacity-60 cursor-not-allowed"
+                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
+                        : "bg-slate-100 text-slate-400 dark:bg-primary-900/30 dark:text-primary-500"
                   }`}
                 >
-                  {/* Status icon */}
-                  <span
-                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl ${
+                  {isDone && !isActive ? (
+                    <span className="material-symbols-outlined text-sm">
+                      check
+                    </span>
+                  ) : (
+                    <span className="material-symbols-outlined text-sm">
+                      {typeIcon}
+                    </span>
+                  )}
+                </span>
+
+                <div className="min-w-0 flex-1">
+                  <p
+                    className={`truncate text-xs font-bold ${
                       isActive
-                        ? "bg-primary-600 text-white"
+                        ? "text-primary-800 dark:text-primary-100"
                         : isDone
-                          ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300"
-                          : "bg-slate-100 dark:bg-primary-900/30 text-slate-400 dark:text-primary-500"
+                          ? "text-green-800 dark:text-green-200"
+                          : "text-slate-600 dark:text-primary-300"
                     }`}
                   >
-                    {isDone && !isActive ? (
-                      <span className="material-symbols-outlined text-sm">
-                        check
-                      </span>
-                    ) : (
-                      <span className="material-symbols-outlined text-sm">
-                        {typeIcon}
-                      </span>
-                    )}
+                    {component.title || component.type}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-wide text-slate-400 dark:text-primary-500">
+                    {String(component.type).replaceAll("_", " ")}
+                  </p>
+                </div>
+
+                {isActive && (
+                  <span className="material-symbols-outlined shrink-0 text-base text-primary-600 dark:text-primary-300">
+                    arrow_right
                   </span>
-
-                  {/* Label */}
-                  <div className="min-w-0 flex-1">
-                    <p
-                      className={`text-xs font-bold truncate ${
-                        isActive
-                          ? "text-primary-800 dark:text-primary-100"
-                          : isDone
-                            ? "text-green-800 dark:text-green-200"
-                            : "text-slate-600 dark:text-primary-300"
-                      }`}
-                    >
-                      {component.title || component.type}
-                    </p>
-                    <p className="text-[10px] text-slate-400 dark:text-primary-500 uppercase tracking-wide">
-                      {String(component.type).replaceAll("_", " ")}
-                    </p>
-                  </div>
-
-                  {/* Active indicator */}
-                  {isActive && (
-                    <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-300 shrink-0">
-                      arrow_right
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Tab: Course Content */}
-      {activeTab === "course" && (
-        <div className="flex-1 overflow-y-auto">
-          {/* Progress header */}
-          <div className="p-3 border-b border-slate-100 dark:border-primary-900/20 bg-primary-600">
-            <p className="text-xs font-bold text-white mb-1.5">
-              Nội dung khóa học
-            </p>
-            <div className="h-1.5 bg-white/25 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-white rounded-full transition-all"
-                style={{ width: `${progressStats?.percentage || 0}%` }}
-              />
-            </div>
-            <p className="text-[10px] text-white/80 mt-1">
-              {progressStats?.completed || 0}/{progressStats?.total || 0} bài ({progressStats?.percentage || 0}%)
-            </p>
-          </div>
-
-          {/* Lesson list */}
-          <div className="p-2 space-y-1">
-            {(flatSyllabusItems || []).map((item, index) => {
-              const config =
-                STATUS_CONFIG[item.status] || STATUS_CONFIG.locked;
-              const isActiveLesson =
-                getSlugFromTitle(item.title) === lessonSlug;
-              return (
-                <button
-                  key={index}
-                  onClick={() => handleSyllabusClick?.(item)}
-                  type="button"
-                  className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-2xl border text-left text-xs ${config.className} ${
-                    isActiveLesson
-                      ? "ring-2 ring-primary-600 ring-offset-1 font-bold"
-                      : ""
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-sm">
-                    {config.icon}
-                  </span>
-                  <span className="flex-1 truncate">{item.title}</span>
-                  {item.status === "content_locked" && (
-                    <span className="text-[9px] font-bold uppercase tracking-wide opacity-70">
-                      Sắp có
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* PDF link */}
-          {documents.length > 0 && (
-            <div className="p-3 border-t border-slate-100 dark:border-primary-900/20">
-              <button
-                type="button"
-                onClick={handlePdfClick}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-2xl border border-primary-200 dark:border-primary-800/40 text-primary-700 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 text-xs font-semibold transition-all"
-              >
-                <span className="material-symbols-outlined text-base">
-                  picture_as_pdf
-                </span>
-                Tài liệu PDF
+                )}
               </button>
-            </div>
-          )}
+            );
+          })}
         </div>
-      )}
+      </Panel>
     </aside>
   );
 }

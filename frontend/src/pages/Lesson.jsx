@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, Suspense, lazy } from "react";
+import React, { useEffect, useMemo, Suspense, lazy } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import PageShell, { PageHero } from "../components/PageShell";
@@ -15,7 +15,6 @@ import { queryKeys } from "../services/queryKeys";
 import { getTitleFromSlug, getSlugFromTitle } from "../utils/slug";
 import { loadSettings } from "../utils/settings";
 import { LessonSkeleton } from "./lesson/components/LessonSkeleton";
-import { LessonSidebar } from "./lesson/components/LessonSidebar";
 
 const FlowLessonPlayer = lazy(() => import("./lesson/flow/FlowLessonPlayer"));
 
@@ -29,8 +28,6 @@ const Lesson = () => {
   const { showToast } = useToast();
   const { user } = useAuth();
   const queryClient = useQueryClient();
-
-  const lessonContentRef = useRef(null);
 
   // Load course journey using query hook
   const { data: journeyData } = useJourney(user);
@@ -375,29 +372,22 @@ const Lesson = () => {
         />
       )}
 
-      <div className={`${!activeLesson ? "px-6 md:px-12 py-8 max-w-6xl mx-auto" : "w-full"} text-left transition-colors duration-300 bg-slate-50 dark:bg-primary-950/10 rounded-3xl min-h-screen mt-6`}>
-        {/* Breadcrumb */}
-        <div className={`flex items-center gap-2 text-sm text-slate-500 dark:text-primary-350 mb-6 flex-wrap ${activeLesson ? "px-6 mt-4" : ""}`}>
-          <span>Trang chủ</span>
-          <span>›</span>
-          <strong
-            className={
-              activeLesson
-                ? "text-slate-650 dark:text-primary-300"
-                : "text-primary-800 dark:text-primary-300"
-            }
-          >
-            Bài học
-          </strong>
-          {activeLesson && (
-            <>
-              <span>›</span>
-              <strong className="text-primary-800 dark:text-primary-300">
-                {activeLesson.title}
-              </strong>
-            </>
-          )}
-        </div>
+      <div
+        className={`text-left transition-colors duration-300 ${
+          activeLesson
+            ? "h-[calc(100vh-64px)] overflow-hidden bg-slate-50 dark:bg-primary-950/10"
+            : "mx-auto mt-6 min-h-screen max-w-6xl rounded-3xl bg-slate-50 px-6 py-8 dark:bg-primary-950/10 md:px-12"
+        }`}
+      >
+        {!activeLesson && (
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500 dark:text-primary-350">
+            <span>Trang chủ</span>
+            <span>›</span>
+            <strong className="text-primary-800 dark:text-primary-300">
+              Bài học
+            </strong>
+          </div>
+        )}
 
         {/* Mindmap view if no active lesson */}
         {!activeLesson && (
@@ -412,51 +402,45 @@ const Lesson = () => {
         )}
 
         {/* Lesson player viewport */}
-        <div ref={lessonContentRef} className="scroll-mt-20">
+        <div className={activeLesson ? "h-full min-h-0" : "scroll-mt-20"}>
           {activeLesson ? (
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={handleBackToMindmap}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-850 dark:text-primary-300 dark:hover:text-primary-100 mb-5 pl-6"
-              >
-                <span className="material-symbols-outlined text-base">
-                  arrow_back
-                </span>
-                Quay lại sơ đồ bài học
-              </button>
+            <div className="flex h-full min-h-0 flex-col">
+              <div className="flex h-12 shrink-0 items-center gap-3 border-b border-slate-200 bg-white px-4 dark:border-primary-850/50 dark:bg-[#0D1117]">
+                <button
+                  type="button"
+                  onClick={handleBackToMindmap}
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-primary-150 text-primary-650 transition-colors hover:bg-primary-50 hover:text-primary-850 dark:border-primary-850 dark:text-primary-300 dark:hover:bg-primary-900/30"
+                  aria-label="Quay lại sơ đồ bài học"
+                >
+                  <span className="material-symbols-outlined text-base">
+                    arrow_back
+                  </span>
+                </button>
 
-              <header className="mb-8 text-left px-6">
-                <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/35 border border-primary-150 dark:border-primary-800 text-primary-800 dark:text-primary-250 px-4 py-2 rounded-full text-xs font-bold mb-3 shadow-sm">
-                  <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-300">
-                    bookmark
-                  </span>
-                  Đang học: {activeLesson.title}
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-bold text-primary-900 dark:text-primary-100">
+                    {activeLesson.title}
+                  </p>
+                  <p className="truncate text-[11px] font-semibold text-slate-400 dark:text-primary-400">
+                    {currentNodeDetails?.timeToRead || "10 phút"} · Độ khó:{" "}
+                    {currentNodeDetails?.difficulty || "Trung bình"}
+                  </p>
                 </div>
-                <h1 className="font-bold text-3xl md:text-4xl text-primary-800 dark:text-primary-100 mb-3">
-                  {activeLesson.title}
-                </h1>
-                <div className="flex flex-wrap gap-2">
-                  <span className="bg-primary-100 dark:bg-primary-900/35 text-primary-750 dark:text-primary-300 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">
-                    Triết học
-                  </span>
-                  <span className="bg-slate-150 dark:bg-primary-900/10 text-slate-700 dark:text-primary-350 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
-                    <span className="material-symbols-outlined text-sm">
-                      schedule
-                    </span>
-                    {currentNodeDetails?.timeToRead || "10 phút"}
-                  </span>
-                  <span className="bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">
-                    Độ khó: {currentNodeDetails?.difficulty || "Trung bình"}
-                  </span>
-                </div>
-              </header>
+              </div>
 
               {loadingNode ? (
-                <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto"><LessonSkeleton /></div>
+                <div className="min-h-0 flex-1 px-6 py-5">
+                  <LessonSkeleton />
+                </div>
               ) : (
-                <div className="w-full">
-                  <Suspense fallback={<div className="px-6"><LessonSkeleton /></div>}>
+                <div className="min-h-0 flex-1">
+                  <Suspense
+                    fallback={
+                      <div className="px-6 py-5">
+                        <LessonSkeleton />
+                      </div>
+                    }
+                  >
                     <FlowLessonPlayer
                       nodeDetails={currentNodeDetails}
                       isRevisit={isRevisit}

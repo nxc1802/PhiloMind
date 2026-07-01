@@ -11,8 +11,8 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
   const { autoplayVideo } = loadSettings();
 
   // Tìm media item đang active
-  const activeMedia = lessonMedia?.find((m) => m.id === activeMediaId)
-    ?? lessonMedia?.[0];
+  const activeMedia =
+    lessonMedia?.find((m) => m.id === activeMediaId) ?? lessonMedia?.[0];
 
   if (!lessonMedia || lessonMedia.length === 0) {
     return (
@@ -48,7 +48,9 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
               <figure className="overflow-hidden rounded-2xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-primary-950/30">
                 <img
                   src={activeMedia.url}
-                  alt={activeMedia.alt || activeMedia.title || "Hình ảnh bài học"}
+                  alt={
+                    activeMedia.alt || activeMedia.title || "Hình ảnh bài học"
+                  }
                   className="w-full max-h-[360px] object-contain"
                 />
                 {(activeMedia.title || activeMedia.subtitle) && (
@@ -80,7 +82,7 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
             </p>
             <div className="flex flex-col gap-1.5">
               {lessonMedia.map((media) => {
-                const isSelected = media.id === (activeMedia?.id);
+                const isSelected = media.id === activeMedia?.id;
                 return (
                   <button
                     key={media.id}
@@ -96,7 +98,8 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
                       {media.type === "video" ? "play_circle" : "image"}
                     </span>
                     <span className="text-xs font-semibold truncate">
-                      {media.title || (media.type === "video" ? "Video" : "Hình ảnh")}
+                      {media.title ||
+                        (media.type === "video" ? "Video" : "Hình ảnh")}
                     </span>
                     {isSelected && (
                       <span className="material-symbols-outlined text-sm text-primary-600 dark:text-primary-300 ml-auto shrink-0">
