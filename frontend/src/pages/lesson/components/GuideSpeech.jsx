@@ -103,21 +103,21 @@ export function SpeechBubble({ who, text, animate, onTypingDone }) {
   }, [done, onTypingDone]);
 
   return (
-    <div className="flex items-start gap-3 j-bubble-in text-left">
+    <div className="flex items-start gap-2 j-bubble-in text-left">
       <div
-        className={`shrink-0 rounded-full bg-gradient-to-br ${character.color} p-0.5 shadow-md`}
+        className={`shrink-0 rounded-full bg-gradient-to-br ${character.color} p-[1px] shadow-sm`}
       >
-        <Avatar id={character.avatar} size={44} />
+        <Avatar id={character.avatar} size={32} />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-bold text-sm text-gray-900 dark:text-primary-100">
+        <div className="flex items-baseline gap-2 mb-0.5">
+          <span className="font-bold text-xs text-gray-900 dark:text-primary-100">
             {character.name}
           </span>
-          <span className="text-[11px] text-gray-400">{character.role}</span>
+          <span className="text-[10px] text-gray-400">{character.role}</span>
         </div>
         <div
-          className="bg-white dark:bg-[#002b37] border border-gray-200 rounded-3xl rounded-tl-sm px-4 py-3 shadow-sm text-gray-800 dark:text-primary-150 leading-relaxed cursor-pointer"
+          className="bg-white dark:bg-[#002b37] border border-gray-200 rounded-2xl rounded-tl-sm px-3 py-2 shadow-sm text-sm text-gray-800 dark:text-primary-150 leading-snug cursor-pointer"
           onClick={() => !done && finishNow()}
         >
           {shown}
@@ -189,7 +189,7 @@ export default function DialogueSequence({
 
   return (
     <div>
-      <div className="space-y-4">
+      <div className="space-y-2">
         {lines.slice(0, visibleCount).map((line, index) => {
           const isCurrent = index === visibleCount - 1;
           return (

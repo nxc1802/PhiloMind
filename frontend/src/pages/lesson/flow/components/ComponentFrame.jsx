@@ -29,16 +29,16 @@ export function ComponentFrame({ component, children, className = "" }) {
   const typeIcon = TYPE_ICONS[safeComponent.type] || "widgets";
 
   return (
-    <section className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-4 md:p-6 text-left flex flex-col h-full min-h-0 ${className}`}>
-      <div className="flex items-center gap-3 mb-4 shrink-0">
-        <span className="material-symbols-outlined flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300">
+    <section className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-3 flex flex-col h-full min-h-0 ${className}`}>
+      <div className="flex items-center gap-2 mb-2 shrink-0">
+        <span className="material-symbols-outlined flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300 text-lg">
           {typeIcon}
         </span>
         <div>
-          <p className="text-[11px] uppercase tracking-wider text-primary-650 dark:text-primary-300 font-bold">
+          <p className="text-[10px] uppercase tracking-wider text-primary-650 dark:text-primary-300 font-bold leading-none mb-0.5">
             {typeLabel}
           </p>
-          <h2 className="text-xl font-bold text-primary-900 dark:text-primary-100 leading-tight">
+          <h2 className="text-base font-bold text-primary-900 dark:text-primary-100 leading-tight">
             {safeComponent.title || "Hoạt động bài học"}
           </h2>
         </div>
