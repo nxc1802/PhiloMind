@@ -40,8 +40,8 @@ export function RightInteractive({
   };
 
   return (
-    <div className="relative z-20 flex h-full min-h-0 flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-slate-100 shadow-sm dark:border-primary-850/50 dark:bg-[#06141b]">
-      <div className="w-full space-y-4 p-3">
+    <div className="relative z-20 flex h-full min-h-0 flex-col overflow-y-auto w-full">
+      <div className="w-full pb-8 h-full">
         {/* Component Renderer */}
         {activeComponent.type === "media" ? (
           <ComponentFrame component={activeComponent}>

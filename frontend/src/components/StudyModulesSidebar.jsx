@@ -24,7 +24,7 @@ export default function StudyModulesSidebar({ activeKey, footer = null }) {
   return (
     <aside
       className={`fixed left-0 top-16 bottom-0 z-40 bg-white dark:bg-[#161B22] border-r border-slate-100 dark:border-primary-900/20 overflow-y-auto hidden lg:flex flex-col transition-all duration-300 ${
-        collapsed ? "w-16" : "w-72"
+        collapsed ? "w-12" : "w-72"
       }`}
     >
       <div
