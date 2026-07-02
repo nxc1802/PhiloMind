@@ -206,7 +206,7 @@ export default function FlowLessonPlayer({
 
   // 5. Layout Rendering
   return (
-    <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 overflow-hidden p-3 lg:grid-cols-[230px_minmax(0,1fr)_260px] 2xl:grid-cols-[280px_minmax(0,1fr)_320px]">
+    <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 overflow-hidden p-3 lg:grid-cols-[205px_minmax(0,1fr)_312px] 2xl:grid-cols-[252px_minmax(0,1fr)_384px]">
       {/* Cột 1: Left Panel */}
       <div className="relative z-10 hidden h-full min-h-0 lg:block">
         <LeftPanel
@@ -231,16 +231,13 @@ export default function FlowLessonPlayer({
         />
       </div>
 
-      {/* Cột 3: Right Interactive (or full width on mobile) */}
-      <div className="relative z-20 h-full min-h-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
-        <RightInteractive
-          flow={flow}
-          activeIndex={activeIndex}
-          completedIds={completedIds}
-          onCompleteComponent={handleCompleteComponent}
-          onFinishLesson={onComplete}
-        />
-      </div>
+      <RightInteractive
+        flow={flow}
+        activeIndex={activeIndex}
+        completedIds={completedIds}
+        onCompleteComponent={handleCompleteComponent}
+        onFinishLesson={onComplete}
+      />
     </div>
   );
 }

@@ -17,7 +17,7 @@ export function RightInteractive({
 
   if (!activeComponent) {
     return (
-      <div className="h-full flex flex-col items-center justify-center p-6 bg-white dark:bg-surface-dark-elevated">
+      <div className="flex h-full min-h-0 flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
         <p className="text-gray-600">Bài học chưa có nội dung tương tác.</p>
       </div>
     );
@@ -40,8 +40,8 @@ export function RightInteractive({
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-y-auto bg-slate-100 dark:bg-[#06141b]">
-      <div className="mx-auto w-full max-w-2xl space-y-5 p-4 md:p-5">
+    <div className="relative z-20 flex h-full min-h-0 flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-slate-100 shadow-sm dark:border-primary-850/50 dark:bg-[#06141b]">
+      <div className="w-full space-y-4 p-3">
         {/* Component Renderer */}
         {activeComponent.type === "media" ? (
           <ComponentFrame component={activeComponent}>

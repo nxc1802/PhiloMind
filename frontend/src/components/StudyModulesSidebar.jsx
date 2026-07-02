@@ -7,6 +7,19 @@ import { useSidebar } from "../context/SidebarContext";
 // Hỗ trợ thu gọn thành icon-only mode (collapse)
 export default function StudyModulesSidebar({ activeKey, footer = null }) {
   const { collapsed, toggle } = useSidebar();
+  const footerLinks = [
+    {
+      href: "https://forms.gle/9AXVDRqzcAnTbdU39",
+      icon: "rate_review",
+      label: "Thực hiện khảo sát",
+      external: true,
+    },
+    {
+      to: "/settings",
+      icon: "settings",
+      label: "Cài đặt tài khoản",
+    },
+  ];
 
   return (
     <aside
@@ -15,7 +28,7 @@ export default function StudyModulesSidebar({ activeKey, footer = null }) {
       }`}
     >
       <div
-        className={`mb-2 min-h-[104px] px-3 py-4 ${
+        className={`mb-2 min-h-[80px] px-3 py-4 ${
           collapsed ? "flex items-start justify-center" : "px-5"
         }`}
       >
@@ -30,7 +43,7 @@ export default function StudyModulesSidebar({ activeKey, footer = null }) {
               <>
                 <div className="flex min-w-0 items-start justify-between gap-2">
                   <h2 className="min-w-0 text-lg font-bold leading-tight text-slate-900 dark:text-primary-100">
-                    Chương trình học
+                    Triết học Mác - Lênin
                   </h2>
                   <button
                     type="button"
@@ -43,9 +56,6 @@ export default function StudyModulesSidebar({ activeKey, footer = null }) {
                     </span>
                   </button>
                 </div>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-primary-400">
-                  Triết học Mác - Lênin
-                </p>
               </>
             )}
             {collapsed && (
@@ -91,6 +101,37 @@ export default function StudyModulesSidebar({ activeKey, footer = null }) {
       {/* Footer */}
       {!collapsed && footer && (
         <div className="mt-auto px-4 pb-8">{footer}</div>
+      )}
+      {collapsed && (
+        <div className="mt-auto space-y-1 border-t border-slate-100 px-2 py-3 dark:border-primary-900/20">
+          {footerLinks.map((item) =>
+            item.external ? (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={item.label}
+                className="flex h-11 w-full items-center justify-center rounded-3xl text-slate-500 transition-all hover:bg-primary-50 hover:text-primary-600 dark:text-slate-400 dark:hover:bg-primary-900/20 dark:hover:text-primary-300"
+              >
+                <span className="material-symbols-outlined text-xl">
+                  {item.icon}
+                </span>
+              </a>
+            ) : (
+              <Link
+                key={item.label}
+                to={item.to}
+                title={item.label}
+                className="flex h-11 w-full items-center justify-center rounded-3xl text-slate-500 transition-all hover:bg-primary-50 hover:text-primary-600 dark:text-slate-400 dark:hover:bg-primary-900/20 dark:hover:text-primary-300"
+              >
+                <span className="material-symbols-outlined text-xl">
+                  {item.icon}
+                </span>
+              </Link>
+            ),
+          )}
+        </div>
       )}
     </aside>
   );

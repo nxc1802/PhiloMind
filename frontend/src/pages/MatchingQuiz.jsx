@@ -5,14 +5,12 @@ import { api } from "../services/api";
 import { useToast } from "../components/Toast";
 import "./MatchingQuiz.css";
 
-
-
 export default function MatchingQuiz() {
   const { id } = useParams();
   const { showToast } = useToast();
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Game States
   const [currentGame, setCurrentGame] = useState(null);
   const [leftItems, setLeftItems] = useState([]);
@@ -47,7 +45,9 @@ export default function MatchingQuiz() {
         setQuizzes([quiz]);
       } else {
         const res = await api.quizzes.list();
-        const matchingQuizzes = (res || []).filter(q => q.type === 'matching');
+        const matchingQuizzes = (res || []).filter(
+          (q) => q.type === "matching",
+        );
         setQuizzes(matchingQuizzes);
         if (matchingQuizzes.length > 0) {
           setCurrentGame(matchingQuizzes[0]);
@@ -55,7 +55,10 @@ export default function MatchingQuiz() {
       }
     } catch (err) {
       console.error("Error loading matching quizzes:", err);
-      showToast("Không thể tải danh sách trò chơi ghép cặp từ CSDL. Sử dụng dữ liệu dự phòng.", "warning");
+      showToast(
+        "Không thể tải danh sách trò chơi ghép cặp từ CSDL. Sử dụng dữ liệu dự phòng.",
+        "warning",
+      );
     } finally {
       setLoading(false);
     }
@@ -77,15 +80,27 @@ export default function MatchingQuiz() {
 
   const startGame = (game = null) => {
     const activeGame = game || currentGame;
-    if (!activeGame || !Array.isArray(activeGame.questions) || activeGame.questions.length === 0) {
+    if (
+      !activeGame ||
+      !Array.isArray(activeGame.questions) ||
+      activeGame.questions.length === 0
+    ) {
       showToast("Không có câu hỏi ghép cặp cho trò chơi này.", "warning");
       return;
     }
     const pairs = activeGame.questions;
 
     // Format pairs for layout
-    const formattedLeft = pairs.map((p, i) => ({ id: `left-${i}`, text: p.left, matchIndex: i }));
-    const formattedRight = pairs.map((p, i) => ({ id: `right-${i}`, text: p.right, matchIndex: i }));
+    const formattedLeft = pairs.map((p, i) => ({
+      id: `left-${i}`,
+      text: p.left,
+      matchIndex: i,
+    }));
+    const formattedRight = pairs.map((p, i) => ({
+      id: `right-${i}`,
+      text: p.right,
+      matchIndex: i,
+    }));
 
     setLeftItems(shuffleArray(formattedLeft));
     setRightItems(shuffleArray(formattedRight));
@@ -162,7 +177,7 @@ export default function MatchingQuiz() {
       // Correct Match!
       const newMatched = { ...matchedPairs, [left.id]: right.id };
       setMatchedPairs(newMatched);
-      setScore(prev => prev + 20);
+      setScore((prev) => prev + 20);
       setSelectedLeft(null);
       setSelectedRight(null);
       showToast("Khớp nối biện chứng chính xác!", "success");
@@ -172,14 +187,17 @@ export default function MatchingQuiz() {
       if (Object.keys(newMatched).length === totalPairs) {
         setTimeout(() => {
           setIsGameOver(true);
-          showToast("Xuất sắc! Bạn đã kết nối tất cả khái niệm triết học!", "success");
+          showToast(
+            "Xuất sắc! Bạn đã kết nối tất cả khái niệm triết học!",
+            "success",
+          );
         }, 600);
       }
     } else {
       // Incorrect Match!
       setErrors({ [left.id]: true, [right.id]: true });
       showToast("Định nghĩa chưa tương thích. Hãy thử lại!", "error");
-      setScore(prev => Math.max(0, prev - 5));
+      setScore((prev) => Math.max(0, prev - 5));
 
       if (errorTimeoutRef.current) {
         clearTimeout(errorTimeoutRef.current);
@@ -204,15 +222,24 @@ export default function MatchingQuiz() {
       <div className="px-6 md:px-12 py-10 max-w-5xl mx-auto">
         {loading ? (
           <div className="text-center py-20 bg-white dark:bg-surface-dark-elevated rounded-3xl border border-slate-200 dark:border-primary-850 shadow-sm">
-            <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
-            <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị đấu trường ghép cặp...</p>
+            <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">
+              sync
+            </span>
+            <p className="text-gray-500 dark:text-primary-250 mt-4 font-semibold">
+              Đang chuẩn bị đấu trường ghép cặp...
+            </p>
           </div>
         ) : quizzes.length === 0 ? (
-          <div className="bg-white rounded-3xl p-12 text-center border border-dashed border-gray-300 max-w-xl mx-auto">
-            <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">layers_clear</span>
-            <h3 className="font-bold text-gray-800 text-lg mb-1">Chưa có Thử thách Ghép cặp nào</h3>
-            <p className="text-gray-500 text-sm">
-              Hiện tại hệ thống chưa có dữ liệu câu hỏi ghép cặp từ CSDL. Đang chờ cập nhật.
+          <div className="bg-white dark:bg-[#002b37] rounded-3xl p-12 text-center border border-dashed border-gray-300 dark:border-primary-850 max-w-xl mx-auto">
+            <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">
+              layers_clear
+            </span>
+            <h3 className="font-bold text-gray-800 dark:text-primary-100 text-lg mb-1">
+              Chưa có Thử thách Ghép cặp nào
+            </h3>
+            <p className="text-gray-500 dark:text-primary-250 text-sm">
+              Hiện tại hệ thống chưa có dữ liệu câu hỏi ghép cặp từ CSDL. Đang
+              chờ cập nhật.
             </p>
           </div>
         ) : !isPlaying ? (
@@ -220,21 +247,25 @@ export default function MatchingQuiz() {
           <div className="bg-slate-900 text-white rounded-3xl p-8 border border-primary-800/20 shadow-xl text-center space-y-6 max-w-2xl mx-auto relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,157,193,0.1),transparent)] pointer-events-none" />
             <div className="inline-flex items-center justify-center h-16 w-16 bg-primary-600/20 rounded-3xl text-primary-500 border border-primary-800/30 mb-2">
-              <span className="material-symbols-outlined text-4xl">grid_view</span>
+              <span className="material-symbols-outlined text-4xl">
+                grid_view
+              </span>
             </div>
-            
+
             {quizzes.length > 0 && (
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-slate-450 font-bold block">Danh sách Trò chơi trong Hệ thống</label>
+                <label className="text-xs uppercase tracking-widest text-slate-450 font-bold block">
+                  Danh sách Trò chơi trong Hệ thống
+                </label>
                 <div className="flex flex-wrap justify-center gap-2">
                   {quizzes.map((q, idx) => (
                     <button
                       key={q.id}
                       onClick={() => setCurrentGame(q)}
                       className={`px-4 py-2 rounded-3xl text-xs font-bold transition-all border ${
-                        currentGame?.id === q.id 
-                          ? 'bg-primary-800 text-white border-primary-600 shadow-md scale-105' 
-                          : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-slate-200'
+                        currentGame?.id === q.id
+                          ? "bg-primary-800 text-white border-primary-600 shadow-md scale-105"
+                          : "bg-slate-950 text-slate-400 border-slate-800 hover:text-slate-200"
                       }`}
                     >
                       Bản đồ {idx + 1}: {q.title}
@@ -248,7 +279,9 @@ export default function MatchingQuiz() {
               TRÒ CHƠI GHÉP CẶP TRIẾT HỌC
             </h3>
             <p className="text-gray-300 text-sm leading-relaxed max-w-md mx-auto">
-              Nối các <strong>Khái niệm</strong> ở cột bên trái với <strong>Định nghĩa khoa học</strong> ở cột bên phải. Mỗi cặp nối đúng đem lại 20 điểm. Trả lời sai bị trừ 5 điểm!
+              Nối các <strong>Khái niệm</strong> ở cột bên trái với{" "}
+              <strong>Định nghĩa khoa học</strong> ở cột bên phải. Mỗi cặp nối
+              đúng đem lại 20 điểm. Trả lời sai bị trừ 5 điểm!
             </p>
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-3xl py-3 px-6 text-amber-300 font-bold inline-block text-sm tracking-wide">
               ✨ Rèn Luyện Tư Duy Hệ Thống ✨
@@ -272,12 +305,17 @@ export default function MatchingQuiz() {
               HOÀN THÀNH THỬ THÁCH!
             </h3>
             <p className="text-gray-300 text-sm leading-relaxed max-w-sm mx-auto">
-              Đồng chí đã hoàn tất kết nối biện chứng trong thời gian kỷ lục <strong>{timeElapsed} giây</strong>!
+              Đồng chí đã hoàn tất kết nối biện chứng trong thời gian kỷ lục{" "}
+              <strong>{timeElapsed} giây</strong>!
             </p>
-            
+
             <div className="bg-slate-950/90 border-2 border-amber-400 rounded-3xl p-6 shadow-inner max-w-sm mx-auto">
-              <span className="text-xs uppercase tracking-[0.2em] text-amber-500 font-bold block mb-1">Chứng nhận danh hiệu</span>
-              <h4 className="text-xl font-black text-white tracking-wide">BẬC THẦY KẾT NỐI TRIẾT HỌC</h4>
+              <span className="text-xs uppercase tracking-[0.2em] text-amber-500 font-bold block mb-1">
+                Chứng nhận danh hiệu
+              </span>
+              <h4 className="text-xl font-black text-white tracking-wide">
+                BẬC THẦY KẾT NỐI TRIẾT HỌC
+              </h4>
               <div className="flex justify-between items-center mt-4 border-t border-slate-800 pt-3 text-xs text-slate-450 font-semibold font-mono">
                 <span>Điểm đạt được: {score}</span>
                 <span>Thời gian: {timeElapsed}s</span>
@@ -305,19 +343,34 @@ export default function MatchingQuiz() {
           // GAMEPLAY SCREEN
           <div className="space-y-6">
             {/* HUD Status Bar */}
-            <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-5 flex flex-wrap justify-between items-center gap-4 text-left">
+            <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-sm border border-gray-200 dark:border-primary-850 p-5 flex flex-wrap justify-between items-center gap-4 text-left">
               <div className="space-y-1">
-                <span className="text-xs uppercase font-bold tracking-wider text-primary-650 dark:text-primary-300">Thử thách ghép cặp</span>
-                <h4 className="font-extrabold text-lg text-gray-900">{currentGame?.title || "Triết học Mác - Lênin"}</h4>
+                <span className="text-xs uppercase font-bold tracking-wider text-primary-650 dark:text-primary-300">
+                  Thử thách ghép cặp
+                </span>
+                <h4 className="font-extrabold text-lg text-gray-900 dark:text-primary-100">
+                  {currentGame?.title || "Triết học Mác - Lênin"}
+                </h4>
               </div>
               <div className="flex items-center gap-4">
-                <div className="bg-slate-50 dark:bg-[#001F28] border border-slate-200 dark:border-primary-850 px-4 py-2 rounded-3xl text-sm font-semibold flex items-center gap-1.5 text-gray-700">
-                  <span className="material-symbols-outlined text-base text-primary-650 dark:text-primary-300">timer</span>
-                  <span>Thời gian: <strong>{timeElapsed}s</strong></span>
+                <div className="bg-slate-50 dark:bg-[#001F28] border border-slate-200 dark:border-primary-850 px-4 py-2 rounded-3xl text-sm font-semibold flex items-center gap-1.5 text-gray-700 dark:text-primary-200">
+                  <span className="material-symbols-outlined text-base text-primary-650 dark:text-primary-300">
+                    timer
+                  </span>
+                  <span>
+                    Thời gian: <strong>{timeElapsed}s</strong>
+                  </span>
                 </div>
-                <div className="bg-slate-50 dark:bg-[#001F28] border border-slate-200 dark:border-primary-850 px-4 py-2 rounded-3xl text-sm font-semibold flex items-center gap-1.5 text-gray-700">
-                  <span className="material-symbols-outlined text-base text-amber-600">stars</span>
-                  <span>Điểm: <strong className="text-amber-700 font-extrabold">{score}</strong></span>
+                <div className="bg-slate-50 dark:bg-[#001F28] border border-slate-200 dark:border-primary-850 px-4 py-2 rounded-3xl text-sm font-semibold flex items-center gap-1.5 text-gray-700 dark:text-primary-200">
+                  <span className="material-symbols-outlined text-base text-amber-600">
+                    stars
+                  </span>
+                  <span>
+                    Điểm:{" "}
+                    <strong className="text-amber-700 dark:text-amber-300 font-extrabold">
+                      {score}
+                    </strong>
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -331,11 +384,12 @@ export default function MatchingQuiz() {
 
             {/* Matching Grid Gameboard */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-              
               {/* Left Column (Concepts) */}
               <div className="space-y-3">
                 <h3 className="font-bold text-base text-primary-850 dark:text-primary-100 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">psychology</span>
+                  <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">
+                    psychology
+                  </span>
                   Cột A: Khái niệm Triết học
                 </h3>
                 <div className="space-y-3">
@@ -349,19 +403,23 @@ export default function MatchingQuiz() {
                         key={item.id}
                         onClick={() => handleSelectLeft(item)}
                         className={`matching-card transition-all relative border-2 ${
-                          isMatched 
-                            ? 'bg-emerald-50 border-emerald-500 text-emerald-800 pointer-events-none opacity-60' 
-                            : hasError 
-                              ? 'bg-primary-50 dark:bg-primary-900/35 border-red-500 text-primary-650 dark:text-primary-300 animate-shake' 
-                              : isSelected 
-                                ? 'bg-primary-600 text-white border-primary-800 shadow-md scale-[1.01]' 
-                                : 'bg-white border-gray-200 text-gray-800 hover:border-primary-800 hover:-translate-y-0.5 cursor-pointer'
+                          isMatched
+                            ? "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-500 text-emerald-800 dark:text-emerald-200 pointer-events-none opacity-80"
+                            : hasError
+                              ? "bg-primary-50 dark:bg-primary-900/35 border-red-500 text-primary-650 dark:text-primary-300 animate-shake"
+                              : isSelected
+                                ? "bg-primary-600 text-white border-primary-800 shadow-md scale-[1.01]"
+                                : "bg-white dark:bg-[#002b37] border-gray-200 dark:border-primary-850 text-gray-800 dark:text-primary-100 hover:border-primary-800 dark:hover:border-primary-500 hover:-translate-y-0.5 cursor-pointer"
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-sm md:text-base leading-relaxed select-none">{item.text}</span>
+                          <span className="font-bold text-sm md:text-base leading-relaxed select-none">
+                            {item.text}
+                          </span>
                           {isMatched && (
-                            <span className="material-symbols-outlined text-emerald-600 text-base">check_circle</span>
+                            <span className="material-symbols-outlined text-emerald-600 text-base">
+                              check_circle
+                            </span>
                           )}
                         </div>
                       </div>
@@ -373,13 +431,17 @@ export default function MatchingQuiz() {
               {/* Right Column (Definitions - with custom scrolling) */}
               <div className="space-y-3">
                 <h3 className="font-bold text-base text-primary-850 dark:text-primary-100 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">menu_book</span>
+                  <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">
+                    menu_book
+                  </span>
                   Cột B: Định nghĩa / Ý nghĩa khoa học
                 </h3>
                 <div className="space-y-3">
                   {rightItems.map((item) => {
                     const isSelected = selectedRight?.id === item.id;
-                    const isMatched = Object.values(matchedPairs).includes(item.id);
+                    const isMatched = Object.values(matchedPairs).includes(
+                      item.id,
+                    );
                     const hasError = !!errors[item.id];
 
                     return (
@@ -388,19 +450,23 @@ export default function MatchingQuiz() {
                         onClick={() => handleSelectRight(item)}
                         // CRITICAL: Max height and overflow-y-auto to guarantee scrolling for long descriptions, resolving out of box!
                         className={`matching-card transition-all border-2 max-h-[140px] overflow-y-auto select-none ${
-                          isMatched 
-                            ? 'bg-emerald-50 border-emerald-500 text-emerald-800 pointer-events-none opacity-60' 
-                            : hasError 
-                              ? 'bg-primary-50 dark:bg-primary-900/35 border-red-500 text-primary-650 dark:text-primary-300 animate-shake' 
-                              : isSelected 
-                                ? 'bg-primary-600 text-white border-primary-800 shadow-md' 
-                                : 'bg-white border-gray-200 text-gray-850 hover:border-primary-800 hover:-translate-y-0.5 cursor-pointer'
+                          isMatched
+                            ? "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-500 text-emerald-800 dark:text-emerald-200 pointer-events-none opacity-80"
+                            : hasError
+                              ? "bg-primary-50 dark:bg-primary-900/35 border-red-500 text-primary-650 dark:text-primary-300 animate-shake"
+                              : isSelected
+                                ? "bg-primary-600 text-white border-primary-800 shadow-md"
+                                : "bg-white dark:bg-[#002b37] border-gray-200 dark:border-primary-850 text-gray-850 dark:text-primary-100 hover:border-primary-800 dark:hover:border-primary-500 hover:-translate-y-0.5 cursor-pointer"
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3 text-left">
-                          <p className="text-xs leading-relaxed font-semibold pr-4">{item.text}</p>
+                          <p className="text-xs leading-relaxed font-semibold pr-4">
+                            {item.text}
+                          </p>
                           {isMatched && (
-                            <span className="material-symbols-outlined text-emerald-600 text-base shrink-0 mt-0.5">check_circle</span>
+                            <span className="material-symbols-outlined text-emerald-600 text-base shrink-0 mt-0.5">
+                              check_circle
+                            </span>
                           )}
                         </div>
                       </div>
@@ -408,7 +474,6 @@ export default function MatchingQuiz() {
                   })}
                 </div>
               </div>
-
             </div>
           </div>
         )}

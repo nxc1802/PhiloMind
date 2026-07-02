@@ -31,7 +31,7 @@ export default function Practice() {
 
   // Fetch all quizzes
   const { data: allQuizzesData, isLoading: loadingQuizzes } = useQuery({
-    queryKey: ['quizzes', 'all'],
+    queryKey: ["quizzes", "all"],
     queryFn: async () => {
       const res = await api.quizzes.list();
       return res || [];
@@ -50,29 +50,42 @@ export default function Practice() {
   const dueCards = dueCardsData || [];
 
   // Fetch all flashcards to compute counts per chapter
-  const { data: allFlashcardsData, isLoading: loadingAllFlashcards } = useQuery({
-    queryKey: ['flashcards', 'all'],
-    queryFn: () => api.flashcards.list(),
-    staleTime: 1000 * 60 * 5,
-  });
-  const allFlashcards = useMemo(() => allFlashcardsData || [], [allFlashcardsData]);
+  const { data: allFlashcardsData, isLoading: loadingAllFlashcards } = useQuery(
+    {
+      queryKey: ["flashcards", "all"],
+      queryFn: () => api.flashcards.list(),
+      staleTime: 1000 * 60 * 5,
+    },
+  );
+  const allFlashcards = useMemo(
+    () => allFlashcardsData || [],
+    [allFlashcardsData],
+  );
 
   // Compute actual main chapters from dbJourney
   const dbChapters = useMemo(() => {
     if (!dbJourney || dbJourney.length === 0) return [];
-    
-    const mainChapters = dbJourney.filter(chap => !chap.parentChapterId);
-    const icons = ["menu_book", "psychology", "account_tree", "auto_stories", "explore"];
-    
+
+    const mainChapters = dbJourney.filter((chap) => !chap.parentChapterId);
+    const icons = [
+      "menu_book",
+      "psychology",
+      "account_tree",
+      "auto_stories",
+      "explore",
+    ];
+
     return mainChapters.map((chap, idx) => {
       // Sum direct nodes and sub-chapters
-      const nodeIds = (chap.nodes || []).map(n => n.id);
+      const nodeIds = (chap.nodes || []).map((n) => n.id);
       const subNodeIds = dbJourney
-        .filter(sub => sub.parentChapterId === chap.id)
-        .flatMap(sub => (sub.nodes || []).map(n => n.id));
+        .filter((sub) => sub.parentChapterId === chap.id)
+        .flatMap((sub) => (sub.nodes || []).map((n) => n.id));
       const allNodeIdsInChapter = [...nodeIds, ...subNodeIds];
 
-      const chapterCards = allFlashcards.filter(c => allNodeIdsInChapter.includes(c.nodeId));
+      const chapterCards = allFlashcards.filter((c) =>
+        allNodeIdsInChapter.includes(c.nodeId),
+      );
       const cardCount = chapterCards.length;
 
       // Calculate progress
@@ -80,25 +93,29 @@ export default function Practice() {
       let totalNodes = 0;
       const countNodeProgress = (node) => {
         totalNodes++;
-        if (node.progress && node.progress[0]?.status === 'completed') {
+        if (node.progress && node.progress[0]?.status === "completed") {
           completedNodes++;
         }
       };
       (chap.nodes || []).forEach(countNodeProgress);
-      dbJourney.filter(sub => sub.parentChapterId === chap.id).forEach(sub => {
-        (sub.nodes || []).forEach(countNodeProgress);
-      });
-      const progress = totalNodes > 0 ? Math.round((completedNodes / totalNodes) * 100) : 0;
+      dbJourney
+        .filter((sub) => sub.parentChapterId === chap.id)
+        .forEach((sub) => {
+          (sub.nodes || []).forEach(countNodeProgress);
+        });
+      const progress =
+        totalNodes > 0 ? Math.round((completedNodes / totalNodes) * 100) : 0;
 
       // Build node descriptions
-      const directNodeTitles = (chap.nodes || []).map(n => n.title);
+      const directNodeTitles = (chap.nodes || []).map((n) => n.title);
       const subNodeTitles = dbJourney
-        .filter(sub => sub.parentChapterId === chap.id)
-        .flatMap(sub => (sub.nodes || []).map(n => n.title));
+        .filter((sub) => sub.parentChapterId === chap.id)
+        .flatMap((sub) => (sub.nodes || []).map((n) => n.title));
       const allTitles = [...directNodeTitles, ...subNodeTitles];
-      const desc = allTitles.length > 0 
-        ? `Khái niệm biện chứng: ${allTitles.slice(0, 3).join(", ")}${allTitles.length > 3 ? "..." : ""}`
-        : "Nội dung lý luận và phương pháp luận triết học.";
+      const desc =
+        allTitles.length > 0
+          ? `Khái niệm biện chứng: ${allTitles.slice(0, 3).join(", ")}${allTitles.length > 3 ? "..." : ""}`
+          : "Nội dung lý luận và phương pháp luận triết học.";
 
       return {
         id: chap.id,
@@ -108,7 +125,7 @@ export default function Practice() {
         desc: desc,
         cardCount: cardCount,
         progress: progress,
-        nodeIds: allNodeIdsInChapter
+        nodeIds: allNodeIdsInChapter,
       };
     });
   }, [dbJourney, allFlashcards]);
@@ -120,22 +137,28 @@ export default function Practice() {
   const handleReviewEase = async (ease) => {
     if (reviewCards.length === 0) return;
     const card = reviewCards[currentReviewIndex];
-    
+
     const nextCard = () => {
       setIsFlipped(false);
       // Move to next card
       if (currentReviewIndex < reviewCards.length - 1) {
-        setCurrentReviewIndex(prev => prev + 1);
+        setCurrentReviewIndex((prev) => prev + 1);
       } else {
         // Finished all cards!
-        showToast("Tuyệt vời! Bạn đã hoàn thành tất cả các thẻ ôn tập trong phiên này.", "success");
+        showToast(
+          "Tuyệt vời! Bạn đã hoàn thành tất cả các thẻ ôn tập trong phiên này.",
+          "success",
+        );
         setIsReviewMode(false);
         setCurrentReviewIndex(0);
       }
     };
 
     if (!user) {
-      showToast("Ghi chú: Đồng chí đang học ở chế độ Khách. Tiến trình sẽ tiếp tục nhưng lịch sử ôn tập không được lưu.", "info");
+      showToast(
+        "Ghi chú: Đồng chí đang học ở chế độ Khách. Tiến trình sẽ tiếp tục nhưng lịch sử ôn tập không được lưu.",
+        "info",
+      );
       nextCard();
       return;
     }
@@ -150,21 +173,28 @@ export default function Practice() {
           showToast("Đã ghi nhận phản hồi và cập nhật lịch ôn tập!", "success");
         },
         onError: (err) => {
-          showToast("Ghi chú: Đã xảy ra lỗi đồng bộ (" + err.message + "), tiến trình học vẫn tiếp tục.", "warning");
-        }
-      }
+          showToast(
+            "Ghi chú: Đã xảy ra lỗi đồng bộ (" +
+              err.message +
+              "), tiến trình học vẫn tiếp tục.",
+            "warning",
+          );
+        },
+      },
     );
   };
 
   // Filter chapters for game/reviews
   const visibleChapters = searchKeyword.trim()
     ? dbChapters.filter((ch) =>
-        ch.title.toLowerCase().includes(searchKeyword.toLowerCase().trim())
+        ch.title.toLowerCase().includes(searchKeyword.toLowerCase().trim()),
       )
     : dbChapters;
 
   const startChapterReview = (chapter) => {
-    const chapterCards = allFlashcards.filter(c => chapter.nodeIds.includes(c.nodeId));
+    const chapterCards = allFlashcards.filter((c) =>
+      chapter.nodeIds.includes(c.nodeId),
+    );
     if (chapterCards.length === 0) {
       showToast("Chương học đang được cập nhật nội dung học thuật.", "warning");
       return;
@@ -194,11 +224,13 @@ export default function Practice() {
 
   // Partition quizzes
   const mockExams = useMemo(() => {
-    return allQuizzes.filter(q => q.type === 'mcq' && !q.nodeId);
+    return allQuizzes.filter((q) => q.type === "mcq" && !q.nodeId);
   }, [allQuizzes]);
 
   const getChapterQuiz = (chapter) => {
-    return allQuizzes.find(q => q.type === 'mcq' && q.nodeId && chapter.nodeIds.includes(q.nodeId));
+    return allQuizzes.find(
+      (q) => q.type === "mcq" && q.nodeId && chapter.nodeIds.includes(q.nodeId),
+    );
   };
 
   return (
@@ -209,7 +241,7 @@ export default function Practice() {
           "Đấu trường Luyện tập: Nơi rèn luyện kiến thức qua các trò chơi tương tác. Bạn có thể chuyển đổi giữa 3 chế độ ở menu tab phía trên.",
           "Thẻ ghi nhớ (Flashcard): Đọc câu hỏi ở mặt trước -> Click vào thẻ để lật xem đáp án ở mặt sau -> Đánh giá mức độ nhớ của bạn để thuật toán Spaced Repetition tự động ôn tập.",
           "Trò chơi Ghép cặp (Shinkei): Ghép nối nhanh các thuật ngữ triết học với định nghĩa chính xác để triệt tiêu toàn bộ thẻ bài trên bảng.",
-          "Đề thi thử (Quiz): Làm bài kiểm tra trắc nghiệm theo chương học hoặc Đề thi thử tổng hợp để kiểm tra và củng cố năng lực trước kỳ thi."
+          "Đề thi thử (Quiz): Làm bài kiểm tra trắc nghiệm theo chương học hoặc Đề thi thử tổng hợp để kiểm tra và củng cố năng lực trước kỳ thi.",
         ]}
       />
       <PageHero
@@ -226,7 +258,9 @@ export default function Practice() {
             <button
               onClick={() => setActiveTab("flashcard")}
               className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
-                activeTab === "flashcard" ? "bg-white dark:bg-[#1C2230] text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
+                activeTab === "flashcard"
+                  ? "bg-white dark:bg-[#1C2230] text-primary-650 dark:text-primary-300 shadow-sm"
+                  : "text-gray-600 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
               }`}
             >
               🎴 Flashcard Ôn Tập
@@ -234,7 +268,9 @@ export default function Practice() {
             <button
               onClick={() => setActiveTab("shinkei")}
               className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
-                activeTab === "shinkei" ? "bg-white dark:bg-[#1C2230] text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
+                activeTab === "shinkei"
+                  ? "bg-white dark:bg-[#1C2230] text-primary-650 dark:text-primary-300 shadow-sm"
+                  : "text-gray-600 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
               }`}
             >
               🧩 Ghép Cặp (Shinkei)
@@ -242,7 +278,9 @@ export default function Practice() {
             <button
               onClick={() => setActiveTab("quiz")}
               className={`px-5 py-2.5 rounded-3xl text-sm font-bold transition-all ${
-                activeTab === "quiz" ? "bg-white dark:bg-[#1C2230] text-primary-650 dark:text-primary-300 shadow-sm" : "text-gray-600 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
+                activeTab === "quiz"
+                  ? "bg-white dark:bg-[#1C2230] text-primary-650 dark:text-primary-300 shadow-sm"
+                  : "text-gray-600 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
               }`}
             >
               📝 Quiz Tổng Hợp
@@ -254,14 +292,20 @@ export default function Practice() {
         {activeTab === "flashcard" && (
           <section className="space-y-6 text-left">
             <h2 className="font-bold text-2xl text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">auto_stories</span>
+              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
+                auto_stories
+              </span>
               Thẻ nhớ học tập (Spaced Repetition)
             </h2>
 
             {loadingDue || loadingAllFlashcards ? (
               <div className="bg-white dark:bg-[#1C2230] rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm flex items-center justify-center">
-                <span className="material-symbols-outlined animate-spin text-primary-650 dark:text-primary-300 text-3xl">sync</span>
-                <span className="ml-2 text-gray-500 font-semibold">Đang tải dữ liệu thẻ...</span>
+                <span className="material-symbols-outlined animate-spin text-primary-650 dark:text-primary-300 text-3xl">
+                  sync
+                </span>
+                <span className="ml-2 text-gray-500 dark:text-primary-250 font-semibold">
+                  Đang tải dữ liệu thẻ...
+                </span>
               </div>
             ) : isReviewMode && activeReviewCard ? (
               <SpacedRepetitionDeck
@@ -281,19 +325,28 @@ export default function Practice() {
                 }}
               />
             ) : (
-
               <div className="space-y-8">
                 {/* Tổng hợp card */}
                 <div className="bg-white dark:bg-[#1C2230] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 flex flex-col sm:flex-row justify-between items-center gap-6 shadow-md">
                   <div className="flex items-center gap-4 text-left">
                     <div className="h-14 w-14 bg-primary-600 text-white rounded-3xl flex items-center justify-center shadow-lg shrink-0">
-                      <span className="material-symbols-outlined text-3xl">auto_stories</span>
+                      <span className="material-symbols-outlined text-3xl">
+                        auto_stories
+                      </span>
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg text-gray-900 dark:text-white">Ôn tập tổng hợp</h3>
+                      <h3 className="font-bold text-lg text-gray-900 dark:text-white">
+                        Ôn tập tổng hợp
+                      </h3>
                       <p className="text-sm text-gray-600 dark:text-slate-400 mt-0.5">
                         {dueCards.length > 0 ? (
-                          <>Đồng chí có <strong className="text-primary-800 dark:text-primary-250 font-bold">{dueCards.length} thẻ</strong> đến hạn cần ôn tập hôm nay để củng cố dài hạn.</>
+                          <>
+                            Đồng chí có{" "}
+                            <strong className="text-primary-800 dark:text-primary-250 font-bold">
+                              {dueCards.length} thẻ
+                            </strong>{" "}
+                            đến hạn cần ôn tập hôm nay để củng cố dài hạn.
+                          </>
                         ) : (
                           "Không còn thẻ nhớ nào đến hạn hôm nay. Hãy học theo từng chương học bên dưới."
                         )}
@@ -312,7 +365,9 @@ export default function Practice() {
                 {/* Chapter list for flashcard review */}
                 <div className="space-y-4">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
-                    <h3 className="font-bold text-lg text-gray-900 dark:text-white">Ôn tập theo Chương học</h3>
+                    <h3 className="font-bold text-lg text-gray-900 dark:text-white">
+                      Ôn tập theo Chương học
+                    </h3>
                     <div className="relative w-full sm:max-w-xs">
                       <input
                         type="text"
@@ -329,8 +384,12 @@ export default function Practice() {
 
                   {visibleChapters.length === 0 ? (
                     <div className="bg-white dark:bg-[#1C2230] rounded-3xl p-12 text-center border border-dashed border-slate-200 dark:border-primary-800/30">
-                      <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">search_off</span>
-                      <p className="text-gray-500 text-sm">Không tìm thấy chương học nào tương thích.</p>
+                      <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">
+                        search_off
+                      </span>
+                      <p className="text-gray-500 text-sm">
+                        Không tìm thấy chương học nào tương thích.
+                      </p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -343,29 +402,45 @@ export default function Practice() {
                           <div>
                             <div className="flex items-center justify-between mb-4">
                               <div className="h-12 w-12 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 flex items-center justify-center">
-                                <span className="material-symbols-outlined text-2xl">{chapter.icon}</span>
+                                <span className="material-symbols-outlined text-2xl">
+                                  {chapter.icon}
+                                </span>
                               </div>
-                              <span className="text-xs font-bold uppercase text-gray-450 dark:text-gray-500">{chapter.chapter}</span>
+                              <span className="text-xs font-bold uppercase text-gray-450 dark:text-gray-500">
+                                {chapter.chapter}
+                              </span>
                             </div>
-                            <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 leading-snug">{chapter.title}</h3>
-                            <p className="text-gray-600 dark:text-slate-400 text-xs line-clamp-3 mb-4">{chapter.desc}</p>
+                            <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 leading-snug">
+                              {chapter.title}
+                            </h3>
+                            <p className="text-gray-600 dark:text-slate-400 text-xs line-clamp-3 mb-4">
+                              {chapter.desc}
+                            </p>
                           </div>
-                          
+
                           <div className="mt-4 pt-3 border-t border-gray-150 dark:border-primary-800/50">
                             <div className="flex justify-between text-xs mb-1.5 font-semibold">
                               {chapter.cardCount > 0 ? (
                                 <>
-                                  <span className="text-gray-500 dark:text-gray-400">{chapter.cardCount} Flashcards</span>
-                                  <span className="text-primary-800 dark:text-primary-250">{chapter.progress}% Hoàn thành</span>
+                                  <span className="text-gray-500 dark:text-gray-400">
+                                    {chapter.cardCount} Flashcards
+                                  </span>
+                                  <span className="text-primary-800 dark:text-primary-250">
+                                    {chapter.progress}% Hoàn thành
+                                  </span>
                                 </>
                               ) : (
-                                <span className="text-amber-600 font-bold bg-amber-50 dark:bg-amber-900/20 px-2.5 py-0.5 rounded-md">Đang cập nhật</span>
+                                <span className="text-amber-600 dark:text-amber-100 font-bold bg-amber-50 dark:bg-amber-950/35 px-2.5 py-0.5 rounded-md">
+                                  Đang cập nhật
+                                </span>
                               )}
                             </div>
                             <div className="w-full bg-gray-200 dark:bg-primary-900/50 rounded-full h-1.5">
                               <div
                                 className="bg-primary-600 h-1.5 rounded-full transition-all"
-                                style={{ width: `${chapter.cardCount > 0 ? chapter.progress : 0}%` }}
+                                style={{
+                                  width: `${chapter.cardCount > 0 ? chapter.progress : 0}%`,
+                                }}
                               />
                             </div>
                           </div>
@@ -385,10 +460,15 @@ export default function Practice() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
               <div>
                 <h2 className="font-bold text-2xl text-gray-900 dark:text-white flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">extension</span>
+                  <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
+                    extension
+                  </span>
                   Trò chơi ghép cặp (Socratic Matching)
                 </h2>
-                <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">Nối các khái niệm ở cột bên trái với mô tả tương ứng ở cột bên phải theo từng chương học.</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">
+                  Nối các khái niệm ở cột bên trái với mô tả tương ứng ở cột bên
+                  phải theo từng chương học.
+                </p>
               </div>
               <div className="relative w-full sm:max-w-xs">
                 <input
@@ -406,18 +486,30 @@ export default function Practice() {
 
             {loadingChapters ? (
               <div className="text-center py-12">
-                <span className="material-symbols-outlined animate-spin text-4xl text-primary-650 dark:text-primary-300">sync</span>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 font-semibold">Đang tải chương học...</p>
+                <span className="material-symbols-outlined animate-spin text-4xl text-primary-650 dark:text-primary-300">
+                  sync
+                </span>
+                <p className="text-gray-500 dark:text-gray-400 mt-2 font-semibold">
+                  Đang tải chương học...
+                </p>
               </div>
             ) : dbChapters.length === 0 ? (
               <div className="bg-white dark:bg-[#1C2230] rounded-3xl p-12 text-center border border-dashed border-gray-300 dark:border-primary-800/50">
-                <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">layers_clear</span>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">Chưa có dữ liệu chương học trên hệ thống.</p>
+                <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">
+                  layers_clear
+                </span>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                  Chưa có dữ liệu chương học trên hệ thống.
+                </p>
               </div>
             ) : visibleChapters.length === 0 ? (
               <div className="bg-white dark:bg-[#1C2230] rounded-3xl p-12 text-center border border-dashed border-gray-300 dark:border-primary-800/50">
-                <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">search_off</span>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">Không tìm thấy chương nào khớp với "{searchKeyword}".</p>
+                <span className="material-symbols-outlined text-5xl text-gray-300 mb-3">
+                  search_off
+                </span>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                  Không tìm thấy chương nào khớp với "{searchKeyword}".
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -430,29 +522,45 @@ export default function Practice() {
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <div className="h-12 w-12 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 flex items-center justify-center">
-                          <span className="material-symbols-outlined text-2xl">{chapter.icon}</span>
+                          <span className="material-symbols-outlined text-2xl">
+                            {chapter.icon}
+                          </span>
                         </div>
-                        <span className="text-xs font-bold uppercase text-gray-450 dark:text-gray-500">{chapter.chapter}</span>
+                        <span className="text-xs font-bold uppercase text-gray-450 dark:text-gray-500">
+                          {chapter.chapter}
+                        </span>
                       </div>
-                      <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 leading-snug">{chapter.title}</h3>
-                      <p className="text-gray-600 dark:text-slate-400 text-xs line-clamp-3 mb-4">{chapter.desc}</p>
+                      <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 leading-snug">
+                        {chapter.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-slate-400 text-xs line-clamp-3 mb-4">
+                        {chapter.desc}
+                      </p>
                     </div>
-                    
+
                     <div className="mt-4 pt-3 border-t border-gray-150 dark:border-primary-800/50">
                       <div className="flex justify-between text-xs mb-1.5 font-semibold">
                         {chapter.cardCount > 0 ? (
                           <>
-                            <span className="text-gray-500 dark:text-gray-400">{chapter.cardCount} Flashcards</span>
-                            <span className="text-primary-800 dark:text-primary-250">{chapter.progress}% Hoàn thành</span>
+                            <span className="text-gray-500 dark:text-gray-400">
+                              {chapter.cardCount} Flashcards
+                            </span>
+                            <span className="text-primary-800 dark:text-primary-250">
+                              {chapter.progress}% Hoàn thành
+                            </span>
                           </>
                         ) : (
-                          <span className="text-amber-600 font-bold bg-amber-50 dark:bg-amber-900/20 px-2.5 py-0.5 rounded-md">Đang cập nhật</span>
+                          <span className="text-amber-600 dark:text-amber-100 font-bold bg-amber-50 dark:bg-amber-950/35 px-2.5 py-0.5 rounded-md">
+                            Đang cập nhật
+                          </span>
                         )}
                       </div>
                       <div className="w-full bg-gray-200 dark:bg-primary-900/50 rounded-full h-1.5">
                         <div
                           className="bg-primary-800 h-1.5 rounded-full transition-all"
-                          style={{ width: `${chapter.cardCount > 0 ? chapter.progress : 0}%` }}
+                          style={{
+                            width: `${chapter.cardCount > 0 ? chapter.progress : 0}%`,
+                          }}
                         />
                       </div>
                     </div>
@@ -463,29 +571,38 @@ export default function Practice() {
           </section>
         )}
 
-
-
         {/* TAB 3: QUIZ TỔNG HỢP & MOCK EXAMS */}
         {activeTab === "quiz" && (
           <section className="space-y-8 text-left animate-fadeIn">
             <div>
               <h2 className="font-bold text-2xl text-gray-900 dark:text-white flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">quiz</span>
+                <span className="material-symbols-outlined text-primary-650 dark:text-primary-300">
+                  quiz
+                </span>
                 Ngân hàng đề thi & Quiz trắc nghiệm
               </h2>
-              <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">Làm quiz từng chương để xem kết quả ngay lập tức, hoặc thi thử toàn diện để tự đánh giá.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">
+                Làm quiz từng chương để xem kết quả ngay lập tức, hoặc thi thử
+                toàn diện để tự đánh giá.
+              </p>
             </div>
 
             {loadingQuizzes || loadingChapters ? (
               <div className="text-center py-12">
-                <span className="material-symbols-outlined animate-spin text-4xl text-primary-650 dark:text-primary-300">sync</span>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 font-semibold">Đang tải đề thi...</p>
+                <span className="material-symbols-outlined animate-spin text-4xl text-primary-650 dark:text-primary-300">
+                  sync
+                </span>
+                <p className="text-gray-500 dark:text-gray-400 mt-2 font-semibold">
+                  Đang tải đề thi...
+                </p>
               </div>
             ) : (
               <>
                 {/* 1. Chapter Quizzes */}
                 <div className="space-y-4">
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white border-l-4 border-primary-800 pl-3">Trắc nghiệm theo Chương học</h3>
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white border-l-4 border-primary-800 pl-3">
+                    Trắc nghiệm theo Chương học
+                  </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {dbChapters.map((chapter) => {
                       const quiz = getChapterQuiz(chapter);
@@ -497,21 +614,29 @@ export default function Practice() {
                           <div>
                             <div className="flex items-center justify-between mb-4">
                               <div className="h-10 w-10 rounded-3xl bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 flex items-center justify-center">
-                                <span className="material-symbols-outlined text-xl">{chapter.icon}</span>
+                                <span className="material-symbols-outlined text-xl">
+                                  {chapter.icon}
+                                </span>
                               </div>
                               <span className="text-[10px] font-extrabold uppercase bg-primary-100 dark:bg-primary-900/30 text-primary-650 dark:text-primary-300 px-2 py-0.5 rounded-full">
                                 Chương Quiz
                               </span>
                             </div>
-                            <h3 className="font-bold text-base text-gray-900 dark:text-white mb-2 leading-snug">{chapter.title}</h3>
+                            <h3 className="font-bold text-base text-gray-900 dark:text-white mb-2 leading-snug">
+                              {chapter.title}
+                            </h3>
                             <p className="text-gray-500 dark:text-slate-400 text-xs line-clamp-3 mb-4">
-                              {quiz ? "Luyện tập các câu hỏi trắc nghiệm của chương, nhận kết quả và giải thích ngay lập tức sau mỗi câu trả lời." : "Đề trắc nghiệm của chương học đang được cập nhật."}
+                              {quiz
+                                ? "Luyện tập các câu hỏi trắc nghiệm của chương, nhận kết quả và giải thích ngay lập tức sau mỗi câu trả lời."
+                                : "Đề trắc nghiệm của chương học đang được cập nhật."}
                             </p>
                           </div>
 
                           <div className="mt-4 pt-3 border-t border-gray-150 dark:border-slate-800 flex items-center justify-between">
-                            <span className="text-2xs text-gray-400 font-bold font-mono">
-                              {quiz ? `Số câu: ${quiz.questions.length}` : "Đang cập nhật"}
+                            <span className="text-2xs text-gray-400 dark:text-primary-400 font-bold font-mono">
+                              {quiz
+                                ? `Số câu: ${quiz.questions.length}`
+                                : "Đang cập nhật"}
                             </span>
                             {quiz ? (
                               <Link
@@ -523,7 +648,7 @@ export default function Practice() {
                             ) : (
                               <button
                                 disabled
-                                className="bg-gray-100 text-gray-400 text-xs font-bold px-3 py-2 rounded-3xl cursor-not-allowed"
+                                className="bg-gray-100 text-gray-400 dark:bg-primary-950/50 dark:text-primary-500 text-xs font-bold px-3 py-2 rounded-3xl cursor-not-allowed"
                               >
                                 Sắp ra mắt
                               </button>
@@ -537,11 +662,17 @@ export default function Practice() {
 
                 {/* 2. Mock Exams */}
                 <div className="space-y-4 pt-4">
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white border-l-4 border-primary-600 pl-3">Đề thi thử học thuật (Mock Exams)</h3>
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white border-l-4 border-primary-600 pl-3">
+                    Đề thi thử học thuật (Mock Exams)
+                  </h3>
                   {mockExams.length === 0 ? (
                     <div className="bg-white dark:bg-[#1C2230] rounded-3xl p-8 text-center border border-dashed border-slate-200 dark:border-primary-800/30 max-w-md">
-                      <span className="material-symbols-outlined text-4xl text-gray-300 mb-2">assignment_late</span>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm">Chưa có đề thi thử tổng hợp nào được thiết lập.</p>
+                      <span className="material-symbols-outlined text-4xl text-gray-300 mb-2">
+                        assignment_late
+                      </span>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm">
+                        Chưa có đề thi thử tổng hợp nào được thiết lập.
+                      </p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -556,24 +687,35 @@ export default function Practice() {
                                 Thi thử
                               </span>
                               <span className="text-2xs text-slate-450 dark:text-slate-500 font-mono">
-                                {new Date(quiz.createdAt).toLocaleDateString('vi-VN')}
+                                {new Date(quiz.createdAt).toLocaleDateString(
+                                  "vi-VN",
+                                )}
                               </span>
                             </div>
-                            <h3 className="font-bold text-lg text-slate-900 dark:text-white leading-snug">{quiz.title}</h3>
+                            <h3 className="font-bold text-lg text-slate-900 dark:text-white leading-snug">
+                              {quiz.title}
+                            </h3>
                             <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed line-clamp-2">
-                              {quiz.description || "Đề thi thử tổng hợp phạm vi toàn bộ chương trình, chấm điểm và giải thích sau khi hoàn thành."}
+                              {quiz.description ||
+                                "Đề thi thử tổng hợp phạm vi toàn bộ chương trình, chấm điểm và giải thích sau khi hoàn thành."}
                             </p>
                           </div>
 
                           <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between relative z-10">
                             <span className="text-2xs text-slate-500 dark:text-slate-400 font-bold">
-                              Số câu hỏi: {Array.isArray(quiz.questions) ? quiz.questions.length : "Nhiều câu"}
+                              Số câu hỏi:{" "}
+                              {Array.isArray(quiz.questions)
+                                ? quiz.questions.length
+                                : "Nhiều câu"}
                             </span>
                             <Link
                               to={`/quiz/mcq/${quiz.id}`}
                               className="bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold px-4 py-2.5 rounded-3xl shadow-sm transition-all inline-flex items-center gap-1"
                             >
-                              Làm đề thi thử <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                              Làm đề thi thử{" "}
+                              <span className="material-symbols-outlined text-xs">
+                                arrow_forward
+                              </span>
                             </Link>
                           </div>
                         </div>

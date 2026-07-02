@@ -14,7 +14,7 @@ const FlashcardDetail = () => {
   const [chapterDetails, setChapterDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [round, setRound] = useState(0); 
+  const [round, setRound] = useState(0);
   const [matchedPairs, setMatchedPairs] = useState([]); // Array of pairIds (flashcardIds)
   const [moves, setMoves] = useState(0);
 
@@ -42,18 +42,20 @@ const FlashcardDetail = () => {
       setLoading(true);
       try {
         const courses = await api.courses.list();
-        const mainCourse = courses.find(c => c.title.includes("Triết học"));
+        const mainCourse = courses.find((c) => c.title.includes("Triết học"));
         let foundChapter = null;
         if (mainCourse) {
           const journey = await api.courses.getJourney(mainCourse.id, user.id);
-          foundChapter = journey.find(c => c.id === id);
+          foundChapter = journey.find((c) => c.id === id);
           setChapterDetails(foundChapter);
         }
 
         // Fetch all flashcards from backend
         const allCards = await api.flashcards.list();
         // Filter cards that belong to this chapter (node.chapterId === id)
-        const chapterCards = allCards.filter(card => card.node && card.node.chapterId === id);
+        const chapterCards = allCards.filter(
+          (card) => card.node && card.node.chapterId === id,
+        );
         setDbFlashcards(chapterCards);
       } catch (err) {
         console.error("Error loading flashcard detail data:", err);
@@ -69,15 +71,23 @@ const FlashcardDetail = () => {
     return dbFlashcards.map((fc, idx) => ({
       id: fc.id || `pair-${idx}`,
       term: fc.question,
-      desc: fc.answer
+      desc: fc.answer,
     }));
   }, [dbFlashcards]);
 
   // Shuffle and set columns on load or restart
   useEffect(() => {
     if (pairs.length > 0) {
-      const formattedLeft = pairs.map((p) => ({ id: `left-${p.id}`, pairId: p.id, text: p.term }));
-      const formattedRight = pairs.map((p) => ({ id: `right-${p.id}`, pairId: p.id, text: p.desc }));
+      const formattedLeft = pairs.map((p) => ({
+        id: `left-${p.id}`,
+        pairId: p.id,
+        text: p.term,
+      }));
+      const formattedRight = pairs.map((p) => ({
+        id: `right-${p.id}`,
+        pairId: p.id,
+        text: p.desc,
+      }));
 
       const shuffle = (array) => {
         const arr = [...array];
@@ -189,9 +199,33 @@ const FlashcardDetail = () => {
   if (loading) {
     return (
       <PageShell activeKey="practice">
-        <div className="text-center py-20">
-          <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
-          <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị trò chơi học tập...</p>
+        <PageHero
+          eyebrow="Trò chơi ghép cặp ghi nhớ"
+          icon="extension"
+          title="Đang cập nhật"
+          subtitle="Nội dung học tập và bộ câu hỏi ôn luyện cho chương này hiện đang được hoàn thiện."
+        />
+        <div className="px-6 py-16 text-center md:px-12">
+          <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white p-10 shadow-xl dark:border-primary-850 dark:bg-[#002b37]/80">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-primary-50 text-primary-650 shadow-md dark:bg-primary-900/35 dark:text-primary-300">
+              <span className="material-symbols-outlined text-3xl">
+                hourglass_empty
+              </span>
+            </div>
+            <h3 className="mb-2 text-2xl font-bold text-gray-900 dark:text-primary-100">
+              Đang cập nhật
+            </h3>
+            <p className="mx-auto max-w-md text-sm leading-relaxed text-gray-500 dark:text-primary-250">
+              Nội dung học tập và bộ câu hỏi ôn luyện cho chương này hiện đang
+              được hoàn thiện. Vui lòng quay lại sau!
+            </p>
+            <Link
+              to="/practice"
+              className="mt-8 inline-flex items-center justify-center rounded-3xl bg-primary-600 px-8 py-3 font-bold text-white shadow-md transition-all hover:bg-primary-700 hover:shadow-lg"
+            >
+              ← Quay lại danh sách thực hành
+            </Link>
+          </div>
         </div>
       </PageShell>
     );
@@ -228,13 +262,18 @@ const FlashcardDetail = () => {
           subtitle="Nối các khái niệm ở cột bên trái với định nghĩa tương ứng ở cột bên phải."
         />
         <div className="px-6 md:px-12 py-16 max-w-4xl mx-auto text-center">
-          <div className="bg-white dark:bg-[#002b37]/80 backdrop-blur-md rounded-3xl p-12 text-center border border-gray-200 shadow-xl max-w-2xl mx-auto animate-fadeIn">
+          <div className="bg-white dark:bg-[#002b37]/80 backdrop-blur-md rounded-3xl p-12 text-center border border-gray-200 dark:border-primary-850 shadow-xl max-w-2xl mx-auto animate-fadeIn">
             <div className="h-16 w-16 bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 rounded-3xl flex items-center justify-center shadow-md mx-auto mb-6">
-              <span className="material-symbols-outlined text-3xl">hourglass_empty</span>
+              <span className="material-symbols-outlined text-3xl">
+                hourglass_empty
+              </span>
             </div>
-            <h3 className="font-bold text-gray-900 text-2xl mb-2 font-serif">Đang cập nhật</h3>
-            <p className="text-gray-500 text-sm max-w-md mx-auto leading-relaxed">
-              Nội dung học tập và bộ câu hỏi ôn luyện cho chương này hiện đang được hoàn thiện. Vui lòng quay lại sau!
+            <h3 className="font-bold text-gray-900 dark:text-primary-100 text-2xl mb-2 font-serif">
+              Đang cập nhật
+            </h3>
+            <p className="text-gray-500 dark:text-primary-250 text-sm max-w-md mx-auto leading-relaxed">
+              Nội dung học tập và bộ câu hỏi ôn luyện cho chương này hiện đang
+              được hoàn thiện. Vui lòng quay lại sau!
             </p>
             <Link
               to="/practice"
@@ -265,7 +304,9 @@ const FlashcardDetail = () => {
               <p className="text-xs uppercase tracking-wider text-gray-500">
                 Số lượt ghép
               </p>
-              <p className="text-2xl font-bold text-primary-650 dark:text-primary-300">{moves}</p>
+              <p className="text-2xl font-bold text-primary-650 dark:text-primary-300">
+                {moves}
+              </p>
             </div>
             <div className="bg-white dark:bg-[#002b37] rounded-3xl border border-gray-200 px-5 py-3 shadow-sm">
               <p className="text-xs uppercase tracking-wider text-gray-500">
@@ -296,18 +337,20 @@ const FlashcardDetail = () => {
               Xuất sắc! Bạn đã ghép xong tất cả các cặp.
             </h2>
             <p className="text-green-700 mt-1 text-sm font-semibold">
-              Hoàn thành trong {moves} lượt. Bấm "Chơi lại / Xáo bài" để thử thách lại!
+              Hoàn thành trong {moves} lượt. Bấm "Chơi lại / Xáo bài" để thử
+              thách lại!
             </p>
           </div>
         )}
 
         {/* Hai cột ghép cặp */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
           {/* Cột Trái: Khái niệm */}
           <div className="space-y-4">
             <h3 className="font-bold text-base text-primary-950 flex items-center gap-2 pb-2 border-b border-gray-100">
-              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">psychology</span>
+              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">
+                psychology
+              </span>
               Khái niệm Triết học
             </h3>
             <div className="space-y-3">
@@ -320,16 +363,21 @@ const FlashcardDetail = () => {
                 let cardClass = "";
                 if (isRevealed) {
                   if (isMatched) {
-                    cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
+                    cardClass =
+                      "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
                   } else if (hasError) {
-                    cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
+                    cardClass =
+                      "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
                   } else if (isSelected) {
-                    cardClass = "bg-primary-50 dark:bg-primary-900/35 border-primary-800 text-primary-850 dark:text-primary-100 ring-2 ring-primary-500 shadow-md -translate-y-0.5";
+                    cardClass =
+                      "bg-primary-50 dark:bg-primary-900/35 border-primary-800 text-primary-850 dark:text-primary-100 ring-2 ring-primary-500 shadow-md -translate-y-0.5";
                   } else {
-                    cardClass = "bg-white dark:bg-[#002b37] border-gray-200 text-gray-800 hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
+                    cardClass =
+                      "bg-white dark:bg-[#002b37] border-gray-200 text-gray-800 hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
                   }
                 } else {
-                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-primary-500 hover:shadow-md transition-all cursor-pointer";
+                  cardClass =
+                    "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-primary-500 hover:shadow-md transition-all cursor-pointer";
                 }
 
                 return (
@@ -343,16 +391,24 @@ const FlashcardDetail = () => {
                     {isRevealed ? (
                       <>
                         <div className="flex flex-col gap-1 w-full text-left">
-                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-650 dark:text-primary-300/60 mb-0.5">Khái niệm</span>
-                          <span className="font-bold text-sm md:text-base leading-snug">{item.text}</span>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-650 dark:text-primary-300/60 mb-0.5">
+                            Khái niệm
+                          </span>
+                          <span className="font-bold text-sm md:text-base leading-snug">
+                            {item.text}
+                          </span>
                         </div>
                         {isMatched && (
-                          <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
+                          <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">
+                            check_circle
+                          </span>
                         )}
                       </>
                     ) : (
                       <div className="flex items-center justify-center w-full py-2.5">
-                        <span className="material-symbols-outlined text-2xl text-slate-400 group-hover:scale-110 transition-transform">psychology</span>
+                        <span className="material-symbols-outlined text-2xl text-slate-400 group-hover:scale-110 transition-transform">
+                          psychology
+                        </span>
                       </div>
                     )}
                   </button>
@@ -364,7 +420,9 @@ const FlashcardDetail = () => {
           {/* Cột Phải: Định nghĩa */}
           <div className="space-y-4">
             <h3 className="font-bold text-base text-primary-950 flex items-center gap-2 pb-2 border-b border-gray-100">
-              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">menu_book</span>
+              <span className="material-symbols-outlined text-primary-650 dark:text-primary-300 text-lg">
+                menu_book
+              </span>
               Định nghĩa / Ý nghĩa khoa học
             </h3>
             <div className="space-y-3">
@@ -377,16 +435,21 @@ const FlashcardDetail = () => {
                 let cardClass = "";
                 if (isRevealed) {
                   if (isMatched) {
-                    cardClass = "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
+                    cardClass =
+                      "bg-emerald-50/70 border-emerald-500 text-emerald-800 pointer-events-none opacity-90 shadow-sm";
                   } else if (hasError) {
-                    cardClass = "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
+                    cardClass =
+                      "bg-rose-50 border-rose-500 text-rose-800 animate-shake";
                   } else if (isSelected) {
-                    cardClass = "bg-primary-50 dark:bg-primary-900/35 border-primary-800 text-primary-850 dark:text-primary-100 ring-2 ring-primary-500 shadow-md -translate-y-0.5";
+                    cardClass =
+                      "bg-primary-50 dark:bg-primary-900/35 border-primary-800 text-primary-850 dark:text-primary-100 ring-2 ring-primary-500 shadow-md -translate-y-0.5";
                   } else {
-                    cardClass = "bg-white dark:bg-[#002b37] border-gray-200 text-gray-700 hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
+                    cardClass =
+                      "bg-white dark:bg-[#002b37] border-gray-200 text-gray-700 hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 shadow-sm";
                   }
                 } else {
-                  cardClass = "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-primary-500 hover:shadow-md transition-all cursor-pointer";
+                  cardClass =
+                    "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 text-slate-500 hover:border-primary-500 hover:shadow-md transition-all cursor-pointer";
                 }
 
                 return (
@@ -400,16 +463,24 @@ const FlashcardDetail = () => {
                     {isRevealed ? (
                       <>
                         <div className="flex flex-col gap-1 w-full text-left">
-                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-650 dark:text-primary-300/60 mb-0.5">Định nghĩa</span>
-                          <span className="text-xs md:text-sm leading-relaxed pr-2">{item.text}</span>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-650 dark:text-primary-300/60 mb-0.5">
+                            Định nghĩa
+                          </span>
+                          <span className="text-xs md:text-sm leading-relaxed pr-2">
+                            {item.text}
+                          </span>
                         </div>
                         {isMatched && (
-                          <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">check_circle</span>
+                          <span className="material-symbols-outlined text-emerald-600 text-lg shrink-0">
+                            check_circle
+                          </span>
                         )}
                       </>
                     ) : (
                       <div className="flex items-center justify-center w-full py-2.5">
-                        <span className="material-symbols-outlined text-2xl text-slate-400 group-hover:scale-110 transition-transform">menu_book</span>
+                        <span className="material-symbols-outlined text-2xl text-slate-400 group-hover:scale-110 transition-transform">
+                          menu_book
+                        </span>
                       </div>
                     )}
                   </button>
@@ -417,9 +488,7 @@ const FlashcardDetail = () => {
               })}
             </div>
           </div>
-
         </div>
-
 
         <div className="mt-8 text-center">
           <Link

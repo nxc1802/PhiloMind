@@ -82,7 +82,7 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
           <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-primary-500">
             Nội dung trực quan
           </p>
-          <div className="grid gap-1.5 xl:grid-cols-2">
+          <div className="grid gap-1.5">
             {lessonMedia.map((media) => {
               const isSelected = media.id === activeMedia?.id;
               return (

@@ -44,15 +44,15 @@ export default function MCQQuiz() {
 
   const handleConfirmAnswer = () => {
     if (selectedOption === null || isAnswered) return;
-    
+
     const currentQuestion = quiz.questions[currentIndex];
     const isCorrect = selectedOption === currentQuestion.correctIndex;
-    
+
     setIsAnswered(true);
-    setUserAnswers(prev => ({ ...prev, [currentIndex]: selectedOption }));
-    
+    setUserAnswers((prev) => ({ ...prev, [currentIndex]: selectedOption }));
+
     if (isCorrect) {
-      setScore(prev => prev + 1);
+      setScore((prev) => prev + 1);
       showToast("Chính xác! Lập luận triết học rất chuẩn xác.", "success");
     } else {
       showToast("Chưa đúng! Hãy suy nghĩ thấu đáo hơn.", "error");
@@ -64,16 +64,16 @@ export default function MCQQuiz() {
       // Save answer and update score immediately (without showing it to user yet)
       const currentQuestion = quiz.questions[currentIndex];
       if (selectedOption === currentQuestion.correctIndex) {
-        setScore(prev => prev + 1);
+        setScore((prev) => prev + 1);
       }
-      setUserAnswers(prev => ({ ...prev, [currentIndex]: selectedOption }));
+      setUserAnswers((prev) => ({ ...prev, [currentIndex]: selectedOption }));
     }
 
     setSelectedOption(null);
     setIsAnswered(false);
-    
+
     if (currentIndex < quiz.questions.length - 1) {
-      setCurrentIndex(prev => prev + 1);
+      setCurrentIndex((prev) => prev + 1);
     } else {
       setIsFinished(true);
       showToast("Đồng chí đã hoàn thành bài kiểm tra!", "success");
@@ -93,8 +93,12 @@ export default function MCQQuiz() {
     return (
       <PageShell activeKey="practice">
         <div className="text-center py-20">
-          <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">sync</span>
-          <p className="text-gray-500 mt-4 font-semibold">Đang chuẩn bị đề thi trắc nghiệm...</p>
+          <span className="material-symbols-outlined animate-spin text-5xl text-primary-650 dark:text-primary-300">
+            sync
+          </span>
+          <p className="text-gray-500 dark:text-primary-250 mt-4 font-semibold">
+            Đang chuẩn bị đề thi trắc nghiệm...
+          </p>
         </div>
       </PageShell>
     );
@@ -104,13 +108,18 @@ export default function MCQQuiz() {
     return (
       <PageShell activeKey="practice">
         <div className="px-6 md:px-12 py-16 max-w-4xl mx-auto text-center">
-          <div className="bg-white/80 backdrop-blur-md rounded-3xl p-12 text-center border border-gray-200 shadow-xl max-w-2xl mx-auto animate-fadeIn">
+          <div className="bg-white/80 dark:bg-[#002b37]/80 backdrop-blur-md rounded-3xl p-12 text-center border border-gray-200 dark:border-primary-850 shadow-xl max-w-2xl mx-auto animate-fadeIn">
             <div className="h-16 w-16 bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 rounded-3xl flex items-center justify-center shadow-md mx-auto mb-6">
-              <span className="material-symbols-outlined text-3xl">hourglass_empty</span>
+              <span className="material-symbols-outlined text-3xl">
+                hourglass_empty
+              </span>
             </div>
-            <h3 className="font-bold text-gray-900 text-2xl mb-2 font-serif">Đang cập nhật</h3>
-            <p className="text-gray-500 text-sm max-w-md mx-auto leading-relaxed">
-              Nội dung câu hỏi trắc nghiệm của chương này hiện đang được hoàn thiện. Vui lòng quay lại sau!
+            <h3 className="font-bold text-gray-900 dark:text-primary-100 text-2xl mb-2 font-serif">
+              Đang cập nhật
+            </h3>
+            <p className="text-gray-500 dark:text-primary-250 text-sm max-w-md mx-auto leading-relaxed">
+              Nội dung câu hỏi trắc nghiệm của chương này hiện đang được hoàn
+              thiện. Vui lòng quay lại sau!
             </p>
             <Link
               to="/practice"
@@ -125,12 +134,16 @@ export default function MCQQuiz() {
   }
 
   const currentQuestion = quiz.questions[currentIndex];
-  const progressPercent = Math.round((currentIndex / quiz.questions.length) * 100);
+  const progressPercent = Math.round(
+    (currentIndex / quiz.questions.length) * 100,
+  );
 
   return (
     <PageShell activeKey="practice">
       <PageHero
-        eyebrow={isChapterQuiz ? "Tự luyện trắc nghiệm chương" : "Đề thi thử học thuật"}
+        eyebrow={
+          isChapterQuiz ? "Tự luyện trắc nghiệm chương" : "Đề thi thử học thuật"
+        }
         icon="quiz"
         title={quiz.title}
         subtitle=""
@@ -140,21 +153,26 @@ export default function MCQQuiz() {
         {!isFinished ? (
           <div className="space-y-6 max-w-3xl mx-auto">
             {/* Status bar */}
-            <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-200 flex justify-between items-center text-sm">
-              <span className="text-gray-500 font-bold">
+            <div className="bg-white dark:bg-[#002b37] rounded-3xl p-5 shadow-sm border border-gray-200 dark:border-primary-850 flex justify-between items-center text-sm">
+              <span className="text-gray-500 dark:text-primary-250 font-bold">
                 Câu hỏi {currentIndex + 1} / {quiz.questions.length}
               </span>
               <div className="flex items-center gap-3">
-                <span className="text-gray-500">Tiến trình:</span>
-                <div className="w-32 bg-gray-200 rounded-full h-2">
-                  <div className="bg-primary-600 h-2 rounded-full transition-all" style={{ width: `${progressPercent}%` }} />
+                <span className="text-gray-500 dark:text-primary-250">
+                  Tiến trình:
+                </span>
+                <div className="w-32 bg-gray-200 dark:bg-primary-950/50 rounded-full h-2">
+                  <div
+                    className="bg-primary-600 h-2 rounded-full transition-all"
+                    style={{ width: `${progressPercent}%` }}
+                  />
                 </div>
               </div>
             </div>
 
             {/* Question card */}
-            <div className="bg-white rounded-3xl shadow-md border border-gray-200 p-8 space-y-6">
-              <h3 className="font-bold text-xl text-gray-900 leading-relaxed font-serif">
+            <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-md border border-gray-200 dark:border-primary-850 p-8 space-y-6">
+              <h3 className="font-bold text-xl text-gray-900 dark:text-primary-100 leading-relaxed font-serif">
                 {currentQuestion.question}
               </h3>
 
@@ -163,18 +181,23 @@ export default function MCQQuiz() {
                 {currentQuestion.options.map((option, idx) => {
                   const isSelected = selectedOption === idx;
                   const isCorrect = idx === currentQuestion.correctIndex;
-                  
-                  let optionClass = "border-gray-200 hover:border-primary-800 hover:bg-primary-50/20 dark:bg-primary-900/10";
+
+                  let optionClass =
+                    "border-gray-200 text-gray-800 hover:border-primary-800 hover:bg-primary-50/20 dark:border-primary-850 dark:bg-primary-950/25 dark:text-primary-100 dark:hover:bg-primary-900/35";
                   if (isChapterQuiz && isAnswered) {
                     if (isCorrect) {
-                      optionClass = "border-emerald-500 bg-emerald-50 text-emerald-800 font-bold";
+                      optionClass =
+                        "border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-200 font-bold";
                     } else if (isSelected) {
-                      optionClass = "border-rose-500 bg-rose-50 text-rose-800";
+                      optionClass =
+                        "border-rose-500 bg-rose-50 text-rose-800 dark:bg-rose-950/30 dark:text-rose-200";
                     } else {
-                      optionClass = "border-gray-200 opacity-60";
+                      optionClass =
+                        "border-gray-200 text-gray-500 dark:border-primary-850 dark:text-primary-400 opacity-60";
                     }
                   } else if (isSelected) {
-                    optionClass = "border-primary-800 bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 font-bold ring-2 ring-primary-600";
+                    optionClass =
+                      "border-primary-800 bg-primary-50 dark:bg-primary-900/35 text-primary-650 dark:text-primary-300 font-bold ring-2 ring-primary-600";
                   }
 
                   return (
@@ -184,11 +207,17 @@ export default function MCQQuiz() {
                       disabled={isChapterQuiz && isAnswered}
                       className={`w-full text-left p-4 rounded-3xl border-2 transition-all flex items-start gap-3 text-sm md:text-base ${optionClass}`}
                     >
-                      <span className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
-                        isChapterQuiz && isAnswered && isCorrect ? "bg-emerald-500 text-white" :
-                        isChapterQuiz && isAnswered && isSelected ? "bg-rose-500 text-white" :
-                        isSelected ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-600"
-                      }`}>
+                      <span
+                        className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
+                          isChapterQuiz && isAnswered && isCorrect
+                            ? "bg-emerald-500 text-white"
+                            : isChapterQuiz && isAnswered && isSelected
+                              ? "bg-rose-500 text-white"
+                              : isSelected
+                                ? "bg-primary-600 text-white"
+                                : "bg-gray-100 text-gray-600 dark:bg-primary-950/50 dark:text-primary-250"
+                        }`}
+                      >
                         {String.fromCharCode(65 + idx)}
                       </span>
                       <span className="leading-snug">{option}</span>
@@ -199,17 +228,21 @@ export default function MCQQuiz() {
 
               {/* Explanation (Shown immediately ONLY in Chapter Quiz mode) */}
               {isChapterQuiz && isAnswered && (
-                <div className="bg-amber-50 border border-amber-200 rounded-3xl p-4 mt-4 animate-fadeIn">
-                  <p className="font-bold text-amber-900 flex items-center gap-1.5 mb-1.5">
-                    <span className="material-symbols-outlined text-lg">lightbulb</span>
+                <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-3xl p-4 mt-4 animate-fadeIn">
+                  <p className="font-bold text-amber-900 dark:text-amber-100 flex items-center gap-1.5 mb-1.5">
+                    <span className="material-symbols-outlined text-lg">
+                      lightbulb
+                    </span>
                     Giải thích đáp án:
                   </p>
-                  <p className="text-sm text-gray-800 leading-relaxed font-serif">{currentQuestion.explanation}</p>
+                  <p className="text-sm text-gray-800 dark:text-amber-50 leading-relaxed font-serif">
+                    {currentQuestion.explanation}
+                  </p>
                 </div>
               )}
 
               {/* Action buttons */}
-              <div className="pt-4 border-t border-gray-100 flex justify-end gap-3">
+              <div className="pt-4 border-t border-gray-100 dark:border-primary-850 flex justify-end gap-3">
                 {isChapterQuiz ? (
                   !isAnswered ? (
                     <button
@@ -224,7 +257,9 @@ export default function MCQQuiz() {
                       onClick={handleNextQuestion}
                       className="bg-primary-600 text-white font-bold px-8 py-3 rounded-3xl shadow-md hover:bg-primary-900 transition-colors"
                     >
-                      {currentIndex < quiz.questions.length - 1 ? "Câu tiếp theo →" : "Xem kết quả"}
+                      {currentIndex < quiz.questions.length - 1
+                        ? "Câu tiếp theo →"
+                        : "Xem kết quả"}
                     </button>
                   )
                 ) : (
@@ -233,7 +268,9 @@ export default function MCQQuiz() {
                     disabled={selectedOption === null}
                     className="bg-primary-600 text-white font-bold px-8 py-3 rounded-3xl shadow-md hover:bg-primary-900 transition-colors disabled:opacity-50"
                   >
-                    {currentIndex < quiz.questions.length - 1 ? "Câu tiếp theo →" : "Xem kết quả"}
+                    {currentIndex < quiz.questions.length - 1
+                      ? "Câu tiếp theo →"
+                      : "Xem kết quả"}
                   </button>
                 )}
               </div>
@@ -243,16 +280,32 @@ export default function MCQQuiz() {
           /* Finished Screen */
           <div className="space-y-8 max-w-3xl mx-auto">
             {/* Victory Score Board */}
-            <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8 text-center space-y-6 max-w-xl mx-auto">
-              <span className="material-symbols-outlined text-7xl text-amber-500 animate-bounce">emoji_events</span>
-              <h2 className="text-3xl font-extrabold text-gray-900">Kết quả bài làm</h2>
-              <p className="text-gray-500 text-sm">
-                Đồng chí đã trả lời chính xác <strong className="text-primary-800 dark:text-primary-250 text-lg">{score}</strong> trên tổng số <strong className="text-gray-800 text-lg">{quiz.questions.length}</strong> câu hỏi.
+            <div className="bg-white dark:bg-[#002b37] rounded-3xl shadow-lg border border-gray-200 dark:border-primary-850 p-8 text-center space-y-6 max-w-xl mx-auto">
+              <span className="material-symbols-outlined text-7xl text-amber-500 animate-bounce">
+                emoji_events
+              </span>
+              <h2 className="text-3xl font-extrabold text-gray-900 dark:text-primary-100">
+                Kết quả bài làm
+              </h2>
+              <p className="text-gray-500 dark:text-primary-250 text-sm">
+                Đồng chí đã trả lời chính xác{" "}
+                <strong className="text-primary-800 dark:text-primary-250 text-lg">
+                  {score}
+                </strong>{" "}
+                trên tổng số{" "}
+                <strong className="text-gray-800 dark:text-primary-100 text-lg">
+                  {quiz.questions.length}
+                </strong>{" "}
+                câu hỏi.
               </p>
 
-              <div className="bg-slate-50 dark:bg-[#001F28] border border-gray-200 rounded-3xl p-5 max-w-xs mx-auto">
-                <span className="text-xs uppercase tracking-widest text-gray-500 font-bold block mb-1">Tỷ lệ chính xác</span>
-                <h4 className="text-3xl font-black text-primary-800 dark:text-primary-250">{Math.round((score / quiz.questions.length) * 100)}%</h4>
+              <div className="bg-slate-50 dark:bg-[#001F28] border border-gray-200 dark:border-primary-850 rounded-3xl p-5 max-w-xs mx-auto">
+                <span className="text-xs uppercase tracking-widest text-gray-500 dark:text-primary-350 font-bold block mb-1">
+                  Tỷ lệ chính xác
+                </span>
+                <h4 className="text-3xl font-black text-primary-800 dark:text-primary-250">
+                  {Math.round((score / quiz.questions.length) * 100)}%
+                </h4>
               </div>
 
               <div className="flex justify-center gap-3 pt-2">
@@ -274,7 +327,7 @@ export default function MCQQuiz() {
             {/* Detailed Questions Review for Mock Exam (Thi thử) */}
             {!isChapterQuiz && (
               <div className="space-y-4 pt-4">
-                <h3 className="font-bold text-xl text-gray-900 border-l-4 border-primary-800 pl-3 mb-6">
+                <h3 className="font-bold text-xl text-gray-900 dark:text-primary-100 border-l-4 border-primary-800 pl-3 mb-6">
                   Chi tiết bài thi thử & Giải thích học thuật
                 </h3>
                 <div className="space-y-6">
@@ -283,14 +336,21 @@ export default function MCQQuiz() {
                     const isCorrect = chosenIdx === q.correctIndex;
 
                     return (
-                      <div key={qIdx} className="bg-white dark:bg-surface-dark-elevated rounded-3xl border border-slate-200 dark:border-primary-850 p-6 md:p-8 shadow-sm space-y-4 text-left">
+                      <div
+                        key={qIdx}
+                        className="bg-white dark:bg-surface-dark-elevated rounded-3xl border border-slate-200 dark:border-primary-850 p-6 md:p-8 shadow-sm space-y-4 text-left"
+                      >
                         <div className="flex items-center gap-2">
-                          <span className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs ${
-                            isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800 dark:text-red-300"
-                          }`}>
+                          <span
+                            className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs ${
+                              isCorrect
+                                ? "bg-green-100 text-green-800"
+                                : "bg-red-100 text-red-800 dark:text-red-300"
+                            }`}
+                          >
                             {qIdx + 1}
                           </span>
-                          <h4 className="font-bold text-lg text-gray-900 font-serif leading-relaxed">
+                          <h4 className="font-bold text-lg text-gray-900 dark:text-primary-100 font-serif leading-relaxed">
                             {q.question}
                           </h4>
                         </div>
@@ -300,13 +360,15 @@ export default function MCQQuiz() {
                             const isSelectedOpt = chosenIdx === optIdx;
                             const isCorrectOpt = optIdx === q.correctIndex;
 
-                            let optStyle = "border-gray-100 bg-gray-50/50 text-gray-600 opacity-80";
+                            let optStyle =
+                              "border-gray-100 bg-gray-50/50 text-gray-600 opacity-80 dark:border-primary-850 dark:bg-primary-950/20 dark:text-primary-300";
                             if (isSelectedOpt) {
                               optStyle = isCorrectOpt
-                                ? "border-emerald-500 bg-emerald-50 text-emerald-800 font-semibold"
-                                : "border-rose-500 bg-rose-50 text-rose-800 font-semibold";
+                                ? "border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-200 font-semibold"
+                                : "border-rose-500 bg-rose-50 text-rose-800 dark:bg-rose-950/30 dark:text-rose-200 font-semibold";
                             } else if (isCorrectOpt) {
-                              optStyle = "border-emerald-500 bg-emerald-50/30 text-emerald-900 font-semibold";
+                              optStyle =
+                                "border-emerald-500 bg-emerald-50/30 text-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-200 font-semibold";
                             }
 
                             return (
@@ -314,11 +376,17 @@ export default function MCQQuiz() {
                                 key={optIdx}
                                 className={`p-3.5 rounded-3xl border-2 flex items-start gap-3 text-sm md:text-base ${optStyle}`}
                               >
-                                <span className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
-                                  isSelectedOpt && isCorrectOpt ? "bg-emerald-500 text-white" :
-                                  isSelectedOpt && !isCorrectOpt ? "bg-rose-500 text-white" :
-                                  isCorrectOpt ? "bg-emerald-500 text-white" : "bg-gray-200 text-gray-500"
-                                }`}>
+                                <span
+                                  className={`h-6 w-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
+                                    isSelectedOpt && isCorrectOpt
+                                      ? "bg-emerald-500 text-white"
+                                      : isSelectedOpt && !isCorrectOpt
+                                        ? "bg-rose-500 text-white"
+                                        : isCorrectOpt
+                                          ? "bg-emerald-500 text-white"
+                                          : "bg-gray-200 text-gray-500 dark:bg-primary-950/50 dark:text-primary-350"
+                                  }`}
+                                >
                                   {String.fromCharCode(65 + optIdx)}
                                 </span>
                                 <span className="leading-snug">{opt}</span>
@@ -328,12 +396,16 @@ export default function MCQQuiz() {
                         </div>
 
                         {/* Explanation Box */}
-                        <div className="bg-amber-50 border border-amber-200 rounded-3xl p-4 mt-2">
-                          <p className="font-bold text-amber-900 flex items-center gap-1.5 mb-1 text-sm">
-                            <span className="material-symbols-outlined text-base">lightbulb</span>
+                        <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-3xl p-4 mt-2">
+                          <p className="font-bold text-amber-900 dark:text-amber-100 flex items-center gap-1.5 mb-1 text-sm">
+                            <span className="material-symbols-outlined text-base">
+                              lightbulb
+                            </span>
                             Đọc thêm & Giải thích lý luận:
                           </p>
-                          <p className="text-xs md:text-sm text-gray-800 leading-relaxed font-serif">{q.explanation}</p>
+                          <p className="text-xs md:text-sm text-gray-800 dark:text-amber-50 leading-relaxed font-serif">
+                            {q.explanation}
+                          </p>
                         </div>
                       </div>
                     );

@@ -58,9 +58,6 @@
 }
 
 .matching-card {
-  background: var(--surface-elevated);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
   border-radius: 14px;
   padding: 20px;
   margin-bottom: 18px;
@@ -117,7 +114,16 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
 }
