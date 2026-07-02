@@ -48,6 +48,30 @@ export class QuizzesService {
       include: { node: true },
     });
     if (!quiz) throw new NotFoundException("Quiz not found");
+
+    // Nếu là Đề thi thử (mock exam), lấy ngẫu nhiên câu hỏi từ các chương
+    if (quiz.nodeId === null && quiz.type === "mcq" && quiz.title.toLowerCase().includes("thi thử")) {
+      const allChapterQuizzes = await this.prisma.quiz.findMany({
+        where: { type: "mcq", nodeId: { not: null } }
+      });
+
+      const ch1Quiz = allChapterQuizzes.find(q => q.title.includes("Chương 1"));
+      const ch2Quiz = allChapterQuizzes.find(q => q.title.includes("Chương 2"));
+      const ch3Quiz = allChapterQuizzes.find(q => q.title.includes("Chương 3"));
+
+      let mockQuestions: any[] = [];
+      const pickRandom = (questions: any, count: number) => {
+        if (!Array.isArray(questions)) return [];
+        return [...questions].sort(() => 0.5 - Math.random()).slice(0, count);
+      };
+
+      if (ch1Quiz) mockQuestions.push(...pickRandom(ch1Quiz.questions, 20));
+      if (ch2Quiz) mockQuestions.push(...pickRandom(ch2Quiz.questions, 20));
+      if (ch3Quiz) mockQuestions.push(...pickRandom(ch3Quiz.questions, 20));
+
+      quiz.questions = mockQuestions.sort(() => 0.5 - Math.random());
+    }
+
     return quiz;
   }
 
