@@ -20,7 +20,7 @@ const TYPE_ICONS = {
  * Shared wrapper frame for all lesson flow components.
  * Renders the component header (type label, icon, title) and wraps children.
  */
-export function ComponentFrame({ component, children }) {
+export function ComponentFrame({ component, children, className = "" }) {
   const safeComponent = component || {};
   const typeLabel = String(safeComponent.type || "lesson_flow").replaceAll(
     "_",
@@ -29,7 +29,7 @@ export function ComponentFrame({ component, children }) {
   const typeIcon = TYPE_ICONS[safeComponent.type] || "widgets";
 
   return (
-    <section className="bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-4 md:p-6 text-left">
+    <section className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-4 md:p-6 text-left ${className}`}>
       <div className="flex items-center gap-3 mb-4">
         <span className="material-symbols-outlined flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300">
           {typeIcon}

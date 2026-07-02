@@ -13,14 +13,12 @@ export function DialogueComponent({ component, onComplete }) {
     [sourceLines],
   );
   return (
-    <ComponentFrame component={component}>
-      <div className="bg-gray-50 dark:bg-primary-950/30 rounded-xl border border-gray-200 dark:border-primary-850 p-2 md:p-3">
-        <DialogueSequence
-          lines={lines}
-          onComplete={() => onComplete({ score: 100, status: "completed" })}
-          ctaLabel="Tiếp tục"
-        />
-      </div>
+    <ComponentFrame component={component} className="!p-3 md:!p-4">
+      <DialogueSequence
+        lines={lines}
+        onComplete={() => onComplete({ score: 100, status: "completed" })}
+        ctaLabel="Tiếp tục"
+      />
     </ComponentFrame>
   );
 }
