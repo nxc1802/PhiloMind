@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import PageShell, { PageHero } from '../components/PageShell';
+import PageShell from '../components/PageShell';
 import OnboardingGuide from '../components/OnboardingGuide';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
-
+import BannerSlider from "../components/BannerSlider";
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { user } = useAuth();
@@ -95,29 +95,7 @@ export default function Home() {
       />
       
       <div className="min-h-screen bg-white dark:bg-[#0D1117] text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300">
-        {/* Hero Section — unified premium PageHero */}
-        <PageHero
-          eyebrow="Sanctuary Học Thuật AI"
-          icon="bolt"
-          title="PhiloMind"
-          subtitle="Trải nghiệm học tập triết học duy vật biện chứng tương tác trực quan với sự hỗ trợ của trí tuệ nhân tạo."
-        >
-          <div className="flex flex-wrap gap-4 pt-2">
-            <Link
-              to="/lessons"
-              className="bg-white text-primary-850 hover:bg-primary-50 font-bold px-7 py-3.5 rounded-3xl shadow-md transition-all hover:-translate-y-0.5"
-            >
-              Khám phá Sơ đồ giáo trình
-            </Link>
-            <Link
-              to="/practice"
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-7 py-3.5 rounded-3xl transition-all shadow-sm"
-            >
-              Khu luyện tập (Practice)
-            </Link>
-          </div>
-        </PageHero>
-
+        <BannerSlider />
         {/* Features Showcase Section — nền trắng sạch */}
         <section className="py-16 px-6 md:px-12 max-w-6xl mx-auto text-left w-full">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">

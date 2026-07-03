@@ -73,10 +73,10 @@ export default function Navbar() {
 
           <Link to="/" className="flex items-center gap-3">
             <img
-              alt="PhiloMind Logo"
-              className="h-9 w-9 md:h-10 md:w-10 object-contain rounded-3xl shadow-md border border-primary-200 dark:border-primary-750"
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAAAQAElEQVR4AezdB5wURbrH8X/vLkkUFMVA2F1QVMw5Y845ZwkmzNkznTKLit4ZzywGVERMGF/PnDFnPXNCxKwYkbz9Vs2uCpI2THdXVf/6M83sznRXPc+3ZoepZ3p6ysSCAAIIIIAAAggggAACCCCAAAKhC4gCQPBDTIIIIIAAAggggAACCCCAAAIIiAIADwIEEEAAAQQQQAABBBBAAAEEghcwCXIEgEHgggACCCCAAAIIIIAAAggggEDIAjY3CgBWgRUBBBBAAAEEEEAAAQQQQACBcAWKmVEAKDLwDwIIIIAAAggggAACCCCAAAKiAMCbIIAAAggggAACCCCAAAIIIBAqAYvAJhzBIBBAAAEEEEAAAQQQQACBcAVsLoLeFHvNI5IARBAAAEEAAQQQQACB/gZYdSELhM0Y/kUAAQQQQAABBBBAAAEEEEAARIBBAAAHxgBrD2q3fTJf+wQkCCCAQEgCxiAmGJpRl1r9fmELZvmkm6muXcVyV1C3BvJL2PGu9DAJMZ9Ri0KvPEEJCCGAAAIIIIAAAggggEAcBMaY4l5wgzEj91xjBVgE6RN3YoGMAQQQQACBfBEpJt0Rvx1j6T3nTSmhPKAzxKRQ6Kgnneg8k6hG2LKvyAQfLFnrm5VgUO5k0t4YFc/LVVKTsSzEHEPdJI1gvR8fWGxoKZVPiYYLgBhBQQHEEAAAQQQQAABBBBAICQCv/2A55R7ZmwNXzqcZPMcC4nVq8f8lqmQPW2+z8l1VdwvMLyUvgvBaT1VOMcCnRvkbPc2XdRbVZFXAhVJKZJCwT1IpvvLyqHF8gXsOXtYvO+jLxNLWdDH8T0hm4XY0DZGE9iZKkqQf+pHJTfZMkbZxN/yiKyqJJtx0ORLXgtOPmZngRZvGPa1SHp8Zj5WYYZY1fq0x6VDvFacFLgJLxBVp20sWiVN6Z3BNFf4/fKZkMTYvBMEpJhVfcLJU6hvHqkH/2sZON7Q+u/VNWGpbYhjPT+3kcwMnJJx2uMUMvGYF8nzGrR5sXlLYJu0K8EQHXtKm6TYN+0rFrQrz7VCk/pVvxm/v9dLc3qU4WqEDPyp5h4u3l+s3jMPPZvkLxZqPD6vwkKZbdGsQ1gF5Wdz9Q5nRkx+/8CILPo7Bd1Sw2CYlQ55MjBjBstfOhS3HfGYqfqNrgFWWiOw="
-            />
+  src="/logo/logo.png"
+  alt="PhiloMind Logo"
+  className="h-11 w-11 object-contain"
+/>
             <h1 className="hidden sm:block text-xl md:text-2xl text-primary-800 dark:text-primary-100 font-bold tracking-tight">
               PhiloMind
             </h1>
