@@ -36,7 +36,7 @@ function PageShellInner({ activeKey, footer, children }) {
       <div className="flex">
         <StudyModulesSidebar activeKey={activeKey} footer={footer} />
         <main
-          className={`flex-1 min-h-[calc(100vh-64px)] bg-white dark:bg-[#0D1117] transition-all duration-300 ${
+          className={`flex-1 min-w-0 min-h-[calc(100vh-64px)] bg-white dark:bg-[#0D1117] transition-all duration-300 ${
             collapsed ? "lg:ml-12" : "lg:ml-72"
           }`}
         >

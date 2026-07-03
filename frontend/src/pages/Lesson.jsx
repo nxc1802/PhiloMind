@@ -402,9 +402,9 @@ const Lesson = () => {
         )}
 
         {/* Lesson player viewport */}
-        <div className={activeLesson ? "h-full min-h-0 overflow-hidden" : "scroll-mt-20"}>
+        <div className={activeLesson ? "h-full min-h-0 min-w-0 overflow-hidden" : "scroll-mt-20"}>
           {activeLesson ? (
-            <div className="flex h-full min-h-0 flex-col overflow-hidden">
+            <div className="flex h-full min-h-0 w-full min-w-0 flex-col overflow-hidden">
               <div className="flex h-12 shrink-0 items-center gap-3 border-b border-slate-200 bg-white px-4 dark:border-primary-850/50 dark:bg-[#0D1117]">
                 <button
                   type="button"

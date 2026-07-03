@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 export function ProgressBar({
   progressItems,
@@ -7,6 +7,18 @@ export function ProgressBar({
   onSelectComponent,
 }) {
   const scrollRef = useRef(null);
+  // Whether the track overflows and can still scroll toward each edge.
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Recompute the two-headed-arrow affordances from the current scroll state.
+  const updateArrows = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanScrollLeft(scrollLeft > 1);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+  }, []);
 
   // Auto-scroll the active item to center — but ONLY within this container.
   // Using scrollIntoView would bubble up and scroll every scrollable ancestor
@@ -17,16 +29,47 @@ export function ProgressBar({
     if (!container) return;
 
     const activeElement = container.querySelector('[data-active="true"]');
-    if (!activeElement) return;
+    if (!activeElement) {
+      updateArrows();
+      return;
+    }
 
     const containerRect = container.getBoundingClientRect();
     const elementRect = activeElement.getBoundingClientRect();
     const elementCenter =
-      elementRect.left - containerRect.left + container.scrollLeft + elementRect.width / 2;
+      elementRect.left -
+      containerRect.left +
+      container.scrollLeft +
+      elementRect.width / 2;
     const targetScroll = elementCenter - containerRect.width / 2;
 
     container.scrollTo({ left: targetScroll, behavior: "smooth" });
-  }, [activeIndex]);
+    // Recompute arrow state after the smooth scroll settles.
+    const raf = requestAnimationFrame(updateArrows);
+    return () => cancelAnimationFrame(raf);
+  }, [activeIndex, updateArrows]);
+
+  // Keep arrow state in sync with scrolling, resizing and content changes.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateArrows();
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, [updateArrows, progressItems]);
+
+  const scrollByStep = (direction) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({
+      left: direction * Math.max(el.clientWidth * 0.6, 160),
+      behavior: "smooth",
+    });
+  };
 
   const getIcon = (type) => {
     switch (type) {
@@ -51,7 +94,24 @@ export function ProgressBar({
   };
 
   return (
-    <div className="w-full max-w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
+    <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
+      {/* Left two-headed-arrow affordance — appears only when scrollable left */}
+      {canScrollLeft && (
+        <>
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 rounded-l-3xl bg-gradient-to-r from-white to-transparent dark:from-surface-dark-elevated" />
+          <button
+            type="button"
+            onClick={() => scrollByStep(-1)}
+            aria-label="Cuộn thanh tiến trình sang trái"
+            className="absolute left-1.5 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-primary-600 shadow-sm backdrop-blur transition-colors hover:bg-primary-50 dark:border-primary-850/60 dark:bg-surface-dark-elevated/90 dark:text-primary-300 dark:hover:bg-primary-900/30"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              chevron_left
+            </span>
+          </button>
+        </>
+      )}
+
       <div
         ref={scrollRef}
         className="flex h-16 items-center gap-1 overflow-x-auto px-4 py-2 scrollbar-hide snap-x"
@@ -65,11 +125,11 @@ export function ProgressBar({
           return (
             <React.Fragment key={component.id}>
               {idx > 0 && (
-                <div 
+                <div
                   className={[
                     "h-0.5 w-8 shrink-0 transition-colors duration-300",
                     isAccessible ? "bg-primary-500" : "bg-slate-200 dark:bg-slate-700"
-                  ].filter(Boolean).join(" ")} 
+                  ].filter(Boolean).join(" ")}
                 />
               )}
               <button
@@ -101,6 +161,23 @@ export function ProgressBar({
           );
         })}
       </div>
+
+      {/* Right two-headed-arrow affordance — appears only when scrollable right */}
+      {canScrollRight && (
+        <>
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 rounded-r-3xl bg-gradient-to-l from-white to-transparent dark:from-surface-dark-elevated" />
+          <button
+            type="button"
+            onClick={() => scrollByStep(1)}
+            aria-label="Cuộn thanh tiến trình sang phải"
+            className="absolute right-1.5 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-primary-600 shadow-sm backdrop-blur transition-colors hover:bg-primary-50 dark:border-primary-850/60 dark:bg-surface-dark-elevated/90 dark:text-primary-300 dark:hover:bg-primary-900/30"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              chevron_right
+            </span>
+          </button>
+        </>
+      )}
     </div>
   );
 }
