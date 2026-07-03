@@ -76,44 +76,6 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
         </p>
       )}
 
-      {/* Media selector — chỉ hiện nếu có nhiều hơn 1 media */}
-      {lessonMedia.length > 1 && (
-        <div className="shrink-0 rounded-2xl border border-slate-200 bg-white p-3 dark:border-primary-850 dark:bg-primary-950/25">
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-primary-500">
-            Nội dung trực quan
-          </p>
-          <div className="grid gap-1.5">
-            {lessonMedia.map((media) => {
-              const isSelected = media.id === activeMedia?.id;
-              return (
-                <button
-                  key={media.id}
-                  type="button"
-                  onClick={() => onSelectMedia?.(media.id)}
-                  className={`flex min-w-0 items-center gap-2.5 rounded-xl border px-3 py-2 text-left transition-all ${
-                    isSelected
-                      ? "border-primary-400 bg-primary-50 text-primary-800 dark:bg-primary-900/40 dark:text-primary-100"
-                      : "border-slate-200 text-slate-600 hover:border-primary-300 hover:bg-slate-50 dark:border-primary-850 dark:text-primary-300 dark:hover:border-primary-700 dark:hover:bg-primary-950/30"
-                  }`}
-                >
-                  <span className="material-symbols-outlined shrink-0 text-base">
-                    {media.type === "video" ? "play_circle" : "image"}
-                  </span>
-                  <span className="min-w-0 truncate text-xs font-semibold">
-                    {media.title ||
-                      (media.type === "video" ? "Video" : "Hình ảnh")}
-                  </span>
-                  {isSelected && (
-                    <span className="material-symbols-outlined ml-auto shrink-0 text-sm text-primary-600 dark:text-primary-300">
-                      visibility
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

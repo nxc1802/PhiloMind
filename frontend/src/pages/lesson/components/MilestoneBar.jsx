@@ -13,7 +13,7 @@ export function MilestoneBar({ flow, completedIds }) {
       <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-primary-400 flex-shrink-0">
         Mảnh ghép
       </span>
-      <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+      <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0 flex-1">
         {milestones.map((milestone) => {
           const isCompleted = completedIds.includes(milestone.id);
 
