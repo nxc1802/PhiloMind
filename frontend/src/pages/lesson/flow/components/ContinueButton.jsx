@@ -6,7 +6,7 @@ import React from "react";
  */
 export function ContinueButton({ onComplete, label = "Hoàn thành bước này" }) {
   return (
-    <div className="mt-5 flex justify-end">
+    <div className="mt-auto pt-5 flex justify-end shrink-0">
       <button
         type="button"
         onClick={() => onComplete({ score: 100, status: "completed" })}

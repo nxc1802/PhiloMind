@@ -421,10 +421,6 @@ const Lesson = () => {
                   <p className="truncate text-sm font-bold text-primary-900 dark:text-primary-100">
                     {activeLesson.title}
                   </p>
-                  <p className="truncate text-[11px] font-semibold text-slate-400 dark:text-primary-400">
-                    {currentNodeDetails?.timeToRead || "10 phút"} · Độ khó:{" "}
-                    {currentNodeDetails?.difficulty || "Trung bình"}
-                  </p>
                 </div>
               </div>
 

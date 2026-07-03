@@ -43,7 +43,7 @@ export function ComponentFrame({ component, children, className = "" }) {
           </h2>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto min-h-0 pr-2">
+      <div className="flex flex-col flex-1 overflow-y-auto min-h-0 pr-2">
         {children}
       </div>
     </section>

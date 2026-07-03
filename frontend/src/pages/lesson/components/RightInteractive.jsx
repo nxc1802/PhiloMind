@@ -41,7 +41,7 @@ export function RightInteractive({
 
   return (
     <div className="relative z-20 flex h-full min-h-0 flex-col w-full">
-      <div className="w-full pb-8 h-full flex flex-col min-h-0">
+      <div className="w-full h-full flex flex-col min-h-0">
         {/* Component Renderer */}
         {activeComponent.type === "media" ? (
           <ComponentFrame component={activeComponent}>

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useUpdateComponentProgressMutation } from "../../../hooks/useMutations";
 import { normalizeFlow } from "./utils/normalizeFlow";
-import { LeftPanel } from "../components/LeftPanel";
+import { ProgressBar } from "../components/ProgressBar";
 import { CenterMedia } from "../components/CenterMedia";
 import { RightInteractive } from "../components/RightInteractive";
 
@@ -204,40 +204,77 @@ export default function FlowLessonPlayer({
     setActiveMediaId(mediaId);
   };
 
-  // 5. Layout Rendering
+  // Drag resize logic
+  const [leftWidth, setLeftWidth] = useState(50); // percentage
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+      const newWidth = (e.clientX / window.innerWidth) * 100;
+      if (newWidth >= 20 && newWidth <= 80) {
+        setLeftWidth(newWidth);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
+
   return (
-    <div className="grid h-full min-h-0 w-full grid-cols-1 gap-3 overflow-hidden p-3 lg:grid-cols-[205px_minmax(0,1fr)_350px] 2xl:grid-cols-[252px_minmax(0,1fr)_420px]">
-      {/* Cột 1: Left Panel */}
-      <div className="relative z-10 hidden h-full min-h-0 lg:block">
-        <LeftPanel
-          flatSyllabusItems={flatSyllabusItems}
-          progressStats={progressStats}
-          lessonSlug={lessonSlug}
-          handleSyllabusClick={handleSyllabusClick}
-          currentNodeDetails={nodeDetails}
-          progressItems={progressItems}
-          activeIndex={activeIndex}
-          completedIds={completedIds}
-          onSelectComponent={handleSelectComponent}
-        />
-      </div>
-
-      {/* Cột 2: Center Media */}
-      <div className="relative z-0 hidden h-full min-h-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated lg:block">
-        <CenterMedia
-          lessonMedia={lessonMedia}
-          activeMediaId={activeMediaId}
-          onSelectMedia={handleSelectMedia}
-        />
-      </div>
-
-      <RightInteractive
-        flow={flow}
+    <div className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-slate-50 dark:bg-[#0D1117]">
+      <ProgressBar
+        progressItems={progressItems}
         activeIndex={activeIndex}
         completedIds={completedIds}
-        onCompleteComponent={handleCompleteComponent}
-        onFinishLesson={onComplete}
+        onSelectComponent={handleSelectComponent}
       />
+      <div className="flex flex-1 min-h-0 w-full p-3 gap-1 overflow-hidden">
+        {/* Left Column: Center Media */}
+        <div 
+          className="relative h-full min-h-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated"
+          style={{ width: `calc(${leftWidth}% - 8px)` }}
+        >
+          <CenterMedia
+            lessonMedia={lessonMedia}
+            activeMediaId={activeMediaId}
+            onSelectMedia={handleSelectMedia}
+          />
+        </div>
+
+        {/* Resizable Divider */}
+        <div
+          className="w-4 shrink-0 cursor-col-resize group flex items-center justify-center -mx-1 z-10"
+          onMouseDown={() => setIsDragging(true)}
+        >
+          <div className={`h-16 w-1 rounded-full transition-colors ${isDragging ? 'bg-primary-500' : 'bg-slate-300 group-hover:bg-primary-400 dark:bg-slate-600'}`} />
+        </div>
+
+        {/* Right Column: Interactive Content */}
+        <div 
+          className="relative h-full min-h-0"
+          style={{ width: `calc(${100 - leftWidth}% - 8px)` }}
+        >
+          <RightInteractive
+            flow={flow}
+            activeIndex={activeIndex}
+            completedIds={completedIds}
+            onCompleteComponent={handleCompleteComponent}
+            onFinishLesson={onComplete}
+          />
+        </div>
+      </div>
     </div>
   );
 }

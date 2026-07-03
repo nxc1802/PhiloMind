@@ -14,3 +14,4 @@ export { FinalSummaryComponent } from './FinalSummaryComponent';
 export { ComponentFrame } from './ComponentFrame';
 export { ContinueButton } from './ContinueButton';
 export { LessonHint } from './LessonHint';
+export { ChainSortingComponent } from './ChainSortingComponent';

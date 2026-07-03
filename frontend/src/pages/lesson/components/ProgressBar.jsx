@@ -1,0 +1,101 @@
+import React, { useRef, useEffect } from "react";
+import clsx from "clsx";
+
+export function ProgressBar({
+  progressItems,
+  activeIndex,
+  completedIds,
+  onSelectComponent,
+}) {
+  const scrollRef = useRef(null);
+
+  // Auto-scroll to active item
+  useEffect(() => {
+    if (scrollRef.current) {
+      const activeElement = scrollRef.current.querySelector('[data-active="true"]');
+      if (activeElement) {
+        activeElement.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+    }
+  }, [activeIndex]);
+
+  const getIcon = (type) => {
+    switch (type) {
+      case "media":
+        return "play_circle";
+      case "mcq":
+      case "true_false":
+        return "quiz";
+      case "category_sorting":
+      case "target_matching":
+      case "matching_columns":
+      case "chain_sorting":
+        return "extension";
+      case "mindmap_reveal":
+      case "dialogue":
+        return "hub";
+      case "final_summary":
+        return "workspace_premium";
+      default:
+        return "article";
+    }
+  };
+
+  return (
+    <div className="w-full bg-white dark:bg-surface-dark-elevated border-b border-slate-200 dark:border-primary-850/50">
+      <div 
+        ref={scrollRef}
+        className="flex h-16 items-center gap-1 overflow-x-auto px-4 py-2 scrollbar-hide snap-x"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {progressItems.map(({ component, index }, idx) => {
+          const isActive = index === activeIndex;
+          const isCompleted = completedIds.includes(component.id);
+          const isAccessible = isCompleted || index <= activeIndex;
+
+          return (
+            <React.Fragment key={component.id}>
+              {idx > 0 && (
+                <div 
+                  className={clsx(
+                    "h-0.5 w-8 shrink-0 transition-colors duration-300",
+                    isAccessible ? "bg-primary-500" : "bg-slate-200 dark:bg-slate-700"
+                  )} 
+                />
+              )}
+              <button
+                type="button"
+                data-active={isActive}
+                disabled={!isAccessible && !isActive}
+                onClick={() => isAccessible && onSelectComponent(index)}
+                className={clsx(
+                  "snap-center group relative flex shrink-0 items-center justify-center rounded-full transition-all duration-300",
+                  "h-10 px-4 gap-2 border-2",
+                  isActive
+                    ? "border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 dark:border-primary-400 scale-105"
+                    : isCompleted
+                      ? "border-primary-500 bg-white text-primary-600 dark:bg-surface-dark-elevated dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                      : "border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500 cursor-not-allowed"
+                )}
+                title={component.title}
+              >
+                <span className="material-symbols-outlined text-[18px]">
+                  {isCompleted && !isActive ? "check_circle" : getIcon(component.type)}
+                </span>
+                {(isActive || isCompleted) && (
+                  <span className="max-w-[120px] truncate text-xs font-semibold">
+                    {component.title}
+                  </span>
+                )}
+              </button>
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
