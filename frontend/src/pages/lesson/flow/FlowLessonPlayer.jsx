@@ -223,12 +223,14 @@ export default function FlowLessonPlayer({
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-slate-50 dark:bg-[#0D1117]">
-      <ProgressBar
-        progressItems={progressItems}
-        activeIndex={activeIndex}
-        completedIds={completedIds}
-        onSelectComponent={handleSelectComponent}
-      />
+      <div className="w-full min-w-0 px-3 pt-3">
+        <ProgressBar
+          progressItems={progressItems}
+          activeIndex={activeIndex}
+          completedIds={completedIds}
+          onSelectComponent={handleSelectComponent}
+        />
+      </div>
       <div className="flex flex-1 min-h-0 w-full p-3 gap-1 overflow-hidden">
         {/* Left Column: Center Media */}
         <div 
