@@ -186,7 +186,7 @@ function buildOriginLessonFlow(node: any) {
     {
       id: "origin-intro",
       type: "dialogue",
-      title: "Nhiệm vụ khai sáng",
+      title: "Khởi hành",
       linkedMediaId: "origin-opening-video",
       config: {
         isMilestone: true,
@@ -275,7 +275,7 @@ function buildOriginLessonFlow(node: any) {
     {
       id: "cognitive-shift-quiz",
       type: "mcq",
-      title: "Sự dịch chuyển tư duy",
+      title: "Nhận thức",
       linkedMediaId: "cognitive-video",
       config: {
         isMilestone: true,
@@ -365,7 +365,7 @@ function buildOriginLessonFlow(node: any) {
     {
       id: "social-core-quiz",
       type: "mcq",
-      title: "Câu hỏi cốt lõi",
+      title: "Xã hội",
       linkedMediaId: "social-video",
       config: {
         isMilestone: true,

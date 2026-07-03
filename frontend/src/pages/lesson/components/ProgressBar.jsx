@@ -45,7 +45,7 @@ export function ProgressBar({
   };
 
   return (
-    <div className="w-full min-w-0 bg-white dark:bg-surface-dark-elevated border-b border-slate-200 dark:border-primary-850/50">
+    <div className="w-full max-w-full min-w-0 overflow-hidden bg-white dark:bg-surface-dark-elevated border-b border-slate-200 dark:border-primary-850/50">
       <div 
         ref={scrollRef}
         className="flex h-16 items-center gap-1 overflow-x-auto px-4 py-2 scrollbar-hide snap-x"
