@@ -8,18 +8,24 @@ export function ProgressBar({
 }) {
   const scrollRef = useRef(null);
 
-  // Auto-scroll to active item
+  // Auto-scroll the active item to center — but ONLY within this container.
+  // Using scrollIntoView would bubble up and scroll every scrollable ancestor
+  // (including the window), which shifts the whole page sideways. We compute the
+  // target scrollLeft manually so the movement stays inside the progress bar.
   useEffect(() => {
-    if (scrollRef.current) {
-      const activeElement = scrollRef.current.querySelector('[data-active="true"]');
-      if (activeElement && typeof activeElement.scrollIntoView === 'function') {
-        activeElement.scrollIntoView({
-          behavior: "smooth",
-          inline: "center",
-          block: "nearest",
-        });
-      }
-    }
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const activeElement = container.querySelector('[data-active="true"]');
+    if (!activeElement) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const elementRect = activeElement.getBoundingClientRect();
+    const elementCenter =
+      elementRect.left - containerRect.left + container.scrollLeft + elementRect.width / 2;
+    const targetScroll = elementCenter - containerRect.width / 2;
+
+    container.scrollTo({ left: targetScroll, behavior: "smooth" });
   }, [activeIndex]);
 
   const getIcon = (type) => {
@@ -45,8 +51,8 @@ export function ProgressBar({
   };
 
   return (
-    <div className="w-full max-w-full min-w-0 overflow-hidden bg-white dark:bg-surface-dark-elevated border-b border-slate-200 dark:border-primary-850/50">
-      <div 
+    <div className="w-full max-w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
+      <div
         ref={scrollRef}
         className="flex h-16 items-center gap-1 overflow-x-auto px-4 py-2 scrollbar-hide snap-x"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
