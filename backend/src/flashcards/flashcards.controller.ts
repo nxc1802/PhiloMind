@@ -1,75 +1,98 @@
-import { Controller, Get, Post, Body, Query, Put, Delete, Param, UseGuards, Req } from '@nestjs/common';
-import { FlashcardsService } from './flashcards.service';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/roles.decorator';
-import { ReviewCardDto } from './dto/review-card.dto';
-import { CreateFlashcardDto } from './dto/create-flashcard.dto';
-import { UpdateFlashcardDto } from './dto/update-flashcard.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Put,
+  Delete,
+  Param,
+  UseGuards,
+  Req,
+} from "@nestjs/common";
+import { FlashcardsService } from "./flashcards.service";
+import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { RolesGuard } from "../auth/roles.guard";
+import { Roles } from "../auth/roles.decorator";
+import { ReviewCardDto } from "./dto/review-card.dto";
+import { CreateFlashcardDto } from "./dto/create-flashcard.dto";
+import { UpdateFlashcardDto } from "./dto/update-flashcard.dto";
 
-@ApiTags('Spaced Repetition Flashcards')
-@Controller('flashcards')
+@ApiTags("Spaced Repetition Flashcards")
+@Controller("flashcards")
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class FlashcardsController {
   constructor(private flashcardsService: FlashcardsService) {}
 
-  @Get('due')
-  @ApiOperation({ summary: 'Retrieve due flashcards for study' })
+  @Get("due")
+  @ApiOperation({ summary: "Retrieve due flashcards for study" })
   async getDueFlashcards(
-    @Query('courseId') courseId?: string,
+    @Query("courseId") courseId?: string,
     @Req() req?: any,
   ) {
     return this.flashcardsService.getDueFlashcards(req.user.id, courseId);
   }
 
-  @Post('review')
-  @ApiOperation({ summary: 'Submit review scores to update spaced repetition times' })
+  @Post("review")
+  @ApiOperation({
+    summary: "Submit review scores to update spaced repetition times",
+  })
   async recordReviewScore(@Body() dto: ReviewCardDto, @Req() req: any) {
-    return this.flashcardsService.recordReviewScore(req.user.id, dto.flashcardId, dto.ease);
+    return this.flashcardsService.recordReviewScore(
+      req.user.id,
+      dto.flashcardId,
+      dto.ease,
+    );
   }
 
   @Post()
-  @Roles('admin')
-  @ApiOperation({ summary: 'Create a new flashcard (Admin)' })
+  @Roles("admin")
+  @ApiOperation({ summary: "Create a new flashcard (Admin)" })
   async createFlashcard(@Body() dto: CreateFlashcardDto) {
     return this.flashcardsService.create(dto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'List all flashcards' })
-  async getFlashcards(@Query('nodeId') nodeId?: string) {
+  @ApiOperation({ summary: "List all flashcards" })
+  async getFlashcards(@Query("nodeId") nodeId?: string) {
     return this.flashcardsService.findAll(nodeId);
   }
 
-  @Get(':id')
-  @Roles('admin')
-  @ApiOperation({ summary: 'Get details of a single flashcard (Admin)' })
-  async getFlashcardById(@Param('id') id: string) {
+  @Get(":id")
+  @Roles("admin")
+  @ApiOperation({ summary: "Get details of a single flashcard (Admin)" })
+  async getFlashcardById(@Param("id") id: string) {
     return this.flashcardsService.findById(id);
   }
 
-  @Put(':id')
-  @Roles('admin')
-  @ApiOperation({ summary: 'Update a flashcard (Admin)' })
-  async updateFlashcard(@Param('id') id: string, @Body() dto: UpdateFlashcardDto) {
+  @Put(":id")
+  @Roles("admin")
+  @ApiOperation({ summary: "Update a flashcard (Admin)" })
+  async updateFlashcard(
+    @Param("id") id: string,
+    @Body() dto: UpdateFlashcardDto,
+  ) {
     return this.flashcardsService.update(id, dto);
   }
 
-  @Delete(':id')
-  @Roles('admin')
-  @ApiOperation({ summary: 'Delete a flashcard (Admin)' })
-  async deleteFlashcard(@Param('id') id: string) {
+  @Delete(":id")
+  @Roles("admin")
+  @ApiOperation({ summary: "Delete a flashcard (Admin)" })
+  async deleteFlashcard(@Param("id") id: string) {
     return this.flashcardsService.remove(id);
   }
 
-  @Post('nodes/:nodeId/bulk')
-  @Roles('admin')
-  @ApiOperation({ summary: 'Bulk import flashcards for a concept node (Admin)' })
+  @Post("nodes/:nodeId/bulk")
+  @Roles("admin")
+  @ApiOperation({
+    summary: "Bulk import flashcards for a concept node (Admin)",
+  })
   async bulkImport(
-    @Param('nodeId') nodeId: string,
-    @Body() dto: { flashcards: { question: string; answer: string; tag?: string }[] },
+    @Param("nodeId") nodeId: string,
+    @Body()
+    dto: { flashcards: { question: string; answer: string; tag?: string }[] },
   ) {
     return this.flashcardsService.bulkImport(nodeId, dto.flashcards);
   }

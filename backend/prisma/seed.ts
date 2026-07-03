@@ -232,13 +232,24 @@ function buildOriginLessonFlow(node: any) {
       linkedMediaId: "cognitive-video",
       navigation_config: { showInProgress: false },
       config: {
-        question: "Bạn là một thành viên trong bộ tộc cổ đại. Theo lối tư duy thời ấy, bạn giải thích trận động đất này thế nào?",
+        question:
+          "Bạn là một thành viên trong bộ tộc cổ đại. Theo lối tư duy thời ấy, bạn giải thích trận động đất này thế nào?",
         options: [
-          { text: "Thần Biển Poseidon nổi giận và rung chuyển mặt đất.", isCorrect: true },
-          { text: "Bộ tộc đã làm điều gì xúc phạm thần linh nên bị trừng phạt.", isCorrect: true },
-          { text: "Linh hồn lòng đất đang giận dữ đòi vật tế.", isCorrect: true }
+          {
+            text: "Thần Biển Poseidon nổi giận và rung chuyển mặt đất.",
+            isCorrect: true,
+          },
+          {
+            text: "Bộ tộc đã làm điều gì xúc phạm thần linh nên bị trừng phạt.",
+            isCorrect: true,
+          },
+          {
+            text: "Linh hồn lòng đất đang giận dữ đòi vật tế.",
+            isCorrect: true,
+          },
         ],
-        explanation: "Dù chọn cách nào, tất cả đều có điểm chung: con người thời ấy giải thích thế giới bằng THẦN THOẠI và TÍN NGƯỠNG. Đây chính là hình thức 'triết lý' đầu tiên của loài người."
+        explanation:
+          "Dù chọn cách nào, tất cả đều có điểm chung: con người thời ấy giải thích thế giới bằng THẦN THOẠI và TÍN NGƯỠNG. Đây chính là hình thức 'triết lý' đầu tiên của loài người.",
       },
       completionRule: { type: "correct" },
     },
@@ -269,13 +280,24 @@ function buildOriginLessonFlow(node: any) {
       linkedMediaId: "cognitive-video",
       navigation_config: { showInProgress: false },
       config: {
-        question: "Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?",
+        question:
+          "Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?",
         options: [
-          { text: "Con người bắt đầu đi tìm quy luật, lý lẽ để giải thích thế giới — thay cho thần thánh.", isCorrect: true },
-          { text: "Con người quyết định tế lễ nhiều hơn nữa cho chắc chắn.", isCorrect: false },
-          { text: "Con người từ bỏ hoàn toàn việc tìm hiểu thế giới.", isCorrect: false }
+          {
+            text: "Con người bắt đầu đi tìm quy luật, lý lẽ để giải thích thế giới — thay cho thần thánh.",
+            isCorrect: true,
+          },
+          {
+            text: "Con người quyết định tế lễ nhiều hơn nữa cho chắc chắn.",
+            isCorrect: false,
+          },
+          {
+            text: "Con người từ bỏ hoàn toàn việc tìm hiểu thế giới.",
+            isCorrect: false,
+          },
         ],
-        explanation: "Chính xác! Khoảnh khắc con người ngờ vực thần thoại và đi tìm QUY LUẬT bằng lý lẽ — đó là lúc tư duy lý luận, tức TRIẾT HỌC, bắt đầu nảy mầm."
+        explanation:
+          "Chính xác! Khoảnh khắc con người ngờ vực thần thoại và đi tìm QUY LUẬT bằng lý lẽ — đó là lúc tư duy lý luận, tức TRIẾT HỌC, bắt đầu nảy mầm.",
       },
       completionRule: { type: "correct" },
     },
@@ -314,7 +336,7 @@ function buildOriginLessonFlow(node: any) {
           {
             who: "noble",
             text: "Tôi có của cải dư thừa, không phải lao động chân tay. Chiều đến, tôi thong dong ngắm sao trời và đàm đạo cùng bạn hữu. Tôi có đủ điều kiện để quan sát và hệ thống hóa tri thức.",
-          }
+          },
         ],
       },
       completionRule: { type: "viewed" },
@@ -325,15 +347,33 @@ function buildOriginLessonFlow(node: any) {
       title: "Lắp ráp chuỗi nhân quả",
       linkedMediaId: "social-video",
       config: {
-        instruction: "Chọn các mắt xích theo ĐÚNG thứ tự nhân quả hình thành điều kiện xã hội của triết học.",
+        instruction:
+          "Chọn các mắt xích theo ĐÚNG thứ tự nhân quả hình thành điều kiện xã hội của triết học.",
         items: [
-          { id: "c1", order: 0, text: "Sản xuất phát triển, chế độ tư hữu hình thành, của cải dư thừa." },
-          { id: "c2", order: 1, text: "Xã hội phân chia giai cấp (chế độ chiếm hữu nô lệ)." },
-          { id: "c3", order: 2, text: "Lao động trí óc tách khỏi lao động chân tay." },
-          { id: "c4", order: 3, text: "Tầng lớp trí thức xuất hiện và hệ thống hóa tri thức thành triết học." },
+          {
+            id: "c1",
+            order: 0,
+            text: "Sản xuất phát triển, chế độ tư hữu hình thành, của cải dư thừa.",
+          },
+          {
+            id: "c2",
+            order: 1,
+            text: "Xã hội phân chia giai cấp (chế độ chiếm hữu nô lệ).",
+          },
+          {
+            id: "c3",
+            order: 2,
+            text: "Lao động trí óc tách khỏi lao động chân tay.",
+          },
+          {
+            id: "c4",
+            order: 3,
+            text: "Tầng lớp trí thức xuất hiện và hệ thống hóa tri thức thành triết học.",
+          },
         ],
-        successFeedback: "Chuỗi nhân quả đã sáng lên! Đây chính là NGUỒN GỐC XÃ HỘI của triết học.",
-        reward: "Mảnh ghép: Nguồn gốc xã hội"
+        successFeedback:
+          "Chuỗi nhân quả đã sáng lên! Đây chính là NGUỒN GỐC XÃ HỘI của triết học.",
+        reward: "Mảnh ghép: Nguồn gốc xã hội",
       },
       completionRule: { type: "correct" },
     },
@@ -344,13 +384,18 @@ function buildOriginLessonFlow(node: any) {
       linkedMediaId: "social-video",
       navigation_config: { showInProgress: false },
       config: {
-        question: "Tại đại hội bộ tộc, câu hỏi lớn được đặt ra: NHÓM NÀO đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết và trở thành các 'Nhà thông thái'?",
+        question:
+          "Tại đại hội bộ tộc, câu hỏi lớn được đặt ra: NHÓM NÀO đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết và trở thành các 'Nhà thông thái'?",
         options: [
-          { text: "Tầng lớp lao động trí óc (quý tộc, trí thức).", isCorrect: true },
+          {
+            text: "Tầng lớp lao động trí óc (quý tộc, trí thức).",
+            isCorrect: true,
+          },
           { text: "Tầng lớp lao động chân tay (nô lệ).", isCorrect: false },
-          { text: "Cả hai nhóm đều như nhau.", isCorrect: false }
+          { text: "Cả hai nhóm đều như nhau.", isCorrect: false },
         ],
-        explanation: "Chỉ khi lao động trí óc TÁCH KHỎI lao động chân tay, tầng lớp trí thức mới xuất hiện và có điều kiện hệ thống hóa tri thức thành triết học."
+        explanation:
+          "Chỉ khi lao động trí óc TÁCH KHỎI lao động chân tay, tầng lớp trí thức mới xuất hiện và có điều kiện hệ thống hóa tri thức thành triết học.",
       },
       completionRule: { type: "correct" },
     },
@@ -364,15 +409,18 @@ function buildOriginLessonFlow(node: any) {
           {
             id: "cognitive",
             label: "Nguồn gốc nhận thức",
-            detail: "Nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng làm nảy sinh tư duy lý luận.",
+            detail:
+              "Nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng làm nảy sinh tư duy lý luận.",
           },
           {
             id: "social",
             label: "Nguồn gốc xã hội",
-            detail: "Phân công lao động, giai cấp và tầng lớp trí thức tạo điều kiện xã hội cho triết học ra đời.",
+            detail:
+              "Phân công lao động, giai cấp và tầng lớp trí thức tạo điều kiện xã hội cho triết học ra đời.",
           },
         ],
-        summary: "Triết học không từ trên trời rơi xuống. Nó nảy sinh từ nhu cầu hiểu biết của con người và những điều kiện xã hội chín muồi.",
+        summary:
+          "Triết học không từ trên trời rơi xuống. Nó nảy sinh từ nhu cầu hiểu biết của con người và những điều kiện xã hội chín muồi.",
       },
       completionRule: { type: "viewed" },
     },
@@ -391,7 +439,8 @@ function buildOriginLessonFlow(node: any) {
               "Thời kỳ đồ đá cũ",
             ],
             correctIndex: 1,
-            explanation: "Triết học ra đời khoảng thế kỷ VIII - VI trước Công nguyên tại các trung tâm văn minh lớn.",
+            explanation:
+              "Triết học ra đời khoảng thế kỷ VIII - VI trước Công nguyên tại các trung tâm văn minh lớn.",
           },
           {
             question: "Triết học có mấy nguồn gốc cơ bản?",
@@ -402,10 +451,12 @@ function buildOriginLessonFlow(node: any) {
               "Không có nguồn gốc xác định",
             ],
             correctIndex: 1,
-            explanation: "Triết học có hai nguồn gốc cơ bản: nguồn gốc nhận thức và nguồn gốc xã hội.",
+            explanation:
+              "Triết học có hai nguồn gốc cơ bản: nguồn gốc nhận thức và nguồn gốc xã hội.",
           },
           {
-            question: "Về nguồn gốc nhận thức, triết học là hình thức tư duy thay thế cho cái gì?",
+            question:
+              "Về nguồn gốc nhận thức, triết học là hình thức tư duy thay thế cho cái gì?",
             options: [
               "Thay thế khoa học tự nhiên",
               "Thay thế tư duy huyền thoại và tôn giáo",
@@ -413,7 +464,8 @@ function buildOriginLessonFlow(node: any) {
               "Thay thế nghệ thuật",
             ],
             correctIndex: 1,
-            explanation: "Triết học thay thế tư duy huyền thoại và tôn giáo bằng tư duy lý luận.",
+            explanation:
+              "Triết học thay thế tư duy huyền thoại và tôn giáo bằng tư duy lý luận.",
           },
           {
             question: "Điều kiện xã hội nào là tiền đề cho triết học ra đời?",
@@ -424,7 +476,8 @@ function buildOriginLessonFlow(node: any) {
               "Xã hội không có của cải dư thừa",
             ],
             correctIndex: 1,
-            explanation: "Triết học ra đời khi xã hội có phân công lao động, giai cấp và tầng lớp trí thức.",
+            explanation:
+              "Triết học ra đời khi xã hội có phân công lao động, giai cấp và tầng lớp trí thức.",
           },
           {
             question: "Vì sao tầng lớp trí thức có vai trò sáng tạo triết học?",
@@ -435,7 +488,8 @@ function buildOriginLessonFlow(node: any) {
               "Vì họ làm nhiều việc chân tay hơn",
             ],
             correctIndex: 1,
-            explanation: "Tầng lớp trí thức có điều kiện và năng lực hệ thống hóa quan niệm thành học thuyết, lý luận.",
+            explanation:
+              "Tầng lớp trí thức có điều kiện và năng lực hệ thống hóa quan niệm thành học thuyết, lý luận.",
           },
         ],
       },
@@ -446,7 +500,8 @@ function buildOriginLessonFlow(node: any) {
       type: "final_summary",
       title: "Nhà Khai Sáng",
       config: {
-        message: "Bạn đã hoàn thành Hành trình Khai Sáng và nắm được trọn vẹn hai nguồn gốc của triết học. Tri thức là ngọn đuốc — hãy tiếp tục thắp sáng!",
+        message:
+          "Bạn đã hoàn thành Hành trình Khai Sáng và nắm được trọn vẹn hai nguồn gốc của triết học. Tri thức là ngọn đuốc — hãy tiếp tục thắp sáng!",
         keyTakeaways: [
           "Nguồn gốc nhận thức: nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng.",
           "Nguồn gốc xã hội: phân công lao động, giai cấp và tầng lớp trí thức.",
@@ -916,13 +971,19 @@ async function main() {
   const ch1QuizzesPath = path.join(__dirname, "data", "ch1.json");
   const ch2QuizzesPath = path.join(__dirname, "data", "ch2.json");
   const ch3QuizzesPath = path.join(__dirname, "data", "ch3.json");
-  
+
   const seedingData = {
     lesson_1b: {},
-    ch1_quizzes: fs.existsSync(ch1QuizzesPath) ? JSON.parse(fs.readFileSync(ch1QuizzesPath, "utf8")) : [],
-    ch2_quizzes: fs.existsSync(ch2QuizzesPath) ? JSON.parse(fs.readFileSync(ch2QuizzesPath, "utf8")) : [],
-    ch3_quizzes: fs.existsSync(ch3QuizzesPath) ? JSON.parse(fs.readFileSync(ch3QuizzesPath, "utf8")) : [],
-    mock_exam: []
+    ch1_quizzes: fs.existsSync(ch1QuizzesPath)
+      ? JSON.parse(fs.readFileSync(ch1QuizzesPath, "utf8"))
+      : [],
+    ch2_quizzes: fs.existsSync(ch2QuizzesPath)
+      ? JSON.parse(fs.readFileSync(ch2QuizzesPath, "utf8"))
+      : [],
+    ch3_quizzes: fs.existsSync(ch3QuizzesPath)
+      ? JSON.parse(fs.readFileSync(ch3QuizzesPath, "utf8"))
+      : [],
+    mock_exam: [],
   };
 
   const supabaseUrl = process.env.SUPABASE_URL;

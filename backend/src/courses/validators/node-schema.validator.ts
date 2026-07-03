@@ -102,7 +102,6 @@ export class NodeSchemaValidator {
       requireArray(config.cards, `${label}.cards`);
     }
 
-
     if (component.type === "mcq") {
       requireString(config.question, `${label}.question`);
       requireArray(config.options, `${label}.options`);
@@ -192,7 +191,8 @@ export class NodeSchemaValidator {
         }
         // Must have either legacy label/detail or new front/back
         const hasLegacy = node.label !== undefined || node.detail !== undefined;
-        const hasNewFormat = node.front !== undefined || node.back !== undefined;
+        const hasNewFormat =
+          node.front !== undefined || node.back !== undefined;
         if (!hasLegacy && !hasNewFormat) {
           throw new BadRequestException(
             `${label}.nodes[${nodeIdx}] must have either label/detail or front/back fields`,
@@ -246,4 +246,3 @@ export class NodeSchemaValidator {
     this.validateLessonFlow(lessonFlow);
   }
 }
-

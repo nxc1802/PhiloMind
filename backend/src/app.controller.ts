@@ -1,20 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get } from "@nestjs/common";
 
 @Controller()
 export class AppController {
   @Get()
   getRootHealth() {
     return {
-      status: 'healthy',
-      service: 'PhiloMind NestJS Backend',
+      status: "healthy",
+      service: "PhiloMind NestJS Backend",
       timestamp: new Date().toISOString(),
     };
   }
 
-  @Get('health')
+  @Get("health")
   getHealth() {
     return {
-      status: 'healthy',
+      status: "healthy",
       timestamp: new Date().toISOString(),
     };
   }

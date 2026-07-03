@@ -676,7 +676,8 @@ export class CoursesService {
         chapterId: dto.chapterId,
         lessonType: "flow",
         lessonFlow: lessonFlow as any,
-        lessonMedia: dto.lessonMedia !== undefined ? (dto.lessonMedia as any) : undefined,
+        lessonMedia:
+          dto.lessonMedia !== undefined ? (dto.lessonMedia as any) : undefined,
         contentReady,
         lessonStatus,
       },
@@ -728,7 +729,8 @@ export class CoursesService {
         orderIndex: dto.orderIndex,
         lessonType: "flow",
         lessonFlow: hasLessonFlowUpdate ? (dto.lessonFlow as any) : undefined,
-        lessonMedia: dto.lessonMedia !== undefined ? (dto.lessonMedia as any) : undefined,
+        lessonMedia:
+          dto.lessonMedia !== undefined ? (dto.lessonMedia as any) : undefined,
         contentReady: inferredContentReady,
         lessonStatus: dto.lessonStatus,
       },

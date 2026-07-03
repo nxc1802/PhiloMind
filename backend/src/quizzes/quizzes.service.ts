@@ -50,14 +50,24 @@ export class QuizzesService {
     if (!quiz) throw new NotFoundException("Quiz not found");
 
     // Nếu là Đề thi thử (mock exam), lấy ngẫu nhiên câu hỏi từ các chương
-    if (quiz.nodeId === null && quiz.type === "mcq" && quiz.title.toLowerCase().includes("thi thử")) {
+    if (
+      quiz.nodeId === null &&
+      quiz.type === "mcq" &&
+      quiz.title.toLowerCase().includes("thi thử")
+    ) {
       const allChapterQuizzes = await this.prisma.quiz.findMany({
-        where: { type: "mcq", nodeId: { not: null } }
+        where: { type: "mcq", nodeId: { not: null } },
       });
 
-      const ch1Quiz = allChapterQuizzes.find(q => q.title.includes("Chương 1"));
-      const ch2Quiz = allChapterQuizzes.find(q => q.title.includes("Chương 2"));
-      const ch3Quiz = allChapterQuizzes.find(q => q.title.includes("Chương 3"));
+      const ch1Quiz = allChapterQuizzes.find((q) =>
+        q.title.includes("Chương 1"),
+      );
+      const ch2Quiz = allChapterQuizzes.find((q) =>
+        q.title.includes("Chương 2"),
+      );
+      const ch3Quiz = allChapterQuizzes.find((q) =>
+        q.title.includes("Chương 3"),
+      );
 
       let mockQuestions: any[] = [];
       const pickRandom = (questions: any, count: number) => {

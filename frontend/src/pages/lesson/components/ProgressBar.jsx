@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import clsx from "clsx";
 
 export function ProgressBar({
   progressItems,
@@ -13,7 +12,7 @@ export function ProgressBar({
   useEffect(() => {
     if (scrollRef.current) {
       const activeElement = scrollRef.current.querySelector('[data-active="true"]');
-      if (activeElement) {
+      if (activeElement && typeof activeElement.scrollIntoView === 'function') {
         activeElement.scrollIntoView({
           behavior: "smooth",
           inline: "center",
@@ -61,10 +60,10 @@ export function ProgressBar({
             <React.Fragment key={component.id}>
               {idx > 0 && (
                 <div 
-                  className={clsx(
+                  className={[
                     "h-0.5 w-8 shrink-0 transition-colors duration-300",
                     isAccessible ? "bg-primary-500" : "bg-slate-200 dark:bg-slate-700"
-                  )} 
+                  ].filter(Boolean).join(" ")} 
                 />
               )}
               <button
@@ -72,7 +71,7 @@ export function ProgressBar({
                 data-active={isActive}
                 disabled={!isAccessible && !isActive}
                 onClick={() => isAccessible && onSelectComponent(index)}
-                className={clsx(
+                className={[
                   "snap-center group relative flex shrink-0 items-center justify-center rounded-full transition-all duration-300",
                   "h-10 px-4 gap-2 border-2",
                   isActive
@@ -80,7 +79,7 @@ export function ProgressBar({
                     : isCompleted
                       ? "border-primary-500 bg-white text-primary-600 dark:bg-surface-dark-elevated dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
                       : "border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500 cursor-not-allowed"
-                )}
+                ].filter(Boolean).join(" ")}
                 title={component.title}
               >
                 <span className="material-symbols-outlined text-[18px]">

@@ -1,5 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { Injectable, Logger } from "@nestjs/common";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 @Injectable()
 export class SupabaseService {
@@ -8,9 +8,10 @@ export class SupabaseService {
 
   constructor() {
     const url = process.env.SUPABASE_URL;
-    const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+    const key =
+      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
-    if (url && url !== 'https://your-supabase-project.supabase.co' && key) {
+    if (url && url !== "https://your-supabase-project.supabase.co" && key) {
       try {
         this.supabase = createClient(url, key, {
           auth: {
@@ -18,12 +19,16 @@ export class SupabaseService {
             autoRefreshToken: false,
           },
         });
-        this.logger.log('Supabase client initialized successfully!');
+        this.logger.log("Supabase client initialized successfully!");
       } catch (err) {
-        this.logger.error(`Supabase client initialization failed: ${err.message}`);
+        this.logger.error(
+          `Supabase client initialization failed: ${err.message}`,
+        );
       }
     } else {
-      this.logger.warn('Supabase URL/Key missing or default. Running in Local Mock Storage Mode.');
+      this.logger.warn(
+        "Supabase URL/Key missing or default. Running in Local Mock Storage Mode.",
+      );
     }
   }
 
@@ -34,7 +39,12 @@ export class SupabaseService {
   /**
    * Uploads file to Supabase storage bucket, falls back to local virtual storage URL.
    */
-  async uploadFile(bucket: string, path: string, fileBuffer: Buffer, mimeType: string): Promise<string> {
+  async uploadFile(
+    bucket: string,
+    path: string,
+    fileBuffer: Buffer,
+    mimeType: string,
+  ): Promise<string> {
     if (this.supabase) {
       try {
         const { data, error } = await this.supabase.storage
@@ -45,17 +55,19 @@ export class SupabaseService {
           });
 
         if (error) throw error;
-        
+
         const { data: urlData } = this.supabase.storage
           .from(bucket)
           .getPublicUrl(path);
 
         return urlData.publicUrl;
       } catch (error) {
-        this.logger.error(`Supabase upload failed: ${error.message}. Returning mock URL.`);
+        this.logger.error(
+          `Supabase upload failed: ${error.message}. Returning mock URL.`,
+        );
       }
     }
-    
+
     // Fallback URL for mock environment
     return `https://philomind-mock-storage.local/${bucket}/${path}`;
   }
@@ -66,7 +78,7 @@ export class SupabaseService {
   async vectorSearch(embedding: number[], limit: number = 3): Promise<any[]> {
     if (this.supabase) {
       try {
-        const { data, error } = await this.supabase.rpc('match_concepts', {
+        const { data, error } = await this.supabase.rpc("match_concepts", {
           query_embedding: embedding,
           match_threshold: 0.7,
           match_count: limit,
@@ -75,7 +87,9 @@ export class SupabaseService {
         if (error) throw error;
         return data || [];
       } catch (error) {
-        this.logger.error(`Supabase RPC vector search failed: ${error.message}`);
+        this.logger.error(
+          `Supabase RPC vector search failed: ${error.message}`,
+        );
       }
     }
     return [];

@@ -1,5 +1,5 @@
-import { Module, Global } from '@nestjs/common';
-import { AIService } from './ai.service';
+import { Module, Global } from "@nestjs/common";
+import { AIService } from "./ai.service";
 
 @Global()
 @Module({

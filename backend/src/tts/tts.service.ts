@@ -1,5 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { SupabaseService } from '../supabase/supabase.service';
+import { Injectable, Logger } from "@nestjs/common";
+import { SupabaseService } from "../supabase/supabase.service";
 
 @Injectable()
 export class TTSService {
@@ -7,7 +7,7 @@ export class TTSService {
   private workerUrl: string;
 
   constructor(private supabase: SupabaseService) {
-    this.workerUrl = process.env.TTS_WORKER_URL || 'http://localhost:8000';
+    this.workerUrl = process.env.TTS_WORKER_URL || "http://localhost:8000";
   }
 
   /**
@@ -15,20 +15,31 @@ export class TTSService {
    */
   async generateSpeech(text: string, nodeId: string): Promise<string> {
     try {
-      this.logger.log(`Requesting TTS synthesis for concept node: ${nodeId}...`);
-      
+      this.logger.log(
+        `Requesting TTS synthesis for concept node: ${nodeId}...`,
+      );
+
       const audioBuffer = await this.callTTSWorker(text);
-      
+
       // Upload audio to Supabase Storage
       const fileName = `podcasts/${nodeId}.wav`;
-      const publicUrl = await this.supabase.uploadFile('podcasts', fileName, audioBuffer, 'audio/wav');
-      
-      this.logger.log(`Speech synthesized and uploaded successfully. Target URL: ${publicUrl}`);
+      const publicUrl = await this.supabase.uploadFile(
+        "podcasts",
+        fileName,
+        audioBuffer,
+        "audio/wav",
+      );
+
+      this.logger.log(
+        `Speech synthesized and uploaded successfully. Target URL: ${publicUrl}`,
+      );
       return publicUrl;
     } catch (err) {
-      this.logger.error(`TTS worker request failed: ${err.message}. Defaulting to mock audio asset.`);
+      this.logger.error(
+        `TTS worker request failed: ${err.message}. Defaulting to mock audio asset.`,
+      );
       // Return a safe placeholder mock audio URL
-      return 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+      return "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
     }
   }
 
@@ -38,18 +49,20 @@ export class TTSService {
 
     try {
       const response = await fetch(`${this.workerUrl}/api/tts/synthesize`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text, voice: 'af_bella' }),
+        body: JSON.stringify({ text, voice: "af_bella" }),
         signal: controller.signal,
       });
 
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new Error(`TTS Worker responded with status code ${response.status}`);
+        throw new Error(
+          `TTS Worker responded with status code ${response.status}`,
+        );
       }
 
       const arrayBuffer = await response.arrayBuffer();

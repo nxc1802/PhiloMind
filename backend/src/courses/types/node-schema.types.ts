@@ -5,7 +5,7 @@
 
 // ─── Lesson Media (center column in 3-column layout) ──────────────────────────
 
-export type LessonMediaType = 'video' | 'image';
+export type LessonMediaType = "video" | "image";
 
 export interface LessonMediaItem {
   /** Unique identifier for this media item */
@@ -41,7 +41,7 @@ export interface ComponentMedia {
 
 // ─── Layout Config ─────────────────────────────────────────────────────────────
 
-export type MindmapLayoutType = 'vertical' | 'horizontal' | 'matrix' | 'custom';
+export type MindmapLayoutType = "vertical" | "horizontal" | "matrix" | "custom";
 
 export interface MindmapLayoutConfig {
   type: MindmapLayoutType;
@@ -56,22 +56,22 @@ export interface MindmapLayoutConfig {
 // ─── Lesson Component (items in lessonFlow array) ─────────────────────────────
 
 export type ComponentType =
-  | 'media'
-  | 'dialogue'
-  | 'markdown'
-  | 'mcq'
-  | 'quiz_sequence'
-  | 'multi_select'
-  | 'true_false'
-  | 'matching_columns'
-  | 'category_sorting'
-  | 'target_matching'
-  | 'mindmap_reveal'
-  | 'sequence_sorting'
-  | 'final_summary';
+  | "media"
+  | "dialogue"
+  | "markdown"
+  | "mcq"
+  | "quiz_sequence"
+  | "multi_select"
+  | "true_false"
+  | "matching_columns"
+  | "category_sorting"
+  | "target_matching"
+  | "mindmap_reveal"
+  | "sequence_sorting"
+  | "final_summary";
 
 export interface CompletionRule {
-  type: 'viewed' | 'correct' | 'completed' | 'any';
+  type: "viewed" | "correct" | "completed" | "any";
   /** Minimum score required (for 'correct' type) */
   minScore?: number;
 }
