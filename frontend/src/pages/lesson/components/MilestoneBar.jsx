@@ -21,21 +21,24 @@ export function MilestoneBar({ flow, completedIds }) {
             <div
               key={milestone.id}
               className={[
-                "relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border-2 transition-all duration-500",
+                "relative flex h-9 shrink-0 items-center justify-center rounded-xl border-2 px-3 gap-1.5 transition-all duration-500",
                 isCompleted
-                  ? "border-amber-400 bg-amber-50 text-amber-500 shadow-[0_0_12px_rgba(251,191,36,0.4)] dark:bg-amber-900/30 dark:shadow-[0_0_12px_rgba(251,191,36,0.2)] scale-110 z-10"
-                  : "border-slate-200 bg-slate-50 text-slate-300 dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-600"
+                  ? "border-amber-400 bg-amber-50 text-amber-700 shadow-[0_0_12px_rgba(251,191,36,0.4)] dark:bg-amber-900/40 dark:text-amber-300 dark:shadow-[0_0_12px_rgba(251,191,36,0.2)] z-10"
+                  : "border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-500"
               ].filter(Boolean).join(" ")}
               title={milestone.title}
             >
               <span 
                 className={[
-                  "material-symbols-outlined text-xl transition-all duration-500",
-                  isCompleted ? "text-amber-500 animate-pulse" : ""
+                  "material-symbols-outlined text-[18px] transition-all duration-500",
+                  isCompleted ? "text-amber-500 dark:text-amber-400 animate-pulse" : ""
                 ].filter(Boolean).join(" ")}
                 style={isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}}
               >
                 extension
+              </span>
+              <span className="text-xs font-bold whitespace-nowrap">
+                {milestone.title}
               </span>
             </div>
           );

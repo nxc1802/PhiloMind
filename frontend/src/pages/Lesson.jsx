@@ -402,9 +402,9 @@ const Lesson = () => {
         )}
 
         {/* Lesson player viewport */}
-        <div className={activeLesson ? "h-full min-h-0" : "scroll-mt-20"}>
+        <div className={activeLesson ? "h-full min-h-0 overflow-hidden" : "scroll-mt-20"}>
           {activeLesson ? (
-            <div className="flex h-full min-h-0 flex-col">
+            <div className="flex h-full min-h-0 flex-col overflow-hidden">
               <div className="flex h-12 shrink-0 items-center gap-3 border-b border-slate-200 bg-white px-4 dark:border-primary-850/50 dark:bg-[#0D1117]">
                 <button
                   type="button"
@@ -429,7 +429,7 @@ const Lesson = () => {
                   <LessonSkeleton />
                 </div>
               ) : (
-                <div className="min-h-0 flex-1">
+                <div className="min-h-0 flex-1 overflow-hidden">
                   <Suspense
                     fallback={
                       <div className="px-6 py-5">
