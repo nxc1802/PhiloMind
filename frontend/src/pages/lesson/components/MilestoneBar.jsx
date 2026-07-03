@@ -13,7 +13,7 @@ export function MilestoneBar({ flow, completedIds }) {
       <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-primary-400 flex-shrink-0">
         Mảnh ghép
       </span>
-      <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0 flex-1">
+      <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0 flex-1 py-3 -my-3 px-2 -mx-2">
         {milestones.map((milestone) => {
           const isCompleted = completedIds.includes(milestone.id);
 
@@ -23,7 +23,7 @@ export function MilestoneBar({ flow, completedIds }) {
               className={[
                 "relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border-2 transition-all duration-500",
                 isCompleted
-                  ? "border-amber-400 bg-amber-50 text-amber-500 shadow-[0_0_12px_rgba(251,191,36,0.4)] dark:bg-amber-900/30 dark:shadow-[0_0_12px_rgba(251,191,36,0.2)] scale-110"
+                  ? "border-amber-400 bg-amber-50 text-amber-500 shadow-[0_0_12px_rgba(251,191,36,0.4)] dark:bg-amber-900/30 dark:shadow-[0_0_12px_rgba(251,191,36,0.2)] scale-110 z-10"
                   : "border-slate-200 bg-slate-50 text-slate-300 dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-600"
               ].filter(Boolean).join(" ")}
               title={milestone.title}
@@ -31,7 +31,7 @@ export function MilestoneBar({ flow, completedIds }) {
               <span 
                 className={[
                   "material-symbols-outlined text-xl transition-all duration-500",
-                  isCompleted ? "fill-current animate-pulse" : ""
+                  isCompleted ? "text-amber-500 animate-pulse" : ""
                 ].filter(Boolean).join(" ")}
                 style={isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}}
               >
