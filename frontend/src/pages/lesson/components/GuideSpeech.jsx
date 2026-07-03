@@ -188,8 +188,8 @@ export default function DialogueSequence({
   }, [autoPlay, currentTypingDone, isLastVisible, showNextLine]);
 
   return (
-    <div>
-      <div className="space-y-2">
+    <div className="flex flex-col flex-1 h-full min-h-0">
+      <div className="space-y-2 overflow-y-auto">
         {lines.slice(0, visibleCount).map((line, index) => {
           const isCurrent = index === visibleCount - 1;
           return (
@@ -204,9 +204,10 @@ export default function DialogueSequence({
             />
           );
         })}
+        <div ref={scrollAnchorRef} />
       </div>
 
-      <div className="mt-5 flex justify-end">
+      <div className="mt-auto pt-5 flex justify-end shrink-0">
         {!allDone ? (
           !autoPlay && (
             <button
@@ -234,7 +235,6 @@ export default function DialogueSequence({
           </button>
         )}
       </div>
-      <div ref={scrollAnchorRef} />
     </div>
   );
 }

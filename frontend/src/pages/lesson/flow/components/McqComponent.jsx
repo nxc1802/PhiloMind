@@ -54,7 +54,7 @@ export function McqComponent({ component, onComplete }) {
       </div>
       {selected && (
         <div
-          className={`mt-4 border p-4 rounded-3xl ${solved ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-primary-50 dark:bg-primary-900/35 border-primary-200 dark:border-primary-800 text-primary-850 dark:text-primary-150"}`}
+          className={`mt-auto border p-4 rounded-3xl ${solved ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800 text-green-900 dark:text-green-300" : "bg-primary-50 dark:bg-primary-900/35 border-primary-200 dark:border-primary-800 text-primary-850 dark:text-primary-150"}`}
         >
           <p
             className={`font-bold flex items-center gap-2 mb-1 ${solved ? "text-green-800" : "text-primary-700 dark:text-primary-250"}`}

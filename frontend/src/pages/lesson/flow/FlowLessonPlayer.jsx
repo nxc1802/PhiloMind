@@ -10,6 +10,8 @@ function getProgress(progress) {
   return Array.isArray(progress) && progress.length > 0 ? progress[0] : null;
 }
 
+import { MilestoneBar } from "../components/MilestoneBar";
+
 function mediaFromComponent(component) {
   if (component?.type !== "media" || !component.config?.url) return null;
 
@@ -33,16 +35,6 @@ function getLinkedMediaId(component) {
     component?.config?.linked_media_id ||
     null
   );
-}
-
-function isVisibleMilestone(component) {
-  const navConfig =
-    component?.navigationConfig ||
-    component?.navigation_config ||
-    component?.config?.navigationConfig ||
-    component?.config?.navigation_config;
-
-  return navConfig?.showInProgress !== false;
 }
 
 export default function FlowLessonPlayer({
@@ -84,10 +76,7 @@ export default function FlowLessonPlayer({
   }, [flowMedia, nodeDetails?.lessonMedia]);
 
   const progressItems = useMemo(
-    () =>
-      flow
-        .map((component, index) => ({ component, index }))
-        .filter(({ component }) => isVisibleMilestone(component)),
+    () => flow.map((component, index) => ({ component, index })),
     [flow],
   );
 
@@ -243,9 +232,10 @@ export default function FlowLessonPlayer({
       <div className="flex flex-1 min-h-0 w-full p-3 gap-1 overflow-hidden">
         {/* Left Column: Center Media */}
         <div 
-          className="relative h-full min-h-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated"
+          className="relative h-full min-h-0 flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated"
           style={{ width: `calc(${leftWidth}% - 8px)` }}
         >
+          <MilestoneBar flow={flow} completedIds={completedIds} />
           <CenterMedia
             lessonMedia={lessonMedia}
             activeMediaId={activeMediaId}

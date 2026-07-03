@@ -115,74 +115,82 @@ export function ChainSortingComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      {instruction && (
-        <LessonHint steps={[instruction]} />
-      )}
-      
-      <div className="mt-4 px-1">
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext
-            items={currentItems.map(i => i.id)}
-            strategy={verticalListSortingStrategy}
-          >
-            {currentItems.map((item, index) => (
-              <SortableItem
-                key={item.id}
-                id={item.id}
-                item={item}
-                isCorrect={hasSubmitted ? item.order === index : undefined}
-              />
-            ))}
-          </SortableContext>
-        </DndContext>
-      </div>
-
-      {!hasSubmitted ? (
-        <div className="mt-auto pt-5 flex justify-end shrink-0">
-          <button
-            type="button"
-            onClick={checkOrder}
-            className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
-          >
-            Kiểm tra
-            <span className="material-symbols-outlined text-base">check</span>
-          </button>
-        </div>
-      ) : isAllCorrect ? (
-        <div className="mt-6 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-5 text-green-950 dark:text-green-100">
-          <p className="font-bold flex items-center gap-2 mb-2 text-lg">
-            <span className="material-symbols-outlined">task_alt</span> 
-            {successFeedback || "Chính xác! Chuỗi nhân quả đã hoàn thiện."}
-          </p>
-          {reward && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 font-bold text-sm">
-              <span className="material-symbols-outlined text-lg">star</span>
-              {reward}
-            </div>
+      <div className="flex flex-col flex-1 h-full min-h-0">
+        <div className="flex flex-col flex-1 overflow-y-auto">
+          {instruction && (
+            <LessonHint steps={[instruction]} />
           )}
-          <ContinueButton
-            onComplete={() =>
-              onComplete({
-                score: 100,
-                answer: currentItems.map(i => i.id),
-                status: "completed",
-              })
-            }
-            label="Tiếp tục"
-          />
+          
+          <div className="mt-4 px-1">
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={currentItems.map(i => i.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                {currentItems.map((item, index) => (
+                  <SortableItem
+                    key={item.id}
+                    id={item.id}
+                    item={item}
+                    isCorrect={hasSubmitted ? item.order === index : undefined}
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
+          </div>
         </div>
-      ) : (
-        <div className="mt-6 bg-red-50 dark:bg-red-950/35 border border-red-200 dark:border-red-800 rounded-3xl p-4 text-red-900 dark:text-red-100">
-          <p className="font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined">error</span> 
-            Chưa chính xác. Các thẻ màu đỏ đang sai vị trí, hãy sắp xếp lại.
-          </p>
-        </div>
-      )}
+
+        {!hasSubmitted ? (
+          <div className="mt-auto pt-5 flex justify-end shrink-0">
+            <button
+              type="button"
+              onClick={checkOrder}
+              className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-5 py-2.5 rounded-3xl font-bold hover:bg-primary-700 transition-colors"
+            >
+              Kiểm tra
+              <span className="material-symbols-outlined text-base">check</span>
+            </button>
+          </div>
+        ) : isAllCorrect ? (
+          <div className="mt-auto pt-4 shrink-0">
+            <div className="bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-5 text-green-950 dark:text-green-100">
+              <p className="font-bold flex items-center gap-2 mb-2 text-lg">
+                <span className="material-symbols-outlined">task_alt</span> 
+                {successFeedback || "Chính xác! Chuỗi nhân quả đã hoàn thiện."}
+              </p>
+              {reward && (
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 font-bold text-sm mb-4">
+                  <span className="material-symbols-outlined text-lg">star</span>
+                  {reward}
+                </div>
+              )}
+              <ContinueButton
+                onComplete={() =>
+                  onComplete({
+                    score: 100,
+                    answer: currentItems.map(i => i.id),
+                    status: "completed",
+                  })
+                }
+                label="Tiếp tục"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="mt-auto pt-4 shrink-0">
+            <div className="bg-red-50 dark:bg-red-950/35 border border-red-200 dark:border-red-800 rounded-3xl p-4 text-red-900 dark:text-red-100">
+              <p className="font-bold flex items-center gap-2">
+                <span className="material-symbols-outlined">error</span> 
+                Chưa chính xác. Các thẻ màu đỏ đang sai vị trí, hãy sắp xếp lại.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </ComponentFrame>
   );
 }

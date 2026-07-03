@@ -127,6 +127,32 @@ function buildDefaultLessonFlow(node: any) {
 }
 
 function extractLessonMedia(lessonFlow: any[], node: any) {
+  if (node.title === "Nguồn gốc của triết học") {
+    return [
+      {
+        id: "origin-opening-video",
+        type: "video",
+        url: "https://www.youtube.com/watch?v=k_jbTWq-u50",
+        title: "Triết học ra đời trong bước ngoặt tư duy của nhân loại",
+        subtitle: "Thế kỷ VIII - VI TCN",
+      },
+      {
+        id: "cognitive-video",
+        type: "video",
+        url: "https://www.youtube.com/watch?v=1VwbmgMTbkk",
+        title: "Bối cảnh thảm họa thiên nhiên cổ đại",
+        subtitle: "Động đất và cách con người cổ đại lý giải tự nhiên",
+      },
+      {
+        id: "social-video",
+        type: "video",
+        url: "https://www.youtube.com/watch?v=JNutDwj92is",
+        title: "Bối cảnh biến đổi xã hội",
+        subtitle: "Phân công lao động, của cải dư thừa và phân chia giai cấp",
+      },
+    ];
+  }
+
   const mediaItems = lessonFlow
     .filter((component) => component?.type === "media" && component.config?.url)
     .map((component) => ({
@@ -158,24 +184,12 @@ function extractLessonMedia(lessonFlow: any[], node: any) {
 function buildOriginLessonFlow(node: any) {
   return [
     {
-      id: "origin-opening-video",
-      type: "media",
-      title: "Cỗ máy thời gian",
-      config: {
-        mediaType: "video",
-        url: "https://www.youtube.com/watch?v=k_jbTWq-u50",
-        title: "Triết học ra đời trong bước ngoặt tư duy của nhân loại",
-        subtitle: "Thế kỷ VIII - VI TCN",
-      },
-      completionRule: { type: "viewed" },
-    },
-    {
       id: "origin-intro",
       type: "dialogue",
       title: "Nhiệm vụ khai sáng",
       linkedMediaId: "origin-opening-video",
-      navigation_config: { showInProgress: false },
       config: {
+        isMilestone: true,
         lines: [
           {
             who: "guide",
@@ -194,23 +208,10 @@ function buildOriginLessonFlow(node: any) {
       completionRule: { type: "viewed" },
     },
     {
-      id: "cognitive-video",
-      type: "media",
-      title: "Bối cảnh thảm họa",
-      config: {
-        mediaType: "video",
-        url: "https://www.youtube.com/watch?v=1VwbmgMTbkk",
-        title: "Bối cảnh thảm họa thiên nhiên cổ đại",
-        subtitle: "Động đất và cách con người cổ đại lý giải tự nhiên",
-      },
-      completionRule: { type: "viewed" },
-    },
-    {
       id: "cognitive-scene",
       type: "dialogue",
       title: "Giải mã sấm truyền",
       linkedMediaId: "cognitive-video",
-      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -230,7 +231,6 @@ function buildOriginLessonFlow(node: any) {
       type: "mcq",
       title: "Tư duy huyền thoại",
       linkedMediaId: "cognitive-video",
-      navigation_config: { showInProgress: false },
       config: {
         question:
           "Bạn là một thành viên trong bộ tộc cổ đại. Theo lối tư duy thời ấy, bạn giải thích trận động đất này thế nào?",
@@ -258,7 +258,6 @@ function buildOriginLessonFlow(node: any) {
       type: "dialogue",
       title: "Bước ngoặt hoài nghi",
       linkedMediaId: "cognitive-video",
-      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -278,8 +277,8 @@ function buildOriginLessonFlow(node: any) {
       type: "mcq",
       title: "Sự dịch chuyển tư duy",
       linkedMediaId: "cognitive-video",
-      navigation_config: { showInProgress: false },
       config: {
+        isMilestone: true,
         question:
           "Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?",
         options: [
@@ -302,23 +301,10 @@ function buildOriginLessonFlow(node: any) {
       completionRule: { type: "correct" },
     },
     {
-      id: "social-video",
-      type: "media",
-      title: "Bối cảnh xã hội",
-      config: {
-        mediaType: "video",
-        url: "https://www.youtube.com/watch?v=JNutDwj92is",
-        title: "Bối cảnh biến đổi xã hội",
-        subtitle: "Phân công lao động, của cải dư thừa và phân chia giai cấp",
-      },
-      completionRule: { type: "viewed" },
-    },
-    {
       id: "social-setup",
       type: "dialogue",
       title: "Đại hội bộ tộc",
       linkedMediaId: "social-video",
-      navigation_config: { showInProgress: false },
       config: {
         lines: [
           {
@@ -373,7 +359,6 @@ function buildOriginLessonFlow(node: any) {
         ],
         successFeedback:
           "Chuỗi nhân quả đã sáng lên! Đây chính là NGUỒN GỐC XÃ HỘI của triết học.",
-        reward: "Mảnh ghép: Nguồn gốc xã hội",
       },
       completionRule: { type: "correct" },
     },
@@ -382,8 +367,8 @@ function buildOriginLessonFlow(node: any) {
       type: "mcq",
       title: "Câu hỏi cốt lõi",
       linkedMediaId: "social-video",
-      navigation_config: { showInProgress: false },
       config: {
+        isMilestone: true,
         question:
           "Tại đại hội bộ tộc, câu hỏi lớn được đặt ra: NHÓM NÀO đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết và trở thành các 'Nhà thông thái'?",
         options: [

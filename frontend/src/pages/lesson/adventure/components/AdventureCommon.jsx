@@ -131,12 +131,12 @@ export function VideoScene({
         )}
         {ytId && (
           <a
-            href={youtubeWatchUrl}
+            href={src}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-white/90 underline decoration-white/40 underline-offset-4 hover:text-white"
           >
-            Mở trực tiếp trên YouTube nếu video bị chặn nhúng
+            Mở trên YouTube
             <span className="material-symbols-outlined text-sm">
               open_in_new
             </span>
