@@ -101,18 +101,20 @@ export function SpeechBubble({ who, text, side = "left", characters }) {
       }`}
     >
       <div
-        className={`j-avatar-pop flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br ${character.color} p-[2px] shadow-lg ring-4 ring-white/80 dark:ring-primary-950/70 ${
+        className={`j-avatar-pop flex h-20 w-20 shrink-0 items-center justify-center overflow-visible rounded-full bg-gradient-to-br ${character.color} p-1 shadow-lg ring-4 ring-white/80 dark:ring-primary-950/70 ${
           isNarrator ? "mr-3" : isRight ? "ml-3" : "mr-3"
         }`}
       >
-        <Avatar
-          id={character.avatar}
-          size={64}
-          className="h-full w-full rounded-full"
-        />
+        <div className="h-full w-full rounded-full bg-white/15 p-0.5 dark:bg-primary-950/15">
+          <Avatar
+            id={character.avatar}
+            size={72}
+            className="h-full w-full overflow-visible rounded-full"
+          />
+        </div>
       </div>
       <div
-        className={`min-w-0 ${isNarrator ? "max-w-[92%] flex-1" : "max-w-[78%]"}`}
+        className={`min-w-0 ${isNarrator ? "max-w-[92%] flex-1" : "max-w-[74%]"}`}
       >
         <div
           className={`mb-1 flex items-baseline gap-2 ${
@@ -165,12 +167,11 @@ export default function DialogueSequence({
   const allDone = isLastVisible;
 
   const lineSides = useMemo(() => {
-    let nonGuideIndex = 0;
+    let sideIndex = 0;
     return lines.map((line) => {
-      if (line.side) return line.side;
-      if (line.who === "guide" || line.who === "narrator") return "center";
-      const side = nonGuideIndex % 2 === 0 ? "left" : "right";
-      nonGuideIndex += 1;
+      if (line.side === "left" || line.side === "right") return line.side;
+      const side = sideIndex % 2 === 0 ? "left" : "right";
+      sideIndex += 1;
       return side;
     });
   }, [lines]);

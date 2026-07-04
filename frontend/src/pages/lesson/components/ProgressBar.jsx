@@ -133,7 +133,7 @@ export function ProgressBar({
     component.title;
 
   return (
-    <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
+    <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-transparent dark:bg-surface-dark-elevated">
       {/* Left two-headed-arrow affordance — appears only when scrollable left */}
       {canScrollLeft && (
         <>
@@ -186,7 +186,7 @@ export function ProgressBar({
                   isActive
                     ? "border-primary-500 bg-primary-50 text-primary-800 shadow-[0_0_0_4px_rgba(37,99,235,0.14),0_14px_30px_rgba(37,99,235,0.22)] ring-2 ring-primary-300 dark:border-primary-300 dark:bg-primary-900/40 dark:text-primary-100 dark:ring-primary-500/50"
                     : isCompleted
-                      ? "border-primary-500 bg-white text-primary-600 hover:bg-primary-50 dark:bg-surface-dark-elevated dark:text-primary-300 dark:hover:bg-primary-900/20"
+                      ? "border-slate-200 bg-white text-primary-600 hover:bg-primary-50 dark:border-slate-700/50 dark:bg-surface-dark-elevated dark:text-slate-300 dark:hover:bg-primary-900/20"
                       : "cursor-not-allowed border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500",
                 ]
                   .filter(Boolean)

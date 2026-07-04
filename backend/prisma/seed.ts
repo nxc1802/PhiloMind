@@ -368,7 +368,7 @@ function buildOriginLessonFlow(node: any) {
         lines: [
           {
             who: "guide",
-            text: "Bối cảnh: nhiều thế hệ trôi qua, con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành Chủ nô và Nô lệ. Để hiểu ai mới đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau nhé.",
+            text: "Nhiều thế hệ trôi qua, con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành Chủ nô và Nô lệ. Để hiểu ai mới đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau nhé.",
           },
           {
             who: "slave",
@@ -1349,7 +1349,7 @@ async function main() {
           setup: [
             {
               who: "guide",
-              text: "Bối cảnh: many thế hệ trôi qua, khi phương thức sản xuất thay đổi — con người biết rèn đồng, rèn sắt, của cải bắt đầu dư thừa — xã hội phân chia thành Chủ nô và Nô lệ.",
+              text: "Nhiều thế hệ trôi qua, khi phương thức sản xuất thay đổi — con người biết rèn đồng, rèn sắt, của cải bắt đầu dư thừa — xã hội phân chia thành Chủ nô và Nô lệ.",
             },
             {
               who: "guide",

@@ -23,7 +23,7 @@ export function RightInteractive({
 
   if (!activeComponent) {
     return (
-      <div className="flex h-full min-h-0 flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
+      <div className="flex h-full min-h-0 flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-transparent dark:bg-surface-dark-elevated">
         <p className="text-gray-600">Bài học chưa có nội dung tương tác.</p>
       </div>
     );
@@ -43,12 +43,12 @@ export function RightInteractive({
   };
 
   return (
-    <div className="relative z-20 flex h-full min-h-0 flex-col w-full">
-      <div className="w-full h-full flex flex-col min-h-0">
+    <div className="relative z-20 flex h-full min-h-0 w-full flex-col overflow-hidden">
+      <div className="flex h-full min-h-0 w-full flex-col overflow-y-auto overscroll-contain pr-1">
         {/* Component Renderer */}
         {activeComponent.type === "media" ? (
           <ComponentFrame component={activeComponent}>
-            <div className="rounded-3xl border border-primary-100 bg-primary-50 p-5 text-slate-800 dark:border-primary-850 dark:bg-primary-950/35 dark:text-primary-100">
+            <div className="rounded-3xl border border-primary-100 bg-primary-50 p-5 text-slate-800 dark:border-transparent dark:bg-primary-950/35 dark:text-primary-100">
               <div className="flex items-start gap-3">
                 <span className="material-symbols-outlined flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-600 text-white">
                   play_circle

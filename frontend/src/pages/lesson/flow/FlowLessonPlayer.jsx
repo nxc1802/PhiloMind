@@ -341,13 +341,13 @@ export default function FlowLessonPlayer({
           type="button"
           onClick={handleResetLesson}
           disabled={updateComponentProgress.isPending || flow.length === 0}
-          className="inline-flex h-16 shrink-0 items-center gap-2 rounded-3xl border border-amber-200 bg-amber-50 px-4 text-sm font-bold text-amber-800 shadow-sm transition-all hover:border-amber-300 hover:bg-amber-100 disabled:cursor-wait disabled:opacity-60 dark:border-amber-800/60 dark:bg-amber-950/30 dark:text-amber-200 dark:hover:bg-amber-900/45"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-primary-200 hover:bg-primary-50 hover:text-primary-650 disabled:cursor-wait disabled:opacity-60 dark:border-transparent dark:bg-slate-900/55 dark:text-primary-250 dark:hover:bg-primary-900/30"
           title="Học lại bài này từ đầu"
+          aria-label="Học lại bài này từ đầu"
         >
           <span className="material-symbols-outlined text-[20px]">
             restart_alt
           </span>
-          <span className="hidden sm:inline">Học lại</span>
         </button>
       </div>
       <div
@@ -356,7 +356,7 @@ export default function FlowLessonPlayer({
       >
         {/* Left Column: Center Media */}
         <div
-          className="relative h-full min-h-0 min-w-0 flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated"
+          className="relative flex h-full min-h-0 min-w-0 flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-transparent dark:bg-surface-dark-elevated"
           style={{ width: `${leftWidth}%` }}
         >
           <MilestoneBar

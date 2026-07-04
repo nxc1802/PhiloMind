@@ -5,12 +5,16 @@ import { ContinueButton } from "./ContinueButton";
 
 export function McqComponent({ component, onComplete }) {
   const options = normalizeOptions(component.config.options);
+  const isEmbedded = component.__isEmbedded === true;
   const isCompleted = component.__isCompleted === true;
-  const completedAnswer = component.__completedResult?.answer || null;
+  const completedAnswer = isEmbedded
+    ? null
+    : component.__completedResult?.answer || null;
   const [selectedId, setSelectedId] = useState(completedAnswer);
   const [wrongIds, setWrongIds] = useState([]);
   const selected = options.find((option) => option.id === selectedId);
   const solved = selected?.isCorrect;
+  const canContinue = solved && (!isCompleted || isEmbedded);
 
   useEffect(() => {
     if (completedAnswer) setSelectedId(completedAnswer);
@@ -77,7 +81,7 @@ export function McqComponent({ component, onComplete }) {
                 : component.feedback?.incorrect) ||
               component.config.explanation}
           </p>
-          {solved && !isCompleted && (
+          {canContinue && (
             <ContinueButton
               onComplete={() =>
                 onComplete({

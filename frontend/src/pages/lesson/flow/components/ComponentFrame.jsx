@@ -21,7 +21,7 @@ const TYPE_ICONS = {
 
 /**
  * Shared wrapper frame for all lesson flow components.
- * Renders the component header (type label, icon, title) and wraps children.
+ * Renders a compact component header and wraps scrollable component content.
  */
 export function ComponentFrame({
   component,
@@ -31,36 +31,29 @@ export function ComponentFrame({
 }) {
   const safeComponent = component || {};
   const isEmbedded = embedded || safeComponent.__isEmbedded === true;
-  const typeLabel = String(safeComponent.type || "lesson_flow").replaceAll(
-    "_",
-    " ",
-  );
   const typeIcon = TYPE_ICONS[safeComponent.type] || "widgets";
+
+  if (isEmbedded) {
+    return (
+      <div className={`flex min-h-0 flex-col ${className}`}>{children}</div>
+    );
+  }
 
   return (
     <section
-      className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl border border-slate-200 dark:border-primary-800 p-3 flex flex-col min-h-0 ${
-        isEmbedded ? "h-auto shadow-sm" : "h-full shadow-md"
-      } ${className}`}
+      className={`flex h-full min-h-0 flex-col rounded-2xl border border-slate-200 bg-white p-3 text-slate-900 shadow-md dark:border-transparent dark:bg-[#0f2530] dark:text-primary-100 ${className}`}
     >
       <div className="flex items-center gap-2 mb-2 shrink-0">
         <span className="material-symbols-outlined flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300 text-lg">
           {typeIcon}
         </span>
         <div>
-          <p className="text-[10px] uppercase tracking-wider text-primary-650 dark:text-primary-300 font-bold leading-none mb-0.5">
-            {typeLabel}
-          </p>
           <h2 className="text-base font-bold text-primary-900 dark:text-primary-100 leading-tight">
             {safeComponent.title || "Hoạt động bài học"}
           </h2>
         </div>
       </div>
-      <div
-        className={`flex flex-col min-h-0 ${
-          isEmbedded ? "pr-0" : "flex-1 overflow-y-auto pr-2"
-        }`}
-      >
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-2">
         {children}
       </div>
     </section>

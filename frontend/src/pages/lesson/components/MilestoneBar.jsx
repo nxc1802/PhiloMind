@@ -12,7 +12,7 @@ export function MilestoneBar({ flow, completedIds, activeIndex }) {
   if (milestones.length === 0) return null;
 
   return (
-    <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-primary-850/50 bg-white/50 dark:bg-[#0a1e28]/50 rounded-t-3xl">
+    <div className="flex items-center gap-3 rounded-t-3xl border-b border-slate-200 bg-white/50 px-4 py-3 dark:border-transparent dark:bg-[#0a1e28]/50">
       <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-primary-400 flex-shrink-0">
         Mảnh ghép
       </span>

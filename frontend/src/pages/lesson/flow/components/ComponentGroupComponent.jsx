@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 import { getComponentName, getComponentRenderer } from "./componentRegistry";
 
@@ -87,6 +88,12 @@ export function ComponentGroupComponent({
           Math.min(children.length, completedChildIds.size + 1),
         );
 
+  const readyToComplete =
+    children.length > 0 &&
+    (completionMode === "any"
+      ? childResults.some((result) => result?.status === "completed")
+      : children.every((child) => completedChildIds.has(child.id)));
+
   const completeGroup = (nextChildResults) => {
     onComplete({
       status: "completed",
@@ -98,8 +105,6 @@ export function ComponentGroupComponent({
   };
 
   const handleChildComplete = (child, result = {}) => {
-    if (completedChildIds.has(child.id)) return;
-
     const nextChildResults = upsertChildResult(childResults, child, result);
     const nextCompletedIds = new Set(
       nextChildResults
@@ -130,32 +135,16 @@ export function ComponentGroupComponent({
 
   if (children.length === 0) {
     return (
-      <div className="flex h-full min-h-0 flex-col justify-center rounded-2xl border border-slate-200 bg-white p-5 text-slate-700 shadow-sm dark:border-primary-850 dark:bg-[#0f2530] dark:text-primary-100">
+      <ComponentFrame component={component}>
         <p className="font-bold">Cụm hoạt động này chưa có component con.</p>
         <ContinueButton onComplete={onComplete} label="Bỏ qua cụm này" />
-      </div>
+      </ComponentFrame>
     );
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      <div className="mb-3 shrink-0 rounded-2xl border border-primary-100 bg-white px-4 py-3 shadow-sm dark:border-primary-850 dark:bg-[#0f2530]">
-        <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300">
-            view_agenda
-          </span>
-          <div className="min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
-              component group
-            </p>
-            <h2 className="truncate text-base font-bold text-primary-900 dark:text-primary-100">
-              {component.title || "Cụm hoạt động"}
-            </h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
+    <ComponentFrame component={component}>
+      <div className="min-h-0 flex-1 space-y-4">
         {visibleChildren.map((child, index) => {
           const Renderer = getComponentRenderer(child.type);
           const childResult = childResults.find(
@@ -172,7 +161,11 @@ export function ComponentGroupComponent({
           return (
             <div
               key={child.id}
-              className="animate-[fadeIn_220ms_ease-out]"
+              className={`animate-[fadeIn_220ms_ease-out] ${
+                index > 0
+                  ? "border-t border-slate-100 pt-4 dark:border-white/10"
+                  : ""
+              }`}
               data-group-child-id={child.id}
             >
               {Renderer ? (
@@ -187,18 +180,17 @@ export function ComponentGroupComponent({
                   {getComponentName(child.type)}).
                 </div>
               )}
-              {isDone && index < children.length - 1 && (
-                <div className="mt-2 flex items-center justify-end gap-2 pr-2 text-xs font-bold text-primary-600 dark:text-primary-300">
-                  <span>Hoàn thành</span>
-                  <span className="material-symbols-outlined text-base">
-                    keyboard_double_arrow_down
-                  </span>
-                </div>
-              )}
             </div>
           );
         })}
+
+        {readyToComplete && (
+          <ContinueButton
+            onComplete={() => completeGroup(childResults)}
+            label="Tiếp tục"
+          />
+        )}
       </div>
-    </div>
+    </ComponentFrame>
   );
 }
