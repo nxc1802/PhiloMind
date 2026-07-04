@@ -208,14 +208,17 @@ export function ProgressBar({
               {idx < progressItems.length - 1 && (
                 <span
                   className={[
-                    "pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 material-symbols-outlined text-[18px] transition-colors",
+                    "pointer-events-none absolute right-[-1.15rem] top-1/2 flex w-10 -translate-y-1/2 items-center transition-colors",
                     isCompleted || isActive
                       ? "text-primary-500 dark:text-primary-300"
                       : "text-slate-300 dark:text-slate-600",
                   ].join(" ")}
                   aria-hidden="true"
                 >
-                  chevron_right
+                  <span className="h-[2px] flex-1 rounded-full bg-current shadow-[0_0_10px_currentColor]" />
+                  <span className="material-symbols-outlined -ml-1 text-[18px] leading-none">
+                    arrow_forward
+                  </span>
                 </span>
               )}
             </div>

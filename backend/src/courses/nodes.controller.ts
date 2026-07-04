@@ -93,6 +93,8 @@ export class NodesController {
       dto.currentComponentIndex,
       dto.completedComponentIds,
       dto.componentResult,
+      dto.componentResults,
+      dto.resetLessonProgress,
     );
   }
 

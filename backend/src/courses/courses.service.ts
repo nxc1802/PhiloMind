@@ -795,6 +795,8 @@ export class CoursesService {
     currentComponentIndex?: number,
     completedComponentIds?: string[],
     componentResult?: any,
+    componentResults?: any[],
+    resetLessonProgress = false,
   ) {
     const existing = await this.prisma.progress.findUnique({
       where: { userId_nodeId: { userId, nodeId } },
@@ -804,32 +806,41 @@ export class CoursesService {
       },
     });
 
-    const previousResults = Array.isArray(existing?.componentResults)
-      ? (existing?.componentResults as any[])
-      : [];
-    const nextResults = componentResult
-      ? [
-          ...previousResults.filter(
-            (result) => result.componentId !== componentResult.componentId,
-          ),
-          {
-            ...componentResult,
-            completedAt:
-              componentResult.completedAt || new Date().toISOString(),
-          },
-        ]
-      : previousResults;
+    const hasComponentResultsOverride = Array.isArray(componentResults);
+    const previousResults = hasComponentResultsOverride
+      ? componentResults
+      : Array.isArray(existing?.componentResults)
+        ? (existing?.componentResults as any[])
+        : [];
+    const nextResults = hasComponentResultsOverride
+      ? componentResults
+      : componentResult
+        ? [
+            ...previousResults.filter(
+              (result) => result.componentId !== componentResult.componentId,
+            ),
+            {
+              ...componentResult,
+              completedAt:
+                componentResult.completedAt || new Date().toISOString(),
+            },
+          ]
+        : previousResults;
 
     const updateData: any = {
-      status: existing?.status === "completed" ? "completed" : "in_progress",
+      status:
+        resetLessonProgress || existing?.status !== "completed"
+          ? "in_progress"
+          : "completed",
     };
+    if (resetLessonProgress) updateData.lessonCompleted = false;
     if (activeComponentId !== undefined)
       updateData.activeComponentId = activeComponentId;
     if (currentComponentIndex !== undefined)
       updateData.currentComponentIndex = currentComponentIndex;
     if (completedComponentIds !== undefined)
       updateData.completedComponentIds = completedComponentIds as any;
-    if (componentResult !== undefined)
+    if (hasComponentResultsOverride || componentResult !== undefined)
       updateData.componentResults = nextResults as any;
 
     return this.prisma.progress.upsert({

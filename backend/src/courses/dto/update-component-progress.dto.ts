@@ -1,4 +1,10 @@
-import { IsArray, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+  IsArray,
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from "class-validator";
 
 export class UpdateComponentProgressDto {
   @IsString()
@@ -15,4 +21,12 @@ export class UpdateComponentProgressDto {
 
   @IsOptional()
   componentResult?: any;
+
+  @IsArray()
+  @IsOptional()
+  componentResults?: any[];
+
+  @IsBoolean()
+  @IsOptional()
+  resetLessonProgress?: boolean;
 }

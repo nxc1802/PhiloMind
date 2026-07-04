@@ -1,4 +1,10 @@
-import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useUpdateComponentProgressMutation } from "../../../hooks/useMutations";
 import { normalizeFlow } from "./utils/normalizeFlow";
@@ -193,6 +199,27 @@ export default function FlowLessonPlayer({
     setActiveMediaId(mediaId);
   };
 
+  const handleResetLesson = () => {
+    const firstComponent = flow[0];
+    if (!firstComponent || !nodeDetails?.id) return;
+
+    setCompletedIds([]);
+    setActiveIndex(0);
+    setActiveMediaId(getMediaIdForIndex(0));
+
+    updateComponentProgress.mutate({
+      nodeId: nodeDetails.id,
+      userId: user?.id,
+      payload: {
+        activeComponentId: firstComponent.id,
+        currentComponentIndex: 0,
+        completedComponentIds: [],
+        componentResults: [],
+        resetLessonProgress: true,
+      },
+    });
+  };
+
   // Drag-resize logic — recoded.
   // Cách cũ tính % theo `e.clientX / window.innerWidth`, bỏ qua việc khung bài
   // học nằm trong <main> có lề trái (sidebar). Vì thế clientX luôn lớn hơn
@@ -251,13 +278,27 @@ export default function FlowLessonPlayer({
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-slate-50 dark:bg-[#0D1117]">
-      <div className="w-full min-w-0 px-3 pt-3">
-        <ProgressBar
-          progressItems={progressItems}
-          activeIndex={activeIndex}
-          completedIds={completedIds}
-          onSelectComponent={handleSelectComponent}
-        />
+      <div className="flex w-full min-w-0 items-center gap-2 px-3 pt-3">
+        <div className="min-w-0 flex-1">
+          <ProgressBar
+            progressItems={progressItems}
+            activeIndex={activeIndex}
+            completedIds={completedIds}
+            onSelectComponent={handleSelectComponent}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={handleResetLesson}
+          disabled={updateComponentProgress.isPending || flow.length === 0}
+          className="inline-flex h-16 shrink-0 items-center gap-2 rounded-3xl border border-amber-200 bg-amber-50 px-4 text-sm font-bold text-amber-800 shadow-sm transition-all hover:border-amber-300 hover:bg-amber-100 disabled:cursor-wait disabled:opacity-60 dark:border-amber-800/60 dark:bg-amber-950/30 dark:text-amber-200 dark:hover:bg-amber-900/45"
+          title="Học lại bài này từ đầu"
+        >
+          <span className="material-symbols-outlined text-[20px]">
+            restart_alt
+          </span>
+          <span className="hidden sm:inline">Học lại</span>
+        </button>
       </div>
       <div
         ref={splitRowRef}
