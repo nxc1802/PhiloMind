@@ -25,7 +25,7 @@ export function DialogueComponent({ component, onComplete }) {
           ctaLabel="Tiếp tục"
           compact={isEmbedded}
           completed={isCompleted}
-          autoPlay={false}
+          autoPlay
         />
       </div>
     </ComponentFrame>

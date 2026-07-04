@@ -14,6 +14,7 @@ export function FinalSummaryComponent({ component, onComplete }) {
   const [showCelebration, setShowCelebration] = useState(false);
   const [completionStarted, setCompletionStarted] = useState(false);
   const completionTimerRef = useRef(null);
+  const completionDeliveredRef = useRef(false);
   const answeredAll =
     quiz.length > 0 && quiz.every((_, index) => answers[index] !== undefined);
   const score =
@@ -37,13 +38,20 @@ export function FinalSummaryComponent({ component, onComplete }) {
     };
   }, []);
 
+  const finishCompletion = () => {
+    if (completionDeliveredRef.current) return;
+    completionDeliveredRef.current = true;
+    if (completionTimerRef.current) {
+      window.clearTimeout(completionTimerRef.current);
+    }
+    onComplete({ score, answer: answers, status: "completed" });
+  };
+
   const handleComplete = () => {
     if (completionStarted) return;
     setCompletionStarted(true);
     setShowCelebration(true);
-    completionTimerRef.current = window.setTimeout(() => {
-      onComplete({ score, answer: answers, status: "completed" });
-    }, 1400);
+    completionTimerRef.current = window.setTimeout(finishCompletion, 6000);
   };
 
   return (
@@ -62,6 +70,16 @@ export function FinalSummaryComponent({ component, onComplete }) {
             <p className="mt-2 text-sm font-semibold leading-6 text-slate-600 dark:text-primary-200">
               Bạn đã hoàn thành bài học và mở khóa phần thưởng tổng kết.
             </p>
+            <button
+              type="button"
+              onClick={finishCompletion}
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-3xl bg-primary-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-colors hover:bg-primary-700"
+            >
+              Chuyển tới bài học tiếp theo
+              <span className="material-symbols-outlined text-base">
+                arrow_forward
+              </span>
+            </button>
           </div>
         </div>
       )}

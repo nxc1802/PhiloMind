@@ -1,178 +1,239 @@
 import React, { useMemo, useState } from "react";
+import {
+  closestCenter,
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 
-/**
- * ChainSortingComponent — Lắp ráp chuỗi nhân quả.
- *
- * Cơ chế mới (thay cho kéo–thả): người học BẤM chọn từng mắt xích theo đúng
- * thứ tự nhân quả. Kiểm tra trực tiếp ngay khi bấm:
- *  - Bấm đúng thứ tự  → thẻ chuyển XANH, gắn số thứ tự và chờ mắt xích tiếp theo.
- *  - Bấm sai thứ tự   → thẻ chớp ĐỎ kèm lời nhắc lý do sai (không tính điểm mất lượt).
- *  - Chọn đủ đúng thứ tự → hiện thông báo thành công như cũ.
- */
-export function ChainSortingComponent({ component, onComplete }) {
+function normalizeItems(items) {
+  return items.map((item, index) => ({
+    ...item,
+    order: typeof item.order === "number" ? item.order : index,
+  }));
+}
+
+function getShuffledItems(items) {
+  const shuffled = [...items].sort(() => Math.random() - 0.5);
+  const expectedIds = items
+    .slice()
+    .sort((a, b) => a.order - b.order)
+    .map((item) => item.id);
+  const isSorted = shuffled.every(
+    (item, index) => item.id === expectedIds[index],
+  );
+
+  if (isSorted && shuffled.length > 1) {
+    [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+  }
+
+  return shuffled;
+}
+
+function SortableChainCard({ item, index, correctIndex, isCorrectPosition }) {
   const {
-    instruction,
-    items = [],
-    successFeedback,
-    reward,
-  } = component.config;
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: item.id });
 
-  // Trộn thứ tự hiển thị một lần, giữ nguyên vị trí trong suốt lượt chơi
-  // để số thứ tự gắn lên từng thẻ không bị nhảy.
-  const shuffledItems = useMemo(() => {
-    const shuffled = [...items].sort(() => Math.random() - 0.5);
-    const isSorted = shuffled.every((item, i) => item.order === i);
-    if (isSorted && shuffled.length > 1) {
-      [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
-    }
-    return shuffled;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [component.id]);
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+      {...attributes}
+      {...listeners}
+      className={[
+        "group relative flex w-full touch-none items-stretch gap-3 rounded-2xl border-2 bg-white p-3 text-left shadow-sm transition-all",
+        "cursor-grab active:cursor-grabbing dark:bg-surface-dark-elevated",
+        isDragging
+          ? "z-30 scale-[1.015] border-primary-400 shadow-2xl"
+          : isCorrectPosition
+            ? "border-green-300 dark:border-green-800/70"
+            : "border-slate-200 hover:border-primary-350 dark:border-primary-850/55 dark:hover:border-primary-650",
+      ].join(" ")}
+    >
+      <span
+        className={[
+          "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-lg font-extrabold",
+          isCorrectPosition
+            ? "bg-green-100 text-green-700 dark:bg-green-950/45 dark:text-green-200"
+            : "bg-slate-100 text-slate-500 group-hover:bg-primary-50 group-hover:text-primary-650 dark:bg-primary-950/35 dark:text-primary-250",
+        ].join(" ")}
+      >
+        {index + 1}
+      </span>
 
-  // Map itemId -> số thứ tự đã gán (1-based). nextOrder là order (0-based) kỳ vọng kế tiếp.
-  const [assigned, setAssigned] = useState({});
-  const [nextOrder, setNextOrder] = useState(0);
-  const [wrongId, setWrongId] = useState(null);
-  const [wrongReason, setWrongReason] = useState("");
-  const [mistakes, setMistakes] = useState(0);
+      {item.icon && (
+        <span className="material-symbols-outlined mt-2 shrink-0 text-2xl text-primary-500 dark:text-primary-250">
+          {item.icon}
+        </span>
+      )}
 
-  const isCompleted = nextOrder >= shuffledItems.length && shuffledItems.length > 0;
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold leading-6 text-slate-850 dark:text-primary-100">
+          {item.text}
+        </p>
+        <p
+          className={[
+            "mt-2 text-[11px] font-bold uppercase tracking-wide",
+            isCorrectPosition
+              ? "text-green-700 dark:text-green-300"
+              : "text-slate-400 dark:text-primary-500",
+          ].join(" ")}
+        >
+          {isCorrectPosition
+            ? "Đúng vị trí"
+            : `Vị trí đúng: ${correctIndex + 1}`}
+        </p>
+      </div>
 
-  const buildReason = (item) => {
-    // Ưu tiên lời nhắc riêng từ dữ liệu nếu có.
-    if (item.reason || item.hint || item.explanation) {
-      return item.reason || item.hint || item.explanation;
-    }
-    const expectedItem = shuffledItems.find((it) => it.order === nextOrder);
-    if (item.order > nextOrder) {
-      return `Đây là hệ quả xảy ra về sau. Trước nó phải là: “${
-        expectedItem?.text || "mắt xích nguyên nhân trước đó"
-      }”.`;
-    }
-    return "Mắt xích này chưa nằm đúng vị trí trong chuỗi nhân quả.";
-  };
+      <span className="material-symbols-outlined mt-2 shrink-0 text-slate-300 transition-colors group-hover:text-primary-500 dark:text-primary-700">
+        drag_indicator
+      </span>
+    </div>
+  );
+}
 
-  const handlePick = (item) => {
-    if (isCompleted) return;
-    if (assigned[item.id]) return; // đã gán số rồi
+export function ChainSortingComponent({ component, onComplete }) {
+  const { instruction, items = [], successFeedback, reward } = component.config;
 
-    if (item.order === nextOrder) {
-      // Đúng thứ tự → gán số, chuyển xanh, chờ mắt xích tiếp theo.
-      setAssigned((prev) => ({ ...prev, [item.id]: nextOrder + 1 }));
-      setNextOrder((prev) => prev + 1);
-      setWrongId(null);
-      setWrongReason("");
-    } else {
-      // Sai thứ tự → chớp đỏ + hiện lý do.
-      setWrongId(item.id);
-      setWrongReason(buildReason(item));
-      setMistakes((prev) => prev + 1);
-    }
+  const normalizedItems = useMemo(() => normalizeItems(items), [items]);
+  const expectedItems = useMemo(
+    () => normalizedItems.slice().sort((a, b) => a.order - b.order),
+    [normalizedItems],
+  );
+  const expectedIds = useMemo(
+    () => expectedItems.map((item) => item.id),
+    [expectedItems],
+  );
+  const correctIndexById = useMemo(
+    () =>
+      Object.fromEntries(expectedItems.map((item, index) => [item.id, index])),
+    [expectedItems],
+  );
+  const [sortedItems, setSortedItems] = useState(() =>
+    getShuffledItems(normalizedItems),
+  );
+  const [moves, setMoves] = useState(0);
+
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 120, tolerance: 6 },
+    }),
+  );
+
+  const sortedIds = sortedItems.map((item) => item.id);
+  const isCompleted =
+    sortedIds.length > 0 &&
+    sortedIds.every((id, index) => id === expectedIds[index]);
+  const correctCount = sortedIds.filter(
+    (id, index) => correctIndexById[id] === index,
+  ).length;
+
+  const handleDragEnd = ({ active, over }) => {
+    if (!over || active.id === over.id) return;
+
+    setSortedItems((current) => {
+      const oldIndex = current.findIndex((item) => item.id === active.id);
+      const newIndex = current.findIndex((item) => item.id === over.id);
+      if (oldIndex < 0 || newIndex < 0) return current;
+      return arrayMove(current, oldIndex, newIndex);
+    });
+    setMoves((value) => value + 1);
   };
 
   const handleReset = () => {
-    setAssigned({});
-    setNextOrder(0);
-    setWrongId(null);
-    setWrongReason("");
+    setSortedItems(getShuffledItems(normalizedItems));
+    setMoves(0);
   };
+
+  if (normalizedItems.length === 0) {
+    return (
+      <ComponentFrame component={component}>
+        <p className="text-sm font-medium text-slate-600 dark:text-primary-150">
+          Chuỗi sắp xếp này chưa có dữ liệu.
+        </p>
+        <ContinueButton onComplete={onComplete} label="Tiếp tục" />
+      </ComponentFrame>
+    );
+  }
 
   return (
     <ComponentFrame component={component}>
-      <div className="flex flex-col flex-1 h-full min-h-0">
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          {instruction && <LessonHint steps={[instruction]} />}
+      <div className="flex h-full min-h-0 flex-1 flex-col">
+        {instruction && (
+          <LessonHint
+            steps={[
+              instruction,
+              "Kéo toàn bộ thẻ lên hoặc xuống để đặt lại thứ tự.",
+            ]}
+          />
+        )}
 
-          <div className="mt-2 mb-3 flex items-center justify-between px-1">
-            <p className="text-sm font-semibold text-slate-600 dark:text-primary-200">
-              Chọn mắt xích số{" "}
-              <span className="text-primary-600 dark:text-primary-300">
-                {Math.min(nextOrder + 1, shuffledItems.length)}
-              </span>{" "}
-              / {shuffledItems.length}
-            </p>
-            {(nextOrder > 0 || wrongId) && !isCompleted && (
-              <button
-                type="button"
-                onClick={handleReset}
-                className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-slate-500 transition-colors hover:border-primary-400 hover:text-primary-600 dark:border-primary-850 dark:bg-surface-dark-elevated dark:text-primary-200"
-              >
-                <span className="material-symbols-outlined text-sm">restart_alt</span>
-                Làm lại
-              </button>
-            )}
-          </div>
-
-          <div className="space-y-3 px-1">
-            {shuffledItems.map((item) => {
-              const number = assigned[item.id];
-              const isPicked = Boolean(number);
-              const isWrong = wrongId === item.id;
-
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => handlePick(item)}
-                  disabled={isPicked || isCompleted}
-                  className={`relative flex w-full items-center gap-4 rounded-2xl border-2 p-4 text-left transition-all ${
-                    isPicked
-                      ? "border-green-400 bg-green-50 text-green-900 dark:border-green-700 dark:bg-green-950/40 dark:text-green-100"
-                      : isWrong
-                        ? "border-red-400 bg-red-50 text-red-900 shadow-sm dark:border-red-700 dark:bg-red-950/40 dark:text-red-100"
-                        : "border-slate-200 bg-white text-slate-800 hover:border-primary-400 hover:bg-primary-50 dark:border-primary-800 dark:bg-surface-dark-elevated dark:text-primary-100 dark:hover:bg-primary-900/25"
-                  }`}
-                >
-                  <span
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg font-extrabold transition-all ${
-                      isPicked
-                        ? "bg-green-500 text-white"
-                        : isWrong
-                          ? "bg-red-500 text-white"
-                          : "bg-slate-100 text-slate-400 dark:bg-primary-900/50 dark:text-primary-300"
-                    }`}
-                  >
-                    {isPicked ? (
-                      number
-                    ) : isWrong ? (
-                      <span className="material-symbols-outlined text-xl">close</span>
-                    ) : (
-                      <span className="material-symbols-outlined text-xl">
-                        radio_button_unchecked
-                      </span>
-                    )}
-                  </span>
-
-                  {item.icon && (
-                    <span className="material-symbols-outlined text-2xl opacity-80">
-                      {item.icon}
-                    </span>
-                  )}
-                  <p className="min-w-0 font-semibold leading-snug">{item.text}</p>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Lời nhắc lý do sai — hiện trực tiếp khi bấm sai thứ tự */}
-          {wrongId && !isCompleted && (
-            <div className="mt-4 flex items-start gap-2 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-900 dark:border-red-800 dark:bg-red-950/35 dark:text-red-100">
-              <span className="material-symbols-outlined mt-0.5 shrink-0 text-red-500">
-                error
-              </span>
-              <div>
-                <p className="font-bold">Chưa đúng thứ tự</p>
-                <p className="mt-0.5 text-sm leading-relaxed">{wrongReason}</p>
-              </div>
-            </div>
-          )}
+        <div className="mb-3 mt-2 flex flex-wrap items-center justify-between gap-2 px-1">
+          <p className="text-sm font-semibold text-slate-600 dark:text-primary-200">
+            Đúng vị trí{" "}
+            <span className="font-extrabold text-primary-650 dark:text-primary-250">
+              {correctCount}/{sortedItems.length}
+            </span>
+          </p>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-slate-500 transition-colors hover:border-primary-400 hover:text-primary-600 dark:border-transparent dark:bg-slate-900/55 dark:text-primary-200"
+          >
+            <span className="material-symbols-outlined text-sm">
+              restart_alt
+            </span>
+            Làm lại
+          </button>
         </div>
 
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={sortedIds}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-1 pb-2 pr-2">
+              {sortedItems.map((item, index) => (
+                <SortableChainCard
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  correctIndex={correctIndexById[item.id]}
+                  isCorrectPosition={correctIndexById[item.id] === index}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+
         {isCompleted && (
-          <div className="mt-auto pt-4 shrink-0">
+          <div className="mt-auto shrink-0 pt-4">
             <div className="rounded-3xl border border-green-200 bg-green-50 p-5 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
               <p className="mb-2 flex items-center gap-2 text-lg font-bold">
                 <span className="material-symbols-outlined">task_alt</span>
@@ -180,19 +241,18 @@ export function ChainSortingComponent({ component, onComplete }) {
               </p>
               {reward && (
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-sm font-bold text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
-                  <span className="material-symbols-outlined text-lg">star</span>
+                  <span className="material-symbols-outlined text-lg">
+                    star
+                  </span>
                   {reward}
                 </div>
               )}
               <ContinueButton
                 onComplete={() =>
                   onComplete({
-                    score: Math.max(100 - mistakes * 10, 50),
-                    attempts: mistakes + 1,
-                    answer: shuffledItems
-                      .slice()
-                      .sort((a, b) => a.order - b.order)
-                      .map((i) => i.id),
+                    score: Math.max(100 - moves * 3, 70),
+                    attempts: moves,
+                    answer: sortedIds,
                     status: "completed",
                   })
                 }

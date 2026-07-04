@@ -2,6 +2,87 @@ import React, { useState, useEffect } from "react";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 
+function MindmapFlipCard({ node, index, open, onReveal }) {
+  const frontText = node.front?.text || "Bấm để mở nội dung";
+  const frontImageUrl = node.front?.image;
+  const backText = node.back?.text || node.label;
+  const detailText = node.back?.detail || node.detail;
+  const backImageUrl = node.back?.image;
+
+  return (
+    <button
+      type="button"
+      onClick={onReveal}
+      className="group relative w-full min-w-0 shrink-0 text-left [perspective:1200px]"
+      aria-label={`Mở mảnh ghép ${index + 1}`}
+    >
+      <div
+        className={[
+          "relative min-h-[11rem] w-full rounded-3xl transition-transform duration-700 [transform-style:preserve-3d]",
+          open ? "[transform:rotateY(180deg)]" : "[transform:rotateY(0deg)]",
+        ].join(" ")}
+      >
+        <div className="absolute inset-0 flex min-w-0 items-start gap-3 rounded-3xl border border-dashed border-slate-250 bg-slate-50 p-4 shadow-sm [backface-visibility:hidden] group-hover:border-primary-300 group-hover:bg-white dark:border-primary-850 dark:bg-primary-950/25 dark:group-hover:bg-[#132d39]">
+          <span className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-slate-300 shadow-sm dark:bg-primary-950 dark:text-primary-650">
+            <span className="material-symbols-outlined text-xl">lock_open</span>
+          </span>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-primary-500">
+              Mảnh ghép {index + 1}
+            </p>
+            <div className="mt-2 flex min-w-0 items-center gap-3">
+              {frontImageUrl && (
+                <img
+                  src={frontImageUrl}
+                  alt="bìa mảnh ghép"
+                  className="h-12 w-12 shrink-0 rounded-2xl object-cover shadow-sm"
+                />
+              )}
+              <p className="min-w-0 break-words text-sm font-bold leading-6 text-slate-600 dark:text-primary-200">
+                {frontText}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute inset-0 flex min-w-0 items-start gap-3 overflow-hidden rounded-3xl border border-primary-250 bg-white p-4 shadow-sm [backface-visibility:hidden] [transform:rotateY(180deg)] dark:border-primary-800 dark:bg-[#132d39]">
+          <span className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-600 text-white">
+            <span className="material-symbols-outlined text-xl">
+              check_circle
+            </span>
+          </span>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
+              Mảnh ghép {index + 1}
+            </p>
+            <div className="mt-2 flex min-w-0 items-start gap-3">
+              {backImageUrl && (
+                <img
+                  src={backImageUrl}
+                  alt="minh họa mảnh ghép"
+                  className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-sm"
+                />
+              )}
+              <div className="min-w-0 flex-1">
+                <p className="break-words text-lg font-extrabold leading-snug text-primary-900 dark:text-primary-100">
+                  {backText}
+                </p>
+                {detailText && (
+                  <p className="mt-2 max-h-24 overflow-y-auto whitespace-normal break-words pr-1 text-sm leading-6 text-slate-650 dark:text-primary-200">
+                    {detailText}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </button>
+  );
+}
+
 /**
  * MindmapRevealComponent — component mở dần các node của mindmap (front/back card format).
  * Tự động mở (auto-reveal) từng node tuần tự, cách nhau 2 giây (yêu cầu từ big_update).
@@ -89,82 +170,15 @@ export function MindmapRevealComponent({ component, onComplete }) {
         <div className="absolute bottom-4 left-[1.35rem] top-4 hidden w-px bg-primary-150 dark:bg-primary-850 sm:block" />
         {nodes.map((node, index) => {
           const open = revealed.includes(node.id);
-          const frontText = node.front?.text || "Bấm để mở nội dung";
-          const frontImageUrl = node.front?.image;
-          const backText = node.back?.text || node.label; // Fallback to legacy label
-          const detailText = node.back?.detail || node.detail; // Fallback to legacy detail
-          const backImageUrl = node.back?.image;
 
           return (
-            <button
+            <MindmapFlipCard
               key={node.id}
-              type="button"
-              onClick={() => handleReveal(node.id)}
-              className={`relative flex w-full min-w-0 shrink-0 items-start gap-3 rounded-3xl border p-4 text-left transition-all ${
-                open
-                  ? "border-primary-250 bg-white shadow-sm dark:border-primary-800 dark:bg-[#132d39]"
-                  : "border-dashed border-slate-250 bg-slate-50 hover:border-primary-300 hover:bg-white dark:border-primary-850 dark:bg-primary-950/25 dark:hover:bg-[#132d39]"
-              }`}
-            >
-              <span
-                className={`relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${
-                  open
-                    ? "bg-primary-600 text-white"
-                    : "bg-white text-slate-300 shadow-sm dark:bg-primary-950 dark:text-primary-650"
-                }`}
-              >
-                <span className="material-symbols-outlined text-xl">
-                  {open ? "check_circle" : "lock_open"}
-                </span>
-              </span>
-
-              <div className="min-w-0 flex-1">
-                <p
-                  className={`text-[11px] font-bold uppercase tracking-wider ${
-                    open
-                      ? "text-primary-650 dark:text-primary-300"
-                      : "text-slate-400 dark:text-primary-500"
-                  }`}
-                >
-                  Mảnh ghép {index + 1}
-                </p>
-
-                {open ? (
-                  <div className="mt-2 flex min-w-0 items-start gap-3">
-                    {backImageUrl && (
-                      <img
-                        src={backImageUrl}
-                        alt="minh họa mảnh ghép"
-                        className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-sm"
-                      />
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <p className="break-words text-lg font-extrabold leading-snug text-primary-900 dark:text-primary-100">
-                        {backText}
-                      </p>
-                      {detailText && (
-                        <p className="mt-2 whitespace-normal break-words text-sm leading-6 text-slate-650 dark:text-primary-200">
-                          {detailText}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mt-2 flex min-w-0 items-center gap-3">
-                    {frontImageUrl && (
-                      <img
-                        src={frontImageUrl}
-                        alt="bìa mảnh ghép"
-                        className="h-12 w-12 shrink-0 rounded-2xl object-cover shadow-sm"
-                      />
-                    )}
-                    <p className="min-w-0 break-words text-sm font-bold leading-6 text-slate-600 dark:text-primary-200">
-                      {frontText}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </button>
+              node={node}
+              index={index}
+              open={open}
+              onReveal={() => handleReveal(node.id)}
+            />
           );
         })}
       </div>
@@ -180,8 +194,8 @@ export function MindmapRevealComponent({ component, onComplete }) {
             {lastRevealedName ? `: ${lastRevealedName}` : ""}.
           </p>
           <p className="mt-2 text-sm leading-relaxed text-slate-650 dark:text-primary-200">
-            Tiếp tục để hoàn thiện nốt {nodes.length - revealedCount} mảnh ghép còn
-            lại của bức tranh khái niệm.
+            Tiếp tục để hoàn thiện nốt {nodes.length - revealedCount} mảnh ghép
+            còn lại của bức tranh khái niệm.
           </p>
         </div>
       )}
