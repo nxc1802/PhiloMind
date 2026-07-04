@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useUpdateComponentProgressMutation } from "../../../hooks/useMutations";
 import { normalizeFlow } from "./utils/normalizeFlow";
@@ -193,33 +193,61 @@ export default function FlowLessonPlayer({
     setActiveMediaId(mediaId);
   };
 
-  // Drag resize logic
-  const [leftWidth, setLeftWidth] = useState(50); // percentage
+  // Drag-resize logic — recoded.
+  // Cách cũ tính % theo `e.clientX / window.innerWidth`, bỏ qua việc khung bài
+  // học nằm trong <main> có lề trái (sidebar). Vì thế clientX luôn lớn hơn
+  // chiều rộng thực của khung → cột trái bị phóng hết cỡ, vỡ cột phải.
+  // Cách mới: đo vị trí con trỏ TƯƠNG ĐỐI so với chính hàng chứa 2 cột.
+  const MIN_PERCENT = 25;
+  const MAX_PERCENT = 75;
+  const splitRowRef = useRef(null);
+  const [leftWidth, setLeftWidth] = useState(50); // phần trăm cột trái
   const [isDragging, setIsDragging] = useState(false);
 
+  const applyWidthFromClientX = useCallback((clientX) => {
+    const row = splitRowRef.current;
+    if (!row) return;
+    const rect = row.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    const raw = ((clientX - rect.left) / rect.width) * 100;
+    const clamped = Math.min(MAX_PERCENT, Math.max(MIN_PERCENT, raw));
+    setLeftWidth(clamped);
+  }, []);
+
+  const startDrag = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      const newWidth = (e.clientX / window.innerWidth) * 100;
-      if (newWidth >= 20 && newWidth <= 80) {
-        setLeftWidth(newWidth);
-      }
-    };
+    if (!isDragging) return;
 
-    const handleMouseUp = () => {
-      setIsDragging(false);
+    const handleMove = (e) => {
+      const clientX = e.touches ? e.touches[0]?.clientX : e.clientX;
+      if (typeof clientX === "number") applyWidthFromClientX(clientX);
     };
+    const stop = () => setIsDragging(false);
 
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    }
+    // Chặn bôi đen văn bản trong lúc kéo.
+    const prevUserSelect = document.body.style.userSelect;
+    const prevCursor = document.body.style.cursor;
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "col-resize";
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", stop);
+    window.addEventListener("touchmove", handleMove, { passive: false });
+    window.addEventListener("touchend", stop);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", stop);
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", stop);
+      document.body.style.userSelect = prevUserSelect;
+      document.body.style.cursor = prevCursor;
     };
-  }, [isDragging]);
+  }, [isDragging, applyWidthFromClientX]);
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-slate-50 dark:bg-[#0D1117]">
@@ -231,11 +259,14 @@ export default function FlowLessonPlayer({
           onSelectComponent={handleSelectComponent}
         />
       </div>
-      <div className="flex flex-1 min-h-0 w-full p-3 gap-1 overflow-hidden">
+      <div
+        ref={splitRowRef}
+        className="flex flex-1 min-h-0 w-full min-w-0 p-3 gap-1 overflow-hidden"
+      >
         {/* Left Column: Center Media */}
-        <div 
-          className="relative h-full min-h-0 flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated"
-          style={{ width: `calc(${leftWidth}% - 8px)` }}
+        <div
+          className="relative h-full min-h-0 min-w-0 flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated"
+          style={{ width: `${leftWidth}%` }}
         >
           <MilestoneBar flow={flow} completedIds={completedIds} />
           <CenterMedia
@@ -247,16 +278,27 @@ export default function FlowLessonPlayer({
 
         {/* Resizable Divider */}
         <div
-          className="w-4 shrink-0 cursor-col-resize group flex items-center justify-center -mx-1 z-10"
-          onMouseDown={() => setIsDragging(true)}
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Kéo để chỉnh độ rộng hai cột"
+          className="group z-10 -mx-1 flex w-4 shrink-0 cursor-col-resize touch-none items-center justify-center"
+          onMouseDown={startDrag}
+          onTouchStart={startDrag}
+          onDoubleClick={() => setLeftWidth(50)}
         >
-          <div className={`h-16 w-1 rounded-full transition-colors ${isDragging ? 'bg-primary-500' : 'bg-slate-300 group-hover:bg-primary-400 dark:bg-slate-600'}`} />
+          <div
+            className={`h-16 w-1 rounded-full transition-colors ${
+              isDragging
+                ? "bg-primary-500"
+                : "bg-slate-300 group-hover:bg-primary-400 dark:bg-slate-600"
+            }`}
+          />
         </div>
 
         {/* Right Column: Interactive Content */}
-        <div 
-          className="relative h-full min-h-0"
-          style={{ width: `calc(${100 - leftWidth}% - 8px)` }}
+        <div
+          className="relative h-full min-h-0 min-w-0"
+          style={{ width: `${100 - leftWidth}%` }}
         >
           <RightInteractive
             flow={flow}
