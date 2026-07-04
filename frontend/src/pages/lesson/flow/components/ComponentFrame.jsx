@@ -1,6 +1,7 @@
 import React from "react";
 
 const TYPE_ICONS = {
+  component_group: "view_agenda",
   media: "play_circle",
   dialogue: "forum",
   markdown: "menu_book",
@@ -22,8 +23,14 @@ const TYPE_ICONS = {
  * Shared wrapper frame for all lesson flow components.
  * Renders the component header (type label, icon, title) and wraps children.
  */
-export function ComponentFrame({ component, children, className = "" }) {
+export function ComponentFrame({
+  component,
+  children,
+  className = "",
+  embedded = false,
+}) {
   const safeComponent = component || {};
+  const isEmbedded = embedded || safeComponent.__isEmbedded === true;
   const typeLabel = String(safeComponent.type || "lesson_flow").replaceAll(
     "_",
     " ",
@@ -32,7 +39,9 @@ export function ComponentFrame({ component, children, className = "" }) {
 
   return (
     <section
-      className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-3 flex flex-col h-full min-h-0 ${className}`}
+      className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl border border-slate-200 dark:border-primary-800 p-3 flex flex-col min-h-0 ${
+        isEmbedded ? "h-auto shadow-sm" : "h-full shadow-md"
+      } ${className}`}
     >
       <div className="flex items-center gap-2 mb-2 shrink-0">
         <span className="material-symbols-outlined flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300 text-lg">
@@ -47,7 +56,11 @@ export function ComponentFrame({ component, children, className = "" }) {
           </h2>
         </div>
       </div>
-      <div className="flex flex-col flex-1 overflow-y-auto min-h-0 pr-2">
+      <div
+        className={`flex flex-col min-h-0 ${
+          isEmbedded ? "pr-0" : "flex-1 overflow-y-auto pr-2"
+        }`}
+      >
         {children}
       </div>
     </section>

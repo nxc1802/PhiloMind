@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { normalizeOptions } from "../utils/normalizeOptions";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 
 export function McqComponent({ component, onComplete }) {
   const options = normalizeOptions(component.config.options);
-  const [selectedId, setSelectedId] = useState(null);
+  const isCompleted = component.__isCompleted === true;
+  const completedAnswer = component.__completedResult?.answer || null;
+  const [selectedId, setSelectedId] = useState(completedAnswer);
   const [wrongIds, setWrongIds] = useState([]);
   const selected = options.find((option) => option.id === selectedId);
   const solved = selected?.isCorrect;
+
+  useEffect(() => {
+    if (completedAnswer) setSelectedId(completedAnswer);
+  }, [completedAnswer]);
 
   const handlePick = (option) => {
     if (solved) return;
@@ -71,7 +77,7 @@ export function McqComponent({ component, onComplete }) {
                 : component.feedback?.incorrect) ||
               component.config.explanation}
           </p>
-          {solved && (
+          {solved && !isCompleted && (
             <ContinueButton
               onComplete={() =>
                 onComplete({

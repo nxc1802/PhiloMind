@@ -7,16 +7,7 @@ export function normalizeFlow(rawFlow) {
 
   const normalized = rawFlow
     .filter((component) => component && typeof component === "object")
-    .map((component, index) => ({
-      ...component,
-      id: component.id || `component_${index}`,
-      type: component.type || "unsupported",
-      title: component.title || "Hoạt động bài học",
-      config:
-        component.config && typeof component.config === "object"
-          ? component.config
-          : {},
-    }));
+    .map((component, index) => normalizeComponent(component, index));
 
   return normalized.flatMap((component) => {
     const finalQuiz = component.config.quiz;
@@ -41,4 +32,33 @@ export function normalizeFlow(rawFlow) {
 
     return [component];
   });
+}
+
+function normalizeComponent(component, index, parentId = "component") {
+  const config =
+    component.config && typeof component.config === "object"
+      ? component.config
+      : {};
+  const id = component.id || `${parentId}_${index}`;
+  const type = component.type || "unsupported";
+
+  return {
+    ...component,
+    id,
+    type,
+    title: component.title || "Hoạt động bài học",
+    config:
+      type === "component_group"
+        ? {
+            ...config,
+            components: Array.isArray(config.components)
+              ? config.components
+                  .filter((child) => child && typeof child === "object")
+                  .map((child, childIndex) =>
+                    normalizeComponent(child, childIndex, id),
+                  )
+              : [],
+          }
+        : config,
+  };
 }

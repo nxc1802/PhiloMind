@@ -25,6 +25,7 @@ const STATUS_CONFIG = {
 };
 
 const COMPONENT_TYPE_ICONS = {
+  component_group: "view_agenda",
   media: "play_circle",
   dialogue: "forum",
   markdown: "menu_book",

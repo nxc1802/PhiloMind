@@ -1,6 +1,7 @@
 import { BadRequestException } from "@nestjs/common";
 
 const SUPPORTED_COMPONENT_TYPES = new Set([
+  "component_group",
   "dialogue",
   "media",
   "markdown",
@@ -42,42 +43,71 @@ export class NodeSchemaValidator {
 
     const ids = new Set<string>();
     data.forEach((component: any, idx: number) => {
-      requireObject(component, `lessonFlow[${idx}]`);
-      requireString(component.id, `lessonFlow[${idx}].id`);
-      requireString(component.type, `lessonFlow[${idx}].type`);
-
-      if (ids.has(component.id)) {
-        throw new BadRequestException(
-          `lessonFlow[${idx}].id duplicates "${component.id}"`,
-        );
-      }
-      ids.add(component.id);
-
-      if (!SUPPORTED_COMPONENT_TYPES.has(component.type)) {
-        throw new BadRequestException(
-          `lessonFlow[${idx}].type "${component.type}" is not supported`,
-        );
-      }
-
-      requireObject(component.config, `lessonFlow[${idx}].config`);
-      this.validateComponentConfig(component, idx);
-
-      if (component.completionRule) {
-        requireObject(
-          component.completionRule,
-          `lessonFlow[${idx}].completionRule`,
-        );
-        requireString(
-          component.completionRule.type,
-          `lessonFlow[${idx}].completionRule.type`,
-        );
-      }
+      this.validateComponent(component, `lessonFlow[${idx}]`, ids);
     });
   }
 
-  private static validateComponentConfig(component: any, idx: number) {
+  private static validateComponent(
+    component: any,
+    path: string,
+    ids: Set<string>,
+    isChild = false,
+  ) {
+    requireObject(component, path);
+    requireString(component.id, `${path}.id`);
+    requireString(component.type, `${path}.type`);
+
+    if (ids.has(component.id)) {
+      throw new BadRequestException(`${path}.id duplicates "${component.id}"`);
+    }
+    ids.add(component.id);
+
+    if (!SUPPORTED_COMPONENT_TYPES.has(component.type)) {
+      throw new BadRequestException(
+        `${path}.type "${component.type}" is not supported`,
+      );
+    }
+
+    if (isChild && component.type === "component_group") {
+      throw new BadRequestException(`${path}.type cannot be component_group`);
+    }
+
+    requireObject(component.config, `${path}.config`);
+    this.validateComponentConfig(component, path, ids);
+
+    if (component.completionRule) {
+      requireObject(component.completionRule, `${path}.completionRule`);
+      requireString(
+        component.completionRule.type,
+        `${path}.completionRule.type`,
+      );
+    }
+  }
+
+  private static validateComponentConfig(
+    component: any,
+    path: string,
+    ids: Set<string>,
+  ) {
     const config = component.config;
-    const label = `lessonFlow[${idx}].config`;
+    const label = `${path}.config`;
+
+    if (component.type === "component_group") {
+      requireArray(config.components, `${label}.components`);
+      if (config.components.length === 0) {
+        throw new BadRequestException(
+          `${label}.components must contain at least one child component`,
+        );
+      }
+      config.components.forEach((child: any, childIdx: number) => {
+        this.validateComponent(
+          child,
+          `${label}.components[${childIdx}]`,
+          ids,
+          true,
+        );
+      });
+    }
 
     if (component.type === "dialogue") {
       requireArray(config.lines, `${label}.lines`);

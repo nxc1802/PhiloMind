@@ -103,6 +103,8 @@ export function ProgressBar({
 
   const getIcon = (type) => {
     switch (type) {
+      case "component_group":
+        return "view_agenda";
       case "media":
         return "play_circle";
       case "mcq":

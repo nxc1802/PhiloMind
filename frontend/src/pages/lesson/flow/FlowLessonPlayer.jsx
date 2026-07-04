@@ -43,6 +43,19 @@ function getLinkedMediaId(component) {
   );
 }
 
+function findFlowIndexByComponentId(flow, componentId) {
+  if (!componentId) return -1;
+  return flow.findIndex((component) => {
+    if (component.id === componentId) return true;
+    const children = component.config?.components;
+    return (
+      component.type === "component_group" &&
+      Array.isArray(children) &&
+      children.some((child) => child?.id === componentId)
+    );
+  });
+}
+
 export default function FlowLessonPlayer({
   nodeDetails,
   isRevisit,
@@ -112,10 +125,16 @@ export default function FlowLessonPlayer({
   };
 
   // 3. State Management
+  const progressActiveIndex = findFlowIndexByComponentId(
+    flow,
+    progress?.activeComponentId,
+  );
   const initialIndex = isRevisit
     ? 0
     : Math.min(
-        progress?.currentComponentIndex || 0,
+        progressActiveIndex >= 0
+          ? progressActiveIndex
+          : progress?.currentComponentIndex || 0,
         Math.max(flow.length - 1, 0),
       );
   const [activeIndex, setActiveIndex] = useState(initialIndex);
@@ -123,6 +142,13 @@ export default function FlowLessonPlayer({
     Array.isArray(progress?.completedComponentIds)
       ? progress.completedComponentIds
       : [],
+  );
+  const componentResults = useMemo(
+    () =>
+      Array.isArray(progress?.componentResults)
+        ? progress.componentResults
+        : [],
+    [progress?.componentResults],
   );
   const [activeMediaId, setActiveMediaId] = useState(lessonMedia[0]?.id);
 
@@ -189,6 +215,30 @@ export default function FlowLessonPlayer({
     if (currentSafeIndex < flow.length - 1) {
       setActiveIndex(nextIndex);
     }
+  };
+
+  const handleUpdateComponentResult = (
+    activeComponent,
+    currentSafeIndex,
+    result = {},
+  ) => {
+    const componentResult = {
+      componentId: activeComponent.id,
+      type: activeComponent.type,
+      status: "in_progress",
+      ...result,
+    };
+
+    updateComponentProgress.mutate({
+      nodeId: nodeDetails.id,
+      userId: user?.id,
+      payload: {
+        activeComponentId: activeComponent.id,
+        currentComponentIndex: currentSafeIndex,
+        completedComponentIds: completedIds,
+        componentResult,
+      },
+    });
   };
 
   const handleSelectComponent = (index) => {
@@ -349,7 +399,9 @@ export default function FlowLessonPlayer({
             flow={flow}
             activeIndex={activeIndex}
             completedIds={completedIds}
+            componentResults={componentResults}
             onCompleteComponent={handleCompleteComponent}
+            onUpdateComponentResult={handleUpdateComponentResult}
             onFinishLesson={onComplete}
           />
         </div>

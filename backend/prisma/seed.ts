@@ -280,47 +280,62 @@ function buildOriginLessonFlow(node: any) {
       completionRule: { type: "correct" },
     },
     {
-      id: "lyra-doubt",
-      type: "dialogue",
+      id: "cognitive-turning-point",
+      type: "component_group",
       title: "Bước ngoặt hoài nghi",
       linkedMediaId: "cognitive-video",
+      navigation_config: { shortLabel: "Hoài nghi" },
       config: {
-        characters: originCharacters,
-        lines: [
+        layout: "vertical",
+        revealMode: "sequential",
+        completionMode: "all",
+        components: [
           {
-            who: "skeptic",
-            text: "Khoan đã! Năm ngoái chúng ta đã tế tới 10 con cừu cho thần linh, vậy mà năm nay động đất vẫn xảy ra. Lễ vật chẳng thay đổi được gì cả. Liệu có phải dưới lòng đất tồn tại một quy luật tự nhiên nào đó, không hề phụ thuộc vào tâm trạng của các vị thần?",
+            id: "lyra-doubt",
+            type: "dialogue",
+            title: "Bước ngoặt hoài nghi",
+            linkedMediaId: "cognitive-video",
+            config: {
+              characters: originCharacters,
+              lines: [
+                {
+                  who: "skeptic",
+                  text: "Khoan đã! Năm ngoái chúng ta đã tế tới 10 con cừu cho thần linh, vậy mà năm nay động đất vẫn xảy ra. Lễ vật chẳng thay đổi được gì cả. Liệu có phải dưới lòng đất tồn tại một quy luật tự nhiên nào đó, không hề phụ thuộc vào tâm trạng của các vị thần?",
+                },
+              ],
+            },
+            completionRule: { type: "viewed" },
+          },
+          {
+            id: "cognitive-shift-quiz",
+            type: "mcq",
+            title: "Nhận thức",
+            linkedMediaId: "cognitive-video",
+            config: {
+              question:
+                "Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?",
+              options: [
+                {
+                  text: "Con người bắt đầu đi tìm quy luật, lý lẽ để giải thích thế giới — thay cho thần thánh.",
+                  isCorrect: true,
+                },
+                {
+                  text: "Con người quyết định tế lễ nhiều hơn nữa cho chắc chắn.",
+                  isCorrect: false,
+                },
+                {
+                  text: "Con người từ bỏ hoàn toàn việc tìm hiểu thế giới.",
+                  isCorrect: false,
+                },
+              ],
+              explanation:
+                "Chính xác! Khoảnh khắc con người ngờ vực thần thoại và đi tìm QUY LUẬT bằng lý lẽ — đó là lúc tư duy lý luận, tức TRIẾT HỌC, bắt đầu nảy mầm.",
+            },
+            completionRule: { type: "correct" },
           },
         ],
       },
-      completionRule: { type: "viewed" },
-    },
-    {
-      id: "cognitive-shift-quiz",
-      type: "mcq",
-      title: "Nhận thức",
-      linkedMediaId: "cognitive-video",
-      config: {
-        question:
-          "Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?",
-        options: [
-          {
-            text: "Con người bắt đầu đi tìm quy luật, lý lẽ để giải thích thế giới — thay cho thần thánh.",
-            isCorrect: true,
-          },
-          {
-            text: "Con người quyết định tế lễ nhiều hơn nữa cho chắc chắn.",
-            isCorrect: false,
-          },
-          {
-            text: "Con người từ bỏ hoàn toàn việc tìm hiểu thế giới.",
-            isCorrect: false,
-          },
-        ],
-        explanation:
-          "Chính xác! Khoảnh khắc con người ngờ vực thần thoại và đi tìm QUY LUẬT bằng lý lẽ — đó là lúc tư duy lý luận, tức TRIẾT HỌC, bắt đầu nảy mầm.",
-      },
-      completionRule: { type: "correct" },
+      completionRule: { type: "all" },
     },
     {
       id: "cognitive-piece",

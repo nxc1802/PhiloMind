@@ -1,6 +1,10 @@
 import React from "react";
 import { ComponentFrame, ContinueButton } from "../flow/components";
-import * as ComponentRegistry from "../flow/components";
+import { ComponentGroupComponent } from "../flow/components";
+import {
+  getComponentName,
+  getComponentRenderer,
+} from "../flow/components/componentRegistry";
 
 /**
  * RightInteractive — Cột phải trong layout 3 cột.
@@ -9,7 +13,9 @@ import * as ComponentRegistry from "../flow/components";
 export function RightInteractive({
   flow,
   activeIndex,
+  componentResults,
   onCompleteComponent,
+  onUpdateComponentResult,
   onFinishLesson,
 }) {
   const safeActiveIndex = Math.min(Math.max(activeIndex, 0), flow.length - 1);
@@ -23,14 +29,11 @@ export function RightInteractive({
     );
   }
 
-  // Component name mapping (e.g., 'mindmap_reveal' -> 'MindmapRevealComponent')
-  const componentName =
-    activeComponent.type
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("") + "Component";
-
-  const Renderer = ComponentRegistry[componentName];
+  const componentName = getComponentName(activeComponent.type);
+  const Renderer =
+    activeComponent.type === "component_group"
+      ? ComponentGroupComponent
+      : getComponentRenderer(activeComponent.type);
 
   const handleComponentComplete = (result = {}) => {
     onCompleteComponent(activeComponent, safeActiveIndex, result);
@@ -72,7 +75,15 @@ export function RightInteractive({
           <Renderer
             key={activeComponent.id}
             component={activeComponent}
+            componentResults={componentResults}
             onComplete={handleComponentComplete}
+            onUpdate={(result) =>
+              onUpdateComponentResult?.(
+                activeComponent,
+                safeActiveIndex,
+                result,
+              )
+            }
           />
         ) : (
           <ComponentFrame component={activeComponent}>

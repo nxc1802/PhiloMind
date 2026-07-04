@@ -137,9 +137,9 @@ File: `frontend/src/pages/lesson/components/RightInteractive.jsx`
 
 Vai tro:
 
-- Nhan `flow`, `activeIndex`, `completedIds`.
+- Nhan `flow`, `activeIndex`, `completedIds`, `componentResults`.
 - Lay active component.
-- Anh xa type sang renderer bang convention:
+- Anh xa type sang renderer bang `componentRegistry.js`; rieng `component_group` dung renderer cha `ComponentGroupComponent`.
 
 ```txt
 matching_columns -> MatchingColumnsComponent
@@ -147,18 +147,48 @@ target_matching  -> TargetMatchingComponent
 final_summary    -> FinalSummaryComponent
 ```
 
-- Import registry tu `frontend/src/pages/lesson/flow/components/index.js`.
+- Import registry tu `frontend/src/pages/lesson/flow/components/componentRegistry.js`.
 - Neu active component la `media`, khong render video o cot phai; cot phai chi hien the xac nhan xem xong, con video/hinh nam o cot giua.
+- Neu active component la `component_group`, cot phai render nhieu child component trong cung mot page. Progress top-level chi tinh parent group.
 - Neu khong co renderer, hien fallback va cho phep bo qua buoc.
 - Neu component cuoi hoan thanh, goi `onFinishLesson`.
 
 Rui ro hien tai:
 
-- Registry phu thuoc convention ten component; them type moi phai export dung ten PascalCase + `Component`.
+- Renderer registry can duoc cap nhat khi them type moi; `component_group` khong duoc long trong `component_group` o giai doan hien tai.
 
 ## 5. Component renderers
 
 Tat ca renderer dang duoc export tu `frontend/src/pages/lesson/flow/components/index.js`.
+
+### component_group
+
+Renderer: `ComponentGroupComponent`
+
+Dung khi can 2-3 component nho xuat hien trong cung mot page o cot phai, vi du dialogue xong roi hien MCQ ngay ben duoi dialogue.
+
+Config:
+
+```json
+{
+  "layout": "vertical",
+  "revealMode": "sequential",
+  "completionMode": "all",
+  "components": [
+    { "id": "dialogue-a", "type": "dialogue", "config": { "lines": [] } },
+    { "id": "quiz-a", "type": "mcq", "config": { "question": "...", "options": [] } }
+  ]
+}
+```
+
+Hanh vi:
+
+- Child component render theo chieu doc trong cung cot phai.
+- `revealMode=sequential`: child tiep theo chi hien sau khi child truoc hoan thanh.
+- `completionMode=all`: parent group chi hoan thanh khi tat ca child hoan thanh.
+- `componentResults` luu ket qua theo parent, trong `childResults`.
+- De tuong thich progress cu, renderer co the doc `componentResults` cua child id cu neu parent group chua co `childResults`.
+- Progress bar va milestone chi tinh parent group, khong them child vao timeline chinh.
 
 ### media
 
@@ -526,6 +556,7 @@ File: `backend/src/courses/validators/node-schema.validator.ts`
 
 Supported types:
 
+- `component_group`
 - `dialogue`
 - `media`
 - `markdown`
@@ -538,6 +569,8 @@ Supported types:
 - `matching_columns`
 - `true_false`
 - `sequence_sorting`
+- `chain_sorting`
+- `knowledge_piece`
 - `final_summary`
 
 Validator hien chi validate shape co ban. No chua validate sau cac rang buoc chi tiet:
@@ -564,32 +597,32 @@ Luon can doi chieu cac method sau khi sua Lesson:
 
 ## 8. Database seed check tren Supabase
 
-Da kiem tra truc tiep bang Prisma voi `backend/.env` vao ngay 2026-07-01.
+Da kiem tra truc tiep bang Prisma voi `backend/.env` vao ngay 2026-07-04, sau khi them `component_group` va gop dialogue `lyra-doubt` voi MCQ `cognitive-shift-quiz` trong lesson dau tien.
 
 Tong quan:
 
 | Hang muc | So luong |
 | --- | ---: |
-| Users | 10 |
+| Users | 14 |
 | Courses | 1 |
 | Chapters | 11 |
 | ConceptNodes | 24 |
 | Published + contentReady nodes | 3 |
 | Draft/locked nodes | 21 |
-| Progress rows | 29 |
+| Progress rows | 28 |
 | Flashcards | 100 |
 | Quizzes | 4 |
 | Warmups | 5 |
 | Podcasts | 2 |
-| Documents | 7 |
+| Documents | 0 |
 
 Lesson published:
 
-| Node | Components | Media | Component types |
-| --- | ---: | ---: | --- |
-| Nguon goc cua triet hoc | 16 | 3 | dialogue, final_summary, markdown, media, mindmap_reveal, quiz_sequence, sequence_sorting |
-| Pham tru vat chat | 11 | 1 | dialogue, final_summary, markdown, matching_columns, mcq, mindmap_reveal, multi_select, media |
-| Khai niem triet hoc | 8 | 0 | category_sorting, final_summary, matching_columns, mcq, mindmap_reveal, quiz_sequence, target_matching, true_false |
+| Node | Top-level components | Flat components | Media | Component types |
+| --- | ---: | ---: | ---: | --- |
+| Nguon goc cua triet hoc | 12 | 14 | 3 | chain_sorting, component_group, dialogue, final_summary, knowledge_piece, mcq, mindmap_reveal, quiz_sequence |
+| Pham tru vat chat | 10 | 10 | 0 | dialogue, final_summary, markdown, matching_columns, mcq, mindmap_reveal, multi_select |
+| Khai niem triet hoc | 8 | 8 | 0 | category_sorting, final_summary, matching_columns, mcq, mindmap_reveal, quiz_sequence, target_matching, true_false |
 
 Integrity checks:
 
@@ -607,16 +640,17 @@ Coverage type trong toan bo `lessonFlow`:
 | Type | Count |
 | --- | ---: |
 | category_sorting | 1 |
+| chain_sorting | 1 |
+| component_group | 1 |
 | dialogue | 5 |
-| final_summary | 24 |
-| markdown | 24 |
+| final_summary | 3 |
+| knowledge_piece | 2 |
+| markdown | 1 |
 | matching_columns | 3 |
-| mcq | 24 |
-| media | 3 |
-| mindmap_reveal | 4 |
+| mcq | 6 |
+| mindmap_reveal | 3 |
 | multi_select | 2 |
-| quiz_sequence | 4 |
-| sequence_sorting | 1 |
+| quiz_sequence | 2 |
 | target_matching | 1 |
 | true_false | 1 |
 

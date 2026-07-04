@@ -148,8 +148,12 @@ export default function DialogueSequence({
   ctaLabel = "Tiếp tục",
   autoPlay = true,
   characters,
+  compact = false,
+  completed = false,
 }) {
-  const [visibleCount, setVisibleCount] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(
+    completed ? lines.length : 1,
+  );
   const scrollAnchorRef = useRef(null);
   const advanceTimerRef = useRef(null);
   const linesKey = useMemo(
@@ -173,16 +177,18 @@ export default function DialogueSequence({
 
   const scrollToLatest = useCallback(() => {
     requestAnimationFrame(() => {
-      scrollAnchorRef.current?.scrollIntoView({
-        behavior: prefersReducedMotion() ? "auto" : "smooth",
-        block: "end",
-      });
+      if (typeof scrollAnchorRef.current?.scrollIntoView === "function") {
+        scrollAnchorRef.current.scrollIntoView({
+          behavior: prefersReducedMotion() ? "auto" : "smooth",
+          block: "end",
+        });
+      }
     });
   }, []);
 
   useEffect(() => {
-    setVisibleCount(1);
-  }, [linesKey]);
+    setVisibleCount(completed ? lines.length : 1);
+  }, [completed, lines.length, linesKey]);
 
   useEffect(() => {
     scrollToLatest();
@@ -207,8 +213,8 @@ export default function DialogueSequence({
   }, [autoPlay, isLastVisible, showNextLine]);
 
   return (
-    <div className="flex flex-col flex-1 h-full min-h-0">
-      <div className="space-y-3 overflow-y-auto pr-1">
+    <div className={`flex flex-col min-h-0 ${compact ? "" : "h-full flex-1"}`}>
+      <div className={`space-y-3 pr-1 ${compact ? "" : "overflow-y-auto"}`}>
         {lines.slice(0, visibleCount).map((line, index) => {
           return (
             <SpeechBubble
@@ -238,7 +244,7 @@ export default function DialogueSequence({
               </span>
             </button>
           )
-        ) : (
+        ) : completed ? null : (
           <button
             type="button"
             onClick={onComplete}
