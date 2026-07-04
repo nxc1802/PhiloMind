@@ -192,6 +192,76 @@ test("auto-revealed dialogue keeps the final continue action available", () => {
   });
 });
 
+test("multi-line social dialogue reveals all lines and keeps next visible", () => {
+  vi.useFakeTimers();
+
+  render(
+    <FlowLessonPlayer
+      nodeDetails={{
+        id: "node-1",
+        lessonFlow: [
+          {
+            id: "social-setup",
+            type: "dialogue",
+            title: "Đại hội bộ tộc",
+            config: {
+              characters: {
+                guide: { name: "Sophia", role: "Người dẫn truyện" },
+                slave: { name: "Borin", role: "Người lao động chân tay" },
+                noble: { name: "Theon", role: "Quý tộc / trí thức" },
+              },
+              lines: [
+                {
+                  who: "guide",
+                  text: "Nhiều thế hệ trôi qua, con người biết rèn đồng, rèn sắt.",
+                },
+                {
+                  who: "slave",
+                  text: "Trời chưa sáng, tôi đã phải ra đồng cày cuốc, vác đá xây tháp tới kiệt sức.",
+                },
+                {
+                  who: "noble",
+                  text: "Tôi có của cải dư thừa, không phải lao động chân tay.",
+                },
+              ],
+            },
+          },
+        ],
+        progress: [{ currentComponentIndex: 0, completedComponentIds: [] }],
+      }}
+    />,
+  );
+
+  expect(screen.getByText(/Nhiều thế hệ trôi qua/i)).toBeInTheDocument();
+  expect(screen.queryByText(/Trời chưa sáng/i)).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /Tiếp tục/i }),
+  ).not.toBeInTheDocument();
+
+  act(() => {
+    vi.advanceTimersByTime(1300);
+  });
+
+  expect(screen.getByText(/Trời chưa sáng/i)).toBeInTheDocument();
+  expect(screen.queryByText(/Tôi có của cải dư thừa/i)).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /Tiếp tục/i }),
+  ).not.toBeInTheDocument();
+
+  act(() => {
+    vi.advanceTimersByTime(1300);
+  });
+
+  expect(screen.getByText(/Tôi có của cải dư thừa/i)).toBeInTheDocument();
+
+  const nextButton = screen.getByRole("button", { name: /Tiếp tục/i });
+  expect(nextButton).toBeInTheDocument();
+  fireEvent.click(nextButton);
+
+  const lastCall = mutationMock.mutate.mock.calls.at(-1)?.[0];
+  expect(lastCall?.payload?.completedComponentIds).toContain("social-setup");
+});
+
 test("restored grouped progress keeps the group in one frame and can continue", async () => {
   render(
     <FlowLessonPlayer

@@ -164,7 +164,6 @@ export default function DialogueSequence({
     completed ? safeLines.length : Math.min(1, safeLines.length),
   );
   const scrollAnchorRef = useRef(null);
-  const advanceTimerRef = useRef(null);
   const linesKey = useMemo(
     () => JSON.stringify(safeLines.map((line) => [line.who, line.text])),
     [safeLines],
@@ -215,12 +214,10 @@ export default function DialogueSequence({
   }, [safeLines.length]);
 
   useEffect(() => {
-    clearTimeout(advanceTimerRef.current);
-    if (autoPlay && !isLastVisible) {
-      advanceTimerRef.current = setTimeout(showNextLine, NPC_REVEAL_DELAY_MS);
-    }
-    return () => clearTimeout(advanceTimerRef.current);
-  }, [autoPlay, isLastVisible, showNextLine]);
+    if (!autoPlay || visibleCount >= safeLines.length) return undefined;
+    const timer = setTimeout(showNextLine, NPC_REVEAL_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [autoPlay, safeLines.length, showNextLine, visibleCount]);
 
   return (
     <div className={`flex min-h-0 flex-col ${compact ? "" : "h-full flex-1"}`}>
