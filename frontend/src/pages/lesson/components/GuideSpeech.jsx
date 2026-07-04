@@ -153,28 +153,35 @@ export default function DialogueSequence({
   compact = false,
   completed = false,
 }) {
+  const safeLines = useMemo(
+    () =>
+      Array.isArray(lines)
+        ? lines.filter((line) => line && typeof line.text === "string")
+        : [],
+    [lines],
+  );
   const [visibleCount, setVisibleCount] = useState(
-    completed ? lines.length : 1,
+    completed ? safeLines.length : Math.min(1, safeLines.length),
   );
   const scrollAnchorRef = useRef(null);
   const advanceTimerRef = useRef(null);
   const linesKey = useMemo(
-    () => JSON.stringify(lines.map((line) => [line.who, line.text])),
-    [lines],
+    () => JSON.stringify(safeLines.map((line) => [line.who, line.text])),
+    [safeLines],
   );
 
-  const isLastVisible = visibleCount >= lines.length;
+  const isLastVisible = visibleCount >= safeLines.length;
   const allDone = isLastVisible;
 
   const lineSides = useMemo(() => {
     let sideIndex = 0;
-    return lines.map((line) => {
+    return safeLines.map((line) => {
       if (line.side === "left" || line.side === "right") return line.side;
       const side = sideIndex % 2 === 0 ? "left" : "right";
       sideIndex += 1;
       return side;
     });
-  }, [lines]);
+  }, [safeLines]);
 
   const scrollToLatest = useCallback(() => {
     requestAnimationFrame(() => {
@@ -188,8 +195,10 @@ export default function DialogueSequence({
   }, []);
 
   useEffect(() => {
-    setVisibleCount(completed ? lines.length : 1);
-  }, [completed, lines.length, linesKey]);
+    setVisibleCount(
+      completed ? safeLines.length : Math.min(1, safeLines.length),
+    );
+  }, [completed, safeLines.length, linesKey]);
 
   useEffect(() => {
     scrollToLatest();
@@ -202,8 +211,8 @@ export default function DialogueSequence({
   }, [allDone, scrollToLatest]);
 
   const showNextLine = useCallback(() => {
-    setVisibleCount((c) => Math.min(c + 1, lines.length));
-  }, [lines.length]);
+    setVisibleCount((c) => Math.min(c + 1, safeLines.length));
+  }, [safeLines.length]);
 
   useEffect(() => {
     clearTimeout(advanceTimerRef.current);
@@ -214,9 +223,13 @@ export default function DialogueSequence({
   }, [autoPlay, isLastVisible, showNextLine]);
 
   return (
-    <div className={`flex flex-col min-h-0 ${compact ? "" : "h-full flex-1"}`}>
-      <div className={`space-y-3 pr-1 ${compact ? "" : "overflow-y-auto"}`}>
-        {lines.slice(0, visibleCount).map((line, index) => {
+    <div className={`flex min-h-0 flex-col ${compact ? "" : "h-full flex-1"}`}>
+      <div
+        className={`min-h-0 space-y-3 pr-1 ${
+          compact ? "max-h-[52vh] overflow-y-auto" : "flex-1 overflow-y-auto"
+        }`}
+      >
+        {safeLines.slice(0, visibleCount).map((line, index) => {
           return (
             <SpeechBubble
               key={index}
@@ -230,7 +243,7 @@ export default function DialogueSequence({
         <div ref={scrollAnchorRef} />
       </div>
 
-      <div className="mt-auto pt-5 flex justify-end shrink-0">
+      <div className="sticky bottom-0 z-20 mt-auto flex shrink-0 justify-end bg-gradient-to-t from-white via-white/95 to-transparent pt-5 dark:from-[#0f2530] dark:via-[#0f2530]/95">
         {!allDone ? (
           !autoPlay && (
             <button

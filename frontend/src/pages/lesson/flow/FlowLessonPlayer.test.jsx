@@ -1,11 +1,12 @@
 import {
+  act,
   fireEvent,
   render,
   screen,
   waitFor,
   within,
 } from "@testing-library/react";
-import { beforeEach, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import FlowLessonPlayer from "./FlowLessonPlayer";
 
 const mutationMock = vi.hoisted(() => ({
@@ -25,6 +26,10 @@ vi.mock("../../../hooks/useMutations", () => ({
 
 beforeEach(() => {
   mutationMock.mutate.mockClear();
+});
+
+afterEach(() => {
+  vi.useRealTimers();
 });
 
 test("renders a fallback instead of crashing when a lesson flow component has no type", () => {
@@ -127,6 +132,63 @@ test("renders grouped lesson components sequentially in the right column", async
         },
       ],
     });
+  });
+});
+
+test("auto-revealed dialogue keeps the final continue action available", () => {
+  vi.useFakeTimers();
+
+  render(
+    <FlowLessonPlayer
+      nodeDetails={{
+        id: "node-1",
+        lessonFlow: [
+          {
+            id: "dialogue-auto",
+            type: "dialogue",
+            title: "Đối thoại tự hiện",
+            config: {
+              lines: [
+                {
+                  who: "guide",
+                  text: "Dòng thoại đầu tiên.",
+                },
+                {
+                  who: "skeptic",
+                  text: "Dòng thoại thứ hai tự xuất hiện.",
+                },
+              ],
+            },
+          },
+        ],
+        progress: [{ currentComponentIndex: 0, completedComponentIds: [] }],
+      }}
+    />,
+  );
+
+  expect(screen.getByText("Dòng thoại đầu tiên.")).toBeInTheDocument();
+  expect(
+    screen.queryByText("Dòng thoại thứ hai tự xuất hiện."),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /Tiếp tục/i }),
+  ).not.toBeInTheDocument();
+
+  act(() => {
+    vi.advanceTimersByTime(1300);
+  });
+
+  expect(
+    screen.getByText("Dòng thoại thứ hai tự xuất hiện."),
+  ).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
+
+  const lastCall = mutationMock.mutate.mock.calls.at(-1)?.[0];
+  expect(lastCall?.payload?.completedComponentIds).toContain("dialogue-auto");
+  expect(lastCall?.payload?.componentResult).toMatchObject({
+    componentId: "dialogue-auto",
+    type: "dialogue",
+    status: "completed",
   });
 });
 
