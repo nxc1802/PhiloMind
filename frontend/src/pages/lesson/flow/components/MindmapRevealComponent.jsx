@@ -14,6 +14,14 @@ export function MindmapRevealComponent({ component, onComplete }) {
   const complete = nodes.length > 0 && revealed.length === nodes.length;
   const revealedCount = revealed.length;
 
+  // Mảnh ghép vừa được mở gần nhất (dùng cho lời chúc mừng trung gian).
+  const lastRevealedId = revealed[revealed.length - 1];
+  const lastRevealedNode = nodes.find((node) => node.id === lastRevealedId);
+  const lastRevealedName =
+    lastRevealedNode?.back?.text || lastRevealedNode?.label || "";
+  // Đã mở ít nhất 1 mảnh nhưng CHƯA hoàn tất → hiện chúc mừng từng bước.
+  const partialCelebrate = revealedCount > 0 && !complete;
+
   // Tự động mở các thẻ tuần tự (2s)
   useEffect(() => {
     if (nodes.length === 0) return;
@@ -160,6 +168,23 @@ export function MindmapRevealComponent({ component, onComplete }) {
           );
         })}
       </div>
+
+      {/* Chúc mừng trung gian — hiện sau mỗi lần mở mảnh ghép (trừ mảnh cuối) */}
+      {partialCelebrate && (
+        <div className="mt-6 rounded-3xl border border-primary-200 bg-primary-50 p-4 text-primary-950 dark:border-primary-800 dark:bg-primary-950/35 dark:text-primary-100">
+          <p className="flex items-center gap-2 font-bold">
+            <span className="material-symbols-outlined text-lg text-primary-600 dark:text-primary-300">
+              celebration
+            </span>
+            Chúc mừng! Đã mở khóa Mảnh ghép {revealedCount}
+            {lastRevealedName ? `: ${lastRevealedName}` : ""}.
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-650 dark:text-primary-200">
+            Tiếp tục để hoàn thiện nốt {nodes.length - revealedCount} mảnh ghép còn
+            lại của bức tranh khái niệm.
+          </p>
+        </div>
+      )}
 
       {complete && (
         <div className="mt-6 rounded-3xl border border-green-200 bg-green-50 p-4 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
