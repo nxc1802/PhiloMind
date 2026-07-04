@@ -79,6 +79,7 @@ export function ProgressBar({
   const startDrag = (event) => {
     const el = scrollRef.current;
     if (!el) return;
+    if (event.target.closest("[data-progress-component-id]")) return;
     dragStateRef.current = {
       active: true,
       startX: event.clientX,
@@ -124,6 +125,11 @@ export function ProgressBar({
     }
   };
 
+  const getLabel = (component) =>
+    component.config?.shortLabel ||
+    component.navigation_config?.shortLabel ||
+    component.title;
+
   return (
     <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated">
       {/* Left two-headed-arrow affordance — appears only when scrollable left */}
@@ -157,41 +163,62 @@ export function ProgressBar({
           const isActive = index === activeIndex;
           const isCompleted = completedIds.includes(component.id);
           const isAccessible = isCompleted || index <= activeIndex;
+          const label = getLabel(component);
 
           return (
-            <button
+            <div
               key={component.id}
-              type="button"
-              data-active={isActive}
-              data-progress-component-id={component.id}
-              disabled={!isAccessible && !isActive}
-              onClick={() => isAccessible && onSelectComponent(index)}
               style={{ flex: "0 0 calc((100% - 1.5rem) / 5)" }}
-              className={[
-                "snap-center group relative flex min-w-[7.5rem] items-center justify-center overflow-hidden rounded-full transition-all duration-300",
-                "h-11 gap-2 border-2 px-3",
-                isActive
-                  ? "border-primary-500 bg-primary-50 text-primary-800 shadow-[0_0_0_4px_rgba(37,99,235,0.14),0_14px_30px_rgba(37,99,235,0.22)] ring-2 ring-primary-300 dark:border-primary-300 dark:bg-primary-900/40 dark:text-primary-100 dark:ring-primary-500/50"
-                  : isCompleted
-                    ? "border-primary-500 bg-white text-primary-600 hover:bg-primary-50 dark:bg-surface-dark-elevated dark:text-primary-300 dark:hover:bg-primary-900/20"
-                    : "cursor-not-allowed border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              title={component.title}
+              className="relative flex h-full shrink-0 snap-center items-center justify-center px-3"
             >
-              {isActive && (
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-70 dark:via-primary-200/10" />
+              <button
+                type="button"
+                data-active={isActive}
+                data-progress-component-id={component.id}
+                disabled={!isAccessible && !isActive}
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={() => isAccessible && onSelectComponent(index)}
+                className={[
+                  "group relative inline-flex h-11 max-w-full items-center justify-center overflow-hidden rounded-full transition-all duration-300",
+                  "gap-1.5 border-2 px-3",
+                  isActive
+                    ? "border-primary-500 bg-primary-50 text-primary-800 shadow-[0_0_0_4px_rgba(37,99,235,0.14),0_14px_30px_rgba(37,99,235,0.22)] ring-2 ring-primary-300 dark:border-primary-300 dark:bg-primary-900/40 dark:text-primary-100 dark:ring-primary-500/50"
+                    : isCompleted
+                      ? "border-primary-500 bg-white text-primary-600 hover:bg-primary-50 dark:bg-surface-dark-elevated dark:text-primary-300 dark:hover:bg-primary-900/20"
+                      : "cursor-not-allowed border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                title={component.title}
+                aria-label={`Mốc tiến trình: ${component.title}`}
+              >
+                {isActive && (
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-70 dark:via-primary-200/10" />
+                )}
+                <span className="material-symbols-outlined relative z-10 shrink-0 text-[18px]">
+                  {isCompleted && !isActive
+                    ? "check_circle"
+                    : getIcon(component.type)}
+                </span>
+                <span className="relative z-10 min-w-0 truncate text-[11px] font-bold leading-tight">
+                  {label}
+                </span>
+              </button>
+
+              {idx < progressItems.length - 1 && (
+                <span
+                  className={[
+                    "pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 material-symbols-outlined text-[18px] transition-colors",
+                    isCompleted || isActive
+                      ? "text-primary-500 dark:text-primary-300"
+                      : "text-slate-300 dark:text-slate-600",
+                  ].join(" ")}
+                  aria-hidden="true"
+                >
+                  chevron_right
+                </span>
               )}
-              <span className="material-symbols-outlined relative z-10 text-[18px]">
-                {isCompleted && !isActive
-                  ? "check_circle"
-                  : getIcon(component.type)}
-              </span>
-              <span className="relative z-10 min-w-0 truncate text-[11px] font-bold leading-tight">
-                {component.title}
-              </span>
-            </button>
+            </div>
           );
         })}
       </div>

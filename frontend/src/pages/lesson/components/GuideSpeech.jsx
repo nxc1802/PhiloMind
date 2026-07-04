@@ -84,10 +84,15 @@ export function SpeechBubble({ who, text, side = "left", characters }) {
   const character = characters?.[who] || CHARACTERS[who] || CHARACTERS.guide;
   const isRight = side === "right";
   const isNarrator = side === "center";
+  const directionClass = isNarrator
+    ? "j-dialogue-center"
+    : isRight
+      ? "j-dialogue-right"
+      : "j-dialogue-left";
 
   return (
     <div
-      className={`flex j-bubble-in text-left ${
+      className={`flex items-start text-left ${directionClass} ${
         isNarrator
           ? "justify-center"
           : isRight
@@ -96,11 +101,15 @@ export function SpeechBubble({ who, text, side = "left", characters }) {
       }`}
     >
       <div
-        className={`shrink-0 rounded-full bg-gradient-to-br ${character.color} p-[2px] shadow-lg ${
+        className={`j-avatar-pop flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br ${character.color} p-[2px] shadow-lg ring-4 ring-white/80 dark:ring-primary-950/70 ${
           isNarrator ? "mr-3" : isRight ? "ml-3" : "mr-3"
         }`}
       >
-        <Avatar id={character.avatar} size={56} />
+        <Avatar
+          id={character.avatar}
+          size={64}
+          className="h-full w-full rounded-full"
+        />
       </div>
       <div
         className={`min-w-0 ${isNarrator ? "max-w-[92%] flex-1" : "max-w-[78%]"}`}
@@ -118,7 +127,7 @@ export function SpeechBubble({ who, text, side = "left", characters }) {
           </span>
         </div>
         <div
-          className={`border px-4 py-3 text-sm leading-6 shadow-sm ${
+          className={`j-chat-pop border px-4 py-3 text-sm leading-6 ${
             isNarrator
               ? "rounded-3xl border-primary-100 bg-primary-50 text-primary-900 dark:border-primary-850 dark:bg-primary-950/35 dark:text-primary-100"
               : isRight

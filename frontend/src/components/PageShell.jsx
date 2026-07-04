@@ -28,7 +28,7 @@ export const SettingsButton = (
 );
 
 // Inner layout — reads sidebar state from context
-function PageShellInner({ activeKey, footer, children }) {
+function PageShellInner({ activeKey, footer, hideFeedback = false, children }) {
   const { collapsed } = useSidebar();
   return (
     <>
@@ -43,8 +43,7 @@ function PageShellInner({ activeKey, footer, children }) {
           {children}
         </main>
       </div>
-      {/* Bong bóng góp ý nổi — xuất hiện trên mọi trang */}
-      <FeedbackWidget />
+      {!hideFeedback && <FeedbackWidget />}
     </>
   );
 }
@@ -53,11 +52,16 @@ function PageShellInner({ activeKey, footer, children }) {
 export default function PageShell({
   activeKey,
   footer = SettingsButton,
+  hideFeedback = false,
   children,
 }) {
   return (
     <SidebarProvider>
-      <PageShellInner activeKey={activeKey} footer={footer}>
+      <PageShellInner
+        activeKey={activeKey}
+        footer={footer}
+        hideFeedback={hideFeedback}
+      >
         {children}
       </PageShellInner>
     </SidebarProvider>

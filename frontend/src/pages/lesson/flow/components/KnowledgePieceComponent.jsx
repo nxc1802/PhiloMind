@@ -38,14 +38,22 @@ export function KnowledgePieceComponent({ component, onComplete }) {
     if (collected || flying) return;
 
     const source = pieceRef.current?.getBoundingClientRect();
-    const target = document
-      .querySelector(`[data-piece-target="true"][data-piece-id="${pieceId}"]`)
-      ?.getBoundingClientRect();
+    const targetSlot = document.querySelector(
+      `[data-piece-target="true"][data-piece-id="${pieceId}"]`,
+    );
+    const targetElement =
+      targetSlot?.querySelector(".piece-target-icon") || targetSlot;
+    const target = targetElement?.getBoundingClientRect();
 
     if (!source || !target) {
       complete();
       return;
     }
+
+    const targetScale = Math.max(
+      0.16,
+      Math.min(0.32, target.width / source.width),
+    );
 
     setFlyer({
       left: source.left,
@@ -54,7 +62,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
       height: source.height,
       dx: target.left + target.width / 2 - (source.left + source.width / 2),
       dy: target.top + target.height / 2 - (source.top + source.height / 2),
-      color,
+      scale: targetScale,
       icon,
       label,
     });
@@ -67,7 +75,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
       setFlyer(null);
       setFlying(false);
       complete();
-    }, 950);
+    }, 1150);
   };
 
   return (
@@ -82,18 +90,18 @@ export function KnowledgePieceComponent({ component, onComplete }) {
             top: flyer.top,
             width: flyer.width,
             height: flyer.height,
-            opacity: flying ? 0.18 : 1,
+            opacity: flying ? 0.82 : 1,
             transform: flying
-              ? `translate(${flyer.dx}px, ${flyer.dy}px) scale(0.18) rotate(18deg)`
+              ? `translate(${flyer.dx}px, ${flyer.dy}px) scale(${flyer.scale}) rotate(720deg)`
               : "translate(0, 0) scale(1) rotate(0deg)",
             transition:
-              "transform 900ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 900ms ease",
+              "transform 1100ms cubic-bezier(0.16, 1, 0.3, 1), opacity 1100ms ease",
           }}
         >
-          <div
-            className={`flex h-full w-full items-center justify-center rounded-[1.75rem] bg-gradient-to-br ${flyer.color} text-white`}
-          >
-            <span className="material-symbols-outlined text-5xl">
+          <div className="relative flex h-full w-full items-center justify-center rounded-[1.75rem] bg-gradient-to-br from-amber-200 via-yellow-400 to-orange-500 text-white shadow-[0_24px_80px_rgba(245,158,11,0.58)]">
+            <span className="j-piece-aura-spin absolute inset-2 rounded-[1.5rem] border-2 border-dashed border-white/45" />
+            <span className="absolute inset-5 rounded-[1.1rem] bg-white/15 blur-sm" />
+            <span className="material-symbols-outlined relative z-10 text-6xl drop-shadow-lg">
               {flyer.icon}
             </span>
           </div>
@@ -108,7 +116,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
         <div className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
           <div
             ref={pieceRef}
-            className={`j-unlock relative flex h-36 w-36 items-center justify-center rounded-[2rem] bg-gradient-to-br ${color} text-white shadow-[0_24px_80px_rgba(245,158,11,0.35)]`}
+            className={`j-unlock j-piece-gold-pulse relative flex h-36 w-36 items-center justify-center rounded-[2rem] bg-gradient-to-br ${color} text-white shadow-[0_24px_80px_rgba(245,158,11,0.35)]`}
           >
             <div className="absolute inset-3 rounded-[1.5rem] border border-white/35" />
             <span className="material-symbols-outlined text-7xl">{icon}</span>
