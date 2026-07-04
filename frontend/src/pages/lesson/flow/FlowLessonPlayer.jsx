@@ -268,7 +268,11 @@ export default function FlowLessonPlayer({
           className="relative h-full min-h-0 min-w-0 flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-primary-850/50 dark:bg-surface-dark-elevated"
           style={{ width: `${leftWidth}%` }}
         >
-          <MilestoneBar flow={flow} completedIds={completedIds} />
+          <MilestoneBar
+            flow={flow}
+            completedIds={completedIds}
+            activeIndex={activeIndex}
+          />
           <CenterMedia
             lessonMedia={lessonMedia}
             activeMediaId={activeMediaId}

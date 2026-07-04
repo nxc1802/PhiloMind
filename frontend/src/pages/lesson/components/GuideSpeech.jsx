@@ -38,10 +38,39 @@ export const CHARACTERS = {
     avatar: "noble",
     color: "from-fuchsia-500 to-purple-600",
   },
+  artisan: {
+    name: "Thợ rèn Damos",
+    role: "Thợ thủ công thành bang",
+    avatar: "artisan",
+    color: "from-orange-500 to-red-600",
+  },
+  merchant: {
+    name: "Thương nhân Mira",
+    role: "Người buôn bán đường biển",
+    avatar: "merchant",
+    color: "from-emerald-500 to-teal-700",
+  },
+  scholar: {
+    name: "Học giả Anax",
+    role: "Người hệ thống hóa tri thức",
+    avatar: "scholar",
+    color: "from-blue-500 to-indigo-700",
+  },
+  child: {
+    name: "Cậu bé Ianos",
+    role: "Người học việc",
+    avatar: "child",
+    color: "from-sky-400 to-cyan-600",
+  },
+  commander: {
+    name: "Chỉ huy Dorian",
+    role: "Người đại diện quyền lực thành bang",
+    avatar: "commander",
+    color: "from-rose-500 to-pink-700",
+  },
 };
 
-const TYPEWRITER_SPEED_MS = 18;
-const NPC_REVEAL_DELAY_MS = 550;
+const NPC_REVEAL_DELAY_MS = 1200;
 
 function prefersReducedMotion() {
   return (
@@ -51,81 +80,53 @@ function prefersReducedMotion() {
   );
 }
 
-function useTypewriter(fullText, enabled = true) {
-  const [shown, setShown] = useState(enabled ? "" : fullText);
-  const [done, setDone] = useState(!enabled);
-  const timerRef = useRef(null);
-
-  useEffect(() => {
-    clearInterval(timerRef.current);
-    if (!enabled || prefersReducedMotion()) {
-      setShown(fullText);
-      setDone(true);
-      return;
-    }
-    setShown("");
-    setDone(false);
-    let index = 0;
-    timerRef.current = setInterval(() => {
-      index += 1;
-      setShown(fullText.slice(0, index));
-      if (index >= fullText.length) {
-        clearInterval(timerRef.current);
-        setDone(true);
-      }
-    }, TYPEWRITER_SPEED_MS);
-    return () => clearInterval(timerRef.current);
-  }, [fullText, enabled]);
-
-  const finishNow = useCallback(() => {
-    clearInterval(timerRef.current);
-    setShown(fullText);
-    setDone(true);
-  }, [fullText]);
-
-  return { shown, done, finishNow };
-}
-
-export function SpeechBubble({ who, text, animate, onTypingDone }) {
-  const character = CHARACTERS[who] || CHARACTERS.guide;
-  const { shown, done, finishNow } = useTypewriter(text, animate);
-  const notifiedRef = useRef(false);
-
-  useEffect(() => {
-    notifiedRef.current = false;
-  }, [text, animate]);
-
-  useEffect(() => {
-    if (done && !notifiedRef.current) {
-      notifiedRef.current = true;
-      onTypingDone?.();
-    }
-  }, [done, onTypingDone]);
+export function SpeechBubble({ who, text, side = "left", characters }) {
+  const character = characters?.[who] || CHARACTERS[who] || CHARACTERS.guide;
+  const isRight = side === "right";
+  const isNarrator = side === "center";
 
   return (
-    <div className="flex items-start gap-2 j-bubble-in text-left">
+    <div
+      className={`flex j-bubble-in text-left ${
+        isNarrator
+          ? "justify-center"
+          : isRight
+            ? "flex-row-reverse justify-start"
+            : "justify-start"
+      }`}
+    >
       <div
-        className={`shrink-0 rounded-full bg-gradient-to-br ${character.color} p-[1px] shadow-sm`}
+        className={`shrink-0 rounded-full bg-gradient-to-br ${character.color} p-[2px] shadow-lg ${
+          isNarrator ? "mr-3" : isRight ? "ml-3" : "mr-3"
+        }`}
       >
-        <Avatar id={character.avatar} size={32} />
+        <Avatar id={character.avatar} size={56} />
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-2 mb-0.5">
+      <div
+        className={`min-w-0 ${isNarrator ? "max-w-[92%] flex-1" : "max-w-[78%]"}`}
+      >
+        <div
+          className={`mb-1 flex items-baseline gap-2 ${
+            isRight ? "justify-end text-right" : "justify-start"
+          }`}
+        >
           <span className="font-bold text-xs text-gray-900 dark:text-primary-100">
             {character.name}
           </span>
-          <span className="text-[10px] text-gray-400">{character.role}</span>
+          <span className="text-[10px] text-gray-400 dark:text-primary-400">
+            {character.role}
+          </span>
         </div>
         <div
-          className="bg-white dark:bg-[#002b37] border border-gray-200 rounded-2xl rounded-tl-sm px-3 py-2 shadow-sm text-sm text-gray-800 dark:text-primary-150 leading-snug cursor-pointer"
-          onClick={() => !done && finishNow()}
+          className={`border px-4 py-3 text-sm leading-6 shadow-sm ${
+            isNarrator
+              ? "rounded-3xl border-primary-100 bg-primary-50 text-primary-900 dark:border-primary-850 dark:bg-primary-950/35 dark:text-primary-100"
+              : isRight
+                ? "rounded-3xl rounded-tr-sm border-primary-200 bg-primary-600 text-white dark:border-primary-600"
+                : "rounded-3xl rounded-tl-sm border-gray-200 bg-white text-gray-800 dark:border-primary-850 dark:bg-[#002b37] dark:text-primary-150"
+          }`}
         >
-          {shown}
-          {!done && (
-            <span className="j-caret" aria-hidden>
-              ▋
-            </span>
-          )}
+          {text}
         </div>
       </div>
     </div>
@@ -137,9 +138,9 @@ export default function DialogueSequence({
   onComplete,
   ctaLabel = "Tiếp tục",
   autoPlay = true,
+  characters,
 }) {
   const [visibleCount, setVisibleCount] = useState(1);
-  const [currentTypingDone, setCurrentTypingDone] = useState(false);
   const scrollAnchorRef = useRef(null);
   const advanceTimerRef = useRef(null);
   const linesKey = useMemo(
@@ -148,7 +149,18 @@ export default function DialogueSequence({
   );
 
   const isLastVisible = visibleCount >= lines.length;
-  const allDone = isLastVisible && currentTypingDone;
+  const allDone = isLastVisible;
+
+  const lineSides = useMemo(() => {
+    let nonGuideIndex = 0;
+    return lines.map((line) => {
+      if (line.side) return line.side;
+      if (line.who === "guide" || line.who === "narrator") return "center";
+      const side = nonGuideIndex % 2 === 0 ? "left" : "right";
+      nonGuideIndex += 1;
+      return side;
+    });
+  }, [lines]);
 
   const scrollToLatest = useCallback(() => {
     requestAnimationFrame(() => {
@@ -161,12 +173,11 @@ export default function DialogueSequence({
 
   useEffect(() => {
     setVisibleCount(1);
-    setCurrentTypingDone(false);
   }, [linesKey]);
 
   useEffect(() => {
     scrollToLatest();
-  }, [visibleCount, currentTypingDone, allDone, scrollToLatest]);
+  }, [visibleCount, allDone, scrollToLatest]);
 
   useEffect(() => {
     if (!allDone) return undefined;
@@ -175,32 +186,28 @@ export default function DialogueSequence({
   }, [allDone, scrollToLatest]);
 
   const showNextLine = useCallback(() => {
-    setCurrentTypingDone(false);
     setVisibleCount((c) => Math.min(c + 1, lines.length));
   }, [lines.length]);
 
   useEffect(() => {
     clearTimeout(advanceTimerRef.current);
-    if (autoPlay && currentTypingDone && !isLastVisible) {
+    if (autoPlay && !isLastVisible) {
       advanceTimerRef.current = setTimeout(showNextLine, NPC_REVEAL_DELAY_MS);
     }
     return () => clearTimeout(advanceTimerRef.current);
-  }, [autoPlay, currentTypingDone, isLastVisible, showNextLine]);
+  }, [autoPlay, isLastVisible, showNextLine]);
 
   return (
     <div className="flex flex-col flex-1 h-full min-h-0">
-      <div className="space-y-2 overflow-y-auto">
+      <div className="space-y-3 overflow-y-auto pr-1">
         {lines.slice(0, visibleCount).map((line, index) => {
-          const isCurrent = index === visibleCount - 1;
           return (
             <SpeechBubble
               key={index}
               who={line.who}
               text={line.text}
-              animate={isCurrent}
-              onTypingDone={
-                isCurrent ? () => setCurrentTypingDone(true) : undefined
-              }
+              side={lineSides[index]}
+              characters={characters}
             />
           );
         })}
@@ -213,7 +220,7 @@ export default function DialogueSequence({
             <button
               type="button"
               onClick={showNextLine}
-              disabled={!currentTypingDone || isLastVisible}
+              disabled={isLastVisible}
               className="inline-flex items-center gap-1.5 bg-gray-800 text-white px-5 py-2.5 rounded-3xl font-semibold hover:bg-gray-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Tiếp

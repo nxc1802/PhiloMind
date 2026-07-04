@@ -33,8 +33,14 @@ export function Avatar({ id, size = 44, className = "" }) {
           </defs>
           <circle cx="32" cy="32" r="30" fill="url(#gd-guide)" />
           <g className="j-flicker" style={{ transformOrigin: "32px 30px" }}>
-            <path d="M32 14c5 6 8 10 8 16a8 8 0 11-16 0c0-6 3-10 8-16z" fill="#fde68a" />
-            <path d="M32 22c2.5 3 4 5.5 4 8.5a4 4 0 11-8 0c0-3 1.5-5.5 4-8.5z" fill="#fb923c" />
+            <path
+              d="M32 14c5 6 8 10 8 16a8 8 0 11-16 0c0-6 3-10 8-16z"
+              fill="#fde68a"
+            />
+            <path
+              d="M32 22c2.5 3 4 5.5 4 8.5a4 4 0 11-8 0c0-3 1.5-5.5 4-8.5z"
+              fill="#fb923c"
+            />
           </g>
           <circle cx="32" cy="48" r="6" fill="#ede9fe" />
         </svg>
@@ -44,7 +50,10 @@ export function Avatar({ id, size = 44, className = "" }) {
         <svg {...common}>
           <circle cx="32" cy="32" r="30" fill="#d97706" />
           <circle cx="32" cy="26" r="11" fill="#fde2bf" />
-          <path d="M22 30c0 12 4 22 10 22s10-10 10-22c-3 4-6 5-10 5s-7-1-10-5z" fill="#f5f5f4" />
+          <path
+            d="M22 30c0 12 4 22 10 22s10-10 10-22c-3 4-6 5-10 5s-7-1-10-5z"
+            fill="#f5f5f4"
+          />
           <rect x="24" y="14" width="16" height="6" rx="3" fill="#92400e" />
           <circle cx="28" cy="26" r="1.6" fill="#1f2937" />
           <circle cx="36" cy="26" r="1.6" fill="#1f2937" />
@@ -57,8 +66,23 @@ export function Avatar({ id, size = 44, className = "" }) {
           <circle cx="32" cy="30" r="12" fill="#cffafe" />
           <circle cx="27" cy="29" r="1.8" fill="#0e7490" />
           <circle cx="37" cy="29" r="1.8" fill="#0e7490" />
-          <path d="M28 35c2 1.5 6 1.5 8 0" stroke="#0e7490" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-          <text x="44" y="20" fontSize="18" fontWeight="700" fill="#fde047" className="j-bob">?</text>
+          <path
+            d="M28 35c2 1.5 6 1.5 8 0"
+            stroke="#0e7490"
+            strokeWidth="1.6"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <text
+            x="44"
+            y="20"
+            fontSize="18"
+            fontWeight="700"
+            fill="#fde047"
+            className="j-bob"
+          >
+            ?
+          </text>
         </svg>
       );
     case "slave": // Lao dong chan tay — mang tren vai
@@ -67,7 +91,15 @@ export function Avatar({ id, size = 44, className = "" }) {
           <circle cx="32" cy="32" r="30" fill="#57534e" />
           <circle cx="32" cy="27" r="10" fill="#e7d3bf" />
           <path d="M16 44c4-6 10-9 16-9s12 3 16 9z" fill="#78716c" />
-          <rect x="14" y="20" width="36" height="3.4" rx="1.7" fill="#451a03" transform="rotate(-12 32 22)" />
+          <rect
+            x="14"
+            y="20"
+            width="36"
+            height="3.4"
+            rx="1.7"
+            fill="#451a03"
+            transform="rotate(-12 32 22)"
+          />
           <circle cx="29" cy="26" r="1.5" fill="#1f2937" />
           <circle cx="35" cy="26" r="1.5" fill="#1f2937" />
         </svg>
@@ -80,7 +112,89 @@ export function Avatar({ id, size = 44, className = "" }) {
           <path d="M22 18l4 5 6-6 6 6 4-5v6H22z" fill="#facc15" />
           <circle cx="28" cy="28" r="1.6" fill="#4c1d95" />
           <circle cx="36" cy="28" r="1.6" fill="#4c1d95" />
-          <path d="M28 33c2 1.2 6 1.2 8 0" stroke="#7e22ce" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+          <path
+            d="M28 33c2 1.2 6 1.2 8 0"
+            stroke="#7e22ce"
+            strokeWidth="1.5"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "artisan": // Tho thu cong / tho ren
+      return (
+        <svg {...common}>
+          <circle cx="32" cy="32" r="30" fill="#ea580c" />
+          <circle cx="32" cy="28" r="10" fill="#fed7aa" />
+          <path d="M20 19h24l-3 7H23z" fill="#7c2d12" />
+          <path d="M18 47c5-8 23-8 28 0z" fill="#9a3412" />
+          <path
+            d="M43 37l8 8"
+            stroke="#fef3c7"
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+          <circle cx="28" cy="28" r="1.5" fill="#431407" />
+          <circle cx="36" cy="28" r="1.5" fill="#431407" />
+        </svg>
+      );
+    case "merchant": // Thuong nhan
+      return (
+        <svg {...common}>
+          <circle cx="32" cy="32" r="30" fill="#047857" />
+          <circle cx="32" cy="28" r="10" fill="#ccfbf1" />
+          <path d="M21 22c3-7 19-7 22 0-5 2-17 2-22 0z" fill="#064e3b" />
+          <path d="M18 48c4-9 24-9 28 0z" fill="#10b981" />
+          <rect x="42" y="34" width="10" height="13" rx="2" fill="#facc15" />
+          <circle cx="28" cy="28" r="1.6" fill="#064e3b" />
+          <circle cx="36" cy="28" r="1.6" fill="#064e3b" />
+        </svg>
+      );
+    case "scholar": // Hoc gia
+      return (
+        <svg {...common}>
+          <circle cx="32" cy="32" r="30" fill="#1d4ed8" />
+          <circle cx="32" cy="28" r="10" fill="#dbeafe" />
+          <path d="M22 20c4-7 16-7 20 0v5H22z" fill="#1e3a8a" />
+          <rect x="17" y="40" width="30" height="12" rx="2" fill="#bfdbfe" />
+          <path d="M32 40v12" stroke="#2563eb" strokeWidth="1.5" />
+          <circle cx="28" cy="28" r="1.5" fill="#172554" />
+          <circle cx="36" cy="28" r="1.5" fill="#172554" />
+        </svg>
+      );
+    case "child": // Nguoi hoc viec tre
+      return (
+        <svg {...common}>
+          <circle cx="32" cy="32" r="30" fill="#0284c7" />
+          <circle cx="32" cy="30" r="11" fill="#e0f2fe" />
+          <path d="M22 24c2-8 18-8 20 0-5-3-15-3-20 0z" fill="#0c4a6e" />
+          <path d="M22 47c3-7 17-7 20 0z" fill="#38bdf8" />
+          <circle cx="28" cy="30" r="1.8" fill="#075985" />
+          <circle cx="36" cy="30" r="1.8" fill="#075985" />
+          <path
+            d="M28 36c2 2 6 2 8 0"
+            stroke="#0369a1"
+            strokeWidth="1.5"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "commander": // Quan chuc / chi huy
+      return (
+        <svg {...common}>
+          <circle cx="32" cy="32" r="30" fill="#be123c" />
+          <circle cx="32" cy="28" r="10" fill="#ffe4e6" />
+          <path d="M20 22l12-8 12 8v5H20z" fill="#881337" />
+          <path d="M18 48c4-8 24-8 28 0z" fill="#f43f5e" />
+          <path
+            d="M24 41h16"
+            stroke="#fecdd3"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          <circle cx="28" cy="28" r="1.5" fill="#4c0519" />
+          <circle cx="36" cy="28" r="1.5" fill="#4c0519" />
         </svg>
       );
     default:
@@ -98,7 +212,12 @@ export function SceneArt({ scene, className = "" }) {
 
   if (scene === "timeMachine") {
     return (
-      <svg viewBox="0 0 400 240" className={wrap} role="img" aria-label="Cỗ máy thời gian và bản đồ văn minh cổ đại">
+      <svg
+        viewBox="0 0 400 240"
+        className={wrap}
+        role="img"
+        aria-label="Cỗ máy thời gian và bản đồ văn minh cổ đại"
+      >
         <defs>
           <radialGradient id="sky" cx="50%" cy="30%" r="80%">
             <stop offset="0%" stopColor="#312e81" />
@@ -112,16 +231,47 @@ export function SceneArt({ scene, className = "" }) {
         </defs>
         <rect width="400" height="240" fill="url(#sky)" />
         {/* Sao lap lanh */}
-        {[[40, 40], [90, 70], [150, 30], [330, 50], [280, 90], [360, 120], [60, 140], [200, 25]].map(
-          ([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r="1.6" fill="#fff" className="j-twinkle" style={{ animationDelay: `${i * 0.4}s` }} />
-          )
-        )}
+        {[
+          [40, 40],
+          [90, 70],
+          [150, 30],
+          [330, 50],
+          [280, 90],
+          [360, 120],
+          [60, 140],
+          [200, 25],
+        ].map(([x, y], i) => (
+          <circle
+            key={i}
+            cx={x}
+            cy={y}
+            r="1.6"
+            fill="#fff"
+            className="j-twinkle"
+            style={{ animationDelay: `${i * 0.4}s` }}
+          />
+        ))}
         {/* Cong xoay thoi gian */}
         <g style={{ transformOrigin: "200px 130px" }} className="j-spin-slow">
           <circle cx="200" cy="130" r="70" fill="url(#portal)" />
-          <circle cx="200" cy="130" r="70" fill="none" stroke="#a78bfa" strokeWidth="2" strokeDasharray="6 10" />
-          <circle cx="200" cy="130" r="52" fill="none" stroke="#ddd6fe" strokeWidth="1.5" strokeDasharray="3 14" />
+          <circle
+            cx="200"
+            cy="130"
+            r="70"
+            fill="none"
+            stroke="#a78bfa"
+            strokeWidth="2"
+            strokeDasharray="6 10"
+          />
+          <circle
+            cx="200"
+            cy="130"
+            r="52"
+            fill="none"
+            stroke="#ddd6fe"
+            strokeWidth="1.5"
+            strokeDasharray="3 14"
+          />
         </g>
         {/* Ban do van minh — 3 diem sang */}
         {[
@@ -129,9 +279,24 @@ export function SceneArt({ scene, className = "" }) {
           { x: 200, y: 150, label: "Ấn Độ" },
           { x: 255, y: 120, label: "Trung Hoa" },
         ].map((m, i) => (
-          <g key={i} className="j-pulse-soft" style={{ animationDelay: `${i * 0.6}s`, transformOrigin: `${m.x}px ${m.y}px` }}>
+          <g
+            key={i}
+            className="j-pulse-soft"
+            style={{
+              animationDelay: `${i * 0.6}s`,
+              transformOrigin: `${m.x}px ${m.y}px`,
+            }}
+          >
             <circle cx={m.x} cy={m.y} r="6" fill="#fbbf24" />
-            <circle cx={m.x} cy={m.y} r="11" fill="none" stroke="#fbbf24" strokeWidth="1.5" opacity="0.6" />
+            <circle
+              cx={m.x}
+              cy={m.y}
+              r="11"
+              fill="none"
+              stroke="#fbbf24"
+              strokeWidth="1.5"
+              opacity="0.6"
+            />
           </g>
         ))}
       </svg>
@@ -140,7 +305,12 @@ export function SceneArt({ scene, className = "" }) {
 
   if (scene === "earthquake") {
     return (
-      <svg viewBox="0 0 400 240" className={wrap} role="img" aria-label="Trận động đất phá hủy ngôi đền và mùa màng">
+      <svg
+        viewBox="0 0 400 240"
+        className={wrap}
+        role="img"
+        aria-label="Trận động đất phá hủy ngôi đền và mùa màng"
+      >
         <defs>
           <linearGradient id="eq-sky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#7f1d1d" />
@@ -149,7 +319,11 @@ export function SceneArt({ scene, className = "" }) {
         </defs>
         <rect width="400" height="240" fill="url(#eq-sky)" />
         {/* Tia set */}
-        <path className="j-flash" d="M250 10l-18 70h22l-16 80 60-100h-26l20-50z" fill="#fde047" />
+        <path
+          className="j-flash"
+          d="M250 10l-18 70h22l-16 80 60-100h-26l20-50z"
+          fill="#fde047"
+        />
         {/* Den co dai rung lac */}
         <g className="j-shake" style={{ transformOrigin: "200px 200px" }}>
           <rect x="120" y="80" width="160" height="14" fill="#e7e5e4" />
@@ -161,14 +335,25 @@ export function SceneArt({ scene, className = "" }) {
         </g>
         {/* Khe nut mat dat */}
         <rect x="0" y="200" width="400" height="40" fill="#451a03" />
-        <path className="j-crack-grow" d="M150 200l16 40M250 200l-14 40M200 200l4 40" stroke="#1c1917" strokeWidth="3" fill="none" />
+        <path
+          className="j-crack-grow"
+          d="M150 200l16 40M250 200l-14 40M200 200l4 40"
+          stroke="#1c1917"
+          strokeWidth="3"
+          fill="none"
+        />
       </svg>
     );
   }
 
   if (scene === "society") {
     return (
-      <svg viewBox="0 0 400 240" className={wrap} role="img" aria-label="Xã hội phân chia giai cấp: lao động chân tay và tầng lớp trí thức">
+      <svg
+        viewBox="0 0 400 240"
+        className={wrap}
+        role="img"
+        aria-label="Xã hội phân chia giai cấp: lao động chân tay và tầng lớp trí thức"
+      >
         <defs>
           <linearGradient id="soc-sky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#fef3c7" />
@@ -176,35 +361,96 @@ export function SceneArt({ scene, className = "" }) {
           </linearGradient>
         </defs>
         <rect width="400" height="240" fill="url(#soc-sky)" />
-        <circle cx="330" cy="50" r="26" fill="#fbbf24" className="j-pulse-soft" style={{ transformOrigin: "330px 50px" }} />
+        <circle
+          cx="330"
+          cy="50"
+          r="26"
+          fill="#fbbf24"
+          className="j-pulse-soft"
+          style={{ transformOrigin: "330px 50px" }}
+        />
         <rect x="0" y="190" width="400" height="50" fill="#a16207" />
         {/* Lao dong chan tay — cuoc xuong dong */}
         <g style={{ transformOrigin: "110px 150px" }}>
           <circle cx="110" cy="120" r="14" fill="#e7d3bf" />
           <rect x="100" y="134" width="20" height="40" rx="6" fill="#78716c" />
           <g className="j-dig" style={{ transformOrigin: "120px 150px" }}>
-            <rect x="118" y="120" width="5" height="50" rx="2" fill="#451a03" transform="rotate(35 120 150)" />
+            <rect
+              x="118"
+              y="120"
+              width="5"
+              height="50"
+              rx="2"
+              fill="#451a03"
+              transform="rotate(35 120 150)"
+            />
           </g>
         </g>
         {/* Quy toc / tri thuc — ngam sao, cuon sach */}
         <g>
           <circle cx="290" cy="118" r="14" fill="#f3e8ff" />
           <path d="M276 130h28l-4 46h-20z" fill="#9333ea" />
-          <rect x="296" y="140" width="22" height="16" rx="2" fill="#facc15" className="j-bob" style={{ transformOrigin: "307px 148px" }} />
+          <rect
+            x="296"
+            y="140"
+            width="22"
+            height="16"
+            rx="2"
+            fill="#facc15"
+            className="j-bob"
+            style={{ transformOrigin: "307px 148px" }}
+          />
         </g>
         {/* Duong phan chia giai cap */}
-        <line x1="200" y1="90" x2="200" y2="200" stroke="#92400e" strokeWidth="2" strokeDasharray="5 6" />
+        <line
+          x1="200"
+          y1="90"
+          x2="200"
+          y2="200"
+          stroke="#92400e"
+          strokeWidth="2"
+          strokeDasharray="5 6"
+        />
       </svg>
     );
   }
 
   // synthesis — hai nhanh hoi tu ve tam
   return (
-    <svg viewBox="0 0 400 240" className={wrap} role="img" aria-label="Hai nguồn gốc hợp nhất tạo nên triết học">
+    <svg
+      viewBox="0 0 400 240"
+      className={wrap}
+      role="img"
+      aria-label="Hai nguồn gốc hợp nhất tạo nên triết học"
+    >
       <rect width="400" height="240" fill="#1e1b4b" />
-      <circle cx="200" cy="120" r="40" fill="#7c3aed" className="j-glow" style={{ transformOrigin: "200px 120px" }} />
-      <line x1="80" y1="60" x2="200" y2="120" stroke="#22d3ee" strokeWidth="3" className="j-draw" />
-      <line x1="320" y1="60" x2="200" y2="120" stroke="#e879f9" strokeWidth="3" className="j-draw" style={{ animationDelay: "0.4s" }} />
+      <circle
+        cx="200"
+        cy="120"
+        r="40"
+        fill="#7c3aed"
+        className="j-glow"
+        style={{ transformOrigin: "200px 120px" }}
+      />
+      <line
+        x1="80"
+        y1="60"
+        x2="200"
+        y2="120"
+        stroke="#22d3ee"
+        strokeWidth="3"
+        className="j-draw"
+      />
+      <line
+        x1="320"
+        y1="60"
+        x2="200"
+        y2="120"
+        stroke="#e879f9"
+        strokeWidth="3"
+        className="j-draw"
+        style={{ animationDelay: "0.4s" }}
+      />
       <circle cx="80" cy="60" r="18" fill="#0891b2" />
       <circle cx="320" cy="60" r="18" fill="#a21caf" />
     </svg>

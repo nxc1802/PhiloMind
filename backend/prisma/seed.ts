@@ -182,6 +182,39 @@ function extractLessonMedia(lessonFlow: any[], node: any) {
 }
 
 function buildOriginLessonFlow(node: any) {
+  const originCharacters = {
+    guide: {
+      name: "Sophia",
+      role: "Người dẫn truyện",
+      avatar: "guide",
+      color: "from-indigo-500 to-violet-600",
+    },
+    elder: {
+      name: "Già làng Kael",
+      role: "Trưởng bộ tộc",
+      avatar: "elder",
+      color: "from-amber-500 to-orange-600",
+    },
+    skeptic: {
+      name: "Lyra",
+      role: "Người hoài nghi trẻ",
+      avatar: "skeptic",
+      color: "from-cyan-500 to-blue-600",
+    },
+    slave: {
+      name: "Borin",
+      role: "Người lao động chân tay",
+      avatar: "slave",
+      color: "from-stone-500 to-stone-700",
+    },
+    noble: {
+      name: "Theon",
+      role: "Quý tộc / trí thức",
+      avatar: "noble",
+      color: "from-fuchsia-500 to-purple-600",
+    },
+  };
+
   return [
     {
       id: "origin-intro",
@@ -189,19 +222,11 @@ function buildOriginLessonFlow(node: any) {
       title: "Khởi hành",
       linkedMediaId: "origin-opening-video",
       config: {
-        isMilestone: true,
+        characters: originCharacters,
         lines: [
           {
             who: "guide",
-            text: "Chào mừng nhà du hành! Mình là Sophia, người sẽ đồng hành cùng bạn.",
-          },
-          {
-            who: "guide",
-            text: "Chúng ta vừa quay ngược kim đồng hồ về thế kỷ VIII - VI trước Công nguyên. Quanh ta, các nền văn minh lớn đang bừng nở: Hy Lạp, Ấn Độ, Trung Hoa.",
-          },
-          {
-            who: "guide",
-            text: "Nhiệm vụ của bạn: đi tìm một thứ vũ khí tư duy hoàn toàn mới có tên là TRIẾT HỌC. Để tìm thấy nó, ta phải vượt qua 2 thử thách đại diện cho 2 nguồn gốc khai sinh ra triết học.",
+            text: "Chào mừng nhà du hành! Mình là Sophia, người sẽ đồng hành cùng bạn. Chúng ta vừa quay ngược kim đồng hồ về thế kỷ VIII - VI trước Công nguyên, khi Hy Lạp, Ấn Độ và Trung Hoa đang bừng nở. Nhiệm vụ của bạn là tìm một vũ khí tư duy hoàn toàn mới mang tên TRIẾT HỌC qua 2 mảnh ghép: nguồn gốc nhận thức và nguồn gốc xã hội.",
           },
         ],
       },
@@ -213,6 +238,7 @@ function buildOriginLessonFlow(node: any) {
       title: "Giải mã sấm truyền",
       linkedMediaId: "cognitive-video",
       config: {
+        characters: originCharacters,
         lines: [
           {
             who: "elder",
@@ -259,14 +285,11 @@ function buildOriginLessonFlow(node: any) {
       title: "Bước ngoặt hoài nghi",
       linkedMediaId: "cognitive-video",
       config: {
+        characters: originCharacters,
         lines: [
           {
             who: "skeptic",
-            text: "Khoan đã! Năm ngoái chúng ta đã tế tới 10 con cừu cho thần linh... vậy mà năm nay động đất VẪN xảy ra. Lễ vật chẳng thay đổi được gì cả.",
-          },
-          {
-            who: "skeptic",
-            text: "Liệu có phải dưới lòng đất tồn tại một QUY LUẬT tự nhiên nào đó — không hề phụ thuộc vào tâm trạng của các vị thần?",
+            text: "Khoan đã! Năm ngoái chúng ta đã tế tới 10 con cừu cho thần linh, vậy mà năm nay động đất vẫn xảy ra. Lễ vật chẳng thay đổi được gì cả. Liệu có phải dưới lòng đất tồn tại một quy luật tự nhiên nào đó, không hề phụ thuộc vào tâm trạng của các vị thần?",
           },
         ],
       },
@@ -278,7 +301,6 @@ function buildOriginLessonFlow(node: any) {
       title: "Nhận thức",
       linkedMediaId: "cognitive-video",
       config: {
-        isMilestone: true,
         question:
           "Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?",
         options: [
@@ -301,19 +323,37 @@ function buildOriginLessonFlow(node: any) {
       completionRule: { type: "correct" },
     },
     {
+      id: "cognitive-piece",
+      type: "knowledge_piece",
+      title: "Đúc kết nguồn gốc nhận thức",
+      linkedMediaId: "cognitive-video",
+      config: {
+        pieceId: "cognitive",
+        label: "Nguồn gốc nhận thức",
+        shortLabel: "Nhận thức",
+        icon: "psychology",
+        color: "from-cyan-400 via-blue-500 to-primary-700",
+        summary:
+          "Triết học nảy mầm khi con người không chỉ tin vào huyền thoại, mà bắt đầu tìm quy luật và lý lẽ chung để giải thích thế giới.",
+        takeaways: [
+          "Nhu cầu hiểu biết thế giới là nhu cầu tự nhiên của con người.",
+          "Tư duy lý luận thay thế dần tư duy huyền thoại và tín ngưỡng nguyên thủy.",
+          "Khái quát hóa tri thức riêng lẻ tạo nên các khái niệm và phạm trù phổ quát.",
+        ],
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
       id: "social-setup",
       type: "dialogue",
       title: "Đại hội bộ tộc",
       linkedMediaId: "social-video",
       config: {
+        characters: originCharacters,
         lines: [
           {
             who: "guide",
-            text: "Bối cảnh: nhiều thế hệ trôi qua, con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành Chủ nô và Nô lệ.",
-          },
-          {
-            who: "guide",
-            text: "Để hiểu ai mới đủ điều kiện làm triết học, hãy thử sống MỘT NGÀY trong hai vai khác nhau nhé.",
+            text: "Bối cảnh: nhiều thế hệ trôi qua, con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành Chủ nô và Nô lệ. Để hiểu ai mới đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau nhé.",
           },
           {
             who: "slave",
@@ -326,6 +366,27 @@ function buildOriginLessonFlow(node: any) {
         ],
       },
       completionRule: { type: "viewed" },
+    },
+    {
+      id: "social-core-quiz",
+      type: "mcq",
+      title: "Xã hội",
+      linkedMediaId: "social-video",
+      config: {
+        question:
+          "Tại đại hội bộ tộc, câu hỏi lớn được đặt ra: NHÓM NÀO đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết và trở thành các 'Nhà thông thái'?",
+        options: [
+          {
+            text: "Tầng lớp lao động trí óc (quý tộc, trí thức).",
+            isCorrect: true,
+          },
+          { text: "Tầng lớp lao động chân tay (nô lệ).", isCorrect: false },
+          { text: "Cả hai nhóm đều như nhau.", isCorrect: false },
+        ],
+        explanation:
+          "Chỉ khi lao động trí óc TÁCH KHỎI lao động chân tay, tầng lớp trí thức mới xuất hiện và có điều kiện hệ thống hóa tri thức thành triết học.",
+      },
+      completionRule: { type: "correct" },
     },
     {
       id: "social-origin-chain",
@@ -363,26 +424,25 @@ function buildOriginLessonFlow(node: any) {
       completionRule: { type: "correct" },
     },
     {
-      id: "social-core-quiz",
-      type: "mcq",
-      title: "Xã hội",
+      id: "social-piece",
+      type: "knowledge_piece",
+      title: "Đúc kết nguồn gốc xã hội",
       linkedMediaId: "social-video",
       config: {
-        isMilestone: true,
-        question:
-          "Tại đại hội bộ tộc, câu hỏi lớn được đặt ra: NHÓM NÀO đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết và trở thành các 'Nhà thông thái'?",
-        options: [
-          {
-            text: "Tầng lớp lao động trí óc (quý tộc, trí thức).",
-            isCorrect: true,
-          },
-          { text: "Tầng lớp lao động chân tay (nô lệ).", isCorrect: false },
-          { text: "Cả hai nhóm đều như nhau.", isCorrect: false },
+        pieceId: "social",
+        label: "Nguồn gốc xã hội",
+        shortLabel: "Xã hội",
+        icon: "groups",
+        color: "from-fuchsia-400 via-purple-500 to-primary-700",
+        summary:
+          "Triết học chỉ có thể ra đời khi xã hội đạt tới trình độ phân công lao động, giai cấp và tầng lớp trí thức có điều kiện hệ thống hóa tri thức.",
+        takeaways: [
+          "Sản xuất phát triển tạo ra của cải dư thừa và tư hữu.",
+          "Xã hội phân chia giai cấp, lao động trí óc tách khỏi lao động chân tay.",
+          "Tầng lớp trí thức có thời gian, điều kiện và nhu cầu xây dựng học thuyết.",
         ],
-        explanation:
-          "Chỉ khi lao động trí óc TÁCH KHỎI lao động chân tay, tầng lớp trí thức mới xuất hiện và có điều kiện hệ thống hóa tri thức thành triết học.",
       },
-      completionRule: { type: "correct" },
+      completionRule: { type: "viewed" },
     },
     {
       id: "origin-union",

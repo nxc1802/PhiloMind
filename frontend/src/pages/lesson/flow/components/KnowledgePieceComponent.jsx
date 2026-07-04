@@ -1,96 +1,166 @@
-import React from "react";
-import { parseMarkdownToReact } from "../../components/MarkdownRenderer";
+import React, { useRef, useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
-import { ContinueButton } from "./ContinueButton";
 
-/**
- * KnowledgePieceComponent — "Đúc kết" / mảnh tri thức trọng tâm.
- *
- * Render một thẻ tri thức đúc kết cuối mỗi phần (nguồn gốc nhận thức,
- * nguồn gốc xã hội...). Đọc config linh hoạt vì dữ liệu có thể dùng nhiều
- * tên trường khác nhau giữa các bản seed:
- *   - Nội dung: content | text | body | summary | description
- *   - Ý chính:  points | keyPoints | takeaways | bullets | highlights
- *   - Nguồn:    source | citation
- */
+function Spark({ className = "" }) {
+  return (
+    <span
+      className={`pointer-events-none absolute h-2 w-2 rounded-full bg-amber-300 shadow-[0_0_18px_rgba(251,191,36,0.9)] ${className}`}
+    />
+  );
+}
+
 export function KnowledgePieceComponent({ component, onComplete }) {
-  const config = component.config || {};
+  const pieceRef = useRef(null);
+  const [flyer, setFlyer] = useState(null);
+  const [flying, setFlying] = useState(false);
+  const [collected, setCollected] = useState(false);
 
-  const heading = config.heading || config.title || component.title;
-  const content =
-    config.content ||
-    config.text ||
-    config.body ||
-    config.summary ||
-    config.description ||
-    "";
+  const {
+    pieceId = component.id,
+    label = component.title || "Mảnh ghép tri thức",
+    summary,
+    takeaways = [],
+    icon = "extension",
+    color = "from-amber-400 via-orange-500 to-primary-600",
+  } = component.config || {};
 
-  const rawPoints =
-    config.points ||
-    config.keyPoints ||
-    config.takeaways ||
-    config.bullets ||
-    config.highlights ||
-    [];
-  const points = Array.isArray(rawPoints)
-    ? rawPoints.map((p) => (typeof p === "string" ? p : p?.text || "")).filter(Boolean)
-    : [];
+  const complete = () => {
+    setCollected(true);
+    onComplete({
+      score: 100,
+      status: "completed",
+      pieceId,
+      pieceLabel: label,
+    });
+  };
 
-  const source = config.source || config.citation;
+  const collectPiece = () => {
+    if (collected || flying) return;
+
+    const source = pieceRef.current?.getBoundingClientRect();
+    const target = document
+      .querySelector(`[data-piece-target="true"][data-piece-id="${pieceId}"]`)
+      ?.getBoundingClientRect();
+
+    if (!source || !target) {
+      complete();
+      return;
+    }
+
+    setFlyer({
+      left: source.left,
+      top: source.top,
+      width: source.width,
+      height: source.height,
+      dx: target.left + target.width / 2 - (source.left + source.width / 2),
+      dy: target.top + target.height / 2 - (source.top + source.height / 2),
+      color,
+      icon,
+      label,
+    });
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setFlying(true));
+    });
+
+    window.setTimeout(() => {
+      setFlyer(null);
+      setFlying(false);
+      complete();
+    }, 950);
+  };
 
   return (
     <ComponentFrame component={component}>
-      <div className="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-sm dark:border-primary-850 dark:bg-[#102733]">
-        <div className="flex items-center gap-3 border-b border-primary-100 bg-gradient-to-r from-primary-50 via-white to-amber-50 px-5 py-4 dark:border-primary-850 dark:from-primary-950/70 dark:via-[#102733] dark:to-amber-950/25">
-          <span className="material-symbols-outlined flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-primary-650 shadow-sm dark:bg-primary-900/40 dark:text-primary-200">
-            auto_stories
-          </span>
-          <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
-              Mảnh tri thức
-            </p>
-            <p className="truncate text-sm font-semibold text-slate-650 dark:text-primary-150">
-              {heading || "Đúc kết nội dung trọng tâm"}
-            </p>
+      {flyer && (
+        <div
+          data-knowledge-piece-flyer="true"
+          data-piece-id={pieceId}
+          className="pointer-events-none fixed z-[120] flex items-center justify-center rounded-[2rem] border border-white/40 bg-white/10 p-2 shadow-2xl backdrop-blur"
+          style={{
+            left: flyer.left,
+            top: flyer.top,
+            width: flyer.width,
+            height: flyer.height,
+            opacity: flying ? 0.18 : 1,
+            transform: flying
+              ? `translate(${flyer.dx}px, ${flyer.dy}px) scale(0.18) rotate(18deg)`
+              : "translate(0, 0) scale(1) rotate(0deg)",
+            transition:
+              "transform 900ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 900ms ease",
+          }}
+        >
+          <div
+            className={`flex h-full w-full items-center justify-center rounded-[1.75rem] bg-gradient-to-br ${flyer.color} text-white`}
+          >
+            <span className="material-symbols-outlined text-5xl">
+              {flyer.icon}
+            </span>
           </div>
         </div>
+      )}
 
-        <div className="p-5">
-          {content ? (
-            <article className="prose max-w-none text-gray-800 prose-headings:text-primary-950 prose-p:leading-8 prose-li:leading-7 dark:text-primary-100 dark:prose-headings:text-primary-100">
-              {parseMarkdownToReact(content)}
-            </article>
-          ) : points.length === 0 ? (
-            <p className="text-slate-600 dark:text-primary-200">
-              Ghi nhớ ý chính của phần vừa học trước khi tiếp tục.
+      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-primary-50 p-5 text-slate-900 shadow-inner dark:border-amber-800/60 dark:from-amber-950/30 dark:via-[#102733] dark:to-primary-950/50 dark:text-primary-100">
+        <Spark className="right-8 top-8 animate-pulse" />
+        <Spark className="bottom-16 left-10 h-1.5 w-1.5 animate-ping" />
+        <Spark className="right-16 top-28 h-1.5 w-1.5 animate-pulse" />
+
+        <div className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
+          <div
+            ref={pieceRef}
+            className={`j-unlock relative flex h-36 w-36 items-center justify-center rounded-[2rem] bg-gradient-to-br ${color} text-white shadow-[0_24px_80px_rgba(245,158,11,0.35)]`}
+          >
+            <div className="absolute inset-3 rounded-[1.5rem] border border-white/35" />
+            <span className="material-symbols-outlined text-7xl">{icon}</span>
+          </div>
+
+          <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.22em] text-amber-600 dark:text-amber-300">
+            Mảnh ghép kiến thức
+          </p>
+          <h3 className="mt-2 text-2xl font-extrabold leading-tight text-primary-950 dark:text-primary-100">
+            {label}
+          </h3>
+          {summary && (
+            <p className="mt-3 max-w-md text-sm font-medium leading-6 text-slate-650 dark:text-primary-200">
+              {summary}
             </p>
-          ) : null}
-
-          {points.length > 0 && (
-            <ul className="mt-4 space-y-2">
-              {points.map((point, index) => (
-                <li
-                  key={index}
-                  className="flex min-w-0 items-start gap-2 rounded-2xl bg-slate-50 px-3 py-2 text-slate-800 dark:bg-primary-950/30 dark:text-primary-100"
-                >
-                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-base text-primary-600 dark:text-primary-300">
-                    check_circle
-                  </span>
-                  <span className="break-words text-sm leading-6">{point}</span>
-                </li>
-              ))}
-            </ul>
           )}
 
-          {source && (
-            <p className="mt-4 border-t border-slate-100 pt-3 text-xs italic text-slate-400 dark:border-primary-850 dark:text-primary-300">
-              Nguồn: {source}
-            </p>
+          {takeaways.length > 0 && (
+            <div className="mt-5 grid w-full gap-2 text-left">
+              {takeaways.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-2 rounded-2xl border border-white/70 bg-white/75 px-3 py-2 text-sm leading-6 shadow-sm dark:border-primary-850/60 dark:bg-primary-950/35"
+                >
+                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-base text-amber-600 dark:text-amber-300">
+                    auto_awesome
+                  </span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
           )}
         </div>
-      </div>
 
-      <ContinueButton onComplete={onComplete} label="Đã ghi nhớ, tiếp tục" />
+        <div className="relative z-10 mt-5 flex justify-end">
+          <button
+            type="button"
+            onClick={collectPiece}
+            disabled={flying || collected}
+            className="inline-flex items-center gap-2 rounded-3xl bg-primary-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:bg-primary-700 disabled:cursor-wait disabled:opacity-70"
+          >
+            {collected
+              ? "Đã thu thập"
+              : flying
+                ? "Đang thu thập..."
+                : "Thu thập mảnh ghép"}
+            <span className="material-symbols-outlined text-base">
+              arrow_forward
+            </span>
+          </button>
+        </div>
+      </div>
     </ComponentFrame>
   );
 }

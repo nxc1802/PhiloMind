@@ -5,6 +5,7 @@ alter table "Chapter"
 
 alter table "ConceptNode"
   add column if not exists "lessonFlow" jsonb,
+  add column if not exists "lessonMedia" jsonb,
   add column if not exists "lessonType" text not null default 'flow',
   add column if not exists "contentReady" boolean not null default false,
   add column if not exists "lessonStatus" text not null default 'draft';
@@ -38,21 +39,19 @@ declare
     {"id":"draft-note","type":"markdown","title":"Bài học đang biên soạn","config":{"content":"Nội dung tương tác của bài này chưa được seed. Bài sẽ hiển thị khóa nội dung cho đến khi được publish."},"completionRule":{"type":"viewed"}}
   ]$json$::jsonb;
   origin_flow jsonb := $json$[
-    {"id":"origin-video","type":"media","title":"Video giới thiệu","config":{"mediaType":"video","url":"https://www.youtube.com/watch?v=k_jbTWq-u50","title":"Triết học ra đời trong bước ngoặt tư duy của nhân loại"},"completionRule":{"type":"viewed"}},
-    {"id":"origin-intro","type":"dialogue","title":"Nhiệm vụ khai sáng","linkedMediaId":"origin-video","navigation_config":{"showInProgress":false},"config":{"lines":[{"who":"guide","text":"Chào mừng nhà du hành! Mình là Sophia, người sẽ đồng hành cùng bạn."},{"who":"guide","text":"Chúng ta vừa quay ngược kim đồng hồ về thế kỷ VIII - VI trước Công nguyên. Hy Lạp, Ấn Độ, Trung Hoa đang bừng nở."},{"who":"guide","text":"Nhiệm vụ của bạn là tìm vũ khí tư duy có tên TRIẾT HỌC qua hai mảnh ghép: nguồn gốc nhận thức và nguồn gốc xã hội."}]},"completionRule":{"type":"viewed"}},
-    {"id":"cognitive-video","type":"media","title":"Giải mã sấm truyền","config":{"mediaType":"video","url":"https://www.youtube.com/watch?v=1VwbmgMTbkk","title":"Bối cảnh thảm họa thiên nhiên cổ đại","subtitle":"Động đất, mưa giông và cách con người cổ đại lý giải tự nhiên"},"completionRule":{"type":"viewed"}},
-    {"id":"cognitive-scene","type":"dialogue","title":"Hội đồng bộ tộc","linkedMediaId":"cognitive-video","navigation_config":{"showInProgress":false},"config":{"lines":[{"who":"elder","text":"Tai họa này từ đâu mà ra?! Hỡi người trẻ kia, hãy giải thích cho cả bộ tộc!"},{"who":"guide","text":"Hãy quên kiến thức hiện đại đi, đặt mình vào tâm trí người cổ đại. Bạn sẽ giải thích thế nào?"}]},"completionRule":{"type":"viewed"}},
-    {"id":"lyra-doubt","type":"dialogue","title":"Bước ngoặt hoài nghi","linkedMediaId":"cognitive-video","navigation_config":{"showInProgress":false},"config":{"lines":[{"who":"skeptic","text":"Khoan đã! Năm ngoái chúng ta đã tế rất nhiều lễ vật, vậy mà năm nay động đất vẫn xảy ra."},{"who":"skeptic","text":"Liệu có quy luật tự nhiên nào dưới lòng đất, không phụ thuộc vào tâm trạng của các vị thần?"}]},"completionRule":{"type":"viewed"}},
-    {"id":"cognitive-origin-quiz","type":"quiz_sequence","title":"Nguồn gốc nhận thức: chuỗi câu hỏi","linkedMediaId":"cognitive-video","navigation_config":{"showInProgress":false},"config":{"questions":[{"question":"Theo lối tư duy cổ đại, trận động đất thường được giải thích theo cách nào?","options":["Ý chí thần linh hoặc lực lượng siêu nhiên đang chi phối tự nhiên.","Một mô hình địa chất hiện đại đã được đo đạc đầy đủ.","Một hiện tượng không cần nguyên nhân."],"correctIndex":0,"explanation":"Tư duy huyền thoại quy hiện tượng tự nhiên về thần linh hoặc lực lượng siêu nhiên."},{"question":"Nếu nguyên nhân là ý chí thần linh, giải pháp hợp logic với tư duy đó là gì?","options":["Tổ chức tế lễ, cúng bái để xoa dịu thần linh.","Đo đạc địa chất và xây dựng giả thuyết khoa học.","Tìm quy luật tự nhiên bằng khái niệm và lý lẽ."],"correctIndex":0,"explanation":"Khi nguyên nhân được đặt vào lực lượng siêu nhiên, giải pháp thường là nghi lễ."},{"question":"Câu hỏi của Lyra hé lộ điều gì đang bắt đầu thay đổi?","options":["Con người bắt đầu tìm quy luật và lý lẽ để giải thích thế giới.","Con người quyết định tế lễ nhiều hơn nữa.","Con người từ bỏ việc tìm hiểu thế giới."],"correctIndex":0,"explanation":"Đây là lúc tư duy lý luận, tức triết học, bắt đầu nảy mầm."}]},"completionRule":{"type":"correct"}},
-    {"id":"cognitive-summary","type":"mindmap_reveal","title":"Bốn bước tiến hóa nhận thức","config":{"center":"Nguồn gốc nhận thức","nodes":[{"id":"need","label":"Nhu cầu tự nhiên","detail":"Nhận thức thế giới là nhu cầu tự nhiên để sinh tồn."},{"id":"myth","label":"Tư duy huyền thoại","detail":"Thần thoại và tín ngưỡng là loại hình triết lý đầu tiên."},{"id":"abstraction","label":"Tư duy trừu tượng","detail":"Con người biết khái quát tri thức riêng lẻ thành cái chung."},{"id":"philosophy","label":"Triết học ra đời","detail":"Triết học thay thế huyền thoại bằng khái niệm, phạm trù, quy luật."}]},"completionRule":{"type":"viewed"}},
-    {"id":"social-video","type":"media","title":"Đại hội bộ tộc","config":{"mediaType":"video","url":"https://www.youtube.com/watch?v=JNutDwj92is","title":"Bối cảnh biến đổi xã hội","subtitle":"Phân công lao động, của cải dư thừa và phân chia giai cấp"},"completionRule":{"type":"viewed"}},
-    {"id":"social-setup","type":"dialogue","title":"Một ngày trong xã hội cổ đại","linkedMediaId":"social-video","navigation_config":{"showInProgress":false},"config":{"lines":[{"who":"guide","text":"Con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành chủ nô và nô lệ."},{"who":"guide","text":"Để hiểu ai đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau."}]},"completionRule":{"type":"viewed"}},
-    {"id":"social-condition-quiz","type":"quiz_sequence","title":"Nguồn gốc xã hội: trải nghiệm vai","linkedMediaId":"social-video","navigation_config":{"showInProgress":false},"config":{"questions":[{"question":"Borin lao động kiệt sức cả ngày. Cuối ngày, Borin có điều kiện suy ngẫm nguồn gốc vũ trụ không?","options":["Không. Borin chỉ kịp ăn vội rồi ngủ để mai lại lao động.","Có. Borin thức trắng đêm để viết học thuyết triết học."],"correctIndex":0,"explanation":"Lao động chân tay và nỗi lo sinh tồn không để lại điều kiện nghiên cứu lý luận."},{"question":"Theon có của cải dư thừa, không phải lao động chân tay. Với điều kiện ấy, Theon có thể làm gì?","options":["Quan sát, suy ngẫm và hệ thống hóa tri thức thành học thuyết.","Cũng chẳng làm được gì vì quá bận đi cày."],"correctIndex":0,"explanation":"Tầng lớp trí óc có thời gian và điều kiện nghiên cứu lý luận."},{"question":"Nhóm nào đủ điều kiện hệ thống hóa tri thức thành học thuyết?","options":["Tầng lớp lao động trí óc: quý tộc, trí thức.","Tầng lớp lao động chân tay: nô lệ.","Cả hai nhóm đều như nhau."],"correctIndex":0,"explanation":"Khi lao động trí óc tách khỏi lao động chân tay, tầng lớp trí thức có điều kiện tạo lập triết học."}]},"completionRule":{"type":"correct"}},
-    {"id":"social-warning","type":"markdown","title":"Ghi nhớ về nguồn gốc xã hội","config":{"content":"Triết học không thể ra đời trong một xã hội mông muội. Nó cần trình độ sản xuất tương đối cao, phân công lao động, giai cấp, nhà nước và tầng lớp trí thức có điều kiện hệ thống hóa tri thức."},"completionRule":{"type":"viewed"}},
-    {"id":"origin-social","type":"sequence_sorting","title":"Chuỗi nhân quả xã hội","config":{"instruction":"Chọn theo đúng thứ tự hình thành điều kiện xã hội của triết học.","items":[{"id":"c1","order":0,"text":"Sản xuất phát triển, của cải dư thừa và tư hữu hình thành."},{"id":"c2","order":1,"text":"Xã hội phân chia giai cấp."},{"id":"c3","order":2,"text":"Lao động trí óc tách khỏi lao động chân tay."},{"id":"c4","order":3,"text":"Tầng lớp trí thức hệ thống hóa tri thức thành triết học."}],"successFeedback":"Chuỗi nhân quả đã sáng lên. Đây là nguồn gốc xã hội của triết học."},"completionRule":{"type":"correct"}},
-    {"id":"origin-union","type":"mindmap_reveal","title":"Hợp nhất hai mảnh ghép","config":{"center":"Triết học ra đời","nodes":[{"id":"cognitive","label":"Nguồn gốc nhận thức","detail":"Nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng."},{"id":"social","label":"Nguồn gốc xã hội","detail":"Phân công lao động, giai cấp và tầng lớp trí thức."}]},"completionRule":{"type":"viewed"}},
-    {"id":"origin-final-quiz","type":"quiz_sequence","title":"Kiểm tra cuối bài","config":{"questions":[{"question":"Triết học ra đời vào khoảng thời gian nào?","options":["Thế kỷ XV - XVI sau CN","Thế kỷ VIII - VI trước CN","Thế kỷ I sau CN","Thời kỳ đồ đá cũ"],"correctIndex":1,"explanation":"Triết học ra đời khoảng thế kỷ VIII - VI trước Công nguyên."},{"question":"Triết học có mấy nguồn gốc cơ bản?","options":["Một: nguồn gốc thần thánh","Hai: nhận thức và xã hội","Ba: kinh tế, chính trị, văn hóa","Không có nguồn gốc xác định"],"correctIndex":1,"explanation":"Triết học có hai nguồn gốc cơ bản: nhận thức và xã hội."},{"question":"Điều kiện xã hội nào là tiền đề cho triết học ra đời?","options":["Xã hội mông muội, chưa phân hóa","Phân công lao động, giai cấp xuất hiện, lao động trí óc tách khỏi lao động chân tay","Mọi người đều làm nông nghiệp như nhau","Xã hội không có của cải dư thừa"],"correctIndex":1,"explanation":"Triết học ra đời khi xã hội có phân công lao động, giai cấp và tầng lớp trí thức."}]},"completionRule":{"type":"correct"}},
-    {"id":"origin-final","type":"final_summary","title":"Hoàn thành bài học","config":{"message":"Triết học xuất hiện khoảng thế kỷ VIII-VI TCN từ nguồn gốc nhận thức và nguồn gốc xã hội.","keyTakeaways":["Nguồn gốc nhận thức: nhu cầu hiểu biết và tư duy trừu tượng.","Nguồn gốc xã hội: phân công lao động, giai cấp và tầng lớp trí thức."],"rewards":{"xp":120,"badge":"Nhà Khai Sáng"}},"completionRule":{"type":"viewed"}}
+    {"id":"origin-intro","type":"dialogue","title":"Khởi hành","linkedMediaId":"origin-opening-video","config":{"characters":{"guide":{"name":"Sophia","role":"Người dẫn truyện","avatar":"guide","color":"from-indigo-500 to-violet-600"},"elder":{"name":"Già làng Kael","role":"Trưởng bộ tộc","avatar":"elder","color":"from-amber-500 to-orange-600"},"skeptic":{"name":"Lyra","role":"Người hoài nghi trẻ","avatar":"skeptic","color":"from-cyan-500 to-blue-600"},"slave":{"name":"Borin","role":"Người lao động chân tay","avatar":"slave","color":"from-stone-500 to-stone-700"},"noble":{"name":"Theon","role":"Quý tộc / trí thức","avatar":"noble","color":"from-fuchsia-500 to-purple-600"}},"lines":[{"who":"guide","text":"Chào mừng nhà du hành! Mình là Sophia, người sẽ đồng hành cùng bạn. Chúng ta vừa quay ngược kim đồng hồ về thế kỷ VIII - VI trước Công nguyên, khi Hy Lạp, Ấn Độ và Trung Hoa đang bừng nở. Nhiệm vụ của bạn là tìm một vũ khí tư duy hoàn toàn mới mang tên TRIẾT HỌC qua 2 mảnh ghép: nguồn gốc nhận thức và nguồn gốc xã hội."}]},"completionRule":{"type":"viewed"}},
+    {"id":"cognitive-scene","type":"dialogue","title":"Giải mã sấm truyền","linkedMediaId":"cognitive-video","config":{"characters":{"guide":{"name":"Sophia","role":"Người dẫn truyện","avatar":"guide","color":"from-indigo-500 to-violet-600"},"elder":{"name":"Già làng Kael","role":"Trưởng bộ tộc","avatar":"elder","color":"from-amber-500 to-orange-600"},"skeptic":{"name":"Lyra","role":"Người hoài nghi trẻ","avatar":"skeptic","color":"from-cyan-500 to-blue-600"},"slave":{"name":"Borin","role":"Người lao động chân tay","avatar":"slave","color":"from-stone-500 to-stone-700"},"noble":{"name":"Theon","role":"Quý tộc / trí thức","avatar":"noble","color":"from-fuchsia-500 to-purple-600"}},"lines":[{"who":"elder","text":"Tai họa này từ đâu mà ra?! Hỡi người trẻ kia, hãy giải thích cho cả bộ tộc!"},{"who":"guide","text":"Bạn vừa chứng kiến tất cả. Hãy quên kiến thức hiện đại đi, đặt mình vào tâm trí người cổ đại. Bạn sẽ giải thích thế nào?"}]},"completionRule":{"type":"viewed"}},
+    {"id":"cognitive-myth-quiz","type":"mcq","title":"Tư duy huyền thoại","linkedMediaId":"cognitive-video","config":{"question":"Bạn là một thành viên trong bộ tộc cổ đại. Theo lối tư duy thời ấy, bạn giải thích trận động đất này thế nào?","options":[{"text":"Thần Biển Poseidon nổi giận và rung chuyển mặt đất.","isCorrect":true},{"text":"Bộ tộc đã làm điều gì xúc phạm thần linh nên bị trừng phạt.","isCorrect":true},{"text":"Linh hồn lòng đất đang giận dữ đòi vật tế.","isCorrect":true}],"explanation":"Dù chọn cách nào, tất cả đều có điểm chung: con người thời ấy giải thích thế giới bằng THẦN THOẠI và TÍN NGƯỠNG. Đây chính là hình thức 'triết lý' đầu tiên của loài người."},"completionRule":{"type":"correct"}},
+    {"id":"lyra-doubt","type":"dialogue","title":"Bước ngoặt hoài nghi","linkedMediaId":"cognitive-video","config":{"characters":{"guide":{"name":"Sophia","role":"Người dẫn truyện","avatar":"guide","color":"from-indigo-500 to-violet-600"},"elder":{"name":"Già làng Kael","role":"Trưởng bộ tộc","avatar":"elder","color":"from-amber-500 to-orange-600"},"skeptic":{"name":"Lyra","role":"Người hoài nghi trẻ","avatar":"skeptic","color":"from-cyan-500 to-blue-600"},"slave":{"name":"Borin","role":"Người lao động chân tay","avatar":"slave","color":"from-stone-500 to-stone-700"},"noble":{"name":"Theon","role":"Quý tộc / trí thức","avatar":"noble","color":"from-fuchsia-500 to-purple-600"}},"lines":[{"who":"skeptic","text":"Khoan đã! Năm ngoái chúng ta đã tế tới 10 con cừu cho thần linh, vậy mà năm nay động đất vẫn xảy ra. Lễ vật chẳng thay đổi được gì cả. Liệu có phải dưới lòng đất tồn tại một quy luật tự nhiên nào đó, không hề phụ thuộc vào tâm trạng của các vị thần?"}]},"completionRule":{"type":"viewed"}},
+    {"id":"cognitive-shift-quiz","type":"mcq","title":"Nhận thức","linkedMediaId":"cognitive-video","config":{"question":"Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?","options":[{"text":"Con người bắt đầu đi tìm quy luật, lý lẽ để giải thích thế giới — thay cho thần thánh.","isCorrect":true},{"text":"Con người quyết định tế lễ nhiều hơn nữa cho chắc chắn.","isCorrect":false},{"text":"Con người từ bỏ hoàn toàn việc tìm hiểu thế giới.","isCorrect":false}],"explanation":"Chính xác! Khoảnh khắc con người ngờ vực thần thoại và đi tìm QUY LUẬT bằng lý lẽ — đó là lúc tư duy lý luận, tức TRIẾT HỌC, bắt đầu nảy mầm."},"completionRule":{"type":"correct"}},
+    {"id":"cognitive-piece","type":"knowledge_piece","title":"Đúc kết nguồn gốc nhận thức","linkedMediaId":"cognitive-video","config":{"pieceId":"cognitive","label":"Nguồn gốc nhận thức","shortLabel":"Nhận thức","icon":"psychology","color":"from-cyan-400 via-blue-500 to-primary-700","summary":"Triết học nảy mầm khi con người không chỉ tin vào huyền thoại, mà bắt đầu tìm quy luật và lý lẽ chung để giải thích thế giới.","takeaways":["Nhu cầu hiểu biết thế giới là nhu cầu tự nhiên của con người.","Tư duy lý luận thay thế dần tư duy huyền thoại và tín ngưỡng nguyên thủy.","Khái quát hóa tri thức riêng lẻ tạo nên các khái niệm và phạm trù phổ quát."]},"completionRule":{"type":"viewed"}},
+    {"id":"social-setup","type":"dialogue","title":"Đại hội bộ tộc","linkedMediaId":"social-video","config":{"characters":{"guide":{"name":"Sophia","role":"Người dẫn truyện","avatar":"guide","color":"from-indigo-500 to-violet-600"},"elder":{"name":"Già làng Kael","role":"Trưởng bộ tộc","avatar":"elder","color":"from-amber-500 to-orange-600"},"skeptic":{"name":"Lyra","role":"Người hoài nghi trẻ","avatar":"skeptic","color":"from-cyan-500 to-blue-600"},"slave":{"name":"Borin","role":"Người lao động chân tay","avatar":"slave","color":"from-stone-500 to-stone-700"},"noble":{"name":"Theon","role":"Quý tộc / trí thức","avatar":"noble","color":"from-fuchsia-500 to-purple-600"}},"lines":[{"who":"guide","text":"Bối cảnh: nhiều thế hệ trôi qua, con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành Chủ nô và Nô lệ. Để hiểu ai mới đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau nhé."},{"who":"slave","text":"Trời chưa sáng, tôi đã phải ra đồng cày cuốc, vác đá xây tháp tới kiệt sức. Cuối ngày, kiệt quệ vì lo từng bữa ăn — lấy đâu ra thời gian và sức lực để ngồi suy ngẫm về nguồn gốc vũ trụ?"},{"who":"noble","text":"Tôi có của cải dư thừa, không phải lao động chân tay. Chiều đến, tôi thong dong ngắm sao trời và đàm đạo cùng bạn hữu. Tôi có đủ điều kiện để quan sát và hệ thống hóa tri thức."}]},"completionRule":{"type":"viewed"}},
+    {"id":"social-core-quiz","type":"mcq","title":"Xã hội","linkedMediaId":"social-video","config":{"question":"Tại đại hội bộ tộc, câu hỏi lớn được đặt ra: NHÓM NÀO đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết và trở thành các 'Nhà thông thái'?","options":[{"text":"Tầng lớp lao động trí óc (quý tộc, trí thức).","isCorrect":true},{"text":"Tầng lớp lao động chân tay (nô lệ).","isCorrect":false},{"text":"Cả hai nhóm đều như nhau.","isCorrect":false}],"explanation":"Chỉ khi lao động trí óc TÁCH KHỎI lao động chân tay, tầng lớp trí thức mới xuất hiện và có điều kiện hệ thống hóa tri thức thành triết học."},"completionRule":{"type":"correct"}},
+    {"id":"social-origin-chain","type":"chain_sorting","title":"Lắp ráp chuỗi nhân quả","linkedMediaId":"social-video","config":{"instruction":"Chọn các mắt xích theo ĐÚNG thứ tự nhân quả hình thành điều kiện xã hội của triết học.","items":[{"id":"c1","order":0,"text":"Sản xuất phát triển, chế độ tư hữu hình thành, của cải dư thừa."},{"id":"c2","order":1,"text":"Xã hội phân chia giai cấp (chế độ chiếm hữu nô lệ)."},{"id":"c3","order":2,"text":"Lao động trí óc tách khỏi lao động chân tay."},{"id":"c4","order":3,"text":"Tầng lớp trí thức xuất hiện và hệ thống hóa tri thức thành triết học."}],"successFeedback":"Chuỗi nhân quả đã sáng lên! Đây chính là NGUỒN GỐC XÃ HỘI của triết học."},"completionRule":{"type":"correct"}},
+    {"id":"social-piece","type":"knowledge_piece","title":"Đúc kết nguồn gốc xã hội","linkedMediaId":"social-video","config":{"pieceId":"social","label":"Nguồn gốc xã hội","shortLabel":"Xã hội","icon":"groups","color":"from-fuchsia-400 via-purple-500 to-primary-700","summary":"Triết học chỉ có thể ra đời khi xã hội đạt tới trình độ phân công lao động, giai cấp và tầng lớp trí thức có điều kiện hệ thống hóa tri thức.","takeaways":["Sản xuất phát triển tạo ra của cải dư thừa và tư hữu.","Xã hội phân chia giai cấp, lao động trí óc tách khỏi lao động chân tay.","Tầng lớp trí thức có thời gian, điều kiện và nhu cầu xây dựng học thuyết."]},"completionRule":{"type":"viewed"}},
+    {"id":"origin-union","type":"mindmap_reveal","title":"Hợp nhất tri thức","config":{"center":"Triết học ra đời","nodes":[{"id":"cognitive","label":"Nguồn gốc nhận thức","detail":"Nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng làm nảy sinh tư duy lý luận."},{"id":"social","label":"Nguồn gốc xã hội","detail":"Phân công lao động, giai cấp và tầng lớp trí thức tạo điều kiện xã hội cho triết học ra đời."}],"summary":"Triết học không từ trên trời rơi xuống. Nó nảy sinh từ nhu cầu hiểu biết của con người và những điều kiện xã hội chín muồi."},"completionRule":{"type":"viewed"}},
+    {"id":"origin-final-quiz","type":"quiz_sequence","title":"Kiểm tra cuối bài","config":{"questions":[{"question":"Triết học ra đời vào khoảng thời gian nào?","options":["Thế kỷ XV - XVI sau CN","Thế kỷ VIII - VI trước CN","Thế kỷ I sau CN","Thời kỳ đồ đá cũ"],"correctIndex":1,"explanation":"Triết học ra đời khoảng thế kỷ VIII - VI trước Công nguyên tại các trung tâm văn minh lớn."},{"question":"Triết học có mấy nguồn gốc cơ bản?","options":["Một: nguồn gốc thần thánh","Hai: nhận thức và xã hội","Ba: kinh tế, chính trị, văn hóa","Không có nguồn gốc xác định"],"correctIndex":1,"explanation":"Triết học có hai nguồn gốc cơ bản: nguồn gốc nhận thức và nguồn gốc xã hội."},{"question":"Về nguồn gốc nhận thức, triết học là hình thức tư duy thay thế cho cái gì?","options":["Thay thế khoa học tự nhiên","Thay thế tư duy huyền thoại và tôn giáo","Thay thế lao động chân tay","Thay thế nghệ thuật"],"correctIndex":1,"explanation":"Triết học thay thế tư duy huyền thoại và tôn giáo bằng tư duy lý luận."},{"question":"Điều kiện xã hội nào là tiền đề cho triết học ra đời?","options":["Xã hội mông muội, chưa phân hóa","Phân công lao động, giai cấp xuất hiện, lao động trí óc tách khỏi lao động chân tay","Mọi người đều làm nông nghiệp như nhau","Xã hội không có của cải dư thừa"],"correctIndex":1,"explanation":"Triết học ra đời khi xã hội có phân công lao động, giai cấp và tầng lớp trí thức."},{"question":"Vì sao tầng lớp trí thức có vai trò sáng tạo triết học?","options":["Vì họ khỏe mạnh hơn","Vì họ có thời gian, điều kiện và nhu cầu nghiên cứu, hệ thống hóa tri thức","Vì họ được thần linh ban cho","Vì họ làm nhiều việc chân tay hơn"],"correctIndex":1,"explanation":"Tầng lớp trí thức có điều kiện và năng lực hệ thống hóa quan niệm thành học thuyết, lý luận."}]},"completionRule":{"type":"correct"}},
+    {"id":"origin-final","type":"final_summary","title":"Nhà Khai Sáng","config":{"message":"Bạn đã hoàn thành Hành trình Khai Sáng và nắm được trọn vẹn hai nguồn gốc của triết học. Tri thức là ngọn đuốc — hãy tiếp tục thắp sáng!","keyTakeaways":["Nguồn gốc nhận thức: nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng.","Nguồn gốc xã hội: phân công lao động, giai cấp và tầng lớp trí thức.","Triết học ra đời khoảng thế kỷ VIII - VI TCN ở cả phương Đông và phương Tây.","Triết học là hình thức tư duy lý luận đầu tiên thay thế tư duy huyền thoại và tôn giáo."],"rewards":{"xp":120,"badge":"Nhà Khai Sáng"}},"completionRule":{"type":"viewed"}}
   ]$json$::jsonb;
   concept_flow jsonb := $json$[
     {"id":"ancient-origin-map","type":"target_matching","title":"Nguồn gốc thuật ngữ triết học","config":{"targets":[{"id":"china","label":"Trung Quốc","icon":"temple_buddhist"},{"id":"india","label":"Ấn Độ","icon":"water"},{"id":"greece","label":"Hy Lạp","icon":"account_balance"}],"items":[{"id":"zhe","text":"哲","targetId":"china"},{"id":"darsana","text":"Dar'sana","targetId":"india"},{"id":"philosophia","text":"φιλοσοφία","targetId":"greece"}],"summary":"Triết học xuất hiện ở nhiều trung tâm văn minh lớn."},"completionRule":{"type":"correct"}},
@@ -149,37 +148,62 @@ begin
   select
     gen_random_uuid()::text, title, summary, original_text, quick_take,
     difficulty, time_to_read, video_url, order_index, chapter_id, lesson_flow,
-    coalesce(
-      (
-        select jsonb_agg(
-          jsonb_build_object(
-            'id', elem->>'id',
-            'type', coalesce(elem->'config'->>'mediaType', 'video'),
-            'url', elem->'config'->>'url',
-            'title', coalesce(elem->'config'->>'title', elem->>'title', title),
-            'subtitle', coalesce(elem->'config'->>'subtitle', quick_take),
-            'alt', elem->'config'->>'alt',
-            'description', elem->'config'->>'description',
-            'badge', elem->'config'->>'badge'
-          )
+    case
+      when title = 'Nguồn gốc của triết học' then jsonb_build_array(
+        jsonb_build_object(
+          'id', 'origin-opening-video',
+          'type', 'video',
+          'url', 'https://www.youtube.com/watch?v=k_jbTWq-u50',
+          'title', 'Triết học ra đời trong bước ngoặt tư duy của nhân loại',
+          'subtitle', 'Thế kỷ VIII - VI TCN'
+        ),
+        jsonb_build_object(
+          'id', 'cognitive-video',
+          'type', 'video',
+          'url', 'https://www.youtube.com/watch?v=1VwbmgMTbkk',
+          'title', 'Bối cảnh thảm họa thiên nhiên cổ đại',
+          'subtitle', 'Động đất và cách con người cổ đại lý giải tự nhiên'
+        ),
+        jsonb_build_object(
+          'id', 'social-video',
+          'type', 'video',
+          'url', 'https://www.youtube.com/watch?v=JNutDwj92is',
+          'title', 'Bối cảnh biến đổi xã hội',
+          'subtitle', 'Phân công lao động, của cải dư thừa và phân chia giai cấp'
         )
-        from jsonb_array_elements(lesson_flow) elem
-        where elem->>'type' = 'media'
-          and elem->'config'->>'url' is not null
-      ),
-      case
-        when video_url is not null then jsonb_build_array(
-          jsonb_build_object(
-            'id', 'lesson-video',
-            'type', 'video',
-            'url', video_url,
-            'title', title,
-            'subtitle', quick_take
+      )
+      else coalesce(
+        (
+          select jsonb_agg(
+            jsonb_build_object(
+              'id', elem->>'id',
+              'type', coalesce(elem->'config'->>'mediaType', 'video'),
+              'url', elem->'config'->>'url',
+              'title', coalesce(elem->'config'->>'title', elem->>'title', title),
+              'subtitle', coalesce(elem->'config'->>'subtitle', quick_take),
+              'alt', elem->'config'->>'alt',
+              'description', elem->'config'->>'description',
+              'badge', elem->'config'->>'badge'
+            )
           )
-        )
-        else '[]'::jsonb
-      end
-    ),
+          from jsonb_array_elements(lesson_flow) elem
+          where elem->>'type' = 'media'
+            and elem->'config'->>'url' is not null
+        ),
+        case
+          when video_url is not null then jsonb_build_array(
+            jsonb_build_object(
+              'id', 'lesson-video',
+              'type', 'video',
+              'url', video_url,
+              'title', title,
+              'subtitle', quick_take
+            )
+          )
+          else '[]'::jsonb
+        end
+      )
+    end,
     'flow', content_ready, lesson_status
   from _lesson_seed;
 

@@ -9,6 +9,7 @@ export function DialogueComponent({ component, onComplete }) {
       sourceLines.map((line) => ({
         who: line.who || "guide",
         text: line.text,
+        side: line.side,
       })),
     [sourceLines],
   );
@@ -17,6 +18,7 @@ export function DialogueComponent({ component, onComplete }) {
       <div className="flex flex-col flex-1 min-h-0">
         <DialogueSequence
           lines={lines}
+          characters={component.config.characters}
           onComplete={() => onComplete({ score: 100, status: "completed" })}
           ctaLabel="Tiếp tục"
         />

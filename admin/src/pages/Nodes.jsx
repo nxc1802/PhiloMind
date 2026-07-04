@@ -2008,6 +2008,22 @@ function FrameworkAdminPanel({ form, setForm }) {
         completionRule: { type: "correct" },
       },
       {
+        id: "knowledge-piece",
+        type: "knowledge_piece",
+        title: "Mảnh ghép kiến thức",
+        config: {
+          pieceId: "main-piece",
+          label: "Mảnh ghép trọng tâm",
+          shortLabel: "Trọng tâm",
+          summary: form.quickTake || "Đúc kết kiến thức quan trọng của bài.",
+          takeaways: [
+            form.summary || "Nắm được luận điểm trung tâm của bài học.",
+          ],
+          icon: "extension",
+        },
+        completionRule: { type: "viewed" },
+      },
+      {
         id: "final-summary",
         type: "final_summary",
         title: "Đúc kết",
@@ -2155,7 +2171,8 @@ function FrameworkAdminPanel({ form, setForm }) {
           Mỗi phần tử cần có `id`, `type`, `config`. Các type hiện hỗ trợ:
           dialogue, media, markdown, target_matching, category_sorting,
           mindmap_reveal, mcq, quiz_sequence, multi_select, matching_columns,
-          true_false, sequence_sorting, final_summary.
+          true_false, sequence_sorting, chain_sorting, knowledge_piece,
+          final_summary.
         </p>
         <div className="rounded-xl border border-slate-800 bg-slate-950 p-3 space-y-2">
           <div className="flex items-center justify-between gap-3 flex-wrap">

@@ -46,7 +46,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
 
   return (
     <ComponentFrame component={component}>
-      <div className="mb-5 overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-amber-50 p-5 dark:border-primary-850 dark:from-primary-950/60 dark:via-[#102733] dark:to-amber-950/25">
+      <div className="mb-5 shrink-0 overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-amber-50 p-5 dark:border-primary-850 dark:from-primary-950/60 dark:via-[#102733] dark:to-amber-950/25">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <span className="material-symbols-outlined flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-primary-600 text-3xl text-white shadow-lg">
@@ -85,7 +85,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
         </div>
       </div>
 
-      <div className="relative space-y-3">
+      <div className="relative flex min-w-0 flex-col gap-3 pb-1">
         <div className="absolute bottom-4 left-[1.35rem] top-4 hidden w-px bg-primary-150 dark:bg-primary-850 sm:block" />
         {nodes.map((node, index) => {
           const open = revealed.includes(node.id);
@@ -100,7 +100,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
               key={node.id}
               type="button"
               onClick={() => handleReveal(node.id)}
-              className={`relative flex w-full min-w-0 items-start gap-3 rounded-3xl border p-4 text-left transition-all ${
+              className={`relative flex w-full min-w-0 shrink-0 items-start gap-3 rounded-3xl border p-4 text-left transition-all ${
                 open
                   ? "border-primary-250 bg-white shadow-sm dark:border-primary-800 dark:bg-[#132d39]"
                   : "border-dashed border-slate-250 bg-slate-50 hover:border-primary-300 hover:bg-white dark:border-primary-850 dark:bg-primary-950/25 dark:hover:bg-[#132d39]"
@@ -138,7 +138,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
                         className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-sm"
                       />
                     )}
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p className="break-words text-lg font-extrabold leading-snug text-primary-900 dark:text-primary-100">
                         {backText}
                       </p>
@@ -187,7 +187,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
       )}
 
       {complete && (
-        <div className="mt-6 rounded-3xl border border-green-200 bg-green-50 p-4 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
+        <div className="mt-6 shrink-0 rounded-3xl border border-green-200 bg-green-50 p-4 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
           <p className="flex items-center gap-2 font-bold">
             <span className="material-symbols-outlined text-lg">task_alt</span>
             Bản đồ đã hoàn chỉnh.

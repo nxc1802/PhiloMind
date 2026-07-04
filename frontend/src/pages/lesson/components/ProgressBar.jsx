@@ -7,6 +7,7 @@ export function ProgressBar({
   onSelectComponent,
 }) {
   const scrollRef = useRef(null);
+  const dragStateRef = useRef({ active: false, startX: 0, scrollLeft: 0 });
   // Whether the track overflows and can still scroll toward each edge.
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -43,7 +44,11 @@ export function ProgressBar({
       elementRect.width / 2;
     const targetScroll = elementCenter - containerRect.width / 2;
 
-    container.scrollTo({ left: targetScroll, behavior: "smooth" });
+    if (typeof container.scrollTo === "function") {
+      container.scrollTo({ left: targetScroll, behavior: "smooth" });
+    } else {
+      container.scrollLeft = targetScroll;
+    }
     // Recompute arrow state after the smooth scroll settles.
     const raf = requestAnimationFrame(updateArrows);
     return () => cancelAnimationFrame(raf);
@@ -71,6 +76,30 @@ export function ProgressBar({
     });
   };
 
+  const startDrag = (event) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    dragStateRef.current = {
+      active: true,
+      startX: event.clientX,
+      scrollLeft: el.scrollLeft,
+    };
+    el.setPointerCapture?.(event.pointerId);
+  };
+
+  const moveDrag = (event) => {
+    const el = scrollRef.current;
+    if (!el || !dragStateRef.current.active) return;
+    const distance = event.clientX - dragStateRef.current.startX;
+    el.scrollLeft = dragStateRef.current.scrollLeft - distance;
+  };
+
+  const endDrag = (event) => {
+    const el = scrollRef.current;
+    dragStateRef.current.active = false;
+    el?.releasePointerCapture?.(event.pointerId);
+  };
+
   const getIcon = (type) => {
     switch (type) {
       case "media":
@@ -82,6 +111,8 @@ export function ProgressBar({
       case "target_matching":
       case "matching_columns":
       case "chain_sorting":
+        return "extension";
+      case "knowledge_piece":
         return "extension";
       case "mindmap_reveal":
       case "dialogue":
@@ -114,8 +145,13 @@ export function ProgressBar({
 
       <div
         ref={scrollRef}
-        className="flex h-16 items-center gap-1 overflow-x-auto px-4 py-2 scrollbar-hide snap-x"
+        className="flex h-16 touch-pan-x select-none items-center gap-2 overflow-x-auto px-4 py-2 scrollbar-hide snap-x"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        onPointerDown={startDrag}
+        onPointerMove={moveDrag}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onPointerLeave={endDrag}
       >
         {progressItems.map(({ component, index }, idx) => {
           const isActive = index === activeIndex;
@@ -123,41 +159,39 @@ export function ProgressBar({
           const isAccessible = isCompleted || index <= activeIndex;
 
           return (
-            <React.Fragment key={component.id}>
-              {idx > 0 && (
-                <div
-                  className={[
-                    "h-0.5 w-8 shrink-0 transition-colors duration-300",
-                    isAccessible ? "bg-primary-500" : "bg-slate-200 dark:bg-slate-700"
-                  ].filter(Boolean).join(" ")}
-                />
+            <button
+              key={component.id}
+              type="button"
+              data-active={isActive}
+              data-progress-component-id={component.id}
+              disabled={!isAccessible && !isActive}
+              onClick={() => isAccessible && onSelectComponent(index)}
+              style={{ flex: "0 0 calc((100% - 1.5rem) / 5)" }}
+              className={[
+                "snap-center group relative flex min-w-[7.5rem] items-center justify-center overflow-hidden rounded-full transition-all duration-300",
+                "h-11 gap-2 border-2 px-3",
+                isActive
+                  ? "border-primary-500 bg-primary-50 text-primary-800 shadow-[0_0_0_4px_rgba(37,99,235,0.14),0_14px_30px_rgba(37,99,235,0.22)] ring-2 ring-primary-300 dark:border-primary-300 dark:bg-primary-900/40 dark:text-primary-100 dark:ring-primary-500/50"
+                  : isCompleted
+                    ? "border-primary-500 bg-white text-primary-600 hover:bg-primary-50 dark:bg-surface-dark-elevated dark:text-primary-300 dark:hover:bg-primary-900/20"
+                    : "cursor-not-allowed border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              title={component.title}
+            >
+              {isActive && (
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-70 dark:via-primary-200/10" />
               )}
-              <button
-                type="button"
-                data-active={isActive}
-                disabled={!isAccessible && !isActive}
-                onClick={() => isAccessible && onSelectComponent(index)}
-                className={[
-                  "snap-center group relative flex shrink-0 items-center justify-center rounded-full transition-all duration-300",
-                  "h-10 px-4 gap-2 border-2",
-                  isActive
-                    ? "border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 dark:border-primary-400 scale-105"
-                    : isCompleted
-                      ? "border-primary-500 bg-white text-primary-600 dark:bg-surface-dark-elevated dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
-                      : "border-slate-200 bg-slate-50 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500 cursor-not-allowed"
-                ].filter(Boolean).join(" ")}
-                title={component.title}
-              >
-                <span className="material-symbols-outlined text-[18px]">
-                  {isCompleted && !isActive ? "check_circle" : getIcon(component.type)}
-                </span>
-                {(isActive || isCompleted) && (
-                  <span className="max-w-[120px] truncate text-xs font-semibold">
-                    {component.title}
-                  </span>
-                )}
-              </button>
-            </React.Fragment>
+              <span className="material-symbols-outlined relative z-10 text-[18px]">
+                {isCompleted && !isActive
+                  ? "check_circle"
+                  : getIcon(component.type)}
+              </span>
+              <span className="relative z-10 min-w-0 truncate text-[11px] font-bold leading-tight">
+                {component.title}
+              </span>
+            </button>
           );
         })}
       </div>

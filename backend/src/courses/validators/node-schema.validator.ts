@@ -13,6 +13,8 @@ const SUPPORTED_COMPONENT_TYPES = new Set([
   "matching_columns",
   "true_false",
   "sequence_sorting",
+  "chain_sorting",
+  "knowledge_piece",
   "final_summary",
 ]);
 
@@ -170,8 +172,18 @@ export class NodeSchemaValidator {
       }
     }
 
-    if (component.type === "sequence_sorting") {
+    if (
+      component.type === "sequence_sorting" ||
+      component.type === "chain_sorting"
+    ) {
       requireArray(config.items, `${label}.items`);
+    }
+
+    if (component.type === "knowledge_piece") {
+      requireString(config.label || component.title, `${label}.label`);
+      if (config.takeaways !== undefined) {
+        requireArray(config.takeaways, `${label}.takeaways`);
+      }
     }
 
     if (component.type === "final_summary") {

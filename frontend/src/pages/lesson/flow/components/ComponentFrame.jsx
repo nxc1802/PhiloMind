@@ -13,6 +13,8 @@ const TYPE_ICONS = {
   target_matching: "ads_click",
   mindmap_reveal: "hub",
   sequence_sorting: "format_list_numbered",
+  chain_sorting: "conversion_path",
+  knowledge_piece: "extension",
   final_summary: "military_tech",
 };
 
@@ -29,7 +31,9 @@ export function ComponentFrame({ component, children, className = "" }) {
   const typeIcon = TYPE_ICONS[safeComponent.type] || "widgets";
 
   return (
-    <section className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-3 flex flex-col h-full min-h-0 ${className}`}>
+    <section
+      className={`bg-white text-slate-900 dark:bg-[#0f2530] dark:text-primary-100 rounded-2xl shadow-md border border-slate-200 dark:border-primary-800 p-3 flex flex-col h-full min-h-0 ${className}`}
+    >
       <div className="flex items-center gap-2 mb-2 shrink-0">
         <span className="material-symbols-outlined flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-650 dark:bg-primary-900/35 dark:text-primary-300 text-lg">
           {typeIcon}
