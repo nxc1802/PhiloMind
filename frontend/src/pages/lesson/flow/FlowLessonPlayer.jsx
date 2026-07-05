@@ -328,15 +328,27 @@ export default function FlowLessonPlayer({
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-slate-50 dark:bg-[#0D1117]">
-      <div className="w-full min-w-0 px-3 pt-3">
-        <ProgressBar
-          progressItems={progressItems}
-          activeIndex={activeIndex}
-          completedIds={completedIds}
-          onSelectComponent={handleSelectComponent}
-          onReset={handleResetLesson}
-          isResetting={updateComponentProgress.isPending || flow.length === 0}
-        />
+      <div className="flex w-full min-w-0 items-center gap-2 px-3 pt-3">
+        <div className="min-w-0 flex-1">
+          <ProgressBar
+            progressItems={progressItems}
+            activeIndex={activeIndex}
+            completedIds={completedIds}
+            onSelectComponent={handleSelectComponent}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={handleResetLesson}
+          disabled={updateComponentProgress.isPending || flow.length === 0}
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-primary-200 hover:bg-primary-50 hover:text-primary-650 disabled:cursor-wait disabled:opacity-60 dark:border-transparent dark:bg-slate-900/55 dark:text-primary-250 dark:hover:bg-primary-900/30"
+          title="Học lại bài này từ đầu"
+          aria-label="Học lại bài này từ đầu"
+        >
+          <span className="material-symbols-outlined text-[20px]">
+            restart_alt
+          </span>
+        </button>
       </div>
       <div
         ref={splitRowRef}
