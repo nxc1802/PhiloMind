@@ -1,213 +1,319 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 
-function MindmapFlipCard({ node, index, open, onReveal }) {
-  const frontText = node.front?.text || "Bấm để mở nội dung";
-  const frontImageUrl = node.front?.image;
-  const backText = node.back?.text || node.label;
-  const detailText = node.back?.detail || node.detail;
-  const backImageUrl = node.back?.image;
-
-  return (
-    <button
-      type="button"
-      onClick={onReveal}
-      className="group relative w-full min-w-0 shrink-0 text-left [perspective:1200px]"
-      aria-label={`Mở mảnh ghép ${index + 1}`}
-    >
-      <div
-        className={[
-          "relative min-h-[11rem] w-full rounded-3xl transition-transform duration-700 [transform-style:preserve-3d]",
-          open ? "[transform:rotateY(180deg)]" : "[transform:rotateY(0deg)]",
-        ].join(" ")}
-      >
-        <div className="absolute inset-0 flex min-w-0 items-start gap-3 rounded-3xl border border-dashed border-slate-250 bg-slate-50 p-4 shadow-sm [backface-visibility:hidden] group-hover:border-primary-300 group-hover:bg-white dark:border-primary-850 dark:bg-primary-950/25 dark:group-hover:bg-[#132d39]">
-          <span className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-slate-300 shadow-sm dark:bg-primary-950 dark:text-primary-650">
-            <span className="material-symbols-outlined text-xl">lock_open</span>
-          </span>
-
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-primary-500">
-              Mảnh ghép {index + 1}
-            </p>
-            <div className="mt-2 flex min-w-0 items-center gap-3">
-              {frontImageUrl && (
-                <img
-                  src={frontImageUrl}
-                  alt="bìa mảnh ghép"
-                  className="h-12 w-12 shrink-0 rounded-2xl object-cover shadow-sm"
-                />
-              )}
-              <p className="min-w-0 break-words text-sm font-bold leading-6 text-slate-600 dark:text-primary-200">
-                {frontText}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute inset-0 flex min-w-0 items-start gap-3 overflow-hidden rounded-3xl border border-primary-250 bg-white p-4 shadow-sm [backface-visibility:hidden] [transform:rotateY(180deg)] dark:border-primary-800 dark:bg-[#132d39]">
-          <span className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-600 text-white">
-            <span className="material-symbols-outlined text-xl">
-              check_circle
-            </span>
-          </span>
-
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
-              Mảnh ghép {index + 1}
-            </p>
-            <div className="mt-2 flex min-w-0 items-start gap-3">
-              {backImageUrl && (
-                <img
-                  src={backImageUrl}
-                  alt="minh họa mảnh ghép"
-                  className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-sm"
-                />
-              )}
-              <div className="min-w-0 flex-1">
-                <p className="break-words text-lg font-extrabold leading-snug text-primary-900 dark:text-primary-100">
-                  {backText}
-                </p>
-                {detailText && (
-                  <p className="mt-2 max-h-24 overflow-y-auto whitespace-normal break-words pr-1 text-sm leading-6 text-slate-650 dark:text-primary-200">
-                    {detailText}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </button>
-  );
-}
-
 /**
- * MindmapRevealComponent — component mở dần các node của mindmap (front/back card format).
- * Tự động mở (auto-reveal) từng node tuần tự, cách nhau 2 giây (yêu cầu từ big_update).
- * Tích hợp FlipCard 3D và MindmapLayout linh hoạt.
+ * MindmapRevealComponent — "Hợp nhất tri thức" dạng BẢN ĐỒ TƯ DUY TOẢ TIA.
+ *
+ * Một nút trung tâm (khái niệm đích) với các mảnh tri thức toả ra xung quanh.
+ * Mỗi mảnh được mở (tự động sau 2s hoặc bấm) sẽ thắp sáng đường nối (spoke)
+ * chạy về tâm. Khi đủ tất cả, cả sơ đồ phát sáng và hiện phần tổng kết.
+ *
+ * Đường nối được vẽ bằng SVG, toạ độ đo lại theo vị trí thực của nút tâm và
+ * từng thẻ nhánh — nên vẫn khớp khi kéo vách chia cột hay đổi kích thước.
  */
 export function MindmapRevealComponent({ component, onComplete }) {
   const nodes = component.config.nodes || [];
+  const centerLabel = component.config.center || "Triết học";
   const [revealed, setRevealed] = useState([]);
 
-  const complete = nodes.length > 0 && revealed.length === nodes.length;
   const revealedCount = revealed.length;
-
-  // Mảnh ghép vừa được mở gần nhất (dùng cho lời chúc mừng trung gian).
+  const complete = nodes.length > 0 && revealedCount === nodes.length;
   const lastRevealedId = revealed[revealed.length - 1];
   const lastRevealedNode = nodes.find((node) => node.id === lastRevealedId);
   const lastRevealedName =
     lastRevealedNode?.back?.text || lastRevealedNode?.label || "";
-  // Đã mở ít nhất 1 mảnh nhưng CHƯA hoàn tất → hiện chúc mừng từng bước.
   const partialCelebrate = revealedCount > 0 && !complete;
 
-  // Tự động mở các thẻ tuần tự (2s)
-  useEffect(() => {
-    if (nodes.length === 0) return;
+  // --- Đo toạ độ để vẽ spoke ---
+  const canvasRef = useRef(null);
+  const hubRef = useRef(null);
+  const nodeRefs = useRef([]);
+  const [spokes, setSpokes] = useState([]);
+  const [canvas, setCanvas] = useState({ w: 0, h: 0 });
 
-    if (revealed.length < nodes.length) {
-      const timer = setTimeout(() => {
-        setRevealed((prev) => {
-          const nextNode = nodes.find((node) => !prev.includes(node.id));
-          return nextNode ? [...prev, nextNode.id] : prev;
-        });
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
+  const measure = useCallback(() => {
+    const canvasEl = canvasRef.current;
+    const hubEl = hubRef.current;
+    if (!canvasEl || !hubEl) return;
+
+    const c = canvasEl.getBoundingClientRect();
+    const h = hubEl.getBoundingClientRect();
+    const hubX = h.left - c.left + h.width / 2;
+    const hubY = h.top - c.top + h.height / 2;
+
+    const next = nodes
+      .map((node, i) => {
+        const el = nodeRefs.current[i];
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        // Neo vào cạnh gần tâm của thẻ nhánh.
+        const nodeX = r.left - c.left;
+        const nodeY = r.top - c.top + r.height / 2;
+        return { id: node.id, x1: hubX, y1: hubY, x2: nodeX, y2: nodeY };
+      })
+      .filter(Boolean);
+
+    setSpokes(next);
+    setCanvas({ w: c.width, h: c.height });
+  }, [nodes]);
+
+  useLayoutEffect(() => {
+    measure();
+    const raf = requestAnimationFrame(measure);
+    const canvasEl = canvasRef.current;
+    const ro =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => measure())
+        : null;
+    if (ro && canvasEl) ro.observe(canvasEl);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [measure, revealedCount]);
+
+  // Tự động mở tuần tự (2s), vẫn cho phép bấm để mở nhanh.
+  useEffect(() => {
+    if (nodes.length === 0 || revealed.length >= nodes.length) return;
+    const timer = setTimeout(() => {
+      setRevealed((prev) => {
+        const nextNode = nodes.find((node) => !prev.includes(node.id));
+        return nextNode ? [...prev, nextNode.id] : prev;
+      });
+    }, 2000);
+    return () => clearTimeout(timer);
   }, [revealed.length, nodes]);
 
-  // Handle manual click if user wants to reveal faster
   const handleReveal = (nodeId) => {
     if (!revealed.includes(nodeId)) {
       setRevealed((prev) => [...prev, nodeId]);
     }
   };
 
+  const isRevealed = (id) => revealed.includes(id);
+
   return (
     <ComponentFrame component={component}>
-      <div className="mb-5 shrink-0 overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-amber-50 p-5 dark:border-primary-850 dark:from-primary-950/60 dark:via-[#102733] dark:to-amber-950/25">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4">
-            <span className="material-symbols-outlined flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-primary-600 text-3xl text-white shadow-lg">
-              hub
+      <style>{`
+        @keyframes mmSpokeFlow { to { stroke-dashoffset: -28; } }
+        .mm-spoke-active { animation: mmSpokeFlow 1.1s linear infinite; }
+      `}</style>
+
+      {/* Header gọn — bỏ khối 'tiến độ' + progress bar trùng lặp, chỉ giữ 1 chip */}
+      <div className="mb-4 flex shrink-0 items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
+            Bản đồ tư duy
+          </p>
+          <p className="text-sm font-medium text-slate-600 dark:text-primary-150">
+            Lắng nghe hoặc đọc để hoàn thiện bức tranh khái niệm.
+          </p>
+        </div>
+        <span
+          className={[
+            "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-extrabold transition-colors",
+            complete
+              ? "border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-900/40 dark:text-amber-200"
+              : "border-primary-200 bg-primary-50 text-primary-700 dark:border-primary-800 dark:bg-primary-900/35 dark:text-primary-200",
+          ].join(" ")}
+        >
+          <span className="material-symbols-outlined text-[18px]">
+            {complete ? "hub" : "linked_services"}
+          </span>
+          {revealedCount}/{nodes.length}
+        </span>
+      </div>
+
+      {/* Sơ đồ toả tia: hub (trái) + các nhánh (phải), spoke vẽ SVG ở giữa */}
+      <div
+        ref={canvasRef}
+        className="relative grid min-h-[16rem] shrink-0 grid-cols-[auto_1fr] items-center gap-x-6 gap-y-4 sm:gap-x-10"
+      >
+        {/* Lớp SVG đường nối */}
+        <svg
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-visible"
+          width={canvas.w}
+          height={canvas.h}
+          viewBox={`0 0 ${canvas.w || 1} ${canvas.h || 1}`}
+          fill="none"
+          aria-hidden="true"
+        >
+          {spokes.map((s) => {
+            const active = isRevealed(s.id);
+            const midX = (s.x1 + s.x2) / 2;
+            const d = `M ${s.x1} ${s.y1} C ${midX} ${s.y1}, ${midX} ${s.y2}, ${s.x2} ${s.y2}`;
+            return (
+              <path
+                key={s.id}
+                d={d}
+                stroke="currentColor"
+                strokeWidth={active ? 2.5 : 2}
+                strokeLinecap="round"
+                strokeDasharray={active ? "6 7" : "2 8"}
+                className={[
+                  active
+                    ? "mm-spoke-active text-primary-500 dark:text-primary-400"
+                    : "text-slate-300 dark:text-slate-700",
+                ].join(" ")}
+                style={{
+                  filter: active
+                    ? "drop-shadow(0 0 5px currentColor)"
+                    : "none",
+                  transition: "stroke-width 300ms",
+                }}
+              />
+            );
+          })}
+        </svg>
+
+        {/* Nút trung tâm */}
+        <div className="relative z-10 flex justify-center">
+          <div
+            ref={hubRef}
+            className={[
+              "flex w-32 flex-col items-center gap-2 rounded-3xl border-2 p-4 text-center transition-all duration-500 sm:w-40",
+              complete
+                ? "border-amber-300 bg-gradient-to-br from-primary-600 to-amber-500 text-white shadow-[0_0_0_5px_rgba(251,191,36,0.18),0_16px_40px_rgba(37,99,235,0.35)]"
+                : "border-primary-200 bg-gradient-to-br from-primary-600 to-primary-700 text-white shadow-[0_10px_30px_rgba(37,99,235,0.28)] dark:border-primary-500",
+            ].join(" ")}
+          >
+            <span
+              className={[
+                "flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 text-3xl",
+                complete ? "animate-pulse" : "",
+              ].join(" ")}
+            >
+              <span className="material-symbols-outlined text-3xl">
+                psychology
+              </span>
             </span>
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
-                Bản đồ tư duy
+              <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
+                Khái niệm đích
               </p>
-              <h3 className="text-2xl font-extrabold leading-tight text-primary-950 dark:text-primary-100">
-                {component.config.center || "Triết học"}
-              </h3>
-              <p className="mt-1 text-sm font-medium text-slate-600 dark:text-primary-150">
-                Lắng nghe hoặc đọc để hoàn thiện bức tranh khái niệm.
+              <p className="text-base font-extrabold leading-tight">
+                {centerLabel}
               </p>
             </div>
           </div>
-          <div className="rounded-2xl border border-primary-150 bg-white px-4 py-3 text-left shadow-sm dark:border-primary-800 dark:bg-primary-950/45">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-primary-250">
-              Tiến độ mở
-            </p>
-            <p className="text-2xl font-extrabold text-primary-800 dark:text-primary-100">
-              {revealedCount}/{nodes.length}
-            </p>
-          </div>
         </div>
-        <div className="mt-5 h-2 overflow-hidden rounded-full bg-white/80 dark:bg-primary-950">
-          <div
-            className="h-full rounded-full bg-primary-600 transition-all duration-500"
-            style={{
-              width: nodes.length
-                ? `${(revealedCount / nodes.length) * 100}%`
-                : "0%",
-            }}
-          />
+
+        {/* Các nhánh tri thức */}
+        <div className="relative z-10 flex min-w-0 flex-col gap-4">
+          {nodes.map((node, index) => {
+            const open = isRevealed(node.id);
+            const title = node.back?.text || node.label || `Mảnh ${index + 1}`;
+            const detail = node.back?.detail || node.detail;
+            const frontText = node.front?.text || "Đang chờ kết nối…";
+
+            return (
+              <button
+                key={node.id}
+                type="button"
+                ref={(el) => (nodeRefs.current[index] = el)}
+                onClick={() => handleReveal(node.id)}
+                aria-label={`Mở mảnh tri thức ${index + 1}`}
+                className={[
+                  "group relative w-full min-w-0 rounded-2xl border-2 p-3.5 text-left transition-all duration-500",
+                  open
+                    ? "border-primary-300 bg-white shadow-sm dark:border-primary-700 dark:bg-[#132d39]"
+                    : "border-dashed border-slate-250 bg-slate-50 hover:border-primary-300 hover:bg-white dark:border-primary-850 dark:bg-primary-950/25 dark:hover:bg-[#132d39]",
+                ].join(" ")}
+              >
+                {/* Chấm neo ở cạnh trái — điểm spoke cắm vào */}
+                <span
+                  className={[
+                    "absolute left-0 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 transition-all duration-500",
+                    open
+                      ? "border-primary-400 bg-primary-500 shadow-[0_0_10px_rgba(37,99,235,0.7)]"
+                      : "border-slate-300 bg-white dark:border-slate-600 dark:bg-slate-800",
+                  ].join(" ")}
+                  aria-hidden="true"
+                />
+
+                <div className="flex min-w-0 items-start gap-2.5 pl-2">
+                  <span
+                    className={[
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-xl transition-colors duration-500",
+                      open
+                        ? "bg-primary-600 text-white"
+                        : "bg-white text-slate-300 shadow-sm dark:bg-primary-950 dark:text-primary-650",
+                    ].join(" ")}
+                  >
+                    <span className="material-symbols-outlined text-[18px]">
+                      {open ? "check_circle" : "lock_open"}
+                    </span>
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className={[
+                        "text-[10px] font-bold uppercase tracking-wider",
+                        open
+                          ? "text-primary-650 dark:text-primary-300"
+                          : "text-slate-400 dark:text-primary-500",
+                      ].join(" ")}
+                    >
+                      Mảnh ghép {index + 1}
+                    </p>
+                    {open ? (
+                      <>
+                        <p className="break-words text-base font-extrabold leading-snug text-primary-900 dark:text-primary-100">
+                          {title}
+                        </p>
+                        {detail && (
+                          <p className="mt-1 max-h-24 overflow-y-auto whitespace-normal break-words pr-1 text-sm leading-6 text-slate-650 dark:text-primary-200">
+                            {detail}
+                          </p>
+                        )}
+                      </>
+                    ) : (
+                      <p className="mt-0.5 break-words text-sm font-bold leading-6 text-slate-500 dark:text-primary-200">
+                        {frontText}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <div className="relative flex min-w-0 flex-col gap-3 pb-1">
-        <div className="absolute bottom-4 left-[1.35rem] top-4 hidden w-px bg-primary-150 dark:bg-primary-850 sm:block" />
-        {nodes.map((node, index) => {
-          const open = revealed.includes(node.id);
-
-          return (
-            <MindmapFlipCard
-              key={node.id}
-              node={node}
-              index={index}
-              open={open}
-              onReveal={() => handleReveal(node.id)}
-            />
-          );
-        })}
-      </div>
-
-      {/* Chúc mừng trung gian — hiện sau mỗi lần mở mảnh ghép (trừ mảnh cuối) */}
+      {/* Chúc mừng từng bước — hiện sau mỗi lần mở (trừ mảnh cuối) */}
       {partialCelebrate && (
-        <div className="mt-6 rounded-3xl border border-primary-200 bg-primary-50 p-4 text-primary-950 dark:border-primary-800 dark:bg-primary-950/35 dark:text-primary-100">
-          <p className="flex items-center gap-2 font-bold">
-            <span className="material-symbols-outlined text-lg text-primary-600 dark:text-primary-300">
-              celebration
-            </span>
-            Chúc mừng! Đã mở khóa Mảnh ghép {revealedCount}
-            {lastRevealedName ? `: ${lastRevealedName}` : ""}.
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-650 dark:text-primary-200">
-            Tiếp tục để hoàn thiện nốt {nodes.length - revealedCount} mảnh ghép
-            còn lại của bức tranh khái niệm.
-          </p>
+        <div className="mt-5 flex items-center gap-2 rounded-2xl border border-primary-200 bg-primary-50 px-4 py-3 text-sm font-semibold text-primary-900 dark:border-primary-800 dark:bg-primary-950/35 dark:text-primary-100">
+          <span className="material-symbols-outlined text-primary-600 dark:text-primary-300">
+            electric_bolt
+          </span>
+          <span className="min-w-0">
+            Đã nối mảnh {revealedCount}
+            {lastRevealedName ? `: ${lastRevealedName}` : ""} về tâm — còn{" "}
+            {nodes.length - revealedCount} mảnh nữa để hoàn thiện sơ đồ.
+          </span>
         </div>
       )}
 
+      {/* Tổng kết — điểm 'done' duy nhất, là đỉnh của quá trình hợp nhất */}
       {complete && (
-        <div className="mt-6 shrink-0 rounded-3xl border border-green-200 bg-green-50 p-4 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
-          <p className="flex items-center gap-2 font-bold">
-            <span className="material-symbols-outlined text-lg">task_alt</span>
-            Bản đồ đã hoàn chỉnh.
+        <div className="mt-5 shrink-0 overflow-hidden rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 to-primary-50 p-5 text-primary-950 dark:border-amber-800 dark:from-amber-950/30 dark:to-primary-950/40 dark:text-primary-100">
+          <p className="flex items-center gap-2 text-lg font-extrabold">
+            <span className="material-symbols-outlined text-amber-500">
+              auto_awesome
+            </span>
+            Sơ đồ đã hợp nhất — {centerLabel}!
           </p>
           {component.config.summary && (
-            <p className="mt-2 text-sm leading-relaxed">
+            <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-primary-150">
               {component.config.summary}
             </p>
           )}
