@@ -1,47 +1,69 @@
-# PhiloMind - AI Philosophy Learning Sanctuary
+# PhiloMind
 
-PhiloMind is an AI-powered interactive learning sanctuary that transforms linear philosophy textbooks into structured visual roadmaps, zoomable mindmaps, Socratic debate partners, AI-generated podcasts, and spaced repetition flashcards.
+PhiloMind is a monorepo for an AI-assisted philosophy learning product. It turns a linear course into a guided journey with a learner frontend, an admin portal, a NestJS API, PostgreSQL/Supabase storage, AI-assisted debate and podcast generation, flashcards, quizzes, and a FastAPI TTS worker.
 
-This repository is organized as a clean, containerized monorepo.
+This repository should be read from the current code first. Historical proposal files, old frontend optimization reports, and copied lesson code dumps were removed because they no longer matched the running architecture.
 
----
+## Services
 
-## 🚀 Key Features
+| Service | Path | Stack | Default port | Role |
+|---|---|---:|---:|---|
+| Learner frontend | `frontend/` | React 18, Vite, Tailwind, TanStack Query | `3000` | Student-facing journey, lesson player, practice, debate, settings |
+| Admin portal | `admin/` | React 18, Vite, Tailwind | `3002` | CRUD for users, courses, nodes, practice content, debates, Philosofun |
+| Backend API | `backend/` | NestJS 11, Prisma, PostgreSQL, Supabase JS | `3001` or `7860` on Hugging Face | Auth, roadmap, lesson flow, progress, AI, storage, TTS proxy |
+| TTS worker | `tts_worker/` | FastAPI, Kokoro ONNX, fallback WAV generator | `8000` or `7860` on Hugging Face | Text-to-speech synthesis for podcast previews |
+| Local DB | `docker-compose.yml` | PostgreSQL 15 with pgvector image | `5432` | Local development database |
 
-- **Interactive Mindmap Canvas**: Converts hierarchical textbook concepts into zoomable, animated nodes (using React Flow & Framer Motion).
-- **Conversational AI Podcasts**: Generates dialogue scripts between host and guest philosophers, read out by a free open-source Text-to-Speech engine.
-- **Socratic Debate Arena**: Challenge your own philosophical claims against a gentle but critical Socratic AI tutor.
-- **SM-2 Spaced Repetition**: Automatically synthesizes and schedules study cards for optimal long-term retention.
-- **Zero-Cost Deployments**: Automatically configured to deploy to Hugging Face Spaces using GitHub Actions.
+## Canonical Docs
 
----
+Start here:
 
-## 📁 Repository Structure
+- [Project overview](docs/PROJECT_OVERVIEW.md) - current architecture, modules, data model, and major flows.
+- [API reference](docs/API.md) - current endpoint inventory generated from controller inspection; use Swagger `/docs` for live schemas.
+- [Lesson components](docs/LESSON_COMPONENTS.md) - detailed `lessonFlow`, `lessonMedia`, renderer, validator, progress, and authoring contract.
+- [Operations](docs/OPERATIONS.md) - environment variables, local setup, Supabase/Postgres pooling, deployment, security, and post-deploy checks.
+- [Design system](docs/DESIGN_SYSTEM.md) - current product UX principles and frontend layout conventions.
 
+Module docs:
+
+- [Backend](backend/README.md)
+- [Learner frontend](frontend/README.md)
+- [Admin portal](admin/README.md)
+- [TTS worker](tts_worker/README.md)
+
+## Local Development
+
+Copy the root env template and fill real secrets:
+
+```bash
+cp .env.example .env
 ```
-PhiloMind/
-├── .github/workflows/
-│   ├── ci.yml            # CI validation (formatting, compilation, linting)
-│   ├── deploy_backend.yml # CD deployment for the backend Hugging Face Space
-│   └── deploy_tts.yml     # CD deployment for the TTS Hugging Face Space
-├── backend/              # NestJS REST API with Prisma and Supabase connections
-├── frontend/             # Vite React learner web application
-├── admin/                # Vite React admin portal
-├── tts_worker/           # FastAPI Text-to-Speech worker (Kokoro-82M ONNX model)
-├── docs/                 # Architectural and deployment guides
-└── scripts/              # Integration and health test utilities
+
+Run the full local stack:
+
+```bash
+docker compose up --build
 ```
 
----
+Run services manually when debugging a single layer:
 
-## 🛠️ Deployment Configuration (GitHub Actions CD)
+```bash
+cd backend && npm install && npx prisma generate && npm run start:dev
+cd frontend && npm install && npm run start
+cd admin && npm install && npm run start
+cd tts_worker && pip install -r requirements.txt && python main.py
+```
 
-This repository includes continuous deployment pipelines that automatically build and deploy your services to Hugging Face Spaces on every push to the `main` branch:
+The backend API uses global prefix `/api`. Root health endpoints are outside the prefix: `/` and `/health`. Swagger is available at `/docs` outside production, or when `ENABLE_SWAGGER=true`.
 
-1. **Backend API Server (NestJS)**: Pushed to [Cuong2004/PhiloMind](https://huggingface.co/spaces/Cuong2004/PhiloMind) (runs 24/7 on Hugging Face Docker Space, listening on port 7860).
-2. **TTS Worker (FastAPI)**: Pushed to [Cuong2004/PhiloMind_TTSworker](https://huggingface.co/spaces/Cuong2004/PhiloMind_TTSworker) (ONNX speech synthesis microservice).
-3. **Frontend Application (Vite React)**: Deployed to **Vercel** (connected directly to the `/frontend` directory of this repo, output directory `dist`).
+## Verification
 
-*To enable deployment, ensure you have added your Hugging Face write token to the GitHub Repository Secrets as `HF_TOKEN`.*
+Common checks:
 
-For Supabase/Postgres connection pool sizing on Cloud, see [docs/DATABASE_POOLING.md](docs/DATABASE_POOLING.md).
+```bash
+cd backend && npm run test -- --runInBand
+cd frontend && npm run test -- --run && npm run build
+cd admin && npm run test -- --run && npm run build
+```
+
+CI runs backend tests plus frontend/admin test and build verification on GitHub Actions.

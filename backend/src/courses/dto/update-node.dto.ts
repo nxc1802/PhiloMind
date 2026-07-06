@@ -40,6 +40,9 @@ export class UpdateNodeDto {
   @IsOptional()
   lessonFlow?: any;
 
+  @IsOptional()
+  lessonMedia?: any;
+
   @IsBoolean()
   @IsOptional()
   contentReady?: boolean;

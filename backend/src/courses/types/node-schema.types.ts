@@ -56,6 +56,7 @@ export interface MindmapLayoutConfig {
 // ─── Lesson Component (items in lessonFlow array) ─────────────────────────────
 
 export type ComponentType =
+  | "component_group"
   | "media"
   | "dialogue"
   | "markdown"
@@ -68,6 +69,8 @@ export type ComponentType =
   | "target_matching"
   | "mindmap_reveal"
   | "sequence_sorting"
+  | "chain_sorting"
+  | "knowledge_piece"
   | "final_summary";
 
 export interface CompletionRule {

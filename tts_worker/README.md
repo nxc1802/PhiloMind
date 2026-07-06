@@ -1,18 +1,41 @@
 ---
 title: PhiloMind TTS Worker
-emoji: 🗣️
-colorFrom: blue
-colorTo: pink
 sdk: docker
 app_port: 7860
-pinned: false
 ---
 
-# PhiloMind Text-To-Speech (TTS) Worker
+# PhiloMind TTS Worker
 
-This is the standalone FastAPI backend service running Kokoro-82M for fast, open-source Text-To-Speech generation. It is packaged with Docker and deployed to Hugging Face Spaces.
+FastAPI service that returns WAV audio for backend podcast/TTS preview requests.
 
-## Tech Stack
-- **Framework**: FastAPI (Python)
-- **Model**: Kokoro-82M (Kokoro-ONNX)
-- **Audio Output**: WAV via `soundfile`
+## Stack
+
+- FastAPI
+- Uvicorn
+- Pydantic
+- Kokoro ONNX when model assets load
+- Synthetic fallback WAV generator when Kokoro assets are unavailable
+
+## Endpoints
+
+| Method | Path | Purpose |
+|---|---|---|
+| `GET` | `/health` | Reports health, engine, and model load state. |
+| `POST` | `/api/tts/synthesize` | Accepts `{ "text": "...", "voice": "af_bella" }` and streams `audio/wav`. |
+
+Input text is limited to 2000 characters.
+
+## Local Run
+
+```bash
+pip install -r requirements.txt
+python main.py
+```
+
+Default local port: `8000`.
+
+Docker/Hugging Face deployments should set `PORT`; Hugging Face Spaces uses `7860`.
+
+## Backend Integration
+
+The NestJS backend calls this service through `TTS_WORKER_URL`, then uploads or stores the resulting WAV through its storage path. See `../docs/OPERATIONS.md` for deployment and env details.

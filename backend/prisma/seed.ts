@@ -214,41 +214,46 @@ function buildOriginLessonFlow(node: any) {
       color: "from-fuchsia-500 to-purple-600",
     },
   };
+  const cognitive = node.lessonContents.find(
+    (item: any) => item.id === "cognitive",
+  );
+  const social = node.lessonContents.find((item: any) => item.id === "social");
+  const minigame = node.minigame.config;
+  const finalSummary = node.finalSummary;
+  const finalData = finalSummary.summary;
+  const toOptions = (options: any[]) =>
+    options.map((option) => ({
+      text: option.text,
+      isCorrect: option.correct === true,
+    }));
 
   return [
     {
       id: "origin-intro",
       type: "dialogue",
-      title: "Khởi hành",
+      title: "Cỗ Máy Thời Gian",
       linkedMediaId: "origin-opening-video",
       config: {
+        title: "Cỗ Máy Thời Gian",
+        subtitle: "Thế kỷ VIII – VI trước Công nguyên",
         characters: originCharacters,
-        lines: [
-          {
-            who: "guide",
-            text: "Chào mừng nhà du hành! Mình là Sophia, người sẽ đồng hành cùng bạn. Chúng ta vừa quay ngược kim đồng hồ về thế kỷ VIII - VI trước Công nguyên, khi Hy Lạp, Ấn Độ và Trung Hoa đang bừng nở. Nhiệm vụ của bạn là tìm một vũ khí tư duy hoàn toàn mới mang tên TRIẾT HỌC qua 2 mảnh ghép: nguồn gốc nhận thức và nguồn gốc xã hội.",
-          },
-        ],
+        lines: node.storyIntro.dialogs,
+        startPoints: node.storyIntro.startPoints,
+        startConfirm: node.storyIntro.startConfirm,
       },
       completionRule: { type: "viewed" },
     },
     {
       id: "cognitive-scene",
       type: "dialogue",
-      title: "Giải mã sấm truyền",
+      title: cognitive.title,
       linkedMediaId: "cognitive-video",
       config: {
+        badge: cognitive.badge,
+        subtitle: cognitive.subtitle,
+        pieceLabel: cognitive.pieceLabel,
         characters: originCharacters,
-        lines: [
-          {
-            who: "elder",
-            text: "Tai họa này từ đâu mà ra?! Hỡi người trẻ kia, hãy giải thích cho cả bộ tộc!",
-          },
-          {
-            who: "guide",
-            text: "Bạn vừa chứng kiến tất cả. Hãy quên kiến thức hiện đại đi, đặt mình vào tâm trí người cổ đại. Bạn sẽ giải thích thế nào?",
-          },
-        ],
+        lines: cognitive.setup,
       },
       completionRule: { type: "viewed" },
     },
@@ -258,24 +263,11 @@ function buildOriginLessonFlow(node: any) {
       title: "Tư duy huyền thoại",
       linkedMediaId: "cognitive-video",
       config: {
-        question:
-          "Bạn là một thành viên trong bộ tộc cổ đại. Theo lối tư duy thời ấy, bạn giải thích trận động đất này thế nào?",
-        options: [
-          {
-            text: "Thần Biển Poseidon nổi giận và rung chuyển mặt đất.",
-            isCorrect: true,
-          },
-          {
-            text: "Bộ tộc đã làm điều gì xúc phạm thần linh nên bị trừng phạt.",
-            isCorrect: true,
-          },
-          {
-            text: "Linh hồn lòng đất đang giận dữ đòi vật tế.",
-            isCorrect: true,
-          },
-        ],
-        explanation:
-          "Dù chọn cách nào, tất cả đều có điểm chung: con người thời ấy giải thích thế giới bằng THẦN THOẠI và TÍN NGƯỠNG. Đây chính là hình thức 'triết lý' đầu tiên của loài người.",
+        question: cognitive.myth.prompt,
+        options: toOptions(cognitive.myth.options),
+        correctFeedback: cognitive.myth.correctFeedback,
+        wrongFeedback: cognitive.myth.wrongFeedback,
+        explanation: cognitive.myth.correctFeedback,
       },
       completionRule: { type: "correct" },
     },
@@ -297,12 +289,7 @@ function buildOriginLessonFlow(node: any) {
             linkedMediaId: "cognitive-video",
             config: {
               characters: originCharacters,
-              lines: [
-                {
-                  who: "skeptic",
-                  text: "Khoan đã! Năm ngoái chúng ta đã tế tới 10 con cừu cho thần linh, vậy mà năm nay động đất vẫn xảy ra. Lễ vật chẳng thay đổi được gì cả. Liệu có phải dưới lòng đất tồn tại một quy luật tự nhiên nào đó, không hề phụ thuộc vào tâm trạng của các vị thần?",
-                },
-              ],
+              lines: cognitive.twist,
             },
             completionRule: { type: "viewed" },
           },
@@ -312,24 +299,11 @@ function buildOriginLessonFlow(node: any) {
             title: "Nhận thức",
             linkedMediaId: "cognitive-video",
             config: {
-              question:
-                "Câu hỏi của Lyra hé lộ điều gì đang BẮT ĐẦU thay đổi trong cách con người suy nghĩ?",
-              options: [
-                {
-                  text: "Con người bắt đầu đi tìm quy luật, lý lẽ để giải thích thế giới — thay cho thần thánh.",
-                  isCorrect: true,
-                },
-                {
-                  text: "Con người quyết định tế lễ nhiều hơn nữa cho chắc chắn.",
-                  isCorrect: false,
-                },
-                {
-                  text: "Con người từ bỏ hoàn toàn việc tìm hiểu thế giới.",
-                  isCorrect: false,
-                },
-              ],
-              explanation:
-                "Chính xác! Khoảnh khắc con người ngờ vực thần thoại và đi tìm QUY LUẬT bằng lý lẽ — đó là lúc tư duy lý luận, tức TRIẾT HỌC, bắt đầu nảy mầm.",
+              question: cognitive.shift.prompt,
+              options: toOptions(cognitive.shift.options),
+              correctFeedback: cognitive.shift.correctFeedback,
+              wrongFeedback: cognitive.shift.wrongFeedback,
+              explanation: cognitive.shift.correctFeedback,
             },
             completionRule: { type: "correct" },
           },
@@ -340,101 +314,89 @@ function buildOriginLessonFlow(node: any) {
     {
       id: "cognitive-piece",
       type: "knowledge_piece",
-      title: "Đúc kết nguồn gốc nhận thức",
+      title: cognitive.conclusion.title,
       linkedMediaId: "cognitive-video",
       config: {
         pieceId: "cognitive",
-        label: "Nguồn gốc nhận thức",
+        label: cognitive.pieceLabel,
         shortLabel: "Nhận thức",
         icon: "psychology",
         color: "from-cyan-400 via-blue-500 to-primary-700",
         summary:
-          "Triết học nảy mầm khi con người không chỉ tin vào huyền thoại, mà bắt đầu tìm quy luật và lý lẽ chung để giải thích thế giới.",
-        takeaways: [
-          "Nhu cầu hiểu biết thế giới là nhu cầu tự nhiên của con người.",
-          "Tư duy lý luận thay thế dần tư duy huyền thoại và tín ngưỡng nguyên thủy.",
-          "Khái quát hóa tri thức riêng lẻ tạo nên các khái niệm và phạm trù phổ quát.",
-        ],
+          "Triết học là hình thức tư duy lý luận đầu tiên thay thế tư duy huyền thoại.",
+        steps: cognitive.conclusion.steps,
+        takeaways: cognitive.conclusion.steps.map(
+          (step: any) => `${step.head}: ${step.body}`,
+        ),
+        reward: "Bạn đã thu thập được mảnh ghép: NGUỒN GỐC NHẬN THỨC!",
       },
       completionRule: { type: "viewed" },
     },
     {
       id: "social-setup",
       type: "dialogue",
-      title: "Đại hội bộ tộc",
+      title: social.title,
       linkedMediaId: "social-video",
       config: {
+        badge: social.badge,
+        subtitle: social.subtitle,
+        pieceLabel: social.pieceLabel,
         characters: originCharacters,
-        lines: [
-          {
-            who: "guide",
-            text: "Nhiều thế hệ trôi qua, con người biết rèn đồng, rèn sắt. Của cải bắt đầu dư thừa, xã hội phân chia thành Chủ nô và Nô lệ. Để hiểu ai mới đủ điều kiện làm triết học, hãy thử sống một ngày trong hai vai khác nhau nhé.",
-          },
-          {
-            who: "slave",
-            text: "Trời chưa sáng, tôi đã phải ra đồng cày cuốc, vác đá xây tháp tới kiệt sức. Cuối ngày, kiệt quệ vì lo từng bữa ăn — lấy đâu ra thời gian và sức lực để ngồi suy ngẫm về nguồn gốc vũ trụ?",
-          },
-          {
-            who: "noble",
-            text: "Tôi có của cải dư thừa, không phải lao động chân tay. Chiều đến, tôi thong dong ngắm sao trời và đàm đạo cùng bạn hữu. Tôi có đủ điều kiện để quan sát và hệ thống hóa tri thức.",
-          },
-        ],
+        lines: social.setup,
       },
       completionRule: { type: "viewed" },
     },
+    ...social.roles.map((role: any, index: number) => ({
+      id: index === 0 ? "social-role-slave" : "social-role-noble",
+      type: "mcq",
+      title: role.label,
+      linkedMediaId: "social-video",
+      config: {
+        roleWho: role.who,
+        intro: role.intro,
+        question: role.question,
+        options: toOptions(role.options),
+        correctFeedback: role.feedbackCorrect,
+        wrongFeedback: role.feedbackWrong,
+        explanation: role.feedbackCorrect,
+      },
+      completionRule: { type: "correct" },
+    })),
     {
       id: "social-core-quiz",
       type: "mcq",
-      title: "Xã hội",
+      title: "Câu hỏi then chốt",
       linkedMediaId: "social-video",
       config: {
-        question:
-          "Tại đại hội bộ tộc, câu hỏi lớn được đặt ra: NHÓM NÀO đủ điều kiện, thời gian và nhu cầu để hệ thống hóa tri thức thành học thuyết và trở thành các 'Nhà thông thái'?",
-        options: [
-          {
-            text: "Tầng lớp lao động trí óc (quý tộc, trí thức).",
-            isCorrect: true,
-          },
-          { text: "Tầng lớp lao động chân tay (nô lệ).", isCorrect: false },
-          { text: "Cả hai nhóm đều như nhau.", isCorrect: false },
-        ],
-        explanation:
-          "Chỉ khi lao động trí óc TÁCH KHỎI lao động chân tay, tầng lớp trí thức mới xuất hiện và có điều kiện hệ thống hóa tri thức thành triết học.",
+        question: social.keyQuestion.prompt,
+        options: toOptions(social.keyQuestion.options),
+        correctFeedback: social.keyQuestion.correctFeedback,
+        wrongFeedback: social.keyQuestion.wrongFeedback,
+        explanation: social.keyQuestion.correctFeedback,
       },
       completionRule: { type: "correct" },
     },
     {
-      id: "social-origin-chain",
-      type: "chain_sorting",
-      title: "Lắp ráp chuỗi nhân quả",
+      id: "social-warning",
+      type: "markdown",
+      title: "Điều kiện xã hội",
       linkedMediaId: "social-video",
       config: {
-        instruction:
-          "Chọn các mắt xích theo ĐÚNG thứ tự nhân quả hình thành điều kiện xã hội của triết học.",
-        items: [
-          {
-            id: "c1",
-            order: 0,
-            text: "Sản xuất phát triển, chế độ tư hữu hình thành, của cải dư thừa.",
-          },
-          {
-            id: "c2",
-            order: 1,
-            text: "Xã hội phân chia giai cấp (chế độ chiếm hữu nô lệ).",
-          },
-          {
-            id: "c3",
-            order: 2,
-            text: "Lao động trí óc tách khỏi lao động chân tay.",
-          },
-          {
-            id: "c4",
-            order: 3,
-            text: "Tầng lớp trí thức xuất hiện và hệ thống hóa tri thức thành triết học.",
-          },
-        ],
-        successFeedback:
-          "Chuỗi nhân quả đã sáng lên! Đây chính là NGUỒN GỐC XÃ HỘI của triết học.",
+        content: social.warning.map((item: string) => `- ${item}`).join("\n"),
+        warning: social.warning,
+      },
+      completionRule: { type: "viewed" },
+    },
+    {
+      id: "social-origin-chain",
+      type: "chain_sorting",
+      title: minigame.title,
+      linkedMediaId: "social-video",
+      config: {
+        instruction: minigame.instruction,
+        items: minigame.items,
+        successFeedback: minigame.successFeedback,
+        reward: minigame.reward,
       },
       completionRule: { type: "correct" },
     },
@@ -445,42 +407,33 @@ function buildOriginLessonFlow(node: any) {
       linkedMediaId: "social-video",
       config: {
         pieceId: "social",
-        label: "Nguồn gốc xã hội",
+        label: social.pieceLabel,
         shortLabel: "Xã hội",
         icon: "groups",
         color: "from-fuchsia-400 via-purple-500 to-primary-700",
-        summary:
-          "Triết học chỉ có thể ra đời khi xã hội đạt tới trình độ phân công lao động, giai cấp và tầng lớp trí thức có điều kiện hệ thống hóa tri thức.",
-        takeaways: [
-          "Sản xuất phát triển tạo ra của cải dư thừa và tư hữu.",
-          "Xã hội phân chia giai cấp, lao động trí óc tách khỏi lao động chân tay.",
-          "Tầng lớp trí thức có thời gian, điều kiện và nhu cầu xây dựng học thuyết.",
-        ],
+        summary: minigame.successFeedback,
+        takeaways: social.warning,
+        reward: "Bạn đã thu thập được mảnh ghép: NGUỒN GỐC XÃ HỘI!",
       },
       completionRule: { type: "viewed" },
     },
     {
       id: "origin-union",
       type: "mindmap_reveal",
-      title: "Hợp nhất tri thức",
+      title: finalSummary.title,
       config: {
-        center: "Triết học ra đời",
-        nodes: [
-          {
-            id: "cognitive",
-            label: "Nguồn gốc nhận thức",
-            detail:
-              "Nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng làm nảy sinh tư duy lý luận.",
-          },
-          {
-            id: "social",
-            label: "Nguồn gốc xã hội",
-            detail:
-              "Phân công lao động, giai cấp và tầng lớp trí thức tạo điều kiện xã hội cho triết học ra đời.",
-          },
-        ],
-        summary:
-          "Triết học không từ trên trời rơi xuống. Nó nảy sinh từ nhu cầu hiểu biết của con người và những điều kiện xã hội chín muồi.",
+        center: finalData.center,
+        centerNote: finalData.centerNote,
+        finalStatement: finalData.finalStatement,
+        guideLines: finalData.guideLines,
+        nodes: finalData.branches.map((branch: any) => ({
+          id: branch.id,
+          label: branch.title,
+          detail: branch.tagline,
+          points: branch.points,
+          icon: branch.icon,
+          color: branch.color,
+        })),
       },
       completionRule: { type: "viewed" },
     },
@@ -489,86 +442,23 @@ function buildOriginLessonFlow(node: any) {
       type: "quiz_sequence",
       title: "Kiểm tra cuối bài",
       config: {
-        questions: [
-          {
-            question: "Triết học ra đời vào khoảng thời gian nào?",
-            options: [
-              "Thế kỷ XV - XVI sau CN",
-              "Thế kỷ VIII - VI trước CN",
-              "Thế kỷ I sau CN",
-              "Thời kỳ đồ đá cũ",
-            ],
-            correctIndex: 1,
-            explanation:
-              "Triết học ra đời khoảng thế kỷ VIII - VI trước Công nguyên tại các trung tâm văn minh lớn.",
-          },
-          {
-            question: "Triết học có mấy nguồn gốc cơ bản?",
-            options: [
-              "Một: nguồn gốc thần thánh",
-              "Hai: nhận thức và xã hội",
-              "Ba: kinh tế, chính trị, văn hóa",
-              "Không có nguồn gốc xác định",
-            ],
-            correctIndex: 1,
-            explanation:
-              "Triết học có hai nguồn gốc cơ bản: nguồn gốc nhận thức và nguồn gốc xã hội.",
-          },
-          {
-            question:
-              "Về nguồn gốc nhận thức, triết học là hình thức tư duy thay thế cho cái gì?",
-            options: [
-              "Thay thế khoa học tự nhiên",
-              "Thay thế tư duy huyền thoại và tôn giáo",
-              "Thay thế lao động chân tay",
-              "Thay thế nghệ thuật",
-            ],
-            correctIndex: 1,
-            explanation:
-              "Triết học thay thế tư duy huyền thoại và tôn giáo bằng tư duy lý luận.",
-          },
-          {
-            question: "Điều kiện xã hội nào là tiền đề cho triết học ra đời?",
-            options: [
-              "Xã hội mông muội, chưa phân hóa",
-              "Phân công lao động, giai cấp xuất hiện, lao động trí óc tách khỏi lao động chân tay",
-              "Mọi người đều làm nông nghiệp như nhau",
-              "Xã hội không có của cải dư thừa",
-            ],
-            correctIndex: 1,
-            explanation:
-              "Triết học ra đời khi xã hội có phân công lao động, giai cấp và tầng lớp trí thức.",
-          },
-          {
-            question: "Vì sao tầng lớp trí thức có vai trò sáng tạo triết học?",
-            options: [
-              "Vì họ khỏe mạnh hơn",
-              "Vì họ có thời gian, điều kiện và nhu cầu nghiên cứu, hệ thống hóa tri thức",
-              "Vì họ được thần linh ban cho",
-              "Vì họ làm nhiều việc chân tay hơn",
-            ],
-            correctIndex: 1,
-            explanation:
-              "Tầng lớp trí thức có điều kiện và năng lực hệ thống hóa quan niệm thành học thuyết, lý luận.",
-          },
-        ],
+        questions: finalSummary.quiz,
       },
       completionRule: { type: "correct" },
     },
     {
       id: "origin-final",
       type: "final_summary",
-      title: "Nhà Khai Sáng",
+      title: finalSummary.completion.badge,
       config: {
-        message:
-          "Bạn đã hoàn thành Hành trình Khai Sáng và nắm được trọn vẹn hai nguồn gốc của triết học. Tri thức là ngọn đuốc — hãy tiếp tục thắp sáng!",
-        keyTakeaways: [
-          "Nguồn gốc nhận thức: nhu cầu hiểu biết thế giới và năng lực tư duy trừu tượng.",
-          "Nguồn gốc xã hội: phân công lao động, giai cấp và tầng lớp trí thức.",
-          "Triết học ra đời khoảng thế kỷ VIII - VI TCN ở cả phương Đông và phương Tây.",
-          "Triết học là hình thức tư duy lý luận đầu tiên thay thế tư duy huyền thoại và tôn giáo.",
-        ],
-        rewards: { xp: 120, badge: "Nhà Khai Sáng" },
+        badgeNote: finalSummary.completion.badgeNote,
+        message: finalSummary.completion.message,
+        keyTakeaways: finalData.branches.flatMap(
+          (branch: any) => branch.points,
+        ),
+        rewards: finalSummary.rewards,
+        quote: finalSummary.completion.quote,
+        actions: finalSummary.actions,
       },
       completionRule: { type: "viewed" },
     },
@@ -1349,7 +1239,7 @@ async function main() {
           setup: [
             {
               who: "guide",
-              text: "Nhiều thế hệ trôi qua, khi phương thức sản xuất thay đổi — con người biết rèn đồng, rèn sắt, của cải bắt đầu dư thừa — xã hội phân chia thành Chủ nô và Nô lệ.",
+              text: "Bối cảnh: nhiều thế hệ trôi qua, khi phương thức sản xuất thay đổi — con người biết rèn đồng, rèn sắt, của cải bắt đầu dư thừa — xã hội phân chia thành Chủ nô và Nô lệ.",
             },
             {
               who: "guide",
@@ -1383,7 +1273,7 @@ async function main() {
               who: "noble",
               label: "Vai 2: Tầng lớp quý tộc / trí thức",
               intro:
-                "Theon có của cải dư thừa, không phải lao động chân tay. Chiều đến, ông thong dung ngắm sao trời và đàm đạo cùng bạn hữu.",
+                "Theon có của cải dư thừa, không phải lao động chân tay. Chiều đến, ông thong dong ngắm sao trời và đàm đạo cùng bạn hữu.",
               question: "Với điều kiện sống như vậy, Theon có thể làm gì?",
               options: [
                 {

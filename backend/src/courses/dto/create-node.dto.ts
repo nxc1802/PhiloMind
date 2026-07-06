@@ -49,6 +49,9 @@ export class CreateNodeDto {
   @IsOptional()
   lessonFlow?: any;
 
+  @IsOptional()
+  lessonMedia?: any;
+
   @IsBoolean()
   @IsOptional()
   contentReady?: boolean;
