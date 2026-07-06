@@ -42,7 +42,7 @@ function getShuffledItems(items) {
   return shuffled;
 }
 
-function SortableChainCard({ item, isCorrectPosition }) {
+function SortableChainCard({ item, isCompleted }) {
   const {
     attributes,
     listeners,
@@ -71,7 +71,7 @@ function SortableChainCard({ item, isCorrectPosition }) {
         "cursor-grab transition-[border-color,box-shadow,background-color] duration-200 active:cursor-grabbing",
         isDragging
           ? "z-30 scale-[1.02] border-primary-400 bg-white shadow-2xl ring-4 ring-primary-200/50 dark:bg-surface-dark-elevated"
-          : isCorrectPosition
+          : isCompleted
             ? "border-green-300 bg-green-50/70 shadow-sm dark:border-green-700/60 dark:bg-green-950/25"
             : "border-slate-200 bg-white shadow-sm hover:border-primary-350 hover:shadow-md dark:border-primary-850/55 dark:bg-surface-dark-elevated dark:hover:border-primary-650",
       ].join(" ")}
@@ -80,7 +80,7 @@ function SortableChainCard({ item, isCorrectPosition }) {
       <span
         className={[
           "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-colors",
-          isCorrectPosition
+          isCompleted
             ? "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-200"
             : "bg-primary-50 text-primary-600 group-hover:bg-primary-100 dark:bg-primary-950/40 dark:text-primary-250",
         ].join(" ")}
@@ -97,15 +97,15 @@ function SortableChainCard({ item, isCorrectPosition }) {
         <p
           className={[
             "mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide",
-            isCorrectPosition
+            isCompleted
               ? "text-green-600 dark:text-green-300"
-              : "text-amber-600 dark:text-amber-400/90",
+              : "text-slate-500 dark:text-slate-400",
           ].join(" ")}
         >
           <span className="material-symbols-outlined text-[15px]">
-            {isCorrectPosition ? "check_circle" : "swap_vert"}
+            {isCompleted ? "check_circle" : "swap_vert"}
           </span>
-          {isCorrectPosition ? "Đúng vị trí" : "Chưa đúng vị trí"}
+          {isCompleted ? "Đúng vị trí" : "Kéo thả để sắp xếp"}
         </p>
       </div>
     </div>
@@ -189,13 +189,7 @@ export function ChainSortingComponent({ component, onComplete }) {
           />
         )}
 
-        <div className="mb-3 mt-2 flex flex-wrap items-center justify-between gap-2 px-1">
-          <p className="text-sm font-semibold text-slate-600 dark:text-primary-200">
-            Đúng vị trí{" "}
-            <span className="font-extrabold text-primary-650 dark:text-primary-250">
-              {correctCount}/{sortedItems.length}
-            </span>
-          </p>
+        <div className="mb-3 mt-2 flex flex-wrap items-center justify-end gap-2 px-1">
           <button
             type="button"
             onClick={handleReset}
@@ -222,7 +216,7 @@ export function ChainSortingComponent({ component, onComplete }) {
                 <SortableChainCard
                   key={item.id}
                   item={item}
-                  isCorrectPosition={correctIndexById[item.id] === index}
+                  isCompleted={isCompleted}
                 />
               ))}
             </div>
@@ -230,32 +224,18 @@ export function ChainSortingComponent({ component, onComplete }) {
         </DndContext>
 
         {isCompleted && (
-          <div className="mt-auto shrink-0 pt-4">
-            <div className="rounded-3xl border border-green-200 bg-green-50 p-5 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
-              <p className="mb-2 flex items-center gap-2 text-lg font-bold">
-                <span className="material-symbols-outlined">task_alt</span>
-                {successFeedback || "Chính xác! Chuỗi nhân quả đã hoàn thiện."}
-              </p>
-              {reward && (
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-sm font-bold text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
-                  <span className="material-symbols-outlined text-lg">
-                    star
-                  </span>
-                  {reward}
-                </div>
-              )}
-              <ContinueButton
-                onComplete={() =>
-                  onComplete({
-                    score: Math.max(100 - moves * 3, 70),
-                    attempts: moves,
-                    answer: sortedIds,
-                    status: "completed",
-                  })
-                }
-                label="Tiếp tục"
-              />
-            </div>
+          <div className="mt-auto shrink-0 pt-4 flex justify-end">
+            <ContinueButton
+              onComplete={() =>
+                onComplete({
+                  score: Math.max(100 - moves * 3, 70),
+                  attempts: moves,
+                  answer: sortedIds,
+                  status: "completed",
+                })
+              }
+              label="Tiếp tục"
+            />
           </div>
         )}
       </div>
