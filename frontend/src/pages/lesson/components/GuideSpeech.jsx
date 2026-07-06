@@ -90,6 +90,14 @@ export function SpeechBubble({ who, text, side = "left", characters }) {
       ? "j-dialogue-right"
       : "j-dialogue-left";
 
+  // Tông màu nền/viền/chữ của bong bóng — dùng chung cho thân và các puff đuôi
+  // để đám mây liền một khối trên cả nền sáng lẫn tối.
+  const bubbleTone = isNarrator
+    ? "border-primary-100 bg-primary-50 text-primary-900 dark:border-primary-850 dark:bg-primary-950/35 dark:text-primary-100"
+    : isRight
+      ? "border-primary-200 bg-primary-600 text-white dark:border-primary-600"
+      : "border-gray-200 bg-white text-gray-800 dark:border-primary-850 dark:bg-[#002b37] dark:text-primary-150";
+
   return (
     <div
       className={`flex items-start text-left ${directionClass} ${
@@ -128,16 +136,31 @@ export function SpeechBubble({ who, text, side = "left", characters }) {
             {character.role}
           </span>
         </div>
-        <div
-          className={`j-chat-pop border px-4 py-3 text-sm leading-6 ${
-            isNarrator
-              ? "rounded-3xl border-primary-100 bg-primary-50 text-primary-900 dark:border-primary-850 dark:bg-primary-950/35 dark:text-primary-100"
-              : isRight
-                ? "rounded-3xl rounded-tr-sm border-primary-200 bg-primary-600 text-white dark:border-primary-600"
-                : "rounded-3xl rounded-tl-sm border-gray-200 bg-white text-gray-800 dark:border-primary-850 dark:bg-[#002b37] dark:text-primary-150"
-          }`}
-        >
-          {text}
+        {/* Bong bóng chat kiểu đám mây: thân bo tròn đều + đuôi hai puff tròn
+            nhỏ dần hướng về phía avatar (trái/phải). Người dẫn (center) không
+            có đuôi. */}
+        <div className="relative">
+          <div
+            className={`j-chat-pop relative rounded-[22px] border px-4 py-3 text-sm leading-6 ${bubbleTone}`}
+          >
+            {text}
+          </div>
+          {!isNarrator && (
+            <>
+              <span
+                className={`absolute bottom-2.5 h-3.5 w-3.5 rounded-full border ${
+                  isRight ? "-right-1" : "-left-1"
+                } ${bubbleTone}`}
+                aria-hidden="true"
+              />
+              <span
+                className={`absolute -bottom-1 h-2 w-2 rounded-full border ${
+                  isRight ? "-right-2.5" : "-left-2.5"
+                } ${bubbleTone}`}
+                aria-hidden="true"
+              />
+            </>
+          )}
         </div>
       </div>
     </div>
