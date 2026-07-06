@@ -14,7 +14,7 @@ export function McqComponent({ component, onComplete }) {
   const [wrongIds, setWrongIds] = useState([]);
   const selected = options.find((option) => option.id === selectedId);
   const solved = selected?.isCorrect;
-  const canContinue = solved && (!isCompleted || isEmbedded);
+  const canContinue = solved && !isCompleted;
 
   useEffect(() => {
     if (completedAnswer) setSelectedId(completedAnswer);
@@ -50,7 +50,10 @@ export function McqComponent({ component, onComplete }) {
                     : "border-gray-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 bg-white dark:bg-surface-dark-elevated text-gray-700 dark:text-primary-100"
               }`}
             >
-              <span className="material-symbols-outlined text-xl shrink-0">
+              <span
+                className="material-symbols-outlined text-xl shrink-0"
+                aria-hidden="true"
+              >
                 {correctVisible
                   ? "check_circle"
                   : wrong

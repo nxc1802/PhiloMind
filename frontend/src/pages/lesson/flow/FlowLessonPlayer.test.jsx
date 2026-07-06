@@ -111,6 +111,9 @@ test("renders grouped lesson components sequentially in the right column", async
   fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
 
   expect(await screen.findByText(/Câu hỏi của Lyra/i)).toBeInTheDocument();
+  expect(
+    screen.queryByText(/Liệu có một quy luật tự nhiên/i),
+  ).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: /Tìm quy luật/i }));
   fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
 
@@ -133,6 +136,87 @@ test("renders grouped lesson components sequentially in the right column", async
       ],
     });
   });
+});
+
+test("sequential groups show one child at a time and do not keep stale next buttons", async () => {
+  render(
+    <FlowLessonPlayer
+      nodeDetails={{
+        id: "node-1",
+        lessonFlow: [
+          {
+            id: "social-role-experience",
+            type: "component_group",
+            title: "...khi phương thức sản xuất thay đổi...",
+            config: {
+              revealMode: "sequential",
+              completionMode: "all",
+              components: [
+                {
+                  id: "social-setup",
+                  type: "dialogue",
+                  title: "...khi phương thức sản xuất thay đổi...",
+                  config: {
+                    lines: [
+                      {
+                        who: "guide",
+                        text: "Bối cảnh: nhiều thế hệ trôi qua.",
+                      },
+                    ],
+                  },
+                },
+                {
+                  id: "social-borin-dialogue",
+                  type: "dialogue",
+                  title: "Một ngày của Borin",
+                  config: {
+                    lines: [
+                      {
+                        who: "slave",
+                        text: "Trời chưa sáng, tôi đã phải ra đồng cày cuốc.",
+                      },
+                    ],
+                  },
+                },
+                {
+                  id: "social-role-slave",
+                  type: "mcq",
+                  title: "Vai 1",
+                  config: {
+                    question: "Borin có thời gian suy ngẫm không?",
+                    options: [
+                      { id: "a", text: "Không.", isCorrect: true },
+                      { id: "b", text: "Có.", isCorrect: false },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        progress: [{ currentComponentIndex: 0, completedComponentIds: [] }],
+      }}
+    />,
+  );
+
+  expect(screen.getByText(/Bối cảnh: nhiều thế hệ/i)).toBeInTheDocument();
+  expect(screen.queryByText(/Trời chưa sáng/i)).not.toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
+
+  expect(await screen.findByText(/Trời chưa sáng/i)).toBeInTheDocument();
+  expect(screen.queryByText(/Bối cảnh: nhiều thế hệ/i)).not.toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
+
+  expect(
+    await screen.findByText(/Borin có thời gian suy ngẫm không/i),
+  ).toBeInTheDocument();
+  expect(screen.queryByText(/Trời chưa sáng/i)).not.toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole("button", { name: /^Không\.$/i }));
+
+  expect(screen.getAllByRole("button", { name: /Tiếp tục/i })).toHaveLength(1);
 });
 
 test("auto-revealed dialogue keeps the final continue action available", () => {

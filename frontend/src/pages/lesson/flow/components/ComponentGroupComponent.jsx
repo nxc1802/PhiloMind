@@ -80,19 +80,27 @@ export function ComponentGroupComponent({
     [childResults],
   );
 
-  const visibleChildren =
-    revealMode === "all"
-      ? children
-      : children.slice(
-          0,
-          Math.min(children.length, completedChildIds.size + 1),
-        );
-
   const readyToComplete =
     children.length > 0 &&
     (completionMode === "any"
       ? childResults.some((result) => result?.status === "completed")
       : children.every((child) => completedChildIds.has(child.id)));
+
+  const activeChildIndex = useMemo(() => {
+    if (children.length === 0) return -1;
+    const firstIncomplete = children.findIndex(
+      (child) => !completedChildIds.has(child.id),
+    );
+    if (firstIncomplete >= 0) return firstIncomplete;
+    return children.length - 1;
+  }, [children, completedChildIds]);
+
+  const visibleChildren =
+    revealMode === "all"
+      ? children
+      : activeChildIndex >= 0
+        ? [children[activeChildIndex]]
+        : [];
 
   const completeGroup = (nextChildResults) => {
     onComplete({
@@ -144,7 +152,7 @@ export function ComponentGroupComponent({
 
   return (
     <ComponentFrame component={component}>
-      <div className="min-h-0 flex-1 space-y-4">
+      <div className="flex min-h-0 flex-1 flex-col">
         {visibleChildren.map((child, index) => {
           const Renderer = getComponentRenderer(child.type);
           const childResult = childResults.find(
@@ -161,11 +169,7 @@ export function ComponentGroupComponent({
           return (
             <div
               key={child.id}
-              className={`animate-[fadeIn_220ms_ease-out] ${
-                index > 0
-                  ? "border-t border-slate-100 pt-4 dark:border-white/10"
-                  : ""
-              }`}
+              className="flex min-h-0 flex-1 animate-[fadeIn_220ms_ease-out] flex-col"
               data-group-child-id={child.id}
             >
               {Renderer ? (
@@ -185,10 +189,12 @@ export function ComponentGroupComponent({
         })}
 
         {readyToComplete && (
-          <ContinueButton
-            onComplete={() => completeGroup(childResults)}
-            label="Tiếp tục"
-          />
+          <div className="mt-4 flex shrink-0 justify-end">
+            <ContinueButton
+              onComplete={() => completeGroup(childResults)}
+              label="Tiếp tục"
+            />
+          </div>
         )}
       </div>
     </ComponentFrame>
