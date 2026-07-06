@@ -42,7 +42,7 @@ function getShuffledItems(items) {
   return shuffled;
 }
 
-function SortableChainCard({ item, index, correctIndex, isCorrectPosition }) {
+function SortableChainCard({ item, isCorrectPosition }) {
   const {
     attributes,
     listeners,
@@ -50,7 +50,11 @@ function SortableChainCard({ item, index, correctIndex, isCorrectPosition }) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: item.id });
+  } = useSortable({
+    id: item.id,
+    // Chuyển động mượt hơn: easing dịu, thời lượng dài hơn mặc định.
+    transition: { duration: 320, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
+  });
 
   return (
     <div
@@ -58,57 +62,52 @@ function SortableChainCard({ item, index, correctIndex, isCorrectPosition }) {
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
+        willChange: "transform",
       }}
       {...attributes}
       {...listeners}
       className={[
-        "group relative flex w-full touch-none items-stretch gap-3 rounded-2xl border-2 bg-white p-3 text-left shadow-sm transition-all",
-        "cursor-grab active:cursor-grabbing dark:bg-surface-dark-elevated",
+        "group relative flex w-full touch-none items-center gap-3.5 rounded-2xl border-2 p-3.5 text-left",
+        "cursor-grab transition-[border-color,box-shadow,background-color] duration-200 active:cursor-grabbing",
         isDragging
-          ? "z-30 scale-[1.015] border-primary-400 shadow-2xl"
+          ? "z-30 scale-[1.02] border-primary-400 bg-white shadow-2xl ring-4 ring-primary-200/50 dark:bg-surface-dark-elevated"
           : isCorrectPosition
-            ? "border-green-300 dark:border-green-800/70"
-            : "border-slate-200 hover:border-primary-350 dark:border-primary-850/55 dark:hover:border-primary-650",
+            ? "border-green-300 bg-green-50/70 shadow-sm dark:border-green-700/60 dark:bg-green-950/25"
+            : "border-slate-200 bg-white shadow-sm hover:border-primary-350 hover:shadow-md dark:border-primary-850/55 dark:bg-surface-dark-elevated dark:hover:border-primary-650",
       ].join(" ")}
     >
+      {/* Icon đẩy ra đầu (thay cho số đếm cũ) */}
       <span
         className={[
-          "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-lg font-extrabold",
+          "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-colors",
           isCorrectPosition
-            ? "bg-green-100 text-green-700 dark:bg-green-950/45 dark:text-green-200"
-            : "bg-slate-100 text-slate-500 group-hover:bg-primary-50 group-hover:text-primary-650 dark:bg-primary-950/35 dark:text-primary-250",
+            ? "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-200"
+            : "bg-primary-50 text-primary-600 group-hover:bg-primary-100 dark:bg-primary-950/40 dark:text-primary-250",
         ].join(" ")}
       >
-        {index + 1}
+        <span className="material-symbols-outlined text-[26px]">
+          {item.icon || "extension"}
+        </span>
       </span>
 
-      {item.icon && (
-        <span className="material-symbols-outlined mt-2 shrink-0 text-2xl text-primary-500 dark:text-primary-250">
-          {item.icon}
-        </span>
-      )}
-
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-semibold leading-6 text-slate-850 dark:text-primary-100">
+        <p className="text-sm font-semibold leading-6 text-slate-800 dark:text-primary-100">
           {item.text}
         </p>
         <p
           className={[
-            "mt-2 text-[11px] font-bold uppercase tracking-wide",
+            "mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide",
             isCorrectPosition
-              ? "text-green-700 dark:text-green-300"
-              : "text-slate-400 dark:text-primary-500",
+              ? "text-green-600 dark:text-green-300"
+              : "text-amber-600 dark:text-amber-400/90",
           ].join(" ")}
         >
-          {isCorrectPosition
-            ? "Đúng vị trí"
-            : `Vị trí đúng: ${correctIndex + 1}`}
+          <span className="material-symbols-outlined text-[15px]">
+            {isCorrectPosition ? "check_circle" : "swap_vert"}
+          </span>
+          {isCorrectPosition ? "Đúng vị trí" : "Chưa đúng vị trí"}
         </p>
       </div>
-
-      <span className="material-symbols-outlined mt-2 shrink-0 text-slate-300 transition-colors group-hover:text-primary-500 dark:text-primary-700">
-        drag_indicator
-      </span>
     </div>
   );
 }
@@ -223,8 +222,6 @@ export function ChainSortingComponent({ component, onComplete }) {
                 <SortableChainCard
                   key={item.id}
                   item={item}
-                  index={index}
-                  correctIndex={correctIndexById[item.id]}
                   isCorrectPosition={correctIndexById[item.id] === index}
                 />
               ))}
