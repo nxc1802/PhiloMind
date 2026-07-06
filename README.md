@@ -1,3 +1,14 @@
+---
+title: PhiloMind
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+
 # PhiloMind
 
 PhiloMind is a monorepo for an AI-assisted philosophy learning product. It turns a linear course into a guided journey with a learner frontend, an admin portal, a NestJS API, PostgreSQL/Supabase storage, AI-assisted debate and podcast generation, flashcards, quizzes, and a FastAPI TTS worker.
