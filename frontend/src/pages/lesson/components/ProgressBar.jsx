@@ -127,10 +127,17 @@ export function ProgressBar({
     }
   };
 
-  const getLabel = (component) =>
-    component.config?.shortLabel ||
-    component.navigation_config?.shortLabel ||
-    component.title;
+  // Giới hạn độ dài nhãn để thanh tiến trình gọn gàng, chữ vừa phải; nhãn dài
+  // bị cắt bằng dấu … (kết hợp truncate của CSS cho phần hiển thị).
+  const MAX_LABEL = 22;
+  const getLabel = (component) => {
+    const raw =
+      component.config?.shortLabel ||
+      component.navigation_config?.shortLabel ||
+      component.title ||
+      "";
+    return raw.length > MAX_LABEL ? `${raw.slice(0, MAX_LABEL - 1).trimEnd()}…` : raw;
+  };
 
   return (
     <div className="relative w-full max-w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-transparent dark:bg-surface-dark-elevated">
@@ -206,7 +213,7 @@ export function ProgressBar({
                     ? "check_circle"
                     : getIcon(component.type)}
                 </span>
-                <span className="relative z-10 min-w-0 truncate text-[13px] font-bold leading-tight">
+                <span className="relative z-10 min-w-0 truncate text-[12px] font-bold leading-tight">
                   {label}
                 </span>
               </button>
