@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { normalizeOptions } from "../utils/normalizeOptions";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
+
+// Thời gian giữ trạng thái "sai" trên màn hình trước khi tự trả về ban đầu.
+const WRONG_FLASH_MS = 1400;
 
 export function McqComponent({ component, onComplete }) {
   const options = normalizeOptions(component.config.options);
@@ -11,7 +14,11 @@ export function McqComponent({ component, onComplete }) {
     ? null
     : component.__completedResult?.answer || null;
   const [selectedId, setSelectedId] = useState(completedAnswer);
-  const [wrongIds, setWrongIds] = useState([]);
+  // Id đang chớp đỏ tạm thời (chỉ tồn tại trong WRONG_FLASH_MS rồi tự reset),
+  // khác với đếm số lần sai (attemptsRef) vốn phải giữ nguyên để tính điểm.
+  const [wrongFlashId, setWrongFlashId] = useState(null);
+  const attemptsRef = useRef(0);
+  const flashTimerRef = useRef(null);
   const selected = options.find((option) => option.id === selectedId);
   const solved = selected?.isCorrect;
   const canContinue = solved && !isCompleted;
@@ -20,12 +27,31 @@ export function McqComponent({ component, onComplete }) {
     if (completedAnswer) setSelectedId(completedAnswer);
   }, [completedAnswer]);
 
+  useEffect(() => {
+    return () => {
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+    };
+  }, []);
+
   const handlePick = (option) => {
     if (solved) return;
-    setSelectedId(option.id);
-    if (!option.isCorrect && !wrongIds.includes(option.id)) {
-      setWrongIds((prev) => [...prev, option.id]);
+
+    if (option.isCorrect) {
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+      setWrongFlashId(null);
+      setSelectedId(option.id);
+      return;
     }
+
+    attemptsRef.current += 1;
+    setSelectedId(option.id);
+    setWrongFlashId(option.id);
+
+    if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+    flashTimerRef.current = setTimeout(() => {
+      setSelectedId(null);
+      setWrongFlashId(null);
+    }, WRONG_FLASH_MS);
   };
 
   return (
@@ -35,7 +61,7 @@ export function McqComponent({ component, onComplete }) {
       </p>
       <div className="space-y-2.5">
         {options.map((option) => {
-          const wrong = wrongIds.includes(option.id);
+          const wrong = option.id === wrongFlashId;
           const correctVisible = solved && option.id === selectedId;
           return (
             <button
@@ -89,7 +115,7 @@ export function McqComponent({ component, onComplete }) {
               onComplete={() =>
                 onComplete({
                   score: 100,
-                  attempts: wrongIds.length + 1,
+                  attempts: attemptsRef.current + 1,
                   answer: selectedId,
                   status: "completed",
                 })
