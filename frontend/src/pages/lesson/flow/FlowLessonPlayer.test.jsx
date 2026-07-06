@@ -139,65 +139,62 @@ test("renders grouped lesson components sequentially in the right column", async
 });
 
 test("sequential groups append each child and do not keep stale next buttons", async () => {
-  render(
-    <FlowLessonPlayer
-      nodeDetails={{
-        id: "node-1",
-        lessonFlow: [
-          {
-            id: "social-role-experience",
-            type: "component_group",
-            title: "...khi phương thức sản xuất thay đổi...",
-            config: {
-              revealMode: "sequential",
-              completionMode: "all",
-              components: [
-                {
-                  id: "social-setup",
-                  type: "dialogue",
-                  title: "...khi phương thức sản xuất thay đổi...",
-                  config: {
-                    lines: [
-                      {
-                        who: "guide",
-                        text: "Bối cảnh: nhiều thế hệ trôi qua.",
-                      },
-                    ],
+  const nodeDetails = {
+    id: "node-1",
+    lessonFlow: [
+      {
+        id: "social-role-experience",
+        type: "component_group",
+        title: "...khi phương thức sản xuất thay đổi...",
+        config: {
+          revealMode: "sequential",
+          completionMode: "all",
+          components: [
+            {
+              id: "social-setup",
+              type: "dialogue",
+              title: "...khi phương thức sản xuất thay đổi...",
+              config: {
+                lines: [
+                  {
+                    who: "guide",
+                    text: "Bối cảnh: nhiều thế hệ trôi qua.",
                   },
-                },
-                {
-                  id: "social-borin-dialogue",
-                  type: "dialogue",
-                  title: "Một ngày của Borin",
-                  config: {
-                    lines: [
-                      {
-                        who: "slave",
-                        text: "Trời chưa sáng, tôi đã phải ra đồng cày cuốc.",
-                      },
-                    ],
-                  },
-                },
-                {
-                  id: "social-role-slave",
-                  type: "mcq",
-                  title: "Vai 1",
-                  config: {
-                    question: "Borin có thời gian suy ngẫm không?",
-                    options: [
-                      { id: "a", text: "Không.", isCorrect: true },
-                      { id: "b", text: "Có.", isCorrect: false },
-                    ],
-                  },
-                },
-              ],
+                ],
+              },
             },
-          },
-        ],
-        progress: [{ currentComponentIndex: 0, completedComponentIds: [] }],
-      }}
-    />,
-  );
+            {
+              id: "social-borin-dialogue",
+              type: "dialogue",
+              title: "Một ngày của Borin",
+              config: {
+                lines: [
+                  {
+                    who: "slave",
+                    text: "Trời chưa sáng, tôi đã phải ra đồng cày cuốc.",
+                  },
+                ],
+              },
+            },
+            {
+              id: "social-role-slave",
+              type: "mcq",
+              title: "Vai 1",
+              config: {
+                question: "Borin có thời gian suy ngẫm không?",
+                options: [
+                  { id: "a", text: "Không.", isCorrect: true },
+                  { id: "b", text: "Có.", isCorrect: false },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+    progress: [{ currentComponentIndex: 0, completedComponentIds: [] }],
+  };
+  const { rerender } = render(<FlowLessonPlayer nodeDetails={nodeDetails} />);
 
   expect(screen.getByText(/Bối cảnh: nhiều thế hệ/i)).toBeInTheDocument();
   expect(screen.queryByText(/Trời chưa sáng/i)).not.toBeInTheDocument();
@@ -206,6 +203,38 @@ test("sequential groups append each child and do not keep stale next buttons", a
 
   expect(await screen.findByText(/Trời chưa sáng/i)).toBeInTheDocument();
   expect(screen.getByText(/Bối cảnh: nhiều thế hệ/i)).toBeInTheDocument();
+  expect(screen.getAllByRole("button", { name: /Tiếp tục/i })).toHaveLength(1);
+
+  rerender(
+    <FlowLessonPlayer
+      nodeDetails={{
+        ...nodeDetails,
+        progress: [
+          {
+            currentComponentIndex: 0,
+            completedComponentIds: [],
+            componentResults: [
+              {
+                componentId: "social-role-experience",
+                type: "component_group",
+                status: "in_progress",
+                childResults: [
+                  {
+                    componentId: "social-setup",
+                    type: "dialogue",
+                    status: "completed",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }}
+    />,
+  );
+
+  expect(screen.getByText(/Bối cảnh: nhiều thế hệ/i)).toBeInTheDocument();
+  expect(screen.getByText(/Trời chưa sáng/i)).toBeInTheDocument();
   expect(screen.getAllByRole("button", { name: /Tiếp tục/i })).toHaveLength(1);
 
   fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));

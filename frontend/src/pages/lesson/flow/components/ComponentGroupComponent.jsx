@@ -7,10 +7,7 @@ function getSavedChildResults(componentResults, component) {
   const parentResult = (componentResults || []).find(
     (result) => result?.componentId === component.id,
   );
-  if (
-    parentResult?.status === "completed" &&
-    Array.isArray(parentResult?.childResults)
-  ) {
+  if (Array.isArray(parentResult?.childResults)) {
     return parentResult.childResults;
   }
 

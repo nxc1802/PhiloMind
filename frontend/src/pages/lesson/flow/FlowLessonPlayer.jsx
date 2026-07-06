@@ -50,6 +50,57 @@ function findFlowIndexByComponentId(flow, componentId) {
   });
 }
 
+function getComponentResults(progress) {
+  return Array.isArray(progress?.componentResults)
+    ? progress.componentResults
+    : [];
+}
+
+function mergeComponentResults(currentResults, incomingResults) {
+  if (!Array.isArray(incomingResults) || incomingResults.length === 0) {
+    return Array.isArray(currentResults) ? currentResults : [];
+  }
+
+  const byId = new Map(
+    (Array.isArray(currentResults) ? currentResults : [])
+      .filter((result) => result?.componentId)
+      .map((result) => [result.componentId, result]),
+  );
+
+  incomingResults.forEach((result) => {
+    if (!result?.componentId) return;
+    const existing = byId.get(result.componentId);
+    const existingChildCount = Array.isArray(existing?.childResults)
+      ? existing.childResults.length
+      : 0;
+    const incomingChildCount = Array.isArray(result?.childResults)
+      ? result.childResults.length
+      : 0;
+
+    byId.set(
+      result.componentId,
+      existingChildCount > incomingChildCount
+        ? { ...result, childResults: existing.childResults }
+        : result,
+    );
+  });
+
+  return Array.from(byId.values());
+}
+
+function upsertComponentResult(results, componentResult) {
+  if (!componentResult?.componentId) {
+    return Array.isArray(results) ? results : [];
+  }
+
+  return [
+    ...(Array.isArray(results) ? results : []).filter(
+      (result) => result?.componentId !== componentResult.componentId,
+    ),
+    componentResult,
+  ];
+}
+
 export default function FlowLessonPlayer({
   nodeDetails,
   isRevisit,
@@ -137,12 +188,12 @@ export default function FlowLessonPlayer({
       ? progress.completedComponentIds
       : [],
   );
-  const componentResults = useMemo(
-    () =>
-      Array.isArray(progress?.componentResults)
-        ? progress.componentResults
-        : [],
+  const progressComponentResults = useMemo(
+    () => getComponentResults(progress),
     [progress?.componentResults],
+  );
+  const [componentResults, setComponentResults] = useState(
+    progressComponentResults,
   );
   const [activeMediaId, setActiveMediaId] = useState(lessonMedia[0]?.id);
 
@@ -170,9 +221,16 @@ export default function FlowLessonPlayer({
         ? progress.completedComponentIds
         : [],
     );
+    setComponentResults(progressComponentResults);
     setActiveMediaId(getMediaIdForIndex(initialIndex));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeDetails?.id, lessonMedia]);
+
+  useEffect(() => {
+    setComponentResults((currentResults) =>
+      mergeComponentResults(currentResults, progressComponentResults),
+    );
+  }, [progressComponentResults]);
 
   // 4. Progress Handlers
   const handleCompleteComponent = (
@@ -194,6 +252,9 @@ export default function FlowLessonPlayer({
     };
 
     setCompletedIds(nextCompletedIds);
+    setComponentResults((currentResults) =>
+      upsertComponentResult(currentResults, componentResult),
+    );
 
     updateComponentProgress.mutate({
       nodeId: nodeDetails.id,
@@ -223,6 +284,10 @@ export default function FlowLessonPlayer({
       ...result,
     };
 
+    setComponentResults((currentResults) =>
+      upsertComponentResult(currentResults, componentResult),
+    );
+
     updateComponentProgress.mutate({
       nodeId: nodeDetails.id,
       userId: user?.id,
@@ -248,6 +313,7 @@ export default function FlowLessonPlayer({
     if (!firstComponent || !nodeDetails?.id) return;
 
     setCompletedIds([]);
+    setComponentResults([]);
     setActiveIndex(0);
     setActiveMediaId(getMediaIdForIndex(0));
 
