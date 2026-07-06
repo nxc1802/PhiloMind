@@ -7,8 +7,15 @@ function getSavedChildResults(componentResults, component) {
   const parentResult = (componentResults || []).find(
     (result) => result?.componentId === component.id,
   );
-  if (Array.isArray(parentResult?.childResults)) {
+  if (
+    parentResult?.status === "completed" &&
+    Array.isArray(parentResult?.childResults)
+  ) {
     return parentResult.childResults;
+  }
+
+  if (parentResult) {
+    return [];
   }
 
   const childIds = new Set(
@@ -99,7 +106,7 @@ export function ComponentGroupComponent({
     revealMode === "all"
       ? children
       : activeChildIndex >= 0
-        ? [children[activeChildIndex]]
+        ? children.slice(0, activeChildIndex + 1)
         : [];
 
   const completeGroup = (nextChildResults) => {
@@ -169,7 +176,7 @@ export function ComponentGroupComponent({
           return (
             <div
               key={child.id}
-              className="flex min-h-0 flex-1 animate-[fadeIn_220ms_ease-out] flex-col"
+              className="flex min-h-0 shrink-0 animate-[fadeIn_220ms_ease-out] flex-col"
               data-group-child-id={child.id}
             >
               {Renderer ? (

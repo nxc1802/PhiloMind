@@ -75,7 +75,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
       setFlyer(null);
       setFlying(false);
       complete();
-    }, 1150);
+    }, 2550);
   };
 
   return (
@@ -95,7 +95,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
               ? `translate(${flyer.dx}px, ${flyer.dy}px) scale(${flyer.scale}) rotate(720deg)`
               : "translate(0, 0) scale(1) rotate(0deg)",
             transition:
-              "transform 1100ms cubic-bezier(0.16, 1, 0.3, 1), opacity 1100ms ease",
+              "transform 2500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 2500ms ease",
           }}
         >
           <div className="relative flex h-full w-full items-center justify-center rounded-[1.75rem] bg-gradient-to-br from-amber-200 via-yellow-400 to-orange-500 text-white shadow-[0_24px_80px_rgba(245,158,11,0.58)]">

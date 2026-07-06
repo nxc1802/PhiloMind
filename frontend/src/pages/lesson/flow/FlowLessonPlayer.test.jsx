@@ -112,8 +112,8 @@ test("renders grouped lesson components sequentially in the right column", async
 
   expect(await screen.findByText(/Câu hỏi của Lyra/i)).toBeInTheDocument();
   expect(
-    screen.queryByText(/Liệu có một quy luật tự nhiên/i),
-  ).not.toBeInTheDocument();
+    screen.getByText(/Liệu có một quy luật tự nhiên/i),
+  ).toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: /Tìm quy luật/i }));
   fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
 
@@ -138,7 +138,7 @@ test("renders grouped lesson components sequentially in the right column", async
   });
 });
 
-test("sequential groups show one child at a time and do not keep stale next buttons", async () => {
+test("sequential groups append each child and do not keep stale next buttons", async () => {
   render(
     <FlowLessonPlayer
       nodeDetails={{
@@ -205,14 +205,19 @@ test("sequential groups show one child at a time and do not keep stale next butt
   fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
 
   expect(await screen.findByText(/Trời chưa sáng/i)).toBeInTheDocument();
-  expect(screen.queryByText(/Bối cảnh: nhiều thế hệ/i)).not.toBeInTheDocument();
+  expect(screen.getByText(/Bối cảnh: nhiều thế hệ/i)).toBeInTheDocument();
+  expect(screen.getAllByRole("button", { name: /Tiếp tục/i })).toHaveLength(1);
 
   fireEvent.click(screen.getByRole("button", { name: /Tiếp tục/i }));
 
   expect(
     await screen.findByText(/Borin có thời gian suy ngẫm không/i),
   ).toBeInTheDocument();
-  expect(screen.queryByText(/Trời chưa sáng/i)).not.toBeInTheDocument();
+  expect(screen.getByText(/Bối cảnh: nhiều thế hệ/i)).toBeInTheDocument();
+  expect(screen.getByText(/Trời chưa sáng/i)).toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /Tiếp tục/i }),
+  ).not.toBeInTheDocument();
 
   fireEvent.click(screen.getByRole("button", { name: /^Không\.$/i }));
 
