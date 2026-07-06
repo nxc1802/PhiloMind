@@ -1,3 +1,14 @@
+---
+title: PhiloMind
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+
 # PhiloMind Backend
 
 NestJS API server for auth, learning roadmap, lesson flow, progress, AI debate, flashcards, quizzes, podcast/TTS, storage, and admin CRUD.
