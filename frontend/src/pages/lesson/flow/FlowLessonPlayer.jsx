@@ -306,15 +306,9 @@ export default function FlowLessonPlayer({
           />
         </div>
 
-        {/* Divider tĩnh — chỉ mang tính trang trí, không thể kéo */}
-        <div
-          aria-hidden="true"
-          className="flex w-px shrink-0 items-center justify-center"
-        >
-          <div className="h-16 w-px rounded-full bg-slate-200 dark:bg-slate-700" />
-        </div>
-
-        {/* Right Column: Interactive Content — nửa còn lại */}
+        {/* Right Column: Interactive Content — nửa còn lại.
+            Không còn divider: hai cột cách nhau đúng bằng gap-3 (12px), khớp
+            với khoảng cách dọc giữa thanh tiến trình và khung bài học (p-3). */}
         <div className="relative h-full min-h-0 min-w-0 flex-1 basis-0">
           <RightInteractive
             flow={flow}

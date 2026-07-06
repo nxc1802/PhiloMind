@@ -153,8 +153,12 @@ export function ProgressBar({
 
       <div
         ref={scrollRef}
-        className="flex h-16 touch-pan-x select-none items-center gap-2 overflow-x-auto px-4 py-2 scrollbar-hide snap-x"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        className="flex h-16 touch-pan-x select-none items-center gap-2 overflow-x-auto overscroll-x-contain px-4 py-2 scrollbar-hide"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          WebkitOverflowScrolling: "touch",
+        }}
         onPointerDown={startDrag}
         onPointerMove={moveDrag}
         onPointerUp={endDrag}
@@ -171,7 +175,7 @@ export function ProgressBar({
             <div
               key={component.id}
               style={{ flex: "0 0 calc((100% - 1.5rem) / 5)" }}
-              className="relative flex h-full shrink-0 snap-center items-center justify-center px-3"
+              className="relative flex h-full shrink-0 items-center justify-center px-3"
             >
               <button
                 type="button"
@@ -202,7 +206,7 @@ export function ProgressBar({
                     ? "check_circle"
                     : getIcon(component.type)}
                 </span>
-                <span className="relative z-10 min-w-0 truncate text-[11px] font-bold leading-tight">
+                <span className="relative z-10 min-w-0 truncate text-[13px] font-bold leading-tight">
                   {label}
                 </span>
               </button>
