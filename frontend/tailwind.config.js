@@ -7,20 +7,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Calm academic blue accent. Use it for controls, states, and accents,
-        // while page backgrounds stay neutral or very lightly blue-tinted.
+        // Bright academic teal-blue accent. Sáng hơn hẳn bản cũ (#0C506C) để
+        // chữ/nút/nền không còn tối. Dùng cho controls, states, accents; nền
+        // trang giữ trung tính hoặc phớt xanh nhẹ.
         primary: {
-              50:  '#F2F8FA',
-              100: '#DCECF1',
-              200: '#BCD8E3',
-              300: '#8FBACB',
-              400: '#5F95AD',
-              500: '#0C506C', // màu chính
-              600: '#0A4258',
-              700: '#08384A',
-              800: '#062B3A',
-              900: '#041F2A',
-              950: '#02141B',
+              50:  '#EAFBFF',
+              100: '#C9F2FB',
+              200: '#98E4F4',
+              300: '#5DCFEA',
+              400: '#22B4D8',
+              500: '#0F97BE', // màu chính — teal-blue sáng
+              600: '#0C7EA2',
+              650: '#0B7597', // 650/750/850: các bước trung gian được dùng ở
+              700: '#0B6C8E', // hàng trăm chỗ trong code (PageHero, cards, ...)
+              750: '#0D607F', // nhưng trước đây CHƯA định nghĩa -> class rỗng ->
+              800: '#0F5470', // vỡ giao diện light mode. Bổ sung để chúng hoạt
+              850: '#114C64', // động đúng như thiết kế gốc.
+              900: '#134457',
+              950: '#0A2A38',
         },
         // Semantic surface tokens for consistent bg across light/dark
         surface: {

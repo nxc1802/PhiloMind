@@ -14,8 +14,8 @@
     --text-primary:      #0f172a;
     --text-secondary:    #475569;
     --text-muted:        #64748b;
-    --accent:            #2563eb;
-    --accent-soft:       #eff6ff;
+    --accent:            #0C7EA2;
+    --accent-soft:       #EAFBFF;
   }
 
   .dark {
@@ -26,8 +26,8 @@
     --text-primary:      #f8fafc;
     --text-secondary:    #cbd5e1;
     --text-muted:        #94a3b8;
-    --accent:            #93c5fd;
-    --accent-soft:       rgba(37, 99, 235, 0.16);
+    --accent:            #5DCFEA;
+    --accent-soft:       rgba(15, 151, 190, 0.16);
   }
 
   body {
@@ -160,13 +160,15 @@
   color: var(--text-primary);
 }
 
-/* Contrast guardrails for legacy utility combinations. */
+/* Contrast guardrails for legacy utility combinations.
+   Ép các sắc primary sáng (250..500) về teal-700 đủ đậm để đọc rõ trên nền
+   sáng (đồng bộ với palette teal-blue mới). */
 .text-primary-250,
 .text-primary-300,
 .text-primary-350,
 .text-primary-400,
 .text-primary-500 {
-  color: #1d4ed8 !important;
+  color: #0B6C8E !important;
 }
 
 .dark .dark\:text-primary-100,
@@ -177,7 +179,7 @@
 .dark .dark\:text-primary-350,
 .dark .dark\:text-primary-400,
 .dark .dark\:text-primary-500 {
-  color: #dbeafe !important;
+  color: #C9F2FB !important;
 }
 
 .dark [class*="dark:bg-primary-900"],
