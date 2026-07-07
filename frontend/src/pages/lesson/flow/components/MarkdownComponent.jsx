@@ -4,6 +4,8 @@ import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 
 export function MarkdownComponent({ component, onComplete }) {
+  const isCompleted = component.__isCompleted === true;
+
   return (
     <ComponentFrame component={component}>
       <div className="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-sm dark:border-primary-850 dark:bg-[#102733]">
@@ -29,7 +31,7 @@ export function MarkdownComponent({ component, onComplete }) {
           {parseMarkdownToReact(component.config.content || "")}
         </article>
       </div>
-      <ContinueButton onComplete={onComplete} />
+      {!isCompleted && <ContinueButton onComplete={onComplete} />}
     </ComponentFrame>
   );
 }

@@ -8,6 +8,21 @@ import React, {
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
 
+function getNodeText(value) {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object") {
+    return value.text || value.label || value.detail || "";
+  }
+  return "";
+}
+
+function getNodeDetail(value) {
+  if (value && typeof value === "object") {
+    return value.detail || value.description || "";
+  }
+  return "";
+}
+
 /**
  * MindmapRevealComponent — "Hợp nhất tri thức" dạng BẢN ĐỒ TƯ DUY TOẢ TIA.
  *
@@ -28,7 +43,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
   const lastRevealedId = revealed[revealed.length - 1];
   const lastRevealedNode = nodes.find((node) => node.id === lastRevealedId);
   const lastRevealedName =
-    lastRevealedNode?.back?.text || lastRevealedNode?.label || "";
+    getNodeText(lastRevealedNode?.back) || lastRevealedNode?.label || "";
   const partialCelebrate = revealedCount > 0 && !complete;
 
   // --- Đo toạ độ để vẽ spoke ---
@@ -211,9 +226,11 @@ export function MindmapRevealComponent({ component, onComplete }) {
         <div className="relative z-10 flex min-w-0 flex-col gap-4">
           {nodes.map((node, index) => {
             const open = isRevealed(node.id);
-            const title = node.back?.text || node.label || `Mảnh ${index + 1}`;
-            const detail = node.back?.detail || node.detail;
-            const frontText = node.front?.text || "Đang chờ kết nối…";
+            const title =
+              getNodeText(node.back) || node.label || `Mảnh ${index + 1}`;
+            const detail = getNodeDetail(node.back) || node.detail;
+            const frontText =
+              getNodeText(node.front) || "Đang chờ kết nối…";
 
             return (
               <button

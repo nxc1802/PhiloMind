@@ -7,8 +7,14 @@ import { DragItem, DropZone } from "./dnd";
 
 export function CategorySortingComponent({ component, onComplete }) {
   const { categories = [], cards = [], summary } = component.config;
+  const isCompleted = component.__isCompleted === true;
+  const completedAnswer =
+    component.__completedResult?.answer &&
+    typeof component.__completedResult.answer === "object"
+      ? component.__completedResult.answer
+      : {};
   // Keep track of placements: { [cardId]: categoryId }
-  const [placements, setPlacements] = useState({});
+  const [placements, setPlacements] = useState(completedAnswer);
   const complete =
     cards.length > 0 &&
     cards.every((card) => placements[card.id] === card.categoryId);
@@ -114,16 +120,18 @@ export function CategorySortingComponent({ component, onComplete }) {
             <span className="material-symbols-outlined">task_alt</span> Phân loại chính xác.
           </p>
           {summary && <p className="text-sm mt-1">{summary}</p>}
-          <ContinueButton
-            onComplete={() =>
-              onComplete({
-                score: 100,
-                answer: placements,
-                status: "completed",
-              })
-            }
-            label="Tiếp tục"
-          />
+          {!isCompleted && (
+            <ContinueButton
+              onComplete={() =>
+                onComplete({
+                  score: 100,
+                  answer: placements,
+                  status: "completed",
+                })
+              }
+              label="Tiếp tục"
+            />
+          )}
         </div>
       )}
     </ComponentFrame>

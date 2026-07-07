@@ -21,145 +21,181 @@
   "lessonMedia": [],
   "lessonFlow": [
     {
-      "id": "concept-opening",
-      "type": "markdown",
-      "title": "Từ nguyên và chiều sâu của triết học",
+      "id": "concept-origin-group",
+      "type": "component_group",
+      "title": "Từ nguyên và nguồn gốc thuật ngữ triết học",
+      "navigation_config": {
+        "shortLabel": "Từ nguyên"
+      },
       "config": {
-        "content": "Triết học đã xuất hiện như một tất yếu khách quan ở cả phương Đông và phương Tây gần như cùng thời điểm, khoảng thế kỷ VIII – VI trước Công nguyên. Để hiểu quan niệm của người xưa về triết học, hãy đặt các thuật ngữ nguyên bản vào đúng vùng văn minh của chúng."
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "concept-opening",
+            "type": "markdown",
+            "title": "Từ nguyên và chiều sâu của triết học",
+            "config": {
+              "content": "Triết học đã xuất hiện như một tất yếu khách quan ở cả phương Đông và phương Tây gần như cùng thời điểm, khoảng thế kỷ VIII – VI trước Công nguyên. Để hiểu quan niệm của người xưa về triết học, hãy đặt các thuật ngữ nguyên bản vào đúng vùng văn minh của chúng."
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "ancient-origin-map",
+            "type": "map_target_matching",
+            "title": "Nguồn gốc thuật ngữ triết học",
+            "config": {
+              "instruction": "Kéo từng thuật ngữ vào đúng vùng văn minh đang phát sáng trên bản đồ.",
+              "targets": [
+                {
+                  "id": "china",
+                  "label": "Trung Quốc",
+                  "icon": "temple_buddhist",
+                  "detail": "Triết biểu hiện cao của trí tuệ, là sự hiểu biết sâu sắc về thế giới thiên - địa - nhân và định hướng nhân sinh quan.",
+                  "x": 72,
+                  "y": 44
+                },
+                {
+                  "id": "india",
+                  "label": "Ấn Độ",
+                  "icon": "water",
+                  "detail": "Dar'sana nghĩa gốc là chiêm ngưỡng, hàm ý tri thức dựa trên lý trí, là con đường suy ngẫm dẫn con người đến với lẽ phải.",
+                  "x": 58,
+                  "y": 58
+                },
+                {
+                  "id": "greece",
+                  "label": "Hy Lạp",
+                  "icon": "account_balance",
+                  "detail": "Philosophia nghĩa là yêu mến sự thông thái, nhấn mạnh khát vọng tìm kiếm chân lý.",
+                  "x": 32,
+                  "y": 44
+                }
+              ],
+              "items": [
+                {
+                  "id": "zhe",
+                  "text": "哲",
+                  "targetId": "china"
+                },
+                {
+                  "id": "darsana",
+                  "text": "Dar'sana",
+                  "targetId": "india"
+                },
+                {
+                  "id": "philosophia",
+                  "text": "φιλοσοφία",
+                  "targetId": "greece"
+                }
+              ],
+              "summary": "Cả ở phương Đông và phương Tây, ngay từ đầu, triết học đã là hoạt động tinh thần bậc cao, là loại hình nhận thức có trình độ trừu tượng hóa và khái quát hóa rất cao. Triết học nhìn nhận và đánh giá đối tượng thông qua thực tế và thông qua hiện tượng quan sát được về con người và vũ trụ, tồn tại với tư cách là một hình thái ý thức xã hội."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          }
+        ]
       },
       "completionRule": {
-        "type": "viewed"
+        "type": "all"
       }
     },
     {
-      "id": "ancient-origin-map",
-      "type": "map_target_matching",
-      "title": "Nguồn gốc thuật ngữ triết học",
+      "id": "worldview-sorting-group",
+      "type": "component_group",
+      "title": "Triết học khác thần thoại - tôn giáo như thế nào?",
+      "navigation_config": {
+        "shortLabel": "Phân loại"
+      },
       "config": {
-        "instruction": "Kéo từng thuật ngữ vào đúng vùng văn minh đang phát sáng trên bản đồ.",
-        "targets": [
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
           {
-            "id": "china",
-            "label": "Trung Quốc",
-            "icon": "temple_buddhist",
-            "detail": "Triết biểu hiện cao của trí tuệ, là sự hiểu biết sâu sắc về thế giới thiên - địa - nhân và định hướng nhân sinh quan.",
-            "x": 72,
-            "y": 44
+            "id": "worldview-sorting-intro",
+            "type": "markdown",
+            "title": "Triết học khác gì với thần thoại - tôn giáo?",
+            "config": {
+              "content": "Triết học và các hình thức nhận thức khác đều muốn vẽ nên bức tranh về thế giới, nhưng công cụ của chúng rất khác nhau. Hãy phân loại các yếu tố dưới đây để làm rõ tính đặc thù của nhận thức triết học."
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
-            "id": "india",
-            "label": "Ấn Độ",
-            "icon": "water",
-            "detail": "Dar'sana nghĩa gốc là chiêm ngưỡng, hàm ý tri thức dựa trên lý trí, là con đường suy ngẫm dẫn con người đến với lẽ phải.",
-            "x": 58,
-            "y": 58
-          },
-          {
-            "id": "greece",
-            "label": "Hy Lạp",
-            "icon": "account_balance",
-            "detail": "Philosophia nghĩa là yêu mến sự thông thái, nhấn mạnh khát vọng tìm kiếm chân lý.",
-            "x": 32,
-            "y": 44
+            "id": "worldview-sorting",
+            "type": "category_sorting",
+            "title": "Phân loại thế giới quan",
+            "config": {
+              "categories": [
+                {
+                  "id": "myth-religion",
+                  "label": "Thần thoại - Tôn giáo",
+                  "description": "Thế giới quan dựa trên niềm tin, tưởng tượng và sức mạnh siêu nhiên."
+                },
+                {
+                  "id": "philosophy",
+                  "label": "Triết học",
+                  "description": "Nhận thức dựa trên lý tính, logic, kinh nghiệm và quy luật."
+                }
+              ],
+              "cards": [
+                {
+                  "id": "faith",
+                  "text": "Niềm tin",
+                  "categoryId": "myth-religion"
+                },
+                {
+                  "id": "imagined-world",
+                  "text": "Quan niệm tưởng tượng về thế giới",
+                  "categoryId": "myth-religion"
+                },
+                {
+                  "id": "personification",
+                  "text": "Nhân cách hóa tự nhiên",
+                  "categoryId": "myth-religion"
+                },
+                {
+                  "id": "rituals",
+                  "text": "Các nghi lễ",
+                  "categoryId": "myth-religion"
+                },
+                {
+                  "id": "reason",
+                  "text": "Công cụ lý tính",
+                  "categoryId": "philosophy"
+                },
+                {
+                  "id": "logic",
+                  "text": "Các tiêu chuẩn logic",
+                  "categoryId": "philosophy"
+                },
+                {
+                  "id": "experience",
+                  "text": "Kinh nghiệm con người khám phá thực tại",
+                  "categoryId": "philosophy"
+                },
+                {
+                  "id": "laws",
+                  "text": "Các quy luật",
+                  "categoryId": "philosophy"
+                }
+              ],
+              "summary": "Triết học lý giải thế giới bằng lý tính, logic và khái quát hóa thay vì chỉ dựa vào niềm tin hoặc tưởng tượng."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
           }
-        ],
-        "items": [
-          {
-            "id": "zhe",
-            "text": "哲",
-            "targetId": "china"
-          },
-          {
-            "id": "darsana",
-            "text": "Dar'sana",
-            "targetId": "india"
-          },
-          {
-            "id": "philosophia",
-            "text": "φιλοσοφία",
-            "targetId": "greece"
-          }
-        ],
-        "summary": "Cả ở phương Đông và phương Tây, ngay từ đầu, triết học đã là hoạt động tinh thần bậc cao, có trình độ trừu tượng hóa và khái quát hóa rất cao."
+        ]
       },
       "completionRule": {
-        "type": "correct"
-      }
-    },
-    {
-      "id": "worldview-sorting-intro",
-      "type": "markdown",
-      "title": "Triết học khác gì với thần thoại - tôn giáo?",
-      "config": {
-        "content": "Triết học và các hình thức nhận thức khác đều muốn vẽ nên bức tranh về thế giới, nhưng công cụ của chúng rất khác nhau. Hãy phân loại các yếu tố dưới đây để làm rõ tính đặc thù của nhận thức triết học."
-      },
-      "completionRule": {
-        "type": "viewed"
-      }
-    },
-    {
-      "id": "worldview-sorting",
-      "type": "category_sorting",
-      "title": "Phân loại thế giới quan",
-      "config": {
-        "categories": [
-          {
-            "id": "myth-religion",
-            "label": "Thần thoại - Tôn giáo",
-            "description": "Thế giới quan dựa trên niềm tin, tưởng tượng và sức mạnh siêu nhiên."
-          },
-          {
-            "id": "philosophy",
-            "label": "Triết học",
-            "description": "Nhận thức dựa trên lý tính, logic, kinh nghiệm và quy luật."
-          }
-        ],
-        "cards": [
-          {
-            "id": "faith",
-            "text": "Niềm tin",
-            "categoryId": "myth-religion"
-          },
-          {
-            "id": "imagined-world",
-            "text": "Quan niệm tưởng tượng về thế giới",
-            "categoryId": "myth-religion"
-          },
-          {
-            "id": "personification",
-            "text": "Nhân cách hóa tự nhiên",
-            "categoryId": "myth-religion"
-          },
-          {
-            "id": "rituals",
-            "text": "Các nghi lễ",
-            "categoryId": "myth-religion"
-          },
-          {
-            "id": "reason",
-            "text": "Công cụ lý tính",
-            "categoryId": "philosophy"
-          },
-          {
-            "id": "logic",
-            "text": "Các tiêu chuẩn logic",
-            "categoryId": "philosophy"
-          },
-          {
-            "id": "experience",
-            "text": "Kinh nghiệm con người khám phá thực tại",
-            "categoryId": "philosophy"
-          },
-          {
-            "id": "laws",
-            "text": "Các quy luật",
-            "categoryId": "philosophy"
-          }
-        ],
-        "summary": "Triết học lý giải thế giới bằng lý tính, logic và khái quát hóa thay vì chỉ dựa vào niềm tin hoặc tưởng tượng."
-      },
-      "completionRule": {
-        "type": "correct"
+        "type": "all"
       }
     },
     {
