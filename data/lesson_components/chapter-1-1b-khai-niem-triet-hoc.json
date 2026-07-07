@@ -18,7 +18,16 @@
       "map_target_matching"
     ]
   },
-  "lessonMedia": [],
+  "lessonMedia": [
+    {
+      "id": "concept-map-image",
+      "type": "image",
+      "url": "/public/lesson-assets/1.b.media.png",
+      "title": "Khái niệm triết học",
+      "subtitle": "Bản đồ thuật ngữ triết học trong các nền văn minh cổ đại",
+      "alt": "Bản đồ minh hoạ nguồn gốc thuật ngữ triết học ở Trung Quốc, Ấn Độ và Hy Lạp"
+    }
+  ],
   "lessonFlow": [
     {
       "id": "concept-origin-group",

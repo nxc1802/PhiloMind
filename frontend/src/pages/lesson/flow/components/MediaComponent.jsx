@@ -3,17 +3,19 @@ import { loadSettings } from "../../../../utils/settings";
 import { VideoScene } from "../../adventure/components/AdventureCommon";
 import { ComponentFrame } from "./ComponentFrame";
 import { ContinueButton } from "./ContinueButton";
+import { resolveBackendAssetUrl } from "../../../../services/api";
 
 export function MediaComponent({ component, onComplete }) {
   const { config } = component;
   const mediaType = config.mediaType || "video";
   const { autoplayVideo } = loadSettings();
+  const mediaUrl = resolveBackendAssetUrl(config.url);
   return (
     <ComponentFrame component={component}>
       {mediaType === "image" ? (
         <figure className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 dark:border-primary-850 dark:bg-primary-950/30">
           <img
-            src={config.url}
+            src={mediaUrl}
             alt={config.alt || config.title || component.title}
             className="max-h-[520px] w-full object-contain"
           />
@@ -30,7 +32,7 @@ export function MediaComponent({ component, onComplete }) {
         </figure>
       ) : (
         <VideoScene
-          src={config.url}
+          src={mediaUrl}
           badge={config.badge}
           title={config.title || component.title}
           subtitle={config.subtitle}

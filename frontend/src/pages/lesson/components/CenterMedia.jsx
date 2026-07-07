@@ -1,6 +1,7 @@
 import React from "react";
 import { VideoScene } from "../adventure/components/AdventureCommon";
 import { loadSettings } from "../../../utils/settings";
+import { resolveBackendAssetUrl } from "../../../services/api";
 
 /**
  * CenterMedia — Cột giữa trong layout 3 cột.
@@ -13,6 +14,7 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
   // Tìm media item đang active
   const activeMedia =
     lessonMedia?.find((m) => m.id === activeMediaId) ?? lessonMedia?.[0];
+  const activeMediaUrl = resolveBackendAssetUrl(activeMedia?.url);
 
   if (!lessonMedia || lessonMedia.length === 0) {
     return (
@@ -38,7 +40,7 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
           <>
             {activeMedia.type === "video" ? (
               <VideoScene
-                src={activeMedia.url}
+                src={activeMediaUrl}
                 badge={activeMedia.badge}
                 title={activeMedia.title}
                 subtitle={activeMedia.subtitle}
@@ -48,7 +50,7 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
             ) : (
               <figure className="overflow-hidden rounded-2xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-primary-950/30">
                 <img
-                  src={activeMedia.url}
+                  src={activeMediaUrl}
                   alt={
                     activeMedia.alt || activeMedia.title || "Hình ảnh bài học"
                   }

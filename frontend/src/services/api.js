@@ -1,6 +1,20 @@
 // API client service for PhiloMind frontend to communicate with backend
 const API_BASE_URL = (import.meta.env && import.meta.env.REACT_APP_API_URL) || 'http://localhost:3001/api';
 
+export function resolveBackendAssetUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (/^(https?:)?\/\//i.test(url) || url.startsWith('data:') || url.startsWith('blob:')) {
+    return url;
+  }
+
+  try {
+    const apiUrl = new URL(API_BASE_URL, window.location.origin);
+    return new URL(url, apiUrl.origin).toString();
+  } catch (_) {
+    return url;
+  }
+}
+
 function getHeaders(customHeaders = {}) {
   const token = localStorage.getItem('token');
   const headers = { ...customHeaders };

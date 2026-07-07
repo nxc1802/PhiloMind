@@ -19,6 +19,10 @@ function loadConvertedLessonFlow(filename: string) {
   return loadConvertedLesson(filename).lessonFlow || [];
 }
 
+function loadConvertedLessonMedia(filename: string) {
+  return loadConvertedLesson(filename).lessonMedia || [];
+}
+
 function stripOptionPrefix(value: string) {
   return value.replace(/^[A-D]\.\s*/i, "").trim();
 }
@@ -1556,6 +1560,13 @@ async function main() {
               "chapter-1-1c-triet-hoc-hat-nhan-the-gioi-quan.json",
             )
           : buildDefaultLessonFlow(n);
+    const lessonMedia = isConceptLesson
+      ? loadConvertedLessonMedia("chapter-1-1b-khai-niem-triet-hoc.json")
+      : isWorldviewCoreLesson
+        ? loadConvertedLessonMedia(
+            "chapter-1-1c-triet-hoc-hat-nhan-the-gioi-quan.json",
+          )
+        : extractLessonMedia(lessonFlow, n);
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -1569,7 +1580,7 @@ async function main() {
         chapterId: sectionChapter.id,
         lessonType: "flow",
         lessonFlow: lessonFlow as any,
-        lessonMedia: extractLessonMedia(lessonFlow, n) as any,
+        lessonMedia: lessonMedia as any,
         contentReady: hasSeededLessonContent,
         lessonStatus: hasSeededLessonContent ? "published" : "draft",
       },
