@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { normalizeOptions } from "../utils/normalizeOptions";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 
 // Thời gian giữ trạng thái "sai" trên màn hình trước khi tự trả về ban đầu.
@@ -8,6 +9,16 @@ const WRONG_FLASH_MS = 1400;
 
 export function McqComponent({ component, onComplete }) {
   const options = normalizeOptions(component.config.options);
+  const questionImage = firstImageAsset(
+    [
+      component.config.image,
+      component.config.imageUrl,
+      component.config.questionImage,
+      component.config.promptImage,
+      component.media?.questionImage,
+    ],
+    component.config.question,
+  );
   const isEmbedded = component.__isEmbedded === true;
   const isCompleted = component.__isCompleted === true;
   const completedAnswer = isEmbedded
@@ -59,10 +70,27 @@ export function McqComponent({ component, onComplete }) {
       <p className="font-semibold text-lg mb-4 text-gray-900 dark:text-primary-100">
         {component.config.question}
       </p>
+      <ComponentImage
+        image={questionImage}
+        alt={component.config.question}
+        fit="contain"
+        className="mb-4 max-h-72"
+        imageClassName="max-h-72"
+      />
       <div className="space-y-2.5">
         {options.map((option) => {
           const wrong = option.id === wrongFlashId;
           const correctVisible = solved && option.id === selectedId;
+          const optionImage = firstImageAsset(
+            [
+              option.image,
+              option.imageUrl,
+              option.media,
+              component.media?.answerImages?.[option.id],
+              component.media?.optionImages?.[option.id],
+            ],
+            option.text,
+          );
           return (
             <button
               key={option.id}
@@ -86,7 +114,14 @@ export function McqComponent({ component, onComplete }) {
                     ? "cancel"
                     : "radio_button_unchecked"}
               </span>
-              {option.text}
+              <span className="min-w-0 flex-1">{option.text}</span>
+              <ComponentImage
+                image={optionImage}
+                alt={option.text}
+                caption={false}
+                className="h-16 w-20 shrink-0"
+                imageClassName="h-full w-full"
+              />
             </button>
           );
         })}

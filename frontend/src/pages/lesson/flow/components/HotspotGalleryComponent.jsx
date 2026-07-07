@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 
 export function HotspotGalleryComponent({ component, onComplete }) {
@@ -39,11 +40,19 @@ export function HotspotGalleryComponent({ component, onComplete }) {
                   }`}
                 >
                   <div className="aspect-[4/3] bg-slate-100 dark:bg-primary-950/30">
-                    {item.image ? (
-                      <img
-                        src={item.image}
+                    {firstImageAsset(
+                      [item.image, item.imageUrl, item.media],
+                      item.title || item.label,
+                    ) ? (
+                      <ComponentImage
+                        image={firstImageAsset(
+                          [item.image, item.imageUrl, item.media],
+                          item.title || item.label,
+                        )}
                         alt={item.title || item.label}
-                        className="h-full w-full object-cover"
+                        caption={false}
+                        className="h-full rounded-none border-0"
+                        imageClassName="h-full w-full"
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center">
@@ -80,6 +89,16 @@ export function HotspotGalleryComponent({ component, onComplete }) {
                   {active.subtitle}
                 </p>
               )}
+              <ComponentImage
+                image={firstImageAsset(
+                  [active.image, active.imageUrl, active.media],
+                  active.title || active.label,
+                )}
+                alt={active.title || active.label}
+                fit="contain"
+                className="mt-4 max-h-72"
+                imageClassName="max-h-72"
+              />
               <div className="mt-4 min-h-0 flex-1 overflow-y-auto rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700 dark:bg-primary-950/25 dark:text-primary-150">
                 {active.detail || active.summary || "Chưa có nội dung chi tiết."}
               </div>

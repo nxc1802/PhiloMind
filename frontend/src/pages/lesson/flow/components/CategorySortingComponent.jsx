@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 import { DragItem, DropZone } from "./dnd";
@@ -60,8 +61,18 @@ export function CategorySortingComponent({ component, onComplete }) {
             .filter((card) => !placements[card.id])
             .map((card) => (
               <DragItem key={card.id} id={card.id}>
-                <div className="px-4 py-2 rounded-3xl border-2 font-semibold border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400">
-                  {card.text}
+                <div className="flex items-center gap-2 rounded-3xl border-2 border-slate-205 bg-white px-4 py-2 font-semibold text-gray-750 hover:border-primary-400 dark:bg-surface-dark-elevated dark:text-primary-150">
+                  <span>{card.text}</span>
+                  <ComponentImage
+                    image={firstImageAsset(
+                      [card.image, card.imageUrl, card.media],
+                      card.text,
+                    )}
+                    alt={card.text}
+                    caption={false}
+                    className="h-12 w-16 shrink-0"
+                    imageClassName="h-full w-full"
+                  />
                 </div>
               </DragItem>
             ))}
@@ -84,21 +95,47 @@ export function CategorySortingComponent({ component, onComplete }) {
                 id={category.id}
                 className="min-h-36 rounded-2xl border-2 border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-[#132d39] px-4 py-4 text-left"
               >
+                <ComponentImage
+                  image={firstImageAsset(
+                    [category.image, category.imageUrl, category.media],
+                    category.label,
+                  )}
+                  alt={category.label}
+                  fit="cover"
+                  caption={false}
+                  className="mb-3 h-24"
+                  imageClassName="h-full w-full"
+                />
                 <p className="font-bold text-primary-850 dark:text-primary-100">
                   {category.label}
                 </p>
+                {category.description && (
+                  <p className="mt-1 text-xs font-medium leading-5 text-slate-600 dark:text-primary-250">
+                    {category.description}
+                  </p>
+                )}
                 <div className="mt-3 flex flex-wrap gap-2">
                   {placedCards.length > 0 ? (
                     placedCards.map((card) => (
                       <DragItem key={card.id} id={card.id}>
                         <div
-                          className={`rounded-full border px-3 py-1.5 text-xs font-bold ${
+                          className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-bold ${
                             card.categoryId === category.id
                               ? "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950/35 dark:text-green-200"
                               : "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950/35 dark:text-red-200"
                           }`}
                         >
-                          {card.text}
+                          <span>{card.text}</span>
+                          <ComponentImage
+                            image={firstImageAsset(
+                              [card.image, card.imageUrl, card.media],
+                              card.text,
+                            )}
+                            alt={card.text}
+                            caption={false}
+                            className="h-10 w-12 shrink-0"
+                            imageClassName="h-full w-full"
+                          />
                         </div>
                       </DragItem>
                     ))

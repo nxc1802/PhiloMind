@@ -24,7 +24,7 @@
       "type": "image",
       "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.b/1.b.media.png",
       "title": "Khái niệm Triết học",
-      "subtitle": "Bản đồ khái niệm triết học trong các nền văn minh cổ đại",
+      "description": "Triết học đã xuất hiện như một tất yếu khách quan ở cả phương Đông và phương Tây gần như cùng một thời điểm (khoảng thế kỷ VIII – VI trước Công nguyên).",
       "alt": "Bản đồ minh hoạ khái niệm triết học ở Trung Quốc, Ấn Độ và Hy Lạp"
     }
   ],
@@ -32,9 +32,9 @@
     {
       "id": "concept-origin-group",
       "type": "component_group",
-      "title": "Khái niệm Triết học",
+      "title": "Quan niệm Triết học",
       "navigation_config": {
-        "shortLabel": "Khái niệm"
+        "shortLabel": "Quan niệm"
       },
       "config": {
         "layout": "vertical",
@@ -44,7 +44,7 @@
           {
             "id": "concept-opening",
             "type": "markdown",
-            "title": "Khái niệm Triết học",
+            "title": "Quan niệm Triết học",
             "config": {
               "content": "Triết học là một hoạt động tinh thần bậc cao, xuất hiện khi con người biết nhìn thế giới bằng lý tính, kinh nghiệm và khái quát hóa. Hãy đặt các cách hiểu tiêu biểu vào đúng không gian văn minh để thấy chiều sâu của khái niệm Triết học."
             },
@@ -55,9 +55,8 @@
           {
             "id": "ancient-origin-map",
             "type": "map_target_matching",
-            "title": "Khái niệm Triết học",
+            "title": "Quan niệm Triết học",
             "config": {
-              "instruction": "Kéo từng cách hiểu vào đúng không gian văn minh đang phát sáng trên bản đồ.",
               "targets": [
                 {
                   "id": "china",
@@ -212,12 +211,24 @@
       "type": "knowledge_piece",
       "title": "Định nghĩa kinh điển",
       "config": {
-        "label": "Định nghĩa triết học",
-        "summary": "Các bách khoa thư lớn đều nhấn mạnh triết học là hình thức nhận thức lý tính, trừu tượng, có phương pháp và có tính hệ thống về thế giới.",
-        "takeaways": [
-          "Britannica: triết học là sự xem xét lý tính, trừu tượng và có phương pháp về thực tại với tính cách là một chỉnh thể.",
-          "Bách khoa thư triết học mới của Viện Triết học Nga: triết học là hình thức đặc biệt của nhận thức và ý thức xã hội về thế giới."
-        ]
+        "pieceId": "classic-definitions",
+        "label": "Định nghĩa kinh điển",
+        "icon": "format_quote",
+        "summary": "Bách khoa thư Britannica định nghĩa: “Triết học là sự xem xét lý tính, trừu tượng và có phương pháp về thực tại với tính cách là một chỉnh thể hoặc những khía cạnh nền tảng của kinh nghiệm và sự tồn tại nguời. Sự truy vấn triết học (Philosophical Inquiry) là thành phần trung tâm của lịch sử trí tuệ của nhiều nền văn minh\n”Bách khoa thư triết học mới của Viện Triết học Nga xuất bản năm 2001 đưa ra định nghĩa: Triết học là hình thức đặc biệt của nhận thức và ý thức xã hội về thế giới, được thể hiện thành hệ thống tri thức về những nguyên tắc cơ bản và nền tảng của tồn tại ngƣời, về những đặc trưng bản chất nhất của mối quan hệ giữa con ngừời với tự nhiên, với xã hội và với đời sống tinh thần."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "marxist-leninist-definition-piece",
+      "type": "knowledge_piece",
+      "title": "Định nghĩa triết học Mác - Lênin",
+      "config": {
+        "pieceId": "marxist-leninist-definition",
+        "label": "Định nghĩa triết học Mác - Lênin",
+        "icon": "school",
+        "summary": "Với sự ra đời của triết học Mác - Lênin, triết học là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới đó, là khoa học về những quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy."
       },
       "completionRule": {
         "type": "viewed"

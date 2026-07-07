@@ -33,39 +33,35 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
   }
 
   return (
-    <div className="flex h-full flex-col gap-3 overflow-y-auto bg-slate-50 p-3 dark:bg-[#0a1e28]">
+    <div className="flex h-full min-h-0 flex-col gap-3 overflow-hidden bg-slate-50 p-3 dark:bg-[#0a1e28]">
       {/* Main media display */}
-      <div className="min-h-0 shrink-0">
+      <div className="flex min-h-0 flex-1 items-center justify-center">
         {activeMedia ? (
           <>
             {activeMedia.type === "video" ? (
-              <VideoScene
-                src={activeMediaUrl}
-                badge={activeMedia.badge}
-                title={activeMedia.title}
-                subtitle={activeMedia.subtitle}
-                autoPlay={autoplayVideo}
-                className="mb-0"
-              />
-            ) : (
-              <figure className="overflow-hidden rounded-2xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-primary-950/30">
-                <img
+              <div className="w-full max-w-full">
+                <VideoScene
                   src={activeMediaUrl}
-                  alt={
-                    activeMedia.alt || activeMedia.title || "Hình ảnh bài học"
-                  }
-                  className="w-full max-h-[360px] object-contain"
+                  badge={activeMedia.badge}
+                  title={activeMedia.title}
+                  subtitle={activeMedia.subtitle}
+                  autoPlay={autoplayVideo}
+                  className="mb-0"
                 />
-                {(activeMedia.title || activeMedia.subtitle) && (
-                  <figcaption className="border-t border-slate-200 dark:border-primary-850 px-4 py-3 text-sm text-slate-600 dark:text-primary-200">
-                    {activeMedia.title && (
-                      <p className="font-bold text-slate-900 dark:text-primary-100">
-                        {activeMedia.title}
-                      </p>
-                    )}
-                    {activeMedia.subtitle && <p>{activeMedia.subtitle}</p>}
-                  </figcaption>
-                )}
+              </div>
+            ) : (
+              <figure className="flex h-full min-h-0 w-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-primary-850 dark:bg-primary-950/30">
+                <div className="flex min-h-0 flex-1 items-center justify-center p-2">
+                  <img
+                    src={activeMediaUrl}
+                    alt={
+                      activeMedia.alt ||
+                      activeMedia.title ||
+                      "Hình ảnh bài học"
+                    }
+                    className="block max-h-full max-w-full object-contain"
+                  />
+                </div>
               </figure>
             )}
           </>
@@ -73,11 +69,10 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
       </div>
 
       {activeMedia?.description && (
-        <p className="shrink-0 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-600 dark:border-primary-850 dark:bg-primary-950/30 dark:text-primary-200">
+        <p className="max-h-28 shrink-0 overflow-y-auto rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-600 dark:border-primary-850 dark:bg-primary-950/30 dark:text-primary-200">
           {activeMedia.description}
         </p>
       )}
-
     </div>
   );
 }

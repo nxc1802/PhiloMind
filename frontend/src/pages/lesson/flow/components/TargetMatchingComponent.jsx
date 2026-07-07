@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 import { DragItem, DropZone } from "./dnd";
@@ -52,8 +53,18 @@ export function TargetMatchingComponent({ component, onComplete }) {
             .filter((item) => !placements[item.id])
             .map((item) => (
               <DragItem key={item.id} id={item.id}>
-                <div className="px-4 py-2 rounded-3xl border-2 font-bold text-lg border-slate-205 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400">
-                  {item.text}
+                <div className="flex items-center gap-2 rounded-3xl border-2 border-slate-205 bg-white px-4 py-2 text-lg font-bold text-gray-750 hover:border-primary-400 dark:bg-surface-dark-elevated dark:text-primary-150">
+                  <span>{item.text}</span>
+                  <ComponentImage
+                    image={firstImageAsset(
+                      [item.image, item.imageUrl, item.media],
+                      item.text,
+                    )}
+                    alt={item.text}
+                    caption={false}
+                    className="h-12 w-16 shrink-0"
+                    imageClassName="h-full w-full"
+                  />
                 </div>
               </DragItem>
             ))}
@@ -79,18 +90,38 @@ export function TargetMatchingComponent({ component, onComplete }) {
                 <p className="font-bold text-primary-900 dark:text-primary-100 mt-2">
                   {target.label}
                 </p>
+                <ComponentImage
+                  image={firstImageAsset(
+                    [target.image, target.imageUrl, target.media],
+                    target.label,
+                  )}
+                  alt={target.label}
+                  caption={false}
+                  className="mx-auto mt-3 h-24 w-full"
+                  imageClassName="h-full w-full"
+                />
                 <div className="mt-3 flex flex-wrap justify-center gap-2">
                   {placedItems.length > 0 ? (
                     placedItems.map((item) => (
                       <DragItem key={item.id} id={item.id}>
                         <div
-                          className={`rounded-full border px-2.5 py-1 text-xs font-bold ${
+                          className={`flex items-center gap-2 rounded-full border px-2.5 py-1 text-xs font-bold ${
                             item.targetId === target.id
                               ? "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950/35 dark:text-green-200"
                               : "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950/35 dark:text-red-200"
                           }`}
                         >
-                          {item.text}
+                          <span>{item.text}</span>
+                          <ComponentImage
+                            image={firstImageAsset(
+                              [item.image, item.imageUrl, item.media],
+                              item.text,
+                            )}
+                            alt={item.text}
+                            caption={false}
+                            className="h-10 w-12 shrink-0"
+                            imageClassName="h-full w-full"
+                          />
                         </div>
                       </DragItem>
                     ))

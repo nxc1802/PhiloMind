@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 
 function Spark({ className = "" }) {
   return (
@@ -22,6 +23,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
     takeaways = [],
     icon = "extension",
     color = "from-amber-400 via-orange-500 to-primary-600",
+    image,
   } = component.config || {};
 
   const complete = () => {
@@ -128,8 +130,15 @@ export function KnowledgePieceComponent({ component, onComplete }) {
           <h3 className="mt-2 text-2xl font-extrabold leading-tight text-primary-950 dark:text-primary-100">
             {label}
           </h3>
+          <ComponentImage
+            image={firstImageAsset([image, component.config?.imageUrl], label)}
+            alt={label}
+            fit="contain"
+            className="mt-4 max-h-72 w-full max-w-md"
+            imageClassName="max-h-72"
+          />
           {summary && (
-            <p className="mt-3 max-w-md text-sm font-medium leading-6 text-slate-650 dark:text-primary-200">
+            <p className="mt-3 max-h-56 w-full max-w-2xl overflow-y-auto whitespace-pre-line rounded-2xl border border-white/70 bg-white/60 px-4 py-3 text-left text-sm font-medium leading-6 text-slate-650 shadow-sm dark:border-primary-850/60 dark:bg-primary-950/25 dark:text-primary-200">
               {summary}
             </p>
           )}

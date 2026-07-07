@@ -8,12 +8,18 @@ export function DialogueComponent({ component, onComplete }) {
   const sourceLines = component.config.lines || component.config.dialogs || [];
   const lines = useMemo(
     () =>
-      sourceLines.map((line) => ({
+      sourceLines.map((line, index) => ({
         who: line.who || "guide",
         text: line.text,
+        image:
+          line.image ||
+          line.imageUrl ||
+          line.media ||
+          component.media?.dialogueImages?.[line.id] ||
+          component.media?.dialogueImages?.[index],
         side: line.side,
       })),
-    [sourceLines],
+    [component.media?.dialogueImages, sourceLines],
   );
   return (
     <ComponentFrame component={component} className="!p-3 md:!p-4">

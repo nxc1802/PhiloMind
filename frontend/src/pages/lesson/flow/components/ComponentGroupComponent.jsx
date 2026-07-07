@@ -156,7 +156,7 @@ export function ComponentGroupComponent({
 
   return (
     <ComponentFrame component={component}>
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col gap-5">
         {visibleChildren.map((child, index) => {
           const Renderer = getComponentRenderer(child.type);
           const childResult = childResults.find(
@@ -173,9 +173,17 @@ export function ComponentGroupComponent({
           return (
             <div
               key={child.id}
-              className="flex min-h-0 shrink-0 animate-[fadeIn_220ms_ease-out] flex-col"
+              className="flex min-h-0 shrink-0 animate-[fadeIn_220ms_ease-out] flex-col rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm dark:border-primary-850/60 dark:bg-primary-950/20"
               data-group-child-id={child.id}
             >
+              <div className="mb-3 flex shrink-0 items-center gap-2 border-b border-slate-100 pb-3 dark:border-primary-850/50">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-xs font-extrabold text-primary-700 dark:bg-primary-900/35 dark:text-primary-200">
+                  {index + 1}
+                </span>
+                <h3 className="min-w-0 text-sm font-extrabold leading-tight text-primary-900 dark:text-primary-100">
+                  {child.title || getComponentName(child.type)}
+                </h3>
+              </div>
               {Renderer ? (
                 <Renderer
                   component={embeddedChild}

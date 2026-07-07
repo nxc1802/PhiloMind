@@ -15,6 +15,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 
@@ -108,6 +109,16 @@ function SortableChainCard({ item, isCompleted }) {
           {isCompleted ? "Đúng vị trí" : "Kéo thả để sắp xếp"}
         </p>
       </div>
+      <ComponentImage
+        image={firstImageAsset(
+          [item.image, item.imageUrl, item.media],
+          item.text,
+        )}
+        alt={item.text}
+        caption={false}
+        className="h-16 w-24 shrink-0"
+        imageClassName="h-full w-full"
+      />
     </div>
   );
 }

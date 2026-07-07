@@ -1,15 +1,34 @@
 import React, { useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 
 export function TrueFalseComponent({ component, onComplete }) {
   const [picked, setPicked] = useState(null);
   const correct = picked === component.config.correctAnswer;
+  const statementImage = firstImageAsset(
+    [
+      component.config.image,
+      component.config.imageUrl,
+      component.config.statementImage,
+      component.config.questionImage,
+      component.config.promptImage,
+      component.media?.questionImage,
+    ],
+    component.config.statement,
+  );
   return (
     <ComponentFrame component={component}>
       <p className="font-semibold text-lg text-gray-900 dark:text-primary-100 mb-4">
         {component.config.statement}
       </p>
+      <ComponentImage
+        image={statementImage}
+        alt={component.config.statement}
+        fit="contain"
+        className="mb-4 max-h-72"
+        imageClassName="max-h-72"
+      />
       <div className="grid sm:grid-cols-2 gap-3">
         {[true, false].map((value) => (
           <button

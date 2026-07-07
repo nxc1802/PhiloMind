@@ -14,6 +14,7 @@ export { FinalSummaryComponent } from "./FinalSummaryComponent";
 export { ComponentFrame } from "./ComponentFrame";
 export { ContinueButton } from "./ContinueButton";
 export { LessonHint } from "./LessonHint";
+export { ComponentImage } from "./ComponentImage";
 export { ChainSortingComponent } from "./ChainSortingComponent";
 export { KnowledgePieceComponent } from "./KnowledgePieceComponent";
 export { ComponentGroupComponent } from "./ComponentGroupComponent";

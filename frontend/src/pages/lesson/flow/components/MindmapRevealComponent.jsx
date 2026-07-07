@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 
 function getNodeText(value) {
@@ -21,6 +22,20 @@ function getNodeDetail(value) {
     return value.detail || value.description || "";
   }
   return "";
+}
+
+function getNodeImage(node, side) {
+  const value = node?.[side];
+  return firstImageAsset(
+    [
+      typeof value === "object" ? value.image : null,
+      typeof value === "object" ? value.imageUrl : null,
+      side === "back" ? node?.image : null,
+      side === "back" ? node?.imageUrl : null,
+      node?.media,
+    ],
+    getNodeText(value) || node?.label || "",
+  );
 }
 
 /**
@@ -221,6 +236,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
             const title = getNodeText(node.back) || node.label || "";
             const detail = getNodeDetail(node.back) || node.detail;
             const frontText = getNodeText(node.front);
+            const nodeImage = getNodeImage(node, open ? "back" : "front");
 
             return (
               <button
@@ -267,6 +283,13 @@ export function MindmapRevealComponent({ component, onComplete }) {
                         <p className="break-words text-base font-extrabold leading-snug text-primary-900 dark:text-primary-100">
                           {title}
                         </p>
+                        <ComponentImage
+                          image={nodeImage}
+                          alt={title}
+                          fit="contain"
+                          className="mt-2 max-h-48"
+                          imageClassName="max-h-48"
+                        />
                         {detail && (
                           <p className="mt-1 max-h-24 overflow-y-auto whitespace-normal break-words pr-1 text-sm leading-6 text-slate-650 dark:text-primary-200">
                             {detail}
@@ -274,10 +297,21 @@ export function MindmapRevealComponent({ component, onComplete }) {
                         )}
                       </>
                     ) : (
-                      frontText && (
-                        <p className="break-words text-sm font-bold leading-6 text-slate-500 dark:text-primary-200">
-                          {frontText}
-                        </p>
+                      (frontText || nodeImage) && (
+                        <>
+                          {frontText && (
+                            <p className="break-words text-sm font-bold leading-6 text-slate-500 dark:text-primary-200">
+                              {frontText}
+                            </p>
+                          )}
+                          <ComponentImage
+                            image={nodeImage}
+                            alt={frontText}
+                            fit="contain"
+                            className="mt-2 max-h-40"
+                            imageClassName="max-h-40"
+                          />
+                        </>
                       )
                     )}
                   </div>

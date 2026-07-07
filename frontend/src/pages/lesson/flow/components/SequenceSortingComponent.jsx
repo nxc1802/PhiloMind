@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 
@@ -51,7 +52,19 @@ export function SequenceSortingComponent({ component, onComplete }) {
                     : "border-slate-250 bg-white text-slate-800 hover:border-primary-400 hover:bg-primary-50 dark:border-primary-850 dark:bg-[#132d39] dark:text-primary-100 dark:hover:bg-primary-900/35"
                 }`}
               >
-                {item.text}
+                <span className="flex items-center gap-3">
+                  <span className="min-w-0 flex-1">{item.text}</span>
+                  <ComponentImage
+                    image={firstImageAsset(
+                      [item.image, item.imageUrl, item.media],
+                      item.text,
+                    )}
+                    alt={item.text}
+                    caption={false}
+                    className="h-14 w-20 shrink-0"
+                    imageClassName="h-full w-full"
+                  />
+                </span>
               </button>
             ))}
         </div>
@@ -84,6 +97,16 @@ export function SequenceSortingComponent({ component, onComplete }) {
                 <span className="text-sm text-green-950 dark:text-green-100 font-medium">
                   {item?.text}
                 </span>
+                <ComponentImage
+                  image={firstImageAsset(
+                    [item?.image, item?.imageUrl, item?.media],
+                    item?.text,
+                  )}
+                  alt={item?.text}
+                  caption={false}
+                  className="ml-auto h-14 w-20 shrink-0"
+                  imageClassName="h-full w-full"
+                />
               </div>
             );
           })}

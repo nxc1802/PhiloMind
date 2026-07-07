@@ -92,7 +92,7 @@ The backend validator and frontend registry currently support:
 | `media` | `url` | Accepted for backwards compatibility. Flow player extracts it into center media; right column asks learner to confirm they watched/read it. |
 | `markdown` | `content` | Renders Markdown-like learning text and continues on acknowledgement. |
 | `target_matching` | `targets[]`, `items[]` | Learner matches items to targets; returns a score/result. |
-| `map_target_matching` | `targets[]`, `items[]` | Learner drags items onto positioned map targets. Targets can define optional `x`, `y`, `icon`, and `detail`. |
+| `map_target_matching` | `targets[]`, `items[]` | Learner drags items onto positioned map targets. Targets/items can define optional `image`, `x`, `y`, `icon`, and `detail`. |
 | `category_sorting` | `categories[]`, `cards[]` | Learner sorts cards into categories. |
 | `mindmap_reveal` | `nodes[]` | Reveals concept cards. Each node needs `id` and either legacy `label`/`detail` or new `front`/`back`. Optional `layoutConfig.type`: `vertical`, `horizontal`, `matrix`, `custom`. |
 | `mcq` | `question`, `options[]`, at least one correct option | Single-question multiple choice. Correct options can use `isCorrect: true` or `correct: true`. |
@@ -142,6 +142,31 @@ Flow player media behavior:
 5. Fall back to the first media item when no explicit media link exists.
 
 Admin `Nodes.jsx` currently appends uploaded lesson images and videos as `media` components inside `lessonFlow`. Node-level `lessonMedia` is supported by backend/player even though the current admin UI does not expose it as a separate field.
+
+Component-level inline images are optional and ignored when absent. Any image
+field can be a URL string or an object:
+
+```json
+{
+  "url": "https://example.com/image.png",
+  "alt": "Mô tả hình ảnh",
+  "caption": "Chú thích ngắn",
+  "fit": "contain"
+}
+```
+
+Supported authoring fields:
+
+- Any component: `media.image`, `media.componentImage`, `config.componentImage`, or `config.heroImage`.
+- Reading/summary components: `config.image` or `config.imageUrl`.
+- `mcq`, `multi_select`, `true_false`, `quiz_sequence`: prompt images via `config.image`, `questionImage`, `statementImage`, `promptImage`, or `question.image`; option images via `option.image`, `option.imageUrl`, or `component.media.answerImages[optionId]`.
+- `final_summary.config.quiz[]`: question and option objects can include `image`.
+- Drag/drop and sorting components: `items[]`, `cards[]`, `targets[]`, `categories[]`, `leftColumn[]`, `rightColumn[]`, `milestones[]`, `periods[]`, and hotspot `items[]` can include `image`.
+- `dialogue`: each line can include `image`; alternatively use `component.media.dialogueImages[lineIdOrIndex]`.
+- `mindmap_reveal`: `front.image`, `back.image`, or legacy node-level `image` are supported.
+
+All inline image fields are backward-compatible. Existing lessons without these
+fields render exactly as before.
 
 ## Runtime Lifecycle
 

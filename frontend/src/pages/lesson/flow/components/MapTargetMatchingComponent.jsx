@@ -7,6 +7,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset, getImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { DragItem, DropZone } from "./dnd";
 
@@ -20,6 +21,7 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
       ? component.__completedResult.answer
       : {};
   const [placements, setPlacements] = useState(completedAnswer);
+  const mapImageAsset = getImageAsset(mapImage, component.title);
 
   const placedCount = Object.keys(placements).length;
   const complete =
@@ -45,14 +47,13 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
     <ComponentFrame component={component}>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <div className="mb-3 flex shrink-0 items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-sm font-bold text-slate-900 dark:text-primary-100">
-              {instruction || "Kéo từng khối tri thức vào đúng vùng phát sáng."}
+          {instruction ? (
+            <p className="min-w-0 text-sm font-bold text-slate-900 dark:text-primary-100">
+              {instruction}
             </p>
-            <p className="mt-1 text-xs font-medium text-slate-500 dark:text-primary-300">
-              Có thể kéo lại để sửa vị trí trước khi hoàn thành.
-            </p>
-          </div>
+          ) : (
+            <span aria-hidden="true" />
+          )}
           <span className="shrink-0 rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700 dark:bg-primary-900/35 dark:text-primary-200">
             {placedCount}/{items.length}
           </span>
@@ -63,8 +64,18 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
             .filter((item) => !placements[item.id])
             .map((item) => (
               <DragItem key={item.id} id={item.id}>
-                <div className="rounded-2xl border-2 border-slate-200 bg-white px-4 py-2 text-base font-extrabold text-slate-800 shadow-sm transition-colors hover:border-primary-400 dark:border-primary-850 dark:bg-surface-dark-elevated dark:text-primary-100">
-                  {item.text}
+                <div className="flex items-center gap-2 rounded-2xl border-2 border-slate-200 bg-white px-4 py-2 text-base font-extrabold text-slate-800 shadow-sm transition-colors hover:border-primary-400 dark:border-primary-850 dark:bg-surface-dark-elevated dark:text-primary-100">
+                  <span>{item.text}</span>
+                  <ComponentImage
+                    image={firstImageAsset(
+                      [item.image, item.imageUrl, item.media],
+                      item.text,
+                    )}
+                    alt={item.text}
+                    caption={false}
+                    className="h-12 w-16 shrink-0"
+                    imageClassName="h-full w-full"
+                  />
                 </div>
               </DragItem>
             ))}
@@ -78,7 +89,7 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
         <div className="relative shrink-0 overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-inner dark:border-primary-850/50 dark:bg-[#102733]">
           {mapImage ? (
             <img
-              src={mapImage}
+              src={mapImageAsset?.url}
               alt=""
               className="absolute inset-0 h-full w-full object-cover opacity-10"
             />
@@ -116,6 +127,17 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
                     </div>
                   </div>
 
+                  <ComponentImage
+                    image={firstImageAsset(
+                      [target.image, target.imageUrl, target.media],
+                      target.label,
+                    )}
+                    alt={target.label}
+                    caption={false}
+                    className="mb-3 h-28"
+                    imageClassName="h-full w-full"
+                  />
+
                   {target.detail && hasCorrectPlacement && (
                     <p className="mb-4 min-h-20 rounded-2xl bg-slate-50 px-3 py-2 text-left text-xs font-medium leading-5 text-slate-600 dark:bg-primary-950/25 dark:text-primary-200">
                       {target.detail}
@@ -127,13 +149,23 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
                       placedItems.map((item) => (
                         <DragItem key={item.id} id={item.id}>
                           <div
-                            className={`rounded-full border px-3 py-1.5 text-sm font-extrabold shadow-sm ${
+                            className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-extrabold shadow-sm ${
                               item.targetId === target.id
                                 ? "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950/35 dark:text-green-200"
                                 : "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950/35 dark:text-red-200"
                             }`}
                           >
-                            {item.text}
+                            <span>{item.text}</span>
+                            <ComponentImage
+                              image={firstImageAsset(
+                                [item.image, item.imageUrl, item.media],
+                                item.text,
+                              )}
+                              alt={item.text}
+                              caption={false}
+                              className="h-10 w-12 shrink-0"
+                              imageClassName="h-full w-full"
+                            />
                           </div>
                         </DragItem>
                       ))

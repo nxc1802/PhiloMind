@@ -28,15 +28,37 @@ export interface LessonMediaItem {
 
 // ─── Component Media (inline media within a component) ────────────────────────
 
+export type ComponentImageAsset =
+  | string
+  | {
+      url?: string;
+      src?: string;
+      imageUrl?: string;
+      alt?: string;
+      caption?: string;
+      title?: string;
+      fit?: "cover" | "contain";
+      position?: string;
+      aspectRatio?: string;
+    };
+
 export interface ComponentMedia {
+  /** Image shown at the top of the component body */
+  image?: ComponentImageAsset;
+  /** Component-level hero/supporting image */
+  componentImage?: ComponentImageAsset;
   /** Image shown in question prompt */
-  questionImage?: string;
-  /** Map of answerId → image URL */
-  answerImages?: Record<string, string>;
-  /** Map of dialogueLineIndex → image URL */
-  dialogueImages?: Record<string, string>;
+  questionImage?: ComponentImageAsset;
+  /** Map of answerId → image asset */
+  answerImages?: Record<string, ComponentImageAsset>;
+  /** Map of optionId → image asset */
+  optionImages?: Record<string, ComponentImageAsset>;
+  /** Map of questionId → image asset */
+  questionImages?: Record<string, ComponentImageAsset>;
+  /** Map of dialogueLineId/index → image asset */
+  dialogueImages?: Record<string, ComponentImageAsset>;
   /** Background/decorative image for the component */
-  backgroundImage?: string;
+  backgroundImage?: ComponentImageAsset;
 }
 
 // ─── Layout Config ─────────────────────────────────────────────────────────────
@@ -105,19 +127,19 @@ export interface MindmapNode {
   /** Front face of the card (shown before reveal) */
   front?: {
     text?: string;
-    image?: string;
+    image?: ComponentImageAsset;
   };
   /** Back face of the card (shown after reveal) */
   back?: {
     text?: string;
-    image?: string;
+    image?: ComponentImageAsset;
   };
   /** Shorthand: label shown when card is revealed (backward-compat) */
   label?: string;
   /** Shorthand: detail text shown when card is revealed (backward-compat) */
   detail?: string;
   /** Optional image for the revealed card (backward-compat) */
-  image?: string;
+  image?: ComponentImageAsset;
   /** Layout config specific to this node's row placement */
   layoutConfig?: MindmapLayoutConfig;
 }
@@ -128,7 +150,7 @@ export interface MatchingColumnItem {
   id: string;
   text: string;
   /** Optional image to show alongside the text */
-  image?: string;
+  image?: ComponentImageAsset;
 }
 
 export interface MatchingPair {

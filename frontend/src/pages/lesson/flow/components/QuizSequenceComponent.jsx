@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { normalizeQuizQuestions } from "../utils/normalizeOptions";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 
 export function QuizSequenceComponent({ component, onComplete }) {
@@ -9,6 +10,17 @@ export function QuizSequenceComponent({ component, onComplete }) {
   const [answers, setAnswers] = useState({});
   const [wrongAnswers, setWrongAnswers] = useState({});
   const activeQuestion = questions[activeQuestionIndex];
+  const activeQuestionImage = firstImageAsset(
+    [
+      activeQuestion?.image,
+      activeQuestion?.imageUrl,
+      activeQuestion?.questionImage,
+      activeQuestion?.promptImage,
+      component.media?.questionImages?.[activeQuestion?.id],
+      component.media?.questionImage,
+    ],
+    activeQuestion?.question,
+  );
   const selectedId = answers[activeQuestionIndex];
   const solved = Boolean(selectedId);
   const isLastQuestion = activeQuestionIndex >= questions.length - 1;
@@ -64,12 +76,29 @@ export function QuizSequenceComponent({ component, onComplete }) {
           <p className="text-lg font-bold leading-relaxed text-slate-950 dark:text-primary-100">
             {activeQuestion.question}
           </p>
+          <ComponentImage
+            image={activeQuestionImage}
+            alt={activeQuestion.question}
+            fit="contain"
+            className="mt-4 max-h-72"
+            imageClassName="max-h-72"
+          />
           <div className="mt-4 grid gap-3">
             {activeQuestion.options.map((option) => {
               const wrong = (wrongAnswers[activeQuestionIndex] || []).includes(
                 option.id,
               );
               const correctVisible = solved && option.id === selectedId;
+              const optionImage = firstImageAsset(
+                [
+                  option.image,
+                  option.imageUrl,
+                  option.media,
+                  component.media?.answerImages?.[option.id],
+                  component.media?.optionImages?.[option.id],
+                ],
+                option.text,
+              );
               return (
                 <button
                   key={option.id}
@@ -90,7 +119,14 @@ export function QuizSequenceComponent({ component, onComplete }) {
                         ? "cancel"
                         : "radio_button_unchecked"}
                   </span>
-                  <span>{option.text}</span>
+                  <span className="min-w-0 flex-1">{option.text}</span>
+                  <ComponentImage
+                    image={optionImage}
+                    alt={option.text}
+                    caption={false}
+                    className="h-16 w-20 shrink-0"
+                    imageClassName="h-full w-full"
+                  />
                 </button>
               );
             })}

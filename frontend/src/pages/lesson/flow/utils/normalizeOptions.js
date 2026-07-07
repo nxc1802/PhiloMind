@@ -2,12 +2,17 @@
  * Normalize answer options array into a consistent shape for MCQ/quiz components.
  */
 export function normalizeOptions(options = []) {
-  return options.map((option, index) => ({
-    id: option.id || option.answerId || `option_${index}`,
-    text: option.text,
-    isCorrect: option.isCorrect === true || option.correct === true,
-    explanation: option.explanation,
-  }));
+  return options.map((option, index) => {
+    const source =
+      typeof option === "object" && option ? option : { text: String(option) };
+    return {
+      ...source,
+      id: source.id || source.answerId || `option_${index}`,
+      text: source.text || source.label || "",
+      isCorrect: source.isCorrect === true || source.correct === true,
+      explanation: source.explanation,
+    };
+  });
 }
 
 /**
@@ -25,6 +30,7 @@ export function normalizeQuizQuestions(questions = []) {
       }
 
       return {
+        ...option,
         id: option.id || `q${questionIndex}_option_${optionIndex}`,
         text: option.text || option.label || "",
         isCorrect:
@@ -36,6 +42,7 @@ export function normalizeQuizQuestions(questions = []) {
     });
 
     return {
+      ...question,
       id: question.id || `question_${questionIndex}`,
       question: question.question || question.prompt || "Câu hỏi",
       options,

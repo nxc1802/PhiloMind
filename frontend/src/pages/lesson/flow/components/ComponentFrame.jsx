@@ -1,4 +1,5 @@
 import React from "react";
+import { ComponentMediaBlock } from "./ComponentImage";
 
 const TYPE_ICONS = {
   component_group: "view_agenda",
@@ -58,6 +59,7 @@ export function ComponentFrame({
         </div>
       </div>
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-2">
+        <ComponentMediaBlock component={safeComponent} />
         {children}
       </div>
     </section>

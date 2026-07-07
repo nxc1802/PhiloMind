@@ -13,11 +13,12 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 import { DragItem, DropZone } from "./dnd";
 
-function MatchCard({ id, icon, children, state = "idle" }) {
+function MatchCard({ id, icon, image, alt, children, state = "idle" }) {
   const stateClass =
     state === "correct"
       ? "border-green-400 text-green-900 dark:border-green-700 dark:text-green-100"
@@ -38,6 +39,13 @@ function MatchCard({ id, icon, children, state = "idle" }) {
       <span className="min-w-0 flex-1 whitespace-normal break-words text-sm font-semibold leading-6">
         {children}
       </span>
+      <ComponentImage
+        image={image}
+        alt={alt}
+        caption={false}
+        className="h-16 w-20 shrink-0"
+        imageClassName="h-full w-full"
+      />
     </div>
   );
 }
@@ -210,6 +218,11 @@ export function MatchingColumnsComponent({ component, onComplete }) {
                           <DragItem id={left.id}>
                             <MatchCard
                               id={`left-${left.id}`}
+                              image={firstImageAsset(
+                                [left.image, left.imageUrl, left.media],
+                                left.text,
+                              )}
+                              alt={left.text}
                               icon={
                                 isLeftCorrect
                                   ? "check_circle"
@@ -238,6 +251,11 @@ export function MatchingColumnsComponent({ component, onComplete }) {
                           <DropZone id={right.id} className="h-full w-full">
                             <MatchCard
                               id={`right-${right.id}`}
+                              image={firstImageAsset(
+                                [right.image, right.imageUrl, right.media],
+                                right.text,
+                              )}
+                              alt={right.text}
                               icon={isTargetPaired ? "link" : "trip_origin"}
                               state={isTargetPaired ? "paired" : "idle"}
                             >

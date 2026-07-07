@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 
 export function TimelineExplorerComponent({ component, onComplete }) {
@@ -46,6 +47,16 @@ export function TimelineExplorerComponent({ component, onComplete }) {
                 <span className="mt-1 text-sm font-extrabold leading-tight">
                   {period.label || period.title}
                 </span>
+                <ComponentImage
+                  image={firstImageAsset(
+                    [period.thumbnail, period.image, period.imageUrl, period.media],
+                    period.label || period.title,
+                  )}
+                  alt={period.label || period.title}
+                  caption={false}
+                  className="mt-2 h-16"
+                  imageClassName="h-full w-full"
+                />
               </button>
             );
           })}
@@ -57,6 +68,16 @@ export function TimelineExplorerComponent({ component, onComplete }) {
               <p className="text-xl font-extrabold text-primary-900 dark:text-primary-100">
                 {active.title || active.label}
               </p>
+              <ComponentImage
+                image={firstImageAsset(
+                  [active.image, active.imageUrl, active.media],
+                  active.title || active.label,
+                )}
+                alt={active.title || active.label}
+                fit="contain"
+                className="mt-4 max-h-72"
+                imageClassName="max-h-72"
+              />
               {active.summary && (
                 <p className="mt-3 text-sm font-semibold leading-6 text-slate-700 dark:text-primary-150">
                   {active.summary}

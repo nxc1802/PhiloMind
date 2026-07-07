@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 
 function getPoint(index, total) {
@@ -69,6 +70,16 @@ export function ProgressionSpiralComponent({ component, onComplete }) {
                 <span className="material-symbols-outlined text-[20px]">
                   {open ? "check_circle" : node.icon || "radio_button_checked"}
                 </span>
+                <ComponentImage
+                  image={firstImageAsset(
+                    [node.thumbnail, node.image, node.imageUrl, node.media],
+                    node.label,
+                  )}
+                  alt={node.label}
+                  caption={false}
+                  className="mt-1 h-6 w-8 shrink-0 rounded-lg"
+                  imageClassName="h-full w-full"
+                />
                 <span className="line-clamp-2 px-1">{node.label}</span>
               </button>
             );
@@ -97,6 +108,20 @@ export function ProgressionSpiralComponent({ component, onComplete }) {
                 <p className="text-lg font-extrabold text-primary-900 dark:text-primary-100">
                   {activeMilestone.label}
                 </p>
+                <ComponentImage
+                  image={firstImageAsset(
+                    [
+                      activeMilestone.image,
+                      activeMilestone.imageUrl,
+                      activeMilestone.media,
+                    ],
+                    activeMilestone.label,
+                  )}
+                  alt={activeMilestone.label}
+                  fit="contain"
+                  className="mt-3 max-h-72"
+                  imageClassName="max-h-72"
+                />
                 {activeMilestone.summary && (
                   <p className="mt-3 text-sm font-semibold leading-6 text-slate-700 dark:text-primary-150">
                     {activeMilestone.summary}

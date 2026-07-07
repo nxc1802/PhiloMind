@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
+import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
+
+function getFinalQuizCorrectIndex(question) {
+  if (typeof question?.correctIndex === "number") return question.correctIndex;
+  return (question?.options || []).findIndex(
+    (option) =>
+      typeof option === "object" &&
+      (option.isCorrect === true || option.correct === true),
+  );
+}
 
 export function FinalSummaryComponent({ component, onComplete }) {
   const {
@@ -21,7 +31,9 @@ export function FinalSummaryComponent({ component, onComplete }) {
     quiz.length === 0
       ? 100
       : Math.round(
-          (quiz.filter((q, index) => answers[index] === q.correctIndex).length /
+          (quiz.filter(
+            (q, index) => answers[index] === getFinalQuizCorrectIndex(q),
+          ).length /
             quiz.length) *
             100,
         );
@@ -102,6 +114,16 @@ export function FinalSummaryComponent({ component, onComplete }) {
         </div>
 
         <div className="p-5">
+          <ComponentImage
+            image={firstImageAsset(
+              [component.config.image, component.config.imageUrl],
+              component.title,
+            )}
+            alt={component.title}
+            fit="contain"
+            className="mb-4 max-h-80"
+            imageClassName="max-h-80"
+          />
           <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">
             <ul className="space-y-2">
               {keyTakeaways.map((item, index) => (
@@ -112,7 +134,16 @@ export function FinalSummaryComponent({ component, onComplete }) {
                   <span className="material-symbols-outlined mt-0.5 shrink-0 text-base text-green-600 dark:text-green-300">
                     check_circle
                   </span>
-                  <span className="break-words text-sm leading-6">{item}</span>
+                  <span className="min-w-0 flex-1 break-words text-sm leading-6">
+                    {typeof item === "object" ? item.text || item.label : item}
+                  </span>
+                  <ComponentImage
+                    image={typeof item === "object" ? item.image : null}
+                    alt={typeof item === "object" ? item.text || item.label : ""}
+                    caption={false}
+                    className="h-14 w-20 shrink-0"
+                    imageClassName="h-full w-full"
+                  />
                 </li>
               ))}
             </ul>
@@ -133,34 +164,83 @@ export function FinalSummaryComponent({ component, onComplete }) {
 
       {quiz.length > 0 && (
         <div className="mt-5 space-y-4">
-          {quiz.map((question, index) => (
-            <div
-              key={index}
-              className="rounded-3xl border border-slate-200 dark:border-primary-850 bg-white dark:bg-[#132d39] p-4"
-            >
-              <p className="font-semibold text-slate-900 dark:text-primary-100 mb-3">
-                {question.question}
-              </p>
-              <div className="grid gap-2">
-                {(question.options || []).map((option, optionIndex) => (
-                  <button
-                    key={optionIndex}
-                    type="button"
-                    onClick={() =>
-                      setAnswers((prev) => ({ ...prev, [index]: optionIndex }))
-                    }
-                    className={`rounded-3xl border px-4 py-2 text-left ${
-                      answers[index] === optionIndex
-                        ? "border-primary-600 bg-primary-50 dark:bg-primary-900/40 text-primary-850 dark:text-primary-100 font-bold shadow-sm"
-                        : "border-gray-250 bg-white dark:bg-surface-dark-elevated text-gray-750 dark:text-primary-150 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
-                    }`}
-                  >
-                    {option}
-                  </button>
-                ))}
+          {quiz.map((question, index) => {
+            const questionText =
+              typeof question === "object"
+                ? question.question || question.prompt
+                : String(question);
+            const questionImage =
+              typeof question === "object"
+                ? firstImageAsset(
+                    [
+                      question.image,
+                      question.imageUrl,
+                      question.questionImage,
+                      question.promptImage,
+                    ],
+                    questionText,
+                  )
+                : null;
+
+            return (
+              <div
+                key={index}
+                className="rounded-3xl border border-slate-200 bg-white p-4 dark:border-primary-850 dark:bg-[#132d39]"
+              >
+                <p className="mb-3 font-semibold text-slate-900 dark:text-primary-100">
+                  {questionText}
+                </p>
+                <ComponentImage
+                  image={questionImage}
+                  alt={questionText}
+                  fit="contain"
+                  className="mb-3 max-h-64"
+                  imageClassName="max-h-64"
+                />
+                <div className="grid gap-2">
+                  {(question.options || []).map((option, optionIndex) => {
+                    const optionText =
+                      typeof option === "object"
+                        ? option.text || option.label || ""
+                        : option;
+                    const optionImage =
+                      typeof option === "object"
+                        ? firstImageAsset(
+                            [option.image, option.imageUrl, option.media],
+                            optionText,
+                          )
+                        : null;
+                    return (
+                      <button
+                        key={optionIndex}
+                        type="button"
+                        onClick={() =>
+                          setAnswers((prev) => ({
+                            ...prev,
+                            [index]: optionIndex,
+                          }))
+                        }
+                        className={`flex items-start gap-3 rounded-3xl border px-4 py-2 text-left ${
+                          answers[index] === optionIndex
+                            ? "border-primary-600 bg-primary-50 font-bold text-primary-850 shadow-sm dark:bg-primary-900/40 dark:text-primary-100"
+                            : "border-gray-250 bg-white text-gray-750 hover:border-primary-400 hover:bg-primary-50 dark:bg-surface-dark-elevated dark:text-primary-150 dark:hover:bg-primary-900/20"
+                        }`}
+                      >
+                        <span className="min-w-0 flex-1">{optionText}</span>
+                        <ComponentImage
+                          image={optionImage}
+                          alt={optionText}
+                          caption={false}
+                          className="h-14 w-20 shrink-0"
+                          imageClassName="h-full w-full"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
           {quizDone && (
             <p className="text-sm font-bold text-green-700 dark:text-green-300">
               Điểm tổng kết: {score}%

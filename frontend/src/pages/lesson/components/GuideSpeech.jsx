@@ -6,6 +6,7 @@ import React, {
   useMemo,
 } from "react";
 import { Avatar } from "./JourneyArt";
+import { ComponentImage, firstImageAsset } from "../flow/components/ComponentImage";
 
 export const CHARACTERS = {
   guide: {
@@ -80,7 +81,7 @@ function prefersReducedMotion() {
   );
 }
 
-export function SpeechBubble({ who, text, side = "left", characters }) {
+export function SpeechBubble({ who, text, image, side = "left", characters }) {
   const character = characters?.[who] || CHARACTERS[who] || CHARACTERS.guide;
   const isRight = side === "right";
   const isNarrator = side === "center";
@@ -144,6 +145,13 @@ export function SpeechBubble({ who, text, side = "left", characters }) {
             className={`j-chat-pop relative rounded-[22px] border px-4 py-3 text-sm leading-6 ${bubbleTone}`}
           >
             {text}
+            <ComponentImage
+              image={firstImageAsset([image], text)}
+              alt={text}
+              fit="contain"
+              className="mt-3 max-h-64 border-white/25 bg-white/10"
+              imageClassName="max-h-64"
+            />
           </div>
           {!isNarrator && (
             <>
@@ -255,6 +263,7 @@ export default function DialogueSequence({
               key={index}
               who={line.who}
               text={line.text}
+              image={line.image}
               side={lineSides[index]}
               characters={characters}
             />
