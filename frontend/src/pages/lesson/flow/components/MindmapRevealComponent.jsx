@@ -40,11 +40,6 @@ export function MindmapRevealComponent({ component, onComplete }) {
 
   const revealedCount = revealed.length;
   const complete = nodes.length > 0 && revealedCount === nodes.length;
-  const lastRevealedId = revealed[revealed.length - 1];
-  const lastRevealedNode = nodes.find((node) => node.id === lastRevealedId);
-  const lastRevealedName =
-    getNodeText(lastRevealedNode?.back) || lastRevealedNode?.label || "";
-  const partialCelebrate = revealedCount > 0 && !complete;
 
   // --- Đo toạ độ để vẽ spoke ---
   const canvasRef = useRef(null);
@@ -128,9 +123,6 @@ export function MindmapRevealComponent({ component, onComplete }) {
         <div className="min-w-0">
           <p className="text-[11px] font-bold uppercase tracking-wider text-primary-650 dark:text-primary-300">
             Bản đồ tư duy
-          </p>
-          <p className="text-sm font-medium text-slate-600 dark:text-primary-150">
-            Lắng nghe hoặc đọc để hoàn thiện bức tranh khái niệm.
           </p>
         </div>
         <span
@@ -226,11 +218,9 @@ export function MindmapRevealComponent({ component, onComplete }) {
         <div className="relative z-10 flex min-w-0 flex-col gap-4">
           {nodes.map((node, index) => {
             const open = isRevealed(node.id);
-            const title =
-              getNodeText(node.back) || node.label || `Mảnh ${index + 1}`;
+            const title = getNodeText(node.back) || node.label || "";
             const detail = getNodeDetail(node.back) || node.detail;
-            const frontText =
-              getNodeText(node.front) || "Đang chờ kết nối…";
+            const frontText = getNodeText(node.front);
 
             return (
               <button
@@ -272,16 +262,6 @@ export function MindmapRevealComponent({ component, onComplete }) {
                   </span>
 
                   <div className="min-w-0 flex-1">
-                    <p
-                      className={[
-                        "text-[10px] font-bold uppercase tracking-wider",
-                        open
-                          ? "text-primary-650 dark:text-primary-300"
-                          : "text-slate-400 dark:text-primary-500",
-                      ].join(" ")}
-                    >
-                      Mảnh ghép {index + 1}
-                    </p>
                     {open ? (
                       <>
                         <p className="break-words text-base font-extrabold leading-snug text-primary-900 dark:text-primary-100">
@@ -294,9 +274,11 @@ export function MindmapRevealComponent({ component, onComplete }) {
                         )}
                       </>
                     ) : (
-                      <p className="mt-0.5 break-words text-sm font-bold leading-6 text-slate-500 dark:text-primary-200">
-                        {frontText}
-                      </p>
+                      frontText && (
+                        <p className="break-words text-sm font-bold leading-6 text-slate-500 dark:text-primary-200">
+                          {frontText}
+                        </p>
+                      )
                     )}
                   </div>
                 </div>
@@ -306,31 +288,11 @@ export function MindmapRevealComponent({ component, onComplete }) {
         </div>
       </div>
 
-      {/* Chúc mừng từng bước — hiện sau mỗi lần mở (trừ mảnh cuối) */}
-      {partialCelebrate && (
-        <div className="mt-5 flex items-center gap-2 rounded-2xl border border-primary-200 bg-primary-50 px-4 py-3 text-sm font-semibold text-primary-900 dark:border-primary-800 dark:bg-primary-950/35 dark:text-primary-100">
-          <span className="material-symbols-outlined text-primary-600 dark:text-primary-300">
-            electric_bolt
-          </span>
-          <span className="min-w-0">
-            Đã nối mảnh {revealedCount}
-            {lastRevealedName ? `: ${lastRevealedName}` : ""} về tâm — còn{" "}
-            {nodes.length - revealedCount} mảnh nữa để hoàn thiện sơ đồ.
-          </span>
-        </div>
-      )}
-
       {/* Tổng kết — điểm 'done' duy nhất, là đỉnh của quá trình hợp nhất */}
       {complete && (
         <div className="mt-5 shrink-0 overflow-hidden rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 to-primary-50 p-5 text-primary-950 dark:border-amber-800 dark:from-amber-950/30 dark:to-primary-950/40 dark:text-primary-100">
-          <p className="flex items-center gap-2 text-lg font-extrabold">
-            <span className="material-symbols-outlined text-amber-500">
-              auto_awesome
-            </span>
-            Sơ đồ đã hợp nhất — {centerLabel}!
-          </p>
           {component.config.summary && (
-            <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-primary-150">
+            <p className="text-sm font-semibold leading-relaxed text-slate-700 dark:text-primary-150">
               {component.config.summary}
             </p>
           )}

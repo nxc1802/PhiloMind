@@ -31,16 +31,16 @@ export function TargetMatchingComponent({ component, onComplete }) {
     <ComponentFrame component={component}>
       <LessonHint
         steps={[
-          "Kéo một thuật ngữ ở hàng trên.",
-          "Đưa thuật ngữ vào vùng/đích tương ứng.",
-          "Có thể kéo lại thuật ngữ để sửa vị trí.",
+          "Kéo một mục ở hàng trên.",
+          "Đưa mục vào vùng/đích tương ứng.",
+          "Có thể kéo lại để sửa vị trí.",
         ]}
       />
       
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <div className="mb-3 flex items-center justify-between gap-3">
           <p className="text-sm font-bold text-slate-800 dark:text-primary-100">
-            Thuật ngữ cần ghép
+            Mục cần ghép
           </p>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-650 dark:bg-primary-900/40 dark:text-primary-150">
             Đã đặt {Object.keys(placements).length}/{items.length}
@@ -58,7 +58,7 @@ export function TargetMatchingComponent({ component, onComplete }) {
               </DragItem>
             ))}
           {items.filter((item) => !placements[item.id]).length === 0 && (
-            <span className="text-sm text-slate-400 dark:text-primary-300 italic self-center mx-auto">Tất cả thuật ngữ đã được ghép</span>
+            <span className="text-sm text-slate-400 dark:text-primary-300 italic self-center mx-auto">Tất cả mục đã được ghép</span>
           )}
         </div>
 
@@ -109,7 +109,7 @@ export function TargetMatchingComponent({ component, onComplete }) {
       {complete && (
         <div className="mt-5 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
           <p className="font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined">task_alt</span> Bản đồ thuật ngữ đã hoàn chỉnh.
+            <span className="material-symbols-outlined">task_alt</span> Các mục đã được ghép chính xác.
           </p>
           {summary && <p className="text-sm mt-1">{summary}</p>}
           <ContinueButton

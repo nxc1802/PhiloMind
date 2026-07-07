@@ -89,9 +89,12 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
           )}
 
           <div className="relative grid gap-3 p-4 md:grid-cols-3">
-            {targets.map((target, index) => {
+            {targets.map((target) => {
               const placedItems = items.filter(
                 (item) => placements[item.id] === target.id,
+              );
+              const hasCorrectPlacement = placedItems.some(
+                (item) => item.targetId === target.id,
               );
 
               return (
@@ -106,9 +109,6 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
                         {target.icon || "travel_explore"}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-primary-400">
-                          Vùng {index + 1}
-                        </p>
                         <p className="text-base font-extrabold leading-tight text-primary-900 dark:text-primary-100">
                           {target.label}
                         </p>
@@ -116,7 +116,7 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
                     </div>
                   </div>
 
-                  {target.detail && (
+                  {target.detail && hasCorrectPlacement && (
                     <p className="mb-4 min-h-20 rounded-2xl bg-slate-50 px-3 py-2 text-left text-xs font-medium leading-5 text-slate-600 dark:bg-primary-950/25 dark:text-primary-200">
                       {target.detail}
                     </p>
