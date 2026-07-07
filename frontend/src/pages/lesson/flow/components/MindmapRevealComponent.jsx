@@ -325,10 +325,17 @@ export function MindmapRevealComponent({ component, onComplete }) {
       {/* Tổng kết — điểm 'done' duy nhất, là đỉnh của quá trình hợp nhất */}
       {complete && (
         <div className="mt-5 shrink-0 overflow-hidden rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 to-primary-50 p-5 text-primary-950 dark:border-amber-800 dark:from-amber-950/30 dark:to-primary-950/40 dark:text-primary-100">
-          {component.config.summary && (
-            <p className="text-sm font-semibold leading-relaxed text-slate-700 dark:text-primary-150">
-              {component.config.summary}
-            </p>
+          {(component.config.summary || component.config.finalStatement) && (
+            <div className="text-sm font-semibold leading-relaxed text-slate-700 dark:text-primary-150 mb-4 space-y-2">
+              <p>{component.config.summary || component.config.finalStatement}</p>
+              {component.config.guideLines && (
+                <ul className="list-disc pl-5 mt-2 space-y-1 font-normal">
+                  {component.config.guideLines.map((line, idx) => (
+                    <li key={idx}>{line}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
           )}
           <ContinueButton
             onComplete={() =>
