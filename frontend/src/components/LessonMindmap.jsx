@@ -56,7 +56,11 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
           <div className="absolute left-0 top-0 bottom-3 w-0.5 bg-slate-200 dark:bg-primary-850" />
           {(section.lessons || []).map((lesson) => {
             const isActive = lesson.slug === activeSlug;
-            const status = progressMap[lesson.title] || 'locked';
+            const status =
+              progressMap[lesson.id] ||
+              progressMap[lesson.slug] ||
+              progressMap[lesson.title] ||
+              'locked';
             const isLocked = status === 'locked' || status === 'content_locked';
             const isContentLocked = status === 'content_locked';
             const isCompleted = status === 'completed';

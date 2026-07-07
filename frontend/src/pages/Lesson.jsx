@@ -137,6 +137,8 @@ const Lesson = () => {
             status = "available";
           }
         }
+        map[n.id] = status;
+        map[getSlugFromTitle(n.title)] = status;
         map[n.title] = status;
         isFirstNode = false;
       });
@@ -249,10 +251,19 @@ const Lesson = () => {
     });
   }, [dbJourney]);
 
-  const handleOpenLesson = (slug) => {
+  const handleOpenLesson = (slugOrId) => {
+    const lessonNode =
+      allJourneyNodes.find(
+        (node) =>
+          node.id === slugOrId || getSlugFromTitle(node.title) === slugOrId,
+      ) || null;
+    const slug = lessonNode ? getSlugFromTitle(lessonNode.title) : slugOrId;
     if (!slug) return;
-    const title = getTitleFromSlug(slug);
-    const status = progressMap[title] || "locked";
+    const status =
+      (lessonNode && progressMap[lessonNode.id]) ||
+      progressMap[slug] ||
+      progressMap[getTitleFromSlug(slug)] ||
+      "locked";
 
     if (status === "content_locked") {
       showToast(

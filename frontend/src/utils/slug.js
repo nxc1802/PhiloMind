@@ -1,6 +1,7 @@
 const TITLE_TO_SLUG = {
   "Nguồn gốc của triết học": "nguon-goc-triet-hoc",
   "Khái niệm triết học": "khai-niem-triet-hoc",
+  "Triết học - hạt nhân lý luận của thế giới quan": "triet-hoc-hat-nhan-the-gioi-quan",
   "Vấn đề cơ bản của triết học": "van-de-co-ban",
   "Sự ra đời và phát triển": "su-ra-doi",
   "Đối tượng và chức năng": "doi-tuong-chuc-nang",
