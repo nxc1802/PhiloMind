@@ -212,9 +212,16 @@
       "title": "Định nghĩa kinh điển",
       "config": {
         "pieceId": "classic-definitions",
-        "label": "Định nghĩa kinh điển",
+        "label": "ĐỊNH NGHĨA KINH ĐIỂN",
+        "shortLabel": "Kinh điển",
         "icon": "format_quote",
-        "summary": "Bách khoa thư Britannica định nghĩa: “Triết học là sự xem xét lý tính, trừu tượng và có phương pháp về thực tại với tính cách là một chỉnh thể hoặc những khía cạnh nền tảng của kinh nghiệm và sự tồn tại nguời. Sự truy vấn triết học (Philosophical Inquiry) là thành phần trung tâm của lịch sử trí tuệ của nhiều nền văn minh\n”Bách khoa thư triết học mới của Viện Triết học Nga xuất bản năm 2001 đưa ra định nghĩa: Triết học là hình thức đặc biệt của nhận thức và ý thức xã hội về thế giới, được thể hiện thành hệ thống tri thức về những nguyên tắc cơ bản và nền tảng của tồn tại ngƣời, về những đặc trưng bản chất nhất của mối quan hệ giữa con ngừời với tự nhiên, với xã hội và với đời sống tinh thần."
+        "color": "from-cyan-400 via-blue-500 to-primary-700",
+        "summary": "Triết học luôn được xem là hình thái nhận thức bậc cao, lý tính và trừu tượng.",
+        "takeaways": [
+          "Bách khoa thư Britannica: Sự xem xét lý tính, trừu tượng và có phương pháp về thực tại.",
+          "Viện Triết học Nga (2001): Hình thức đặc biệt của nhận thức và ý thức xã hội về thế giới."
+        ],
+        "reward": "Bạn đã thu thập được mảnh ghép: ĐỊNH NGHĨA KINH ĐIỂN!"
       },
       "completionRule": {
         "type": "viewed"
@@ -226,9 +233,16 @@
       "title": "Định nghĩa triết học Mác - Lênin",
       "config": {
         "pieceId": "marxist-leninist-definition",
-        "label": "Định nghĩa triết học Mác - Lênin",
+        "label": "ĐỊNH NGHĨA MÁC - LÊNIN",
+        "shortLabel": "Mác - Lênin",
         "icon": "school",
-        "summary": "Với sự ra đời của triết học Mác - Lênin, triết học là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới đó, là khoa học về những quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy."
+        "color": "from-emerald-400 via-green-500 to-primary-700",
+        "summary": "Triết học là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới đó.",
+        "takeaways": [
+          "Hệ thống quan điểm lý luận chung nhất về thế giới và con người.",
+          "Khoa học về quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy."
+        ],
+        "reward": "Bạn đã thu thập được mảnh ghép: ĐỊNH NGHĨA MÁC - LÊNIN!"
       },
       "completionRule": {
         "type": "viewed"
