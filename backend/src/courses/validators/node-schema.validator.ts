@@ -16,6 +16,10 @@ const SUPPORTED_COMPONENT_TYPES = new Set([
   "sequence_sorting",
   "chain_sorting",
   "knowledge_piece",
+  "map_target_matching",
+  "progression_spiral",
+  "timeline_explorer",
+  "hotspot_gallery",
   "final_summary",
 ]);
 
@@ -124,7 +128,10 @@ export class NodeSchemaValidator {
       requireString(config.content, `${label}.content`);
     }
 
-    if (component.type === "target_matching") {
+    if (
+      component.type === "target_matching" ||
+      component.type === "map_target_matching"
+    ) {
       requireArray(config.targets, `${label}.targets`);
       requireArray(config.items, `${label}.items`);
     }
@@ -214,6 +221,18 @@ export class NodeSchemaValidator {
       if (config.takeaways !== undefined) {
         requireArray(config.takeaways, `${label}.takeaways`);
       }
+    }
+
+    if (component.type === "progression_spiral") {
+      requireArray(config.milestones, `${label}.milestones`);
+    }
+
+    if (component.type === "timeline_explorer") {
+      requireArray(config.periods, `${label}.periods`);
+    }
+
+    if (component.type === "hotspot_gallery") {
+      requireArray(config.items, `${label}.items`);
     }
 
     if (component.type === "final_summary") {

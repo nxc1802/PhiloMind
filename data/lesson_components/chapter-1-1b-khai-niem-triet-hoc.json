@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "lessonKey": "1.1.b",
+  "title": "Khái niệm triết học",
+  "sourceCoverage": {
+    "sourceFile": "../data_lesson.txt",
+    "sections": [
+      "KỊCH BẢN E-LEARNING: KHÁI NIỆM TRIẾT HỌC",
+      "Bản đồ thế giới cổ đại với 3 vùng đất phát sáng",
+      "Phân loại THẦN THOẠI - TÔN GIÁO và TRIẾT HỌC",
+      "Nội dung chủ yếu của các định nghĩa Triết học"
+    ]
+  },
+  "contractCompatibility": {
+    "contractFile": "../../docs/LESSON_COMPONENTS.md",
+    "usesOnlySupportedTypes": true,
+    "builtComponents": [
+      "map_target_matching"
+    ]
+  },
+  "lessonMedia": [],
+  "lessonFlow": [
+    {
+      "id": "concept-opening",
+      "type": "markdown",
+      "title": "Từ nguyên và chiều sâu của triết học",
+      "config": {
+        "content": "Triết học đã xuất hiện như một tất yếu khách quan ở cả phương Đông và phương Tây gần như cùng thời điểm, khoảng thế kỷ VIII – VI trước Công nguyên. Để hiểu quan niệm của người xưa về triết học, hãy đặt các thuật ngữ nguyên bản vào đúng vùng văn minh của chúng."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "ancient-origin-map",
+      "type": "map_target_matching",
+      "title": "Nguồn gốc thuật ngữ triết học",
+      "config": {
+        "instruction": "Kéo từng thuật ngữ vào đúng vùng văn minh đang phát sáng trên bản đồ.",
+        "targets": [
+          {
+            "id": "china",
+            "label": "Trung Quốc",
+            "icon": "temple_buddhist",
+            "detail": "Triết biểu hiện cao của trí tuệ, là sự hiểu biết sâu sắc về thế giới thiên - địa - nhân và định hướng nhân sinh quan.",
+            "x": 72,
+            "y": 44
+          },
+          {
+            "id": "india",
+            "label": "Ấn Độ",
+            "icon": "water",
+            "detail": "Dar'sana nghĩa gốc là chiêm ngưỡng, hàm ý tri thức dựa trên lý trí, là con đường suy ngẫm dẫn con người đến với lẽ phải.",
+            "x": 58,
+            "y": 58
+          },
+          {
+            "id": "greece",
+            "label": "Hy Lạp",
+            "icon": "account_balance",
+            "detail": "Philosophia nghĩa là yêu mến sự thông thái, nhấn mạnh khát vọng tìm kiếm chân lý.",
+            "x": 32,
+            "y": 44
+          }
+        ],
+        "items": [
+          {
+            "id": "zhe",
+            "text": "哲",
+            "targetId": "china"
+          },
+          {
+            "id": "darsana",
+            "text": "Dar'sana",
+            "targetId": "india"
+          },
+          {
+            "id": "philosophia",
+            "text": "φιλοσοφία",
+            "targetId": "greece"
+          }
+        ],
+        "summary": "Cả ở phương Đông và phương Tây, ngay từ đầu, triết học đã là hoạt động tinh thần bậc cao, có trình độ trừu tượng hóa và khái quát hóa rất cao."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "worldview-sorting-intro",
+      "type": "markdown",
+      "title": "Triết học khác gì với thần thoại - tôn giáo?",
+      "config": {
+        "content": "Triết học và các hình thức nhận thức khác đều muốn vẽ nên bức tranh về thế giới, nhưng công cụ của chúng rất khác nhau. Hãy phân loại các yếu tố dưới đây để làm rõ tính đặc thù của nhận thức triết học."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "worldview-sorting",
+      "type": "category_sorting",
+      "title": "Phân loại thế giới quan",
+      "config": {
+        "categories": [
+          {
+            "id": "myth-religion",
+            "label": "Thần thoại - Tôn giáo",
+            "description": "Thế giới quan dựa trên niềm tin, tưởng tượng và sức mạnh siêu nhiên."
+          },
+          {
+            "id": "philosophy",
+            "label": "Triết học",
+            "description": "Nhận thức dựa trên lý tính, logic, kinh nghiệm và quy luật."
+          }
+        ],
+        "cards": [
+          {
+            "id": "faith",
+            "text": "Niềm tin",
+            "categoryId": "myth-religion"
+          },
+          {
+            "id": "imagined-world",
+            "text": "Quan niệm tưởng tượng về thế giới",
+            "categoryId": "myth-religion"
+          },
+          {
+            "id": "personification",
+            "text": "Nhân cách hóa tự nhiên",
+            "categoryId": "myth-religion"
+          },
+          {
+            "id": "rituals",
+            "text": "Các nghi lễ",
+            "categoryId": "myth-religion"
+          },
+          {
+            "id": "reason",
+            "text": "Công cụ lý tính",
+            "categoryId": "philosophy"
+          },
+          {
+            "id": "logic",
+            "text": "Các tiêu chuẩn logic",
+            "categoryId": "philosophy"
+          },
+          {
+            "id": "experience",
+            "text": "Kinh nghiệm con người khám phá thực tại",
+            "categoryId": "philosophy"
+          },
+          {
+            "id": "laws",
+            "text": "Các quy luật",
+            "categoryId": "philosophy"
+          }
+        ],
+        "summary": "Triết học lý giải thế giới bằng lý tính, logic và khái quát hóa thay vì chỉ dựa vào niềm tin hoặc tưởng tượng."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "definition-citations",
+      "type": "knowledge_piece",
+      "title": "Định nghĩa kinh điển",
+      "config": {
+        "label": "Định nghĩa triết học",
+        "summary": "Các bách khoa thư lớn đều nhấn mạnh triết học là hình thức nhận thức lý tính, trừu tượng, có phương pháp và có tính hệ thống về thế giới.",
+        "takeaways": [
+          "Britannica: triết học là sự xem xét lý tính, trừu tượng và có phương pháp về thực tại với tính cách là một chỉnh thể.",
+          "Bách khoa thư triết học mới của Viện Triết học Nga: triết học là hình thức đặc biệt của nhận thức và ý thức xã hội về thế giới."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "definition-core-mindmap",
+      "type": "mindmap_reveal",
+      "title": "Nội dung chủ yếu của các định nghĩa triết học",
+      "config": {
+        "center": "Nội dung chủ yếu của các định nghĩa Triết học",
+        "layoutConfig": {
+          "type": "matrix"
+        },
+        "nodes": [
+          {
+            "id": "social-consciousness",
+            "front": "Mảnh ghép 1",
+            "back": "Triết học là một hình thái ý thức xã hội."
+          },
+          {
+            "id": "world-object",
+            "front": "Mảnh ghép 2",
+            "back": "Khách thể khám phá của triết học là thế giới trong hệ thống chỉnh thể toàn vẹn vốn có của nó."
+          },
+          {
+            "id": "universal-laws",
+            "front": "Mảnh ghép 3",
+            "back": "Triết học giải thích sự vật, hiện tượng, quá trình và quan hệ của thế giới nhằm tìm ra những quy luật phổ biến nhất chi phối thế giới, con người và tư duy."
+          },
+          {
+            "id": "systematic-abstract",
+            "front": "Mảnh ghép 4",
+            "back": "Tri thức triết học mang tính hệ thống, logic và trừu tượng về thế giới, bao gồm những nguyên tắc cơ bản và quan điểm nền tảng về mọi tồn tại."
+          }
+        ],
+        "summary": "Triết học là hình thái đặc biệt của ý thức xã hội, được thể hiện thành hệ thống các quan điểm lý luận chung nhất về thế giới, con người và tư duy của con người trong thế giới ấy."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "concept-final",
+      "type": "final_summary",
+      "title": "Hoàn thành bài Khái niệm triết học",
+      "config": {
+        "message": "Bạn đã giải mã nguồn gốc thuật ngữ và nội dung cốt lõi của khái niệm triết học.",
+        "keyTakeaways": [
+          "Triết học là hoạt động tinh thần bậc cao, có trình độ trừu tượng hóa và khái quát hóa cao.",
+          "Triết học khác thần thoại - tôn giáo ở công cụ lý tính, logic và việc tìm kiếm quy luật.",
+          "Triết học là hình thái đặc biệt của ý thức xã hội và hệ thống quan điểm lý luận chung nhất về thế giới."
+        ],
+        "rewards": {
+          "xp": 100,
+          "badge": "Người giải mã khái niệm"
+        },
+        "actions": {
+          "retryButton": true,
+          "nextLessonButton": true
+        }
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

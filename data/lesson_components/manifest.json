@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "sourceFile": "../data_lesson.txt",
+  "contractFile": "../../docs/LESSON_COMPONENTS.md",
+  "contractAuditDate": "2026-07-06",
+  "lessons": [
+    {
+      "key": "1.1.a",
+      "title": "Nguồn gốc của triết học",
+      "file": "chapter-1-1a-nguon-goc-triet-hoc.json",
+      "status": "converted"
+    },
+    {
+      "key": "1.1.b",
+      "title": "Khái niệm triết học",
+      "file": "chapter-1-1b-khai-niem-triet-hoc.json",
+      "status": "converted"
+    },
+    {
+      "key": "1.1.c",
+      "title": "Triết học - hạt nhân lý luận của thế giới quan",
+      "file": "chapter-1-1c-triet-hoc-hat-nhan-the-gioi-quan.json",
+      "status": "converted"
+    }
+  ]
+}

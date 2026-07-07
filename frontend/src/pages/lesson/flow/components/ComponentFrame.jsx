@@ -16,6 +16,10 @@ const TYPE_ICONS = {
   sequence_sorting: "format_list_numbered",
   chain_sorting: "conversion_path",
   knowledge_piece: "extension",
+  map_target_matching: "travel_explore",
+  progression_spiral: "all_inclusive",
+  timeline_explorer: "timeline",
+  hotspot_gallery: "image_search",
   final_summary: "military_tech",
 };
 

@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "lessonKey": "1.1.c",
+  "title": "Triết học - hạt nhân lý luận của thế giới quan",
+  "sourceCoverage": {
+    "sourceFile": "../data_lesson.txt",
+    "sections": [
+      "Hãy cùng đi sâu vào cốt lõi",
+      "Lựa chọn định nghĩa chính xác nhất về triết học Mác - Lênin",
+      "Triết học khác với các khoa học khác như thế nào",
+      "Mọi học thuyết triết học đều là khoa học?"
+    ]
+  },
+  "contractCompatibility": {
+    "contractFile": "../../docs/LESSON_COMPONENTS.md",
+    "usesOnlySupportedTypes": true,
+    "builtComponents": [
+      "progression_spiral"
+    ]
+  },
+  "lessonMedia": [],
+  "lessonFlow": [
+    {
+      "id": "worldview-core-intro",
+      "type": "markdown",
+      "title": "Triết học là hạt nhân của thế giới quan",
+      "config": {
+        "content": "Triết học là hạt nhân của thế giới quan và có sự phát triển nhảy vọt với sự ra đời của triết học Mác - Lênin. Hãy bắt đầu bằng việc lựa chọn định nghĩa chính xác nhất."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "marxist-leninist-definition",
+      "type": "mcq",
+      "title": "Định nghĩa triết học Mác - Lênin",
+      "config": {
+        "question": "Đâu là định nghĩa chính xác nhất về triết học Mác - Lênin?",
+        "options": [
+          {
+            "id": "belief-only",
+            "text": "Triết học chỉ là những quan niệm tưởng tượng và niềm tin thuần túy của con người về vị trí của mình trong thế giới.",
+            "isCorrect": false
+          },
+          {
+            "id": "general-laws",
+            "text": "Với sự ra đời của triết học Mác - Lênin, triết học là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới đó, là khoa học về những quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy.",
+            "isCorrect": true
+          },
+          {
+            "id": "specific-natural-science",
+            "text": "Triết học là một ngành khoa học cụ thể chỉ nghiên cứu về các hiện tượng tự nhiên tách rời khỏi xã hội và tư duy.",
+            "isCorrect": false
+          }
+        ],
+        "correctFeedback": "Đúng. Triết học Mác - Lênin thể hiện rõ vai trò hạt nhân thế giới quan bằng lý luận khoa học về các quy luật chung nhất của tự nhiên, xã hội và tư duy.",
+        "wrongFeedback": "Chưa chính xác. Hãy chú ý phạm vi khái quát của triết học Mác - Lênin: thế giới, con người, tự nhiên, xã hội và tư duy."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "philosophy-specificity",
+      "type": "matching_columns",
+      "title": "Tính đặc thù của triết học",
+      "config": {
+        "instruction": "Nối nội dung ở cột trái với mô tả phù hợp ở cột phải.",
+        "leftColumn": [
+          {
+            "id": "philosophical-knowledge",
+            "text": "Tri thức khoa học triết học"
+          },
+          {
+            "id": "method",
+            "text": "Phương pháp nghiên cứu của triết học"
+          },
+          {
+            "id": "theoretical-worldview",
+            "text": "Cơ sở để diễn tả thế giới quan bằng lý luận"
+          }
+        ],
+        "rightColumn": [
+          {
+            "id": "abstract-general",
+            "text": "Mang tính khái quát cao dựa trên sự trừu tượng hóa sâu sắc về thế giới, về bản chất cuộc sống con người."
+          },
+          {
+            "id": "whole-world",
+            "text": "Xem xét thế giới như một chỉnh thể trong mối quan hệ giữa các yếu tố và tìm cách đưa ra một hệ thống các quan niệm về chỉnh thể đó."
+          },
+          {
+            "id": "history-summary",
+            "text": "Dựa trên cơ sở tổng kết toàn bộ lịch sử của khoa học và lịch sử của bản thân tư tưởng triết học."
+          }
+        ],
+        "correctPairs": [
+          {
+            "leftId": "philosophical-knowledge",
+            "rightId": "abstract-general"
+          },
+          {
+            "leftId": "method",
+            "rightId": "whole-world"
+          },
+          {
+            "leftId": "theoretical-worldview",
+            "rightId": "history-summary"
+          }
+        ],
+        "summary": "Nhận thức triết học không đi vào từng ngóc ngách cô lập mà xem xét thế giới như một chỉnh thể toàn vẹn."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "not-all-philosophy-science",
+      "type": "true_false",
+      "title": "Mọi học thuyết triết học đều là khoa học?",
+      "config": {
+        "statement": "Mọi học thuyết triết học đều là khoa học.",
+        "correctAnswer": false,
+        "explanation": "Không phải mọi triết học đều là khoa học. Song các học thuyết triết học đều có đóng góp nhất định cho sự hình thành tri thức khoa học triết học trong lịch sử."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "philosophy-spiral-piece",
+      "type": "progression_spiral",
+      "title": "Đường xoáy ốc của lịch sử tư tưởng",
+      "config": {
+        "center": "Lịch sử tư tưởng triết học",
+        "instruction": "Mở từng mốc để thấy vì sao triết học phát triển như những vòng khâu nối tiếp trong lịch sử tư tưởng.",
+        "milestones": [
+          {
+            "id": "not-every-philosophy-science",
+            "label": "Không phải mọi triết học đều là khoa học",
+            "icon": "help",
+            "summary": "Các học thuyết triết học không tự động có tính khoa học chỉ vì chúng được gọi là triết học.",
+            "detail": "Tính khoa học phụ thuộc vào đối tượng, hệ thống tri thức và phương pháp nghiên cứu của từng học thuyết."
+          },
+          {
+            "id": "historical-contribution",
+            "label": "Vòng khâu lịch sử",
+            "icon": "all_inclusive",
+            "summary": "Mỗi học thuyết triết học đều là một vòng khâu trong đường xoáy ốc của lịch sử tư tưởng nhân loại.",
+            "detail": "Ngay cả những học thuyết còn hạn chế vẫn có đóng góp nhất định cho sự hình thành tri thức triết học về sau."
+          },
+          {
+            "id": "scientific-level",
+            "label": "Trình độ khoa học",
+            "icon": "science",
+            "summary": "Trình độ khoa học của triết học phụ thuộc vào sự phát triển của đối tượng nghiên cứu, hệ tri thức và phương pháp.",
+            "detail": "Vì vậy cần đánh giá triết học trong điều kiện lịch sử cụ thể, không tách khỏi trình độ nhận thức của thời đại."
+          },
+          {
+            "id": "worldview-core",
+            "label": "Hạt nhân thế giới quan",
+            "icon": "psychology",
+            "summary": "Triết học là hình thái đặc biệt của ý thức xã hội và giữ vai trò hạt nhân lý luận của thế giới quan.",
+            "detail": "Với triết học Mác - Lênin, vai trò này được thể hiện thành hệ thống quan điểm khoa học về các quy luật chung nhất của tự nhiên, xã hội và tư duy."
+          }
+        ],
+        "summary": "Triết học phát triển qua các vòng khâu lịch sử; triết học Mác - Lênin là bước phát triển khoa học trong vai trò hạt nhân lý luận của thế giới quan."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "worldview-core-final",
+      "type": "final_summary",
+      "title": "Hoàn thành bài Triết học - hạt nhân lý luận của thế giới quan",
+      "config": {
+        "message": "Bạn đã nắm được vì sao triết học giữ vai trò hạt nhân lý luận của thế giới quan.",
+        "keyTakeaways": [
+          "Triết học Mác - Lênin là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới.",
+          "Triết học nghiên cứu những quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy.",
+          "Triết học khác khoa học cụ thể ở mức độ khái quát, phương pháp xem xét chỉnh thể và nền tảng tổng kết lịch sử khoa học - tư tưởng.",
+          "Không phải mọi học thuyết triết học đều là khoa học, nhưng chúng đều góp phần vào lịch sử tư tưởng triết học."
+        ],
+        "rewards": {
+          "xp": 100,
+          "badge": "Người nắm hạt nhân thế giới quan"
+        },
+        "actions": {
+          "retryButton": true,
+          "nextLessonButton": true
+        }
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

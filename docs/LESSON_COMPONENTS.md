@@ -92,6 +92,7 @@ The backend validator and frontend registry currently support:
 | `media` | `url` | Accepted for backwards compatibility. Flow player extracts it into center media; right column asks learner to confirm they watched/read it. |
 | `markdown` | `content` | Renders Markdown-like learning text and continues on acknowledgement. |
 | `target_matching` | `targets[]`, `items[]` | Learner matches items to targets; returns a score/result. |
+| `map_target_matching` | `targets[]`, `items[]` | Learner drags items onto positioned map targets. Targets can define optional `x`, `y`, `icon`, and `detail`. |
 | `category_sorting` | `categories[]`, `cards[]` | Learner sorts cards into categories. |
 | `mindmap_reveal` | `nodes[]` | Reveals concept cards. Each node needs `id` and either legacy `label`/`detail` or new `front`/`back`. Optional `layoutConfig.type`: `vertical`, `horizontal`, `matrix`, `custom`. |
 | `mcq` | `question`, `options[]`, at least one correct option | Single-question multiple choice. Correct options can use `isCorrect: true` or `correct: true`. |
@@ -102,6 +103,9 @@ The backend validator and frontend registry currently support:
 | `sequence_sorting` | `items[]` | Learner orders items into the correct sequence. |
 | `chain_sorting` | `items[]` | Guided ordering/chain activity; supports optional `instruction`, `successFeedback`, and `reward`. |
 | `knowledge_piece` | `config.label` or component `title` | Short knowledge card; optional `takeaways[]`. |
+| `progression_spiral` | `milestones[]` | Learner opens milestones on a spiral/progression surface; completes after all milestones are visited. |
+| `timeline_explorer` | `periods[]` | Learner explores historical periods with persistent visited state. |
+| `hotspot_gallery` | `items[]` | Learner opens image/icon hotspots or cards and reads details for each item. |
 | `final_summary` | none strictly required | Completion/summary screen; optional `message`, `keyTakeaways[]`, and `rewards`. |
 
 ## Media Model

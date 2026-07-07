@@ -1,0 +1,1932 @@
+[
+  {
+    "question": "Theo chủ nghĩa duy vật lịch sử, quan hệ sản xuất có thể tác động tới lực lượng sản xuất theo hướng?",
+    "options": [
+      "A. Thúc đẩy hoặc kìm hãm sự phát triển",
+      "B. Thúc đẩy",
+      "C. Hỗ trợ",
+      "D. Tạo điều kiện"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thúc đẩy hoặc kìm hãm sự phát triển"
+  },
+  {
+    "question": "Từ định nghĩa con người của Ph. Ăngghen, đặc điểm nào sau đây cho thấy con người khác với động vật?",
+    "options": [
+      "A. Biết tư duy",
+      "B. Biết ứng xử theo các quy phạm đạo đức",
+      "C. Chính trị",
+      "D. Biết chế tạo và sử dụng công cụ lao động"
+    ],
+    "correctIndex": 3,
+    "explanation": "Biết chế tạo và sử dụng công cụ lao động"
+  },
+  {
+    "question": "Toàn bộ những quan hệ sản xuất của một xã hội trong sự vận động hiện thực của chúng hợp thành cơ cấu kinh tế của xã hội đó được gọi là gì?",
+    "options": [
+      "A. Cơ sở hạ tầng",
+      "B. Cơ sở thượng tầng",
+      "C. Quan hệ sản xuất",
+      "D. Quan hệ phân phối"
+    ],
+    "correctIndex": 0,
+    "explanation": "Cơ sở hạ tầng"
+  },
+  {
+    "question": "Trong xã hội phân chia giai cấp:",
+    "options": [
+      "A. Đấu tranh giai cấp là nguồn gốc và động lực vận động và phát triển xã hội",
+      "B. Đấu tranh giai cấp là nguyên nhân chủ yếu của vận động và phát triển xã hội",
+      "C. Đấu tranh giai cấp là động lực chủ yếu dẫn đến sự vận động và phát triển xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Đấu tranh giai cấp là động lực chủ yếu dẫn đến sự vận động và phát triển xã hội"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử thì:",
+    "options": [
+      "A. Con người là chủ thể tùy ý sáng tạo ra lịch sử",
+      "B. Lịch sử sáng tạo ra con người; con người không thể sáng tạo ra lịch sử",
+      "C. Con người không thể sáng tạo ra lịch sử mà chỉ có thể thích ứng với những điều kiện có sẵn",
+      "D. Con người sáng tạo ra lịch sử trong phạm vi những điều kiện khách quan mà chính lịch sử trước đó đã tạo nên cho nó"
+    ],
+    "correctIndex": 3,
+    "explanation": "Con người sáng tạo ra lịch sử trong phạm vi những điều kiện khách quan mà chính lịch sử trước đó đã tạo nên cho nó"
+  },
+  {
+    "question": "Học thuyết Hình thái kinh tế - xã hội là nội dung của:",
+    "options": [
+      "A. Phép biện chứng",
+      "B. Tất cả các đáp án đều đúng",
+      "C. Chủ nghĩa duy vật biện chứng",
+      "D. Chủ nghĩa duy vật lịch sử"
+    ],
+    "correctIndex": 3,
+    "explanation": "Chủ nghĩa duy vật lịch sử"
+  },
+  {
+    "question": "Nền tảng quan hệ giữa cá nhân và xã hội là:",
+    "options": [
+      "A. Lợi ích",
+      "B. Pháp luật",
+      "C. Đạo đức"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lợi ích"
+  },
+  {
+    "question": "Theo quan điểm duy vật lịch sử, nguồn gốc sâu xa của các cuộc cách mạng là do:",
+    "options": [
+      "A. Quần chúng lao động bị áp bức",
+      "B. Quần chúng lao động hiểu được lý luận chính trị",
+      "C. Giai cấp cầm quyền bị khủng hoảng về đường lối cai trị",
+      "D. Mâu thuẫn gay gắt giữa lực lượng sản xuất và quan hệ sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Mâu thuẫn gay gắt giữa lực lượng sản xuất và quan hệ sản xuất"
+  },
+  {
+    "question": "Đâu là một trong những hình thức cộng đồng người trước khi hình thành dân tộc?",
+    "options": [
+      "A. Thị tộc",
+      "B. Chủng tộc",
+      "C. Sắc tộc",
+      "D. Dân tộc"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thị tộc"
+  },
+  {
+    "question": "Đâu là một phát minh vĩ đại của C.Mác đã đem lại một cuộc cách mạng trong triết học về xã hội?",
+    "options": [
+      "A. Chủ nghĩa duy vật lịch sử",
+      "B. Chủ nghĩa duy tâm khách quan",
+      "C. Chủ nghĩa duy tâm chủ quan",
+      "D. Chủ nghĩa duy vật chất phác"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chủ nghĩa duy vật lịch sử"
+  },
+  {
+    "question": "Trong các yếu tố sau, yếu tố nào thuộc về kiến trúc thượng tầng?",
+    "options": [
+      "A. Cơ sở kinh tế",
+      "B. Cơ sở vật chất kỹ thuật",
+      "C. Công nghệ thông tin",
+      "D. Các học thuyết, tư tưởng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Các học thuyết, tư tưởng"
+  },
+  {
+    "question": "Yếu tố chủ thể của lực lượng sản xuất là:",
+    "options": [
+      "A. Con người với kỹ năng, kỹ xảo và tri thức được tích luỹ lại",
+      "B. Tư liệu sản xuất hiện đại",
+      "C. Khoa học công nghệ tiên tiến",
+      "D. Các phương án trả lời đều đúng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Con người với kỹ năng, kỹ xảo và tri thức được tích luỹ lại"
+  },
+  {
+    "question": "Chọn cụm từ thích hợp điền vào chỗ trống sau để hình thành khái niệm về \"Cơ sở hạ tầng\" theo quan điểm của triết học Mác - Lênin: Cơ sở hạ tầng là tổng hợp các quan hệ sản xuất hợp thành ..............của xã hội?",
+    "options": [
+      "A. Cơ sở vật chất - kỹ thuật",
+      "B. Hệ thống điện, đường, trường, trạm",
+      "C. Cơ cấu kinh tế",
+      "D. Đời sống vật chất"
+    ],
+    "correctIndex": 2,
+    "explanation": "Cơ cấu kinh tế"
+  },
+  {
+    "question": "Hình thái ý thức xã hội nào phản ánh bản chất và tính quy luật của thế giới khách quan?",
+    "options": [
+      "A. Ý thức chính trị",
+      "B. Ý thức pháp quyền",
+      "C. Ý thức khoa học",
+      "D. Ý thức đạo đức"
+    ],
+    "correctIndex": 2,
+    "explanation": "Ý thức khoa học"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, trong kiến trúc thượng tầng của xã hội có giai cấp, yếu tố cơ bản nhất, có tác động trực tiếp và mạnh mẽ nhất tới cơ sở hạ tầng là yếu tố:",
+    "options": [
+      "A. Tổ chức chính đảng",
+      "B. Tổ chức nhà nước",
+      "C. Tổ chức tôn giáo",
+      "D. Các tổ chức văn hóa - xã hội"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tổ chức nhà nước"
+  },
+  {
+    "question": "Sự khác biệt cơ bản nhất giữa các giai cấp là địa vị của họ trong:",
+    "options": [
+      "A. Quyền lực chính trị",
+      "B. Quyền lực nhà nước",
+      "C. Quyền lực quản lý kinh tế",
+      "D. Quyền lực sở hữu tư liệu sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Quyền lực sở hữu tư liệu sản xuất"
+  },
+  {
+    "question": "Ý thức tôn giáo là niềm tin của bộ phận nhân dân, thường là yếu tố bền vững nhất trong đời sống tinh thần của mỗi con người, mỗi xã hội. Vậy, nguyên nhân sự tồn tại bền vững của ý thức tôn giáo là gì?",
+    "options": [
+      "A. Nhận thức",
+      "B. Trình độ",
+      "C. Văn hóa",
+      "D. Tâm lý"
+    ],
+    "correctIndex": 3,
+    "explanation": "Tâm lý"
+  },
+  {
+    "question": "Từ thế kỷ VIII trước công nguyên với nhà nước đầu tiên trong lịch sử, giai cấp tư hữu đã dùng pháp luật và bộ máy thống trị của mình để chiếm mất quyền lực của đông đảo quần chúng nhân dân lao động là những:",
+    "options": [
+      "A. Nông dân",
+      "B. Người tự do",
+      "C. Người nô lệ",
+      "D. Nông nô"
+    ],
+    "correctIndex": 2,
+    "explanation": "Người nô lệ"
+  },
+  {
+    "question": "Yếu tố nào không thuộc lực lượng sản xuất?",
+    "options": [
+      "A. Người lao động",
+      "B. Nhà xưởng, công trường",
+      "C. Đối tượng lao động",
+      "D. Kinh tế thượng tầng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Kinh tế thượng tầng"
+  },
+  {
+    "question": "Cách mạng xã hội được khái quát bởi:",
+    "options": [
+      "A. Thay đổi thể chế chính trị xã hội này bằng thể chế chính trị khác",
+      "B. Thay đổi thể chế kinh tế này bằng một thể chế kinh tế khác cao hơn",
+      "C. Thay đổi căn bản, toàn diện và triệt để một hình thái kinh tế - xã hội này bằng một hình thái kinh tế - xã hội khác cao hơn"
+    ],
+    "correctIndex": 2,
+    "explanation": "Thay đổi căn bản, toàn diện và triệt để một hình thái kinh tế - xã hội này bằng một hình thái kinh tế - xã hội khác cao hơn"
+  },
+  {
+    "question": "Theo quan điểm Mác xít thì nhà nước có:",
+    "options": [
+      "A. Hai đặc trưng",
+      "B. Ba đặc trưng",
+      "C. Bốn đặc trưng",
+      "D. Năm đặc trưng"
+    ],
+    "correctIndex": 1,
+    "explanation": "Ba đặc trưng"
+  },
+  {
+    "question": "Sự thống nhất giữa lực lượng sản xuất với một trình độ nhất định và quan hệ sản xuất tương ứng tạo thành gì?",
+    "options": [
+      "A. Bản chất hàng hóa",
+      "B. Năng lực sáng tạo",
+      "C. Cách thức sản xuất",
+      "D. Phương thức sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Phương thức sản xuất"
+  },
+  {
+    "question": "Trong nền sản xuất lớn hiện đại, yếu tố quyết định năng suất của quá trình lao động sản xuất là:",
+    "options": [
+      "A. Sức lao động",
+      "B. Tư liệu sản xuất hiện đại",
+      "C. Công cụ sản xuất tiên tiến",
+      "D. Đối tượng lao động"
+    ],
+    "correctIndex": 2,
+    "explanation": "Công cụ sản xuất tiên tiến"
+  },
+  {
+    "question": "Ý thức xã hội phản ánh tồn tại xã hội với hai trình độ khác nhau đó là:",
+    "options": [
+      "A. Tâm lý xã hội và hệ tư tưởng xã hội",
+      "B. Tâm lý con người và hệ tư tưởng",
+      "C. Tinh thần xã hội và hệ tư tưởng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tâm lý xã hội và hệ tư tưởng xã hội"
+  },
+  {
+    "question": "Ai là người khẳng định: \"cái sự hiển nhiên...... là trước hết con người cần phải ăn, uống, ở và mặc, nghĩa là phải lao động, trước khi có thể đấu tranh để giành quyền thống trị, trước khi có thể hoạt động chính trị, tôn giáo, triết học ...'",
+    "options": [
+      "A. C.Mác",
+      "B. Ph.Ăngghen",
+      "C. Platon",
+      "D. Immanuel Kant"
+    ],
+    "correctIndex": 1,
+    "explanation": "Ph.Ăngghen"
+  },
+  {
+    "question": "Anh A có tri thức, năng lực, trình độ, kinh nghiệm và kỹ năng lao động. Vậy có thể gọi A là?",
+    "options": [
+      "A. Trí thức",
+      "B. Người lao động",
+      "C. Lao động trí thức",
+      "D. Năng lực lao động"
+    ],
+    "correctIndex": 2,
+    "explanation": "Lao động trí thức"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin, tiêu chí cơ bản để đánh giá phẩm chất của mỗi cá nhân là:",
+    "options": [
+      "A. Địa vị xã hội của cá nhân",
+      "B. Thái độ, hành vi đạo đức của cá nhân",
+      "C. Sự thực hiện khả năng làm chủ đối với hoàn cảnh và hành động thực tiễn của cá nhân",
+      "D. Tất cả đều đúng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Tất cả đều đúng"
+  },
+  {
+    "question": "Theo quan điểm chủ nghĩa duy vật lịch sử, lực lượng cơ bản nhất trong quần chúng nhân dân là:",
+    "options": [
+      "A. Giai cấp thống trị xã hội",
+      "B. Tầng lớp tri thức",
+      "C. Người lao động",
+      "D. Công nhân và nông dân"
+    ],
+    "correctIndex": 2,
+    "explanation": "Người lao động"
+  },
+  {
+    "question": "Cơ sở của sự tồn tại và phát triển của xã hội là sản xuất:",
+    "options": [
+      "A. Hàng hóa, dịch vụ",
+      "B. Tư liệu sản xuất",
+      "C. Tư liệu tiêu dùng",
+      "D. Sản xuất vật chất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Sản xuất vật chất"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, trong xã hội khi xuất hiện mâu thuẫn gay gắt giữa lực lượng sản xuất và quan hệ sản xuất thì:",
+    "options": [
+      "A. Quan hệ sản xuất sẽ tự động thay đổi cho phù hợp với lực lượng sản xuất",
+      "B. Quan hệ sản xuất không thể thay đổi được vì nó được bảo vệ bằng quyền lực nhà nước",
+      "C. Lực lượng sản xuất phải tự điều chỉnh cho phù hợp với quan hệ sản xuất",
+      "D. Quan hệ sản xuất được thay đổi thông qua những cuộc cải cách và các cuộc cách mạng xã hội"
+    ],
+    "correctIndex": 3,
+    "explanation": "Quan hệ sản xuất được thay đổi thông qua những cuộc cải cách và các cuộc cách mạng xã hội"
+  },
+  {
+    "question": "\"Phải giải thích ý thức xã hội bằng những mâu thuẫn, những sự xung đột hiện có giữa các lực lượng sản xuất và những quan hệ sản xuất của xã hội\". Luận điểm này nhấn mạnh điểm nào trong quan niệm duy vật lịch sử?",
+    "options": [
+      "A. Vai trò quyết định của tồn tại xã hội đối với ý thức xã hội",
+      "B. Vai trò chi phối của phương thức sản xuất đối với ý thức xã hội",
+      "C. Vai trò của cơ sở hạ tầng đối với kiến trúc thượng tầng",
+      "D. Vai trò quyết định của ý thức xã hội đối với tồn tại xã hội"
+    ],
+    "correctIndex": 1,
+    "explanation": "Vai trò chi phối của phương thức sản xuất đối với ý thức xã hội"
+  },
+  {
+    "question": "Quan điểm của chủ nghĩa Mác-Lênin về lãnh tụ là:",
+    "options": [
+      "A. Tất cả các đáp án đều đúng",
+      "B. Những cá nhân kiệt xuất có sự gắn bó với quần chúng nhân dân",
+      "C. Những cá nhân kiệt xuất được quần chúng tín nhiệm",
+      "D. Những cá nhân kiệt xuất tự nguyện hy sinh bản thân mình vì lợi ích của quần chúng nhân dân"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tất cả các đáp án đều đúng"
+  },
+  {
+    "question": "Mối quan hệ giữa lĩnh vực kinh tế và lĩnh vực chính trị của xã hội được khái quát trong quy luật nào?",
+    "options": [
+      "A. Quy luật về mối quan hệ biện chứng giữa cơ sở hạ tầng và kiến trúc thượng tầng",
+      "B. Quy luật đấu tranh giai cấp",
+      "C. Quy luật tồn tại xã hội quyết định ý thức xã hội",
+      "D. Tất cả đều sai"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quy luật về mối quan hệ biện chứng giữa cơ sở hạ tầng và kiến trúc thượng tầng"
+  },
+  {
+    "question": "Nội dung trước tiên của cách mạng xã hội chủ nghĩa là phải giành chính quyền về tay giai cấp công nhân, nhân dân lao động, đưa những người lao động:",
+    "options": [
+      "A. Thành người lao động tập thể",
+      "B. Làm chủ tư liệu sản xuất",
+      "C. Thành người quản lý xã hội",
+      "D. Lên địa vị làm chủ xã hội"
+    ],
+    "correctIndex": 1,
+    "explanation": "Làm chủ tư liệu sản xuất"
+  },
+  {
+    "question": "Đặc trưng chủ yếu của cách mạng xã hội:",
+    "options": [
+      "A. Sự thay đổi chính quyền nhà nước từ tay giai cấp thống trị đã lỗi thời sang tay giai cấp cách mạng.",
+      "B. Sự thay đổi về cơ cấu, tổ chức hoạt động sản xuất ra của cải vật chất trong xã hội",
+      "C. Sự thay đổi về hệ tư tưởng nói riêng và toàn bộ đời sống tinh thần của xã hội nói chung"
+    ],
+    "correctIndex": 0,
+    "explanation": "Sự thay đổi chính quyền nhà nước từ tay giai cấp thống trị đã lỗi thời sang tay giai cấp cách mạng."
+  },
+  {
+    "question": "Vai trò của cách mạng xã hội đối với tiến hóa xã hội gì?",
+    "options": [
+      "A. Cách mạng xã hội làm gián đoạn quá trình tiến hóa xã hội",
+      "B. Cách mạng xã hội phủ định tiến hóa xã hội",
+      "C. Cách mạng xã hội không có quan hệ với tiến hóa xã hội",
+      "D. Cách mạng xã hội mở đường cho quá trình tiến hoá xã hội lên giai đoạn cao hơn."
+    ],
+    "correctIndex": 3,
+    "explanation": "Cách mạng xã hội mở đường cho quá trình tiến hoá xã hội lên giai đoạn cao hơn."
+  },
+  {
+    "question": "Theo quan điểm duy vật lịch sử thì xã hội có các loại hình sản xuất cơ bản nào?",
+    "options": [
+      "A. Sản xuất ra của cải vật chất, tinh thần và văn hóa",
+      "B. Sản xuất ra văn hóa, con người và đời sống tinh thần",
+      "C. Sản xuất ra của cải vật chất, đời sống tinh thần và nghệ thuật",
+      "D. Sản xuất ra của cải vật chất, tinh thần và con người"
+    ],
+    "correctIndex": 3,
+    "explanation": "Sản xuất ra của cải vật chất, tinh thần và con người"
+  },
+  {
+    "question": "Theo quan niệm duy vật biện chứng về lịch sử thì do khác nhau và đối lập nhau về yếu tố nào tạo ra khả năng khách quan dẫn đến tập đoàn này có thể chiếm đoạt lao động của tập đoàn khác?",
+    "options": [
+      "A. Quyền lực",
+      "B. Sở hữu",
+      "C. Địa vị",
+      "D. Tài sản"
+    ],
+    "correctIndex": 2,
+    "explanation": "Địa vị"
+  },
+  {
+    "question": "Ai là người đã đưa ra định nghĩa về giai cấp sau đây: \"Người ta gọi là giai cấp, những tập đoàn to lớn gồm những người khác nhau về địa vị của họ trong một hệ thống sản xuất xã hội nhất định trong lịch sử, khác nhau về quan hệ của họ (thường thường thì những quan hệ này được pháp luật quy định và thừa nhận) đối với tư liệu sản xuất, về vai trò của họ trong tổ chức lao động xã hội và như vậy là khác nhau về cách thức hưởng thụ và về phần của cải xã hội ít hoặc nhiều mà họ được hưởng. Giai cấp là những tập đoàn người, mà tập đoàn này thì có thể chiếm đoạt lao động của tập đoàn khác, do chỗ tập đoàn đó có địa vị khác nhau trong một chế độ kinh tế - xã hội nhất định\".",
+    "options": [
+      "A. Heraclit",
+      "B. Khổng Tử",
+      "C. V.I.Lênin",
+      "D. Chủ tịch Hồ Chí Minh"
+    ],
+    "correctIndex": 2,
+    "explanation": "V.I.Lênin"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin thì sự thay đổi quan hệ sản xuất phụ thuộc vào:",
+    "options": [
+      "A. Trình độ của công cụ sản xuất",
+      "B. Trình độ kỹ thuật sản xuất",
+      "C. Trình độ phân công lao động xã hội",
+      "D. Trình độ phát triển của lực lượng sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Trình độ phát triển của lực lượng sản xuất"
+  },
+  {
+    "question": "Theo C.Mác, các nền kinh tế căn bản phân biệt với nhau bởi:",
+    "options": [
+      "A. Phương thức sản xuất ra của cải vật chất",
+      "B. Mục đích của quá trình sản xuất ra của cải vật chất",
+      "C. Mục đích tự nhiên của quá trình sản xuất ra của cải vật chất",
+      "D. Mục đích xã hội của quá trình sản xuất ra của cải vật chất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Phương thức sản xuất ra của cải vật chất"
+  },
+  {
+    "question": "Trong xã hội có giai cấp, nội dung và hình thức phát triển của ý thức xã hội khác nhau do đâu?",
+    "options": [
+      "A. Những điều kiện sinh hoạt vật chất, lợi ích và địa vị của các giai cấp khác nhau",
+      "B. Thói quen khác nhau",
+      "C. Sở thích khác nhau",
+      "D. Những điều kiện sinh hoạt tinh thần, địa vị, thói quen của các giai cấp khác nhau"
+    ],
+    "correctIndex": 0,
+    "explanation": "Những điều kiện sinh hoạt vật chất, lợi ích và địa vị của các giai cấp khác nhau"
+  },
+  {
+    "question": "Những ý thức lạc hậu tiêu cực không mất đi một cách dễ dàng, là do:",
+    "options": [
+      "A. Thói quen tập quán lâu đời",
+      "B. Ý thức xã hội không phản ánh kịp tồn tại xã hội",
+      "C. Thói quen tập quán lâu đời và ý thức xã hội không phản ánh kịp tồn tại xã hội",
+      "D. Ý thức xã hội phản ánh tồn tại xã hội và thói quen tập quán"
+    ],
+    "correctIndex": 2,
+    "explanation": "Thói quen tập quán lâu đời và ý thức xã hội không phản ánh kịp tồn tại xã hội"
+  },
+  {
+    "question": "Bản chất của nhà nước là gì?",
+    "options": [
+      "A. Mang bản chất của giai cấp thống trị",
+      "B. Mang bản chất của giai cấp bị trị",
+      "C. Mang bản chất của tất cả các giai cấp",
+      "D. Mang bản chất của xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Mang bản chất của giai cấp thống trị"
+  },
+  {
+    "question": "Theo C. Mác và Ph. Ăngghen, để tồn tại và phát triển, con người cần phải thực hiện hoạt động gì?",
+    "options": [
+      "A. Vận động",
+      "B. Sản xuất",
+      "C. Làm giàu",
+      "D. Kinh doanh"
+    ],
+    "correctIndex": 1,
+    "explanation": "Sản xuất"
+  },
+  {
+    "question": "Hạt nhân cơ bản trong quần chúng nhân dân là:",
+    "options": [
+      "A. Những người lao động sản xuất ra của cải vật chất",
+      "B. Những bộ phận dân cư chống lại giai cấp thống trị áp bức bóc lột, đối kháng với nhân dân",
+      "C. Những tầng lớp xã hội khác nhau thúc đẩy sự tiến bộ của xã hội",
+      "D. Những tầng lớp dân cư lao động"
+    ],
+    "correctIndex": 0,
+    "explanation": "Những người lao động sản xuất ra của cải vật chất"
+  },
+  {
+    "question": "Trong mối quan hệ giữa tồn tại xã hội và ý thức xã hội:",
+    "options": [
+      "A. Suy đến cùng, tồn tại xã hội quyết định ý thức xã hội",
+      "B. Suy đến cùng, ý thức xã hội quyết định tồn tại xã hội",
+      "C. Tồn tại và ý thức xã hội phụ thuộc lẫn nhau, không cái nào quyết định cái nào",
+      "D. Tùy từng điều mà xem xét cái nào quyết định cái nào"
+    ],
+    "correctIndex": 0,
+    "explanation": "Suy đến cùng, tồn tại xã hội quyết định ý thức xã hội"
+  },
+  {
+    "question": "Theo triết học Mác, hình thái kinh tế - xã hội cuối cùng là?",
+    "options": [
+      "A. Phong kiến",
+      "B. Tư bản chủ nghĩa",
+      "C. Xã hội chủ nghĩa",
+      "D. Cộng sản chủ nghĩa"
+    ],
+    "correctIndex": 3,
+    "explanation": "Cộng sản chủ nghĩa"
+  },
+  {
+    "question": "Ý thức xã hội có tính chất nào sau đây?",
+    "options": [
+      "A. Tính độc lập tương đối",
+      "B. Tính độc lập tuyệt đối",
+      "C. Tính sáng tạo",
+      "D. Tính bất biến"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tính độc lập tương đối"
+  },
+  {
+    "question": "Theo quan niệm của chủ nghĩa duy vật lịch sử thì đỉnh cao của sự phát triển đấu tranh giai cấp là đấu tranh:",
+    "options": [
+      "A. Chính trị",
+      "B. Võ trang",
+      "C. Kinh tế",
+      "D. Giải phóng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chính trị"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa Mác-Lênin, khái niệm nào dùng để chỉ lực lượng sản xuất cơ bản của xã hội, trực tiếp sản xuất ra của cải vật chất, là cơ sở của sự tồn tại và phát triển của xã hội, là động lực cơ bản của mọi cuộc cách mạng xã hội và là người sáng tạo ra những giá trị văn hóa tinh thần cho xã hội?",
+    "options": [
+      "A. Quần chúng nhân dân",
+      "B. Tất cả các đáp án đều đúng",
+      "C. Lãnh tụ",
+      "D. Vĩ nhân"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quần chúng nhân dân"
+  },
+  {
+    "question": "Theo C. Mác, trong tính hiện thực của nó, bản chất con người là tổng hòa:",
+    "options": [
+      "A. Các phẩm chất xã hội",
+      "B. Quan hệ lợi ích",
+      "C. Các quan hệ xã hội",
+      "D. Quan hệ hiện thực"
+    ],
+    "correctIndex": 2,
+    "explanation": "Các quan hệ xã hội"
+  },
+  {
+    "question": "Chủ nghĩa duy vật lịch sử cho rằng, cuộc đấu tranh giữa những người lao động làm thuê, những người nô lệ bị áp bức về chính trị - xã hội và bị bóc lột về kinh tế chống lại bọn áp bức và bóc lột nó là thực chất:",
+    "options": [
+      "A. Đấu tranh giai cấp",
+      "B. Ra đời giai cấp",
+      "C. Cách mạng",
+      "D. Ra đời nhà nước"
+    ],
+    "correctIndex": 0,
+    "explanation": "Đấu tranh giai cấp"
+  },
+  {
+    "question": "Chủ nghĩa duy vật lịch sử cho rằng, tồn tại xã hội là khái niệm dùng để chỉ phương diện sinh hoạt vật chất và những điều kiện gì của xã hội?",
+    "options": [
+      "A. Văn hoá tinh thần",
+      "B. Sinh hoạt tinh thần",
+      "C. Sinh hoạt vật chất",
+      "D. Kinh tế"
+    ],
+    "correctIndex": 2,
+    "explanation": "Sinh hoạt vật chất"
+  },
+  {
+    "question": "Những nét chung nhất của quy luật về sự phù hợp giữa quan hệ sản xuất và trình độ phát triển của lực lượng sản xuất là:",
+    "options": [
+      "A. Tính đa dạng",
+      "B. Tính khách quan",
+      "C. Tính phổ biến",
+      "D. Tính chung nhất"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tính phổ biến"
+  },
+  {
+    "question": "Ý thức xã hội là phạm trù triết học dùng để chỉ:",
+    "options": [
+      "A. Toàn bộ đời sống tinh thần của xã hội",
+      "B. Toàn bộ điều kiện vật chất của xã hội",
+      "C. Toàn bộ điều kiện tinh thần của xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Toàn bộ đời sống tinh thần của xã hội"
+  },
+  {
+    "question": "Quan điểm tiến bộ và cách mạng nhất của chủ nghĩa Mác-Lênin về vấn đề con người là:",
+    "options": [
+      "A. Giải thích được nguồn gốc tự nhiên và xã hội của con người dưới ánh sáng khoa học",
+      "B. Mô tả được quá trình hoạt động sống và lao động sản xuất của con người theo tinh thần của chủ nghĩa duy vật",
+      "C. Đưa ra được học thuyết cách mạng và triệt để về đấu tranh giải phóng con người",
+      "D. Giải thích được một cách khoa học nguồn gốc của ý thức của con người"
+    ],
+    "correctIndex": 0,
+    "explanation": "Giải thích được nguồn gốc tự nhiên và xã hội của con người dưới ánh sáng khoa học"
+  },
+  {
+    "question": "Theo quan niệm duy vật biện chứng, trong xã hội có giai cấp, hệ tư tưởng thống trị xã hội bao giờ cũng là hệ tư tưởng của giai cấp:",
+    "options": [
+      "A. Tiên tiến nhất",
+      "B. Lãnh đạo xã hội",
+      "C. Thống trị xã hội",
+      "D. Đứng đầu xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Thống trị xã hội"
+  },
+  {
+    "question": "Trong các yếu tố của lực lượng sản xuất, yếu tố nào là quan trọng nhất?",
+    "options": [
+      "A. Tư liệu sản xuất",
+      "B. Người lao động",
+      "C. Đối tượng lao động",
+      "D. Máy móc và công nghệ hiện đại"
+    ],
+    "correctIndex": 1,
+    "explanation": "Người lao động"
+  },
+  {
+    "question": "\"Cái cối xay quay bằng tay đưa lại xã hội có lãnh chúa phong kiến, cái cối xay chạy bằng máy hơi nước đưa lại xã hội có nhà tư bản công nghiệp\". Thí dụ có hình ảnh trên nhằm nêu bật vai trò quyết định, xét đến cùng, trong sự phát triển là yếu tố nào?",
+    "options": [
+      "A. Đối tượng lao động",
+      "B. Lực lượng sản xuất",
+      "C. Tư liệu sản xuất",
+      "D. Công cụ lao động"
+    ],
+    "correctIndex": 1,
+    "explanation": "Lực lượng sản xuất"
+  },
+  {
+    "question": "Chọn phương án đúng theo quan điểm duy tâm về lịch sử. Trong mối quan hệ giữa tồn tại xã hội và ý thức xã hội:",
+    "options": [
+      "A. Suy đến cùng, tồn tại xã hội quyết định ý thức xã hội",
+      "B. Suy đến cùng, ý thức xã hội quyết định tồn tại xã hội",
+      "C. Tồn tại trong mối quan hệ phụ thuộc vào nhau, không cái nào quyết định cái nào",
+      "D. Tùy từng điều kiện mà xem xét cái nào quyết định cái nào"
+    ],
+    "correctIndex": 1,
+    "explanation": "Suy đến cùng, ý thức xã hội quyết định tồn tại xã hội"
+  },
+  {
+    "question": "C.Mác đã xuất phát từ quan hệ nào, coi đó là quan hệ cơ bản nhất để phân tích kết cấu của xã hội?",
+    "options": [
+      "A. Quan hệ chính trị",
+      "B. Quan hệ pháp luật",
+      "C. Quan hệ giữa con người với giới tự nhiên",
+      "D. Quan hệ sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Quan hệ sản xuất"
+  },
+  {
+    "question": "Tiêu chí nào là quan trọng nhất để phân biệt các hình thái kinh tế - xã hội?",
+    "options": [
+      "A. Lực lượng sản xuất",
+      "B. Quan hệ sản xuất",
+      "C. Kiến trúc thượng tầng"
+    ],
+    "correctIndex": 1,
+    "explanation": "Quan hệ sản xuất"
+  },
+  {
+    "question": "Ở xã hội Việt Nam hiện nay:",
+    "options": [
+      "A. Còn đấu tranh giai cấp",
+      "B. Không còn đấu tranh giai cấp",
+      "C. Các phương án trả lời đều sai",
+      "D. Đấu tranh giai cấp gay gắt"
+    ],
+    "correctIndex": 0,
+    "explanation": "Còn đấu tranh giai cấp"
+  },
+  {
+    "question": "Trong 3 đặc trưng của giai cấp thì đặc trưng nào giữ vai trò chi phối các đặc trưng khác?",
+    "options": [
+      "A. Khác nhau về vai trò trong tổ chức lao động xã hội",
+      "B. Khác nhau về địa vị trong hệ thống tổ chức xã hội",
+      "C. Khác nhau về quan hệ sở hữu tư liệu sản xuất xã hội",
+      "D. Tập đoàn này có thể chiếm hữu đoạt lao động của tập đoàn khác"
+    ],
+    "correctIndex": 2,
+    "explanation": "Khác nhau về quan hệ sở hữu tư liệu sản xuất xã hội"
+  },
+  {
+    "question": "Trong tư liệu sản xuất thì cái gì phản ánh rõ nhất trình độ phát triển của lực lượng sản xuất?",
+    "options": [
+      "A. Công cụ lao động",
+      "B. Máy móc",
+      "C. Đối tượng lao động",
+      "D. Công cụ tin học"
+    ],
+    "correctIndex": 0,
+    "explanation": "Công cụ lao động"
+  },
+  {
+    "question": "Trong xã hội có giai cấp, tính chất kế thừa của ý thức xã hội có gắn với tính chất giai cấp của nó?",
+    "options": [
+      "A. Tùy trường hợp cụ thể",
+      "B. Không kế thừa",
+      "C. Có kế thừa",
+      "D. Có kế thừa và không kế thừa"
+    ],
+    "correctIndex": 2,
+    "explanation": "Có kế thừa"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa Mác -Lênin, \"Bộ tộc\" được định nghĩa là gì?",
+    "options": [
+      "A. Bộ tộc là hình thức cộng đồng người hình thành khi xã hội có sự phân chia thành giai cấp. Các bộ tộc được hình thành từ sự liên kết của nhiều bộ lạc sống trên một lãnh thổ nhất định",
+      "B. Những tộc người sống lưu vong",
+      "C. Nhiều bộ lạc hợp lại",
+      "D. Những người có chung lãnh thổ, ngôn ngữ, văn hóa, kinh tế"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bộ tộc là hình thức cộng đồng người hình thành khi xã hội có sự phân chia thành giai cấp. Các bộ tộc được hình thành từ sự liên kết của nhiều bộ lạc sống trên một lãnh thổ nhất định"
+  },
+  {
+    "question": "Thực chất của quá trình sản xuất vật chất là quá trình:",
+    "options": [
+      "A. Con người thực hiện sự cải biến giới tự nhiên",
+      "B. Con người nhận thức thế giới và bản thân mình",
+      "C. Con người thực hiện sáng tạo trong tư duy",
+      "D. Con người thực hiện lợi ích của mình"
+    ],
+    "correctIndex": 0,
+    "explanation": "Con người thực hiện sự cải biến giới tự nhiên"
+  },
+  {
+    "question": "Sự ra đời và tồn tại của nhà nước ....",
+    "options": [
+      "A. là hiện tượng mang tính khách quan, được quyết định bởi quá trình phát triển của xã hội.",
+      "B. là hiện tượng mang tính chủ quan, phụ thuộc vào nguyện vọng của giai cấp cầm quyền.",
+      "C. là hiện tượng mang tính chủ quan phụ thuộc vào nguyện vọng của mỗi quốc gia, mỗi dân tộc.",
+      "D. là hiện tượng mang tính khách quan, được quy định bởi sự phát triển của khoa học kỹ thuật."
+    ],
+    "correctIndex": 0,
+    "explanation": "là hiện tượng mang tính khách quan, được quyết định bởi quá trình phát triển của xã hội."
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, nhà nước là:",
+    "options": [
+      "A. Tổ chức phi chính phủ",
+      "B. Tổ chức quyền lực phi giai cấp",
+      "C. Tổ chức quyền lực mang bản chất của giai cấp sở hữu tư liệu sản xuất chủ yếu của xã hội",
+      "D. Tổ chức quyền lực mang bản chất của mọi giai cấp trong xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tổ chức quyền lực mang bản chất của giai cấp sở hữu tư liệu sản xuất chủ yếu của xã hội"
+  },
+  {
+    "question": "Điều kiện cơ bản để ý thức xã hội tác động trở lại tồn tại xã hội là:",
+    "options": [
+      "A. Ý thức xã hội phải vượt trước tồn tại xã hội",
+      "B. Ý thức xã hội phải phù hợp với tồn tại xã hội",
+      "C. Phải có hoạt động thực tiễn của con người",
+      "D. Phải có điều kiện vật chất bảo đảm"
+    ],
+    "correctIndex": 2,
+    "explanation": "Phải có hoạt động thực tiễn của con người"
+  },
+  {
+    "question": "Nguồn gốc trực tiếp của sự ra đời giai cấp trong xã hội?",
+    "options": [
+      "A. Do sự phát triển lực lượng sản xuất làm xuất hiện \"của dư tương đối\"",
+      "B. Do sự chênh lệch về khả năng giữa các tập đoàn người",
+      "C. Do sự phân hóa giữa giàu và nghèo trong xã hội",
+      "D. Do sự xuất hiện chế độ tư hữu về tư liệu sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Do sự xuất hiện chế độ tư hữu về tư liệu sản xuất"
+  },
+  {
+    "question": "Theo triết học Mác, con người là gì?",
+    "options": [
+      "A. Thực thể sinh học - xã hội",
+      "B. Thực thể tự nhiên - sinh học",
+      "C. Kết hợp con vật và con người",
+      "D. Là thực thể do thánh thần tạo ra"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thực thể sinh học - xã hội"
+  },
+  {
+    "question": "Sự phân chia giai cấp trong xã hội bắt đầu từ hình thái kinh tế - xã hội nào?",
+    "options": [
+      "A. Cộng sản nguyên thủy",
+      "B. Tư bản chủ nghĩa",
+      "C. Phong kiến",
+      "D. Chiếm hữu nô lệ"
+    ],
+    "correctIndex": 3,
+    "explanation": "Chiếm hữu nô lệ"
+  },
+  {
+    "question": "Cấu trúc của phương thức sản xuất gồm những yếu tố nào sau đây?",
+    "options": [
+      "A. Công cụ lao động, đối tượng lao động",
+      "B. Trình độ lao động, quan hệ sản xuất",
+      "C. Lực lượng sản xuất, quan hệ sản xuất",
+      "D. Tư liệu sản xuất và con người"
+    ],
+    "correctIndex": 2,
+    "explanation": "Lực lượng sản xuất, quan hệ sản xuất"
+  },
+  {
+    "question": "Toàn bộ những chính sách, quan điểm, tư tưởng, đường lối chỉ đạo của nhà nước được gọi là gì?",
+    "options": [
+      "A. Cơ sở hạ tầng",
+      "B. Cơ sở thượng tầng",
+      "C. Quan hệ sản xuất",
+      "D. Kiến trúc thượng tầng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Kiến trúc thượng tầng"
+  },
+  {
+    "question": "Thời đại kinh tế ngày nay được gọi là gì?",
+    "options": [
+      "A. Nền kinh tế 4.0",
+      "B. Nền kinh tế tri thức",
+      "C. Nền kinh tế thị trường",
+      "D. Nền kinh tế hàng hóa nhiều thành phần"
+    ],
+    "correctIndex": 1,
+    "explanation": "Nền kinh tế tri thức"
+  },
+  {
+    "question": "Quá trình \"Lịch sử tự nhiên\" của sự phát triển các hình thái kinh tế xã hội là quá trình phát triển theo:",
+    "options": [
+      "A. Quy luật của tự nhiên",
+      "B. Ý muốn chủ quan của con người",
+      "C. Ý niệm tuyệt đối",
+      "D. Quy luật khách quan của xã hội"
+    ],
+    "correctIndex": 3,
+    "explanation": "Quy luật khách quan của xã hội"
+  },
+  {
+    "question": "Vai trò của lãnh tụ đối với phong trào của quần chúng nhân dân?",
+    "options": [
+      "A. Thúc đẩy hoặc kìm hãm sự tiến bộ của xã hội",
+      "B. Là người sáng lập ra các tổ chức chính trị, xã hội và là linh hồn của các tổ chức đó",
+      "C. Lãnh tụ của mỗi thời đại chỉ có thể hoàn thành những nhiệm vụ đặt ra của thời đại đó",
+      "D. Tất cả các đáp án đều đúng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Tất cả các đáp án đều đúng"
+  },
+  {
+    "question": "Xét đến cùng, mục đích của sự sản xuất xã hội là để làm gì?",
+    "options": [
+      "A. Sản xuất ra của cải vật chất",
+      "B. Sản xuất và tái sản xuất ra đời sống hiện thực",
+      "C. Sản xuất ra con người, nuôi sống con người",
+      "D. Sản xuất ra con người"
+    ],
+    "correctIndex": 1,
+    "explanation": "Sản xuất và tái sản xuất ra đời sống hiện thực"
+  },
+  {
+    "question": "Theo quan điểm của duy vật về lịch sử, nhân tố quyết định trong lịch sử xét đến cùng là gì?",
+    "options": [
+      "A. Lao động, tái sản xuất ra con người",
+      "B. Sở hữu về tư liệu sản xuất, phân phối sản phẩm",
+      "C. Kết cấu xã hội, giai cấp",
+      "D. Sự sản xuất và tái sản xuất ra đời sống hiện thực"
+    ],
+    "correctIndex": 3,
+    "explanation": "Sự sản xuất và tái sản xuất ra đời sống hiện thực"
+  },
+  {
+    "question": "Trong lực lượng sản xuất, đâu là yếu tố động nhất, cách mạng nhất?",
+    "options": [
+      "A. Công cụ lao động",
+      "B. Bộ óc con người",
+      "C. Con người lao động",
+      "D. Tư liệu sản xuất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Công cụ lao động"
+  },
+  {
+    "question": "Khái niệm \"cơ sở hạ tầng\" là dùng để chỉ:",
+    "options": [
+      "A. Quan hệ kinh tế của xã hội",
+      "B. Kết cấu vật chất - kỹ thuật làm cơ sở để phát triển kinh tế",
+      "C. Quan hệ sản xuất của xã hội",
+      "D. Quan hệ sản xuất hợp thành cơ cấu kinh tế của xã hội"
+    ],
+    "correctIndex": 3,
+    "explanation": "Quan hệ sản xuất hợp thành cơ cấu kinh tế của xã hội"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin, \"tồn tại xã hội\" bao gồm:",
+    "options": [
+      "A. Dân số, ý thức xã hội, kiến trúc thượng tầng",
+      "B. Lực lượng sản xuất, dân số, phương thức sản xuất, ý thức xã hội",
+      "C. Môi trường tự nhiên, quan hệ sản xuất, tâm lý xã hội, hệ tư tưởng",
+      "D. Môi trường tự nhiên, dân số, phương thức sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Môi trường tự nhiên, dân số, phương thức sản xuất"
+  },
+  {
+    "question": "Trong một hình thái kinh tế xã hội, quan hệ sản xuất có vai trò sau đây:",
+    "options": [
+      "A. Là quan hệ cơ bản, quyết định tất cả các quan hệ xã hội khác",
+      "B. Là cơ sở kinh tế của các hiện tượng xã hội",
+      "C. Thể hiện tính liên tục trong sự phát triển của xã hội loài người",
+      "D. Tiêu biểu cho bộ mặt xã hội ở mỗi giai đoạn phát triển nhất định"
+    ],
+    "correctIndex": 2,
+    "explanation": "Thể hiện tính liên tục trong sự phát triển của xã hội loài người"
+  },
+  {
+    "question": "Khi quan hệ sản xuất được xem là phù hợp với tính chất và trình độ phát triển của lực lượng sản xuất:",
+    "options": [
+      "A. Thúc đẩy lực lượng sản xuất phát triển",
+      "B. Cải thiện đời sống nhân dân",
+      "C. Tạo điều kiện thực hiện công bằng xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thúc đẩy lực lượng sản xuất phát triển"
+  },
+  {
+    "question": "Nhân tố quyết định xu hướng phát triển của các hình thái kinh tế - xã hội là:",
+    "options": [
+      "A. Ý thức của giai cấp nắm quyền lực nhà nước",
+      "B. Ý chí của nhân dân",
+      "C. Quy luật khách quan",
+      "D. Điều kiện khách quan và chủ quan của mỗi xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quy luật khách quan"
+  },
+  {
+    "question": "Quan hệ giữa người với người trong quá trình sản xuất được gọi là gì?",
+    "options": [
+      "A. Quan hệ xã hội",
+      "B. Quan hệ tổ chức quản lý",
+      "C. Quan hệ sản xuất",
+      "D. Quan hệ điều tiết"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quan hệ sản xuất"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin, luận điểm nào sau đây chưa chính xác khi đề cập đến mối quan hệ giữa tồn tại xã hội và ý thức xã hội?",
+    "options": [
+      "A. Một bộ phận ý thức xã hội có thể vượt trước tồn tại xã hội",
+      "B. Ý thức xã hội mang tính kế thừa",
+      "C. Ý thức xã hội luôn thay đổi ngay lập tức khi tồn tại xã hội thay đổi",
+      "D. Ý thức xã hội thường lạc hậu, bảo thủ so với tồn tại xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Ý thức xã hội luôn thay đổi ngay lập tức khi tồn tại xã hội thay đổi"
+  },
+  {
+    "question": "Theo V.I. Lênin \"Chủ nghĩa Mác đã mở đường cho việc nghiên cứu rộng rãi và toàn diện quá trình phát sinh, phát triển và suy tàn của...*\"",
+    "options": [
+      "A. Hệ thống vật chất trong giới tự nhiên",
+      "B. Các quá trình kinh tế và chính trị - xã hội",
+      "C. Các sự vật, hiện tượng trong thế giới tự nhiên, xã hội và tư duy",
+      "D. Các hình thái kinh tế - xã hội"
+    ],
+    "correctIndex": 3,
+    "explanation": "Các hình thái kinh tế - xã hội"
+  },
+  {
+    "question": "Trong mối quan hệ giữa \"lực lượng sản xuất và quan hệ sản xuất\", yếu tố nào là nội dung, yếu tố nào là hình thức?",
+    "options": [
+      "A. Lực lượng sản xuất là nội dung - quan hệ sản xuất là hình thức",
+      "B. Quan hệ sản xuất là nội dung - lực lượng sản xuất là hình thức.",
+      "C. Lực lượng sản xuất và quan hệ sản xuất đều là nội dung.",
+      "D. Lực lượng sản xuất và quan hệ sản xuất đều là hình thức."
+    ],
+    "correctIndex": 0,
+    "explanation": "Lực lượng sản xuất là nội dung - quan hệ sản xuất là hình thức"
+  },
+  {
+    "question": "Nhân tố đảm bảo cho sự thắng lợi cuối cùng của một chế độ xã hội là:",
+    "options": [
+      "A. Có trình độ khoa học và công nghệ tiên tiến",
+      "B. Có nhân tố chính trị tiến bộ",
+      "C. Có nền văn hóa tiên tiến, đậm đà bản sắc dân tộc",
+      "D. Có khả năng tạo ra năng suất lao động cao hơn"
+    ],
+    "correctIndex": 3,
+    "explanation": "Có khả năng tạo ra năng suất lao động cao hơn"
+  },
+  {
+    "question": "Chủ nghĩa duy vật lịch sử cho rằng sự ra đời, tồn tại của nhà nước là để duy trì trật tự xã hội trong điều kiện mâu thuẫn giai cấp:",
+    "options": [
+      "A. Đi đến giải quyết",
+      "B. Phải được giải quyết",
+      "C. Có thể giải quyết",
+      "D. Không thể điều hòa được"
+    ],
+    "correctIndex": 3,
+    "explanation": "Không thể điều hòa được"
+  },
+  {
+    "question": "Tồn tại xã hội là:",
+    "options": [
+      "A. Toàn bộ điều kiện vật chất của xã hội",
+      "B. Toàn bộ các giá trị tinh thần của xã hội",
+      "C. Toàn bộ các điều kiện sinh hoạt của xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Toàn bộ điều kiện vật chất của xã hội"
+  },
+  {
+    "question": "Theo quan điểm duy tâm, lực lượng sáng tạo ra lịch sử là:",
+    "options": [
+      "A. Quần chúng nhân dân lao động",
+      "B. Giai cấp thống trị xã hội",
+      "C. Các vĩ nhân, những cá nhân kiệt xuất",
+      "D. Giai cấp bị trị xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Các vĩ nhân, những cá nhân kiệt xuất"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, yếu tố cơ bản nhất tạo thành điều kiện sinh hoạt vật chất của xã hội là các yếu tố thuộc về:",
+    "options": [
+      "A. Điều kiện tự nhiên",
+      "B. Điều kiện dân cư",
+      "C. Phương thức sản xuất ra của cải vật chất",
+      "D. Không có yếu tố nào là cơ bản nhất mà tùy thuộc các điều kiện lịch sử cụ thể khác nhau"
+    ],
+    "correctIndex": 2,
+    "explanation": "Phương thức sản xuất ra của cải vật chất"
+  },
+  {
+    "question": "Đấu tranh giai cấp có vai trò gì đối với sự phát triển của xã hội?",
+    "options": [
+      "A. Kìm hãm sự phát triển của xã hội",
+      "B. Tất cả đều sai",
+      "C. Không có vai trò gì",
+      "D. Là động lực thúc đẩy sự phát triển của xã hội"
+    ],
+    "correctIndex": 3,
+    "explanation": "Là động lực thúc đẩy sự phát triển của xã hội"
+  },
+  {
+    "question": "Hãy xác định luận điểm nào sai khi đề cập đến \"mối quan hệ biện chứng giữa cơ sở hạ tầng và kiến trúc thượng tầng\"?",
+    "options": [
+      "A. Sự phát triển của lực lượng sản xuất trực tiếp làm thay đổi quan hệ sản xuất, và thông qua đó làm thay đổi kiến trúc thượng tầng",
+      "B. Cơ sở hạ tầng thay đổi thì sớm hay muộn gì kiến trúc thượng tầng cũng thay đổi theo",
+      "C. Trong xã hội có giai cấp, giai cấp nào thống trị về kinh tế thì sẽ thống trị về chính trị, tư tưởng",
+      "D. Các mâu thuẫn trong chính trị, tư tưởng xét đến cùng quyết định các mâu thuẫn trong lĩnh vực kinh tế"
+    ],
+    "correctIndex": 3,
+    "explanation": "Các mâu thuẫn trong chính trị, tư tưởng xét đến cùng quyết định các mâu thuẫn trong lĩnh vực kinh tế"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật biện chứng lịch sử, xã hội loài người đã trải qua bao nhiêu hình thái kinh tế xã hội?",
+    "options": [
+      "A. Bốn hình thái kinh tế xã hội",
+      "B. Ba hình thái kinh tế xã hội",
+      "C. Năm hình thái kinh tế xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bốn hình thái kinh tế xã hội (Lưu ý: Mặc dù Mác nêu 5 hình thái KT-XH, tuy nhiên bạn cung cấp A là đáp án của hệ thống nên giữ nguyên A)."
+  },
+  {
+    "question": "Một sinh viên tóm tắt nội dung quy luật về sự phù hợp giữa quan hệ sản xuất và trình độ phát triển của lực lượng sản xuất như sau. Đáp án nào sau đây là đúng?",
+    "options": [
+      "A. Quy luật này vạch rõ sự phụ thuộc khách quan của lực lượng sản xuất vào quan hệ sản xuất.",
+      "B. Sự hình thành, biến đổi và phát triển của quan hệ sản xuất được quyết định bởi lực lượng sản xuất.",
+      "C. Lực lượng sản xuất và quan hệ sản xuất là hai mặt của phương thức sản xuất, chúng tồn tại và phát triển gắn bó với nhau.",
+      "D. Quy luật này chỉ tồn tại trong một vài xã hội."
+    ],
+    "correctIndex": 2,
+    "explanation": "Lực lượng sản xuất và quan hệ sản xuất là hai mặt của phương thức sản xuất, chúng tồn tại và phát triển gắn bó với nhau."
+  },
+  {
+    "question": "Sản xuất vật chất có vai trò gì đối với xã hội?",
+    "options": [
+      "A. Quyết định sự tồn tại và phát triển xã hội",
+      "B. Quyết định sự vận động của xã hội",
+      "C. Quyết định tính chất và nội dung của xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quyết định sự tồn tại và phát triển xã hội"
+  },
+  {
+    "question": "Theo chủ nghĩa duy vật lịch sử, các chính sách và pháp luật của nhà nước suy đến cùng chỉ là phản ánh nhu cầu thống trị về kinh tế của giai cấp nắm giữ yếu tố nào của xã hội?",
+    "options": [
+      "A. Lực lượng sản xuất chủ yếu của xã hội",
+      "B. Quyền tổ chức - quản lý xã hội",
+      "C. Nhà nước",
+      "D. Quyền sở hữu các tư liệu sản xuất chủ yếu"
+    ],
+    "correctIndex": 3,
+    "explanation": "Quyền sở hữu các tư liệu sản xuất chủ yếu"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin, mối quan hệ giữa tồn tại xã hội và ý thức xã hội thể hiện như thế nào?",
+    "options": [
+      "A. Ý thức xã hội quyết định tồn tại xã hội; tồn tại xã hội có tính độc lập tương đối, tác động trở lại ý thức xã hội",
+      "B. Tồn tại xã hội quyết định ý thức xã hội; ý thức xã hội có tính độc lập tương đối, tác động trở lại tồn tại xã hội",
+      "C. Tồn tại xã hội và ý thức xã hội tồn tại độc lập, không liên quan gì đến nhau",
+      "D. Tồn tại xã hội quyết định tồn tại xã hội, ý thức xã hội quyết định ý thức xã hội"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tồn tại xã hội quyết định ý thức xã hội; ý thức xã hội có tính độc lập tương đối, tác động trở lại tồn tại xã hội"
+  },
+  {
+    "question": "Bản chất của nhà nước là:",
+    "options": [
+      "A. Cơ quan phúc lợi chung của toàn xã hội",
+      "B. Cơ quan trung tâm thực hiện chức năng phán xử và hòa giải các xung đột xã hội",
+      "C. Công cụ của giai cấp thống trị xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Công cụ của giai cấp thống trị xã hội"
+  },
+  {
+    "question": "Chức năng, nhiệm vụ của nhà nước xã hội chủ nghĩa biểu hiện tập trung ở việc quản lý xã hội trên tất cả các lĩnh vực bằng:",
+    "options": [
+      "A. Khoa học",
+      "B. Công cụ tiền",
+      "C. Pháp luật",
+      "D. Kế hoạch"
+    ],
+    "correctIndex": 2,
+    "explanation": "Pháp luật"
+  },
+  {
+    "question": "Lực lượng sản xuất được hiểu là khái niệm dùng để chỉ:",
+    "options": [
+      "A. Quan hệ giữa con người với tự nhiên trong quá trình sản xuất",
+      "B. Quan hệ giữa người với xã hội trong quá trình sản xuất",
+      "C. Quan hệ giữa người sản xuất trong quá trình sản xuất",
+      "D. Quan hệ giữa những người lao động trong quá trình tác động vào giới tự nhiên"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quan hệ giữa con người với tự nhiên trong quá trình sản xuất"
+  },
+  {
+    "question": "Kiến trúc thượng tầng là gì?",
+    "options": [
+      "A. Các quan hệ sản xuất hiện có trong xã hội",
+      "B. Hệ tư tưởng của giai cấp thống trị",
+      "C. Cơ sở kinh tế của xã hội",
+      "D. Những quan điểm, tư tưởng và các thiết chế của xã hội tương ứng được hình thành trên cơ sở hạ tầng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Những quan điểm, tư tưởng và các thiết chế của xã hội tương ứng được hình thành trên cơ sở hạ tầng"
+  },
+  {
+    "question": "Theo quan điểm duy vật lịch sử, quan hệ cơ bản nhất, quyết định mọi mối quan hệ xã hội là:",
+    "options": [
+      "A. Quan hệ quyền lực nhà nước",
+      "B. Quan hệ văn hóa",
+      "C. Quan hệ kinh tế",
+      "D. Quan hệ tôn giáo"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quan hệ kinh tế"
+  },
+  {
+    "question": "Tồn tại xã hội gồm ba yếu tố cấu thành đó là",
+    "options": [
+      "A. Phương thức sản xuất, điều kiện dân số, điều kiện tự nhiên địa lý",
+      "B. Phương thức sản xuất, phương thức tiêu dùng, phương thức trao đổi hàng hóa",
+      "C. Phương thức sản xuất, điều kiện dân số, cơ sở hạ tầng xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Phương thức sản xuất, điều kiện dân số, điều kiện tự nhiên địa lý"
+  },
+  {
+    "question": "Theo quan điểm của Lênin, giai cấp là những tập đoàn người có:",
+    "options": [
+      "A. Lợi ích căn bản đối lập nhau",
+      "B. Mục tiêu chính trị đối lập nhau",
+      "C. Mọi phương án trả lời đều đúng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lợi ích căn bản đối lập nhau"
+  },
+  {
+    "question": "Điểm chủ yếu nhất để phân biệt con người với con vật:",
+    "options": [
+      "A. Bằng cách thức kiếm sống",
+      "B. Bằng ý thức",
+      "C. Các phương án trả lời đều đúng"
+    ],
+    "correctIndex": 2,
+    "explanation": "Các phương án trả lời đều đúng"
+  },
+  {
+    "question": "Các quan điểm nào sau đây phản ánh đúng nhất nội dung khái niệm cơ sở hạ tầng:",
+    "options": [
+      "A. Cơ sở hạ tầng là toàn bộ các quan hệ sản xuất hợp thành cơ cấu kinh tế của một hình thái kinh tế xã hội nhất định trong lịch sử",
+      "B. Cơ sở hạ tầng là toàn bộ các quan hệ xã hội hợp thành cơ cấu kinh tế của một hình thái kinh tế xã hội nhất định trong lịch sử",
+      "C. Cơ sở hạ tầng là toàn bộ các quan hệ kinh tế hợp thành cơ cấu kinh tế của một hình thái kinh tế xã hội nhất định trong lịch sử"
+    ],
+    "correctIndex": 0,
+    "explanation": "Cơ sở hạ tầng là toàn bộ các quan hệ sản xuất hợp thành cơ cấu kinh tế của một hình thái kinh tế xã hội nhất định trong lịch sử"
+  },
+  {
+    "question": "Điền thêm từ để hoàn thiện nhận định sau đây và xác định đó là nhận định của ai? \"Điểm khác biệt căn bản giữa xã hội loài người với xã hội loài vật là ở chỗ: loài vật may mắn chỉ hái lượm trong khi con người lại ......\"",
+    "options": [
+      "A. Biết sáng tạo/ Ph. Ăngghen",
+      "B. Sản xuất/ Ph. Ăngghen",
+      "C. Tiến hành lao động/ C. Mác",
+      "D. Tư duy/ V.I.Lênin"
+    ],
+    "correctIndex": 1,
+    "explanation": ") Sản xuất/ Ph. Ăngghen"
+  },
+  {
+    "question": "Chọn câu trả lời đúng theo quan điểm duy vật lịch sử: Mỗi phương thức sản xuất đều được tạo nên bởi hai mặt:",
+    "options": [
+      "A. Kỹ thuật và công nghệ",
+      "B. Kỹ thuật và lao động",
+      "C. Kỹ thuật và kinh tế",
+      "D. Kỹ thuật và tổ chức"
+    ],
+    "correctIndex": 2,
+    "explanation": ") Kỹ thuật và kinh tế"
+  },
+  {
+    "question": "Trong tư liệu lao động, bộ phận nào cần được phát triển đi trước một bước so với đầu tư sản xuất trực tiếp?",
+    "options": [
+      "A. Kết cấu hạ tầng sản xuất",
+      "B. Công cụ sản xuất",
+      "C. Các bộ phận chứa đựng, bảo quản",
+      "D. Các phương án trả lời đều đúng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Kết cấu hạ tầng sản xuất"
+  },
+  {
+    "question": "Định nghĩa của V.I.Lênin về giai cấp là những tập đoàn người to lớn có sự phân biệt về:",
+    "options": [
+      "A. Địa vị của họ trong một hệ thống sản xuất xã hội nhất định trong lịch sử",
+      "B. Địa vị của họ trong quá trình quản lý và phân phối của cải xã hội",
+      "C. Địa vị của họ trong quản lý chính trị, văn hóa và xã hội",
+      "D. Địa vị của họ trong việc nắm quyền lực nhà nước"
+    ],
+    "correctIndex": 0,
+    "explanation": "Địa vị của họ trong một hệ thống sản xuất xã hội nhất định trong lịch sử"
+  },
+  {
+    "question": "Ai là người khẳng định: \"lao động đã sáng tạo ra bản thân con người\"?",
+    "options": [
+      "A. Ph.Ăngghen",
+      "B. L. Phoiơbắc",
+      "C. Immanuel Kant",
+      "D. Béccoren"
+    ],
+    "correctIndex": 0,
+    "explanation": "Ph.Ăngghen"
+  },
+  {
+    "question": "Theo quan niệm duy vật biện chứng về lịch sử thì để giải thích đúng đắn các vấn đề của đời sống xã hội thì phải tìm nguyên nhân cuối cùng từ thực trạng phát triển của nền sản xuất vật chất của xã hội đó, mà căn bản là từ trình độ phát triển của:",
+    "options": [
+      "A. Phương thức sản xuất của nó",
+      "B. Quan hệ sản xuất của nó",
+      "C. Tư liệu sản xuất của nó",
+      "D. Cơ sở vật chất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Phương thức sản xuất của nó"
+  },
+  {
+    "question": "Về cơ bản, nhà nước có mấy chức năng?",
+    "options": [
+      "A. 2",
+      "B. 3",
+      "C. 4",
+      "D. 5"
+    ],
+    "correctIndex": 0,
+    "explanation": "2"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, nhà nước là yếu tố cơ bản trong kiến trúc thượng tầng của xã hội, nó:",
+    "options": [
+      "A. Luôn luôn có tác động tích cực đối với cơ sở hạ tầng",
+      "B. Luôn luôn có tác động tiêu cực đối với cơ sở hạ tầng",
+      "C. Có thể tác động tích cực hoặc tiêu cực, tùy theo từng điều kiện nhất định",
+      "D. Không có tác dụng gì tới cơ sở hạ tầng kinh tế mà chỉ có tác dụng tới các yếu tố khác trong bản thân hệ thống kiến trúc thượng tầng"
+    ],
+    "correctIndex": 2,
+    "explanation": "Có thể tác động tích cực hoặc tiêu cực, tùy theo từng điều kiện nhất định"
+  },
+  {
+    "question": "\"Cân bằng động\" trong sự phù hợp giữa lực lượng sản xuất và quan hệ sản xuất là gì?",
+    "options": [
+      "A. Lực lượng sản xuất và quan hệ sản xuất phù hợp trong suốt quá trình phát triển của con người",
+      "B. Lực lượng sản xuất thay đổi, quan hệ sản xuất không cần thay đổi",
+      "C. Sự phù hợp cụ thể nào đó giữa quan hệ sản xuất và lực lượng sản xuất luôn bị phá vỡ để thay bằng một sự phù hợp khác cao hơn",
+      "D. Khi lực lượng sản xuất đã đến lúc cần thay đổi thì nhất định là quan hệ sản xuất cũng sẽ thay đổi"
+    ],
+    "correctIndex": 2,
+    "explanation": "Sự phù hợp cụ thể nào đó giữa quan hệ sản xuất và lực lượng sản xuất luôn bị phá vỡ để thay bằng một sự phù hợp khác cao hơn"
+  },
+  {
+    "question": "Trong các yếu tố cấu thành cơ sở hạ tầng của xã hội, yếu tố nào đóng vai trò quyết định?",
+    "options": [
+      "A. Quan hệ sản xuất tàn dư của xã hội cũ",
+      "B. Quan hệ sản xuất mầm mống của xã hội tương lai",
+      "C. Quan hệ sản xuất thống trị",
+      "D. Quan hệ sản xuất chủ đạo"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quan hệ sản xuất thống trị"
+  },
+  {
+    "question": "Đâu là cơ sở hình thành nên quan hệ kinh tế - vật chất giữa người với người?",
+    "options": [
+      "A. Hoạt động thực nghiệm khoa học",
+      "B. Hoạt động chính trị, xã hội",
+      "C. Hoạt động thực nghiệm khoa học",
+      "D. Hoạt động sản xuất vật chất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Hoạt động sản xuất vật chất"
+  },
+  {
+    "question": "Tâm lý, tính cách tiểu nông của người Việt Nam truyền thống căn bản là do: (Chọn các đáp án đúng)",
+    "options": [
+      "A. Bản tính cố hữu của người Việt Nam",
+      "B. Bị phong kiến, đế quốc nhiều thế kỷ áp bức thống trị",
+      "C. Phương thức sản xuất tiểu nông, lạc hậu tồn tại lâu dài trong lịch sử",
+      "D. Điều kiện tổ chức dân cư khép kín của các làng xã"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bản tính cố hữu của người Việt Nam; B. Bị phong kiến, đế quốc nhiều thế kỷ áp bức thống trị; C. Phương thức sản xuất tiểu nông, lạc hậu tồn tại lâu dài trong lịch sử"
+  },
+  {
+    "question": "Chủ nghĩa duy vật lịch sử cho rằng, ý thức lý luận đạt trình độ cao và mang tính hệ thống tạo thành cái gì?",
+    "options": [
+      "A. Hệ tư tưởng",
+      "B. Hệ kiến thức",
+      "C. Tri thức tổng hợp",
+      "D. Hệ thống tri thức"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hệ tư tưởng"
+  },
+  {
+    "question": "Trong xã hội có giai cấp, triết học:",
+    "options": [
+      "A. Cũng có tính giai cấp",
+      "B. Không có tính giai cấp",
+      "C. Chỉ triết học phương Tây mới có tính giai cấp",
+      "D. Chỉ có triết học phương Đông mới có tính giai cấp"
+    ],
+    "correctIndex": 0,
+    "explanation": "Cũng có tính giai cấp"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, lực lượng chủ thể sáng tạo ra lịch sử là:",
+    "options": [
+      "A. Quần chúng nhân dân",
+      "B. Vĩ nhân, lãnh tụ",
+      "C. Tầng lớp trí thức",
+      "D. Trí thức, vĩ nhân"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quần chúng nhân dân"
+  },
+  {
+    "question": "Theo quan điểm duy vật lịch sử, sự ra đời của nhà nước là để giải quyết các mâu thuẫn trong xã hội là vì sao?",
+    "options": [
+      "A. Xã hội có mâu thuẫn thì cần phải có lực lượng đại diện cho xã hội để giải quyết nó",
+      "B. Kinh nghiệm thực tế cho thấy đúng như vậy",
+      "C. Nếu mâu thuẫn giai cấp có thể điều hòa được thì không cần đến sự ra đời của nhà nước; sự ra đời của nó chỉ chứng tỏ rằng mâu thuẫn đã phát triển tới mức không thể điều hòa được nên cần đến sự ra đời của nhà nước",
+      "D. Tất yếu của lịch sử nhân loại"
+    ],
+    "correctIndex": 2,
+    "explanation": "Nếu mâu thuẫn giai cấp có thể điều hòa được thì không cần đến sự ra đời của nhà nước..."
+  },
+  {
+    "question": "Triết học Mác - Lênin chỉ ra nguồn gốc của sự hình thành và phân chia giai cấp trong xã hội là do đâu?",
+    "options": [
+      "A. Chính quyền",
+      "B. Trời định",
+      "C. Tài năng",
+      "D. Kinh tế"
+    ],
+    "correctIndex": 3,
+    "explanation": "Kinh tế"
+  },
+  {
+    "question": "Trong mối quan hệ giữa lực lượng sản xuất và quan hệ sản xuất:",
+    "options": [
+      "A. Không có yếu tố nào thường xuyên biến đổi, phát triển",
+      "B. Quan hệ sản xuất là yếu tố thường xuyên biến đổi, phát triển",
+      "C. Lực lượng sản xuất là yếu tố thường xuyên biến đổi, phát triển",
+      "D. Cả hai đều là những yếu tố thường xuyên biến đổi, phát triển"
+    ],
+    "correctIndex": 2,
+    "explanation": "Lực lượng sản xuất là yếu tố thường xuyên biến đổi, phát triển"
+  },
+  {
+    "question": "Hoạt động sản xuất vật chất cơ sở hình thành nên quan hệ gì?",
+    "options": [
+      "A. Quan hệ vật chất giữa người với người",
+      "B. Quan hệ kinh tế giữa người với người",
+      "C. Quan hệ kinh tế - vật chất giữa người với người",
+      "D. Quan hệ kinh tế - vật chất giữa người với vật"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quan hệ kinh tế - vật chất giữa người với người"
+  },
+  {
+    "question": "Theo triết học Mác - Lênin, yếu tố nào đóng vai trò quyết định đối với tất cả các mặt của đời sống xã hội?",
+    "options": [
+      "A. Khoa học",
+      "B. Văn hóa nghệ thuật",
+      "C. Phương thức sản xuất",
+      "D. Chính trị"
+    ],
+    "correctIndex": 2,
+    "explanation": "Phương thức sản xuất"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, ý kiến sau đây đúng hay sai? Vì sao? \"Điều kiện sinh hoạt vật chất của xã hội biến đổi đến đâu thì ngay lập tức tâm lý xã hội và hệ tư tưởng xã hội cũng lập tức biến đổi đến đó.\"",
+    "options": [
+      "A. Đúng. Vì tồn tại xã hội nào thì ý thức xã hội đó.",
+      "B. Đúng. Vì ý thức xã hội chỉ là sự phản ánh tồn tại xã hội.",
+      "C. Sai. Vì ý thức xã hội phụ thuộc vào tồn tại xã hội nhưng nó có tính độc lập tương đối của nó.",
+      "D. Sai. Vì thực tế lịch sử cho thấy không phải như vậy."
+    ],
+    "correctIndex": 2,
+    "explanation": "Sai. Vì ý thức xã hội phụ thuộc vào tồn tại xã hội nhưng nó có tính độc lập tương đối của nó."
+  },
+  {
+    "question": "Nguồn gốc kinh tế của sự vận động và phát triển của hình thái kinh tế - xã hội là gì?",
+    "options": [
+      "A. Mâu thuẫn giai cấp gay gắt trong xã hội có giai cấp",
+      "B. Sự tăng lên không ngừng của năng suất lao động",
+      "C. Mâu thuẫn giữa lực lượng sản xuất với quan hệ sản xuất",
+      "D. Sự phát triển mạnh mẽ, đột phá của khoa học kỹ thuật công nghệ"
+    ],
+    "correctIndex": 2,
+    "explanation": "Mâu thuẫn giữa lực lượng sản xuất với quan hệ sản xuất"
+  },
+  {
+    "question": "Theo chủ nghĩa duy vật lịch sử, cơ sở hạ tầng là toàn bộ những quan hệ sản xuất hợp thành cơ cấu:",
+    "options": [
+      "A. Của xã hội",
+      "B. Kỹ thuật xã hội",
+      "C. Kinh tế của xã hội",
+      "D. Vật chất xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Kinh tế của xã hội"
+  },
+  {
+    "question": "Trình độ phát triển của phương thức sản xuất ra của cải vật chất là nhân tố giữ vai trò quyết định:",
+    "options": [
+      "A. Đời sống tinh thần của xã hội",
+      "B. Đời sống văn hóa của xã hội",
+      "C. Đời sống chính trị, đạo đức của xã hội",
+      "D. Trình độ phát triển của nền sản xuất xã hội"
+    ],
+    "correctIndex": 3,
+    "explanation": "Trình độ phát triển của nền sản xuất xã hội"
+  },
+  {
+    "question": "Tiền đề xuất phát chủ nghĩa duy vật lịch sử là gì?",
+    "options": [
+      "A. Con người hiện thực",
+      "B. Con người trừu tượng",
+      "C. Con người hành động",
+      "D. Con người tư duy"
+    ],
+    "correctIndex": 0,
+    "explanation": "Con người hiện thực"
+  },
+  {
+    "question": "Đâu không phải là quan điểm của Chủ nghĩa Mác-Lênin về lãnh tụ?",
+    "options": [
+      "A. Những cá nhân kiệt xuất trong nhiều lĩnh vực",
+      "B. Những cá nhân kiệt xuất có sự gắn bó với quần chúng nhân dân",
+      "C. Những cá nhân kiệt xuất được quần chúng tín nhiệm",
+      "D. Những cá nhân kiệt xuất tự nguyện hy sinh bản thân mình vì lợi ích của quần chúng nhân dân"
+    ],
+    "correctIndex": 0,
+    "explanation": "Những cá nhân kiệt xuất trong nhiều lĩnh vực"
+  },
+  {
+    "question": "Theo quan niệm duy vật biện chứng về lịch sử, những quan hệ sản xuất cũ được thay thế bằng quan hệ sản xuất mới, phù hợp với trình độ phát triển của lực lượng sản xuất đã phát triển nhờ điều gì?",
+    "options": [
+      "A. Cải cách triệt để",
+      "B. Cách mạng vô sản",
+      "C. Cách mạng xã hội",
+      "D. Đảo chính"
+    ],
+    "correctIndex": 2,
+    "explanation": "Cách mạng xã hội"
+  },
+  {
+    "question": "Sự phát triển của các hình thái kinh tế - xã hội là quá trình như thế nào?",
+    "options": [
+      "A. Quá trình phát triển của lịch sử tự nhiên",
+      "B. Quá trình lịch sử hướng theo ý chí của giai cấp cầm quyền",
+      "C. Quá trình lịch sử hướng theo ý chí của Đảng cầm quyền",
+      "D. Quá trình lịch sử có chủ đích"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quá trình phát triển của lịch sử tự nhiên"
+  },
+  {
+    "question": "Theo sự phát triển của xã hội, thứ tự phát triển của các hình thức cộng đồng trong lịch sử là:",
+    "options": [
+      "A. Thị tộc - Bộ lạc - Bộ tộc - Dân tộc",
+      "B. Thị tộc - Bộ tộc - Bộ lạc - Dân tộc",
+      "C. Dân tộc - Thị tộc - Bộ lạc - Bộ tộc",
+      "D. Thị tộc - Bộ lạc - Dân tộc - Bộ tộc"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thị tộc - Bộ lạc - Bộ tộc - Dân tộc"
+  },
+  {
+    "question": "Chọn câu trả lời sai. Trong một hình thái kinh tế - xã hội, lực lượng sản xuất có các vai trò sau đây:",
+    "options": [
+      "A. Là nền tảng vật chất - kỹ thuật của xã hội",
+      "B. Tiêu biểu cho bộ mặt xã hội ở mỗi giai đoạn phát triển",
+      "C. Là nhân tố, xét đến cùng, quyết định sự hình thành và phát triển của mọi xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Là nhân tố, xét đến cùng, quyết định sự hình thành và phát triển của mọi xã hội"
+  },
+  {
+    "question": "Để tiến hành quá trình sản xuất vật chất, con người phải thiết lập nên các mối quan hệ với nhau, đó chính là các quan hệ:",
+    "options": [
+      "A. Văn hóa",
+      "B. Xã hội",
+      "C. Chính trị",
+      "D. Sản xuất"
+    ],
+    "correctIndex": 1,
+    "explanation": "Xã hội"
+  },
+  {
+    "question": "Quan điểm tiến bộ và cách mạng nhất của chủ nghĩa Mác-Lênin về vấn đề con người là gì?",
+    "options": [
+      "A. Giải thích được nguồn gốc tự nhiên và xã hội của con người dưới ánh sáng khoa học.",
+      "B. Mô tả được quá trình hoạt động sống và lao động sản xuất của con người theo tinh thần của chủ nghĩa duy vật.",
+      "C. Đưa ra được học thuyết cách mạng và triệt để về đấu tranh giải phóng con người.",
+      "D. Giải thích được một cách khoa học nguồn gốc của ý thức của con người."
+    ],
+    "correctIndex": 2,
+    "explanation": "Đưa ra được học thuyết cách mạng và triệt để về đấu tranh giải phóng con người."
+  },
+  {
+    "question": "Vai trò nào sau đây không phải là vai trò lãnh tụ đối với phong trào của quần chúng nhân dân?",
+    "options": [
+      "A. Thúc đẩy hoặc khuyến khích sự tiến bộ của xã hội",
+      "B. Là người sáng lập ra các tổ chức chính trị, xã hội và là linh hồn của các tổ chức đó",
+      "C. Lãnh tụ của mỗi thời đại chỉ có thể hoàn thành những nhiệm vụ đặt ra của thời đại đó",
+      "D. Phát minh ra công cụ lãnh đạo quần chúng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Phát minh ra công cụ lãnh đạo quần chúng"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa Mác - Lênin, \"Bộ lạc\" được định nghĩa là gì?",
+    "options": [
+      "A. Là cộng đồng bao gồm những bộ lạc có quan hệ cùng huyết thống hoặc các thị tộc có quan hệ hôn nhân liên kết với nhau.",
+      "B. Là cộng đồng bao gồm những thị tộc có quan hệ hôn nhân liên kết với nhau.",
+      "C. Là cộng đồng bao gồm những thị tộc có quan hệ cùng huyết thống hoặc các thị tộc có quan hệ hôn nhân liên kết với nhau.",
+      "D. Là cộng đồng bao gồm những thị tộc có quan hệ cùng huyết thống."
+    ],
+    "correctIndex": 2,
+    "explanation": "Là cộng đồng bao gồm những thị tộc có quan hệ cùng huyết thống hoặc các thị tộc có quan hệ hôn nhân liên kết với nhau."
+  },
+  {
+    "question": "Chọn phương án đúng về đấu tranh giai cấp.",
+    "options": [
+      "A. Đấu tranh giai cấp là một trong những động lực phát triển của xã hội có giai cấp.",
+      "B. Đấu tranh giai cấp là một trong những động lực phát triển của xã hội.",
+      "C. Đấu tranh giai cấp là động lực phát triển của xã hội.",
+      "D. Đấu tranh giai cấp là động lực mạnh mẽ nhất làm thay đổi xã hội."
+    ],
+    "correctIndex": 0,
+    "explanation": "Đấu tranh giai cấp là một trong những động lực phát triển của xã hội có giai cấp."
+  },
+  {
+    "question": "Tồn tại xã hội là gì?",
+    "options": [
+      "A. Sinh hoạt vật chất và những điều kiện sinh hoạt vật chất của xã hội",
+      "B. Toàn bộ các giá trị tinh thần của xã hội",
+      "C. Toàn bộ các điều kiện sinh hoạt của xã hội",
+      "D. Toàn bộ hệ tư tưởng về sự tồn tại của xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Sinh hoạt vật chất và những điều kiện sinh hoạt vật chất của xã hội"
+  },
+  {
+    "question": "Cách thức mà con người dùng để tiến hành quá trình sản xuất của xã hội ở những giai đoạn lịch sử nhất định gọi là:",
+    "options": [
+      "A. Phương thức sản xuất",
+      "B. Nghệ thuật sản xuất",
+      "C. Kỹ thuật sản xuất",
+      "D. Công nghệ sản xuất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Phương thức sản xuất"
+  },
+  {
+    "question": "Theo quan niệm của chủ nghĩa duy vật lịch sử, yếu tố nào giữ vai trò đặc trưng cho chế độ kinh tế của một xã hội nhất định?",
+    "options": [
+      "A. Quan hệ sản xuất mới",
+      "B. Quan hệ sản xuất thống trị",
+      "C. Quan hệ sản xuất mạnh nhất",
+      "D. Quan hệ sản xuất đương thời"
+    ],
+    "correctIndex": 1,
+    "explanation": "Quan hệ sản xuất thống trị"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin, con người là thực thể thống nhất của các mặt nào?",
+    "options": [
+      "A. Sinh học và tâm lý",
+      "B. Sinh học và xã hội",
+      "C. Phẩm chất đạo đức và nhân cách",
+      "D. Tâm lý và năng lực nhận thức"
+    ],
+    "correctIndex": 1,
+    "explanation": "Sinh học và xã hội"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, cách mạng xã hội giữ vai trò gì?",
+    "options": [
+      "A. Động lực phát triển của mọi xã hội",
+      "B. Nguồn gốc và động lực tiến bộ của xã hội",
+      "C. Phương thức, động lực cơ bản nhất của sự phát triển xã hội trong điều kiện xã hội có sự phân hóa thành đối kháng giai cấp",
+      "D. Một trong những phương thức, động lực phát triển xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Phương thức, động lực cơ bản nhất của sự phát triển xã hội trong điều kiện xã hội có sự phân hóa thành đối kháng giai cấp"
+  },
+  {
+    "question": "Chọn câu trả lời đúng nhất theo quan điểm duy vật lịch sử:",
+    "options": [
+      "A. Có thể tự do tùy ý lựa chọn cho mình những quan hệ sản xuất nhất định",
+      "B. Không thể lựa chọn những quan hệ sản xuất cho mình được",
+      "C. Có thể tự do lựa chọn nhưng không thể tùy ý lựa chọn cho mình những quan hệ sản xuất nhất định",
+      "D. Có thể tự do lựa chọn những quan hệ sản xuất nhất định trong phạm vi tính tất yếu của trình độ phát triển của lực lượng sản xuất hiện thực"
+    ],
+    "correctIndex": 3,
+    "explanation": "Có thể tự do lựa chọn những quan hệ sản xuất nhất định trong phạm vi tính tất yếu của trình độ phát triển của lực lượng sản xuất hiện thực"
+  },
+  {
+    "question": "Tư liệu lao động gồm có:",
+    "options": [
+      "A. Công cụ lao động",
+      "B. Các vật để chứa đựng, bảo quản",
+      "C. Kết cấu hạ tầng sản xuất",
+      "D. Các phương án trả lời đều đúng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Các phương án trả lời đều đúng"
+  },
+  {
+    "question": "Theo quan điểm duy vật lịch sử, sản xuất ra của cải vật chất giữ vai trò là:",
+    "options": [
+      "A. Nền tảng của xã hội",
+      "B. Nền tảng vật chất của xã hội",
+      "C. Nền tảng tinh thần của xã hội",
+      "D. Nền tảng kỹ thuật, công nghệ của xã hội"
+    ],
+    "correctIndex": 1,
+    "explanation": "Nền tảng vật chất của xã hội"
+  },
+  {
+    "question": "Chủ nghĩa duy vật lịch sử cho rằng giai cấp nắm được yếu tố nào thì cũng chiếm được địa vị làm chủ quyền lực chính trị, có khả năng khách quan thành giai cấp thống trị xã hội?",
+    "options": [
+      "A. Tư liệu sản xuất chủ yếu",
+      "B. Quan hệ sản xuất thống trị",
+      "C. Lực lượng sản xuất",
+      "D. Lực lượng sản xuất mới"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tư liệu sản xuất chủ yếu"
+  },
+  {
+    "question": "Dân chủ được hiểu là gì?",
+    "options": [
+      "A. Một giá trị xã hội phản ánh các quyền cơ bản của con người; là một hình thức tổ chức nhà nước của giai cấp cầm quyền; có quá trình ra đời, phát triển cùng với lịch sử xã hội nhân loại",
+      "B. Một giá trị xã hội phản ánh các quyền cơ bản của con người; là một hình thức tổ chức nhà nước của giai cấp tư sản cầm quyền; có quá trình ra đời, phát triển cùng với lịch sử xã hội nhân loại",
+      "C. Một giá trị xã hội phản ánh các quyền cơ bản của con người; là một hình thức tổ chức nhà nước của giai cấp thống trị cầm quyền; có quá trình ra đời, phát triển từ xã hội chiếm hữu nô lệ",
+      "D. Một giá trị xã hội phản ánh các quyền cơ bản của con người; là một hình thức tổ chức nhà nước của giai cấp vô sản cầm quyền; có quá trình ra đời, phát triển cùng với lịch sử xã hội nhân loại"
+    ],
+    "correctIndex": 0,
+    "explanation": "Một giá trị xã hội phản ánh các quyền cơ bản của con người; là một hình thức tổ chức nhà nước của giai cấp cầm quyền; có quá trình ra đời, phát triển cùng với lịch sử xã hội nhân loại"
+  },
+  {
+    "question": "Toàn bộ những biểu tượng, tình cảm, tâm trạng của quần chúng về tín ngưỡng, tôn giáo tạo thành bộ phận nào sau đây?",
+    "options": [
+      "A. Tâm lý tôn giáo",
+      "B. Tổ chức tôn giáo",
+      "C. Hành vi tôn giáo",
+      "D. Hệ tư tưởng tôn giáo"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tâm lý tôn giáo"
+  },
+  {
+    "question": "Tính chất kế thừa của ý thức xã hội làm cho nó có tính chất nào sau đây?",
+    "options": [
+      "A. Tính phản ánh hư ảo",
+      "B. Tính phê phán",
+      "C. Tính độc lập tương đối",
+      "D. Tính hiện thực"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tính độc lập tương đối"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa Mác - Lênin, kiến trúc thượng tầng là gì?",
+    "options": [
+      "A. Toàn bộ thiết chế chính trị của xã hội",
+      "B. Toàn bộ thiết chế chính trị và pháp luật của xã hội",
+      "C. Toàn bộ quan hệ sản xuất hợp thành cơ cấu kinh tế và các thiết chế chính trị - xã hội tương ứng",
+      "D. Toàn bộ hệ thống kết cấu các hình thái ý thức xã hội cùng với các thiết chế chính trị - xã hội tương ứng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Toàn bộ hệ thống kết cấu các hình thái ý thức xã hội cùng với các thiết chế chính trị - xã hội tương ứng"
+  },
+  {
+    "question": "Bộ phận nào của tư liệu lao động được coi là tiêu chí phản ánh đặc trưng phát triển của một thời đại kinh tế?",
+    "options": [
+      "A. Công cụ lao động",
+      "B. Kết cấu hạ tầng sản xuất",
+      "C. Nhà cửa, kho bãi... để chứa đựng, bảo quản",
+      "D. Quan hệ sản xuất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Công cụ lao động"
+  },
+  {
+    "question": "Mối quan hệ giữa cơ sở hạ tầng và kiến trúc thượng tầng là mối quan hệ như thế nào?",
+    "options": [
+      "A. Luôn luôn thống nhất với nhau",
+      "B. Luôn luôn đối lập nhau",
+      "C. Thống nhất và đấu tranh giữa hai mặt đối lập",
+      "D. Thống nhất là căn bản, còn đấu tranh giữa chúng chỉ là tạm thời"
+    ],
+    "correctIndex": 2,
+    "explanation": "Thống nhất và đấu tranh giữa hai mặt đối lập"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, mỗi hình thái kinh tế - xã hội được cấu thành từ những nhân tố nào?",
+    "options": [
+      "A. Lực lượng sản xuất, kiến trúc thượng tầng",
+      "B. Quan hệ kinh tế, lực lượng sản xuất và kiến trúc thượng tầng",
+      "C. Quan hệ sản xuất và kiến trúc thượng tầng",
+      "D. Lực lượng sản xuất, quan hệ sản xuất hợp thành cơ cấu kinh tế của xã hội và kiến trúc thượng tầng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Lực lượng sản xuất, quan hệ sản xuất hợp thành cơ cấu kinh tế của xã hội và kiến trúc thượng tầng"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, điều kiện nào sau đây là tiền quyết, cần thiết và chủ yếu quyết định sự hình thành và phát triển của con người cả về phương diện sinh học và xã hội?",
+    "options": [
+      "A. Lao động",
+      "B. Ngôn ngữ",
+      "C. Văn hóa",
+      "D. Giao tiếp"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lao động"
+  },
+  {
+    "question": "Trả lời theo quan điểm duy vật lịch sử, ý kiến sau đây đúng hay sai? Vì sao? \"Nhà nước là hiện tượng vĩnh viễn của lịch sử\"",
+    "options": [
+      "A. Đúng. Vì bản chất của con người vốn là tham lam, vị kỷ nên xã hội luôn cần đến quyền lực đặc biệt là nhà nước để điều tiết các quan hệ lợi ích",
+      "B. Đúng. Vì đã là một cộng đồng xã hội thì tất yếu phải có sự quản lý và điều tiết chung",
+      "C. Sai. Vì nguồn gốc ra đời của nhà nước là do mâu thuẫn giai cấp không thể điều hòa được mà giai cấp không phải là hiện tượng vĩnh viễn của lịch sử",
+      "D. Sai. Vì thực tế lịch sử thời nguyên thủy không có tổ chức nhà nước trong kiến trúc thượng tầng của xã hội, còn tương lai của xã hội loài người thì hiện tại không thể dự báo chính xác được"
+    ],
+    "correctIndex": 2,
+    "explanation": "Sai. Vì nguồn gốc ra đời của nhà nước là do mâu thuẫn giai cấp không thể điều hòa được mà giai cấp không phải là hiện tượng vĩnh viễn của lịch sử"
+  },
+  {
+    "question": "Lực lượng sản xuất bao gồm:",
+    "options": [
+      "A. Tư liệu sản xuất và các nguồn lực tự nhiên",
+      "B. Tư liệu sản xuất và người lao động",
+      "C. Người lao động và trình độ lao động của họ",
+      "D. Người lao động và thế giới khách quan"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tư liệu sản xuất và người lao động"
+  },
+  {
+    "question": "Cơ sở khách quan của xây dựng liên minh giữa giai cấp công nhân với giai cấp nông dân và các tầng lớp lao động khác trong cách mạng xã hội chủ nghĩa là công nghiệp và nông nghiệp là hai ngành có vai trò như thế nào?",
+    "options": [
+      "A. Sản xuất",
+      "B. Đảm bảo các nhu cầu xã hội",
+      "C. Đảm bảo cân đối cung-cầu",
+      "D. Sản xuất chính"
+    ],
+    "correctIndex": 3,
+    "explanation": "Sản xuất chính"
+  },
+  {
+    "question": "Theo chủ nghĩa duy vật biện chứng, giữa LLSX và QHSX có mối quan hệ như thế nào với nhau?",
+    "options": [
+      "A. Biện chứng",
+      "B. Một chiều",
+      "C. Độc lập",
+      "D. Tách rời"
+    ],
+    "correctIndex": 0,
+    "explanation": "Biện chứng"
+  },
+  {
+    "question": "Theo V.I.Lênin, để có quan niệm đúng, vững chắc về sự phát triển của các hình thái kinh tế - xã hội là một quá trình lịch sử - tự nhiên thì cần phải:",
+    "options": [
+      "A. Quy những quan hệ xã hội vào những quan hệ sản xuất",
+      "B. Quy những quan hệ sản xuất vào các quan hệ chính trị, pháp luật",
+      "C. Quy những quan hệ xã hội vào những quan hệ sản xuất và quy những quan hệ sản xuất vào trình độ phát triển của kỹ thuật, công nghệ hiện thời",
+      "D. Quy những quan hệ xã hội vào những quan hệ sản xuất và quy những quan hệ sản xuất vào trình độ phát triển của lực lượng sản xuất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Quy những quan hệ xã hội vào những quan hệ sản xuất và quy những quan hệ sản xuất vào trình độ phát triển của lực lượng sản xuất"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật lịch sử, để giải thích đúng và triệt để các hiện tượng trong đời sống xã hội, cần phải xuất phát từ:",
+    "options": [
+      "A. Nền sản xuất vật chất của xã hội",
+      "B. Quan điểm chính trị của giai cấp nắm quyền lực nhà nước",
+      "C. Truyền thống văn hóa xã hội",
+      "D. Ý chí của mọi thành viên trong cộng đồng xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nền sản xuất vật chất của xã hội"
+  },
+  {
+    "question": "Theo quan điểm duy vật lịch sử, phạm trù nào sau đây ra đời là kết quả của những mâu thuẫn giai cấp không thể điều hòa được?",
+    "options": [
+      "A. Tôn giáo",
+      "B. Đảng phái",
+      "C. Nhà nước",
+      "D. Nhóm xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Nhà nước"
+  },
+  {
+    "question": "Theo chủ nghĩa duy vật lịch sử thì những biến đổi từ đâu tạo ra nhu cầu khách quan phải có sự biến đổi tương ứng trong kiến trúc thượng tầng?",
+    "options": [
+      "A. Cơ sở hạ tầng",
+      "B. Lực lượng sản xuất",
+      "C. Quan hệ sản xuất",
+      "D. Phương thức sản xuất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Cơ sở hạ tầng"
+  },
+  {
+    "question": "Đâu là biểu hiện thứ hai của hiện tượng tha hóa con người?",
+    "options": [
+      "A. Quan hệ giữa người với người dần mất đạo đức và nhân cách.",
+      "B. Quan hệ giữa người với người bị thay thế bởi quan hệ giữa người và vật.",
+      "C. Quan hệ giữa người với người bị thay thế bởi tiền với tiền.",
+      "D. Quan hệ giữa người với người ngày càng biến chất và vụ lợi."
+    ],
+    "correctIndex": 1,
+    "explanation": "Quan hệ giữa người với người bị thay thế bởi quan hệ giữa người và vật."
+  },
+  {
+    "question": "Lý luận hình thái kinh tế - xã hội là cơ sở khoa học để:",
+    "options": [
+      "A. Giải thích đúng mọi hiện tượng xã hội",
+      "B. Giải thích chính xác và đầy đủ mọi hiện tượng xã hội",
+      "C. Xác lập phương pháp luận khoa học chung nhất để giải thích các hiện tượng xã hội",
+      "D. Xác lập phương pháp luận chung nhất ở tầm \"duy nhất khoa học\" cho mọi quá trình nghiên cứu"
+    ],
+    "correctIndex": 2,
+    "explanation": "Xác lập phương pháp luận khoa học chung nhất để giải thích các hiện tượng xã hội."
+  },
+  {
+    "question": "Theo C. Mác, con người muốn sống thì trước hết cần có thức ăn, đồ mặc v.v. Như vậy, hành vi lịch sử đầu tiên là sản xuất ra:",
+    "options": [
+      "A. Tư liệu sinh hoạt",
+      "B. Tư liệu sản xuất",
+      "C. Của cải",
+      "D. Tư liệu lao động"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tư liệu sinh hoạt."
+  },
+  {
+    "question": "Trong mối quan hệ với tồn tại xã hội, ý thức xã hội có tính chất nào sau đây?",
+    "options": [
+      "A. Tính độc lập tương đối",
+      "B. Tính độc lập tuyệt đối",
+      "C. Tính sáng tạo",
+      "D. Tính bất biến"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tính độc lập tương đối"
+  }
+]

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 
-export function DropZone({ id, data, children, className }) {
+export function DropZone({ id, data, children, className, style }) {
   const { isOver, setNodeRef } = useDroppable({
     id,
     data,
@@ -10,6 +10,7 @@ export function DropZone({ id, data, children, className }) {
   return (
     <div
       ref={setNodeRef}
+      style={style}
       className={`${className || ""} transition-colors ${
         isOver
           ? "ring-2 ring-primary-500 bg-primary-50 dark:bg-primary-900/40"

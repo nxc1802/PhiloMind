@@ -114,7 +114,14 @@ export function ProgressBar({
       case "target_matching":
       case "matching_columns":
       case "chain_sorting":
+      case "map_target_matching":
         return "extension";
+      case "progression_spiral":
+        return "all_inclusive";
+      case "timeline_explorer":
+        return "timeline";
+      case "hotspot_gallery":
+        return "image_search";
       case "knowledge_piece":
         return "extension";
       case "mindmap_reveal":

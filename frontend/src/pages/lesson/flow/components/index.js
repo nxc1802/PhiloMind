@@ -17,3 +17,7 @@ export { LessonHint } from "./LessonHint";
 export { ChainSortingComponent } from "./ChainSortingComponent";
 export { KnowledgePieceComponent } from "./KnowledgePieceComponent";
 export { ComponentGroupComponent } from "./ComponentGroupComponent";
+export { MapTargetMatchingComponent } from "./MapTargetMatchingComponent";
+export { ProgressionSpiralComponent } from "./ProgressionSpiralComponent";
+export { TimelineExplorerComponent } from "./TimelineExplorerComponent";
+export { HotspotGalleryComponent } from "./HotspotGalleryComponent";

@@ -6,6 +6,19 @@ import { createClient } from "@supabase/supabase-js";
 
 const prisma = new PrismaClient();
 
+function loadConvertedLesson(filename: string) {
+  const filePath = path.resolve(
+    __dirname,
+    "../../data/lesson_components",
+    filename,
+  );
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+function loadConvertedLessonFlow(filename: string) {
+  return loadConvertedLesson(filename).lessonFlow || [];
+}
+
 function stripOptionPrefix(value: string) {
   return value.replace(/^[A-D]\.\s*/i, "").trim();
 }
@@ -420,6 +433,21 @@ function buildOriginLessonFlow(node: any) {
             },
             completionRule: { type: "correct" },
           },
+        ],
+      },
+      completionRule: { type: "all" },
+    },
+    {
+      id: "social-theon-experience",
+      type: "component_group",
+      title: social.roles[1].label,
+      linkedMediaId: "social-video",
+      navigation_config: { shortLabel: "Vai 2" },
+      config: {
+        layout: "vertical",
+        revealMode: "sequential",
+        completionMode: "all",
+        components: [
           {
             id: "social-theon-dialogue",
             type: "dialogue",
@@ -553,174 +581,6 @@ function buildOriginLessonFlow(node: any) {
         rewards: finalSummary.rewards,
         quote: finalSummary.completion.quote,
         actions: finalSummary.actions,
-      },
-      completionRule: { type: "viewed" },
-    },
-  ];
-}
-
-function buildLesson1bFlow(source: any) {
-  return [
-    {
-      id: "ancient-origin-map",
-      type: "target_matching",
-      title: "Nguồn gốc thuật ngữ triết học",
-      config: {
-        targets: [
-          { id: "china", label: "Trung Quốc", icon: "temple_buddhist" },
-          { id: "india", label: "Ấn Độ", icon: "water" },
-          { id: "greece", label: "Hy Lạp", icon: "account_balance" },
-        ],
-        items: [
-          { id: "zhe", text: "哲", targetId: "china" },
-          { id: "darsana", text: "Dar'sana", targetId: "india" },
-          { id: "philosophia", text: "φιλοσοφία", targetId: "greece" },
-        ],
-        summary:
-          "Triết học xuất hiện ở nhiều trung tâm văn minh lớn và biểu hiện nhu cầu nhận thức bậc cao của con người.",
-      },
-      completionRule: { type: "correct" },
-    },
-    {
-      id: "worldview-sorting",
-      type: "category_sorting",
-      title: "Phân loại thế giới quan",
-      config: {
-        categories: [
-          { id: "myth-religion", label: "Thần thoại - Tôn giáo" },
-          { id: "philosophy", label: "Triết học" },
-        ],
-        cards: [
-          { id: "faith", text: "Niềm tin", categoryId: "myth-religion" },
-          { id: "ritual", text: "Nghi lễ", categoryId: "myth-religion" },
-          { id: "reason", text: "Công cụ lý tính", categoryId: "philosophy" },
-          { id: "law", text: "Quy luật", categoryId: "philosophy" },
-        ],
-        summary:
-          "Triết học tìm cách lý giải thế giới bằng lý tính, logic và khái quát hóa.",
-      },
-      completionRule: { type: "correct" },
-    },
-    {
-      id: "philosophy-features",
-      type: "mindmap_reveal",
-      title: "Bốn đặc trưng cốt lõi",
-      config: {
-        center: "Triết học",
-        nodes: [
-          {
-            id: "social-consciousness",
-            label: "Hình thái ý thức xã hội",
-            detail: "Triết học là một hình thái ý thức xã hội bậc cao.",
-          },
-          {
-            id: "whole",
-            label: "Chỉnh thể toàn vẹn",
-            detail: "Triết học xem xét thế giới trong tính chỉnh thể.",
-          },
-          {
-            id: "universal-laws",
-            label: "Quy luật phổ biến",
-            detail:
-              "Triết học hướng tới các quy luật chung nhất của tự nhiên, xã hội và tư duy.",
-          },
-          {
-            id: "worldview-core",
-            label: "Hạt nhân thế giới quan",
-            detail: "Triết học là hạt nhân lý luận của thế giới quan.",
-          },
-        ],
-      },
-      completionRule: { type: "viewed" },
-    },
-    {
-      id: "marxist-definition",
-      type: "mcq",
-      title: "Định nghĩa triết học Mác - Lênin",
-      config: {
-        question: "Định nghĩa nào phù hợp nhất với triết học Mác - Lênin?",
-        options: [
-          { id: "a", text: "Tập hợp các niềm tin tôn giáo.", isCorrect: false },
-          {
-            id: "b",
-            text: "Hệ thống tri thức lý luận chung nhất về thế giới, vị trí con người trong thế giới và phương pháp nhận thức, cải tạo thế giới.",
-            isCorrect: true,
-            explanation:
-              "Đây là cách hiểu khái quát về chức năng thế giới quan và phương pháp luận của triết học.",
-          },
-          {
-            id: "c",
-            text: "Một khoa học thực nghiệm nghiên cứu riêng một lĩnh vực.",
-            isCorrect: false,
-          },
-        ],
-      },
-      completionRule: { type: "correct" },
-    },
-    {
-      id: "philosophy-science-matching",
-      type: "matching_columns",
-      title: "Phân biệt tri thức triết học và khoa học cụ thể",
-      config: {
-        leftColumn: [
-          { id: "philosophy", text: "Tri thức triết học" },
-          { id: "specific-science", text: "Khoa học cụ thể" },
-          { id: "worldview", text: "Thế giới quan" },
-        ],
-        rightColumn: [
-          { id: "general", text: "Khái quát những vấn đề chung nhất" },
-          { id: "domain", text: "Nghiên cứu một lĩnh vực, đối tượng cụ thể" },
-          {
-            id: "orientation",
-            text: "Định hướng cách con người nhìn nhận thế giới",
-          },
-        ],
-        correctPairs: [
-          { leftId: "philosophy", rightId: "general" },
-          { leftId: "specific-science", rightId: "domain" },
-          { leftId: "worldview", rightId: "orientation" },
-        ],
-      },
-      completionRule: { type: "correct" },
-    },
-    {
-      id: "all-philosophy-is-science",
-      type: "true_false",
-      title: "Mọi học thuyết triết học đều là khoa học?",
-      config: {
-        statement: "Mọi học thuyết triết học đều là khoa học.",
-        correctAnswer: false,
-        explanation:
-          "Không phải mọi học thuyết triết học đều khoa học; tính khoa học phụ thuộc vào cơ sở lý luận, phương pháp và khả năng phản ánh đúng hiện thực.",
-      },
-      completionRule: { type: "correct" },
-    },
-    {
-      id: "lesson-1b-final-quiz",
-      type: "quiz_sequence",
-      title: "Kiểm tra cuối bài 1.b",
-      config: {
-        questions: source.finalSummary?.quiz || [],
-      },
-      completionRule: { type: "correct" },
-    },
-    {
-      id: "lesson-1b-final",
-      type: "final_summary",
-      title: "Hoàn thành bài 1.b",
-      config: {
-        message:
-          source.finalSummary?.summary?.finalStatement ||
-          "Bạn đã nắm được khái niệm triết học.",
-        keyTakeaways: [
-          "Triết học là hệ thống tri thức lý luận chung nhất về thế giới.",
-          "Triết học là hạt nhân lý luận của thế giới quan.",
-          "Cần phân biệt tri thức triết học với tri thức của các khoa học cụ thể.",
-        ],
-        rewards: source.finalSummary?.rewards || {
-          xp: 120,
-          badge: "Người khai mở tư duy",
-        },
       },
       completionRule: { type: "viewed" },
     },
@@ -1017,7 +877,6 @@ async function main() {
   const ch3QuizzesPath = path.join(__dirname, "data", "ch3.json");
 
   const seedingData = {
-    lesson_1b: {},
     ch1_quizzes: fs.existsSync(ch1QuizzesPath)
       ? JSON.parse(fs.readFileSync(ch1QuizzesPath, "utf8"))
       : [],
@@ -1333,7 +1192,7 @@ async function main() {
           setup: [
             {
               who: "guide",
-              text: "Bối cảnh: nhiều thế hệ trôi qua, khi phương thức sản xuất thay đổi — con người biết rèn đồng, rèn sắt, của cải bắt đầu dư thừa — xã hội phân chia thành Chủ nô và Nô lệ.",
+              text: "Nhiều thế hệ trôi qua, khi phương thức sản xuất thay đổi — con người biết rèn đồng, rèn sắt, của cải bắt đầu dư thừa — xã hội phân chia thành Chủ nô và Nô lệ.",
             },
             {
               who: "guide",
@@ -1573,14 +1432,41 @@ async function main() {
     {
       title: "Khái niệm triết học",
       summary:
-        "Triết học là hệ thống tri thức lý luận chung nhất của con người về thế giới.",
+        "Triết học là hình thái đặc biệt của ý thức xã hội, thể hiện thành hệ thống quan điểm lý luận chung nhất về thế giới, con người và tư duy.",
       originalText:
-        "Triết học là hệ thống quan điểm lí luận chung nhất về thế giới, về con người và vị trí của con người trong thế giới đó.",
-      quickTake: "Hệ thống tri thức lý luận chung nhất về thế giới.",
+        "Triết học ra đời ở phương Đông và phương Tây như hoạt động tinh thần bậc cao. Các định nghĩa hiện đại nhấn mạnh triết học là hình thái đặc biệt của ý thức xã hội, nghiên cứu thế giới như một chỉnh thể và tìm ra những quy luật phổ biến nhất chi phối thế giới, con người và tư duy.",
+      quickTake:
+        "Triết học là hệ thống quan điểm lý luận chung nhất về thế giới, con người và tư duy.",
       difficulty: "Easy",
       timeToRead: "6 min read",
       orderIndex: 2,
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: null,
+    },
+    {
+      title: "Triết học - hạt nhân lý luận của thế giới quan",
+      summary:
+        "Triết học giữ vai trò hạt nhân lý luận của thế giới quan và với triết học Mác - Lênin trở thành khoa học về những quy luật chung nhất.",
+      originalText:
+        "Triết học là hạt nhân lý luận của thế giới quan. Với sự ra đời của triết học Mác - Lênin, triết học là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới đó, là khoa học về những quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy.",
+      quickTake:
+        "Triết học là hạt nhân lý luận của thế giới quan, khái quát những quy luật chung nhất.",
+      difficulty: "Medium",
+      timeToRead: "8 min read",
+      orderIndex: 3,
+      videoUrl: null,
+    },
+    {
+      title: "Đối tượng của triết học trong lịch sử",
+      summary:
+        "Đối tượng của triết học thay đổi qua các thời kỳ, từ tri thức bao trùm ban đầu đến quan niệm khoa học về các quy luật chung nhất.",
+      originalText:
+        "Trong lịch sử, đối tượng của triết học có sự biến đổi cùng với sự phát triển của khoa học và đời sống xã hội. Triết học từng bao chứa nhiều tri thức chung, rồi dần xác định đối tượng riêng ở những vấn đề chung nhất của thế giới và tư duy.",
+      quickTake:
+        "Đối tượng triết học biến đổi lịch sử, nhưng hướng tới các vấn đề chung nhất.",
+      difficulty: "Medium",
+      timeToRead: "9 min read",
+      orderIndex: 4,
+      videoUrl: null,
     },
     {
       title: "Vấn đề cơ bản của triết học",
@@ -1591,8 +1477,21 @@ async function main() {
       quickTake: "Mối quan hệ biện chứng giữa vật chất và ý thức.",
       difficulty: "Hard",
       timeToRead: "12 min read",
-      orderIndex: 3,
-      videoUrl: defaultYoutubeUrl,
+      orderIndex: 5,
+      videoUrl: null,
+    },
+    {
+      title: "Biện chứng và siêu hình",
+      summary:
+        "Biện chứng và siêu hình là hai phương pháp nhận thức đối lập trong cách xem xét sự vật, hiện tượng.",
+      originalText:
+        "Phương pháp biện chứng xem xét sự vật trong mối liên hệ, vận động và phát triển. Phương pháp siêu hình xem xét sự vật trong trạng thái cô lập, tĩnh tại và ít chú ý đến sự chuyển hóa.",
+      quickTake:
+        "Biện chứng nhìn sự vật trong liên hệ và phát triển; siêu hình nhìn cô lập, tĩnh tại.",
+      difficulty: "Medium",
+      timeToRead: "9 min read",
+      orderIndex: 6,
+      videoUrl: null,
     },
     {
       title: "Sự ra đời và phát triển",
@@ -1603,8 +1502,8 @@ async function main() {
       quickTake: "Bước ngoặt vĩ đại giải phóng tư tưởng vô sản.",
       difficulty: "Medium",
       timeToRead: "10 min read",
-      orderIndex: 4,
-      videoUrl: defaultYoutubeUrl,
+      orderIndex: 7,
+      videoUrl: null,
     },
     {
       title: "Đối tượng và chức năng",
@@ -1615,8 +1514,8 @@ async function main() {
       quickTake: "Cung cấp thế giới quan và phương pháp luận khoa học.",
       difficulty: "Easy",
       timeToRead: "7 min read",
-      orderIndex: 5,
-      videoUrl: defaultYoutubeUrl,
+      orderIndex: 8,
+      videoUrl: null,
     },
     {
       title: "Vai trò trong đời sống xã hội",
@@ -1627,27 +1526,36 @@ async function main() {
       quickTake: "Công cụ cải tạo thế giới khách quan.",
       difficulty: "Medium",
       timeToRead: "8 min read",
-      orderIndex: 6,
-      videoUrl: defaultYoutubeUrl,
+      orderIndex: 9,
+      videoUrl: null,
     },
   ];
 
   const createdCh1Nodes = [];
   for (const n of ch1Nodes) {
-    const isNode2 = n.title === "Khái niệm triết học";
+    const isOriginLesson = n.title === "Nguồn gốc của triết học";
+    const isConceptLesson = n.title === "Khái niệm triết học";
+    const isWorldviewCoreLesson =
+      n.title === "Triết học - hạt nhân lý luận của thế giới quan";
     const hasSeededLessonContent =
-      isNode2 || n.title === "Nguồn gốc của triết học";
+      isOriginLesson || isConceptLesson || isWorldviewCoreLesson;
     const sectionChapter =
-      n.orderIndex <= 3 ? ch1SectionIntro : ch1SectionMarxism;
+      n.orderIndex <= 6 ? ch1SectionIntro : ch1SectionMarxism;
     const sectionOrderIndex =
       sectionChapter.id === ch1SectionIntro.id
         ? n.orderIndex
-        : n.orderIndex - 3;
-    const lessonFlow = isNode2
-      ? buildLesson1bFlow(seedingData.lesson_1b)
-      : n.title === "Nguồn gốc của triết học"
-        ? buildOriginLessonFlow(n)
-        : buildDefaultLessonFlow(n);
+        : n.orderIndex - 6;
+    const lessonFlow = isOriginLesson
+      ? buildOriginLessonFlow(n)
+      : isConceptLesson
+        ? loadConvertedLessonFlow(
+            "chapter-1-1b-khai-niem-triet-hoc.json",
+          )
+        : isWorldviewCoreLesson
+          ? loadConvertedLessonFlow(
+              "chapter-1-1c-triet-hoc-hat-nhan-the-gioi-quan.json",
+            )
+          : buildDefaultLessonFlow(n);
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,

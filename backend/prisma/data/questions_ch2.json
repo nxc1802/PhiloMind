@@ -1,0 +1,1639 @@
+[
+  {
+    "question": "Khi một sự vật, một hiện tượng mới được nảy sinh thì yếu tố nào sẽ xuất hiện đầu tiên?",
+    "options": [
+      "A. Cái chung",
+      "B. Cái riêng",
+      "C. Cái đơn nhất",
+      "D. Cái phổ biến"
+    ],
+    "correctIndex": 2,
+    "explanation": "Cái đơn nhất"
+  },
+  {
+    "question": "Những sự vật, hiện tượng nếu có cùng nguyên nhân, trong những điều kiện giống nhau thì sẽ tạo nên kết quả như nhau. Điều này thể hiện tính chất gì trong mối liên hệ nhân quả?",
+    "options": [
+      "A. Tính khách quan",
+      "B. Tính phổ biến",
+      "C. Tính tất yếu",
+      "D. Tính biện chứng"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tính tất yếu"
+  },
+  {
+    "question": "Trong hoạt động nhận thức, cần nhìn nhận sự vật trong trạng thái vận động và phát triển. Điều đó dựa trên cơ sở lý luận của nguyên lý nào?",
+    "options": [
+      "A. Nguyên lý về mối liên hệ phổ biến",
+      "B. Nguyên lý về sự phát triển",
+      "C. Nguyên lý về tính thống nhất vật chất của thế giới"
+    ],
+    "correctIndex": 1,
+    "explanation": "Nguyên lý về sự phát triển"
+  },
+  {
+    "question": "Cơ sở, động lực, mục đích của nhận thức là:",
+    "options": [
+      "A. Lý luận",
+      "B. Thực tiễn",
+      "C. Triết học"
+    ],
+    "correctIndex": 1,
+    "explanation": "Thực tiễn"
+  },
+  {
+    "question": "Triết học duy vật biện chứng cho rằng:",
+    "options": [
+      "A. Vật chất quyết định ý thức, ý thức tác động trở lại vật chất",
+      "B. Ý thức quyết định vật chất, vật chất tác động trở lại ý thức",
+      "C. Vật chất quyết định ý thức",
+      "D. Vật chất và ý thức đều có vai trò quyết định"
+    ],
+    "correctIndex": 0,
+    "explanation": "Vật chất quyết định ý thức, ý thức tác động trở lại vật chất"
+  },
+  {
+    "question": "Trong quá trình nhận thức và hoạt động thực tiễn, chúng ta cần:",
+    "options": [
+      "A. Phủ nhận, gạt bỏ cái ngẫu nhiên",
+      "B. Cơ bản là phải căn cứ vào cái ngẫu nhiên nhưng đồng thời phải tính tới cái tất nhiên",
+      "C. Căn cứ vào cái tất nhiên và ngẫu nhiên",
+      "D. Cơ bản là phải căn cứ vào cái tất nhiên nhưng đồng thời phải tính tới cái ngẫu nhiên"
+    ],
+    "correctIndex": 3,
+    "explanation": "Cơ bản là phải căn cứ vào cái tất nhiên nhưng đồng thời phải tính tới cái ngẫu nhiên"
+  },
+  {
+    "question": "Điều khẳng định nào sau đây đúng về mối quan hệ giữa lý luận và kinh nghiệm?",
+    "options": [
+      "A. Lý luận được hình thành từ kinh nghiệm trên cơ sở kinh nghiệm",
+      "B. Kinh nghiệm nhiều tự phát dẫn đến sự ra đời của lý luận",
+      "C. Mọi lý luận đều được xuất phát từ kinh nghiệm",
+      "D. Lý luận đi trước kinh nghiệm"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lý luận được hình thành từ kinh nghiệm trên cơ sở kinh nghiệm"
+  },
+  {
+    "question": "Bản thân cây Sầu riêng luôn tồn tại hai quá trình quang hợp và hô hấp. Quá trình quang hợp giúp cây Sầu riêng hấp thụ nước và khí Cacbonic cùng với ánh sáng mặt trời để tạo ra các hợp chất hữu cơ và thải ra Oxi. Còn quá trình hô hấp là quá trình hấp thụ Oxi, chuyển đổi các chất hữu cơ, và giải phóng năng lượng, thải ra khí Cacbonic. Với kiến thức về Triết học đã được học, Anh/Chị hãy cho biết quá trình quang hợp và hô hấp của cây Sầu riêng nằm trong quy luật nào trong các quy luật sau đây?",
+    "options": [
+      "A. Quy luật từ những sự thay đổi về lượng dẫn đến sự thay đổi về chất và ngược lại",
+      "B. Quy luật thống nhất và đấu tranh giữa các mặt đối lập",
+      "C. Quy luật phủ định của phủ định",
+      "D. Quy luật phát triển"
+    ],
+    "correctIndex": 1,
+    "explanation": "Quy luật thống nhất và đấu tranh giữa các mặt đối lập"
+  },
+  {
+    "question": "Chọn phương án đúng để điền vào chỗ trống: \"Điểm xuất phát của....... là : Sự khẳng định những sự vật và hiện tượng của tự nhiên đều bao gồm những mâu thuẫn vốn có của chúng?",
+    "options": [
+      "A. Phép siêu hình",
+      "B. Phép biện chứng",
+      "C. Phép biện chứng duy tâm",
+      "D. Chủ nghĩa duy vật"
+    ],
+    "correctIndex": 1,
+    "explanation": "Phép biện chứng"
+  },
+  {
+    "question": "Theo Triết học Mác - Lênin cái bàn, cái ghế có phải vật chất không?",
+    "options": [
+      "A. Có. Vì nó là dạng của vật chất trong không gian.",
+      "B. Không. Vì nó không có vật chất trong không gian.",
+      "C. Có. Vì nó có tồn tại cụ thể, có kích thước và tồn tại cùng thời gian.",
+      "D. Không. Vì nó chỉ là một dạng cụ thể của vật chất."
+    ],
+    "correctIndex": 2,
+    "explanation": "Có. Vì nó có tồn tại cụ thể, có kích thước và tồn tại cùng thời gian."
+  },
+  {
+    "question": "Điền vào dấu ... \"Cái ..là cái toàn bộ, phong phú hơn cái...\"",
+    "options": [
+      "A. Chung/Riêng",
+      "B. Riêng/Chung",
+      "C. Chung/Đơn nhất",
+      "D. Đơn nhất/Riêng"
+    ],
+    "correctIndex": 1,
+    "explanation": "Riêng/Chung"
+  },
+  {
+    "question": "Trong hoạt động thực tiễn, sai lầm của sự trì trệ bảo thủ là do không tôn trọng quy luật nào?",
+    "options": [
+      "A. Quy luật mâu thuẫn",
+      "B. Quy luật lượng chất",
+      "C. Quy luật tự nhiên",
+      "D. Quy luật xã hội"
+    ],
+    "correctIndex": 1,
+    "explanation": "Quy luật lượng chất"
+  },
+  {
+    "question": "Khẳng định nào sau đây về thế giới vật chất là đúng?",
+    "options": [
+      "A. Chỉ có một thế giới duy nhất là thế giới vật chất",
+      "B. Chỉ có một thế giới duy nhất là thế giới tinh thần",
+      "C. Có nhiều thế giới vật chất",
+      "D. Có nhiều thế giới tinh thần"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chỉ có một thế giới duy nhất là thế giới vật chất"
+  },
+  {
+    "question": "Chỉ có một thế giới duy nhất là thế giới vật chất là thể hiện tính chất gì của thế giới vật chất?",
+    "options": [
+      "A. Đa dạng",
+      "B. Thống nhất",
+      "C. Tổng hợp",
+      "D. Đặc thù"
+    ],
+    "correctIndex": 1,
+    "explanation": "Thống nhất"
+  },
+  {
+    "question": "Ai đã tìm ra tia phóng xạ?",
+    "options": [
+      "A. Ronghen",
+      "B. Nicolai copazir",
+      "C. Béccoren",
+      "D. Jorb Bruno"
+    ],
+    "correctIndex": 2,
+    "explanation": "Béccoren"
+  },
+  {
+    "question": "Phép biện chứng có đặc trưng cơ bản sau:",
+    "options": [
+      "A. Tính khách quan và tính mâu thuẫn",
+      "B. Tính mâu thuẫn và tính kế thừa",
+      "C. Tất cả các đáp án đều sai",
+      "D. Tính khách quan và tính kế thừa"
+    ],
+    "correctIndex": 3,
+    "explanation": "Tính khách quan và tính kế thừa"
+  },
+  {
+    "question": "Theo Triết học Mác, vật chất tồn tại thế nào?",
+    "options": [
+      "A. Chủ quan",
+      "B. Phụ thuộc và con người",
+      "C. Khách quan",
+      "D. Theo ý muốn của thần linh"
+    ],
+    "correctIndex": 2,
+    "explanation": "Khách quan"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật biện chứng, luận điểm nào sau đây là đúng?",
+    "options": [
+      "A. Có tất nhiên thuần tuý tồn tại khách quan",
+      "B. Có ngẫu nhiên thuần tuý tồn tại khách quan",
+      "C. Không có cái tất nhiên và ngẫu nhiên thuần tuý tồn tại bên ngoài nhau",
+      "D. Tất nhiên và ngẫu nhiên cùng tồn tại song song với nhau trong tư duy"
+    ],
+    "correctIndex": 2,
+    "explanation": "Không có cái tất nhiên và ngẫu nhiên thuần tuý tồn tại bên ngoài nhau"
+  },
+  {
+    "question": "Khi sự vật không trực tiếp tác động vào giác quan của con người, là hình thức nhận thức nào sau đây?",
+    "options": [
+      "A. Cảm giác",
+      "B. Tri giác",
+      "C. Biểu tượng",
+      "D. Khái niệm"
+    ],
+    "correctIndex": 3,
+    "explanation": "Khái niệm"
+  },
+  {
+    "question": "Theo V.I Lênin: Quan điểm về đời sống, về thực tiễn phải là...của lý luận nhận thức:",
+    "options": [
+      "A. Điểm thứ nhất",
+      "B. Quan điểm đầu tiên",
+      "C. Quan điểm thứ nhất và cơ bản",
+      "D. Điều quan trọng"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quan điểm thứ nhất và cơ bản"
+  },
+  {
+    "question": "Theo quan điểm của phép biện chứng duy vật thì quy luật nào là quy luật về khuynh hướng cơ bản, phổ biến của mọi sự vận động và phát triển diễn ra trong lĩnh vực tự nhiên, xã hội và tư duy?",
+    "options": [
+      "A. Vận động",
+      "B. Lượng đổi, chất đổi",
+      "C. Mâu thuẫn",
+      "D. Phủ định của phủ định"
+    ],
+    "correctIndex": 3,
+    "explanation": "Phủ định của phủ định"
+  },
+  {
+    "question": "Vận dụng Triết học vào thực tế phải dựa trên quan điểm:",
+    "options": [
+      "A. Lịch sử cụ thể",
+      "B. Phát triển",
+      "C. Kế thừa",
+      "D. Tất cả các đáp án đều đúng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Tất cả các đáp án đều đúng"
+  },
+  {
+    "question": "Hình thức nhận thức nào cần có sự tác động trực tiếp của vật vào cơ quan giác quan của con người?",
+    "options": [
+      "A. Tri giác",
+      "B. Khái niệm",
+      "C. Suy luận",
+      "D. Phán đoán"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tri giác"
+  },
+  {
+    "question": "Chọn các đáp án đúng. Điều kiện cần và đủ để sinh ra ý thức là do:",
+    "options": [
+      "A. Nghiên cứu khoa học",
+      "B. Lao động, ngôn ngữ",
+      "C. Bộ óc người",
+      "D. Các sự vật, hiện tượng trong thế giới khách quan"
+    ],
+    "correctIndex": 1,
+    "explanation": "Lao động, ngôn ngữ; C. Bộ óc người; D. Các sự vật, hiện tượng trong thế giới khách quan"
+  },
+  {
+    "question": "Chân lý là:",
+    "options": [
+      "A. Ý kiến của những người có kinh nghiệm",
+      "B. Sự phù hợp giữa tri thức với hiện thực khách quan và được thực tiễn kiểm nghiệm",
+      "C. Những quan điểm thuộc về đa số",
+      "D. Là những thứ đúng đắn trong khoa học"
+    ],
+    "correctIndex": 1,
+    "explanation": "Sự phù hợp giữa tri thức với hiện thực khách quan và được thực tiễn kiểm nghiệm"
+  },
+  {
+    "question": "\"Góp gió thành bão\" giúp anh/chị liên hệ tới quy luật nào trong triết học?",
+    "options": [
+      "A. Lượng - chất",
+      "B. Mâu thuẫn",
+      "C. Phủ định của phủ định",
+      "D. Không có phương án nào đúng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lượng - chất"
+  },
+  {
+    "question": "Thời gian phát hiện ra tia Rơnghen là khi nào?",
+    "options": [
+      "A. Năm 1895",
+      "B. Năm 1896",
+      "C. Năm 1897",
+      "D. Năm 1898"
+    ],
+    "correctIndex": 0,
+    "explanation": "Năm 1895"
+  },
+  {
+    "question": "Theo C. Mác, vấn đề tìm hiểu xem tư duy của con người có thể đạt được chân lý khách quan hay không hoàn toàn không phải là vấn đề lý luận mà là vấn đề:",
+    "options": [
+      "A. Sống còn",
+      "B. Hiện thực",
+      "C. Thực tiễn",
+      "D. Khoa học"
+    ],
+    "correctIndex": 2,
+    "explanation": "Thực tiễn"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật biện chứng thì đứng im là một trạng thái đặc biệt của vận động:",
+    "options": [
+      "A. Tuyệt đối",
+      "B. Trong cân bằng",
+      "C. Tại chỗ",
+      "D. Tĩnh tại"
+    ],
+    "correctIndex": 1,
+    "explanation": "Trong cân bằng"
+  },
+  {
+    "question": "Nguyên tắc thống nhất giữa lý luận với thực tiễn là nguyên tắc được rút ra trực tiếp từ:",
+    "options": [
+      "A. Mối quan hệ giữa vật chất và ý thức",
+      "B. Lý luận nhận thức",
+      "C. Quan hệ giữa khả năng và hiện thực",
+      "D. Phán đoán suy luận"
+    ],
+    "correctIndex": 0,
+    "explanation": "Mối quan hệ giữa vật chất và ý thức"
+  },
+  {
+    "question": "Luận điểm sau đây thuộc lập trường triết học nào: \"Cái mới ra đời trên cơ sở phá hủy hoàn toàn cái cũ\"?",
+    "options": [
+      "A. Quan điểm siêu hình",
+      "B. Quan điểm duy tâm",
+      "C. Quan điểm phát triển",
+      "D. Quan điểm biện chứng duy vật"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quan điểm siêu hình"
+  },
+  {
+    "question": "Ý thức được gọi là hình ảnh chủ quan của:",
+    "options": [
+      "A. Hiện thực khách quan",
+      "B. Thế giới khách quan",
+      "C. Thế giới chủ quan",
+      "D. Thế giới vật chất"
+    ],
+    "correctIndex": 1,
+    "explanation": "Thế giới khách quan"
+  },
+  {
+    "question": "Lơxíp và Đêmôcrít có điểm chung là gì?",
+    "options": [
+      "A. Cả hai ông đều cho rằng, vật chất là nước",
+      "B. Cả hai ông đều cho rằng, vật chất là lửa",
+      "C. Cả hai ông đều cho rằng, vật chất là không khí",
+      "D. Cả hai ông đều cho rằng, vật chất là nguyên tử"
+    ],
+    "correctIndex": 3,
+    "explanation": "Cả hai ông đều cho rằng, vật chất là nguyên tử"
+  },
+  {
+    "question": "Galilê là nhà triết học thuộc trường phái triết học nào?",
+    "options": [
+      "A. Chủ nghĩa duy vật biện chứng",
+      "B. Chủ nghĩa duy vật siêu hình",
+      "C. Chủ nghĩa duy tâm siêu hình",
+      "D. Chủ nghĩa duy tâm máy móc"
+    ],
+    "correctIndex": 1,
+    "explanation": "Chủ nghĩa duy vật siêu hình"
+  },
+  {
+    "question": "Xác định mệnh đề sai:",
+    "options": [
+      "A. Vật thể là dạng cụ thể của vật chất",
+      "B. Vật chất tồn tại thông qua những dạng cụ thể của nó",
+      "C. Vật chất là một dạng tồn tại của vật thể",
+      "D. Vật thể không đồng nghĩa với vật chất"
+    ],
+    "correctIndex": 2,
+    "explanation": "Vật chất là một dạng tồn tại của vật thể"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật biện chứng khẳng định nào sau đây là đúng?",
+    "options": [
+      "A. Cái ngẫu nhiên không có nguyên nhân",
+      "B. Chỉ có cái tất yếu mới có nguyên nhân",
+      "C. Không phải cái gì con người chưa nhận thức được nguyên nhân là cái ngẫu nhiên"
+    ],
+    "correctIndex": 2,
+    "explanation": "Không phải cái gì con người chưa nhận thức được nguyên nhân là cái ngẫu nhiên"
+  },
+  {
+    "question": "Một sinh viên tâm sự với bạn về hoàn cảnh gia đình mình trong 10 năm đổi mới như sau: gia đình trước đây rất khó khăn. Khi bố từ quân đội về hưu có ít tiền, gia đình đầu tư mua máy và thiết bị sản xuất đậu phụ và làm tương bán. May quá, mặt hàng làm ra có thị trường tiêu thụ ngày càng rộng. Gia đình còn tận dụng các sản phẩm phụ để nuôi heo. Thế là thu nhập của gia đình tăng dần. Đến nay bố mình đã trở thành một chủ xưởng sản xuất có 20 lao động thuê ngoài. Mẹ mình làm trợ lý, mình làm kế toán giúp mẹ. Nhà mình bây giờ khang trang, đủ tiện nghi sinh hoạt. Phân tích sự việc trên theo bình diện triết học, sự thay đổi của gia đình của bạn sinh viên trên thuộc:",
+    "options": [
+      "A. Phủ định biện chứng",
+      "B. Phủ định siêu hình",
+      "C. Cả hai",
+      "D. Không hề có sự phủ định"
+    ],
+    "correctIndex": 0,
+    "explanation": "Phủ định biện chứng"
+  },
+  {
+    "question": "Nhận thức cảm tính được thực hiện dưới những hình thức nào?",
+    "options": [
+      "A. Tri giác, phán đoán và suy luận",
+      "B. Cảm giác, tri giác và khái niệm",
+      "C. Cảm giác, tri giác và biểu tượng",
+      "D. Khái niệm và phán đoán"
+    ],
+    "correctIndex": 2,
+    "explanation": "Cảm giác, tri giác và biểu tượng"
+  },
+  {
+    "question": "Cái riêng là một phạm trù dùng để chỉ:",
+    "options": [
+      "A. Những mặt, những thuộc tính chung của nhiều sự vật",
+      "B. Một sự vật, một hiện tượng, một quá trình riêng lẻ nhất định",
+      "C. Những nét, những thuộc tính chỉ có ở một sự vật",
+      "D. Các yếu tố cấu thành một hệ thống"
+    ],
+    "correctIndex": 1,
+    "explanation": "Một sự vật, một hiện tượng, một quá trình riêng lẻ nhất định"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật biện chứng thì thông qua vận động mà các dạng cụ thể của vật chất:",
+    "options": [
+      "A. Tạo ra ý thức",
+      "B. Không tồn tại",
+      "C. Mất dần đi",
+      "D. Biểu hiện"
+    ],
+    "correctIndex": 3,
+    "explanation": "Biểu hiện"
+  },
+  {
+    "question": "Một sinh viên chuẩn bị bài seminar trong 1 tuần theo cách thức: ngày đầu phác thảo đề cương sơ lược sau đó hàng ngày dành 15 phút sửa chữa và bổ sung bài chuẩn bị đó cả kết cấu, nội dung. Đúng vào buổi seminar, sinh viên đó đã có một bản chuẩn bị hoàn chỉnh. Công việc trên đã diễn ra theo nguyên lý, quy luật nào?",
+    "options": [
+      "A. Quy luật mâu thuẫn",
+      "B. Quy luật lượng - chất",
+      "C. Quy luật phủ định của phủ định",
+      "D. Nguyên lý về mối liên hệ phổ biến"
+    ],
+    "correctIndex": 1,
+    "explanation": "Quy luật lượng - chất"
+  },
+  {
+    "question": "Theo triết học Mác, sự chuyển dịch từ hình thái kinh tế chiếm hữu nô lệ, sang phong kiến rồi đến xã hội chủ nghĩa thuộc loại vận động nào?",
+    "options": [
+      "A. Vận động vật lý",
+      "B. Vận động hóa học",
+      "C. Vận động sinh học",
+      "D. Vận động xã hội"
+    ],
+    "correctIndex": 3,
+    "explanation": "Vận động xã hội"
+  },
+  {
+    "question": "Quy luật bao giờ cũng mang tính:",
+    "options": [
+      "A. Khách quan",
+      "B. Chủ quan",
+      "C. Cả khách quan và chủ quan",
+      "D. Các phương án trả lời đều sai"
+    ],
+    "correctIndex": 0,
+    "explanation": "Khách quan"
+  },
+  {
+    "question": "Nhận thức lý tính được thực hiện dưới hình thức nào?",
+    "options": [
+      "A. Cảm giác, tri giác và phán đoán",
+      "B. Khái niệm, phán đoán và suy lý",
+      "C. Cảm giác, khái niệm, suy lý",
+      "D. Cảm giác, tri giác, biểu tượng"
+    ],
+    "correctIndex": 1,
+    "explanation": "Khái niệm, phán đoán và suy lý"
+  },
+  {
+    "question": "Điền vào chỗ trống: ....... là một phạm trù triết học dùng để chỉ thực tại khách quan được đem lại cho con người thông qua cảm giác, được cảm giác của chúng ta ghi nhận, chụp lại, phản ánh, và tồn tại không lệ thuộc vào cảm giác.",
+    "options": [
+      "A. Vật chất",
+      "B. Ý thức",
+      "C. Năng lực",
+      "D. Thế giới"
+    ],
+    "correctIndex": 0,
+    "explanation": "Vật chất"
+  },
+  {
+    "question": "Một trong các nội dung định nghĩa của Lênin về vật chất đó là, vật chất được cảm giác của chúng ta chép lại, chụp lại, phản ánh và tồn tại:",
+    "options": [
+      "A. Lệ thuộc vào cảm giác",
+      "B. Không lệ thuộc vào cảm giác",
+      "C. Tuỳ thuộc vào nhận thức",
+      "D. Tuỳ theo ý thức"
+    ],
+    "correctIndex": 1,
+    "explanation": "Không lệ thuộc vào cảm giác"
+  },
+  {
+    "question": "Theo quan điểm của phép biện chứng duy vật, thì phạm trù chỉ một sự vật, một hiện tượng, một quá trình nhất định là:",
+    "options": [
+      "A. Đặc thù",
+      "B. Bản chất",
+      "C. Cái riêng",
+      "D. Hiện tượng"
+    ],
+    "correctIndex": 2,
+    "explanation": "Cái riêng"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin tiêu chuẩn của chân lý là:",
+    "options": [
+      "A. Tri thức do các thế hệ trước để lại",
+      "B. Tri thức được nhiều người công nhận",
+      "C. Thực tiễn",
+      "D. Lời nói của các vĩ nhân"
+    ],
+    "correctIndex": 2,
+    "explanation": "Thực tiễn"
+  },
+  {
+    "question": "Hình thức hoạt động thực tiễn cơ bản nhất quyết định các hình thức hoạt động khác là hình thức nào sau đây?",
+    "options": [
+      "A. Hoạt động chính trị - xã hội",
+      "B. Hoạt động quan sát và thực nghiệm khoa học",
+      "C. Hoạt động sản xuất vật chất",
+      "D. Hoạt động kinh tế"
+    ],
+    "correctIndex": 2,
+    "explanation": "Hoạt động sản xuất vật chất"
+  },
+  {
+    "question": "Chất và lượng có mối quan hệ với nhau như thế nào?",
+    "options": [
+      "A. Không có mối quan hệ gì với nhau",
+      "B. Chỉ có mối quan hệ giữa chất với lượng",
+      "C. Chỉ có mối quan hệ giữa lượng với chất",
+      "D. Có mối quan hệ biện chứng với nhau"
+    ],
+    "correctIndex": 3,
+    "explanation": "Có mối quan hệ biện chứng với nhau"
+  },
+  {
+    "question": "Chỉ tính quy định, mối liên hệ thống nhất giữa chất và lượng, là khoảng giới hạn mà trong đó sự thay đổi về lượng của sự vật chưa làm thay đổi căn bản chất của nó gọi là:",
+    "options": [
+      "A. Độ",
+      "B. Giới hạn",
+      "C. Điểm nút",
+      "D. Tích về lượng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Độ"
+  },
+  {
+    "question": "Sự sinh ra, lớn lên, già đi thuộc hình thức vận động nào trong triết học?",
+    "options": [
+      "A. Vận động cơ học",
+      "B. Vận động sinh học",
+      "C. Vận động vật lý",
+      "D. Vận động hóa học"
+    ],
+    "correctIndex": 1,
+    "explanation": "Vận động sinh học"
+  },
+  {
+    "question": "Trong thực tế chúng ta phải dựa vào:",
+    "options": [
+      "A. Hiện thực và dự đoán các khả năng",
+      "B. Mối quan hệ giữa khả năng và hiện thực",
+      "C. Hiện thực vì khả năng là cái chưa tồn tại",
+      "D. Khả năng vì khả năng có thế chứa hiện thực"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hiện thực và dự đoán các khả năng"
+  },
+  {
+    "question": "Cái ngẫu nhiên là cái:",
+    "options": [
+      "A. Diễn ra hoàn toàn không chịu sự chi phối của quy luật nào",
+      "B. Hoàn toàn diễn ra theo quy luật",
+      "C. Biểu hiện của quy luật",
+      "D. Không biểu hiện của bất cứ quy luật nào"
+    ],
+    "correctIndex": 2,
+    "explanation": "Biểu hiện của quy luật"
+  },
+  {
+    "question": "Theo Lênin, khách quan là cái đang tồn tại:",
+    "options": [
+      "A. Phụ thuộc nhận thức con người",
+      "B. Trong thế giới con người",
+      "C. Trong thế giới tự nhiên",
+      "D. Độc lập, không phụ thuộc vào ý thức"
+    ],
+    "correctIndex": 3,
+    "explanation": "Độc lập, không phụ thuộc vào ý thức"
+  },
+  {
+    "question": "Điền vào dấu .. là tổng hợp những mặt, những yếu tố trong quá trình tạo nên sự vật:",
+    "options": [
+      "A. Khả năng",
+      "B. Hiện thực",
+      "C. Nội dung",
+      "D. Hình thức"
+    ],
+    "correctIndex": 2,
+    "explanation": "Nội dung"
+  },
+  {
+    "question": "Điền cụm từ thích hợp vào chỗ (..): \"Không thể đem lại cho hai khái niệm ... này một định nghĩa cách chỉ rõ ràng trong hai khái niệm đó, cái nào được coi là có trước\".",
+    "options": [
+      "A. Nhận thức luận",
+      "B. Bản thể luận",
+      "C. Nhất nguyên luận",
+      "D. Nhị nguyên luận"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nhận thức luận"
+  },
+  {
+    "question": "Nguyên nhân là phạm trù triết học chỉ:",
+    "options": [
+      "A. Tác động qua lại giữa các mặt, các yếu tố bên trong sự vật hay giữa sự vật này với sự vật kia biến đổi nhất định",
+      "B. Quan hệ giữa các mặt, các yếu tố bên trong sự vật hay giữa sự vật này với sự vật kia tạo nhất định",
+      "C. Sự chuyển hóa giữa các mặt, các yếu tố bên trong sự vật hay giữa sự vật này với sự vật kia biến đổi nhất định"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tác động qua lại giữa các mặt, các yếu tố bên trong sự vật hay giữa sự vật này với sự vật kia biến đổi nhất định"
+  },
+  {
+    "question": "Tri thức nào sau đây nảy sinh một cách trực tiếp từ thực tiễn lao động sản xuất?",
+    "options": [
+      "A. Tri thức kinh nghiệm",
+      "B. Tri thức lý luận",
+      "C. Tri thức lý luận khoa học",
+      "D. Tri thức lý luận thực tiễn"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tri thức kinh nghiệm"
+  },
+  {
+    "question": "Theo cách phân chia các hình thức vận động của Ph. Ăngghen, hình thức vận động nào là thấp nhất?",
+    "options": [
+      "A. Hình thức vận động cơ học",
+      "B. Hình thức vận động vật lý",
+      "C. Hình thức vận động hóa học",
+      "D. Hình thức vận động xã hội"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hình thức vận động cơ học"
+  },
+  {
+    "question": "Theo quan điểm của phép biện chứng duy vật thì chất là sự thống nhất hữu cơ của các thuộc tính cấu thành nó và là phạm trù dùng để chỉ tính quy định gì của sự vật, hiện tượng?",
+    "options": [
+      "A. Có tổ chức",
+      "B. Khách quan vốn có",
+      "C. Về kết cấu",
+      "D. Về kết quả"
+    ],
+    "correctIndex": 1,
+    "explanation": "Khách quan vốn có"
+  },
+  {
+    "question": "Chân lý bao gồm các tính chất sau:",
+    "options": [
+      "A. Tính phong phú, đa dạng",
+      "B. Tính khách quan",
+      "C. Tính tương đối",
+      "D. Tính cụ thể"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tính khách quan, C. Tính tương đối, D. Tính cụ thể"
+  },
+  {
+    "question": "Theo quan điểm triết học Mácxít, khẳng định nào sau đây sai?",
+    "options": [
+      "A. Thế giới là một chỉnh thể trong sự liên hệ, ràng buộc lẫn nhau",
+      "B. Con người không thể tách khỏi các mối quan hệ với tự nhiên",
+      "C. Giữa các loài luôn có những khâu trung gian nối chúng với nhau",
+      "D. Thế giới tinh thần và thế giới vật chất tồn tại độc lập nhau"
+    ],
+    "correctIndex": 3,
+    "explanation": "Thế giới tinh thần và thế giới vật chất tồn tại độc lập nhau"
+  },
+  {
+    "question": "Theo Ph. Ăngghen, tính thống nhất của vật chất được chứng minh bởi:",
+    "options": [
+      "A. Thực tiễn lịch sử",
+      "B. Thực tiễn cách mạng",
+      "C. Sự phát triển lâu dài của khoa học",
+      "D. Sự phát triển lâu dài và khó khăn của triết học và khoa học tự nhiên"
+    ],
+    "correctIndex": 3,
+    "explanation": "Sự phát triển lâu dài và khó khăn của triết học và khoa học tự nhiên"
+  },
+  {
+    "question": "Khi chất mới của sự vật ra đời có thể làm thay đổi những gì của sự vận động và phát triển của sự vật?",
+    "options": [
+      "A. Bản chất, hình thức",
+      "B. Kết cấu, quy mô",
+      "C. Hình thức kết cấu",
+      "D. Hình thức vận động"
+    ],
+    "correctIndex": 1,
+    "explanation": "Kết cấu, quy mô"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật biện chứng, trong thực tế chúng ta phải:",
+    "options": [
+      "A. Dựa vào tất nhiên, đề phòng ngẫu nhiên",
+      "B. Dựa vào ngẫu nhiên, đề phòng tất nhiên",
+      "C. Dựa vào cả tất nhiên và ngẫu nhiên"
+    ],
+    "correctIndex": 0,
+    "explanation": "Dựa vào tất nhiên, đề phòng ngẫu nhiên"
+  },
+  {
+    "question": "Vị trí của quy luật phủ định của phủ định trong phép biện chứng duy vật:",
+    "options": [
+      "A. Chỉ ra cách thức của sự phát triển",
+      "B. Chỉ ra nguồn gốc của sự phát triển",
+      "C. Chỉ ra nguyên nhân của sự phát triển",
+      "D. Chỉ ra khuynh hướng của sự phát triển"
+    ],
+    "correctIndex": 3,
+    "explanation": "Chỉ ra khuynh hướng của sự phát triển"
+  },
+  {
+    "question": "Sự phản ánh có tính chủ động lựa chọn thông tin, xử lý thông tin là hình thức phản ánh:",
+    "options": [
+      "A. Tâm lý",
+      "B. Năng động, sáng tạo",
+      "C. Tiên tiến",
+      "D. Không thụ động"
+    ],
+    "correctIndex": 1,
+    "explanation": "Năng động, sáng tạo"
+  },
+  {
+    "question": "Hãy chỉ ra sai lầm của các nhà triết học thế kỷ XVII-XVIII trong quan niệm về vật chất:",
+    "options": [
+      "A. Vật chất biểu hiện qua không gian và thời gian",
+      "B. Đồng nhất vật chất với vật thể",
+      "C. Đề cập đến vai trò của vật thể",
+      "D. Đồng nhất vật chất với một số tính chất phổ biến của vật thể"
+    ],
+    "correctIndex": 1,
+    "explanation": "Đồng nhất vật chất với vật thể"
+  },
+  {
+    "question": "Điền vào chỗ trống: Chủ nghĩa duy vật biện chứng đã định nghĩa nhận thức là một quá trình phản ánh ...thế giới khách quan vào bộ óc của con người.",
+    "options": [
+      "A. Tự giác",
+      "B. Tích cực",
+      "C. Sáng tạo",
+      "D. Chủ quan"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tích cực; C. Sáng tạo"
+  },
+  {
+    "question": "Phủ định biện chứng có đặc trưng cơ bản nào?",
+    "options": [
+      "A. Tính khách quan và tính mâu thuẫn",
+      "B. Tính mâu thuẫn và tính kế thừa",
+      "C. Tất cả các đáp án đều sai",
+      "D. Tính khách quan và tính kế thừa"
+    ],
+    "correctIndex": 3,
+    "explanation": "Tính khách quan và tính kế thừa"
+  },
+  {
+    "question": "Định nghĩa phạm trù vật chất phụ thuộc chủ yếu vào:",
+    "options": [
+      "A. Sự phát triển khoa học kỹ thuật",
+      "B. Sự phát triển của logic hình thức",
+      "C. Sự phát triển của logic biện chứng",
+      "D. Tất cả các đáp án đều đúng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Sự phát triển khoa học kỹ thuật"
+  },
+  {
+    "question": "Hãy chỉ ra một biểu hiện không thuộc chủ quan duy ý chí:",
+    "options": [
+      "A. Suy nghĩ và hành động nóng vội",
+      "B. Chạy theo nguyện vọng chủ quan",
+      "C. Quyết tâm thực hiện mục tiêu",
+      "D. Không tính tới điều kiện và khả năng thực tế"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quyết tâm thực hiện mục tiêu"
+  },
+  {
+    "question": "Theo quan điểm của phép biện chứng duy vật thì trong những điều kiện xác định cái đơn nhất và cái gì có thể chuyển hóa lẫn nhau?",
+    "options": [
+      "A. Cái đặc thù",
+      "B. Cái cái riêng",
+      "C. Cái chung",
+      "D. Quy luật"
+    ],
+    "correctIndex": 2,
+    "explanation": "Cái chung"
+  },
+  {
+    "question": "Điền vào dấu (_): \"Quan điểm nhất quán từ xưa đến nay của các nhà triết học duy vật là thừa nhận sự tồn tại .....lấy bản thân giới tự nhiên để giải thích tự nhiên\".",
+    "options": [
+      "A. Chủ quan của thế giới vật chất",
+      "B. Song song với thế giới vật chất",
+      "C. Khách quan của thế giới vật chất",
+      "D. Có tính trật tự, nguyên tắc của thế giới vật chất"
+    ],
+    "correctIndex": 2,
+    "explanation": "Khách quan của thế giới vật chất"
+  },
+  {
+    "question": "\"Nguyên nhân\" là phạm trù triết học dùng để chỉ:",
+    "options": [
+      "A. Những tác động giữa các mặt các yếu tố bên trong sự vật hay giữa sự vật này với sự vật kia gây ra những biến đổi nhất định.",
+      "B. Những tác động chủ yếu trong thế giới vật chất",
+      "C. Những tác nhân cơ bản trong thế giới vật chất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Những tác động giữa các mặt các yếu tố bên trong sự vật hay giữa sự vật này với sự vật kia gây ra những biến đổi nhất định."
+  },
+  {
+    "question": "Ngẫu nhiên là phạm trù triết học dùng để chỉ:",
+    "options": [
+      "A. Những gì đang tồn tại",
+      "B. Những gì sẽ xuất hiện do nguyên nhân bên ngoài quyết định",
+      "C. Những gì sẽ xuất hiện khi có điều kiện bên trong quyết định"
+    ],
+    "correctIndex": 1,
+    "explanation": "Những gì sẽ xuất hiện do nguyên nhân bên ngoài quyết định"
+  },
+  {
+    "question": "Khi xác định tính chất của phạm trù \"Cái chung\", triết học Mác- Lênin khẳng định cái chung là cái:",
+    "options": [
+      "A. Bản chất",
+      "B. Hiện tượng",
+      "C. Cụ thể"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bản chất"
+  },
+  {
+    "question": "Chủ nghĩa duy vật biện chứng khẳng định rằng, nguyên nhân sinh ra kết quả phải có:",
+    "options": [
+      "A. Tác động",
+      "B. Điều kiện",
+      "C. Nguyên cớ"
+    ],
+    "correctIndex": 1,
+    "explanation": "Điều kiện"
+  },
+  {
+    "question": "Theo định nghĩa vật chất của Lê Nin - vật chất là những gì?",
+    "options": [
+      "A. Tồn tại một cách cụ thể, có thể nhìn thấy",
+      "B. Tồn tại vô hình, thần bí ở bên ngoài thế giới khách quan",
+      "C. Tồn tại ở bên ngoài ý thức, được ý thức con người phản ánh",
+      "D. Tồn tại vô hình, không thể nhìn thấy"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tồn tại ở bên ngoài ý thức, được ý thức con người phản ánh"
+  },
+  {
+    "question": "Lơxíp (khoảng 500 - 440 trước CN) được xem là?",
+    "options": [
+      "A. Nhà triết học Giáo hội Cổ đại",
+      "B. Nhà toán học Hi Lạp Cổ đại",
+      "C. Nhà triết học Hi Lạp Cổ đại",
+      "D. Nhà thần học Hi Lạp Cổ đại"
+    ],
+    "correctIndex": 2,
+    "explanation": "Nhà triết học Hi Lạp Cổ đại"
+  },
+  {
+    "question": "Nguyên nhân và kết quả cái nào có trước?",
+    "options": [
+      "A. Nguyên nhân",
+      "B. Kết quả",
+      "C. Cả hai cùng xuất hiện trước",
+      "D. Không cái nào xuất hiện trước"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nguyên nhân"
+  },
+  {
+    "question": "Tình thiên - Trời hửng Sự vật vẫn xoay đà định sẵn, Hết mưa là nắng hừng lên thôi; Đất trời một thoáng thu màn ướt, Sông núi muôn trùng trải gấm phơi; Trời ẩm, hoa cười chào gió nhẹ, Cây cao, chim hót rộn cành tươi; Người cùng vạn vật đều phơi phới, Hết khổ là vui vốn lẽ đời. Trong bài thơ trên của Chủ tịch Hồ Chí Minh, cặp phạm trù nào được nhắc đến?",
+    "options": [
+      "A. Cái chung, cái riêng",
+      "B. Bản chất, hiện tượng",
+      "C. Tất nhiên, ngẫu nhiên",
+      "D. Nguyên nhân, kết quả"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tất nhiên, ngẫu nhiên"
+  },
+  {
+    "question": "V.I.Lênin cho rằng: Tính ... không thể tách rời tính phổ biến",
+    "options": [
+      "A. Nhân quả",
+      "B. Tất nhiên",
+      "C. Đơn nhất",
+      "D. Hiện thực"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tất nhiên"
+  },
+  {
+    "question": "Mối liên hệ thống nhất và đấu tranh, chuyển hóa giữa các mặt đối lập của mỗi sự vật, hiện tượng hoặc giữa các sự vật, hiện tượng với nhau gọi là khái niệm gì?",
+    "options": [
+      "A. Chuyển hoá chất, lượng",
+      "B. Sự thống nhất",
+      "C. Quan hệ hài hòa",
+      "D. Mâu thuẫn"
+    ],
+    "correctIndex": 3,
+    "explanation": "Mâu thuẫn"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy vật thì những mối liên hệ tồn tại ở mọi sự vật, hiện tượng của thế giới là mối liên hệ:",
+    "options": [
+      "A. Chung",
+      "B. Quan trọng",
+      "C. Khá phổ biến",
+      "D. Phổ biến"
+    ],
+    "correctIndex": 3,
+    "explanation": "Phổ biến"
+  },
+  {
+    "question": "Đâu là một quan điểm của chủ nghĩa duy vật biện chứng?",
+    "options": [
+      "A. Vật chất quyết định ý thức, ý thức tác động trở lại vật chất",
+      "B. Ý thức quyết định vật chất, vật chất tác động trở lại ý thức",
+      "C. Vật chất quyết định ý thức",
+      "D. Vật chất và ý thức đều có vai trò quyết định"
+    ],
+    "correctIndex": 0,
+    "explanation": "Vật chất quyết định ý thức, ý thức tác động trở lại vật chất"
+  },
+  {
+    "question": "Khi đánh giá một con người, quan điểm toàn diện đòi hỏi điều gì?",
+    "options": [
+      "A. Phải đặc biệt nhấn mạnh một mặt nào đó, bỏ qua những mặt còn lại",
+      "B. Phải đặt họ vào những điều kiện, thời đại của mình mà đánh giá",
+      "C. Phải đặt họ trong những mối quan hệ với những người khác, với những việc khác có thể ảnh hưởng đến sự phát triển của họ mà đánh giá",
+      "D. Phải xuất phát từ mục đích và lợi ích của họ mà đánh giá"
+    ],
+    "correctIndex": 2,
+    "explanation": "Phải đặt họ trong những mối quan hệ với những người khác, với những việc khác có thể ảnh hưởng đến sự phát triển của họ mà đánh giá"
+  },
+  {
+    "question": "A là một sinh viên có học lực kém, nên gia đình và Thầy/Cô đã khuyên A nên cố gắng nhiều hơn nữa, nhận thấy được vấn đề, A đã ra sức học tập để tích lũy kiến thức, trải qua một khoảng thời gian bạn A không chỉ trở thành một học sinh giỏi mà còn đạt được học bổng do Đại học FPT cung cấp. Căn cứ vào kiến thức được học ở môn Triết học, Anh/Chị hãy cho biết trường hợp bạn A thuộc 1 trong 3 quy luật nào sau đây?",
+    "options": [
+      "A. Quy luật từ những sự thay đổi về lượng dẫn đến sự thay đổi về chất và ngược lại",
+      "B. Quy luật thống nhất và đấu tranh giữa các mặt đối lập",
+      "C. Quy luật phủ định của phủ định",
+      "D. Quy luật phát triển"
+    ],
+    "correctIndex": 0,
+    "explanation": "Quy luật từ những sự thay đổi về lượng dẫn đến sự thay đổi về chất và ngược lại"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin, thuộc tính phản ánh là thuộc tính có ở đối tượng nào?",
+    "options": [
+      "A. Riêng có ở con người",
+      "B. Chỉ có ở các cơ thể sống",
+      "C. Chỉ có ở các chất vô cơ",
+      "D. Phổ biến ở mọi tổ chức vật chất"
+    ],
+    "correctIndex": 3,
+    "explanation": "Phổ biến ở mọi tổ chức vật chất"
+  },
+  {
+    "question": "Sai lầm của các nhà triết học cổ đại trong quan niệm về vật chất là gì?",
+    "options": [
+      "A. Đồng nhất vật chất với một số dạng vật thể cụ thể, cảm tính",
+      "B. Vật chất là tất cả cái tồn tại khách quan",
+      "C. Vật chất là có thể nhận thức được",
+      "D. Vật chất tự thân vận động"
+    ],
+    "correctIndex": 0,
+    "explanation": "Đồng nhất vật chất với một số dạng vật thể cụ thể, cảm tính"
+  },
+  {
+    "question": "Trước khi chủ nghĩa duy vật biện chứng ra đời, nhìn chung các nhà triết học duy vật quan niệm vật chất là gì?",
+    "options": [
+      "A. Một hay một số chất tự có, đầu tiên",
+      "B. Toàn bộ vật chất",
+      "C. Vũ trụ quan",
+      "D. Giới tự nhiên E. Ý thức"
+    ],
+    "correctIndex": 0,
+    "explanation": "Một hay một số chất tự có, đầu tiên"
+  },
+  {
+    "question": "Hiện tượng, quá trình khác nhau đều có những mối liên hệ cụ thể khác nhau, là biểu hiện của tính chất nào trong mối liên hệ?",
+    "options": [
+      "A. Đa dạng, phong phú",
+      "B. Khách quan",
+      "C. Phổ biến",
+      "D. Chung nhất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Đa dạng, phong phú"
+  },
+  {
+    "question": "\"Cái đơn nhất\" là phạm trù triết học dùng để chỉ:",
+    "options": [
+      "A. Thuộc tính tồn tại duy nhất ở một sự vật",
+      "B. Thuộc tính tồn tại trong nhiều sự vật hiện tượng",
+      "C. Những sự vật hiện tượng khách quan"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thuộc tính tồn tại duy nhất ở một sự vật"
+  },
+  {
+    "question": "Hiện tượng là:",
+    "options": [
+      "A. Một bộ phận của bản chất",
+      "B. Luôn đồng nhất với bản chất",
+      "C. Biểu hiện bên ngoài của bản chất",
+      "D. Kết quả của bản chất"
+    ],
+    "correctIndex": 2,
+    "explanation": "Biểu hiện bên ngoài của bản chất"
+  },
+  {
+    "question": "Theo quan điểm của phép biện chứng duy vật thì quan hệ biện chứng giữa \"cái riêng\" và \"cái chung\" thì cái chung tồn tại như thế nào so với cái riêng?",
+    "options": [
+      "A. Bên cái riêng",
+      "B. Trong cái riêng",
+      "C. Cùng cái riêng",
+      "D. Ngoài cái riêng"
+    ],
+    "correctIndex": 1,
+    "explanation": "Trong cái riêng"
+  },
+  {
+    "question": "Định nghĩa vật chất của Lênin bao gồm mấy nội dung cơ bản?",
+    "options": [
+      "A. 2",
+      "B. 3",
+      "C. 4",
+      "D. 5"
+    ],
+    "correctIndex": 1,
+    "explanation": "3"
+  },
+  {
+    "question": "Hiện thực là phạm trù triết học dùng để chỉ những gì:",
+    "options": [
+      "A. Sẽ tồn tại khi có đủ điều kiện",
+      "B. Đang tồn tại trong thực tế",
+      "C. Sẽ xuất hiện khi hội đủ mọi điều kiện"
+    ],
+    "correctIndex": 1,
+    "explanation": "Đang tồn tại trong thực tế"
+  },
+  {
+    "question": "Ngũ hành gồm những yếu tố nào?",
+    "options": [
+      "A. Kim, mộc, thủy, hỏa, thổ",
+      "B. Nhân, lễ, nghĩa, trí, tín",
+      "C. Kim, mộc, thủy, hỏa, lễ",
+      "D. Kim, mộc, thổ, thủy, không khí"
+    ],
+    "correctIndex": 0,
+    "explanation": "Kim, mộc, thủy, hỏa, thổ"
+  },
+  {
+    "question": "Cơ sở trực tiếp và chủ yếu nhất để hình thành khái niệm là:",
+    "options": [
+      "A. Thực tiễn",
+      "B. Thế giới tự nhiên",
+      "C. Tri giác và biểu tượng",
+      "D. Cảm giác"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thực tiễn"
+  },
+  {
+    "question": "Khi xem xét, đánh giá con người trong mối quan hệ với gia đình, bạn bè, đồng nghiệp và các mối quan hệ xã hội được gọi là cách nhìn nhận gì?",
+    "options": [
+      "A. Biện chứng",
+      "B. Toàn diện",
+      "C. Lịch sử, cụ thể",
+      "D. Phiến diện"
+    ],
+    "correctIndex": 1,
+    "explanation": "Toàn diện"
+  },
+  {
+    "question": "Một nhóm sinh viên tranh luận về chân lý, hãy xác định ý kiến nào đúng nhất, chân lý là gì?",
+    "options": [
+      "A. Quan điểm được mọi người trong cuộc bỏ phiếu tán thành",
+      "B. Quan điểm được đa số ủng hộ",
+      "C. Một phán đoán đúng theo quy tắc logic",
+      "D. Một quan điểm được chứng minh trong thực tiễn là đúng"
+    ],
+    "correctIndex": 3,
+    "explanation": "Một quan điểm được chứng minh trong thực tiễn là đúng"
+  },
+  {
+    "question": "Khái niệm nào chỉ sự quy định, sự tác động qua lại, sự chuyển hóa lẫn nhau giữa các sự vật, hiện tượng hay giữa các mặt, các yếu tố của chúng trong thế giới?",
+    "options": [
+      "A. Mối liên hệ",
+      "B. Mối liên hệ phổ biến",
+      "C. Mối liên hệ phổ biến nhất",
+      "D. Mối quan hệ"
+    ],
+    "correctIndex": 0,
+    "explanation": "Mối liên hệ"
+  },
+  {
+    "question": "Vì các mối liên hệ có tính đa dạng, phong phú nên trong hoạt động nhận thức và thực tiễn khi thực hiện quan điểm toàn diện, con người phải kết hợp với quan điểm:",
+    "options": [
+      "A. Lịch sử - cụ thể",
+      "B. Toàn diện",
+      "C. Biện chứng",
+      "D. Khách quan"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lịch sử - cụ thể"
+  },
+  {
+    "question": "Điều khẳng định nào sau đây là đúng?",
+    "options": [
+      "A. Thuyết không thể biết không thừa nhận chân lý khách quan.",
+      "B. Chủ nghĩa duy tâm chủ quan không thừa nhận chân lý khách quan.",
+      "C. Chủ nghĩa duy tâm khách quan thừa nhận chân lý chủ quan.",
+      "D. Chủ nghĩa duy vật biện chứng thừa nhận chân lý khách quan."
+    ],
+    "correctIndex": 3,
+    "explanation": "Chủ nghĩa duy vật biện chứng thừa nhận chân lý khách quan."
+  },
+  {
+    "question": "Quan điểm phát triển đòi hỏi điều gì?",
+    "options": [
+      "A. Bảo vệ cái mới, ủng hộ cái mới, đấu tranh cho cái mới nhưng không phủ định sạch trơn cái cũ.",
+      "B. Bảo vệ cái cũ, đấu tranh cho cái cũ đồng thời tạo điều kiện để cái mới ra đời và thay thế cái cũ.",
+      "C. Phát huy những mặt tích cực của cái cũ, tạo điều kiện cho nó phát triển.",
+      "D. Tạo điều kiện tiền đề cho cái mới phát triển."
+    ],
+    "correctIndex": 0,
+    "explanation": "Bảo vệ cái mới, ủng hộ cái mới, đấu tranh cho cái mới nhưng không phủ định sạch trơn cái cũ."
+  },
+  {
+    "question": "Luận điểm sau đây thuộc quan điểm triết học nào: \"Phát triển là quá trình chuyển hóa từ những thay đổi về lượng thành sự thay đổi về chất và ngược lại\"?",
+    "options": [
+      "A. Quan điểm chiết trung và biện chứng",
+      "B. Tất cả đều đúng",
+      "C. Quan điểm biện chứng",
+      "D. Quan điểm siêu hình"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quan điểm biện chứng"
+  },
+  {
+    "question": "Biện chứng là phương pháp:",
+    "options": [
+      "A. Thấy cái chung mà không thấy cái riêng",
+      "B. Thấy cái riêng mà không thấy cái chung",
+      "C. Vừa thấy cái chung và cái riêng",
+      "D. Thấy cái chung mà không thấy cái đơn nhất"
+    ],
+    "correctIndex": 2,
+    "explanation": "Vừa thấy cái chung và cái riêng"
+  },
+  {
+    "question": "Con chó, con mèo có ý thức không?",
+    "options": [
+      "A. Có. Vì nó được con người dạy.",
+      "B. Không. Vì nó không được dạy.",
+      "C. Có. Vì nó được rèn luyện qua quá trình tiếp xúc với con người.",
+      "D. Không. Vì nó chỉ có bản năng."
+    ],
+    "correctIndex": 2,
+    "explanation": "Có. Vì nó được rèn luyện qua quá trình tiếp xúc với con người."
+  },
+  {
+    "question": "Các hình thức tồn tại của các dạng cụ thể của vật chất ở một vị trí nhất định, có một quảng tính nhất định và tồn tại trong mỗi tương quan nhất định với các dạng cụ thể khác của vật chất được gọi là gì?",
+    "options": [
+      "A. Tồn tại của vật chất",
+      "B. Thời gian",
+      "C. Không gian",
+      "D. Sự tồn tại"
+    ],
+    "correctIndex": 2,
+    "explanation": "Không gian"
+  },
+  {
+    "question": "Điền vào dấu \"... tồn tại khách quan, độc lập với ý thức của con người\":",
+    "options": [
+      "A. Tất nhiên và ngẫu nhiên",
+      "B. Chỉ có tất nhiên",
+      "C. Chỉ có ngẫu nhiên",
+      "D. Tất nhiên và ngẫu nhiên đều không"
+    ],
+    "correctIndex": 1,
+    "explanation": "Chỉ có tất nhiên"
+  },
+  {
+    "question": "Theo Lênin, vật chất có mấy hình thức tồn tại?",
+    "options": [
+      "A. 1",
+      "B. 2",
+      "C. 3",
+      "D. 4"
+    ],
+    "correctIndex": 1,
+    "explanation": "2 (Thời gian và Không gian)"
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy tâm khách quan, mối quan hệ giữa các sự vật do cái gì quyết định?",
+    "options": [
+      "A. Lực lượng siêu nhiên (thượng đế, ý niệm tuyệt đối)",
+      "B. Cảm giác, thói quen của con người",
+      "C. Bản chất của thế giới tự nhiên",
+      "D. Phức hợp của cảm giác"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lực lượng siêu nhiên (thượng đế, ý niệm tuyệt đối)"
+  },
+  {
+    "question": "\"Mặt người dạ thú\" giúp anh/chị liên hệ tới cặp phạm trù nào trong triết học?",
+    "options": [
+      "A. Cái chung, cái riêng",
+      "B. Bản chất, hiện tượng",
+      "C. Tất nhiên, ngẫu nhiên",
+      "D. Nguyên nhân, kết quả"
+    ],
+    "correctIndex": 1,
+    "explanation": "Bản chất, hiện tượng"
+  },
+  {
+    "question": "Tại sao khi nhìn lên trời, mỗi người đều nhìn thấy đám mây với những hình thù khác nhau?",
+    "options": [
+      "A. Sự phản ánh năng động, sáng tạo của ý thức",
+      "B. Do ý muốn chủ quan của mỗi người",
+      "C. Thế giới khách quan đa dạng, phong phú",
+      "D. Do đám mây hôm đó có hình thù như vật cụ thể nên mỗi người nhìn khác nhau"
+    ],
+    "correctIndex": 0,
+    "explanation": "Sự phản ánh năng động, sáng tạo của ý thức"
+  },
+  {
+    "question": "Thuộc tính cơ bản nhất, phổ biến nhất của mọi tồn tại vật chất được khái quát trong phạm trù vật chất của chủ nghĩa duy vật biện chứng là:",
+    "options": [
+      "A. Không gian và thời gian",
+      "B. Tồn tại khách quan",
+      "C. Tồn tại trong vận động",
+      "D. Vận động và đứng im"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tồn tại khách quan"
+  },
+  {
+    "question": "Đứng im được hiểu là trạng thái như thế nào?",
+    "options": [
+      "A. Tuyệt đối",
+      "B. Tương đối",
+      "C. Vừa tuyệt đối vừa tương đối",
+      "D. Không có đáp án đúng"
+    ],
+    "correctIndex": 1,
+    "explanation": "Tương đối"
+  },
+  {
+    "question": "Tính chất nào của đứng im khi nói đứng im, cân bằng chỉ xảy ra trong một số quan hệ nhất định chứ không phải trong mọi quan hệ?",
+    "options": [
+      "A. Thực tế",
+      "B. Tuyệt đối",
+      "C. Tương đối",
+      "D. Thường xuyên"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tương đối"
+  },
+  {
+    "question": "Một trong những nội dung chỉ tính thống nhất vật chất của thế giới là gì?",
+    "options": [
+      "A. Chỉ có một thế giới duy nhất, thế giới thống nhất với nhau.",
+      "B. Chỉ có một thế giới duy nhất, thế giới thống nhất ở tính vật chất.",
+      "C. Thế giới này là do vụ nổ vũ trụ gây ra, tạo ra những hành tinh mang tính vật chất.",
+      "D. A và B."
+    ],
+    "correctIndex": 1,
+    "explanation": "Chỉ có một thế giới duy nhất, thế giới thống nhất ở tính vật chất."
+  },
+  {
+    "question": "Luận điểm \"Mối liên hệ nhân quả là do cảm giác con người quy định\" thuộc lập trường triết học nào?",
+    "options": [
+      "A. Chủ nghĩa duy tâm khách quan",
+      "B. Chủ nghĩa duy tâm chủ quan",
+      "C. Chủ nghĩa duy vật biện chứng",
+      "D. Chủ nghĩa duy vật siêu hình"
+    ],
+    "correctIndex": 1,
+    "explanation": "Chủ nghĩa duy tâm chủ quan"
+  },
+  {
+    "question": "Ai là tác giả của Thuyết tương đối tổng quát?",
+    "options": [
+      "A. Albert Einstein (A. Anhxtanh)",
+      "B. Nicolai Copernic",
+      "C. Giordano Bruno",
+      "D. Alexander Sancho"
+    ],
+    "correctIndex": 0,
+    "explanation": "Albert Einstein (A. Anhxtanh)"
+  },
+  {
+    "question": "Theo chủ nghĩa duy vật biện chứng, vận động không chỉ là sự thay đổi vị trí trong không gian, mà còn là mọi sự thay đổi và:",
+    "options": [
+      "A. Mọi di chuyển trong thực tế",
+      "B. Mọi quá trình diễn ra trong vũ trụ",
+      "C. Mọi vận động trong tự nhiên, xã hội",
+      "D. Mọi vận động trong xã hội"
+    ],
+    "correctIndex": 2,
+    "explanation": "Mọi vận động trong tự nhiên, xã hội"
+  },
+  {
+    "question": "Theo quan điểm của triết học Mác - Lênin, mối quan hệ giữa \"sự thống nhất và đấu tranh của các mặt đối lập\" là như thế nào?",
+    "options": [
+      "A. Sự thống nhất và đấu tranh của các mặt đối lập là thống nhất. Không có thống nhất của các mặt đối lập thì cũng không có đấu tranh của các mặt đối lập.",
+      "B. Sự đấu tranh của các mặt đối lập vừa tương đối, vừa tuyệt đối.",
+      "C. Không có \"sự thống nhất của các mặt đối lập\" thì vẫn có \"sự đấu tranh của các mặt đối lập\".",
+      "D. Không có \"sự đấu tranh của các mặt đối lập\" thì có thể trong một vài trường hợp sẽ có \"sự thống nhất của các mặt đối lập\"."
+    ],
+    "correctIndex": 0,
+    "explanation": "Sự thống nhất và đấu tranh của các mặt đối lập là thống nhất. Không có thống nhất của các mặt đối lập thì cũng không có đấu tranh của các mặt đối lập."
+  },
+  {
+    "question": "Đêmôcrit (khoảng 427 - 374 trước CN) được xem là?",
+    "options": [
+      "A. Nhà triết học Giáo hội Cổ đại",
+      "B. Nhà toán học Hy Lạp Cổ đại",
+      "C. Nhà triết học Hy Lạp Cổ đại",
+      "D. Nhà thần học Hy Lạp Cổ đại"
+    ],
+    "correctIndex": 2,
+    "explanation": "Nhà triết học Hy Lạp Cổ đại"
+  },
+  {
+    "question": "Điền vào dấu ... \"Phạm trù là những... phản ánh những mặt, những thuộc tính, những mối liên hệ chung, cơ bản nhất của các sự vật và hiện tượng thuộc một lĩnh vực nhất định.\"",
+    "options": [
+      "A. Khái niệm",
+      "B. Khái niệm rộng",
+      "C. Khái niệm rộng nhất",
+      "D. Khái niệm hẹp"
+    ],
+    "correctIndex": 2,
+    "explanation": "Khái niệm rộng nhất"
+  },
+  {
+    "question": "Ném một đồng xu có hai mặt đen và trắng lên trời, đồng xu rơi xuống đất và ngửa mặt đen lên trên. Hiện tượng trên gọi là:",
+    "options": [
+      "A. Ngẫu nhiên",
+      "B. Tất nhiên",
+      "C. Vừa tất nhiên vừa ngẫu nhiên",
+      "D. Không phải tất nhiên và cũng không phải ngẫu nhiên"
+    ],
+    "correctIndex": 2,
+    "explanation": "Vừa tất nhiên vừa ngẫu nhiên"
+  },
+  {
+    "question": "Trong các cặp khái niệm dưới đây, cặp nào có quan hệ nhân quả?",
+    "options": [
+      "A. Đông - Tây",
+      "B. Chăm chỉ - Tiến bộ",
+      "C. Xuân - Hạ",
+      "D. Ngày - Đêm"
+    ],
+    "correctIndex": 1,
+    "explanation": "Chăm chỉ - Tiến bộ"
+  },
+  {
+    "question": "Vận dụng triết học vào thực tế, ta không dựa trên quan điểm nào?",
+    "options": [
+      "A. Lịch sử cụ thể",
+      "B. Phát triển",
+      "C. Kế thừa",
+      "D. Duy tâm"
+    ],
+    "correctIndex": 3,
+    "explanation": "Duy tâm"
+  },
+  {
+    "question": "Công ty sản xuất thuốc bảo vệ thực vật muốn bổ nhiệm anh Nguyễn Văn A và chị Trần Thị B làm trưởng phòng quản lý nhân sự. Trong quá trình xem xét, công ty đó đã căn cứ vào năng lực tích lũy trong quá trình làm việc, độ nhạy bén khi xử lý công việc, năng lực phán đoán của Anh A và Chị B... Căn cứ vào ví dụ trên, Anh (Chị) hãy cho biết công ty đó đã vận dụng nội dung nào sau đây để bổ nhiệm nhân sự?",
+    "options": [
+      "A. Nguyên lý về mối liên hệ phổ biến",
+      "B. Nguyên lý về sự phát triển",
+      "C. Quy luật phủ định của phủ định",
+      "D. Quy luật đấu tranh và thống nhất giữa các mặt đối lập"
+    ],
+    "correctIndex": 1,
+    "explanation": "Nguyên lý về sự phát triển"
+  },
+  {
+    "question": "Trường phái triết học nào sau đây cho rằng vật chất bao gồm các yếu tố: kim, mộc, thủy, hỏa, thổ?",
+    "options": [
+      "A. Ngũ hành",
+      "B. Pháp gia",
+      "C. Âm dương",
+      "D. Âm dương - ngũ hành"
+    ],
+    "correctIndex": 0,
+    "explanation": "Ngũ hành"
+  },
+  {
+    "question": "Luận điểm cho rằng \"Vật hay vật thể là những phức hợp cảm giác\" thuộc trường phái triết học nào?",
+    "options": [
+      "A. Chủ nghĩa duy tâm chủ quan",
+      "B. Chủ nghĩa duy tâm khách quan",
+      "C. Chủ nghĩa duy vật siêu hình",
+      "D. Tất cả các đáp án đều đúng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chủ nghĩa duy tâm chủ quan"
+  },
+  {
+    "question": "Cái do nguyên nhân cơ bản bên trong của kết cấu vật chất quyết định và trong những điều kiện nhất định nó phải xảy ra như thế chứ không thể khác được gọi là gì?",
+    "options": [
+      "A. Tất nhiên",
+      "B. Ngẫu nhiên",
+      "C. Hệ quả",
+      "D. Bản chất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tất nhiên"
+  },
+  {
+    "question": "Quan điểm nào cho rằng sự phát triển chỉ là sự tăng, giảm đơn thuần về mặt lượng, không có sự thay đổi về chất?",
+    "options": [
+      "A. Quan điểm duy vật",
+      "B. Quan điểm duy tâm",
+      "C. Quan điểm siêu hình"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quan điểm siêu hình"
+  },
+  {
+    "question": "Quan điểm ủng hộ cái mới tiến bộ, từ đó chống lại cái cũ, cái lỗi thời kìm hãm sự phát triển là quan điểm được rút ra trực tiếp từ quy luật nào?",
+    "options": [
+      "A. Quy luật từ những thay đổi về lượng dẫn đến những thay đổi về chất và ngược lại",
+      "B. Quy luật thống nhất và quy luật đấu tranh của các mặt đối lập",
+      "C. Quy luật phủ định của phủ định",
+      "D. Quy luật biện chứng của lực lượng sản xuất và quan hệ sản xuất"
+    ],
+    "correctIndex": 2,
+    "explanation": "Quy luật phủ định của phủ định"
+  },
+  {
+    "question": "Tổng hợp tất cả những mặt, những mối liên hệ tất nhiên, tương đối ổn định bên trong sự vật, quy định sự vận động và phát triển của sự vật gọi là gì?",
+    "options": [
+      "A. Bản chất",
+      "B. Hiện tượng",
+      "C. Nội dung",
+      "D. Hình thức"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bản chất"
+  },
+  {
+    "question": "Ai là người khẳng định: \"Cần phải có sự phân biệt rõ ràng giữa vật chất với tính cách là một phạm trù của triết học\"?",
+    "options": [
+      "A. C. Mác",
+      "B. Ph. Ăngghen",
+      "C. L. Phoiơbắc",
+      "D. Immanuel Kant"
+    ],
+    "correctIndex": 1,
+    "explanation": "Ph. Ăngghen"
+  },
+  {
+    "question": "Cái tất nhiên là cái do:",
+    "options": [
+      "A. Những nguyên nhân cơ bản bên trong sự vật quy định",
+      "B. Những nguyên nhân bên ngoài sự vật qui định",
+      "C. Cả nguyên nhân bên trong và nguyên nhân bên ngoài sự vật qui định",
+      "D. Những nguyên nhân bản chất bên trong qui định"
+    ],
+    "correctIndex": 0,
+    "explanation": "Những nguyên nhân cơ bản bên trong sự vật quy định"
+  },
+  {
+    "question": "Nhu cầu ăn, mặc, ở, học tập của con người là:",
+    "options": [
+      "A. Là cái chung",
+      "B. Là cái tất yếu",
+      "C. Vừa là cái chung vừa là cái tất yếu"
+    ],
+    "correctIndex": 2,
+    "explanation": "Vừa là cái chung vừa là cái tất yếu"
+  },
+  {
+    "question": "Theo quan điểm duy vật biện chứng, nguyên nhân và kết quả có thể...",
+    "options": [
+      "A. Chuyển hóa lẫn nhau.",
+      "B. Tồn tại độc lập với nhau.",
+      "C. Xuất hiện đồng thời.",
+      "D. Không có mối liên hệ qua lại."
+    ],
+    "correctIndex": 0,
+    "explanation": "Chuyển hóa lẫn nhau."
+  },
+  {
+    "question": "Sự thay đổi về lượng đạt đến giới hạn nào thì sẽ dẫn đến sự thay đổi về chất?",
+    "options": [
+      "A. Điểm nút",
+      "B. Khoảng độ",
+      "C. Bước nhảy",
+      "D. Mâu thuẫn"
+    ],
+    "correctIndex": 0,
+    "explanation": "Điểm nút"
+  },
+  {
+    "question": "...là phương thức tồn tại và phát triển của sự vật, là hệ thống các mối liên hệ tương đối bền vững giữa các yếu tố của sự vật đó.",
+    "options": [
+      "A. Kết quả",
+      "B. Nguyên nhân",
+      "C. Nội dung",
+      "D. Hình thức"
+    ],
+    "correctIndex": 3,
+    "explanation": "Hình thức"
+  },
+  {
+    "question": "Nguồn gốc tự nhiên của ý thức bao gồm yếu tố nào? Chọn 2 phương án.",
+    "options": [
+      "A. Thế giới vật chất của con người",
+      "B. Thế giới khách quan",
+      "C. Bộ não người",
+      "D. Lao động và ngôn ngữ"
+    ],
+    "correctIndex": 1,
+    "explanation": "Thế giới khách quan; C. Bộ não người"
+  },
+  {
+    "question": "Ai là người đã phủ nhận tính hiện thực khách quan của điện tử?",
+    "options": [
+      "A. E. Makho",
+      "B. Piécsơn",
+      "C. Anhxtanh",
+      "D. Béccoren"
+    ],
+    "correctIndex": 0,
+    "explanation": "E. Makho"
+  },
+  {
+    "question": "Đâu là một trong những trường phái triết học ở Trung Quốc thời cổ đại?",
+    "options": [
+      "A. Thuyết Ngũ hành",
+      "B. Thuyết Nguyên tử",
+      "C. Phái Vedanta",
+      "D. Phái Lokayata"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thuyết Ngũ hành"
+  },
+  {
+    "question": "Theo quan điểm của phép biến chứng duy vật thì những thay đổi về chất của sự vật lại tạo ra những thay đổi gì của sự vật trên các phương diện khác nhau?",
+    "options": [
+      "A. Biến đổi mới về lượng",
+      "B. Biến đổi của chất",
+      "C. Chất mới",
+      "D. Cái mới"
+    ],
+    "correctIndex": 0,
+    "explanation": "Biến đổi mới về lượng"
+  },
+  {
+    "question": "Nguyên lý về sự phát triển là cơ sở khoa học để định hướng cho nhận thức và cải tạo thế giới. Theo đó, trong hoạt động nhận thức và hoạt động thực tiễn con người phải đặt sự vật, hiện tượng theo khuynh hướng:",
+    "options": [
+      "A. Đi thẳng",
+      "B. Đi lên của nó",
+      "C. Không tụt lùi",
+      "D. Vận động"
+    ],
+    "correctIndex": 1,
+    "explanation": "Đi lên của nó"
+  },
+  {
+    "question": "Quan điểm nào sau đây cho rằng các sự vật, hiện tượng, các quá trình khác nhau vừa tồn tại độc lập, vừa quy định, tác động qua lại, chuyển hóa lẫn nhau?",
+    "options": [
+      "A. Quan điểm siêu hình",
+      "B. Quan điểm biện chứng",
+      "C. Quan điểm duy tâm",
+      "D. Quan điểm duy vật"
+    ],
+    "correctIndex": 1,
+    "explanation": "Quan điểm biện chứng"
+  },
+  {
+    "question": "Nhận định nào sau đây đúng về cái ngẫu nhiên?",
+    "options": [
+      "A. Diễn ra hoàn toàn không chịu sự chi phối của quy luật nào",
+      "B. Hoàn toàn diễn ra theo quy luật",
+      "C. Biểu hiện của quy luật",
+      "D. Không biểu hiện của bất cứ quy luật nào"
+    ],
+    "correctIndex": 2,
+    "explanation": "Biểu hiện của quy luật"
+  },
+  {
+    "question": "V.I.Lênin đã định nghĩa phạm trù vật chất với tư cách là một phạm trù triết học bằng cách đem đối lập với phạm trù nào sau đây?",
+    "options": [
+      "A. Phạm trù ý thức",
+      "B. Phạm trù thực tiễn",
+      "C. Phạm trù nhận thức",
+      "D. Phạm trù quy luật"
+    ],
+    "correctIndex": 0,
+    "explanation": "Phạm trù ý thức"
+  },
+  {
+    "question": "Định nghĩa về vật chất của V.I.Lênin được nêu ra trong tác phẩm nào?",
+    "options": [
+      "A. Làm gì?",
+      "B. Bút ký triết học",
+      "C. Tuyên ngôn của Đảng Cộng sản",
+      "D. Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán"
+    ],
+    "correctIndex": 3,
+    "explanation": "Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán"
+  }
+]

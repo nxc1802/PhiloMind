@@ -120,5 +120,7 @@ build/
 !**/public/uploads/.gitkeep
 
 # Philosophy training raw text/PDF data folder
-data/
-
+data/*
+!data/data_lesson.txt
+!data/lesson_components/
+!data/lesson_components/**

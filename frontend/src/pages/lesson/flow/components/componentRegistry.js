@@ -13,6 +13,10 @@ import { SequenceSortingComponent } from "./SequenceSortingComponent";
 import { FinalSummaryComponent } from "./FinalSummaryComponent";
 import { ChainSortingComponent } from "./ChainSortingComponent";
 import { KnowledgePieceComponent } from "./KnowledgePieceComponent";
+import { MapTargetMatchingComponent } from "./MapTargetMatchingComponent";
+import { ProgressionSpiralComponent } from "./ProgressionSpiralComponent";
+import { TimelineExplorerComponent } from "./TimelineExplorerComponent";
+import { HotspotGalleryComponent } from "./HotspotGalleryComponent";
 
 export const COMPONENT_RENDERERS = {
   dialogue: DialogueComponent,
@@ -30,6 +34,10 @@ export const COMPONENT_RENDERERS = {
   final_summary: FinalSummaryComponent,
   chain_sorting: ChainSortingComponent,
   knowledge_piece: KnowledgePieceComponent,
+  map_target_matching: MapTargetMatchingComponent,
+  progression_spiral: ProgressionSpiralComponent,
+  timeline_explorer: TimelineExplorerComponent,
+  hotspot_gallery: HotspotGalleryComponent,
 };
 
 export function getComponentName(type = "") {

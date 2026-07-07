@@ -2170,9 +2170,11 @@ function FrameworkAdminPanel({ form, setForm }) {
         <p className="text-slate-500 leading-relaxed">
           Mỗi phần tử cần có `id`, `type`, `config`. Các type hiện hỗ trợ:
           component_group, dialogue, media, markdown, target_matching,
-          category_sorting, mindmap_reveal, mcq, quiz_sequence, multi_select,
-          matching_columns, true_false, sequence_sorting, chain_sorting,
-          knowledge_piece, final_summary.
+          map_target_matching, category_sorting, mindmap_reveal, mcq,
+          quiz_sequence, multi_select, matching_columns, true_false,
+          sequence_sorting, chain_sorting, knowledge_piece,
+          progression_spiral, timeline_explorer, hotspot_gallery,
+          final_summary.
         </p>
         <div className="rounded-xl border border-slate-800 bg-slate-950 p-3 space-y-2">
           <div className="flex items-center justify-between gap-3 flex-wrap">

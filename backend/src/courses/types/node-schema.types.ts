@@ -71,6 +71,10 @@ export type ComponentType =
   | "sequence_sorting"
   | "chain_sorting"
   | "knowledge_piece"
+  | "map_target_matching"
+  | "progression_spiral"
+  | "timeline_explorer"
+  | "hotspot_gallery"
   | "final_summary";
 
 export interface CompletionRule {
