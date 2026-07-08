@@ -1055,19 +1055,6 @@ async function main() {
       videoUrl: null,
     },
     {
-      title: "Triết học - hạt nhân lý luận của thế giới quan",
-      summary:
-        "Triết học giữ vai trò hạt nhân lý luận của thế giới quan và với triết học Mác - Lênin trở thành khoa học về những quy luật chung nhất.",
-      originalText:
-        "Triết học là hạt nhân lý luận của thế giới quan. Với sự ra đời của triết học Mác - Lênin, triết học là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới đó, là khoa học về những quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy.",
-      quickTake:
-        "Triết học là hạt nhân lý luận của thế giới quan, khái quát những quy luật chung nhất.",
-      difficulty: "Medium",
-      timeToRead: "8 min read",
-      orderIndex: 3,
-      videoUrl: null,
-    },
-    {
       title: "Đối tượng của triết học trong lịch sử",
       summary:
         "Đối tượng của triết học thay đổi qua các thời kỳ, từ tri thức bao trùm ban đầu đến quan niệm khoa học về các quy luật chung nhất.",
@@ -1077,6 +1064,19 @@ async function main() {
         "Đối tượng triết học biến đổi lịch sử, nhưng hướng tới các vấn đề chung nhất.",
       difficulty: "Medium",
       timeToRead: "9 min read",
+      orderIndex: 3,
+      videoUrl: null,
+    },
+    {
+      title: "Triết học - hạt nhân lý luận của thế giới quan",
+      summary:
+        "Triết học giữ vai trò hạt nhân lý luận của thế giới quan và với triết học Mác - Lênin trở thành khoa học về những quy luật chung nhất.",
+      originalText:
+        "Triết học là hạt nhân lý luận của thế giới quan. Với sự ra đời của triết học Mác - Lênin, triết học là hệ thống quan điểm lý luận chung nhất về thế giới và vị trí con người trong thế giới đó, là khoa học về những quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy.",
+      quickTake:
+        "Triết học là hạt nhân lý luận của thế giới quan, khái quát những quy luật chung nhất.",
+      difficulty: "Medium",
+      timeToRead: "8 min read",
       orderIndex: 4,
       videoUrl: null,
     },
@@ -1149,8 +1149,9 @@ async function main() {
     const isConceptLesson = n.title === "Khái niệm triết học";
     const isWorldviewCoreLesson =
       n.title === "Triết học - hạt nhân lý luận của thế giới quan";
+    const isObjectLesson = n.title === "Đối tượng của triết học trong lịch sử";
     const hasSeededLessonContent =
-      isOriginLesson || isConceptLesson || isWorldviewCoreLesson;
+      isOriginLesson || isConceptLesson || isWorldviewCoreLesson || isObjectLesson;
     const sectionChapter =
       n.orderIndex <= 6 ? ch1SectionIntro : ch1SectionMarxism;
     const sectionOrderIndex =
@@ -1165,22 +1166,30 @@ async function main() {
         ? loadConvertedLessonFlow(
             "chapter-1-1b-khai-niem-triet-hoc.json",
           )
-        : isWorldviewCoreLesson
+        : isObjectLesson
           ? loadConvertedLessonFlow(
-              "chapter-1-1c-triet-hoc-hat-nhan-the-gioi-quan.json",
+              "chapter-1-1c-doi-tuong-cua-triet-hoc-trong-lich-su.json",
             )
-          : buildDefaultLessonFlow(n);
+          : isWorldviewCoreLesson
+            ? loadConvertedLessonFlow(
+                "chapter-1-1d-triet-hoc-hat-nhan-the-gioi-quan.json",
+              )
+            : buildDefaultLessonFlow(n);
     const lessonMedia = isOriginLesson
       ? loadConvertedLessonMedia(
           "chapter-1-1a-nguon-goc-triet-hoc.json",
         )
       : isConceptLesson
         ? loadConvertedLessonMedia("chapter-1-1b-khai-niem-triet-hoc.json")
-        : isWorldviewCoreLesson
+        : isObjectLesson
           ? loadConvertedLessonMedia(
-              "chapter-1-1c-triet-hoc-hat-nhan-the-gioi-quan.json",
+              "chapter-1-1c-doi-tuong-cua-triet-hoc-trong-lich-su.json",
             )
-          : extractLessonMedia(lessonFlow, n);
+          : isWorldviewCoreLesson
+            ? loadConvertedLessonMedia(
+                "chapter-1-1d-triet-hoc-hat-nhan-the-gioi-quan.json",
+              )
+            : extractLessonMedia(lessonFlow, n);
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,

@@ -18,8 +18,14 @@
     },
     {
       "key": "1.1.c",
+      "title": "Đối tượng của triết học trong lịch sử",
+      "file": "chapter-1-1c-doi-tuong-cua-triet-hoc-trong-lich-su.json",
+      "status": "converted"
+    },
+    {
+      "key": "1.1.d",
       "title": "Triết học - hạt nhân lý luận của thế giới quan",
-      "file": "chapter-1-1c-triet-hoc-hat-nhan-the-gioi-quan.json",
+      "file": "chapter-1-1d-triet-hoc-hat-nhan-the-gioi-quan.json",
       "status": "converted"
     }
   ]
