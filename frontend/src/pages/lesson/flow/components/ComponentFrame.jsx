@@ -21,6 +21,7 @@ const TYPE_ICONS = {
   progression_spiral: "all_inclusive",
   timeline_explorer: "timeline",
   hotspot_gallery: "image_search",
+  shinkei_matching: "style",
   final_summary: "military_tech",
 };
 

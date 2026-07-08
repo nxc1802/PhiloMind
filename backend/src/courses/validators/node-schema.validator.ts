@@ -20,6 +20,7 @@ const SUPPORTED_COMPONENT_TYPES = new Set([
   "progression_spiral",
   "timeline_explorer",
   "hotspot_gallery",
+  "shinkei_matching",
   "final_summary",
 ]);
 
@@ -198,6 +199,15 @@ export class NodeSchemaValidator {
       requireArray(config.leftColumn, `${label}.leftColumn`);
       requireArray(config.rightColumn, `${label}.rightColumn`);
       requireArray(config.correctPairs, `${label}.correctPairs`);
+    }
+
+    if (component.type === "shinkei_matching") {
+      requireArray(config.pairs, `${label}.pairs`);
+      if (config.pairs.length === 0) {
+        throw new BadRequestException(
+          `${label}.pairs must contain at least one pair`,
+        );
+      }
     }
 
     if (component.type === "true_false") {

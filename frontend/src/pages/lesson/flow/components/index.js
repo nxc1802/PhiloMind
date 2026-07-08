@@ -22,3 +22,4 @@ export { MapTargetMatchingComponent } from "./MapTargetMatchingComponent";
 export { ProgressionSpiralComponent } from "./ProgressionSpiralComponent";
 export { TimelineExplorerComponent } from "./TimelineExplorerComponent";
 export { HotspotGalleryComponent } from "./HotspotGalleryComponent";
+export { ShinkeiMatchingComponent } from "./ShinkeiMatchingComponent";

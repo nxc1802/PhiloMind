@@ -18,6 +18,43 @@ import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 import { DragItem, DropZone } from "./dnd";
 
+export function buildExpectedMatches(correctPairs = []) {
+  const expected = new Map();
+
+  correctPairs.forEach((pair) => {
+    const leftIds = Array.isArray(pair.leftIds)
+      ? pair.leftIds
+      : Array.isArray(pair.leftColumnIds)
+        ? pair.leftColumnIds
+        : [pair.leftId].filter(Boolean);
+    const rightIds = Array.isArray(pair.rightIds)
+      ? pair.rightIds
+      : Array.isArray(pair.rightColumnIds)
+        ? pair.rightColumnIds
+        : [pair.rightId].filter(Boolean);
+
+    leftIds.forEach((leftId) => {
+      if (!expected.has(leftId)) expected.set(leftId, new Set());
+      rightIds.forEach((rightId) => expected.get(leftId).add(rightId));
+    });
+  });
+
+  return expected;
+}
+
+function isExpectedMatch(expected, leftId, rightId) {
+  return expected.get(leftId)?.has(rightId) === true;
+}
+
+export function isMatchingColumnsComplete(leftColumn, pairs, expected) {
+  return (
+    leftColumn.length > 0 &&
+    leftColumn.every((left) =>
+      isExpectedMatch(expected, left.id, pairs[left.id]),
+    )
+  );
+}
+
 function MatchCard({ id, icon, image, alt, children, state = "idle" }) {
   const stateClass =
     state === "correct"
@@ -62,10 +99,7 @@ export function MatchingColumnsComponent({ component, onComplete }) {
   const [lines, setLines] = useState([]);
 
   const expected = useMemo(
-    () =>
-      Object.fromEntries(
-        correctPairs.map((pair) => [pair.leftId, pair.rightId]),
-      ),
+    () => buildExpectedMatches(correctPairs),
     [correctPairs],
   );
   const pairedRightIds = useMemo(() => new Set(Object.values(pairs)), [pairs]);
@@ -74,9 +108,7 @@ export function MatchingColumnsComponent({ component, onComplete }) {
     left: leftColumn[index],
     right: rightColumn[index],
   }));
-  const complete =
-    leftColumn.length > 0 &&
-    leftColumn.every((left) => pairs[left.id] === expected[left.id]);
+  const complete = isMatchingColumnsComplete(leftColumn, pairs, expected);
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
@@ -106,7 +138,7 @@ export function MatchingColumnsComponent({ component, onComplete }) {
 
         return {
           id: `${leftId}-${rightId}`,
-          correct: expected[leftId] === rightId,
+          correct: isExpectedMatch(expected, leftId, rightId),
           path: `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`,
         };
       })
@@ -205,7 +237,7 @@ export function MatchingColumnsComponent({ component, onComplete }) {
                   const isLeftCorrect =
                     left &&
                     isLeftPaired &&
-                    pairs[left.id] === expected[left.id];
+                    isExpectedMatch(expected, left.id, pairs[left.id]);
                   const isTargetPaired = right && pairedRightIds.has(right.id);
 
                   return (

@@ -24,6 +24,19 @@ function mediaFromComponent(component) {
     alt: component.config.alt,
     description: component.config.description,
     badge: component.config.badge,
+    width: component.config.width,
+    height: component.config.height,
+    minWidth: component.config.minWidth,
+    minHeight: component.config.minHeight,
+    maxWidth: component.config.maxWidth,
+    maxHeight: component.config.maxHeight,
+    aspectRatio: component.config.aspectRatio || component.config.ratio,
+    fit: component.config.fit,
+    position: component.config.position,
+    align: component.config.align,
+    size: component.config.size,
+    display: component.config.display,
+    layout: component.config.layout,
   };
 }
 

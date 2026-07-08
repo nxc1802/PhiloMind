@@ -7,13 +7,42 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { ComponentFrame } from "./ComponentFrame";
-import { ComponentImage, firstImageAsset, getImageAsset } from "./ComponentImage";
+import {
+  ComponentImage,
+  firstImageAsset,
+  getImageAsset,
+} from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { DragItem, DropZone } from "./dnd";
 
+function expectedTargetIds(item) {
+  return new Set(
+    [
+      item.targetId,
+      ...(Array.isArray(item.targetIds) ? item.targetIds : []),
+      ...(Array.isArray(item.acceptedTargetIds) ? item.acceptedTargetIds : []),
+    ].filter(Boolean),
+  );
+}
+
+function targetAcceptsItem(target, item) {
+  const targetItemIds = [
+    ...(Array.isArray(target.itemIds) ? target.itemIds : []),
+    ...(Array.isArray(target.acceptedItemIds) ? target.acceptedItemIds : []),
+  ];
+  return (
+    expectedTargetIds(item).has(target.id) || targetItemIds.includes(item.id)
+  );
+}
+
 export function MapTargetMatchingComponent({ component, onComplete }) {
-  const { targets = [], items = [], summary, instruction, mapImage } =
-    component.config || {};
+  const {
+    targets = [],
+    items = [],
+    summary,
+    instruction,
+    mapImage,
+  } = component.config || {};
   const isCompleted = component.__isCompleted === true;
   const completedAnswer =
     component.__completedResult?.answer &&
@@ -26,7 +55,10 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
   const placedCount = Object.keys(placements).length;
   const complete =
     items.length > 0 &&
-    items.every((item) => placements[item.id] === item.targetId);
+    items.every((item) => {
+      const target = targets.find((entry) => entry.id === placements[item.id]);
+      return target ? targetAcceptsItem(target, item) : false;
+    });
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
@@ -104,8 +136,8 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
               const placedItems = items.filter(
                 (item) => placements[item.id] === target.id,
               );
-              const hasCorrectPlacement = placedItems.some(
-                (item) => item.targetId === target.id,
+              const hasCorrectPlacement = placedItems.some((item) =>
+                targetAcceptsItem(target, item),
               );
 
               return (
@@ -150,7 +182,7 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
                         <DragItem key={item.id} id={item.id}>
                           <div
                             className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-extrabold shadow-sm ${
-                              item.targetId === target.id
+                              targetAcceptsItem(target, item)
                                 ? "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950/35 dark:text-green-200"
                                 : "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950/35 dark:text-red-200"
                             }`}
@@ -187,7 +219,9 @@ export function MapTargetMatchingComponent({ component, onComplete }) {
 
       {complete && (
         <div className="mt-4 shrink-0 rounded-3xl border border-green-200 bg-green-50 p-4 text-green-950 dark:border-green-800 dark:bg-green-950/35 dark:text-green-100">
-          {summary && <p className="text-sm font-semibold leading-6">{summary}</p>}
+          {summary && (
+            <p className="text-sm font-semibold leading-6">{summary}</p>
+          )}
           {!isCompleted && (
             <ContinueButton
               onComplete={() =>

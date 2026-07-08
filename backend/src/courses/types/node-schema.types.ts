@@ -24,6 +24,18 @@ export interface LessonMediaItem {
   description?: string;
   /** Optional badge label overlay */
   badge?: string;
+  /** Optional display width, e.g. 320, "50%", "18rem" */
+  width?: number | string;
+  /** Optional display height, e.g. 180, "12rem" */
+  height?: number | string;
+  /** Optional maximum display width */
+  maxWidth?: number | string;
+  /** Optional maximum display height */
+  maxHeight?: number | string;
+  /** Optional aspect ratio such as "16/9" */
+  aspectRatio?: string;
+  /** Optional image fit behavior */
+  fit?: "cover" | "contain" | "fill" | "none" | "scale-down";
 }
 
 // ─── Component Media (inline media within a component) ────────────────────────
@@ -37,9 +49,32 @@ export type ComponentImageAsset =
       alt?: string;
       caption?: string;
       title?: string;
-      fit?: "cover" | "contain";
+      fit?: "cover" | "contain" | "fill" | "none" | "scale-down";
       position?: string;
       aspectRatio?: string;
+      width?: number | string;
+      height?: number | string;
+      minWidth?: number | string;
+      minHeight?: number | string;
+      maxWidth?: number | string;
+      maxHeight?: number | string;
+      radius?: number | string;
+      borderRadius?: number | string;
+      align?: "left" | "center" | "right";
+      size?: {
+        width?: number | string;
+        height?: number | string;
+        minWidth?: number | string;
+        minHeight?: number | string;
+        maxWidth?: number | string;
+        maxHeight?: number | string;
+        aspectRatio?: string;
+        radius?: number | string;
+        borderRadius?: number | string;
+        align?: "left" | "center" | "right";
+      };
+      display?: Record<string, number | string | undefined>;
+      layout?: Record<string, number | string | undefined>;
     };
 
 export interface ComponentMedia {
@@ -97,6 +132,7 @@ export type ComponentType =
   | "progression_spiral"
   | "timeline_explorer"
   | "hotspot_gallery"
+  | "shinkei_matching"
   | "final_summary";
 
 export interface CompletionRule {
@@ -156,4 +192,27 @@ export interface MatchingColumnItem {
 export interface MatchingPair {
   leftId: string;
   rightId: string;
+  /** Optional shorthand for many left cards matching one right card */
+  leftIds?: string[];
+  /** Optional shorthand for one left card accepting several right cards */
+  rightIds?: string[];
+}
+
+export interface ShinkeiPairCard {
+  id?: string;
+  text?: string;
+  label?: string;
+  title?: string;
+  name?: string;
+  description?: string;
+  image?: ComponentImageAsset;
+  imageUrl?: string;
+  media?: ComponentImageAsset;
+  thumbnail?: ComponentImageAsset;
+}
+
+export interface ShinkeiMatchingPair {
+  id: string;
+  left: string | ShinkeiPairCard;
+  right: string | ShinkeiPairCard;
 }

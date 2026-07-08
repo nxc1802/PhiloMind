@@ -86,18 +86,30 @@
               "items": [
                 {
                   "id": "zhe",
-                  "text": "哲",
-                  "targetId": "china"
+                  "targetId": "china",
+                  "image": {
+                    "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.b/zhe_.png",
+                    "alt": "Chữ Triết (哲)",
+                    "fit": "contain"
+                  }
                 },
                 {
                   "id": "darsana",
-                  "text": "Dar'sana",
-                  "targetId": "india"
+                  "targetId": "india",
+                  "image": {
+                    "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.b/darsana_.png",
+                    "alt": "Chữ Dar'sana",
+                    "fit": "contain"
+                  }
                 },
                 {
                   "id": "philosophia",
-                  "text": "φιλοσοφία",
-                  "targetId": "greece"
+                  "targetId": "greece",
+                  "image": {
+                    "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.b/philosophia_.png",
+                    "alt": "Chữ philosophia",
+                    "fit": "contain"
+                  }
                 }
               ],
               "summary": "Cả ở phương Đông và phương Tây, ngay từ đầu, triết học đã là hoạt động tinh thần bậc cao, là loại hình nhận thức có trình độ trừu tượng hóa và khái quát hóa rất cao. Triết học nhìn nhận và đánh giá đối tượng thông qua thực tế và thông qua hiện tượng quan sát được về con người và vũ trụ, tồn tại với tư cách là một hình thái ý thức xã hội."

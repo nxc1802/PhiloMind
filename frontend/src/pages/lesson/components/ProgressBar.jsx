@@ -122,6 +122,8 @@ export function ProgressBar({
         return "timeline";
       case "hotspot_gallery":
         return "image_search";
+      case "shinkei_matching":
+        return "style";
       case "knowledge_piece":
         return "extension";
       case "mindmap_reveal":
@@ -143,7 +145,9 @@ export function ProgressBar({
       component.navigation_config?.shortLabel ||
       component.title ||
       "";
-    return raw.length > MAX_LABEL ? `${raw.slice(0, MAX_LABEL - 1).trimEnd()}…` : raw;
+    return raw.length > MAX_LABEL
+      ? `${raw.slice(0, MAX_LABEL - 1).trimEnd()}…`
+      : raw;
   };
 
   return (

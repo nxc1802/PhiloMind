@@ -98,7 +98,7 @@ The backend validator and frontend registry currently support:
 | `mcq`                 | `question`, `options[]`, at least one correct option | Single-question multiple choice. Correct options can use `isCorrect: true` or `correct: true`.                                                                                                                   |
 | `quiz_sequence`       | `questions[]`                                        | Multi-question sequence. Each question needs `question` or `prompt`, `options[]`, and either `correctIndex` or a correct option flag.                                                                            |
 | `multi_select`        | `question`, `options[]`, at least one correct option | Multi-answer question.                                                                                                                                                                                           |
-| `matching_columns`    | `leftColumn[]`, `rightColumn[]`, `correctPairs[]`    | Drag/match left and right columns.                                                                                                                                                                               |
+| `matching_columns`    | `leftColumn[]`, `rightColumn[]`, `correctPairs[]`    | Drag/match left and right columns. Multiple left cards can match the same right card.                                                                                                                            |
 | `true_false`          | `statement`, boolean `correctAnswer`                 | Binary true/false question.                                                                                                                                                                                      |
 | `sequence_sorting`    | `items[]`                                            | Learner orders items into the correct sequence.                                                                                                                                                                  |
 | `chain_sorting`       | `items[]`                                            | Guided ordering/chain activity; supports optional `instruction`, `successFeedback`, and `reward`.                                                                                                                |
@@ -106,6 +106,7 @@ The backend validator and frontend registry currently support:
 | `progression_spiral`  | `milestones[]`                                       | Learner opens milestones on a spiral/progression surface; completes after all milestones are visited.                                                                                                            |
 | `timeline_explorer`   | `periods[]`                                          | Learner explores historical periods with persistent visited state.                                                                                                                                               |
 | `hotspot_gallery`     | `items[]`                                            | Learner opens image/icon hotspots or cards and reads details for each item.                                                                                                                                      |
+| `shinkei_matching`    | `pairs[]`                                            | Two-column memory game. Learner flips one left card and one right card; correct pairs stay open, wrong pairs show a miss state and close again.                                                                  |
 | `final_summary`       | none strictly required                               | Completion/summary screen; optional `message`, `keyTakeaways[]`, and `rewards`.                                                                                                                                  |
 
 ## Media Model
@@ -151,7 +152,35 @@ field can be a URL string or an object:
   "url": "https://example.com/image.png",
   "alt": "Mô tả hình ảnh",
   "caption": "Chú thích ngắn",
-  "fit": "contain"
+  "fit": "contain",
+  "width": 320,
+  "height": "12rem",
+  "maxWidth": "100%",
+  "aspectRatio": "16 / 9",
+  "position": "center"
+}
+```
+
+Image display sizing is carried with the image object and is optional. Supported
+fields are `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight`,
+`aspectRatio`, `fit`, `position`, `radius`, `borderRadius`, and `align`.
+Numeric sizes are rendered as pixels; string sizes are passed through for values
+such as `"50%"`, `"18rem"`, `"240px"`, or `"clamp(12rem, 40vw, 28rem)"`.
+The same fields can also be nested under `size`, `display`, or `layout`.
+
+Examples:
+
+```json
+{
+  "url": "/public/lesson-assets/map.png",
+  "alt": "Bản đồ ba trung tâm văn minh",
+  "size": {
+    "width": "min(100%, 520px)",
+    "height": 280,
+    "aspectRatio": "16 / 9"
+  },
+  "fit": "contain",
+  "align": "center"
 }
 ```
 
@@ -162,11 +191,90 @@ Supported authoring fields:
 - `mcq`, `multi_select`, `true_false`, `quiz_sequence`: prompt images via `config.image`, `questionImage`, `statementImage`, `promptImage`, or `question.image`; option images via `option.image`, `option.imageUrl`, or `component.media.answerImages[optionId]`.
 - `final_summary.config.quiz[]`: question and option objects can include `image`.
 - Drag/drop and sorting components: `items[]`, `cards[]`, `targets[]`, `categories[]`, `leftColumn[]`, `rightColumn[]`, `milestones[]`, `periods[]`, and hotspot `items[]` can include `image`.
+- `shinkei_matching.config.pairs[]`: each `left` and `right` card can include `image`, `imageUrl`, `media`, or `thumbnail`.
 - `dialogue`: each line can include `image`; alternatively use `component.media.dialogueImages[lineIdOrIndex]`.
 - `mindmap_reveal`: `front.image`, `back.image`, or legacy node-level `image` are supported.
 
 All inline image fields are backward-compatible. Existing lessons without these
 fields render exactly as before.
+
+## Matching Relationships
+
+Matching components support many-to-one authoring without changing existing
+seed data.
+
+For `matching_columns`, legacy one-to-one pairs remain valid:
+
+```json
+{ "leftId": "plato", "rightId": "idealism" }
+```
+
+For several left cards matching the same right card, either repeat `rightId`:
+
+```json
+[
+  { "leftId": "socrates", "rightId": "greek" },
+  { "leftId": "plato", "rightId": "greek" }
+]
+```
+
+or use the shorthand:
+
+```json
+{ "leftIds": ["socrates", "plato"], "rightId": "greek" }
+```
+
+For `target_matching`, `map_target_matching`, and `category_sorting`, many
+cards/items can already point to one target/category. The renderer now supports
+both directions:
+
+- Item/card-side: `targetId`, `targetIds`, `acceptedTargetIds`, `categoryId`, `categoryIds`, or `acceptedCategoryIds`.
+- Target/category-side: `itemIds`, `acceptedItemIds`, `cardIds`, or `acceptedCardIds`.
+
+## Shinkei Matching
+
+`shinkei_matching` is a two-column memory game inspired by Shinkei-suijaku /
+concentration games. It renders N left cards and N right cards face down.
+Learners flip one card from each side. Correct pairs stay open; wrong pairs show
+a miss state and close again after a short delay.
+
+```json
+{
+  "id": "philosopher-memory",
+  "type": "shinkei_matching",
+  "title": "Ghép triết gia với đóng góp",
+  "config": {
+    "instruction": "Lật một thẻ triết gia và một thẻ đóng góp tương ứng.",
+    "shuffle": true,
+    "pairs": [
+      {
+        "id": "socrates-dialogue",
+        "left": {
+          "id": "socrates",
+          "text": "Socrates",
+          "image": {
+            "url": "/public/lesson-assets/socrates.png",
+            "width": 96,
+            "height": 96,
+            "fit": "contain"
+          }
+        },
+        "right": {
+          "id": "dialogue-method",
+          "text": "Đối thoại phản biện",
+          "image": {
+            "url": "/public/lesson-assets/dialogue.png",
+            "size": { "width": 120, "height": 90 },
+            "fit": "cover"
+          }
+        }
+      }
+    ],
+    "successFeedback": "Tất cả cặp thẻ đã được mở chính xác."
+  },
+  "completionRule": { "type": "correct" }
+}
+```
 
 ## Runtime Lifecycle
 

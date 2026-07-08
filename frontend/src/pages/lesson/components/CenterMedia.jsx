@@ -2,6 +2,7 @@ import React from "react";
 import { VideoScene } from "../adventure/components/AdventureCommon";
 import { loadSettings } from "../../../utils/settings";
 import { resolveBackendAssetUrl } from "../../../services/api";
+import { ComponentImage } from "../flow/components/ComponentImage";
 
 /**
  * CenterMedia — Cột giữa trong layout 3 cột.
@@ -50,19 +51,15 @@ export function CenterMedia({ lessonMedia, activeMediaId, onSelectMedia }) {
                 />
               </div>
             ) : (
-              <figure className="flex h-full min-h-0 w-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-primary-850 dark:bg-primary-950/30">
-                <div className="flex min-h-0 flex-1 items-center justify-center p-2">
-                  <img
-                    src={activeMediaUrl}
-                    alt={
-                      activeMedia.alt ||
-                      activeMedia.title ||
-                      "Hình ảnh bài học"
-                    }
-                    className="block max-h-full max-w-full object-contain"
-                  />
-                </div>
-              </figure>
+              <ComponentImage
+                image={{ ...activeMedia, url: activeMediaUrl }}
+                alt={activeMedia.alt || activeMedia.title || "Hình ảnh bài học"}
+                fit={activeMedia.fit || "contain"}
+                caption={false}
+                className="max-h-full max-w-full"
+                imageClassName="max-h-full max-w-full"
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+              />
             )}
           </>
         ) : null}

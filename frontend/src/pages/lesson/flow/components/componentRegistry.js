@@ -17,6 +17,7 @@ import { MapTargetMatchingComponent } from "./MapTargetMatchingComponent";
 import { ProgressionSpiralComponent } from "./ProgressionSpiralComponent";
 import { TimelineExplorerComponent } from "./TimelineExplorerComponent";
 import { HotspotGalleryComponent } from "./HotspotGalleryComponent";
+import { ShinkeiMatchingComponent } from "./ShinkeiMatchingComponent";
 
 export const COMPONENT_RENDERERS = {
   dialogue: DialogueComponent,
@@ -38,6 +39,7 @@ export const COMPONENT_RENDERERS = {
   progression_spiral: ProgressionSpiralComponent,
   timeline_explorer: TimelineExplorerComponent,
   hotspot_gallery: HotspotGalleryComponent,
+  shinkei_matching: ShinkeiMatchingComponent,
 };
 
 export function getComponentName(type = "") {

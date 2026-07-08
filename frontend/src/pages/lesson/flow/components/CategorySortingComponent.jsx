@@ -1,10 +1,41 @@
 import React, { useState } from "react";
-import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { ComponentFrame } from "./ComponentFrame";
 import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
 import { LessonHint } from "./LessonHint";
 import { DragItem, DropZone } from "./dnd";
+
+function expectedCategoryIds(card) {
+  return new Set(
+    [
+      card.categoryId,
+      ...(Array.isArray(card.categoryIds) ? card.categoryIds : []),
+      ...(Array.isArray(card.acceptedCategoryIds)
+        ? card.acceptedCategoryIds
+        : []),
+    ].filter(Boolean),
+  );
+}
+
+function categoryAcceptsCard(category, card) {
+  const categoryCardIds = [
+    ...(Array.isArray(category.cardIds) ? category.cardIds : []),
+    ...(Array.isArray(category.acceptedCardIds)
+      ? category.acceptedCardIds
+      : []),
+  ];
+  return (
+    expectedCategoryIds(card).has(category.id) ||
+    categoryCardIds.includes(card.id)
+  );
+}
 
 export function CategorySortingComponent({ component, onComplete }) {
   const { categories = [], cards = [], summary } = component.config;
@@ -18,11 +49,18 @@ export function CategorySortingComponent({ component, onComplete }) {
   const [placements, setPlacements] = useState(completedAnswer);
   const complete =
     cards.length > 0 &&
-    cards.every((card) => placements[card.id] === card.categoryId);
+    cards.every((card) => {
+      const category = categories.find(
+        (entry) => entry.id === placements[card.id],
+      );
+      return category ? categoryAcceptsCard(category, card) : false;
+    });
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } })
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 100, tolerance: 5 },
+    }),
   );
 
   const handleDragEnd = (event) => {
@@ -45,7 +83,7 @@ export function CategorySortingComponent({ component, onComplete }) {
           "Thẻ xanh là đúng, thẻ đỏ là cần chuyển lại. Có thể kéo lại để sửa.",
         ]}
       />
-      
+
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <div className="mb-3 flex items-center justify-between gap-3">
           <p className="text-sm font-bold text-slate-800 dark:text-primary-100">
@@ -55,7 +93,7 @@ export function CategorySortingComponent({ component, onComplete }) {
             Đã đặt {Object.keys(placements).length}/{cards.length}
           </span>
         </div>
-        
+
         <div className="flex flex-wrap gap-2 mb-6 min-h-12 p-3 bg-slate-50 dark:bg-primary-950/20 border border-slate-200 dark:border-primary-850 rounded-2xl">
           {cards
             .filter((card) => !placements[card.id])
@@ -77,7 +115,9 @@ export function CategorySortingComponent({ component, onComplete }) {
               </DragItem>
             ))}
           {cards.filter((card) => !placements[card.id]).length === 0 && (
-            <span className="text-sm text-slate-400 dark:text-primary-300 italic self-center mx-auto">Tất cả thẻ đã được phân loại</span>
+            <span className="text-sm text-slate-400 dark:text-primary-300 italic self-center mx-auto">
+              Tất cả thẻ đã được phân loại
+            </span>
           )}
         </div>
 
@@ -120,7 +160,7 @@ export function CategorySortingComponent({ component, onComplete }) {
                       <DragItem key={card.id} id={card.id}>
                         <div
                           className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-bold ${
-                            card.categoryId === category.id
+                            categoryAcceptsCard(category, card)
                               ? "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950/35 dark:text-green-200"
                               : "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950/35 dark:text-red-200"
                           }`}
@@ -154,7 +194,8 @@ export function CategorySortingComponent({ component, onComplete }) {
       {complete && (
         <div className="mt-4 bg-green-50 dark:bg-green-950/35 border border-green-200 dark:border-green-800 rounded-3xl p-4 text-green-950 dark:text-green-100">
           <p className="font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined">task_alt</span> Phân loại chính xác.
+            <span className="material-symbols-outlined">task_alt</span> Phân
+            loại chính xác.
           </p>
           {summary && <p className="text-sm mt-1">{summary}</p>}
           {!isCompleted && (
