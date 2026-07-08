@@ -3,7 +3,6 @@ import * as fs from "fs";
 import * as path from "path";
 import * as mime from "mime-types";
 
-// Load environment variables directly or use process.env
 const supabaseUrl = process.env.SUPABASE_URL || "https://vqkliqnanzemrjifvawf.supabase.co/";
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
@@ -13,10 +12,13 @@ if (!supabaseKey) {
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-
 const BUCKET_NAME = "lesson-assets";
 
 async function uploadFile(filePath: string, destPath: string) {
+  if (!fs.existsSync(filePath)) {
+    console.error(`File not found: ${filePath}`);
+    return null;
+  }
   console.log(`Uploading ${filePath} to ${destPath}...`);
   const fileBuffer = fs.readFileSync(filePath);
   const contentType = mime.lookup(filePath) || "application/octet-stream";
@@ -43,9 +45,7 @@ async function uploadFile(filePath: string, destPath: string) {
 
 async function main() {
   const filesToUpload = [
-    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/哲_.png", dest: "chapter-1/1.1.b/zhe_.png" },
-    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/φιλοσοφία_.png", dest: "chapter-1/1.1.b/philosophia_.png" },
-    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/Dar'sana_.png", dest: "chapter-1/1.1.b/darsana_.png" }
+    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/cap04.jpg", dest: "chapter-1/1.1.d/cap04.jpg" }
   ];
 
   for (const file of filesToUpload) {
