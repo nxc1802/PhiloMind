@@ -27,15 +27,15 @@ Global learner shell:
 
 Primary learner routes:
 
-| Route | UX role |
-|---|---|
-| `/` | Resume learning and orient the user. |
-| `/lessons` | Course journey and lesson player. |
-| `/practice` | Flashcards and quiz practice. |
-| `/debate` | Socratic argument practice. |
-| `/philosofun` | Lightweight video learning. |
-| `/docs` | Reference/support material. |
-| `/settings` | User preferences, including local unlock-all dev setting. |
+| Route         | UX role                                                   |
+| ------------- | --------------------------------------------------------- |
+| `/`           | Resume learning and orient the user.                      |
+| `/lessons`    | Course journey and lesson player.                         |
+| `/practice`   | Flashcards and quiz practice.                             |
+| `/debate`     | Socratic argument practice.                               |
+| `/philosofun` | Lightweight video learning.                               |
+| `/docs`       | Reference/support material.                               |
+| `/settings`   | User preferences, including local unlock-all dev setting. |
 
 ## Lesson UX Contract
 
@@ -46,7 +46,7 @@ Current contract:
 - Journey view uses a mindmap-style overview.
 - Opening a lesson switches into a full-height focused player.
 - Locked lessons and unpublished lessons are blocked before opening.
-- The player has a progress strip, reset button, media column, draggable divider, and right interactive column.
+- The player has a progress strip, reset button, media column, and right interactive column in a fixed 50/50 layout.
 - Media belongs in the center column; learner actions belong in the right column.
 - Grouped components should read as one cohesive learner activity, not as raw nested schema.
 - Multiple-choice options should not look pre-answered.

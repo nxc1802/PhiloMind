@@ -47,9 +47,11 @@ const Lesson = () => {
     return null;
   }, [lessonSlug, dbJourney]);
 
+  const activeLessonLocked = isLessonContentLocked(activeLesson);
+
   // Node details query hook
   const { data: currentNodeDetails, isLoading: loadingNode } = useNodeDetails(
-    activeLesson?.id,
+    activeLesson && !activeLessonLocked ? activeLesson.id : undefined,
     user?.id,
   );
 
@@ -185,7 +187,9 @@ const Lesson = () => {
       ? allJourneyNodes.findIndex((node) => node.id === activeLesson.id)
       : 0;
     const startIndex = Math.max(0, activeIndex - 1);
-    const nodesToWarm = allJourneyNodes.slice(startIndex, startIndex + 5);
+    const nodesToWarm = allJourneyNodes
+      .slice(startIndex, startIndex + 5)
+      .filter((node) => !isLessonContentLocked(node));
 
     nodesToWarm.forEach((node) => {
       queryClient.prefetchQuery({
@@ -443,7 +447,32 @@ const Lesson = () => {
                 </div>
               </div>
 
-              {loadingNode ? (
+              {activeLessonLocked ? (
+                <div className="flex min-h-0 flex-1 items-center justify-center bg-slate-50 px-6 py-8 dark:bg-[#0D1117]">
+                  <div className="max-w-md rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-primary-850/60 dark:bg-surface-dark-elevated">
+                    <span className="material-symbols-outlined text-4xl text-primary-500 dark:text-primary-300">
+                      lock_clock
+                    </span>
+                    <h2 className="mt-3 text-lg font-bold text-primary-900 dark:text-primary-100">
+                      Bài học đang được biên soạn
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-primary-200">
+                      Nội dung này chưa được xuất bản chính thức. Hãy quay lại
+                      sơ đồ bài học để chọn bài đã sẵn sàng.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleBackToMindmap}
+                      className="mt-5 inline-flex items-center gap-2 rounded-3xl bg-primary-600 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-primary-700"
+                    >
+                      <span className="material-symbols-outlined text-base">
+                        account_tree
+                      </span>
+                      Quay lại sơ đồ
+                    </button>
+                  </div>
+                </div>
+              ) : loadingNode ? (
                 <div className="min-h-0 flex-1 px-6 py-5">
                   <LessonSkeleton />
                 </div>

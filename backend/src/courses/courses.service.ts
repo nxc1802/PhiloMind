@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   Logger,
@@ -32,6 +33,90 @@ export class CoursesService {
     this.coursesCache.clear();
     this.documentsCache.clear();
     this.warmupsCache.clear();
+  }
+
+  private isAdminRole(role?: string) {
+    return role === "admin";
+  }
+
+  private isPublishedLesson(node: any) {
+    return node?.contentReady === true && node?.lessonStatus === "published";
+  }
+
+  private assertLearnerCanOpenNode(node: any, role?: string) {
+    if (this.isAdminRole(role) || this.isPublishedLesson(node)) return;
+    throw new ForbiddenException("Lesson content is not published");
+  }
+
+  private collectLessonComponentIds(lessonFlow: any) {
+    const ids = new Set<string>();
+    const visit = (components: any) => {
+      if (!Array.isArray(components)) return;
+      components.forEach((component) => {
+        if (!component || typeof component !== "object") return;
+        if (typeof component.id === "string" && component.id.trim()) {
+          ids.add(component.id);
+        }
+        if (component.type === "component_group") {
+          visit(component.config?.components);
+        }
+      });
+    };
+    visit(lessonFlow);
+    return ids;
+  }
+
+  private validateComponentProgressPayload(node: any, payload: any) {
+    const flow = Array.isArray(node?.lessonFlow) ? node.lessonFlow : [];
+    const componentIds = this.collectLessonComponentIds(flow);
+    const assertKnownId = (value: any, label: string) => {
+      if (value === undefined || value === null) return;
+      if (!componentIds.has(value)) {
+        throw new BadRequestException(
+          `${label} "${value}" is not in lessonFlow`,
+        );
+      }
+    };
+
+    assertKnownId(payload.activeComponentId, "activeComponentId");
+    assertKnownId(
+      payload.componentResult?.componentId,
+      "componentResult.componentId",
+    );
+
+    if (
+      payload.currentComponentIndex !== undefined &&
+      (payload.currentComponentIndex < 0 ||
+        payload.currentComponentIndex >= flow.length)
+    ) {
+      throw new BadRequestException(
+        "currentComponentIndex is out of lessonFlow range",
+      );
+    }
+
+    if (Array.isArray(payload.completedComponentIds)) {
+      payload.completedComponentIds.forEach(
+        (componentId: string, idx: number) =>
+          assertKnownId(componentId, `completedComponentIds[${idx}]`),
+      );
+    }
+
+    if (Array.isArray(payload.componentResults)) {
+      payload.componentResults.forEach((result: any, idx: number) =>
+        assertKnownId(
+          result?.componentId,
+          `componentResults[${idx}].componentId`,
+        ),
+      );
+    }
+  }
+
+  private assertPublishableLessonFlow(lessonFlow: any) {
+    if (!Array.isArray(lessonFlow) || lessonFlow.length === 0) {
+      throw new BadRequestException(
+        "lessonFlow must contain at least one component before publishing",
+      );
+    }
   }
 
   async createCourse(userId: string, title: string, description?: string) {
@@ -271,7 +356,7 @@ export class CoursesService {
     return chapters;
   }
 
-  async getNodeDetails(nodeId: string, userId: string) {
+  async getNodeDetails(nodeId: string, userId: string, role?: string) {
     const node = await this.prisma.conceptNode.findUnique({
       where: { id: nodeId },
       include: {
@@ -284,10 +369,11 @@ export class CoursesService {
     });
 
     if (!node) throw new NotFoundException("Concept node not found");
+    this.assertLearnerCanOpenNode(node, role);
     return node;
   }
 
-  async getNodeCore(nodeId: string, userId: string) {
+  async getNodeCore(nodeId: string, userId: string, role?: string) {
     const node = await this.prisma.conceptNode.findUnique({
       where: { id: nodeId },
       select: {
@@ -319,6 +405,7 @@ export class CoursesService {
       },
     });
     if (!node) throw new NotFoundException("Concept node not found");
+    this.assertLearnerCanOpenNode(node, role);
     return node;
   }
 
@@ -376,13 +463,14 @@ export class CoursesService {
     );
   }
 
-  async completeNode(nodeId: string, userId: string) {
+  async completeNode(nodeId: string, userId: string, role?: string) {
     // 1. Get the current node with its chapter
     const currentNode = await this.prisma.conceptNode.findUnique({
       where: { id: nodeId },
       include: { chapter: true },
     });
     if (!currentNode) throw new NotFoundException("Concept node not found");
+    this.assertLearnerCanOpenNode(currentNode, role);
 
     // 2. Mark progress of current node as completed
     const updateData = {
@@ -436,12 +524,20 @@ export class CoursesService {
   async updateNodeProgress(
     userId: string,
     nodeId: string,
+    role?: string,
     status?: string,
     lessonCompleted?: boolean,
     flashcardCompleted?: boolean,
     podcastCompleted?: boolean,
     quizCompleted?: boolean,
   ) {
+    const node = await this.prisma.conceptNode.findUnique({
+      where: { id: nodeId },
+      select: { contentReady: true, lessonStatus: true },
+    });
+    if (!node) throw new NotFoundException("Concept node not found");
+    this.assertLearnerCanOpenNode(node, role);
+
     const existing = await this.prisma.progress.findUnique({
       where: { userId_nodeId: { userId, nodeId } },
       select: {
@@ -660,6 +756,9 @@ export class CoursesService {
       ? dto.lessonFlow
       : this.buildDefaultLessonFlow(dto);
     NodeSchemaValidator.validateNode(lessonFlow);
+    if (contentReady || lessonStatus === "published") {
+      this.assertPublishableLessonFlow(lessonFlow);
+    }
     if (dto.lessonMedia !== undefined) {
       NodeSchemaValidator.validateLessonMedia(dto.lessonMedia);
     }
@@ -699,7 +798,11 @@ export class CoursesService {
   }
 
   async updateNode(nodeId: string, dto: any) {
-    await this.getNodeDetails(nodeId, "admin-user");
+    const existingNode = await this.getNodeDetails(
+      nodeId,
+      "admin-user",
+      "admin",
+    );
     const hasLessonFlowUpdate =
       dto.lessonFlow !== undefined && dto.lessonFlow !== null;
     if (hasLessonFlowUpdate) {
@@ -716,6 +819,19 @@ export class CoursesService {
         : hasLessonFlowUpdate
           ? true
           : undefined;
+    const effectiveContentReady =
+      inferredContentReady !== undefined
+        ? inferredContentReady
+        : existingNode.contentReady;
+    const effectiveLessonStatus =
+      dto.lessonStatus !== undefined
+        ? dto.lessonStatus
+        : existingNode.lessonStatus;
+    if (effectiveContentReady || effectiveLessonStatus === "published") {
+      this.assertPublishableLessonFlow(
+        hasLessonFlowUpdate ? dto.lessonFlow : existingNode.lessonFlow,
+      );
+    }
     const node = await this.prisma.conceptNode.update({
       where: { id: nodeId },
       data: {
@@ -791,6 +907,7 @@ export class CoursesService {
   async updateComponentProgress(
     userId: string,
     nodeId: string,
+    role?: string,
     activeComponentId?: string,
     currentComponentIndex?: number,
     completedComponentIds?: string[],
@@ -798,6 +915,24 @@ export class CoursesService {
     componentResults?: any[],
     resetLessonProgress = false,
   ) {
+    const node = await this.prisma.conceptNode.findUnique({
+      where: { id: nodeId },
+      select: {
+        contentReady: true,
+        lessonStatus: true,
+        lessonFlow: true,
+      },
+    });
+    if (!node) throw new NotFoundException("Concept node not found");
+    this.assertLearnerCanOpenNode(node, role);
+    this.validateComponentProgressPayload(node, {
+      activeComponentId,
+      currentComponentIndex,
+      completedComponentIds,
+      componentResult,
+      componentResults,
+    });
+
     const existing = await this.prisma.progress.findUnique({
       where: { userId_nodeId: { userId, nodeId } },
       select: {
@@ -859,7 +994,7 @@ export class CoursesService {
   }
 
   async deleteNode(nodeId: string) {
-    await this.getNodeDetails(nodeId, "admin-user");
+    await this.getNodeDetails(nodeId, "admin-user", "admin");
 
     const node = await this.prisma.$transaction(async (tx) => {
       await tx.flashcardReview.deleteMany({ where: { flashcard: { nodeId } } });
@@ -897,7 +1032,7 @@ export class CoursesService {
   }
 
   async createPodcast(dto: any) {
-    await this.getNodeDetails(dto.nodeId, "admin-user");
+    await this.getNodeDetails(dto.nodeId, "admin-user", "admin");
     const podcast = await this.prisma.podcast.create({
       data: {
         nodeId: dto.nodeId,

@@ -15,6 +15,8 @@ Thư mục này lưu dữ liệu lesson đã được chuyển từ kịch bản
 - `component-gap-analysis.md`: nhận xét về khả năng biểu diễn bằng component hiện tại và đề xuất component mới.
 - `validate.mjs`: kiểm tra nhanh component type, id trùng, và required config theo contract hiện tại.
 
+Các lesson có `status: "converted"` trong manifest là nguồn seed cho lesson đã chuyển đổi. Backend seed và script `backend/prisma/reseed_lessons.ts` đọc trực tiếp các file này.
+
 ## Validate
 
 ```bash

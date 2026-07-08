@@ -23,35 +23,35 @@ Runtime files:
 
 `ConceptNode` stores lesson content:
 
-| Field | Type | Purpose |
-|---|---|---|
-| `lessonFlow` | JSON array | Ordered top-level lesson components. |
-| `lessonMedia` | JSON array or null | Optional media items for the center column. |
-| `lessonType` | string | Currently written as `flow` by create/update. |
-| `contentReady` | boolean | Learner can open only when true and published. |
-| `lessonStatus` | string | `draft`, `published`, or `archived`. |
+| Field          | Type               | Purpose                                        |
+| -------------- | ------------------ | ---------------------------------------------- |
+| `lessonFlow`   | JSON array         | Ordered top-level lesson components.           |
+| `lessonMedia`  | JSON array or null | Optional media items for the center column.    |
+| `lessonType`   | string             | Currently written as `flow` by create/update.  |
+| `contentReady` | boolean            | Learner can open only when true and published. |
+| `lessonStatus` | string             | `draft`, `published`, or `archived`.           |
 
 `Progress` stores per-user runtime state:
 
-| Field | Purpose |
-|---|---|
-| `status` | `locked`, `available`, `in_progress`, or `completed`. |
-| `lessonCompleted` | Node-level lesson completion flag. |
-| `activeComponentId` | Component id to resume. |
-| `currentComponentIndex` | Top-level flow index to resume. |
-| `completedComponentIds` | JSON array of completed top-level component ids. |
-| `componentResults` | JSON array of latest result per component id. |
+| Field                   | Purpose                                               |
+| ----------------------- | ----------------------------------------------------- |
+| `status`                | `locked`, `available`, `in_progress`, or `completed`. |
+| `lessonCompleted`       | Node-level lesson completion flag.                    |
+| `activeComponentId`     | Component id to resume.                               |
+| `currentComponentIndex` | Top-level flow index to resume.                       |
+| `completedComponentIds` | JSON array of completed top-level component ids.      |
+| `componentResults`      | JSON array of latest result per component id.         |
 
 ## Availability Rules
 
-The learner UI treats a node as content-locked unless both are true:
+The learner UI and backend learner endpoints treat a node as content-locked unless both are true:
 
 ```js
-node.contentReady === true
-node.lessonStatus === "published"
+node.contentReady === true;
+node.lessonStatus === "published";
 ```
 
-Admin create/update may save drafts. Learner journey and syllabus mapping prevent opening unpublished or not-ready nodes.
+Admin create/update may save drafts. Learner journey and syllabus mapping prevent opening unpublished or not-ready nodes, and direct node-detail/progress/complete API calls reject unpublished lessons for non-admin users.
 
 ## Component Shape
 
@@ -85,28 +85,28 @@ Optional common fields:
 
 The backend validator and frontend registry currently support:
 
-| Type | Required config | Runtime behavior |
-|---|---|---|
-| `component_group` | `components[]` | Renders child components as one learner-facing group. Children cannot be another `component_group`. Default `revealMode` is `sequential`; default `completionMode` is `all`. Saves `childResults` when complete. |
-| `dialogue` | `lines[]`, each line needs `text` | Uses dialogue renderer; `dialogs` is also accepted by the frontend for legacy data. |
-| `media` | `url` | Accepted for backwards compatibility. Flow player extracts it into center media; right column asks learner to confirm they watched/read it. |
-| `markdown` | `content` | Renders Markdown-like learning text and continues on acknowledgement. |
-| `target_matching` | `targets[]`, `items[]` | Learner matches items to targets; returns a score/result. |
-| `map_target_matching` | `targets[]`, `items[]` | Learner drags items onto positioned map targets. Targets/items can define optional `image`, `x`, `y`, `icon`, and `detail`. |
-| `category_sorting` | `categories[]`, `cards[]` | Learner sorts cards into categories. |
-| `mindmap_reveal` | `nodes[]` | Reveals concept cards. Each node needs `id` and either legacy `label`/`detail` or new `front`/`back`. Optional `layoutConfig.type`: `vertical`, `horizontal`, `matrix`, `custom`. |
-| `mcq` | `question`, `options[]`, at least one correct option | Single-question multiple choice. Correct options can use `isCorrect: true` or `correct: true`. |
-| `quiz_sequence` | `questions[]` | Multi-question sequence. Each question needs `question` or `prompt`, `options[]`, and either `correctIndex` or a correct option flag. |
-| `multi_select` | `question`, `options[]`, at least one correct option | Multi-answer question. |
-| `matching_columns` | `leftColumn[]`, `rightColumn[]`, `correctPairs[]` | Drag/match left and right columns. |
-| `true_false` | `statement`, boolean `correctAnswer` | Binary true/false question. |
-| `sequence_sorting` | `items[]` | Learner orders items into the correct sequence. |
-| `chain_sorting` | `items[]` | Guided ordering/chain activity; supports optional `instruction`, `successFeedback`, and `reward`. |
-| `knowledge_piece` | `config.label` or component `title` | Short knowledge card; optional `takeaways[]`. |
-| `progression_spiral` | `milestones[]` | Learner opens milestones on a spiral/progression surface; completes after all milestones are visited. |
-| `timeline_explorer` | `periods[]` | Learner explores historical periods with persistent visited state. |
-| `hotspot_gallery` | `items[]` | Learner opens image/icon hotspots or cards and reads details for each item. |
-| `final_summary` | none strictly required | Completion/summary screen; optional `message`, `keyTakeaways[]`, and `rewards`. |
+| Type                  | Required config                                      | Runtime behavior                                                                                                                                                                                                 |
+| --------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `component_group`     | `components[]`                                       | Renders child components as one learner-facing group. Children cannot be another `component_group`. Default `revealMode` is `sequential`; default `completionMode` is `all`. Saves `childResults` when complete. |
+| `dialogue`            | `lines[]`, each line needs `text`                    | Uses dialogue renderer; `dialogs` is also accepted by the frontend for legacy data.                                                                                                                              |
+| `media`               | `url`                                                | Accepted for backwards compatibility. Flow player extracts it into center media; right column asks learner to confirm they watched/read it.                                                                      |
+| `markdown`            | `content`                                            | Renders Markdown-like learning text and continues on acknowledgement.                                                                                                                                            |
+| `target_matching`     | `targets[]`, `items[]`                               | Learner matches items to targets; returns a score/result.                                                                                                                                                        |
+| `map_target_matching` | `targets[]`, `items[]`                               | Learner drags items onto positioned map targets. Targets/items can define optional `image`, `x`, `y`, `icon`, and `detail`.                                                                                      |
+| `category_sorting`    | `categories[]`, `cards[]`                            | Learner sorts cards into categories.                                                                                                                                                                             |
+| `mindmap_reveal`      | `nodes[]`                                            | Reveals concept cards. Each node needs `id` and either legacy `label`/`detail` or new `front`/`back`. Optional `layoutConfig.type`: `vertical`, `horizontal`, `matrix`, `custom`.                                |
+| `mcq`                 | `question`, `options[]`, at least one correct option | Single-question multiple choice. Correct options can use `isCorrect: true` or `correct: true`.                                                                                                                   |
+| `quiz_sequence`       | `questions[]`                                        | Multi-question sequence. Each question needs `question` or `prompt`, `options[]`, and either `correctIndex` or a correct option flag.                                                                            |
+| `multi_select`        | `question`, `options[]`, at least one correct option | Multi-answer question.                                                                                                                                                                                           |
+| `matching_columns`    | `leftColumn[]`, `rightColumn[]`, `correctPairs[]`    | Drag/match left and right columns.                                                                                                                                                                               |
+| `true_false`          | `statement`, boolean `correctAnswer`                 | Binary true/false question.                                                                                                                                                                                      |
+| `sequence_sorting`    | `items[]`                                            | Learner orders items into the correct sequence.                                                                                                                                                                  |
+| `chain_sorting`       | `items[]`                                            | Guided ordering/chain activity; supports optional `instruction`, `successFeedback`, and `reward`.                                                                                                                |
+| `knowledge_piece`     | `config.label` or component `title`                  | Short knowledge card; optional `takeaways[]`.                                                                                                                                                                    |
+| `progression_spiral`  | `milestones[]`                                       | Learner opens milestones on a spiral/progression surface; completes after all milestones are visited.                                                                                                            |
+| `timeline_explorer`   | `periods[]`                                          | Learner explores historical periods with persistent visited state.                                                                                                                                               |
+| `hotspot_gallery`     | `items[]`                                            | Learner opens image/icon hotspots or cards and reads details for each item.                                                                                                                                      |
+| `final_summary`       | none strictly required                               | Completion/summary screen; optional `message`, `keyTakeaways[]`, and `rewards`.                                                                                                                                  |
 
 ## Media Model
 
@@ -183,6 +183,12 @@ fields render exactly as before.
 11. Finishing the last component calls `/api/courses/nodes/:nodeId/complete`.
 12. Backend marks the node complete and unlocks the next node.
 
+Backend runtime guards:
+
+- Student `GET /api/courses/nodes/:nodeId`, `GET /api/courses/nodes/:nodeId/core`, `PATCH /api/courses/nodes/:nodeId/progress`, `PATCH /api/courses/nodes/:nodeId/component-progress`, and `POST /api/courses/nodes/:nodeId/complete` require the node to be published and content-ready.
+- Admin node CRUD can still inspect and edit draft lesson content through `/api/nodes`.
+- Component progress writes are checked against the current `lessonFlow`: active ids, completed ids, component result ids, and top-level indexes must match the stored flow.
+
 ## Progress Result Shape
 
 On component completion, the frontend sends a `componentResult` similar to:
@@ -234,7 +240,10 @@ Example:
         "title": "Lyra đặt câu hỏi",
         "config": {
           "lines": [
-            { "speaker": "Lyra", "text": "Nếu triết học bắt đầu từ ngạc nhiên, vậy điều gì làm ta thật sự phải nghĩ lại?" }
+            {
+              "speaker": "Lyra",
+              "text": "Nếu triết học bắt đầu từ ngạc nhiên, vậy điều gì làm ta thật sự phải nghĩ lại?"
+            }
           ]
         }
       },
@@ -246,7 +255,11 @@ Example:
           "question": "Điều gì mở đầu tốt nhất cho tư duy triết học?",
           "options": [
             { "id": "a", "text": "Học thuộc kết luận", "isCorrect": false },
-            { "id": "b", "text": "Đặt vấn đề với điều tưởng như hiển nhiên", "isCorrect": true }
+            {
+              "id": "b",
+              "text": "Đặt vấn đề với điều tưởng như hiển nhiên",
+              "isCorrect": true
+            }
           ],
           "explanation": "Tư duy triết học bắt đầu khi ta chất vấn nền tảng của điều quen thuộc."
         }
@@ -271,5 +284,6 @@ Before publishing a node:
 - Child components inside `component_group` do not use `component_group`.
 - `contentReady` is true only when the lesson is learner-ready.
 - `lessonStatus` is `published` only when the node should appear as playable.
+- A published node must have a non-empty valid `lessonFlow`.
 - Test the lesson from the learner UI, not only the admin JSON editor.
 - If changing supported types, update validator, frontend registry, renderer exports, TypeScript schema docs, admin helper text, seed SQL, and this file together.

@@ -318,6 +318,17 @@ export default function Nodes() {
       };
 
       const lessonFlowJson = parseJsonField(form.lessonFlow, "Lesson Flow");
+      const isPublishing =
+        Boolean(form.contentReady) || form.lessonStatus === "published";
+      if (
+        modal.type === "edit" &&
+        isPublishing &&
+        (!Array.isArray(lessonFlowJson) || lessonFlowJson.length === 0)
+      ) {
+        throw new Error(
+          "Lesson Flow phải là JSON array có ít nhất một component trước khi publish.",
+        );
+      }
 
       const payload = {
         ...form,
@@ -2172,9 +2183,8 @@ function FrameworkAdminPanel({ form, setForm }) {
           component_group, dialogue, media, markdown, target_matching,
           map_target_matching, category_sorting, mindmap_reveal, mcq,
           quiz_sequence, multi_select, matching_columns, true_false,
-          sequence_sorting, chain_sorting, knowledge_piece,
-          progression_spiral, timeline_explorer, hotspot_gallery,
-          final_summary.
+          sequence_sorting, chain_sorting, knowledge_piece, progression_spiral,
+          timeline_explorer, hotspot_gallery, final_summary.
         </p>
         <div className="rounded-xl border border-slate-800 bg-slate-950 p-3 space-y-2">
           <div className="flex items-center justify-between gap-3 flex-wrap">

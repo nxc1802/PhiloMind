@@ -44,7 +44,11 @@ export class NodesController {
     summary: "Retrieve comprehensive learn detail for a concept node",
   })
   async getNodeDetails(@Param("nodeId") nodeId: string, @Req() req: any) {
-    return this.coursesService.getNodeDetails(nodeId, req.user.id);
+    return this.coursesService.getNodeDetails(
+      nodeId,
+      req.user.id,
+      req.user.role,
+    );
   }
 
   @Get("courses/nodes/:nodeId/core")
@@ -52,13 +56,13 @@ export class NodesController {
     summary: "Retrieve core progress and type info for a concept node",
   })
   async getNodeCore(@Param("nodeId") nodeId: string, @Req() req: any) {
-    return this.coursesService.getNodeCore(nodeId, req.user.id);
+    return this.coursesService.getNodeCore(nodeId, req.user.id, req.user.role);
   }
 
   @Post("courses/nodes/:nodeId/complete")
   @ApiOperation({ summary: "Mark node as completed and auto-unlock next node" })
   async completeNode(@Param("nodeId") nodeId: string, @Req() req: any) {
-    return this.coursesService.completeNode(nodeId, req.user.id);
+    return this.coursesService.completeNode(nodeId, req.user.id, req.user.role);
   }
 
   @Patch("courses/nodes/:nodeId/progress")
@@ -71,6 +75,7 @@ export class NodesController {
     return this.coursesService.updateNodeProgress(
       req.user.id,
       nodeId,
+      req.user.role,
       dto.status,
       dto.lessonCompleted,
       dto.flashcardCompleted,
@@ -89,6 +94,7 @@ export class NodesController {
     return this.coursesService.updateComponentProgress(
       req.user.id,
       nodeId,
+      req.user.role,
       dto.activeComponentId,
       dto.currentComponentIndex,
       dto.completedComponentIds,

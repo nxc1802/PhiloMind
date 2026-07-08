@@ -15,40 +15,40 @@ Templates:
 
 Core backend variables:
 
-| Variable | Required | Notes |
-|---|---:|---|
-| `DATABASE_URL` | Yes | PostgreSQL URL. On hosted Supabase, prefer transaction pooler URL. |
-| `JWT_SECRET` | Production | Backend throws in production if missing. |
-| `GOOGLE_CLIENT_ID` | If using Google login | Used by backend Google ID token validation. |
-| `ALLOWED_ORIGINS` | Production | Comma-separated frontend/admin origins for CORS. |
-| `ENABLE_SWAGGER` | Optional | `true` exposes Swagger in production. |
-| `SUPABASE_URL` | If using Supabase | Supabase project URL. |
-| `SUPABASE_ANON_KEY` | If using Supabase Auth/client storage | Public anon key. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-side only | Used by backend/server-side storage and seed helpers. Never expose to frontend. |
-| `OPENAI_API_KEY` | If using real AI | AI service has mock fallback when absent. |
-| `OPENAI_API_BASE_URL` | Optional | Defaults to OpenRouter-compatible URL. |
-| `LLM_MODEL` | Optional | Defaults to `meta-llama/llama-3-70b-instruct:free`. |
-| `TTS_WORKER_URL` | Optional | Defaults to local worker. |
+| Variable                    |                              Required | Notes                                                                           |
+| --------------------------- | ------------------------------------: | ------------------------------------------------------------------------------- |
+| `DATABASE_URL`              |                                   Yes | PostgreSQL URL. On hosted Supabase, prefer transaction pooler URL.              |
+| `JWT_SECRET`                |                            Production | Backend throws in production if missing.                                        |
+| `GOOGLE_CLIENT_ID`          |                 If using Google login | Used by backend Google ID token validation.                                     |
+| `ALLOWED_ORIGINS`           |                            Production | Comma-separated frontend/admin origins for CORS.                                |
+| `ENABLE_SWAGGER`            |                              Optional | `true` exposes Swagger in production.                                           |
+| `SUPABASE_URL`              |                     If using Supabase | Supabase project URL.                                                           |
+| `SUPABASE_ANON_KEY`         | If using Supabase Auth/client storage | Public anon key.                                                                |
+| `SUPABASE_SERVICE_ROLE_KEY` |                      Server-side only | Used by backend/server-side storage and seed helpers. Never expose to frontend. |
+| `OPENAI_API_KEY`            |                      If using real AI | AI service has mock fallback when absent.                                       |
+| `OPENAI_API_BASE_URL`       |                              Optional | Defaults to OpenRouter-compatible URL.                                          |
+| `LLM_MODEL`                 |                              Optional | Defaults to `meta-llama/llama-3-70b-instruct:free`.                             |
+| `TTS_WORKER_URL`            |                              Optional | Defaults to local worker.                                                       |
 
 Prisma and DB load variables:
 
-| Variable | Default | Notes |
-|---|---:|---|
-| `PRISMA_CONNECTION_LIMIT` | `5` local | Lower this for small hosted DB pools. |
-| `PRISMA_POOL_TIMEOUT` | `60` local | Runtime URL normalization applies safe values for Supabase pooler URLs. |
-| `PRISMA_CONNECT_TIMEOUT` | `30` local | Runtime URL normalization applies safe values for Supabase pooler URLs. |
-| `PRISMA_TRANSACTION_MAX_WAIT_MS` | `20000` | Transaction wait limit. |
-| `PRISMA_TRANSACTION_TIMEOUT_MS` | `60000` | Transaction runtime limit. |
-| `DB_QUERY_CONCURRENCY` | `5` | Backend query limiter. |
-| `DB_QUEUE_TIMEOUT_MS` | `30000` | Query queue timeout. |
+| Variable                         |    Default | Notes                                                                   |
+| -------------------------------- | ---------: | ----------------------------------------------------------------------- |
+| `PRISMA_CONNECTION_LIMIT`        |  `5` local | Lower this for small hosted DB pools.                                   |
+| `PRISMA_POOL_TIMEOUT`            | `60` local | Runtime URL normalization applies safe values for Supabase pooler URLs. |
+| `PRISMA_CONNECT_TIMEOUT`         | `30` local | Runtime URL normalization applies safe values for Supabase pooler URLs. |
+| `PRISMA_TRANSACTION_MAX_WAIT_MS` |    `20000` | Transaction wait limit.                                                 |
+| `PRISMA_TRANSACTION_TIMEOUT_MS`  |    `60000` | Transaction runtime limit.                                              |
+| `DB_QUERY_CONCURRENCY`           |        `5` | Backend query limiter.                                                  |
+| `DB_QUEUE_TIMEOUT_MS`            |    `30000` | Query queue timeout.                                                    |
 
 Frontend variables:
 
-| Variable | Used by | Notes |
-|---|---|---|
-| `REACT_APP_API_URL` | Frontend and admin | Vite embeds this name even though it has the old CRA prefix. |
-| `REACT_APP_SUPABASE_URL` | Learner frontend | Used for Supabase client/OAuth. |
-| `REACT_APP_SUPABASE_ANON_KEY` | Learner frontend | Public anon key only. |
+| Variable                      | Used by            | Notes                                                        |
+| ----------------------------- | ------------------ | ------------------------------------------------------------ |
+| `REACT_APP_API_URL`           | Frontend and admin | Vite embeds this name even though it has the old CRA prefix. |
+| `REACT_APP_SUPABASE_URL`      | Learner frontend   | Used for Supabase client/OAuth.                              |
+| `REACT_APP_SUPABASE_ANON_KEY` | Learner frontend   | Public anon key only.                                        |
 
 ## Local Stack
 
@@ -59,11 +59,11 @@ docker compose up --build
 
 Default local ports:
 
-| Service | Port |
-|---|---:|
-| Frontend | `3000` |
-| Backend | `3001` |
-| Admin | `3002` |
+| Service    |   Port |
+| ---------- | -----: |
+| Frontend   | `3000` |
+| Backend    | `3001` |
+| Admin      | `3002` |
 | TTS worker | `8000` |
 | PostgreSQL | `5432` |
 
@@ -112,11 +112,11 @@ Adjust only after checking actual traffic and pool capacity.
 
 Current workflows:
 
-| Workflow | Trigger | Target |
-|---|---|---|
-| `.github/workflows/ci.yml` | Push/PR to `main` or `master` | Backend tests/audit, frontend tests/build/audit, admin tests/build/audit. |
-| `.github/workflows/deploy_backend.yml` | Backend path changes on `main` or `master` | Hugging Face Space `Cuong2004/PhiloMind`. |
-| `.github/workflows/deploy_tts.yml` | TTS worker path changes on `main` or `master` | Hugging Face Space `Cuong2004/PhiloMind_TTSworker`. |
+| Workflow                               | Trigger                                       | Target                                                                    |
+| -------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------- |
+| `.github/workflows/ci.yml`             | Push/PR to `main` or `master`                 | Backend tests/audit, frontend tests/build/audit, admin tests/build/audit. |
+| `.github/workflows/deploy_backend.yml` | Backend path changes on `main` or `master`    | Hugging Face Space `Cuong2004/PhiloMind`.                                 |
+| `.github/workflows/deploy_tts.yml`     | TTS worker path changes on `main` or `master` | Hugging Face Space `Cuong2004/PhiloMind_TTSworker`.                       |
 
 Backend listens on `7860` when `SPACE_ID` is present for Hugging Face Spaces; otherwise it uses `PORT` or `3001`.
 
@@ -153,9 +153,11 @@ Run these after backend, frontend, admin, and TTS deploys:
 - Swagger availability matches `ENABLE_SWAGGER`.
 - Login works for local account and configured OAuth/Supabase path.
 - Learner `/lessons` loads journey and blocks unpublished lessons.
+- Direct learner node-detail/progress/complete API calls reject unpublished lessons.
 - A published lesson opens, renders media and a right-column component, then writes component progress.
 - Completing a lesson unlocks or moves to the next available lesson.
 - Admin `/nodes` can save a valid `lessonFlow` and rejects invalid JSON/component shapes.
+- Admin cannot publish a lesson with an empty `lessonFlow`.
 - Upload image asset and video URL flows return usable URLs.
 - Podcast synthesize returns an audio URL or expected fallback behavior.
 - Flashcard due/review flow updates review schedule.
