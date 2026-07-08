@@ -195,7 +195,11 @@ export class PrismaService
     client.$use((params, next) => this.queryLimiter.run(() => next(params)));
   }
 
-  async onModuleInit() {
+  onModuleInit() {
+    void this.connectInBackground();
+  }
+
+  private async connectInBackground() {
     try {
       await this.$connect();
       this.logger.log("Successfully connected to database.");
