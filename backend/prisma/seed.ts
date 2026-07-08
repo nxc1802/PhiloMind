@@ -198,7 +198,6 @@ function extractLessonMedia(lessonFlow: any[], node: any) {
   ];
 }
 
-
 function buildMaterialLessonFlow(node: any) {
   return [
     ...(node.videoUrl
@@ -1151,7 +1150,10 @@ async function main() {
       n.title === "Triết học - hạt nhân lý luận của thế giới quan";
     const isObjectLesson = n.title === "Đối tượng của triết học trong lịch sử";
     const hasSeededLessonContent =
-      isOriginLesson || isConceptLesson || isWorldviewCoreLesson || isObjectLesson;
+      isOriginLesson ||
+      isConceptLesson ||
+      isWorldviewCoreLesson ||
+      isObjectLesson;
     const sectionChapter =
       n.orderIndex <= 6 ? ch1SectionIntro : ch1SectionMarxism;
     const sectionOrderIndex =
@@ -1159,13 +1161,9 @@ async function main() {
         ? n.orderIndex
         : n.orderIndex - 6;
     const lessonFlow = isOriginLesson
-      ? loadConvertedLessonFlow(
-          "chapter-1-1a-nguon-goc-triet-hoc.json",
-        )
+      ? loadConvertedLessonFlow("chapter-1-1a-nguon-goc-triet-hoc.json")
       : isConceptLesson
-        ? loadConvertedLessonFlow(
-            "chapter-1-1b-khai-niem-triet-hoc.json",
-          )
+        ? loadConvertedLessonFlow("chapter-1-1b-khai-niem-triet-hoc.json")
         : isObjectLesson
           ? loadConvertedLessonFlow(
               "chapter-1-1c-doi-tuong-cua-triet-hoc-trong-lich-su.json",
@@ -1176,9 +1174,7 @@ async function main() {
               )
             : buildDefaultLessonFlow(n);
     const lessonMedia = isOriginLesson
-      ? loadConvertedLessonMedia(
-          "chapter-1-1a-nguon-goc-triet-hoc.json",
-        )
+      ? loadConvertedLessonMedia("chapter-1-1a-nguon-goc-triet-hoc.json")
       : isConceptLesson
         ? loadConvertedLessonMedia("chapter-1-1b-khai-niem-triet-hoc.json")
         : isObjectLesson
