@@ -1149,11 +1149,13 @@ async function main() {
     const isWorldviewCoreLesson =
       n.title === "Triết học - hạt nhân lý luận của thế giới quan";
     const isObjectLesson = n.title === "Đối tượng của triết học trong lịch sử";
+    const isBasicProblemLesson = n.title === "Vấn đề cơ bản của triết học";
     const hasSeededLessonContent =
       isOriginLesson ||
       isConceptLesson ||
       isWorldviewCoreLesson ||
-      isObjectLesson;
+      isObjectLesson ||
+      isBasicProblemLesson;
     const sectionChapter =
       n.orderIndex <= 6 ? ch1SectionIntro : ch1SectionMarxism;
     const sectionOrderIndex =
@@ -1172,7 +1174,11 @@ async function main() {
             ? loadConvertedLessonFlow(
                 "chapter-1-1d-triet-hoc-hat-nhan-the-gioi-quan.json",
               )
-            : buildDefaultLessonFlow(n);
+            : isBasicProblemLesson
+              ? loadConvertedLessonFlow(
+                  "chapter-1-1e-van-de-co-ban-cua-triet-hoc.json",
+                )
+              : buildDefaultLessonFlow(n);
     const lessonMedia = isOriginLesson
       ? loadConvertedLessonMedia("chapter-1-1a-nguon-goc-triet-hoc.json")
       : isConceptLesson
@@ -1185,7 +1191,11 @@ async function main() {
             ? loadConvertedLessonMedia(
                 "chapter-1-1d-triet-hoc-hat-nhan-the-gioi-quan.json",
               )
-            : extractLessonMedia(lessonFlow, n);
+            : isBasicProblemLesson
+              ? loadConvertedLessonMedia(
+                  "chapter-1-1e-van-de-co-ban-cua-triet-hoc.json",
+                )
+              : extractLessonMedia(lessonFlow, n);
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,

@@ -86,7 +86,7 @@ function PairCard({
       aria-pressed={faceUp}
       disabled={disabled || matched}
       onClick={onFlip}
-      className={`group min-h-[10rem] w-full rounded-3xl border-2 p-2 text-left shadow-sm transition-all duration-300 ${
+      className={`group min-h-[10rem] w-full rounded-2xl border-2 p-1 text-left shadow-sm transition-all duration-300 ${
         mismatch ? "animate-pulse" : ""
       } ${justMatched ? "scale-[1.02]" : ""} ${stateClass}`}
     >
@@ -98,14 +98,16 @@ function PairCard({
         }}
       >
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-primary-600 to-cyan-600 text-white"
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-cyan-600 text-white"
           style={{ backfaceVisibility: "hidden" }}
         >
           <span className="text-6xl font-black opacity-80 drop-shadow-md">?</span>
         </div>
 
         <div
-          className="absolute inset-0 flex flex-col justify-between gap-3 rounded-2xl bg-white p-3 text-slate-900 dark:bg-[#14313f] dark:text-primary-50"
+          className={`absolute inset-0 flex flex-col justify-between gap-2 rounded-xl bg-white text-slate-900 dark:bg-[#14313f] dark:text-primary-50 ${
+            label ? "p-2.5" : "p-1.5"
+          }`}
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",

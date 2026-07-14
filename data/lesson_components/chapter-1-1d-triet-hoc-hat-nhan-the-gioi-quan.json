@@ -78,23 +78,7 @@
               ]
             },
             "completionRule": { "type": "correct" }
-          }
-        ]
-      },
-      "completionRule": { "type": "all" }
-    },
-    {
-      "id": "concept-group",
-      "type": "component_group",
-      "title": "Khái niệm Thế giới quan",
-      "navigation_config": {
-        "shortLabel": "Khái niệm"
-      },
-      "config": {
-        "layout": "vertical",
-        "revealMode": "sequential",
-        "completionMode": "all",
-        "components": [
+          },
           {
             "id": "m1-intro",
             "type": "markdown",
@@ -103,30 +87,30 @@
               "content": "Trí tuệ loài người luôn hướng đến việc hiểu biết sâu sắc và toàn diện về mọi hiện tượng, sự vật, quá trình. Tuy nhiên, tri thức ở thời đại nào cũng có hạn so với thế giới cần nhận thức. Trong bối cảnh đó, con người buộc phải xác định những quan điểm về toàn bộ thế giới để định hướng cho nhận thức và hành động. Đó chính là thế giới quan."
             },
             "completionRule": { "type": "viewed" }
-          },
-          {
-            "id": "m1-piece",
-            "type": "knowledge_piece",
-            "title": "Khái niệm thế giới quan",
-            "config": {
-              "pieceId": "worldview_def",
-              "label": "THẾ GIỚI QUAN",
-              "shortLabel": "Thế giới quan",
-              "icon": "public",
-              "color": "from-blue-400 via-indigo-500 to-primary-700",
-              "summary": "Thế giới quan là hệ thống quan điểm của con người về thế giới, quy định các nguyên tắc, thái độ và giá trị.",
-              "takeaways": [
-                "Là khái niệm triết học chỉ hệ thống các tri thức, quan điểm, tình cảm, niềm tin, lý tưởng xác định về thế giới.",
-                "Bao hàm quan niệm về vị trí của con người (cá nhân, xã hội, nhân loại) trong thế giới đó.",
-                "Thế giới quan bao hàm trong nó nhân sinh quan – quan niệm về đời sống, nguyên tắc và thái độ."
-              ],
-              "reward": "Bạn đã thu thập được mảnh ghép: ĐỊNH NGHĨA THẾ GIỚI QUAN!"
-            },
-            "completionRule": { "type": "viewed" }
           }
         ]
       },
       "completionRule": { "type": "all" }
+    },
+    {
+      "id": "m1-piece",
+      "type": "knowledge_piece",
+      "title": "Khái niệm thế giới quan",
+      "config": {
+        "pieceId": "worldview_def",
+        "label": "THẾ GIỚI QUAN",
+        "shortLabel": "Thế giới quan",
+        "icon": "public",
+        "color": "from-blue-400 via-indigo-500 to-primary-700",
+        "summary": "Thế giới quan là hệ thống quan điểm của con người về thế giới, quy định các nguyên tắc, thái độ và giá trị.",
+        "takeaways": [
+          "Là khái niệm triết học chỉ hệ thống các tri thức, quan điểm, tình cảm, niềm tin, lý tưởng xác định về thế giới.",
+          "Bao hàm quan niệm về vị trí của con người (cá nhân, xã hội, nhân loại) trong thế giới đó.",
+          "Thế giới quan bao hàm trong nó nhân sinh quan – quan niệm về đời sống, nguyên tắc và thái độ."
+        ],
+        "reward": "Bạn đã thu thập được mảnh ghép: ĐỊNH NGHĨA THẾ GIỚI QUAN!"
+      },
+      "completionRule": { "type": "viewed" }
     },
     {
       "id": "structure-group",

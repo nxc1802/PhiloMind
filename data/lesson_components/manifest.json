@@ -27,6 +27,12 @@
       "title": "Triết học - hạt nhân lý luận của thế giới quan",
       "file": "chapter-1-1d-triet-hoc-hat-nhan-the-gioi-quan.json",
       "status": "converted"
+    },
+    {
+      "key": "1.1.e",
+      "title": "Vấn đề cơ bản của triết học",
+      "file": "chapter-1-1e-van-de-co-ban-cua-triet-hoc.json",
+      "status": "converted"
     }
   ]
 }
