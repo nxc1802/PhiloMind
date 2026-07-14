@@ -45,7 +45,10 @@ async function uploadFile(filePath: string, destPath: string) {
 
 async function main() {
   const filesToUpload = [
-    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/cap04.jpg", dest: "chapter-1/1.1.d/cap04.jpg" }
+    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/doi_tuong_01.png", dest: "chapter-1/1.1.c/doi_tuong_01.png" },
+    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/doi_tuong_02.png", dest: "chapter-1/1.1.c/doi_tuong_02.png" },
+    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/doi_tuong_03.png", dest: "chapter-1/1.1.c/doi_tuong_03.png" },
+    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/doi_tuong_04.png", dest: "chapter-1/1.1.c/doi_tuong_04.png" }
   ];
 
   for (const file of filesToUpload) {

@@ -23,12 +23,42 @@
       "final_summary"
     ]
   },
-  "lessonMedia": [],
+  "lessonMedia": [
+    {
+      "id": "ancient-media",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.c/doi_tuong_01.png",
+      "title": "Đối tượng triết học thời Cổ đại",
+      "alt": "Đối tượng triết học thời Cổ đại"
+    },
+    {
+      "id": "medieval-media",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.c/doi_tuong_02.png",
+      "title": "Đối tượng triết học thời Trung cổ",
+      "alt": "Đối tượng triết học thời Trung cổ"
+    },
+    {
+      "id": "modern-media",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.c/doi_tuong_03.png",
+      "title": "Đối tượng triết học thời Cận đại",
+      "alt": "Đối tượng triết học thời Cận đại"
+    },
+    {
+      "id": "contemporary-media",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.c/doi_tuong_04.png",
+      "title": "Đối tượng triết học thời Hiện đại",
+      "alt": "Đối tượng triết học thời Hiện đại"
+    }
+  ],
   "lessonFlow": [
     {
       "id": "ancient-group",
       "type": "component_group",
       "title": "Thời kỳ Cổ đại",
+      "linkedMediaId": "ancient-media",
       "navigation_config": {
         "shortLabel": "Cổ đại"
       },
@@ -41,6 +71,7 @@
             "id": "ancient-intro",
             "type": "markdown",
             "title": "Thời kỳ Cổ đại",
+            "linkedMediaId": "ancient-media",
             "config": {
               "content": "Trong tiến trình phát triển của xã hội và nhận thức, đối tượng của triết học không hề cố định mà luôn biến đổi qua các thời kỳ lịch sử. Hãy cùng quay ngược thời gian về thời kỳ Cổ đại để khám phá diện mạo đầu tiên của đối tượng triết học qua tương tác dưới đây!"
             },
@@ -50,6 +81,7 @@
             "id": "ancient-knowledge",
             "type": "multi_select",
             "title": "Tri thức thời Cổ đại",
+            "linkedMediaId": "ancient-media",
             "config": {
               "question": "Nền triết học tự nhiên ở phương Tây thời kỳ này bao gồm tất cả những tri thức mà con người có được. Hãy tìm các lĩnh vực tri thức thuộc phạm vi triết học thời kỳ này!",
               "options": [
@@ -61,35 +93,39 @@
               "explanation": "Ngay từ khi ra đời, triết học được xem là hình thái cao nhất của tri thức. Các ngành khoa học chuyên ngành mãi về sau mới dần tách ra."
             },
             "completionRule": { "type": "correct" }
-          },
-          {
-            "id": "ancient-piece",
-            "type": "knowledge_piece",
-            "title": "Khoa học của mọi khoa học",
-            "config": {
-              "pieceId": "ancient",
-              "label": "THỜI KỲ CỔ ĐẠI",
-              "shortLabel": "Cổ đại",
-              "icon": "account_balance",
-              "color": "from-amber-400 via-orange-500 to-primary-700",
-              "summary": "Triết học được xem là hình thái cao nhất của tri thức, bao hàm trong nó tri thức của tất cả các lĩnh vực.",
-              "takeaways": [
-                "Nền triết học tự nhiên ở phương Tây thời kỳ này bao gồm tất cả những tri thức mà con người có được, trước hết là toán học, vật lý học, thiên văn học.",
-                "Đây là nguyên nhân làm nảy sinh quan niệm rằng, triết học là khoa học của mọi khoa học.",
-                "Ảnh hưởng của triết học Hy Lạp cổ đại còn in đậm dấu ấn đến sự phát triển của tư tưởng triết học ở Tây Âu mãi về sau."
-              ],
-              "reward": "Bạn đã thu thập được mảnh ghép: TRIẾT HỌC TỰ NHIÊN CỔ ĐẠI!"
-            },
-            "completionRule": { "type": "viewed" }
           }
         ]
       },
       "completionRule": { "type": "all" }
     },
     {
+      "id": "ancient-piece",
+      "type": "knowledge_piece",
+      "title": "Khoa học của mọi khoa học",
+      "linkedMediaId": "ancient-media",
+      "config": {
+        "pieceId": "ancient",
+        "label": "THỜI KỲ CỔ ĐẠI",
+        "shortLabel": "Cổ đại",
+        "icon": "account_balance",
+        "color": "from-amber-400 via-orange-500 to-primary-700",
+        "summary": "Triết học được xem là hình thái cao nhất của tri thức, bao hàm trong nó tri thức của tất cả các lĩnh vực.",
+        "takeaways": [
+          "Nền triết học tự nhiên ở phương Tây thời kỳ này bao gồm tất cả những tri thức mà con người có được, trước hết là toán học, vật lý học, thiên văn học.",
+          "Đây là nguyên nhân làm nảy sinh quan niệm rằng, triết học là khoa học của mọi khoa học.",
+          "Ảnh hưởng của triết học Hy Lạp cổ đại còn in đậm dấu ấn đến sự phát triển của tư tưởng triết học ở Tây Âu mãi về sau."
+        ],
+        "reward": "Bạn đã thu thập được mảnh ghép: TRIẾT HỌC TỰ NHIÊN CỔ ĐẠI!"
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
       "id": "medieval-group",
       "type": "component_group",
       "title": "Thời kỳ Trung cổ",
+      "linkedMediaId": "medieval-media",
       "navigation_config": {
         "shortLabel": "Trung cổ"
       },
@@ -102,6 +138,7 @@
             "id": "medieval-intro",
             "type": "markdown",
             "title": "Thời kỳ Trung cổ",
+            "linkedMediaId": "medieval-media",
             "config": {
               "content": "Khi quyền lực tối cao của Giáo hội bao trùm Tây Âu trung cổ, một trật tự tư tưởng mới được thiết lập. Triết học không còn được tự do tìm hiểu thế giới. Bạn hãy sắm vai một giáo sĩ: Thanh trừng các tư tưởng tự nhiên cũ và Thu nạp những tư tưởng được Giáo hội chấp nhận để hoàn thiện diện mạo Triết học Kinh viện!"
             },
@@ -111,6 +148,7 @@
             "id": "medieval-sorting",
             "type": "category_sorting",
             "title": "Diện mạo Triết học Kinh viện",
+            "linkedMediaId": "medieval-media",
             "config": {
               "categories": [
                 {
@@ -138,34 +176,38 @@
               "summary": "Ở Tây Âu thời trung cổ, nền triết học tự nhiên bị bóp nghẹt để nhường chỗ cho triết học kinh viện – nơi triết học chấp nhận làm 'nữ tì của thần học'."
             },
             "completionRule": { "type": "correct" }
-          },
-          {
-            "id": "medieval-piece",
-            "type": "knowledge_piece",
-            "title": "Trung cổ",
-            "config": {
-              "pieceId": "medieval-knowledge",
-              "label": "DIỆN MẠO TRIẾT HỌC KINH VIỆN TRUNG CỔ",
-              "shortLabel": "Trung cổ",
-              "icon": "church",
-              "color": "from-stone-400 via-gray-500 to-primary-700",
-              "summary": "Ở Tây Âu thời trung cổ, khi quyền lực của Giáo hội bao trùm mọi lĩnh vực đời sống, nền triết học tự nhiên bị bóp nghẹt để nhường chỗ cho triết học kinh viện – nơi triết học chấp nhận làm \"nữ tì của thần học\".",
-              "takeaways": [
-                "Đối tượng của triết học thời kỳ này hoàn toàn quay lưng với thế giới tự nhiên.",
-                "Chỉ tập trung vào các chủ đề nặng tính tư biện và phi thế tục như: niềm tin tôn giáo, thiên đường, địa ngục, mặc khải và chú giải các tín điều."
-              ],
-              "reward": "Bạn đã thu thập được mảnh ghép: TRIẾT HỌC KINH VIỆN!"
-            },
-            "completionRule": { "type": "viewed" }
           }
         ]
       },
       "completionRule": { "type": "all" }
     },
     {
+      "id": "medieval-piece",
+      "type": "knowledge_piece",
+      "title": "Trung cổ",
+      "linkedMediaId": "medieval-media",
+      "config": {
+        "pieceId": "medieval-knowledge",
+        "label": "DIỆN MẠO TRIẾT HỌC KINH VIỆN TRUNG CỔ",
+        "shortLabel": "Trung cổ",
+        "icon": "church",
+        "color": "from-stone-400 via-gray-500 to-primary-700",
+        "summary": "Ở Tây Âu thời trung cổ, khi quyền lực của Giáo hội bao trùm mọi lĩnh vực đời sống, nền triết học tự nhiên bị bóp nghẹt để nhường chỗ cho triết học kinh viện – nơi triết học chấp nhận làm \"nữ tì của thần học\".",
+        "takeaways": [
+          "Đối tượng của triết học thời kỳ này hoàn toàn quay lưng với thế giới tự nhiên.",
+          "Chỉ tập trung vào các chủ đề nặng tính tư biện và phi thế tục như: niềm tin tôn giáo, thiên đường, địa ngục, mặc khải và chú giải các tín điều."
+        ],
+        "reward": "Bạn đã thu thập được mảnh ghép: TRIẾT HỌC KINH VIỆN!"
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
       "id": "modern-group",
       "type": "component_group",
       "title": "Thời kỳ Cận đại",
+      "linkedMediaId": "modern-media",
       "navigation_config": {
         "shortLabel": "Cận đại"
       },
@@ -178,6 +220,7 @@
             "id": "modern-intro",
             "type": "markdown",
             "title": "Thời kỳ Cận đại",
+            "linkedMediaId": "modern-media",
             "config": {
               "content": "Sau ‘cuộc cách mạng’ Copernicus, các khoa học Tây Âu thế kỷ XV, XVI dần phục hưng, thúc đẩy sự hình thành của quan hệ sản xuất tư bản chủ nghĩa và sản xuất công nghiệp. Hãy cùng phân định các trường phái triết học thế kỷ XVII - XVIII trên bàn cân tri thức!"
             },
@@ -187,6 +230,7 @@
             "id": "modern-matching",
             "type": "category_sorting",
             "title": "Bàn cân tri thức",
+            "linkedMediaId": "modern-media",
             "config": {
               "categories": [
                 { "id": "materialism", "label": "Khoa học, triết học duy vật", "description": "Trường phái khoa học và duy vật" },
@@ -201,35 +245,39 @@
               "summary": "Thành tựu khoa học thực nghiệm thế kỷ XV-XVI đã thúc đẩy cuộc đấu tranh giữa khoa học, duy vật với duy tâm. Sự phát triển của các khoa học chuyên ngành từng bước xóa bỏ vai trò 'khoa học của các khoa học'. Triết học Hegel là học thuyết cuối cùng thể hiện tham vọng đó."
             },
             "completionRule": { "type": "correct" }
-          },
-          {
-            "id": "modern-piece",
-            "type": "knowledge_piece",
-            "title": "Cận đại",
-            "config": {
-              "pieceId": "modern-knowledge",
-              "label": "THỜI KỲ CẬN ĐẠI",
-              "shortLabel": "Cận đại",
-              "icon": "science",
-              "color": "from-teal-400 via-emerald-500 to-primary-700",
-              "summary": "Thành tựu của khoa học thực nghiệm thế kỷ XV - XVI đã thúc đẩy cuộc đấu tranh giữa khoa học, triết học duy vật với chủ nghĩa duy tâm và tôn giáo.",
-              "takeaways": [
-                "Vấn đề đối tượng của triết học bắt đầu được đặt ra.",
-                "Sự phát triển của các khoa học chuyên ngành từng bước xóa bỏ vai trò của triết học tự nhiên cũ, làm phá sản tham vọng của triết học muốn đóng vai trò là 'khoa học của các khoa học'.",
-                "Triết học Hegel là học thuyết triết học cuối cùng thể hiện tham vọng đó."
-              ],
-              "reward": "Bạn đã thu thập được mảnh ghép: PHÂN ĐỊNH KHOA HỌC!"
-            },
-            "completionRule": { "type": "viewed" }
           }
         ]
       },
       "completionRule": { "type": "all" }
     },
     {
+      "id": "modern-piece",
+      "type": "knowledge_piece",
+      "title": "Cận đại",
+      "linkedMediaId": "modern-media",
+      "config": {
+        "pieceId": "modern-knowledge",
+        "label": "THỜI KỲ CẬN ĐẠI",
+        "shortLabel": "Cận đại",
+        "icon": "science",
+        "color": "from-teal-400 via-emerald-500 to-primary-700",
+        "summary": "Thành tựu của khoa học thực nghiệm thế kỷ XV - XVI đã thúc đẩy cuộc đấu tranh giữa khoa học, triết học duy vật với chủ nghĩa duy tâm và tôn giáo.",
+        "takeaways": [
+          "Vấn đề đối tượng của triết học bắt đầu được đặt ra.",
+          "Sự phát triển của các khoa học chuyên ngành từng bước xóa bỏ vai trò của triết học tự nhiên cũ, làm phá sản tham vọng của triết học muốn đóng vai trò là 'khoa học của các khoa học'.",
+          "Triết học Hegel là học thuyết triết học cuối cùng thể hiện tham vọng đó."
+        ],
+        "reward": "Bạn đã thu thập được mảnh ghép: PHÂN ĐỊNH KHOA HỌC!"
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
       "id": "contemporary-group",
       "type": "component_group",
       "title": "Thời kỳ Hiện đại",
+      "linkedMediaId": "contemporary-media",
       "navigation_config": {
         "shortLabel": "Hiện đại"
       },
@@ -242,6 +290,7 @@
             "id": "contemporary-intro",
             "type": "markdown",
             "title": "Thời kỳ Hiện đại",
+            "linkedMediaId": "contemporary-media",
             "config": {
               "content": "Sự phát triển mạnh mẽ của khoa học vào đầu thế kỷ XIX đã dẫn đến một bước ngoặt vĩ đại: Sự ra đời của triết học Mác. Hãy kích hoạt các mảnh ghép tư duy để xem triết học Mác và triết học phương Tây hiện đại đã xác định đối tượng nghiên cứu của mình như thế nào!"
             },
@@ -251,6 +300,7 @@
             "id": "contemporary-sorting",
             "type": "category_sorting",
             "title": "Triết học phương Tây hiện đại",
+            "linkedMediaId": "contemporary-media",
             "config": {
               "categories": [
                 { "id": "marxism", "label": "TRIẾT HỌC MÁC", "description": "Lập trường duy vật triệt để" },
@@ -268,34 +318,38 @@
               "summary": "Với sự ra đời của triết học Mác, đối tượng của triết học được xác lập một cách hợp lý trên lập trường duy vật triệt để, đoạn tuyệt tham vọng trở thành 'khoa học của các khoa học'."
             },
             "completionRule": { "type": "correct" }
-          },
-          {
-            "id": "contemporary-piece",
-            "type": "knowledge_piece",
-            "title": "Hiện đại",
-            "config": {
-              "pieceId": "contemporary-knowledge",
-              "label": "THỜI KỲ HIỆN ĐẠI",
-              "shortLabel": "Hiện đại",
-              "icon": "lightbulb",
-              "color": "from-blue-400 via-indigo-500 to-primary-700",
-              "summary": "Nhìn chung, các học thuyết triết học thời kỳ này tập trung nghiên cứu những vấn đề chung nhất của giới tự nhiên, của xã hội và con người, mối quan hệ của con người, của tư duy con người nói riêng với thế giới.",
-              "takeaways": [
-                "Tập trung nghiên cứu những vấn đề chung nhất của tự nhiên, xã hội và con người.",
-                "Nghiên cứu mối quan hệ của con người, của tư duy con người nói riêng với thế giới."
-              ],
-              "reward": "Bạn đã thu thập được mảnh ghép: ĐỐI TƯỢNG TRIẾT HỌC HIỆN ĐẠI!"
-            },
-            "completionRule": { "type": "viewed" }
           }
         ]
       },
       "completionRule": { "type": "all" }
     },
     {
+      "id": "contemporary-piece",
+      "type": "knowledge_piece",
+      "title": "Hiện đại",
+      "linkedMediaId": "contemporary-media",
+      "config": {
+        "pieceId": "contemporary-knowledge",
+        "label": "THỜI KỲ HIỆN ĐẠI",
+        "shortLabel": "Hiện đại",
+        "icon": "lightbulb",
+        "color": "from-blue-400 via-indigo-500 to-primary-700",
+        "summary": "Nhìn chung, các học thuyết triết học thời kỳ này tập trung nghiên cứu những vấn đề chung nhất của giới tự nhiên, của xã hội và con người, mối quan hệ của con người, của tư duy con người nói riêng với thế giới.",
+        "takeaways": [
+          "Tập trung nghiên cứu những vấn đề chung nhất của tự nhiên, xã hội và con người.",
+          "Nghiên cứu mối quan hệ của con người, của tư duy con người nói riêng với thế giới."
+        ],
+        "reward": "Bạn đã thu thập được mảnh ghép: ĐỐI TƯỢNG TRIẾT HỌC HIỆN ĐẠI!"
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
       "id": "final",
       "type": "final_summary",
       "title": "Đúc kết bài học",
+      "linkedMediaId": "contemporary-media",
       "config": {
         "message": "Bạn đã hoàn thành xuất sắc bài học!",
         "keyTakeaways": [

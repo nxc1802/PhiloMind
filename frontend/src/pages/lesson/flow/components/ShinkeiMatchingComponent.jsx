@@ -26,10 +26,11 @@ function normalizeSideCard(value, fallbackId, fallbackLabel) {
     return { id: fallbackId, text: value };
   }
   if (value && typeof value === "object") {
+    const hasImage = !!(value.image || value.imageUrl || value.media || value.thumbnail);
     return {
       ...value,
       id: value.id || fallbackId,
-      text: cardLabel(value, fallbackLabel),
+      text: cardLabel(value, hasImage ? "" : fallbackLabel),
     };
   }
   return { id: fallbackId, text: fallbackLabel };
@@ -65,10 +66,10 @@ function PairCard({
   disabled,
   onFlip,
 }) {
-  const label = cardLabel(card, side === "left" ? "Thẻ trái" : "Thẻ phải");
+  const label = card.text;
   const image = firstImageAsset(
     [card.image, card.imageUrl, card.media, card.thumbnail],
-    label,
+    label || "Hình ảnh",
   );
   const stateClass = matched
     ? "border-green-300 bg-green-50 shadow-green-100 dark:border-green-700 dark:bg-green-950/35"
@@ -100,12 +101,7 @@ function PairCard({
           className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-primary-600 to-cyan-600 text-white"
           style={{ backfaceVisibility: "hidden" }}
         >
-          <span className="material-symbols-outlined text-4xl">
-            {side === "left" ? "filter_1" : "filter_2"}
-          </span>
-          <span className="mt-2 text-xs font-extrabold uppercase tracking-[0.18em] opacity-80">
-            {side === "left" ? "Trái" : "Phải"}
-          </span>
+          <span className="text-6xl font-black opacity-80 drop-shadow-md">?</span>
         </div>
 
         <div
@@ -115,27 +111,43 @@ function PairCard({
             transform: "rotateY(180deg)",
           }}
         >
-          <div className="flex items-start justify-between gap-2">
-            <p className="min-w-0 text-sm font-extrabold leading-5">{label}</p>
-            <span
-              className={`material-symbols-outlined text-xl ${
-                matched
-                  ? "text-green-600"
-                  : mismatch
-                    ? "text-red-500"
-                    : "text-primary-500"
-              }`}
-            >
-              {matched ? "task_alt" : mismatch ? "cancel" : "visibility"}
-            </span>
-          </div>
+          {label ? (
+            <div className="flex items-start justify-between gap-2">
+              <p className="min-w-0 text-sm font-extrabold leading-5">{label}</p>
+              <span
+                className={`material-symbols-outlined shrink-0 text-xl ${
+                  matched
+                    ? "text-green-600"
+                    : mismatch
+                      ? "text-red-500"
+                      : "text-primary-500"
+                }`}
+              >
+                {matched ? "task_alt" : mismatch ? "cancel" : "visibility"}
+              </span>
+            </div>
+          ) : (
+            <div className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/60 shadow-sm backdrop-blur-sm dark:bg-[#14313f]/60">
+              <span
+                className={`material-symbols-outlined text-[1.125rem] ${
+                  matched
+                    ? "text-green-600"
+                    : mismatch
+                      ? "text-red-500"
+                      : "text-primary-500"
+                }`}
+              >
+                {matched ? "task_alt" : mismatch ? "cancel" : "visibility"}
+              </span>
+            </div>
+          )}
           <ComponentImage
             image={image}
-            alt={label}
+            alt={label || "Hình ảnh"}
             fit="contain"
             caption={false}
             className="min-h-20 flex-1"
-            imageClassName="h-full w-full"
+            imageClassName="h-full w-full rounded-md object-contain"
           />
           {card.description && (
             <p className="text-xs font-medium leading-5 text-slate-600 dark:text-primary-200">

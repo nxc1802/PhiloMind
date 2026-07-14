@@ -1,0 +1,2 @@
+Ở phần Media, hãy seed 4 ảnh ứng với 4 thời kỳ, khi thu thập mảnh ghép của thời kỳ A và next sang thời kỳ B thì media sẽ đổi từ ảnh A sang ảnh B
+Hãy bổ sung component quiz (trước đúc kết, sau mindmap nếu có) vào cho cả 4 lessons chương 1 từ  [quiz.md](file;file:///Volumes/WorkSpace/Project/PhiloMind/data/quiz.md) 
