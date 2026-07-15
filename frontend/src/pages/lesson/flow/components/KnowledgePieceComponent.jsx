@@ -110,7 +110,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
         </div>
       )}
 
-      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-primary-50 p-5 text-slate-900 shadow-inner dark:border-amber-800/60 dark:from-amber-950/30 dark:via-[#102733] dark:to-primary-950/50 dark:text-primary-100">
+      <div className="relative flex min-h-0 flex-1 flex-col overflow-y-auto rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-primary-50 p-5 text-slate-900 shadow-inner dark:border-amber-800/60 dark:from-amber-950/30 dark:via-[#102733] dark:to-primary-950/50 dark:text-primary-100">
         <Spark className="right-8 top-8 animate-pulse" />
         <Spark className="bottom-16 left-10 h-1.5 w-1.5 animate-ping" />
         <Spark className="right-16 top-28 h-1.5 w-1.5 animate-pulse" />
