@@ -27,51 +27,31 @@ export default function StudyModulesSidebar({ activeKey, footer = null }) {
         collapsed ? "w-12" : "w-72"
       }`}
     >
-      <div
-        className={`mb-2 min-h-[80px] px-3 py-4 ${
-          collapsed ? "flex items-start justify-center" : "px-5"
-        }`}
-      >
-        <div className="flex w-full items-start gap-3">
-          {!collapsed && (
-            <span className="material-symbols-outlined mt-0.5 shrink-0 text-primary-600 dark:text-primary-300">
-              school
+      <div className={`mb-2 px-3 py-3 ${collapsed ? "flex justify-center" : "flex justify-end"}`}>
+        {!collapsed && (
+          <button
+            type="button"
+            onClick={toggle}
+            title="Thu gọn sidebar"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl text-slate-400 transition-all hover:bg-primary-50 hover:text-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 dark:hover:text-primary-300"
+          >
+            <span className="material-symbols-outlined text-xl">
+              chevron_left
             </span>
-          )}
-          <div className="min-w-0 flex-1">
-            {!collapsed && (
-              <>
-                <div className="flex min-w-0 items-start justify-between gap-2">
-                  <h2 className="min-w-0 text-lg font-bold leading-tight text-slate-900 dark:text-primary-100">
-                    Triết học Mác - Lênin
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={toggle}
-                    title="Thu gọn sidebar"
-                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl text-slate-400 transition-all hover:bg-primary-50 hover:text-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 dark:hover:text-primary-300"
-                  >
-                    <span className="material-symbols-outlined text-xl">
-                      chevron_left
-                    </span>
-                  </button>
-                </div>
-              </>
-            )}
-            {collapsed && (
-              <button
-                type="button"
-                onClick={toggle}
-                title="Mở rộng sidebar"
-                className="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-2xl text-slate-400 transition-all hover:bg-primary-50 hover:text-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 dark:hover:text-primary-300"
-              >
-                <span className="material-symbols-outlined text-xl">
-                  chevron_right
-                </span>
-              </button>
-            )}
-          </div>
-        </div>
+          </button>
+        )}
+        {collapsed && (
+          <button
+            type="button"
+            onClick={toggle}
+            title="Mở rộng sidebar"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-slate-400 transition-all hover:bg-primary-50 hover:text-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 dark:hover:text-primary-300"
+          >
+            <span className="material-symbols-outlined text-xl">
+              chevron_right
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Nav items */}
