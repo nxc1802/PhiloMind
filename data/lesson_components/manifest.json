@@ -33,6 +33,30 @@
       "title": "Vấn đề cơ bản của triết học",
       "file": "chapter-1-1e-van-de-co-ban-cua-triet-hoc.json",
       "status": "converted"
+    },
+    {
+      "key": "1.2",
+      "title": "Sự ra đời và phát triển",
+      "file": "chuong1_su_ra_doi_va_phat_trien.json",
+      "status": "converted"
+    },
+    {
+      "key": "1.3",
+      "title": "Đối tượng và chức năng",
+      "file": "chuong1_bai7.json",
+      "status": "converted"
+    },
+    {
+      "key": "1.4",
+      "title": "Vai trò trong đời sống xã hội",
+      "file": "chuong1_bai8.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.1",
+      "title": "Phạm trù vật chất",
+      "file": "chuong2_khung_hoang_vat_ly.json",
+      "status": "converted"
     }
   ]
 }

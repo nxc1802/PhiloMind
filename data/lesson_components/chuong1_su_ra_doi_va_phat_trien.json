@@ -1,0 +1,735 @@
+{
+  "lessonFlow": [
+    {
+      "id": "b3-dieu-kien-kinh-te-xa-hoi",
+      "type": "category_sorting",
+      "title": "Điều kiện kinh tế - xã hội",
+      "config": {
+        "instruction": "Vào những năm 40 của thế kỷ XIX, sự phát triển của phương thức sản xuất tư bản chủ nghĩa dưới tác động của cuộc cách mạng công nghiệp đã làm cho mâu thuẫn xã hội trở nên vô cùng gay gắt. Hãy định vị các phong trào đấu tranh giai cấp tiêu biểu bằng cách kéo thả các thẻ sự kiện vào đúng các quốc gia!",
+        "categories": [
+          {
+            "id": "phap",
+            "title": "Pháp"
+          },
+          {
+            "id": "anh",
+            "title": "Anh"
+          },
+          {
+            "id": "duc",
+            "title": "Đức"
+          }
+        ],
+        "cards": [
+          {
+            "id": "c1",
+            "text": "Cuộc khởi nghĩa của thợ dệt ở Lyon diễn ra vào năm 1831 và nổ ra lại vào năm 1834, thể hiện cuộc quyết chiến giữa giai cấp những người có của và giai cấp những kẻ không có gì hết",
+            "categoryId": "phap"
+          },
+          {
+            "id": "c2",
+            "text": "Phong trào Hiến chương vào cuối những năm 30 của thế kỷ XIX, là phong trào cách mạng vô sản to lớn đầu tiên, thật sự có tính chất quần chúng và có hình thức chính trị",
+            "categoryId": "anh"
+          },
+          {
+            "id": "c3",
+            "text": "Cuộc đấu tranh của thợ dệt ở Xilêdi mang tính chất giai cấp tự phát, dẫn đến sự ra đời của tổ chức vô sản cách mạng là 'Đồng minh những người chính nghĩa'",
+            "categoryId": "duc"
+          }
+        ],
+        "successFeedback": "Thực tiễn cách mạng của giai cấp vô sản là cơ sở chủ yếu nhất cho sự ra đời triết học Mác."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b3-nguon-goc-ly-luan",
+      "type": "category_sorting",
+      "title": "Nguồn gốc lý luận",
+      "config": {
+        "instruction": "Triết học Mác ra đời là sự thừa kế thẳng và trực tiếp những thành tựu trong lịch sử tư tưởng của nhân loại để giải đáp những vấn đề của thời đại. Hãy phân loại các vĩ nhân lịch sử vào đúng nguồn gốc tư tưởng của họ!",
+        "categories": [
+          {
+            "id": "duc",
+            "title": "TRIẾT HỌC CỔ ĐIỂN ĐỨC (Nguồn gốc lý luận trực tiếp)"
+          },
+          {
+            "id": "anh",
+            "title": "KINH TẾ CHÍNH TRỊ HỌC ANH (Nhân tố không thể thiếu)"
+          },
+          {
+            "id": "phap",
+            "title": "CHỦ NGHÃ XÃ HỘI KHÔNG TƯỞNG PHÁP (Nguồn gốc học thuyết Mác về CNXH)"
+          }
+        ],
+        "cards": [
+          {
+            "id": "c1",
+            "text": "Hegel",
+            "categoryId": "duc"
+          },
+          {
+            "id": "c2",
+            "text": "Feuerbach",
+            "categoryId": "duc"
+          },
+          {
+            "id": "c3",
+            "text": "Adam Smith",
+            "categoryId": "anh"
+          },
+          {
+            "id": "c4",
+            "text": "David Ricardo",
+            "categoryId": "anh"
+          },
+          {
+            "id": "c5",
+            "text": "Saint Simon",
+            "categoryId": "phap"
+          },
+          {
+            "id": "c6",
+            "text": "Charles Fourier",
+            "categoryId": "phap"
+          }
+        ],
+        "successFeedback": "C. Mác và Ph. Ăngghen đã kế thừa 'hạt nhân hợp lý' trong tư tưởng biện chứng của Hegel và dựa vào truyền thống chủ nghĩa duy vật của Feuerbach để xây dựng nên triết học mới."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b3-tien-de-khoa-hoc",
+      "type": "mindmap_reveal",
+      "title": "Tiền đề khoa học tự nhiên",
+      "config": {
+        "instruction": "Sự phát triển mạnh mẽ của khoa học tự nhiên đầu thế kỷ XIX đã vạch ra mối liên hệ thống nhất biện chứng của thế giới vật chất, làm sụp đổ phương pháp tư duy siêu hình. Hãy mở khóa ba chiếc hộp khoa học!",
+        "layoutConfig": {
+          "type": "horizontal"
+        },
+        "nodes": [
+          {
+            "id": "nang-luong",
+            "front": {
+              "text": "Định luật bảo toàn và chuyển hóa năng lượng"
+            },
+            "back": {
+              "text": "Chứng minh sự chuyển hóa tuần hoàn của các dạng năng lượng trong tự nhiên."
+            }
+          },
+          {
+            "id": "te-bao",
+            "front": {
+              "text": "Thuyết tế bào"
+            },
+            "back": {
+              "text": "Mạng lưới các đơn vị sinh học siêu vi, chứng minh nguồn gốc thống nhất của sự sống."
+            }
+          },
+          {
+            "id": "tien-hoa",
+            "front": {
+              "text": "Thuyết tiến hóa của Charles Darwin"
+            },
+            "back": {
+              "text": "Sơ đồ phân nhánh tiến hóa của muôn loài, chứng minh sự phát triển và biến đổi liên tục của thế giới tự nhiên."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "b3-nhan-to-chu-quan",
+      "type": "mcq",
+      "title": "Nhân tố chủ quan",
+      "config": {
+        "question": "Nhân tố chủ quan nào đã kết tinh và tạo nên động lực sáng tạo mạnh mẽ giúp C. Mác và Ph. Ăngghen xây dựng nên triết học Mác?",
+        "options": [
+          {
+            "id": "opt-1",
+            "text": "Xuất thân từ tầng lớp cùng khổ của xã hội và chỉ tập trung vào hoạt động đấu tranh trên báo chí lý luận thuần túy.",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-2",
+            "text": "Hoạt động thực tiễn không biết mệt mỏi, lập trường giai cấp công nhân và tình cảm đặc biệt đối với nhân dân lao động, hòa quyện với tình bạn vĩ đại; cùng với bước chuyển lập trường từ dân chủ cách mạng và nhân đạo chủ nghĩa sang lập trường giai cấp công nhân và nhân đạo cộng sản thông qua lao động khoa học nghiêm túc.",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-3",
+            "text": "Giữ nguyên lập trường dân chủ cách mạng cũ để nghiên cứu kinh tế học nhằm giải thích các quan hệ phong kiến.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Tình bạn vĩ đại vượt xa mọi truyền thuyết đời xưa đã kết tinh và tạo nên động lực sáng tạo mạnh mẽ giúp C. Mác và Ph. Ăngghen xây dựng nên học thuyết của mình."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b3-tong-ket",
+      "type": "final_summary",
+      "title": "Khung thông điệp kết luận toàn diện",
+      "config": {
+        "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nSự xuất hiện của triết học Mác là một cuộc cách mạng vĩ đại trong lịch sử triết học, là tất yếu lịch sử được tạo nên từ sự thống nhất giữa điều kiện khách quan và nhân tố chủ quan.",
+        "keyTakeaways": [
+          "Về điều kiện kinh tế - xã hội, đó là sự xuất hiện của giai cấp vô sản trên vũ đài lịch sử tự phát và tự giác đấu tranh thông qua các phong trào lớn tại Pháp, Anh, Đức.",
+          "Về nguồn gốc lý luận, triết học Mác kế thừa trực tiếp 'hạt nhân hợp lý' biện chứng ở Hegel và chủ nghĩa duy vật của Feuerbach.",
+          "Về tiền đề khoa học tự nhiên, triết học Mác dựa trên ba phát minh vĩ đại: định luật bảo toàn, thuyết tế bào và thuyết tiến hóa Darwin.",
+          "Nhân tố chủ quan quyết định chính là hoạt động thực tiễn cách mạng gắn chặt với hoạt động lý luận của C. Mác và Ph. Ăngghen."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "b4-tien-trinh",
+      "type": "timeline_explorer",
+      "title": "Tiến trình hình thành và phát triển của Triết học Mác",
+      "config": {
+        "instruction": "Sự ra đời của triết học Mác là một quá trình phát triển bền bỉ và không ngừng hoàn thiện. Hãy cuộn dòng thời gian dưới đây để khám phá ba thời kỳ chủ yếu trong sự hình thành triết học Mác!",
+        "periods": [
+          {
+            "id": "thoi-ky-1841-1844",
+            "title": "Thời kỳ 1841 - 1844",
+            "content": "**Thời kỳ hình thành tư tưởng triết học với bước chuyển lập trường.** Đây là giai đoạn C. Mác và Ph. Ăngghen tích cực tham gia các hoạt động thực tiễn và nghiên cứu khoa học. Trong thời kỳ này, các ông đã tạo ra bước chuyển biến lập trường tư tưởng lịch sử: chuyển từ thế giới quan duy tâm sang thế giới quan duy vật, từ lập trường dân chủ cách mạng sang lập trường cộng sản chủ nghĩa."
+          },
+          {
+            "id": "thoi-ky-1844-1848",
+            "title": "Thời kỳ 1844 - 1848",
+            "content": "**Thời kỳ đề xuất những nguyên lý triết học duy vật biện chứng và duy vật lịch sử.** Trong giai đoạn này, bằng sự hợp tác chặt chẽ, các ông đã công bố nhiều tác phẩm quan trọng. Các nguyên lý cốt lõi của triết học duy vật biện chứng và duy vật lịch sử đã được đề xuất và hoàn thiện, tạo nền tảng vững chắc cho học thuyết mới."
+          },
+          {
+            "id": "thoi-ky-1848-1895",
+            "title": "Thời kỳ 1848 - 1895",
+            "content": "**Thời kỳ C. Mác và Ph. Ăngghen bổ sung và phát triển toàn diện triết học Mác.** Học thuyết triết học tiếp tục được thử thách, bổ sung qua thực tiễn phong trào công nhân quốc tế (Công xã Paris 1871) và qua các nghiên cứu chuyên sâu về kinh tế chính trị học (bộ Tư bản) cũng như các khám phá mới của khoa học tự nhiên."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "b4-tac-pham-kinh-dien",
+      "type": "matching_columns",
+      "title": "Những tác phẩm kinh điển và ý nghĩa lịch sử",
+      "config": {
+        "instruction": "Hãy ghép nối các tác phẩm kinh điển với đúng ý nghĩa triết học to lớn mà nó mang lại trong thời kỳ hình thành hệ thống!",
+        "leftColumn": [
+          {
+            "id": "t1",
+            "text": "Hệ tư tưởng Đức"
+          },
+          {
+            "id": "t2",
+            "text": "Sự khốn cùng của triết học (1847)"
+          },
+          {
+            "id": "t3",
+            "text": "Tuyên ngôn của Đảng Cộng sản (1848)"
+          }
+        ],
+        "rightColumn": [
+          {
+            "id": "r1",
+            "text": "Tác phẩm đầu tiên C. Mác và Ph. Ăngghen viết chung, trình bày quan điểm duy vật lịch sử một cách hệ thống."
+          },
+          {
+            "id": "r2",
+            "text": "Chống lại triết học tiểu tư sản của P.J. Proudhon, bảo vệ và phát triển triết học duy vật biện chứng."
+          },
+          {
+            "id": "r3",
+            "text": "Văn kiện có tính chất cương lĩnh đầu tiên của chủ nghĩa Mác, đánh dấu sự trưởng thành về mọi mặt của chủ nghĩa Mác (triết học, kinh tế chính trị, CNXH khoa học)."
+          }
+        ],
+        "correctPairs": [
+          {
+            "leftId": "t1",
+            "rightId": "r1"
+          },
+          {
+            "leftId": "t2",
+            "rightId": "r2"
+          },
+          {
+            "leftId": "t3",
+            "rightId": "r3"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b4-thoi-ky-lenin",
+      "type": "fill_in_blanks",
+      "title": "Thời kỳ V.I. Lênin bảo vệ và phát triển triết học Mác",
+      "config": {
+        "instruction": "Thời kỳ 1917 - 1924, V.I. Lênin đã chỉ đạo vượt qua những khó khăn về nhận thức để xây dựng chủ nghĩa xã hội. Hãy giúp V.I. Lênin hoàn thiện các nguyên lý xây dựng đất nước bằng cách lựa chọn các từ khóa chính xác nhất điền vào các văn kiện thực tiễn!",
+        "textWithBlanks": "Thời kỳ 1917 - 1924 (sau Cách mạng tháng Mười), V.I. Lênin tổng kết kinh nghiệm thực tiễn để bảo vệ thành quả cách mạng và xây dựng chủ nghĩa xã hội, trong đó nhiệm vụ cơ bản, hàng đầu là nâng cao [blank_1].",
+        "blanks": [
+          {
+            "id": "blank_1",
+            "correctAnswer": "năng suất lao động",
+            "distractors": [
+              "công cụ máy móc",
+              "thời gian làm việc"
+            ]
+          }
+        ],
+        "successFeedback": "Đúng vậy! Nâng cao năng suất lao động là cốt lõi để xây dựng cơ sở vật chất - kỹ thuật cho chế độ mới."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b4-lap-truong-bao-ve",
+      "type": "category_sorting",
+      "title": "Lập trường bảo vệ và phát triển triết học",
+      "config": {
+        "instruction": "Hãy phân loại các thẻ thái độ dưới đây vào đúng nhóm thể hiện bản chất khoa học hoặc thái độ sai lầm đối với triết học Mác - Lênin!",
+        "categories": [
+          {
+            "id": "tich-cuc",
+            "title": "Bảo vệ và phát triển triết học Mác - Lênin"
+          },
+          {
+            "id": "tieu-cuc",
+            "title": "Các xu hướng sai lầm / xét lại"
+          }
+        ],
+        "cards": [
+          {
+            "id": "c1",
+            "text": "Phát triển triết học dựa trên tổng kết thực tiễn lịch sử",
+            "categoryId": "tich-cuc"
+          },
+          {
+            "id": "c2",
+            "text": "Thống nhất giữa tính Đảng và tính khoa học trong nghiên cứu",
+            "categoryId": "tich-cuc"
+          },
+          {
+            "id": "c3",
+            "text": "Đấu tranh chống các trào lưu tư tưởng tư sản",
+            "categoryId": "tich-cuc"
+          },
+          {
+            "id": "c4",
+            "text": "Phủ nhận hạt nhân hợp lý và thành tựu của triết học duy vật biện chứng",
+            "categoryId": "tieu-cuc"
+          },
+          {
+            "id": "c5",
+            "text": "Thái độ giáo điều, biến triết học thành một hệ thống tín điều xơ cứng",
+            "categoryId": "tieu-cuc"
+          }
+        ],
+        "successFeedback": "Bảo vệ và phát triển triết học Mác - Lênin không phải là bảo vệ từng câu từng chữ một cách giáo điều, mà là bảo vệ linh hồn sống của nó thông qua việc phát triển học thuyết từ thực tiễn sinh động."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b4-tong-ket",
+      "type": "final_summary",
+      "title": "Khung thông điệp kết luận toàn diện",
+      "config": {
+        "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nSự hình thành và phát triển của triết học Mác là một quá trình liên tục không ngừng, đi từ bước chuyển lập trường triết học đến việc đề xuất các nguyên lý cơ bản và cuối cùng là bổ sung, hoàn thiện thông qua thực tiễn cách mạng.",
+        "keyTakeaways": [
+          "Quá trình này trải qua 3 thời kỳ của C. Mác và Ph. Ăngghen (1841-1844: chuyển biến lập trường; 1844-1848: đề xuất nguyên lý; 1848-1895: phát triển toàn diện).",
+          "Giai đoạn tiếp theo gắn liền với sự bảo vệ và phát triển xuất sắc của V.I. Lênin (1893-1924) qua các cuộc cách mạng Nga và xây dựng đất nước.",
+          "Việc bảo vệ, bổ sung và phát triển triết học Mác - Lênin hiện nay là nhiệm vụ quan trọng, yêu cầu phải gắn lý luận với thực tiễn lịch sử, chống lại các thái độ giáo điều và xu hướng xét lại."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "b5-khac-phuc-han-che",
+      "type": "category_sorting",
+      "title": "Khắc phục hạn chế của triết học cũ",
+      "config": {
+        "instruction": "Cuộc cách mạng trong triết học không thể bắt đầu nếu C. Mác và Ph. Ăngghen không vượt qua được những cái bóng khổng lồ của quá khứ. Hãy kéo thả các hạn chế của triết học cũ trả về đúng chủ nhân của nó!",
+        "categories": [
+          {
+            "id": "hegel",
+            "title": "Triết học Hegel"
+          },
+          {
+            "id": "feuerbach",
+            "title": "Triết học Feuerbach"
+          }
+        ],
+        "cards": [
+          {
+            "id": "c1",
+            "text": "Tính chất duy tâm thần bí",
+            "categoryId": "hegel"
+          },
+          {
+            "id": "c2",
+            "text": "Tính chất siêu hình, không thấy được sự phát triển",
+            "categoryId": "feuerbach"
+          },
+          {
+            "id": "c3",
+            "text": "Không thấy được vai trò của thực tiễn lịch sử xã hội",
+            "categoryId": "feuerbach"
+          },
+          {
+            "id": "c4",
+            "text": "Hệ thống triết học bảo thủ, tư biện",
+            "categoryId": "hegel"
+          }
+        ],
+        "successFeedback": "C. Mác và Ph. Ăngghen đã kế thừa 'hạt nhân hợp lý' (phép biện chứng của Hegel) và 'cái cơ bản' (chủ nghĩa duy vật của Feuerbach), đồng thời loại bỏ những hạn chế của họ để tạo ra một hệ thống triết học mới."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b5-thong-nhat",
+      "type": "mcq",
+      "title": "Sự thống nhất giữa các mặt đối lập",
+      "config": {
+        "question": "Bằng cách vượt qua triết học cũ, C. Mác và Ph. Ăngghen đã tạo ra một học thuyết triết học trong đó thống nhất được hai yếu tố nào chưa từng có trong lịch sử?",
+        "options": [
+          {
+            "id": "opt-1",
+            "text": "Sự thống nhất giữa chủ nghĩa duy tâm và phép biện chứng.",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-2",
+            "text": "Sự thống nhất giữa chủ nghĩa duy vật và phép biện chứng, làm cho chủ nghĩa duy vật trở nên triệt để và phép biện chứng trở thành lý luận khoa học.",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-3",
+            "text": "Sự thống nhất giữa khoa học tự nhiên và tôn giáo.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Triết học Mác là sự thống nhất hữu cơ giữa chủ nghĩa duy vật và phép biện chứng. Chủ nghĩa duy vật triết học Mác là chủ nghĩa duy vật biện chứng, và phép biện chứng của triết học Mác là phép biện chứng duy vật."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b5-sang-tao-vi-dai",
+      "type": "mindmap_reveal",
+      "title": "Sáng tạo vĩ đại nhất của C. Mác",
+      "config": {
+        "instruction": "Bước ngoặt lớn nhất, đánh dấu sự khác biệt hoàn toàn của triết học Mác với toàn bộ các học thuyết trước đó nằm ở cách nhìn nhận về xã hội loài người. Hãy lật mở các mảnh ghép logic dưới đây để hiểu về phát minh vĩ đại này!",
+        "layoutConfig": {
+          "type": "vertical"
+        },
+        "nodes": [
+          {
+            "id": "han-che-cu",
+            "front": {
+              "text": "Hạn chế của Chủ nghĩa duy vật trước Mác"
+            },
+            "back": {
+              "text": "Chỉ mang tính chất duy vật về giới tự nhiên, nhưng lại rơi vào quan điểm duy tâm khi giải thích về lịch sử xã hội (cho rằng ý thức, tư tưởng quyết định sự phát triển của xã hội)."
+            }
+          },
+          {
+            "id": "buoc-ngoat",
+            "front": {
+              "text": "Phát minh vĩ đại: Chủ nghĩa duy vật lịch sử"
+            },
+            "back": {
+              "text": "C. Mác đã vận dụng quan điểm duy vật biện chứng vào việc nghiên cứu lịch sử xã hội, làm sáng tỏ các quy luật khách quan của sự phát triển xã hội."
+            }
+          },
+          {
+            "id": "cot-loi",
+            "front": {
+              "text": "Chân lý cốt lõi của duy vật lịch sử"
+            },
+            "back": {
+              "text": "Khẳng định rằng phương thức sản xuất đời sống vật chất quyết định quá trình sinh hoạt xã hội, chính trị và tinh thần nói chung. Tồn tại xã hội quyết định ý thức xã hội."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "b5-bien-doi-vai-tro",
+      "type": "category_sorting",
+      "title": "Sự biến đổi vai trò của triết học",
+      "config": {
+        "instruction": "Sự ra đời của triết học Mác đã làm thay đổi hoàn toàn chức năng xã hội của triết học. Hãy đưa các thuộc tính về đúng với hệ hình triết học của nó!",
+        "categories": [
+          {
+            "id": "triet-hoc-cu",
+            "title": "Các triết học trước Mác"
+          },
+          {
+            "id": "triet-hoc-mac",
+            "title": "Triết học Mác"
+          }
+        ],
+        "cards": [
+          {
+            "id": "c1",
+            "text": "Chủ yếu đóng vai trò giải thích thế giới bằng lý luận",
+            "categoryId": "triet-hoc-cu"
+          },
+          {
+            "id": "c2",
+            "text": "Thường có tính chất tư biện, tách rời thực tiễn",
+            "categoryId": "triet-hoc-cu"
+          },
+          {
+            "id": "c3",
+            "text": "Không chỉ giải thích thế giới mà còn là công cụ nhận thức khoa học để cải tạo thế giới",
+            "categoryId": "triet-hoc-mac"
+          },
+          {
+            "id": "c4",
+            "text": "Sự thống nhất giữa lý luận và thực tiễn",
+            "categoryId": "triet-hoc-mac"
+          },
+          {
+            "id": "c5",
+            "text": "Vũ khí lý luận của giai cấp vô sản trong cuộc đấu tranh giải phóng nhân loại",
+            "categoryId": "triet-hoc-mac"
+          }
+        ],
+        "successFeedback": "Đúng như C. Mác đã nói: 'Các nhà triết học đã chỉ giải thích thế giới bằng nhiều cách khác nhau, song vấn đề là cải tạo thế giới'."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b5-tong-ket",
+      "type": "final_summary",
+      "title": "Khung thông điệp kết luận toàn diện",
+      "config": {
+        "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nCuộc cách mạng trong triết học do C. Mác và Ph. Ăngghen thực hiện là một bước ngoặt vĩ đại trong lịch sử tư tưởng nhân loại.",
+        "keyTakeaways": [
+          "Khắc phục triệt để tính chất duy tâm, thần bí của triết học Hegel và tính chất siêu hình của chủ nghĩa duy vật Feuerbach.",
+          "Sáng tạo ra Chủ nghĩa duy vật biện chứng bằng cách thống nhất hữu cơ giữa chủ nghĩa duy vật và phép biện chứng.",
+          "Phát minh ra Chủ nghĩa duy vật lịch sử - bước tiến vĩ đại nhất, áp dụng phương pháp biện chứng duy vật vào việc giải thích sự phát triển của xã hội loài người.",
+          "Thay đổi hoàn toàn chức năng của triết học: từ chỗ chỉ dừng lại ở việc giải thích thế giới chuyển sang trở thành công cụ khoa học, vũ khí lý luận của giai cấp công nhân để cải tạo thế giới."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "b6-ban-chat-khoa-hoc",
+      "type": "matching_columns",
+      "title": "Bản chất khoa học",
+      "config": {
+        "instruction": "Chủ nghĩa Mác - Lênin không phải là một giáo điều xơ cứng, mà là một hệ thống lý luận khoa học chặt chẽ. Hãy tham gia trò chơi ghép đôi dưới đây để làm rõ các khía cạnh của bản chất khoa học này!",
+        "leftColumn": [
+          {
+            "id": "t1",
+            "text": "Thái độ với tri thức nhân loại"
+          },
+          {
+            "id": "t2",
+            "text": "Mối quan hệ với thực tiễn"
+          },
+          {
+            "id": "t3",
+            "text": "Khả năng phát triển"
+          }
+        ],
+        "rightColumn": [
+          {
+            "id": "r1",
+            "text": "Tiếp thu tinh hoa tư tưởng của nhân loại, không phải là hệ thống đóng kín."
+          },
+          {
+            "id": "r2",
+            "text": "Là kết quả của sự tổng kết thực tiễn, luôn lấy thực tiễn làm tiêu chuẩn để kiểm nghiệm chân lý."
+          },
+          {
+            "id": "r3",
+            "text": "Không ngừng được bổ sung, phát triển cùng với sự tiến bộ của khoa học và thực tiễn xã hội."
+          }
+        ],
+        "correctPairs": [
+          {
+            "leftId": "t1",
+            "rightId": "r1"
+          },
+          {
+            "leftId": "t2",
+            "rightId": "r2"
+          },
+          {
+            "leftId": "t3",
+            "rightId": "r3"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b6-ban-chat-cach-mang",
+      "type": "timeline_explorer",
+      "title": "Bản chất cách mạng",
+      "config": {
+        "instruction": "Triết học Mác - Lênin là vũ khí lý luận của giai cấp công nhân. Hãy sắp xếp các luận điểm theo cấp độ phát triển để thấy rõ sức mạnh cải tạo thế giới của nó!",
+        "periods": [
+          {
+            "id": "cap-do-1",
+            "title": "Mục tiêu tối thượng",
+            "content": "Không dừng lại ở việc giải thích và hiểu biết thế giới, mà hướng đến mục tiêu cao cả là **cải tạo thế giới**, giải phóng giai cấp, giải phóng xã hội và giải phóng con người khỏi mọi ách áp bức, bóc lột."
+          },
+          {
+            "id": "cap-do-2",
+            "title": "Lập trường giai cấp",
+            "content": "Là hệ tư tưởng, vũ khí lý luận sắc bén của **giai cấp công nhân** và nhân dân lao động trong cuộc đấu tranh chống lại giai cấp tư sản và chế độ tư bản chủ nghĩa."
+          },
+          {
+            "id": "cap-do-3",
+            "title": "Tinh thần phê phán",
+            "content": "Mang tinh thần **phê phán triệt để**. Nó không chùn bước trước bất cứ uy quyền nào, luôn phân tích mọi sự vật hiện tượng trong quá trình vận động, sinh thành và tiêu vong tất yếu của chúng."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "b6-su-thong-nhat",
+      "type": "fill_in_blanks",
+      "title": "Sự thống nhất giữa bản chất khoa học và cách mạng",
+      "config": {
+        "instruction": "Bản chất khoa học và cách mạng trong triết học Mác - Lênin không tách rời mà thống nhất chặt chẽ với nhau. Hãy điền chính xác các từ khóa còn thiếu để hoàn thiện công thức thống nhất này!",
+        "textWithBlanks": "Sự thống nhất giữa bản chất khoa học và cách mạng thể hiện ở chỗ: Khoa học mang tính cách mạng vì nó hướng tới giải phóng con người; Cách mạng mang tính khoa học vì nó dựa trên sự thấu hiểu quy luật khách quan. Do đó, phong trào công nhân cần phải có [blank_1] dẫn đường, và ngược lại, lý luận phải gắn liền với [blank_2], không ngừng [blank_3] để không trở thành giáo điều.",
+        "blanks": [
+          {
+            "id": "blank_1",
+            "correctAnswer": "lý luận",
+            "distractors": [
+              "kinh nghiệm",
+              "niềm tin"
+            ]
+          },
+          {
+            "id": "blank_2",
+            "correctAnswer": "thực tiễn",
+            "distractors": [
+              "tưởng tượng",
+              "suy đoán"
+            ]
+          },
+          {
+            "id": "blank_3",
+            "correctAnswer": "sáng tạo",
+            "distractors": [
+              "bảo thủ",
+              "lặp lại"
+            ]
+          }
+        ],
+        "successFeedback": "Sự thống nhất lý luận và thực tiễn là nguyên tắc tối cao của chủ nghĩa Mác - Lênin."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b6-dac-trung-mo",
+      "type": "category_sorting",
+      "title": "Đặc trưng mở của Chủ nghĩa Mác - Lênin",
+      "config": {
+        "instruction": "Chủ nghĩa Mác - Lênin có những đặc trưng cơ bản nào tạo nên sức sống vượt thời gian? Hãy đóng dấu các thẻ thuộc tính vào đúng các luồng tư tưởng cốt lõi!",
+        "categories": [
+          {
+            "id": "he-thong",
+            "title": "Tính hệ thống"
+          },
+          {
+            "id": "thuc-tien",
+            "title": "Tính thực tiễn"
+          },
+          {
+            "id": "mo",
+            "title": "Tính mở"
+          }
+        ],
+        "cards": [
+          {
+            "id": "c1",
+            "text": "Các bộ phận cấu thành liên kết hữu cơ, logic chặt chẽ với nhau (Triết học, Kinh tế chính trị, CNXH Khoa học)",
+            "categoryId": "he-thong"
+          },
+          {
+            "id": "c2",
+            "text": "Luôn hướng tới giải quyết các vấn đề bức thiết do cuộc sống đặt ra",
+            "categoryId": "thuc-tien"
+          },
+          {
+            "id": "c3",
+            "text": "Lấy hiện thực khách quan làm tiêu chuẩn duy nhất để kiểm nghiệm chân lý",
+            "categoryId": "thuc-tien"
+          },
+          {
+            "id": "c4",
+            "text": "Sẵn sàng tiếp thu những thành tựu mới của văn minh nhân loại",
+            "categoryId": "mo"
+          },
+          {
+            "id": "c5",
+            "text": "Không phải là một khuôn mẫu cứng nhắc, mà cần được bổ sung, phát triển theo thời đại",
+            "categoryId": "mo"
+          }
+        ],
+        "successFeedback": "Chính những đặc trưng này khiến chủ nghĩa Mác - Lênin luôn giữ được sức sống mãnh liệt và không bị lạc hậu trước sự thay đổi của lịch sử."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "b6-tong-ket",
+      "type": "final_summary",
+      "title": "Khung thông điệp kết luận toàn diện",
+      "config": {
+        "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nBản chất của triết học Mác - Lênin được biểu hiện tập trung ở sự thống nhất cao độ giữa tính khoa học triệt để và tính cách mạng sâu sắc.",
+        "keyTakeaways": [
+          "**Tính khoa học:** Kế thừa tinh hoa nhân loại, tổng kết thực tiễn, phản ánh đúng quy luật khách quan của tự nhiên, xã hội và tư duy.",
+          "**Tính cách mạng:** Là vũ khí lý luận của giai cấp công nhân nhằm cải tạo thế giới, giải phóng con người, mang tinh thần phê phán triệt để.",
+          "**Tính thống nhất:** Khoa học để cách mạng thành công, và cách mạng phải dựa trên cơ sở khoa học.",
+          "Với tính mở, tính hệ thống và tính thực tiễn, triết học Mác - Lênin không phải là một hệ thống giáo điều khép kín mà luôn phát triển sáng tạo cùng thời đại."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}
