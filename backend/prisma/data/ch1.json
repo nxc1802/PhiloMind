@@ -1,0 +1,1213 @@
+[
+  {
+    "question": "Xanh-ximông là đại biểu của trường phái nào?",
+    "options": [
+      "A. Chủ nghĩa xã hội không tưởng Pháp",
+      "B. Chủ nghĩa xã hội không tưởng Đức",
+      "C. Triết học cổ điển Đức",
+      "D. Kinh tế chính trị học Anh"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Công lao của C.Mác và Ph.Ăngghen với nhận thức là gì?",
+    "options": [
+      "A. Phát hiện ra thế giới khách quan",
+      "B. Đưa phương pháp luận vào nhận thức",
+      "C. Đưa thực tiễn vào triết học",
+      "D. Đề ra tư tưởng đấu tranh chống lại giai cấp tư sản"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Thuyết có thể biết còn gọi là gì?",
+    "options": [
+      "A. Thuyết nhận biết",
+      "B. Thuyết khả tri",
+      "C. Thuyết khả tri luận",
+      "D. Thuyết nhận biết luận"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Triết học có mấy vấn đề? Trong vấn đề có mấy mặt?",
+    "options": [
+      "A. 1 mặt, 2 vấn đề",
+      "B. 1 vấn đề, 1 mặt",
+      "C. 1 vấn đề, 2 mặt",
+      "D. 2 mặt, 2 vấn đề"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Đâu là một trong những trường phái của triết học duy tâm?",
+    "options": [
+      "A. Duy tâm khách quan",
+      "B. Duy tâm duy lý",
+      "C. Duy tâm biện chứng",
+      "D. Duy tâm tôn giáo"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Một trong những nguồn gốc ra đời của Triết học là",
+    "options": [
+      "A. Tự nhiên",
+      "B. Lao động",
+      "C. Ngôn ngữ",
+      "D. Xã hội"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Một trong những nguyên nhân ra đời của triết học là:",
+    "options": [
+      "A. Tâm lý",
+      "B. Tư tưởng",
+      "C. Nhận thức",
+      "D. Tự nhiên"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Triết học Mác-Lênin ra đời một phần là kết quả kế thừa trực tiếp từ",
+    "options": [
+      "A. Thế giới quan duy vật của Hêghen và phép biện chứng của Phoiơbắc",
+      "B. Thế giới quan duy vật của Phoiơbắc và phép biện chứng của Hêghen",
+      "C. Thế giới quan duy vật và phép biện chứng của cả Hêghen và Phoiơbắc",
+      "D. Chủ nghĩa duy tâm của Hônbách và biện chứng pháp của Aristốt"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Triết học nghiên cứu thế giới như thế nào?",
+    "options": [
+      "A. Như một đối tượng vật chất cụ thể",
+      "B. Như một hệ đối tượng vật chất nhất định",
+      "C. Như một chỉnh thể thống nhất"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Quan điểm nào sau đây cho rằng các sự vật, hiện tượng, các quá trình khác nhau vừa tồn tại ổn định, tác động qua lại, chuyển hóa lẫn nhau?",
+    "options": [
+      "A. Quan điểm siêu hình",
+      "B. Quan điểm biện chứng",
+      "C. Quan điểm duy tâm",
+      "D. Quan điểm duy vật"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Triết học phổ biến ở Tây Âu thời Trung cổ là Triết học gì?",
+    "options": [
+      "A. Triết học tự nhiên",
+      "B. Triết học kinh viện",
+      "C. Triết học khoa học xã hội",
+      "D. Triết học chính trị"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Thuyết bất khả tri còn gọi là gì?",
+    "options": [
+      "A. Thuyết không thể biết",
+      "B. Thuyết khả tri",
+      "C. Thuyết khả tri luận",
+      "D. Thuyết nhận biết luận"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Hạt nhân lý luận của thế giới quan khoa học là chủ nghĩa.",
+    "options": [
+      "A. Duy vật",
+      "B. Mác",
+      "C. Duy vật biện chứng",
+      "D. Lênin"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Chủ nghĩa Mác-Lênin ra đời dựa trên bao nhiêu tiền đề?",
+    "options": [
+      "A. Ba tiền đề",
+      "B. Bốn tiền đề",
+      "C. Năm tiền đề",
+      "D. Sáu tiền đề"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Thế nào là phương pháp siêu hình?",
+    "options": [
+      "A. Xem xét các sự vật trong mối liên hệ tác động qua lại lẫn nhau, nhưng không vận động, không phát triển",
+      "B. Xem xét các sự vật trong trạng thái cô lập, tách rời nhau, và không vận động, không phát triển",
+      "C. Xem xét các sự vật trong mối liên hệ tác động qua lại lẫn nhau, và luôn vận động, luôn phát triển",
+      "D. Xem xét các sự vật trong trạng thái cô lập, tách rời nhau, nhưng luôn vận động, luôn phát triển"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Trong chủ nghĩa Mác - Lênin thì",
+    "options": [
+      "A. Triết học là cơ sở nền tảng của kinh tế chính trị và chủ nghĩa xã hội khoa học",
+      "B. Kinh tế chính trị học là cơ sở nền tảng của triết học và chủ nghĩa xã hội khoa học",
+      "C. Chủ nghĩa xã hội khoa học là cơ sở của kinh tế chính trị và triết học"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Triết học ra đời từ đâu?",
+    "options": [
+      "A. Từ thực tiễn, do nhu cầu của thực tiễn",
+      "B. Từ sự tư duy của con người về bản thân mình",
+      "C. Từ sự vận động của ý muốn chủ quan của con người",
+      "D. Từ thực tiễn, do sự phát triển của khoa học kỹ thuật"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Chủ nghĩa Mác-Lênin gồm ba bộ phận cấu thành đó là",
+    "options": [
+      "A. Triết học, Kinh tế chính trị học và Chủ nghĩa xã hội khoa học",
+      "B. Triết học, Kinh tế chính trị học và Chính trị học",
+      "C. Triết học, Kinh tế học và Chủ nghĩa xã hội khoa học"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Triết học duy tâm khách quan và duy tâm chủ quan đều có điểm chung là",
+    "options": [
+      "A. Đề cao lĩnh vực tinh thần của con người",
+      "B. Đề cao lĩnh vực vật chất và tinh thần của con người",
+      "C. Đề cao đời sống tâm linh của con người",
+      "A. Đề cao lĩnh vực tinh thần của con người",
+      "B. Đánh giá đúng lĩnh vực tinh thần của con người",
+      "C. Đề cao tư duy của con người)"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Thế giới quan được hiểu là gì?",
+    "options": [
+      "A. Quan niệm của con người về thế giới",
+      "B. Hệ thống quan niệm của con người về thế giới",
+      "C. Hệ thống quan niệm, quan điểm lý luận của con người về thế giới",
+      "D. Hệ thống quan niệm, quan điểm chung nhất của con người về thế giới"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Triết học Mác là thế giới quan khoa học của giai cấp nào?",
+    "options": [
+      "A. Giai cấp tư sản tiến bộ",
+      "B. Giai cấp công nhân",
+      "C. Tầng lớp trí thức",
+      "D. Giai cấp lao động"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Đâu là nguồn gốc lý luận của chủ nghĩa Mác?",
+    "options": [
+      "A. Tư tưởng xã hội phương Đông cổ đại",
+      "B. Triết học cổ điển Đức, kinh tế chính trị cổ điển Anh và chủ nghĩa xã hội không tưởng Pháp",
+      "C. Chủ nghĩa duy vật siêu hình thế kỷ XVII - XVIII ở Tây Âu",
+      "D. Học thuyết tiến hoá"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Triết học của các nhà tư tưởng thời kỳ Phục Hưng có đặc điểm gì?",
+    "options": [
+      "A. Có tính chất duy vật tự phát",
+      "B. Có tính chất duy tâm khách quan",
+      "C. Còn pha trộn giữa các yếu tố duy vật và duy tâm",
+      "D. Còn pha trộn giữa các yếu tố duy tâm thần bí và siêu hình"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Chủ nghĩa xã hội không tưởng đề cao yếu tố gì?",
+    "options": [
+      "A. Tinh thần nhân đạo",
+      "B. Xã hội đại đồng",
+      "C. Sự bình đẳng",
+      "D. Một xã hội không còn sự bóc lột"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Hệ thống những quan điểm lý luận chung nhất về thế giới và về vị trí của con người trong thế giới đó là:",
+    "options": [
+      "A. Quan điểm biện chứng",
+      "B. Chủ nghĩa duy vật",
+      "C. Chủ nghĩa duy vật biện chứng",
+      "D. Triết học"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Đâu là nhận định sai về Triết học Mác?",
+    "options": [
+      "A. Triết học Mác cho rằng triết học là khoa học của mọi khoa học",
+      "B. Theo quan điểm của triết học Mác triết học không thay thế được các khoa học cụ thể",
+      "C. Theo quan điểm của triết học Mác thì sự phát triển của triết học quan hệ chặt chẽ với sự phát triển của khoa học tự nhiên",
+      "D. Triết học Mác là sự tổng hợp của các trường phái triết học trong lịch sử"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Trong chủ nghĩa Mác - Lênin, bộ phận lý luận nào có chức năng làm sáng tỏ bản chất và những quy luật chung nhất của mọi sự vận động, phát triển của thế giới?",
+    "options": [
+      "A. Triết học Mác - Lênin",
+      "B. Kinh tế chính trị Mác - Lênin",
+      "C. Chủ nghĩa xã hội khoa học",
+      "D. Không có bộ phận nào giữ chức năng đó vì chủ nghĩa Mác - Lênin thuộc khoa học xã hội"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Chủ nghĩa Mác - Lênin sẽ phát triển đạt đến đâu?",
+    "options": [
+      "A. Đã phát triển đến mức hoàn toàn đầy đủ",
+      "B. Trong đó mọi vấn đề được giải quyết triệt để, chỉ cần nghiên cứu và vận dụng trong thực tiễn",
+      "C. Có thể thay thế cho mọi khoa học",
+      "D. Không ngừng phát triển trên cơ sở tổng kết những thành tựu mới của sự phát triển các khoa học và thực tiễn"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Chủ nghĩa nào mà sự tồn tại phát triển của nó thường gắn với lợi ích giai cấp và các lực lượng tiến bộ trong lịch sử?",
+    "options": [
+      "A. Duy vật thô sơ",
+      "B. Duy vật",
+      "C. Duy tâm khách quan",
+      "D. Chiết trung"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Phép biện chứng của triết học Hêghen là:",
+    "options": [
+      "A. Phép biện chứng duy tâm chủ quan.",
+      "B. Phép biện chứng duy vật hiện đại.",
+      "C. Phép biện chứng ngây thơ, chất phác.",
+      "D. Phép biện chứng duy tâm khách quan."
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Triết học trong xã hội có giai cấp được hiểu như thế nào?",
+    "options": [
+      "A. Cũng có tính giai cấp",
+      "B. Không có tính giai cấp",
+      "C. Chỉ triết học phương Tây mới có tính giai cấp",
+      "D. Chỉ có triết học phương Đông mới có tính giai cấp"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Vật chất với tư cách là phạm trù triết học đã có lịch sử phát triển khoảng bao nhiêu năm",
+    "options": [
+      "A. 2500 năm",
+      "B. 3000 năm",
+      "C. 3500 năm",
+      "D. 4000 năm"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Biện chứng là phương pháp",
+    "options": [
+      "A. Thấy cái chung mà không thấy cái riêng",
+      "B. Thấy cái riêng mà không thấy cái chung",
+      "C. Vừa thấy cái chung và cái riêng",
+      "D. Vừa thấy cái chung, vừa thấy cái riêng và cái đơn nhất"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Đặc điểm của quy luật triết học mang tính",
+    "options": [
+      "A. Chung nhất, khái quát nhất về thế giới",
+      "B. Cụ thể nhất, chi tiết nhất về thế giới",
+      "C. Toàn diện nhất, sâu sắc nhất về thế giới"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Triết học bao gồm những quan điểm chung nhất, những sự lý giải có luận chứng cho các câu hỏi chung của con người, nên triết học bao gồm toàn bộ tri thức của nhân loại. Kết luận trên ứng với triết học thời kỳ nào? Chọn câu trả lời đúng.",
+    "options": [
+      "A. Triết học cổ đại",
+      "B. Triết học phục hưng",
+      "C. Triết học Trung cổ - Tây Âu",
+      "D. Triết học Mác - Lênin"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Khẳng định nào sau đây là sai?",
+    "options": [
+      "A. Triết học Mác là sự kết hợp phép biện chứng của Hêghen và chủ nghĩa duy tâm của Phoi - ơ - bắc",
+      "B. Triết học Mác có sự thống nhất giữa phương pháp biện chứng và thế giới quan duy vật",
+      "C. Triết học Mác kế thừa và cải tạo phép biện chứng của Hêghen trên cơ sở duy vật",
+      "D. Tất cả các phương án đều sai"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Hai khái niệm triết học cùng với thế giới quan...",
+    "options": [
+      "A. Là trùng nhau vì đều là hệ thống quan điểm chung về thế giới",
+      "B. Triết học không phải là toàn bộ thế giới quan mà chỉ là hạt nhân lý luận chung nhất của thế giới quan",
+      "C. Không phải mọi triết học đều là hạt nhân lý luận của thế giới quan mà chỉ có triết học Mác - Lênin mới là hạt nhân lý luận của thế giới quan",
+      "D. Là hoàn toàn khác nhau"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Theo chủ nghĩa Mác - Lênin, triết học khác với các khoa học khác ở chỗ nào?",
+    "options": [
+      "A. Tính đặc thù của hệ thống tri thức khoa học và phương pháp nghiên cứu",
+      "B. Tính đặc thù của hệ thống tri thức và phương pháp nghiên cứu khoa học",
+      "C. Tính đặc thù của khoa học và phương pháp nghiên cứu đặc thù",
+      "D. Tính biện chứng và siêu hình"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Nếu quá đề cao triết học duy tâm sẽ dẫn đến",
+    "options": [
+      "A. Xa rời thực tế",
+      "B. Cực đoan",
+      "C. Thực dụng",
+      "D. Khách quan"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Vấn đề cơ bản của triết học gồm hai mặt đó là",
+    "options": [
+      "A. Bản thể luận và nhận thức luận",
+      "B. Lý luận và thực tiễn",
+      "C. Tri thức và chân lý",
+      "D. Vật chất và ý thức"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Phương pháp luận là lý luận chung về",
+    "options": [
+      "A. Phương pháp",
+      "B. Giải pháp",
+      "C. Phương châm",
+      "D. Cách thức"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Tác phẩm nào được xem là đánh dấu cho sự chín muồi về tư tưởng xã hội chủ nghĩa của C.Mác và Ăng-ghen?",
+    "options": [
+      "A. Gia đình thần thánh (1842)",
+      "B. Hệ tư tưởng Đức (1842)",
+      "C. Tuyên ngôn của Đảng cộng sản (1848)",
+      "D. Tư bản (1867)"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Triết học duy vật biện chứng là sự thống nhất giữa",
+    "options": [
+      "A. Thế giới quan duy vật và phương pháp luận biện chứng",
+      "B. Nhân sinh quan duy vật và phương pháp luận biện chứng",
+      "C. Thế giới quan duy vật và phương pháp luận siêu hình",
+      "D. Thế giới quan duy tâm và phương pháp luận biện chứng"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Biện chứng là phương pháp của khoa học nào sau đây?",
+    "options": [
+      "A. Triết học",
+      "B. Đạo đức học",
+      "C. Chính trị học",
+      "D. Lịch sử học"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Mác đã kế thừa \"hạt nhân hợp lý\" trong triết học của ông để xây dựng phép biện chứng duy vật. Ông là ai?",
+    "options": [
+      "A. Phơ bách",
+      "B. Platon",
+      "C. Hê ghen",
+      "D. Căng tơ"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Vấn đề cơ bản của triết học là",
+    "options": [
+      "A. Quan hệ giữa vật chất và ý thức",
+      "B. Quan hệ giữa khách quan và chủ quan",
+      "C. Quan hệ giữa thực tiễn và lí luận",
+      "D. Quan hệ giữa con người và tự nhiên"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Nền tảng lý luận của chủ nghĩa Mác-Lênin là",
+    "options": [
+      "A. Triết học",
+      "B. Kinh tế chính trị học",
+      "C. Chủ nghĩa xã hội khoa học",
+      "D. Khoa học tự nhiên"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Bản chất của triết học duy tâm như thế nào?",
+    "options": [
+      "A. Đi ngược lại với khoa học",
+      "B. Không hoàn toàn phản khoa học",
+      "C. Rất khoa học",
+      "D. Luôn dẫn dắt khoa học"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Chủ nghĩa Mác-Lênin ra đời vào khoảng thời gian nào?",
+    "options": [
+      "A. Giữa thế kỷ XIX",
+      "B. Đầu thế kỷ XIX",
+      "C. Đầu thế kỷ XX",
+      "D. Cuối thế kỷ XIX"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Nguồn gốc lý luận trực tiếp của triết học Mác là",
+    "options": [
+      "A. Triết học Hy Lạp cổ đại",
+      "B. Triết học cổ điển Đức",
+      "C. Triết học tây Âu trung cổ",
+      "D. Chủ nghĩa xã hội không tưởng Pháp"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Triết học trở thành \"nữ tì\" của thần học khi nào?",
+    "options": [
+      "A. Khi quyền lực của Nhà thờ, kinh viện bao trùm mọi lĩnh vực đời sống xã hội",
+      "B. Khi quyền lực của Thánh chủ bao trùm mọi lĩnh vực đời sống xã hội",
+      "C. Khi quyền lực của Giáo hội bao trùm mọi lĩnh vực đời sống xã hội",
+      "D. Khi quyền lực của nhà vua kém quyền lực giáo phái"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Triết học coi vật chất và tinh thần cùng quyết định nguồn gốc và sự tồn tại của thế giới như nhau gọi là",
+    "options": [
+      "A. Triết học duy vật",
+      "B. Triết học duy tâm",
+      "C. Triết học nhị nguyên",
+      "D. Triết học nhất nguyên"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Khái niệm \"những nguyên lý cơ bản của chủ nghĩa Mác - Lênin\" là chỉ",
+    "options": [
+      "A. Những quan điểm cơ bản của chủ nghĩa Mác - Lênin",
+      "B. Những quan điểm cơ bản, nền tảng của chủ nghĩa Mác - Lênin",
+      "C. Những quan điểm mang tính chất chân lý bền vững của chủ nghĩa Mác - Lênin",
+      "D. Những quan điểm cơ bản, nền tảng và có tính chất chân lý bền vững của chủ nghĩa Mác - Lênin"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Sai lầm của các nhà duy vật chất phác thời cổ đại là gì?",
+    "options": [
+      "A. Đồng nhất vật chất với vật thể",
+      "B. Đồng nhất vật thể với bản thân nó",
+      "C. Đồng nhất vật chất duy vật và thế giới duy tâm",
+      "D. Không có đáp án nào đúng"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Đâu là một trong những tác phẩm của Lênin?",
+    "options": [
+      "A. Chủ nghĩa xã hội không tưởng Pháp",
+      "B. Chủ nghĩa Duy vật và chủ nghĩa kinh viện phê phán",
+      "C. Chủ nghĩa Duy vật và chủ nghĩa kinh nghiệm phê phán",
+      "D. Đường Kách Mệnh"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Giải quyết mặt thứ nhất trong vấn đề cơ bản của triết học đã chia nó thành hai trường phái triết học lớn trong lịch sử, đó là các chủ nghĩa",
+    "options": [
+      "A. Duy vật và duy tâm",
+      "B. Duy vật và siêu hình",
+      "C. Duy vật biện chứng và duy tâm",
+      "D. Duy vật máy móc và duy tâm"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Nguồn gốc xã hội dẫn đến sự ra đời của Triết học là?",
+    "options": [
+      "A. Do sự phát triển của lực lượng sản xuất",
+      "B. Cách mạng nổ ra, những tộc người tan rã",
+      "C. Lao động trí óc đã tách khỏi lao động chân tay",
+      "D. Phân tích đúng tình hình trên toàn thế giới, sản xuất phát triển"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Một trong ba hình thức cơ bản của chủ nghĩa duy vật là gì?",
+    "options": [
+      "A. Chủ nghĩa duy vật chất phác thời cổ đại",
+      "B. Chủ nghĩa duy vật trung đại",
+      "C. Chủ nghĩa duy vật Mác thời cận đại",
+      "D. Chủ nghĩa Sôphanh thời hiện đại"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Định nghĩa đúng triết học Mác - Lênin là",
+    "options": [
+      "A. Hệ thống quan điểm duy vật biện chứng về tự nhiên, xã hội và tư duy",
+      "B. Khoa học làm cầu nối giữa các khoa học",
+      "C. Chính trị",
+      "D. Một thứ tôn giáo"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Các nhà triết học duy tâm được chia thành mấy trường phái?",
+    "options": [
+      "A. 2",
+      "B. 3",
+      "C. 4",
+      "D. 5"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Vấn đề cơ bản của triết học có hai mặt. Mặt thứ hai phải trả lời câu hỏi con người có khả năng hay không trong:",
+    "options": [
+      "A. Nhận thức được bản thân",
+      "B. Hòa hợp với tự nhiên",
+      "C. Chinh phục được thế giới",
+      "D. Nhận thức được thế giới"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Trong xã hội Ấn Độ cổ đại, triết học được hiểu là:",
+    "options": [
+      "A. Con đường suy ngẫm để dẫn dắt con người tới lẽ phải",
+      "B. Con đường tu tập",
+      "C. Con đường giải thoát",
+      "D. Con đường giác ngộ"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Ở Trung Quốc thời cổ đại có Triết học không?",
+    "options": [
+      "A. Có",
+      "B. Không",
+      "C. Chỉ có hệ tư tưởng chứ không có triết học",
+      "D. Không có hệ tư tưởng và triết học"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Đâu là hình thức thế giới quan tồn tại trước thế giới quan triết học?",
+    "options": [
+      "A. Thế giới quan tiền tệ",
+      "B. Thế giới quan tôn giáo",
+      "C. Thế giới quan nhân sinh",
+      "D. Thế giới quan pháp luật"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Đâu là tác phẩm của Ph. Ăngghen?",
+    "options": [
+      "A. \"Biện chứng của thiên nhiên\"",
+      "B. \"Biện chứng của tự nhiên\"",
+      "C. \"Biện chứng của tự do\"",
+      "D. \"Tự nhiên của biện chứng\""
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Vị trí, vai trò của Triết học Mác - Lênin trong đời sống xã hội và trong sự nghiệp đổi mới ở Việt Nam hiện nay?",
+    "options": [
+      "A. Thúc đẩy",
+      "B. Đối lập",
+      "C. Mâu thuẫn",
+      "D. Quan trọng, là nền tảng tư tưởng, kim chỉ nam cho hành động"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Triết học do C.Mác và Ph.Ăng-ghen thực hiện là bước ngoặt cách mạng trong sự phát triển của triết học. Biểu hiện vĩ đại nhất của bước ngoặt cách mạng đó là:",
+    "options": [
+      "A. Thay đổi căn bản tính chất của triết học, thay đổi căn bản đối tượng của nó và mối quan hệ đối với các khoa học khác",
+      "B. Gắn bó chặt chẽ giữa triết học với phong trào cách mạng của giai cấp vô sản và quần chúng lao động",
+      "C. Sáng tạo ra chủ nghĩa duy vật lịch sử làm thay đổi quan niệm của con người về xã hội",
+      "D. Làm cho triết học trở nên phổ biến trong cuộc sống"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Các hình thức cơ bản của chủ nghĩa duy tâm:",
+    "options": [
+      "A. Duy tâm chủ quan và duy tâm khách quan",
+      "B. Duy tâm biện chứng và duy tâm siêu hình",
+      "C. Duy tâm trung cổ cận đại và duy tâm cổ điển Đức",
+      "D. Duy tâm khách quan và duy tâm cổ đại"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Chủ nghĩa duy tâm có nguồn gốc nhận thức và nguồn gốc xã hội là trong quá trình nhận thức nó xem xét phiến diện, tuyệt đối hóa, thần thánh hóa cái gì của quá trình nhận thức?",
+    "options": [
+      "A. Một đối tượng",
+      "B. Những đặc tính nào đó",
+      "C. Một số mặt nào đó",
+      "D. Một mặt, một đặc tính nào đó"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Phép biện chứng chất phác thời cổ đại là",
+    "options": [
+      "A. Một hình thức của chủ nghĩa duy tâm",
+      "B. Một phần của chủ nghĩa duy vật",
+      "C. Tất cả đều đúng",
+      "D. Một hình thức của phép biện chứng"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Vấn đề cơ bản của Triết học là gì?",
+    "options": [
+      "A. Mối quan hệ giữa tự nhiên và bản thể",
+      "B. Mối quan hệ giữa tư duy và tồn tại",
+      "C. Mối quan hệ giữa cái chung và cái riêng",
+      "D. Con người và bản thể"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Ai được xem là nhà triết học thiên tài vào thế kỷ XVIII - XIX?",
+    "options": [
+      "A. Hecralitus",
+      "B. Immanuel Kant",
+      "C. Socrates",
+      "D. Bruno Fesnades"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Chủ nghĩa duy vật hình thành và phát triển với mấy hình thức cơ bản?",
+    "options": [
+      "A. 1",
+      "B. 2",
+      "C. 3",
+      "D. 4"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Đâu là nhận định đúng về Triết học?",
+    "options": [
+      "A. Triết học là hạt nhân của tôn giáo",
+      "B. Triết học là hạt nhân của thế giới quan",
+      "C. Triết học là trung tâm của phương pháp luận",
+      "D. Triết học là hạt nhân của phương pháp luận"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Ai là người tạo ra cơ sở tri thức cho sự phát triển của triết học trong thời kỳ Phục hưng?",
+    "options": [
+      "A. Adam Smith",
+      "B. Math Lurer",
+      "C. Xanhxi-mong",
+      "D. Copernicus"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Thời kỳ Phục hưng bắt đầu ở quốc gia nào?",
+    "options": [
+      "A. Pháp",
+      "B. Ý",
+      "C. Anh",
+      "D. Bồ Đào Nha"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Chủ nghĩa duy vật siêu hình ra đời gắn liền với thời kỳ nào?",
+    "options": [
+      "A. Thời kỳ Phục hưng",
+      "B. Thời kỳ Trung cổ",
+      "C. Thời kỳ Khải huyền",
+      "D. Thời kỳ cận đại"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Chủ nghĩa duy vật là trường phái triết học cho rằng:",
+    "options": [
+      "A. Bản chất thế giới là vật thể",
+      "B. Bản chất thế giới là vật chất",
+      "C. Vật chất là tính thứ hai",
+      "D. Vật chất tác động đến ý thức",
+      "E. Bản chất thế giới là vật chất và ý thức"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Chủ nghĩa duy vật cho rằng đâu là bản nguyên của thế giới?",
+    "options": [
+      "A. Bản chất thế giới là vật chất",
+      "B. Bản nguyên thế giới là ý thức",
+      "C. Bản nguyên thế giới là lực lượng siêu nhiên",
+      "D. Bản nguyên thế giới là Thượng đế"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Thừa nhận sự tồn tại của vật chất và tinh thần là bản nguyên có thể cùng quyết định nguồn gốc và sự vận động của thế giới là trường phái nào?",
+    "options": [
+      "A. Nhị nguyên luận",
+      "B. Biện chứng",
+      "C. Biện chứng luận",
+      "D. Chủ nghĩa Mác - Lênin"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Theo triết học mácxít thì siêu hình và biện chứng là hai phương pháp như thế nào?",
+    "options": [
+      "A. Đối lập nhau",
+      "B. Tương tác lẫn nhau",
+      "C. Bổ sung cho nhau",
+      "D. Có mối liên hệ với nhau"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Vấn đề cơ bản của triết học có hai mặt. Mặt thứ nhất phải trả lời cho câu hỏi cái nào có trước, cái nào có sau, cái nào quyết định cái nào. Đó là quan hệ giữa cái gì với cái gì?",
+    "options": [
+      "A. Tư duy với thực tế",
+      "B. Tư duy với xã hội",
+      "C. Ý thức và vật chất",
+      "D. Ý thức và bộ não"
+    ],
+    "explanation": "(Kiểu hỏi khác: Mặt thứ nhất trong vấn đề cơ bản của triết học giải quyết mối quan hệ giữa các yếu tố nào sau đây?)",
+    "correctIndex": 2
+  },
+  {
+    "question": "Theo quan điểm của chủ nghĩa duy tâm khách quan, mối quan hệ giữa các sự vật do cái gì quyết định?",
+    "options": [
+      "A. Lực lượng siêu nhiên (thượng đế, ý niệm tuyệt đối)",
+      "B. Cảm giác, thói quen của con người",
+      "C. Bản chất của thế giới tự nhiên",
+      "D. Phức hợp của cảm giác"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Chọn phương án trả lời phù hợp nhất. \"Sự ra đời của Triết học Mác là một quá trình...\". Từ còn thiếu trong chỗ trống là gì?",
+    "options": [
+      "A. Tất yếu khách quan",
+      "B. Thiết yếu",
+      "C. \"nhiều hơn và đồ sộ hơn\"... \"thế hệ trước\"",
+      "D. Đấu tranh của giai cấp"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Quan điểm nào thuộc chủ nghĩa duy tâm?",
+    "options": [
+      "A. Vật chất quyết định ý thức",
+      "B. Vật chất là tính thứ nhất, ý thức là tính thứ hai",
+      "C. Vật chất và ý thức song song tồn tại, không cái nào phụ thuộc cái nào",
+      "D. Ý thức có trước, vật chất có sau; ý thức quyết định vật chất",
+      "A. Vật chất quyết định ý thức",
+      "B. Ý thức quyết định vật chất",
+      "C. Con người quyết định tất cả)"
+    ],
+    "explanation": "(Kiểu hỏi khác: Triết học duy tâm cho rằng điều nào là đúng sau đây?",
+    "correctIndex": 3
+  },
+  {
+    "question": "\"Phương pháp biện chứng của tôi không những khác phương pháp của Hêghen về cơ bản mà còn đối lập hẳn với phương pháp ấy nữa\" là luận điểm của ai?",
+    "options": [
+      "A. Phoiơbắc",
+      "B. Ph. Ăngghen",
+      "C. V.I. Lênin",
+      "D. C.Mác"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Yếu tố biện chứng trong triết học Phật giáo được thể hiện qua quan điểm về điều gì?",
+    "options": [
+      "A. Vô thường, nhân duyên",
+      "B. Bát chính đạo",
+      "C. Bát khổ",
+      "D. Vô thường, vô ngã, vô tạo giả"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Cơ sở để phân chia triết học thành các trường phái khác nhau là:",
+    "options": [
+      "A. Vấn đề cơ bản của nhận thức luận",
+      "B. Vấn đề cơ bản của phương pháp luận",
+      "C. Vấn đề cơ bản của triết học"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Luận điểm \"Bản chất là những thực thể tinh thần tồn tại khách quan, quyết định sự tồn tại của sự vật\" thuộc lập trường triết học nào?",
+    "options": [
+      "A. Chủ nghĩa duy tâm chủ quan",
+      "B. Chủ nghĩa duy tâm khách quan",
+      "C. Chủ nghĩa duy vật siêu hình",
+      "D. Tất cả các đáp án đều đúng"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Triết học ra đời vào thời gian nào?",
+    "options": [
+      "A. Thế kỷ II TCN",
+      "B. Thế kỷ VIII - VI TCN",
+      "C. Thế kỷ II sau CN",
+      "D. Thế kỷ VII - VI TCN"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Trước khi triết học Mác ra đời, triết học được \"suy tôn\" là gì?",
+    "options": [
+      "A. Khoa học nghiên cứu",
+      "B. Khoa học của các khoa học",
+      "C. Khoa học của toán học",
+      "D. Khoa học của tầng lớp quý tộc"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Triết học trở thành nữ tì của thần học trong giai đoạn nào?",
+    "options": [
+      "A. Ở Tây Âu thời trung cổ",
+      "B. Ở Tây Âu thời cổ đại",
+      "C. Ở Tây Âu thời cận đại",
+      "D. Ở Châu Âu thời hiện đại"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Luận điểm cho rằng \"vật hay vật thể là những phức hợp cảm giác\" thuộc trường phái triết học nào?",
+    "options": [
+      "A. Chủ nghĩa duy tâm chủ quan.",
+      "B. Chủ nghĩa duy tâm khách quan.",
+      "C. Chủ nghĩa duy vật siêu hình.",
+      "D. Tất cả các đáp án đều đúng."
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Nhận định nào sau đây là sai khi nói về vị trí, vai trò của Triết học Mác - Lênin trong đời sống xã hội và trong sự nghiệp đổi mới ở Việt Nam hiện nay?",
+    "options": [
+      "A. Là thế giới quan khoa học cho hoạt động thực tiễn",
+      "B. Là phương pháp luận biện chứng cho nhận thức khoa học",
+      "C. Là chìa khóa vạn năng để giải quyết mọi vấn đề",
+      "D. Là nền tảng tư tưởng, kim chỉ nam cho hành động"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Trường phái triết học nào sau đây cho rằng tinh thần khách quan có trước, tồn tại độc lập với giới tự nhiên và con người?",
+    "options": [
+      "A. Duy vật thô sơ",
+      "B. Duy ý chí",
+      "C. Duy tâm chủ quan",
+      "D. Duy tâm khách quan"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Chủ nghĩa duy tâm khách quan có tư tưởng như thế nào?",
+    "options": [
+      "A. Cho rằng đầu óc con người quyết định tất cả hoạt động của con người",
+      "B. Cho rằng con người có thể biết được thế giới khi ở trong bốn bức tường trắng",
+      "C. Cho rằng ý thức con người chi phối hoạt động của bản thân họ",
+      "D. Cho rằng tinh thần khách quan chi phối hoạt động của con người"
+    ],
+    "explanation": "",
+    "correctIndex": 3
+  },
+  {
+    "question": "Khi V.I. Lênin phát triển chủ nghĩa Mác trong giai đoạn đế quốc chủ nghĩa, ông đã bổ sung lý luận nào cho phù hợp với bối cảnh xã hội mới? Chọn 2 đáp án.",
+    "options": [
+      "A. Khả năng của cách mạng vô sản chỉ có thể xảy ra đồng thời trên toàn cầu",
+      "B. Khả năng cách mạng vô sản có thể xảy ra ở một hoặc một số nước có điều kiện thích hợp",
+      "C. Chủ nghĩa đế quốc là giai đoạn phát triển cao nhất và là giai đoạn suy tàn của chủ nghĩa tư bản",
+      "D. Chủ nghĩa đế quốc phát triển sẽ làm giảm căng thẳng giữa các quốc gia tư bản, từ đó ổn định xã hội"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "\"Triết học\" là thuật ngữ được sử dụng lần đầu tiên trong trường phái nào?",
+    "options": [
+      "A. Socrates",
+      "B. Heraclitus",
+      "C. Thales",
+      "D. C. Mác"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "C.Mác và Ph.Ăngghen là người nước nào?",
+    "options": [
+      "A. Đức",
+      "B. Áo",
+      "C. Liên Xô",
+      "D. Tiệp Khắc"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Những phát minh nào của khoa học tự nhiên đã ảnh hưởng đến sự phát triển của chủ nghĩa duy vật biện chứng?",
+    "options": [
+      "A. Định luật bảo toàn và chuyển hóa năng lượng",
+      "B. Thuyết tế bào",
+      "C. Thuyết tiến hóa của Charles Darwin",
+      "D. Lý thuyết tương đối của Albert Einstein"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Câu trả lời sau đây, câu nào diễn đạt chưa chuẩn xác:",
+    "options": [
+      "A. Chủ nghĩa Mác là học thuyết do C.Mác sáng lập.",
+      "B. Chủ nghĩa Mác là học thuyết về sự nghiệp giải phóng giai cấp vô sản và nhân dân lao động.",
+      "C. Chủ nghĩa Mác là thế giới quan và phương pháp luận chung của mọi nhận thức và thực tiễn.",
+      "D. Chủ nghĩa Mác là học thuyết được xây dựng trên cơ sở kế thừa những tinh hoa của lịch sử tư tưởng nhân loại và thực tiễn cách mạng"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Vấn đề cơ bản của Triết học là gì?",
+    "options": [
+      "A. Mối quan hệ giữa tự nhiên và bản thể",
+      "B. Mối quan hệ giữa tư duy và tồn tại",
+      "C. Mối quan hệ giữa cái chung và cái riêng",
+      "D. Con người và bản thể"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Vấn đề cơ bản của triết học trả lời câu hỏi lớn nào?",
+    "options": [
+      "A. Mặt thứ nhất: giữa vật chất và ý thức cái nào có trước, cái nào có sau, cái nào quyết định cái nào?",
+      "B. Mặt thứ hai: con người có khả năng nhận thức được thế giới hay không?",
+      "C. Mặt thứ nhất: Khi tìm ra nguyên nhân cuối cùng của sự vận động vật chất là cái quyết định là đúng hay sai?",
+      "D. Mặt thứ hai: Con người về cơ bản có thể nhận thức được toàn bộ các sự vật hiện tượng hay không?"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Đâu là cơ sở chủ yếu nhất cho sự ra đời của triết học Mác?",
+    "options": [
+      "A. Thực tiễn cách mạng của giai cấp vô sản",
+      "B. Nguồn gốc lý luận",
+      "C. Tiền đề khoa học tự nhiên",
+      "D. Nhân tố chủ quan của C.Mác và Ph. Ăngghen"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Thuật ngữ \"triết gia\" đầu tiên xuất hiện được dùng để chỉ người nghiên cứu về:",
+    "options": [
+      "A. Bản chất của sự vật",
+      "B. Bản chất của thế giới",
+      "C. Bản chất của con người",
+      "D. Bản chất của thực tại khách quan"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Về hình thức cơ bản, loại chủ nghĩa nào khẳng định mọi sự vật, hiện tượng chỉ là phức hợp những cảm giác của cá nhân, của chủ thể?",
+    "options": [
+      "A. Duy vật siêu hình",
+      "B. Duy tâm khách quan",
+      "C. Duy tâm chủ quan",
+      "D. Duy vật máy móc"
+    ],
+    "explanation": "",
+    "correctIndex": 2
+  },
+  {
+    "question": "Những yếu tố nào đã thúc đẩy sự ra đời của triết học Mác trong bối cảnh Cách mạng công nghiệp ở Châu Âu?",
+    "options": [
+      "A. Sự tăng trưởng nhanh chóng của tầng lớp trung lưu với quyền lực kinh tế ngày càng lớn",
+      "B. Sự phát triển mạnh mẽ của lực lượng sản xuất và các mâu thuẫn xã hội gia tăng",
+      "C. Sự cần thiết phải có một lý thuyết mới để soi sáng vai trò của giai cấp tư sản",
+      "D. Sự xuất hiện của giai cấp vô sản như một lực lượng chính trị - xã hội độc lập"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Ai là đại diện tiêu biểu cho trường phái nhị nguyên luận?",
+    "options": [
+      "A. Descartes",
+      "B. Socrates",
+      "C. Heraclitus",
+      "D. Thales"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  },
+  {
+    "question": "Thế nào là phương pháp siêu hình?",
+    "options": [
+      "A. Xem xét các sự vật trong mối liên hệ tác động qua lại lẫn nhau, nhưng không vận động, không phát triển",
+      "B. Xem xét các sự vật trong trạng thái cô lập, tách rời nhau, và không vận động, không phát triển",
+      "C. Xem xét các sự vật trong mối liên hệ tác động qua lại lẫn nhau, và luôn vận động, luôn phát triển",
+      "D. Xem xét các sự vật trong trạng thái cô lập, tách rời nhau, nhưng luôn vận động, luôn phát triển"
+    ],
+    "explanation": "",
+    "correctIndex": 1
+  },
+  {
+    "question": "Vì sao nói triết học là hạt nhân của thế giới quan? Lựa chọn 3 đáp án đúng.",
+    "options": [
+      "A. Vì bản thân triết học chính là thế giới quan",
+      "B. Vì thế giới quan triết học như thế nào sẽ quy định các thế giới quan và các quan niệm khác như thế",
+      "C. Vì triết học bao giờ cũng là thành phần quan trọng, đóng vai trò là nhân tố cốt lõi trong các thế giới quan khác",
+      "D. Vì triết học luôn luôn ảnh hưởng và chi phối một cách tự giác đối với các loại thế giới quan"
+    ],
+    "explanation": "",
+    "correctIndex": 0
+  }
+]

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "b7-doi-tuong-nghien-cuu",
+    "type": "matching_columns",
+    "title": "Đối tượng nghiên cứu của triết học",
+    "config": {
+      "instruction": "Sự phân định ranh giới đối tượng nghiên cứu giữa triết học và các khoa học cụ thể là một bước tiến lịch sử. Hãy nối các lĩnh vực với đúng đối tượng nghiên cứu của chúng!",
+      "leftColumn": [
+        { "id": "triet-hoc-cu", "text": "Triết học trước Mác (Triết học tự nhiên)" },
+        { "id": "khoa-hoc", "text": "Các khoa học cụ thể" },
+        { "id": "triet-hoc-mac", "text": "Triết học Mác - Lênin" }
+      ],
+      "rightColumn": [
+        { "id": "r1", "text": "Bao trùm lên mọi lĩnh vực, tự coi mình là 'khoa học của các khoa học', đứng trên các khoa học cụ thể." },
+        { "id": "r2", "text": "Nghiên cứu, đi sâu vào từng lĩnh vực, từng bộ phận riêng biệt của giới tự nhiên, xã hội hoặc tư duy." },
+        { "id": "r3", "text": "Nghiên cứu những quy luật chung nhất của tự nhiên, xã hội và tư duy; giải quyết mối quan hệ giữa vật chất và ý thức trên lập trường duy vật biện chứng." }
+      ],
+      "correctPairs": [
+        { "leftId": "triet-hoc-cu", "rightId": "r1" },
+        { "leftId": "khoa-hoc", "rightId": "r2" },
+        { "leftId": "triet-hoc-mac", "rightId": "r3" }
+      ]
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b7-moi-quan-he",
+    "type": "category_sorting",
+    "title": "Mối quan hệ giữa Triết học Mác và khoa học cụ thể",
+    "config": {
+      "instruction": "Hãy đóng dấu ĐÚNG hoặc SAI cho các nhận định dưới đây về mối quan hệ giữa triết học Mác - Lênin và các khoa học cụ thể!",
+      "categories": [
+        { "id": "dung", "title": "Nhận định ĐÚNG" },
+        { "id": "sai", "title": "Nhận định SAI" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Triết học Mác - Lênin thay thế hoàn toàn các khoa học cụ thể vì nó nghiên cứu quy luật chung nhất.", "categoryId": "sai" },
+        { "id": "c2", "text": "Quan hệ giữa quy luật của triết học và quy luật của khoa học cụ thể là quan hệ giữa cái chung và cái riêng.", "categoryId": "dung" },
+        { "id": "c3", "text": "Các khoa học cụ thể hoàn toàn độc lập, không cần cung cấp dữ liệu làm tiền đề cơ sở cho triết học và cũng không cần dựa vào thế giới quan triết học.", "categoryId": "sai" },
+        { "id": "c4", "text": "Triết học Mác - Lênin là sự khái quát cao những kết quả của khoa học cụ thể, do đó trở thành cơ sở thế giới quan, phương pháp luận cho các khoa học cụ thể.", "categoryId": "dung" }
+      ],
+      "successFeedback": "Với triết học Mác - Lênin, đối tượng của triết học và đối tượng của khoa học cụ thể đã được phân biệt rõ ràng nhưng lại có sự kết hợp tất yếu."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b7-chuc-nang-tgq",
+    "type": "mindmap_reveal",
+    "title": "Chức năng Thế giới quan",
+    "config": {
+      "instruction": "Triết học Mác - Lênin thực hiện đồng thời nhiều chức năng, trong đó Thế giới quan là một trong hai chức năng cơ bản nhất. Hãy CLICK vào các tiêu điểm của 'Cặp kính thế giới quan duy vật biện chứng' dưới đây để giải mã vai trò định hướng của nó!",
+      "layoutConfig": { "type": "vertical" },
+      "nodes": [
+        {
+          "id": "nhan-thuc",
+          "front": { "text": "Định hướng nhận thức" },
+          "back": { "text": "Đem lại thế giới quan duy vật biện chứng, là cơ sở khoa học đi sâu nhận thức bản chất của tự nhiên, xã hội và nhận thức được mục đích, ý nghĩa của cuộc sống." }
+        },
+        {
+          "id": "hanh-dong",
+          "front": { "text": "Định hướng hành động" },
+          "back": { "text": "Giúp con người hình thành quan điểm khoa học định hướng mọi hoạt động, từ đó xác định thái độ và cả cách thức hoạt động của mình. Nâng cao vai trò tích cực, sáng tạo." }
+        },
+        {
+          "id": "dau-tranh",
+          "front": { "text": "Vai trò đấu tranh tư tưởng" },
+          "back": { "text": "Là cơ sở khoa học để đấu tranh với các loại thế giới quan duy tâm, tôn giáo, phản khoa học; là hạt nhân của hệ tư tưởng của giai cấp công nhân." }
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b7-chuc-nang-ppl",
+    "type": "fill_in_blanks",
+    "title": "Chức năng Phương pháp luận",
+    "config": {
+      "instruction": "Hãy hóa thân thành một nhà nghiên cứu để điền chính xác các thuật ngữ còn thiếu, hoàn thiện hệ thống quan điểm phương pháp luận này!",
+      "textWithBlanks": "Phương pháp luận cũng có nghĩa là [blank_1]. Vai trò phương pháp luận duy vật biện chứng được thể hiện trước hết là [blank_2]. Triết học Mác - Lênin giúp con người phát triển tư duy khoa học, đó là [blank_3].",
+      "blanks": [
+        { "id": "blank_1", "correctAnswer": "lý luận về hệ thống phương pháp", "distractors": ["công cụ thực hành", "tập hợp quy tắc"] },
+        { "id": "blank_2", "correctAnswer": "phương pháp chung của toàn bộ nhận thức khoa học", "distractors": ["định luật cụ thể", "giáo điều tư duy"] },
+        { "id": "blank_3", "correctAnswer": "tư duy ở cấp độ phạm trù, quy luật", "distractors": ["tư duy kinh nghiệm", "tư duy trực quan"] }
+      ],
+      "successFeedback": "Chức năng phương pháp luận cung cấp hệ thống nguyên tắc chung nhất làm công cụ phát triển tư duy."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b7-thai-do",
+    "type": "mcq",
+    "title": "Thái độ vận dụng lý luận",
+    "config": {
+      "question": "Mặc dù có vai trò cực kỳ to lớn, triết học Mác - Lênin có phải là một 'đơn thuốc vạn năng' giải quyết được mọi việc hay không? Thái độ vận dụng lý luận nào dưới đây là chính xác nhất?",
+      "options": [
+        { "id": "opt-1", "text": "Xem thường phương pháp luận triết học vì nó quá chung chung, không giải quyết được các vấn đề cụ thể.", "isCorrect": false },
+        { "id": "opt-2", "text": "Tuyệt đối hóa vai trò của phương pháp luận triết học, coi nó là chiếc chìa khóa vạn năng cho mọi tình huống.", "isCorrect": false },
+        { "id": "opt-3", "text": "Tránh xem thường hoặc tuyệt đối hóa; cần bồi dưỡng phương pháp luận duy vật biện chứng kết hợp chặt chẽ với tri thức khoa học cụ thể và kinh nghiệm hoạt động thực tiễn.", "isCorrect": true }
+      ],
+      "explanation": "Xem thường triết học sẽ sa vào mò mẫm, mất phương hướng; tuyệt đối hóa sẽ sa vào giáo điều. Chỉ có kết hợp chặt chẽ lý luận với thực tiễn và tri thức cụ thể mới mang lại thành công."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b7-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nĐối tượng nghiên cứu của triết học Mác - Lênin là giải quyết mối quan hệ giữa vật chất và ý thức và nghiên cứu những quy luật vận động chung nhất của tự nhiên, xã hội và tư duy.",
+      "keyTakeaways": [
+        "Sự khác biệt với triết học cũ là nó không thay thế khoa học cụ thể, mà có mối quan hệ biện chứng (cái chung và cái riêng) với các khoa học này.",
+        "Thực hiện hai chức năng cơ bản thống nhất hữu cơ: chức năng thế giới quan và chức năng phương pháp luận.",
+        "Trong hoạt động thực tiễn, không được xem thường phương pháp luận triết học (dẫn đến mò mẫm) cũng không được tuyệt đối hóa nó (dẫn đến giáo điều).",
+        "Luôn phải kết hợp chặt chẽ lý luận triết học với tri thức khoa học cụ thể và kinh nghiệm thực tiễn."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

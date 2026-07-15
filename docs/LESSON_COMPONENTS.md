@@ -108,6 +108,7 @@ The backend validator and frontend registry currently support:
 | `hotspot_gallery`     | `items[]`                                            | Learner opens image/icon hotspots or cards and reads details for each item.                                                                                                                                      |
 | `shinkei_matching`    | `pairs[]`                                            | Two-column memory game. Learner flips one left card and one right card; correct pairs stay open, wrong pairs show a miss state and close again.                                                                  |
 | `final_summary`       | none strictly required                               | Completion/summary screen; optional `message`, `keyTakeaways[]`, and `rewards`.                                                                                                                                  |
+| `fill_in_blanks`      | `textWithBlanks`, `blanks[]`                         | Learner fills in or selects missing keywords in a text block. Blanks use tags like `[blank_1]` mapped to definitions with `correctAnswer` and optional `distractors`.                                            |
 
 ## Media Model
 

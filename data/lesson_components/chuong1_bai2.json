@@ -1,0 +1,142 @@
+[
+  {
+    "id": "b2-y-nghia",
+    "type": "matching_columns",
+    "title": "Ý nghĩa xuất phát của biện chứng và siêu hình",
+    "config": {
+      "instruction": "Trước khi trở thành hai phương pháp tư duy đối lập nhau trong triết học hiện đại, các khái niệm 'biện chứng' và 'siêu hình' đã mang những ý nghĩa ban đầu rất độc đáo. Hãy kết nối các nhân vật và thời đại với đúng định nghĩa!",
+      "leftColumn": [
+        { "id": "socrates", "text": "Socrates" },
+        { "id": "aristotle", "text": "Aristotle" },
+        { "id": "triet-hoc-hien-dai", "text": "Triết học hiện đại (đặc biệt triết học mácxít)" }
+      ],
+      "rightColumn": [
+        { "id": "r1", "text": "Nghệ thuật tranh luận để tìm chân lý bằng cách phát hiện mâu thuẫn trong cách lập luận" },
+        { "id": "r2", "text": "Dùng để chỉ triết học, với tư cách là khoa học siêu cảm tính, phi thực nghiệm" },
+        { "id": "r3", "text": "Được dùng, trước hết để chỉ hai phương pháp tư duy chung nhất đối lập nhau đó là phương pháp biện chứng và phương pháp siêu hình" }
+      ],
+      "correctPairs": [
+        { "leftId": "socrates", "rightId": "r1" },
+        { "leftId": "aristotle", "rightId": "r2" },
+        { "leftId": "triet-hoc-hien-dai", "rightId": "r3" }
+      ]
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b2-ban-chat-sieu-hinh",
+    "type": "multi_select",
+    "title": "Bản chất của phương pháp siêu hình",
+    "config": {
+      "question": "Thế giới quan của con người sẽ bị quy định hoàn toàn bởi phương pháp tư duy mà họ lựa chọn. Hãy cùng phân biệt bản chất của Phương pháp siêu hình bằng cách lựa chọn chính xác các đặc điểm nhận thức của phương pháp này!",
+      "options": [
+        { "id": "opt-1", "text": "Nhận thức đối tượng ở trạng thái cô lập, tách rời đối tượng ra khỏi các quan hệ được xem xét và coi các mặt đối lập với nhau có một ranh giới tuyệt đối.", "isCorrect": true },
+        { "id": "opt-2", "text": "Nhận thức đối tượng ở trạng thái tĩnh; đồng nhất đối tượng với trạng thái tĩnh nhất thời đó.", "isCorrect": true },
+        { "id": "opt-3", "text": "Thừa nhận sự biến đổi chỉ là sự biến đổi về số lượng, về các hiện tượng bề ngoài.", "isCorrect": true },
+        { "id": "opt-4", "text": "Nguyên nhân của sự biến đổi được coi là nằm ở bên ngoài đối tượng.", "isCorrect": true },
+        { "id": "opt-5", "text": "Nhận thức đối tượng trong mối liên hệ phổ biến.", "isCorrect": false },
+        { "id": "opt-6", "text": "Nguồn gốc sự vận động là mâu thuẫn nội tại.", "isCorrect": false }
+      ],
+      "explanation": "Phương pháp siêu hình có cội nguồn hợp lý từ trong khoa học cơ học cổ điển. Song, nó chỉ có tác dụng trong một phạm vi nhất định bởi hiện thực khách quan không rời rạc và không ngưng đọng như phương pháp tư duy này quan niệm."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b2-gioi-han-tu-duy-sieu-hinh",
+    "type": "fill_in_blanks",
+    "title": "Giới hạn của tư duy siêu hình (Luận điểm của Ph. Ăngghen)",
+    "config": {
+      "instruction": "Nhà triết học Ph. Ăngghen đã chỉ ra một cách hình tượng những giới hạn và sai lầm phương pháp luận của tư duy siêu hình khi vượt quá phạm vi cơ học cổ điển. Hãy điền các từ khóa còn thiếu để hoàn chỉnh luận điểm nổi tiếng của ông!",
+      "textWithBlanks": "Phương pháp siêu hình \"chỉ nhìn thấy những sự vật riêng biệt mà không nhìn thấy [blank_1] giữa những sự vật ấy\". \"...chỉ nhìn thấy sự tồn tại của những sự vật ấy mà không nhìn thấy [blank_2] của những sự vật ấy\". \"...chỉ nhìn thấy trạng thái tĩnh của những sự vật ấy mà quên mất [blank_3] của những sự vật ấy\". \"...chỉ nhìn thấy [blank_4] mà không thấy [blank_5]\".",
+      "blanks": [
+        { "id": "blank_1", "correctAnswer": "mối liên hệ qua lại", "distractors": ["sự khác biệt", "sự cô lập"] },
+        { "id": "blank_2", "correctAnswer": "sự phát sinh và sự tiêu vong", "distractors": ["bản chất thực sự", "sự vận động"] },
+        { "id": "blank_3", "correctAnswer": "sự vận động", "distractors": ["sự bất biến", "mối liên kết"] },
+        { "id": "blank_4", "correctAnswer": "cây", "distractors": ["lá", "rừng"] },
+        { "id": "blank_5", "correctAnswer": "rừng", "distractors": ["cây", "đất"] }
+      ],
+      "successFeedback": "Chính xác! Phương pháp siêu hình dẫn đến việc nhìn nhận thế giới một cách phiến diện, không thấy được bức tranh tổng thể và tiến trình phát triển."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b2-dac-trung-bien-chung",
+    "type": "mindmap_reveal",
+    "title": "Đặc trưng cốt lõi của phương pháp biện chứng",
+    "config": {
+      "instruction": "Đối lập hoàn toàn với siêu hình, Phương pháp biện chứng mang lại một góc nhìn toàn vẹn và động về thế giới. Hãy kích hoạt các mảnh ghép tư duy dưới đây để làm rõ các đặc trưng cốt lõi của phương pháp biện chứng!",
+      "layoutConfig": { "type": "matrix" },
+      "nodes": [
+        { "id": "n1", "front": { "text": "Mối liên hệ" }, "back": { "text": "Nhận thức đối tượng trong các mối liên hệ phổ biến vốn có của nó. Đối tượng và các thành phần của đối tượng luôn trong sự lệ thuộc, ảnh hưởng, ràng buộc và quy định lẫn nhau." } },
+        { "id": "n2", "front": { "text": "Sự vận động" }, "back": { "text": "Nhận thức đối tượng ở trạng thái luôn vận động biến đổi, nằm trong khuynh hướng phổ quát là phát triển. Quá trình vận động này thay đổi cả về lượng và chất của các sự vật, hiện tượng." } },
+        { "id": "n3", "front": { "text": "Nguồn gốc" }, "back": { "text": "Nguồn gốc của sự vận động, thay đổi đó là sự đấu tranh giữa các mặt đối lập của mâu thuẫn nội tại trong bản thân sự vật, hiện tượng." } },
+        { "id": "n4", "front": { "text": "Góc nhìn toàn diện" }, "back": { "text": "Cho phép chủ thể nhận thức không chỉ thấy những sự vật riêng biệt mà còn thấy cả mối liên hệ giữa chúng; không chỉ thấy sự tồn tại của sự vật mà còn thấy cả sự sinh thành, phát triển và tiêu vong của sự vật; không chỉ thấy trạng thái tĩnh mà còn thấy cả trạng thái động của sự vật." } }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b2-ranh-gioi-nhan-thuc",
+    "type": "mcq",
+    "title": "Ranh giới nhận thức (Bài tập so sánh của Ph. Ăngghen)",
+    "config": {
+      "question": "Ph. Ăngghen đã nhận xét như thế nào về sự khác biệt giữa tư duy của nhà siêu hình và tư duy biện chứng?",
+      "options": [
+        { "id": "opt-1", "text": "Tư duy siêu hình thừa nhận cái khẳng định và cái phủ định vừa loại trừ nhau lại vừa gắn bó với nhau, trong khi tư duy biện chứng xem xét các đối tượng ở trạng thái cô lập tuyệt đối.", "isCorrect": false },
+        { "id": "opt-2", "text": "Tư duy của nhà siêu hình chỉ dựa trên những phản đề tuyệt đối không thể dung nhau được (hoặc là... hoặc là). Ngược lại, tư duy biện chứng là tư duy mềm dẻo, linh hoạt, không tuyệt đối hóa nghiêm ngặt những ranh giới, trong những trường hợp cần thiết là bên cạnh cái 'hoặc là... hoặc là' thì còn có cả 'cái này lẫn cái kia' nữa, và thực hiện sự môi giới giữa các mặt đối lập.", "isCorrect": true }
+      ]
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b2-ba-hinh-thuc-bien-chung",
+    "type": "timeline_explorer",
+    "title": "Ba hình thức lịch sử của phép biện chứng",
+    "config": {
+      "instruction": "Cùng với sự phát triển của tư duy con người, phương pháp biện chứng đã trải qua ba giai đoạn phát triển, được thể hiện trong triết học với ba hình thức lịch sử. Bạn hãy sắp xếp các hình thức này vào đúng các nấc thang tiến hóa của lịch sử triết học!",
+      "periods": [
+        {
+          "id": "nac-thang-1",
+          "title": "Nấc thang 1 (Hình thức thứ nhất): Phép biện chứng tự phát thời cổ đại",
+          "content": "Các nhà biện chứng cả phương Đông và phương Tây thời cổ đại đã thấy được các sự vật, hiện tượng của vũ trụ vận động trong sự sinh thành, biến hóa vô cùng vô tận; nhưng những gì họ thấy được chỉ là trực kiến, chưa có các kết quả của nghiên cứu và thực nghiệm khoa học minh chứng."
+        },
+        {
+          "id": "nac-thang-2",
+          "title": "Nấc thang 2 (Hình thức thứ hai): Phép biện chứng duy tâm",
+          "content": "Đỉnh cao thể hiện trong triết học cổ điển Đức, người khởi đầu là Kant và người hoàn thiện là Hegel; lần đầu tiên trình bày một cách có hệ thống những nội dung quan trọng nhất của phương pháp biện chứng; nhưng cho rằng biện chứng bắt đầu và kết thúc ở tinh thần, thế giới hiện thực chỉ là sự phản ánh biện chứng của ý niệm."
+        },
+        {
+          "id": "nac-thang-3",
+          "title": "Nấc thang 3 (Hình thức thứ ba): Phép biện chứng duy vật",
+          "content": "Do C. Mác và Ph. Ăngghen xây dựng, V.I. Lênin và các nhà triết học hậu thế phát triển; gạt bỏ tính thần bí, tư biện của triết học cổ điển Đức, kế thừa hạt nhân hợp lý để xây dựng học thuyết về mối liên hệ phổ biến và về sự phát triển dưới hình thức hoàn bị nhất."
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b2-kiem-tra-dung-sai",
+    "type": "true_false",
+    "title": "Đúc kết kiến thức cốt lõi",
+    "config": {
+      "statement": "Căn cứ vào văn bản gốc, phép biện chứng duy vật của C. Mác và Ph. Ăngghen là sự sao chép nguyên vẹn phép biện chứng của triết học cổ điển Đức mà không có sự cải biến nào.",
+      "correctAnswer": false,
+      "explanation": "C. Mác và Ph. Ăngghen đã gạt bỏ tính thần bí, tư biện của triết học cổ điển Đức, chỉ kế thừa hạt nhân hợp lý để xây dựng nên học thuyết của mình."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b2-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nKhái niệm biện chứng và siêu hình có nguồn gốc lịch sử lâu dài, ban đầu gắn liền với nghệ thuật tranh luận (Socrates) hoặc khoa học siêu cảm tính (Aristotle), nhưng trong triết học hiện đại đã trở thành hai phương pháp tư duy chung nhất đối lập nhau.",
+      "keyTakeaways": [
+        "Phương pháp siêu hình nhận thức đối tượng ở trạng thái cô lập, tĩnh tại, biệt lập, xem ranh giới giữa các mặt đối lập là tuyệt đối và tìm nguyên nhân biến đổi ở bên ngoài (chỉ nhìn thấy cây mà không thấy rừng), có cội nguồn từ cơ học cổ điển.",
+        "Phương pháp biện chứng nhận thức đối tượng trong các mối liên hệ phổ biến, lệ thuộc và ràng buộc lẫn nhau; ở trạng thái luôn vận động, biến đổi và phát triển do nguồn gốc đấu tranh giữa các mặt đối lập của mâu thuẫn nội tại.",
+        "Phép biện chứng tiến hóa qua ba hình thức: phép biện chứng tự phát thời cổ đại, phép biện chứng duy tâm cổ điển Đức (khởi đầu từ Kant, hoàn thiện bởi Hegel), và đỉnh cao hoàn bị nhất là phép biện chứng duy vật do C. Mác và Ph. Ăngghen xây dựng."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

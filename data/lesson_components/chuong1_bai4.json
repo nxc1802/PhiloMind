@@ -1,0 +1,101 @@
+[
+  {
+    "id": "b4-tien-trinh",
+    "type": "timeline_explorer",
+    "title": "Tiến trình hình thành và phát triển của Triết học Mác",
+    "config": {
+      "instruction": "Sự ra đời của triết học Mác là một quá trình phát triển bền bỉ và không ngừng hoàn thiện. Hãy cuộn dòng thời gian dưới đây để khám phá ba thời kỳ chủ yếu trong sự hình thành triết học Mác!",
+      "periods": [
+        {
+          "id": "thoi-ky-1841-1844",
+          "title": "Thời kỳ 1841 - 1844",
+          "content": "**Thời kỳ hình thành tư tưởng triết học với bước chuyển lập trường.** Đây là giai đoạn C. Mác và Ph. Ăngghen tích cực tham gia các hoạt động thực tiễn và nghiên cứu khoa học. Trong thời kỳ này, các ông đã tạo ra bước chuyển biến lập trường tư tưởng lịch sử: chuyển từ thế giới quan duy tâm sang thế giới quan duy vật, từ lập trường dân chủ cách mạng sang lập trường cộng sản chủ nghĩa."
+        },
+        {
+          "id": "thoi-ky-1844-1848",
+          "title": "Thời kỳ 1844 - 1848",
+          "content": "**Thời kỳ đề xuất những nguyên lý triết học duy vật biện chứng và duy vật lịch sử.** Trong giai đoạn này, bằng sự hợp tác chặt chẽ, các ông đã công bố nhiều tác phẩm quan trọng. Các nguyên lý cốt lõi của triết học duy vật biện chứng và duy vật lịch sử đã được đề xuất và hoàn thiện, tạo nền tảng vững chắc cho học thuyết mới."
+        },
+        {
+          "id": "thoi-ky-1848-1895",
+          "title": "Thời kỳ 1848 - 1895",
+          "content": "**Thời kỳ C. Mác và Ph. Ăngghen bổ sung và phát triển toàn diện triết học Mác.** Học thuyết triết học tiếp tục được thử thách, bổ sung qua thực tiễn phong trào công nhân quốc tế (Công xã Paris 1871) và qua các nghiên cứu chuyên sâu về kinh tế chính trị học (bộ Tư bản) cũng như các khám phá mới của khoa học tự nhiên."
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b4-tac-pham-kinh-dien",
+    "type": "matching_columns",
+    "title": "Những tác phẩm kinh điển và ý nghĩa lịch sử",
+    "config": {
+      "instruction": "Hãy ghép nối các tác phẩm kinh điển với đúng ý nghĩa triết học to lớn mà nó mang lại trong thời kỳ hình thành hệ thống!",
+      "leftColumn": [
+        { "id": "t1", "text": "Hệ tư tưởng Đức" },
+        { "id": "t2", "text": "Sự khốn cùng của triết học (1847)" },
+        { "id": "t3", "text": "Tuyên ngôn của Đảng Cộng sản (1848)" }
+      ],
+      "rightColumn": [
+        { "id": "r1", "text": "Tác phẩm đầu tiên C. Mác và Ph. Ăngghen viết chung, trình bày quan điểm duy vật lịch sử một cách hệ thống." },
+        { "id": "r2", "text": "Chống lại triết học tiểu tư sản của P.J. Proudhon, bảo vệ và phát triển triết học duy vật biện chứng." },
+        { "id": "r3", "text": "Văn kiện có tính chất cương lĩnh đầu tiên của chủ nghĩa Mác, đánh dấu sự trưởng thành về mọi mặt của chủ nghĩa Mác (triết học, kinh tế chính trị, CNXH khoa học)." }
+      ],
+      "correctPairs": [
+        { "leftId": "t1", "rightId": "r1" },
+        { "leftId": "t2", "rightId": "r2" },
+        { "leftId": "t3", "rightId": "r3" }
+      ]
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b4-thoi-ky-lenin",
+    "type": "fill_in_blanks",
+    "title": "Thời kỳ V.I. Lênin bảo vệ và phát triển triết học Mác",
+    "config": {
+      "instruction": "Thời kỳ 1917 - 1924, V.I. Lênin đã chỉ đạo vượt qua những khó khăn về nhận thức để xây dựng chủ nghĩa xã hội. Hãy giúp V.I. Lênin hoàn thiện các nguyên lý xây dựng đất nước bằng cách lựa chọn các từ khóa chính xác nhất điền vào các văn kiện thực tiễn!",
+      "textWithBlanks": "Thời kỳ 1917 - 1924 (sau Cách mạng tháng Mười), V.I. Lênin tổng kết kinh nghiệm thực tiễn để bảo vệ thành quả cách mạng và xây dựng chủ nghĩa xã hội, trong đó nhiệm vụ cơ bản, hàng đầu là nâng cao [blank_1].",
+      "blanks": [
+        { "id": "blank_1", "correctAnswer": "năng suất lao động", "distractors": ["công cụ máy móc", "thời gian làm việc"] }
+      ],
+      "successFeedback": "Đúng vậy! Nâng cao năng suất lao động là cốt lõi để xây dựng cơ sở vật chất - kỹ thuật cho chế độ mới."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b4-lap-truong-bao-ve",
+    "type": "category_sorting",
+    "title": "Lập trường bảo vệ và phát triển triết học",
+    "config": {
+      "instruction": "Hãy phân loại các thẻ thái độ dưới đây vào đúng nhóm thể hiện bản chất khoa học hoặc thái độ sai lầm đối với triết học Mác - Lênin!",
+      "categories": [
+        { "id": "tich-cuc", "title": "Bảo vệ và phát triển triết học Mác - Lênin" },
+        { "id": "tieu-cuc", "title": "Các xu hướng sai lầm / xét lại" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Phát triển triết học dựa trên tổng kết thực tiễn lịch sử", "categoryId": "tich-cuc" },
+        { "id": "c2", "text": "Thống nhất giữa tính Đảng và tính khoa học trong nghiên cứu", "categoryId": "tich-cuc" },
+        { "id": "c3", "text": "Đấu tranh chống các trào lưu tư tưởng tư sản", "categoryId": "tich-cuc" },
+        { "id": "c4", "text": "Phủ nhận hạt nhân hợp lý và thành tựu của triết học duy vật biện chứng", "categoryId": "tieu-cuc" },
+        { "id": "c5", "text": "Thái độ giáo điều, biến triết học thành một hệ thống tín điều xơ cứng", "categoryId": "tieu-cuc" }
+      ],
+      "successFeedback": "Bảo vệ và phát triển triết học Mác - Lênin không phải là bảo vệ từng câu từng chữ một cách giáo điều, mà là bảo vệ linh hồn sống của nó thông qua việc phát triển học thuyết từ thực tiễn sinh động."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b4-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nSự hình thành và phát triển của triết học Mác là một quá trình liên tục không ngừng, đi từ bước chuyển lập trường triết học đến việc đề xuất các nguyên lý cơ bản và cuối cùng là bổ sung, hoàn thiện thông qua thực tiễn cách mạng.",
+      "keyTakeaways": [
+        "Quá trình này trải qua 3 thời kỳ của C. Mác và Ph. Ăngghen (1841-1844: chuyển biến lập trường; 1844-1848: đề xuất nguyên lý; 1848-1895: phát triển toàn diện).",
+        "Giai đoạn tiếp theo gắn liền với sự bảo vệ và phát triển xuất sắc của V.I. Lênin (1893-1924) qua các cuộc cách mạng Nga và xây dựng đất nước.",
+        "Việc bảo vệ, bổ sung và phát triển triết học Mác - Lênin hiện nay là nhiệm vụ quan trọng, yêu cầu phải gắn lý luận với thực tiễn lịch sử, chống lại các thái độ giáo điều và xu hướng xét lại."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

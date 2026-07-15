@@ -1,0 +1,102 @@
+[
+  {
+    "id": "b3-dieu-kien-kinh-te-xa-hoi",
+    "type": "category_sorting",
+    "title": "Điều kiện kinh tế - xã hội",
+    "config": {
+      "instruction": "Vào những năm 40 của thế kỷ XIX, sự phát triển của phương thức sản xuất tư bản chủ nghĩa dưới tác động của cuộc cách mạng công nghiệp đã làm cho mâu thuẫn xã hội trở nên vô cùng gay gắt. Hãy định vị các phong trào đấu tranh giai cấp tiêu biểu bằng cách kéo thả các thẻ sự kiện vào đúng các quốc gia!",
+      "categories": [
+        { "id": "phap", "title": "Pháp" },
+        { "id": "anh", "title": "Anh" },
+        { "id": "duc", "title": "Đức" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Cuộc khởi nghĩa của thợ dệt ở Lyon diễn ra vào năm 1831 và nổ ra lại vào năm 1834, thể hiện cuộc quyết chiến giữa giai cấp những người có của và giai cấp những kẻ không có gì hết", "categoryId": "phap" },
+        { "id": "c2", "text": "Phong trào Hiến chương vào cuối những năm 30 của thế kỷ XIX, là phong trào cách mạng vô sản to lớn đầu tiên, thật sự có tính chất quần chúng và có hình thức chính trị", "categoryId": "anh" },
+        { "id": "c3", "text": "Cuộc đấu tranh của thợ dệt ở Xilêdi mang tính chất giai cấp tự phát, dẫn đến sự ra đời của tổ chức vô sản cách mạng là 'Đồng minh những người chính nghĩa'", "categoryId": "duc" }
+      ],
+      "successFeedback": "Thực tiễn cách mạng của giai cấp vô sản là cơ sở chủ yếu nhất cho sự ra đời triết học Mác."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b3-nguon-goc-ly-luan",
+    "type": "category_sorting",
+    "title": "Nguồn gốc lý luận",
+    "config": {
+      "instruction": "Triết học Mác ra đời là sự thừa kế thẳng và trực tiếp những thành tựu trong lịch sử tư tưởng của nhân loại để giải đáp những vấn đề của thời đại. Hãy phân loại các vĩ nhân lịch sử vào đúng nguồn gốc tư tưởng của họ!",
+      "categories": [
+        { "id": "duc", "title": "TRIẾT HỌC CỔ ĐIỂN ĐỨC (Nguồn gốc lý luận trực tiếp)" },
+        { "id": "anh", "title": "KINH TẾ CHÍNH TRỊ HỌC ANH (Nhân tố không thể thiếu)" },
+        { "id": "phap", "title": "CHỦ NGHÃ XÃ HỘI KHÔNG TƯỞNG PHÁP (Nguồn gốc học thuyết Mác về CNXH)" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Hegel", "categoryId": "duc" },
+        { "id": "c2", "text": "Feuerbach", "categoryId": "duc" },
+        { "id": "c3", "text": "Adam Smith", "categoryId": "anh" },
+        { "id": "c4", "text": "David Ricardo", "categoryId": "anh" },
+        { "id": "c5", "text": "Saint Simon", "categoryId": "phap" },
+        { "id": "c6", "text": "Charles Fourier", "categoryId": "phap" }
+      ],
+      "successFeedback": "C. Mác và Ph. Ăngghen đã kế thừa 'hạt nhân hợp lý' trong tư tưởng biện chứng của Hegel và dựa vào truyền thống chủ nghĩa duy vật của Feuerbach để xây dựng nên triết học mới."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b3-tien-de-khoa-hoc",
+    "type": "mindmap_reveal",
+    "title": "Tiền đề khoa học tự nhiên",
+    "config": {
+      "instruction": "Sự phát triển mạnh mẽ của khoa học tự nhiên đầu thế kỷ XIX đã vạch ra mối liên hệ thống nhất biện chứng của thế giới vật chất, làm sụp đổ phương pháp tư duy siêu hình. Hãy mở khóa ba chiếc hộp khoa học!",
+      "layoutConfig": { "type": "horizontal" },
+      "nodes": [
+        {
+          "id": "nang-luong",
+          "front": { "text": "Định luật bảo toàn và chuyển hóa năng lượng" },
+          "back": { "text": "Chứng minh sự chuyển hóa tuần hoàn của các dạng năng lượng trong tự nhiên." }
+        },
+        {
+          "id": "te-bao",
+          "front": { "text": "Thuyết tế bào" },
+          "back": { "text": "Mạng lưới các đơn vị sinh học siêu vi, chứng minh nguồn gốc thống nhất của sự sống." }
+        },
+        {
+          "id": "tien-hoa",
+          "front": { "text": "Thuyết tiến hóa của Charles Darwin" },
+          "back": { "text": "Sơ đồ phân nhánh tiến hóa của muôn loài, chứng minh sự phát triển và biến đổi liên tục của thế giới tự nhiên." }
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b3-nhan-to-chu-quan",
+    "type": "mcq",
+    "title": "Nhân tố chủ quan",
+    "config": {
+      "question": "Nhân tố chủ quan nào đã kết tinh và tạo nên động lực sáng tạo mạnh mẽ giúp C. Mác và Ph. Ăngghen xây dựng nên triết học Mác?",
+      "options": [
+        { "id": "opt-1", "text": "Xuất thân từ tầng lớp cùng khổ của xã hội và chỉ tập trung vào hoạt động đấu tranh trên báo chí lý luận thuần túy.", "isCorrect": false },
+        { "id": "opt-2", "text": "Hoạt động thực tiễn không biết mệt mỏi, lập trường giai cấp công nhân và tình cảm đặc biệt đối với nhân dân lao động, hòa quyện với tình bạn vĩ đại; cùng với bước chuyển lập trường từ dân chủ cách mạng và nhân đạo chủ nghĩa sang lập trường giai cấp công nhân và nhân đạo cộng sản thông qua lao động khoa học nghiêm túc.", "isCorrect": true },
+        { "id": "opt-3", "text": "Giữ nguyên lập trường dân chủ cách mạng cũ để nghiên cứu kinh tế học nhằm giải thích các quan hệ phong kiến.", "isCorrect": false }
+      ],
+      "explanation": "Tình bạn vĩ đại vượt xa mọi truyền thuyết đời xưa đã kết tinh và tạo nên động lực sáng tạo mạnh mẽ giúp C. Mác và Ph. Ăngghen xây dựng nên học thuyết của mình."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b3-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nSự xuất hiện của triết học Mác là một cuộc cách mạng vĩ đại trong lịch sử triết học, là tất yếu lịch sử được tạo nên từ sự thống nhất giữa điều kiện khách quan và nhân tố chủ quan.",
+      "keyTakeaways": [
+        "Về điều kiện kinh tế - xã hội, đó là sự xuất hiện của giai cấp vô sản trên vũ đài lịch sử tự phát và tự giác đấu tranh thông qua các phong trào lớn tại Pháp, Anh, Đức.",
+        "Về nguồn gốc lý luận, triết học Mác kế thừa trực tiếp 'hạt nhân hợp lý' biện chứng ở Hegel và chủ nghĩa duy vật của Feuerbach.",
+        "Về tiền đề khoa học tự nhiên, triết học Mác dựa trên ba phát minh vĩ đại: định luật bảo toàn, thuyết tế bào và thuyết tiến hóa Darwin.",
+        "Nhân tố chủ quan quyết định chính là hoạt động thực tiễn cách mạng gắn chặt với hoạt động lý luận của C. Mác và Ph. Ăngghen."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

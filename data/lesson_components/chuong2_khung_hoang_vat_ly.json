@@ -1,0 +1,197 @@
+[
+  {
+    "id": "c2-intro",
+    "type": "markdown",
+    "title": "Mở đầu: Câu hỏi của lịch sử",
+    "config": {
+      "content": "Đứng trước câu hỏi kinh điển của nhân loại: *\"Bản chất của thế giới này là gì?\"*, lịch sử triết học đã hình thành và chia thành hai ngả đường lớn:\n* **Chủ nghĩa Duy tâm:** Cho rằng tinh thần, ý niệm hay ý thức là nguồn gốc, là cái có trước và quyết định thế giới vật chất.\n* **Chủ nghĩa Duy vật:** Khẳng định vật chất là cái có trước, tồn tại khách quan và quyết định ý thức."
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-duy-tam",
+    "type": "mindmap_reveal",
+    "title": "Quan niệm của chủ nghĩa duy tâm",
+    "config": {
+      "instruction": "Dù cùng gặp nhau ở điểm chung là đề cao vai trò của tinh thần, chủ nghĩa duy tâm lại chia thành hai hướng tiếp cận khác nhau. Hãy lật mở để xem chi tiết.",
+      "layoutConfig": { "type": "horizontal" },
+      "nodes": [
+        {
+          "id": "duy-tam-khach-quan",
+          "front": { "text": "Chủ nghĩa duy tâm khách quan\n(Đại diện: Platon)" },
+          "back": { "text": "**Quan điểm:** Học thuyết \"Ý niệm\" của Platon cho rằng thế giới vật chất cảm tính quanh ta thực chất chỉ là cái bóng, là sự phản ánh mờ nhạt của một thế giới khác hoàn hảo và vĩnh cửu hơn – **thế giới của các \"Ý niệm\"** thuần túy.\n\n**Cốt lõi:** Thừa nhận sự tồn tại của giới tự nhiên, nhưng coi nguồn gốc của giới tự nhiên là do \"sự tha hóa\" (biến đổi, phái sinh) từ tinh thần thế giới." }
+        },
+        {
+          "id": "duy-tam-chu-quan",
+          "front": { "text": "Chủ nghĩa duy tâm chủ quan\n(Đại diện: Protagoras)" },
+          "back": { "text": "**Quan điểm:** Luận điểm nổi tiếng của ông là *\"Con người là thước đo của vạn vật, thước đo của những cái đang tồn tại và những cái không tồn tại\"*.\n\n**Cốt lõi:** Khẳng định thế giới khách quan không tồn tại độc lập mà phụ thuộc hoàn toàn vào nhận thức, cảm giác và ý chí chủ quan của mỗi cá nhân." }
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-duy-tam-duc-ket",
+    "type": "knowledge_piece",
+    "title": "Đúc kết về chủ nghĩa duy tâm",
+    "config": {
+      "label": "Đúc kết",
+      "takeaways": [
+        "Dù là duy tâm khách quan hay duy tâm chủ quan, các nhà triết học thuộc trường phái này tuy buộc phải thừa nhận sự hiện diện của các sự vật, hiện tượng trong thực tế nhưng về mặt bản chất, họ đã phủ nhận đặc tính tồn tại độc lập (khách quan) của vật chất đối với ý thức con người."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-duy-vat-lich-su",
+    "type": "timeline_explorer",
+    "title": "Quan niệm của chủ nghĩa duy vật qua các thời kỳ lịch sử",
+    "config": {
+      "instruction": "Trái ngược với chủ nghĩa duy tâm, sự phát triển của chủ nghĩa duy vật gắn liền với thực tiễn sản xuất và sự tiến bộ của tri thức khoa học qua các thời kỳ.",
+      "periods": [
+        {
+          "id": "thoi-co-dai-so-khai",
+          "title": "Chủ nghĩa duy vật sơ khai thời Cổ đại",
+          "content": "Từ thuở sơ khai, khi khoa học tự nhiên còn non trẻ, các triết gia đã cố gắng tìm kiếm **\"bản nguyên\"** – chất liệu đầu tiên cấu thành nên toàn bộ vũ trụ mà không cần dùng đến các thế lực siêu nhiên thần thánh. Họ đồng nhất vật chất với các yếu tố tự nhiên cụ thể:\n* **Thales:** Cho rằng bản nguyên của thế giới là **Nước**.\n* **Heraclitus:** Coi nguồn gốc của mọi sự vật là **Lửa**.\n* **Anaximenes:** Chọn **Không khí** làm nền tảng.\n* **Ấn Độ cổ đại (Trường phái Tứ đại):** Quy thế giới về 4 yếu tố: **Đất, nước, lửa, gió**.\n* **Trung Quốc cổ đại (Thuyết Ngũ hành):** Giải thích sự biến đổi của thế giới qua 5 yếu tố: **Kim, mộc, thủy, hỏa, thổ**.\n\n**Đánh giá:** Mang tính tích cực khi dùng giới tự nhiên để giải thích thế giới nhưng hạn chế ở chỗ đồng nhất vật chất với vật thể cụ thể."
+        },
+        {
+          "id": "buoc-tien-apeiron",
+          "title": "Bước tiến Apeiron của Anaximander",
+          "content": "Nhận ra rằng nước, lửa hay không khí đều có thể biến đổi và tự triệt tiêu nhau, Anaximander cho rằng nguồn gốc của vạn vật phải là một thứ chung, đứng sau mọi dạng vật chất cụ thể. Ông gọi đó là **Apeiron** – một bản chất vô định, vô hạn và không thể suy tàn.\n\n*Ý nghĩa:* Đây là nỗ lực vượt bậc nhằm thoát khỏi hạn chế của việc \"đồng nhất vật chất với một vật thể cụ thể\" của các nhà duy vật đi trước."
+        },
+        {
+          "id": "thuyet-nguyen-tu",
+          "title": "Thuyết Nguyên tử của Democritus",
+          "content": "Tiếp nối nỗ lực tìm kiếm bản chất chung của thế giới, Leucippus và Democritus đã tiến một bước dài mang tính đột phá khi đưa ra **Thuyết Nguyên tử**.\n\n*Quan điểm:* Họ khẳng định mọi sự vật, hiện tượng trong vũ trụ đều được cấu tạo từ những hạt vật chất cực kỳ nhỏ bé, không thể phân chia và không thể nhìn thấy bằng mắt thường, gọi là **nguyên tử**."
+        },
+        {
+          "id": "thoi-can-dai",
+          "title": "Chủ nghĩa duy vật thời Cận đại (Thế kỷ XV – XVIII)",
+          "content": "Tư duy triết học gắn liền với sự bùng nổ của khoa học thực nghiệm. Các nhà triết học tiêu biểu thời kỳ này đã cùng nhau thảo luận và đi đến một quan điểm lớn: **Giới tự nhiên là một thế giới vật chất tồn tại khách quan và vận động theo các quy luật mà con người có thể nhận thức được bằng quan sát, thực nghiệm và lý trí.**\n\n* **Francis Bacon:** Muốn hiểu thế giới, phải đi từ quan sát, thí nghiệm và kinh nghiệm thực tế.\n* **Thomas Hobbes:** Thế giới là tổng thể các vật thể đang vận động. Vận động của vật chất giải thích cho mọi hiện tượng tự nhiên.\n* **René Descartes:** Xem tự nhiên như một hệ thống vận hành theo các quy luật cơ học chặt chẽ.\n* **Baruch Spinoza:** Tự nhiên tự tồn tại, là nguyên nhân của chính nó (*causa sui*).\n* **Denis Diderot:** Vật chất luôn gắn liền với vận động; tự nhiên luôn biến đổi không ngừng chứ không hề tĩnh tại."
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-tieu-diem-khoa-hoc",
+    "type": "mindmap_reveal",
+    "title": "Tiêu điểm: Sự kết hợp giữa Triết học và Khoa học thời Cận đại",
+    "config": {
+      "instruction": "Triết học duy vật thế kỷ XV – XVIII không còn là những phỏng đoán thuần túy mà được nâng đỡ bởi các thành tựu khoa học thực tiễn. Hãy lật mở để xem tác động sâu sắc đến tư tưởng triết học.",
+      "layoutConfig": { "type": "matrix" },
+      "nodes": [
+        {
+          "id": "kinh-thien-van",
+          "front": { "text": "Kính thiên văn & Mô hình hệ Mặt Trời" },
+          "back": { "text": "Chứng minh tự nhiên vận động theo quy luật khách quan, bác bỏ các cách giải thích mang tính thần học, tôn giáo." }
+        },
+        {
+          "id": "phong-thi-nghiem",
+          "front": { "text": "Phòng thí nghiệm & Dụng cụ đo lường" },
+          "back": { "text": "Đưa quan sát, thí nghiệm và kinh nghiệm thực tế trở thành phương pháp luận tối quan trọng để nhận thức thế giới." }
+        },
+        {
+          "id": "may-moc",
+          "front": { "text": "Máy móc & Hệ thống bánh răng" },
+          "back": { "text": "Sự phát triển vượt bậc của cơ học cổ điển khiến các nhà triết học hình dung toàn bộ thế giới như một cỗ máy khổng lồ vận hành tuần hoàn, chính xác." }
+        },
+        {
+          "id": "la-ban",
+          "front": { "text": "La bàn, Bản đồ & Tàu hàng hải" },
+          "back": { "text": "Các phát kiến địa lý vĩ đại giúp mở rộng tầm nhìn của con người về thế giới thực, làm sụp đổ các quan niệm siêu hình dựa trên giáo lý cũ." }
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-danh-gia-chung",
+    "type": "knowledge_piece",
+    "title": "Đánh giá chung về Chủ nghĩa duy vật Cận đại",
+    "config": {
+      "label": "Đánh giá chung Phần 1",
+      "takeaways": [
+        "**Điểm tiến bộ:** Chuyển từ những phỏng đoán trực quan, cảm tính sang cách giải thích thế giới dựa trên cơ sở khoa học và thực nghiệm. Khẳng định giới tự nhiên tồn tại khách quan, vận động theo quy luật tự thân.",
+        "**Tính máy móc:** Do chịu ảnh hưởng sâu sắc từ cơ học cổ điển (cơ học Newton), họ có xu hướng nhìn nhận thế giới giống như một cỗ máy đại cơ khí và giải thích mọi vận động phức tạp bằng sự dịch chuyển cơ học đơn thuần.",
+        "**Tính siêu hình:** Thường xem xét sự vật trong trạng thái cô lập, tách rời, tĩnh tại và biệt lập nhau; chưa thấy được mối liên hệ phổ biến và sự phát triển tự thân sinh động của thế giới vật chất."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-doi-thoai-lich-su",
+    "type": "dialogue",
+    "title": "Cuộc Đối Thoại Lịch Sử: Định Nghĩa Siêu Hình Về Vật Chất",
+    "config": {
+      "lines": [
+        { "speaker": "Narrator", "text": "Trong lịch sử, các nhà duy vật siêu hình luôn tự tin rằng họ đã nắm giữ được cấu trúc cuối cùng của thế giới. Hãy cùng theo dõi cuộc phỏng vấn kinh điển mở đầu cho cuộc khủng hoảng này:" },
+        { "speaker": "MC", "text": "Thưa Giáo sư, theo ông, vật chất là gì?" },
+        { "speaker": "Giáo sư", "text": "Vật chất chính là nguyên tử! Đó là hạt nhỏ nhất, không thể phân chia và tuyệt đối bất biến!" },
+        { "speaker": "MC", "text": "Nếu khoa học chứng minh điều ngược lại thì sao?" },
+        { "speaker": "Giáo sư", "text": "Không thể nào!" },
+        { "speaker": "Narrator", "text": "Thế nhưng, lịch sử khoa học tự nhiên thực nghiệm đã giáng những đòn chí mạng vào quan niệm cơ học giản đơn này." }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-chuoi-phat-hien",
+    "type": "timeline_explorer",
+    "title": "Chuỗi Phát Hiện Khoa Học Làm Rung Chuyển Quan Niệm Cũ",
+    "config": {
+      "instruction": "Dưới đây là tiến trình lịch sử với những phát kiến vĩ đại của khoa học tự nhiên từ cuối thế kỷ XIX đến đầu thế kỷ XX, đập tan bức tranh nguyên tử \"bất biến\" của chủ nghĩa duy vật siêu hình.",
+      "periods": [
+        {
+          "id": "1895-tia-x",
+          "title": "Năm 1895 - Phát hiện ra Tia X (Röntgen)",
+          "content": "Wilhelm Röntgen phát hiện ra tia X, chứng minh khả năng đâm xuyên qua các lớp vật chất đặc. Phát minh này cho phép con người quan sát những phần nằm sâu bên trong sự vật mà mắt thường không thể nhìn thấy, hé mở một thế giới vi mô vô cùng phức tạp."
+        },
+        {
+          "id": "1896-phong-xa",
+          "title": "Năm 1896 - Phát hiện Hiện tượng Phóng xạ (Becquerel)",
+          "content": "Henri Becquerel phát hiện ra hiện tượng phóng xạ. Lần đầu tiên, con người nhận ra vật chất không hề tĩnh tại tuyệt đối. Bản thân các nguyên tố tự nhiên có thể tự phát ra bức xạ, tự phân rã và biến đổi thành nguyên tố khác. Quan niệm về một nguyên tử \"bất biến\" chính thức bị lung lay."
+        },
+        {
+          "id": "1897-dien-tu",
+          "title": "Năm 1897 - Phát hiện ra Điện tử (J.J. Thomson)",
+          "content": "J.J. Thomson tìm ra điện tử (electron) - một hạt mang điện tích âm có khối lượng nhỏ hơn khối lượng nguyên tử hàng nghìn lần. Phát hiện này chứng minh nguyên tử không phải là khối đặc đơn giản, mà là một hệ thống có cấu trúc phức tạp bên trong."
+        },
+        {
+          "id": "dau-tk20-curie",
+          "title": "Đầu Thế kỷ XX - Nghiên cứu của Marie & Pierre Curie",
+          "content": "Hai nhà bác học Marie và Pierre Curie đi sâu nghiên cứu các chất phóng xạ. Họ chứng minh được rằng nguyên tử có thể bị phân rã, biến đổi từ dạng này sang dạng khác và giải phóng nguồn năng lượng khổng lồ ẩn sâu bên trong cấu trúc của nó."
+        },
+        {
+          "id": "1905-einstein",
+          "title": "Năm 1905 - Thuyết Tương Đối & Công thức E = mc² (Einstein)",
+          "content": "Albert Einstein công bố Thuyết Tương đối, đưa ra công thức liên hệ giữa khối lượng (m) và năng lượng (E): $E = mc^2$. Phát minh này chứng minh rằng không gian, thời gian và khối lượng không phải là những đại lượng tuyệt đối, bất biến hay độc lập với nhau. Khối lượng của vật thể thực chất thay đổi theo vận tốc chuyển động của nó."
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-ban-chat-khung-hoang",
+    "type": "markdown",
+    "title": "Bản Chất Cuộc Khủng Hoảng: Vật Chất Có Thật Sự Biến Mất?",
+    "config": {
+      "content": "#### Những luận điệu hoài nghi và duy tâm xuất hiện:\nKhi nguyên tử - thứ từng được coi là giới hạn cuối cùng của vật chất - bị chứng minh là có thể phân chia và biến đổi, nhiều nhà khoa học và triết học duy tâm đã vội vã tuyên bố:\n1. *\"Vật chất đã tiêu tan mất rồi!\"*\n2. *\"Vật chất đã biến thành năng lượng và các phương trình toán học phi vật chất!\"*\n3. Từ đó, họ phủ nhận toàn bộ nền tảng của chủ nghĩa duy vật, cho rằng thế giới này thực chất chỉ là ý thức, tinh thần hoặc do các lực lượng siêu nhiên vô hình điều khiển.\n\n#### Lời giải đáp từ góc nhìn Duy vật Biện chứng:\nThực chất, thế giới quan duy vật biện chứng chỉ ra rằng: **Thứ bị phá vỡ không phải là bản thân vật chất, mà chỉ là giới hạn nhận thức cũ của con người về vật chất.**\n* **Vật chất không biến mất:** Bản thân thế giới khách quan (thực tại tồn tại độc lập với ý thức) vẫn luôn ở đó. Việc phát hiện ra điện tử, tia X hay hiện tượng phóng xạ chỉ giúp con người hiểu sâu sắc hơn, chính xác hơn về cấu trúc bên trong của thế giới ấy.\n* **Sự sụp đổ của tư duy siêu hình:** Cái biến mất ở đây chính là quan niệm ngây thơ, máy móc coi nguyên tử là hạt \"nhỏ nhất\", \"bất biến\" và \"vô cấu trúc\". Vật chất không chỉ dừng lại ở nguyên tử, nó vô hạn về mặt cấu trúc và không ngừng vận động, chuyển hóa."
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "c2-tam-nhin-tuong-lai",
+    "type": "final_summary",
+    "title": "Tầm Nhìn Cho Tương Lai: Sự Cần Thiết Của Một Định Nghĩa Mới",
+    "config": {
+      "message": "Cuộc khủng hoảng vật lý cuối thế kỷ XIX không chứng minh vật chất biến mất. Trái lại, nó là một bước đệm vĩ đại của nhận thức, đòi hỏi chủ nghĩa duy vật phải tự đổi mới, nâng cấp thế giới quan từ siêu hình, máy móc lên tầm cao biện chứng.",
+      "keyTakeaways": [
+        "Sự sụp đổ của quan niệm duy vật siêu hình về nguyên tử bất biến.",
+        "Khẳng định vật chất không biến mất, chỉ là giới hạn nhận thức của con người được mở rộng.",
+        "Điều này đặt ra yêu cầu lịch sử cho sự ra đời của một định nghĩa vật chất mang tính triết học triệt để và khoa học hơn (Định nghĩa vật chất của V.I. Lênin)."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

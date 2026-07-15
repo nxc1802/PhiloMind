@@ -22,6 +22,7 @@ const SUPPORTED_COMPONENT_TYPES = new Set([
   "hotspot_gallery",
   "shinkei_matching",
   "final_summary",
+  "fill_in_blanks",
 ]);
 
 function requireArray(value: any, label: string) {
@@ -249,6 +250,15 @@ export class NodeSchemaValidator {
       if (config.keyTakeaways !== undefined) {
         requireArray(config.keyTakeaways, `${label}.keyTakeaways`);
       }
+    }
+
+    if (component.type === "fill_in_blanks") {
+      requireString(config.textWithBlanks, `${label}.textWithBlanks`);
+      requireArray(config.blanks, `${label}.blanks`);
+      config.blanks.forEach((blank: any, blankIdx: number) => {
+        requireString(blank.id, `${label}.blanks[${blankIdx}].id`);
+        requireString(blank.correctAnswer, `${label}.blanks[${blankIdx}].correctAnswer`);
+      });
     }
 
     if (component.type === "mindmap_reveal") {

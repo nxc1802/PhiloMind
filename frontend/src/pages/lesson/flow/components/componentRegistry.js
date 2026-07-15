@@ -18,6 +18,7 @@ import { ProgressionSpiralComponent } from "./ProgressionSpiralComponent";
 import { TimelineExplorerComponent } from "./TimelineExplorerComponent";
 import { HotspotGalleryComponent } from "./HotspotGalleryComponent";
 import { ShinkeiMatchingComponent } from "./ShinkeiMatchingComponent";
+import { FillInBlanksComponent } from "./FillInBlanksComponent";
 
 export const COMPONENT_RENDERERS = {
   dialogue: DialogueComponent,
@@ -40,6 +41,7 @@ export const COMPONENT_RENDERERS = {
   timeline_explorer: TimelineExplorerComponent,
   hotspot_gallery: HotspotGalleryComponent,
   shinkei_matching: ShinkeiMatchingComponent,
+  fill_in_blanks: FillInBlanksComponent,
 };
 
 export function getComponentName(type = "") {

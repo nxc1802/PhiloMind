@@ -1,0 +1,100 @@
+[
+  {
+    "id": "b5-khac-phuc-han-che",
+    "type": "category_sorting",
+    "title": "Khắc phục hạn chế của triết học cũ",
+    "config": {
+      "instruction": "Cuộc cách mạng trong triết học không thể bắt đầu nếu C. Mác và Ph. Ăngghen không vượt qua được những cái bóng khổng lồ của quá khứ. Hãy kéo thả các hạn chế của triết học cũ trả về đúng chủ nhân của nó!",
+      "categories": [
+        { "id": "hegel", "title": "Triết học Hegel" },
+        { "id": "feuerbach", "title": "Triết học Feuerbach" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Tính chất duy tâm thần bí", "categoryId": "hegel" },
+        { "id": "c2", "text": "Tính chất siêu hình, không thấy được sự phát triển", "categoryId": "feuerbach" },
+        { "id": "c3", "text": "Không thấy được vai trò của thực tiễn lịch sử xã hội", "categoryId": "feuerbach" },
+        { "id": "c4", "text": "Hệ thống triết học bảo thủ, tư biện", "categoryId": "hegel" }
+      ],
+      "successFeedback": "C. Mác và Ph. Ăngghen đã kế thừa 'hạt nhân hợp lý' (phép biện chứng của Hegel) và 'cái cơ bản' (chủ nghĩa duy vật của Feuerbach), đồng thời loại bỏ những hạn chế của họ để tạo ra một hệ thống triết học mới."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b5-thong-nhat",
+    "type": "mcq",
+    "title": "Sự thống nhất giữa các mặt đối lập",
+    "config": {
+      "question": "Bằng cách vượt qua triết học cũ, C. Mác và Ph. Ăngghen đã tạo ra một học thuyết triết học trong đó thống nhất được hai yếu tố nào chưa từng có trong lịch sử?",
+      "options": [
+        { "id": "opt-1", "text": "Sự thống nhất giữa chủ nghĩa duy tâm và phép biện chứng.", "isCorrect": false },
+        { "id": "opt-2", "text": "Sự thống nhất giữa chủ nghĩa duy vật và phép biện chứng, làm cho chủ nghĩa duy vật trở nên triệt để và phép biện chứng trở thành lý luận khoa học.", "isCorrect": true },
+        { "id": "opt-3", "text": "Sự thống nhất giữa khoa học tự nhiên và tôn giáo.", "isCorrect": false }
+      ],
+      "explanation": "Triết học Mác là sự thống nhất hữu cơ giữa chủ nghĩa duy vật và phép biện chứng. Chủ nghĩa duy vật triết học Mác là chủ nghĩa duy vật biện chứng, và phép biện chứng của triết học Mác là phép biện chứng duy vật."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b5-sang-tao-vi-dai",
+    "type": "mindmap_reveal",
+    "title": "Sáng tạo vĩ đại nhất của C. Mác",
+    "config": {
+      "instruction": "Bước ngoặt lớn nhất, đánh dấu sự khác biệt hoàn toàn của triết học Mác với toàn bộ các học thuyết trước đó nằm ở cách nhìn nhận về xã hội loài người. Hãy lật mở các mảnh ghép logic dưới đây để hiểu về phát minh vĩ đại này!",
+      "layoutConfig": { "type": "vertical" },
+      "nodes": [
+        {
+          "id": "han-che-cu",
+          "front": { "text": "Hạn chế của Chủ nghĩa duy vật trước Mác" },
+          "back": { "text": "Chỉ mang tính chất duy vật về giới tự nhiên, nhưng lại rơi vào quan điểm duy tâm khi giải thích về lịch sử xã hội (cho rằng ý thức, tư tưởng quyết định sự phát triển của xã hội)." }
+        },
+        {
+          "id": "buoc-ngoat",
+          "front": { "text": "Phát minh vĩ đại: Chủ nghĩa duy vật lịch sử" },
+          "back": { "text": "C. Mác đã vận dụng quan điểm duy vật biện chứng vào việc nghiên cứu lịch sử xã hội, làm sáng tỏ các quy luật khách quan của sự phát triển xã hội." }
+        },
+        {
+          "id": "cot-loi",
+          "front": { "text": "Chân lý cốt lõi của duy vật lịch sử" },
+          "back": { "text": "Khẳng định rằng phương thức sản xuất đời sống vật chất quyết định quá trình sinh hoạt xã hội, chính trị và tinh thần nói chung. Tồn tại xã hội quyết định ý thức xã hội." }
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b5-bien-doi-vai-tro",
+    "type": "category_sorting",
+    "title": "Sự biến đổi vai trò của triết học",
+    "config": {
+      "instruction": "Sự ra đời của triết học Mác đã làm thay đổi hoàn toàn chức năng xã hội của triết học. Hãy đưa các thuộc tính về đúng với hệ hình triết học của nó!",
+      "categories": [
+        { "id": "triet-hoc-cu", "title": "Các triết học trước Mác" },
+        { "id": "triet-hoc-mac", "title": "Triết học Mác" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Chủ yếu đóng vai trò giải thích thế giới bằng lý luận", "categoryId": "triet-hoc-cu" },
+        { "id": "c2", "text": "Thường có tính chất tư biện, tách rời thực tiễn", "categoryId": "triet-hoc-cu" },
+        { "id": "c3", "text": "Không chỉ giải thích thế giới mà còn là công cụ nhận thức khoa học để cải tạo thế giới", "categoryId": "triet-hoc-mac" },
+        { "id": "c4", "text": "Sự thống nhất giữa lý luận và thực tiễn", "categoryId": "triet-hoc-mac" },
+        { "id": "c5", "text": "Vũ khí lý luận của giai cấp vô sản trong cuộc đấu tranh giải phóng nhân loại", "categoryId": "triet-hoc-mac" }
+      ],
+      "successFeedback": "Đúng như C. Mác đã nói: 'Các nhà triết học đã chỉ giải thích thế giới bằng nhiều cách khác nhau, song vấn đề là cải tạo thế giới'."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b5-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nCuộc cách mạng trong triết học do C. Mác và Ph. Ăngghen thực hiện là một bước ngoặt vĩ đại trong lịch sử tư tưởng nhân loại.",
+      "keyTakeaways": [
+        "Khắc phục triệt để tính chất duy tâm, thần bí của triết học Hegel và tính chất siêu hình của chủ nghĩa duy vật Feuerbach.",
+        "Sáng tạo ra Chủ nghĩa duy vật biện chứng bằng cách thống nhất hữu cơ giữa chủ nghĩa duy vật và phép biện chứng.",
+        "Phát minh ra Chủ nghĩa duy vật lịch sử - bước tiến vĩ đại nhất, áp dụng phương pháp biện chứng duy vật vào việc giải thích sự phát triển của xã hội loài người.",
+        "Thay đổi hoàn toàn chức năng của triết học: từ chỗ chỉ dừng lại ở việc giải thích thế giới chuyển sang trở thành công cụ khoa học, vũ khí lý luận của giai cấp công nhân để cải tạo thế giới."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

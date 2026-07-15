@@ -1,0 +1,117 @@
+[
+  {
+    "id": "b8-ranh-gioi",
+    "type": "category_sorting",
+    "title": "Ranh giới định hướng giữa triết học và khoa học chuyên ngành",
+    "config": {
+      "instruction": "Hãy cùng tham gia thử thách kéo thả dưới đây để làm rõ ranh giới định hướng, phạm vi ảnh hưởng của triết học và các khoa học cụ thể!",
+      "categories": [
+        { "id": "khoa-hoc", "title": "Khoa học chuyên ngành" },
+        { "id": "triet-hoc", "title": "Triết học Mác - Lênin" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Định luật bảo toàn và chuyển hóa năng lượng", "categoryId": "khoa-hoc" },
+        { "id": "c2", "text": "Định luật vạn vật hấp dẫn", "categoryId": "khoa-hoc" },
+        { "id": "c3", "text": "Quy luật giá trị", "categoryId": "khoa-hoc" },
+        { "id": "c4", "text": "Có tác dụng định hướng trong một phạm vi nhất định nào đấy của hiện thực", "categoryId": "khoa-hoc" },
+        { "id": "c5", "text": "Phản ánh những mặt, những thuộc tính, những mối liên hệ phổ biến nhất của cả tự nhiên, xã hội và tư duy", "categoryId": "triet-hoc" },
+        { "id": "c6", "text": "Có tác dụng định hướng trong tất cả mọi trường hợp", "categoryId": "triet-hoc" },
+        { "id": "c7", "text": "Xác định sơ bộ các mốc cơ bản, phương hướng đặt vấn đề và giải quyết vấn đề, tránh được những lầm lạc", "categoryId": "triet-hoc" }
+      ],
+      "successFeedback": "Khác với khoa học chuyên ngành, triết học có tác dụng định hướng không phải chỉ trong một phạm vi nhất định, mà trong tất cả mọi trường hợp."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b8-lap-truong-ton-giao",
+    "type": "category_sorting",
+    "title": "Bài toán lập trường triết học (Thái độ đối với tôn giáo)",
+    "config": {
+      "instruction": "Vấn đề thái độ đối với tôn giáo phụ thuộc hoàn toàn vào lập trường triết học dẫn đường. Hãy cùng phân loại các hệ quả thực tiễn diễn ra theo từng lập trường!",
+      "categories": [
+        { "id": "duy-tam", "title": "Lập trường Duy tâm (Sai lầm)" },
+        { "id": "duy-vat", "title": "Lập trường Duy vật (Chính xác)" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Coi ý thức là cái có trước và quyết định vật chất", "categoryId": "duy-tam" },
+        { "id": "c2", "text": "Tìm cách loại trừ tôn giáo chỉ bằng sức mạnh của ý chí, bằng cách cấm đoán", "categoryId": "duy-tam" },
+        { "id": "c3", "text": "Giải quyết bằng những cách giản đơn, hành chính, thiếu cơ sở khoa học, không dẫn đến kết quả", "categoryId": "duy-tam" },
+        { "id": "c4", "text": "Coi vật chất là cái có trước và quyết định ý thức", "categoryId": "duy-vat" },
+        { "id": "c5", "text": "Đi tìm và giải quyết những nguyên nhân vật chất (nguồn gốc xã hội) đã sản sinh ra tôn giáo", "categoryId": "duy-vat" },
+        { "id": "c6", "text": "Chủ trương tự do tín ngưỡng đồng thời tiến hành cải tạo xã hội để loại trừ nguồn gốc xã hội sâu xa", "categoryId": "duy-vat" }
+      ],
+      "successFeedback": "Như V.I. Lênin đã nói: Người nào bắt tay vào những vấn đề riêng trước khi giải quyết các vấn đề chung, thì trên mỗi bước đi, sẽ không sao tránh khỏi vấp phải những vấn đề chung đó một cách mù quáng."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b8-dieu-chinh-thai-do",
+    "type": "mcq",
+    "title": "Điều chỉnh thái độ đối với vai trò của triết học",
+    "config": {
+      "question": "Trong hoạt động cụ thể, để tránh những sai lầm nghiêm trọng trong thực tiễn do việc xem thường hoặc tuyệt đối hóa vai trò của triết học, chúng ta cần có nhận thức như thế nào?",
+      "options": [
+        { "id": "opt-1", "text": "Xem thường vai trò của triết học vì nó chỉ giải quyết những vấn đề quá chung, từ đó dẫn đến tình trạng mò mẫm, tùy tiện và dễ bằng lòng với biện pháp nhất thời.", "isCorrect": false },
+        { "id": "opt-2", "text": "Tuyệt đối hóa triết học, coi nó là chiếc chìa khóa vạn năng để giải quyết mọi vấn đề cụ thể, dẫn đến áp dụng máy móc, giáo điều.", "isCorrect": false },
+        { "id": "opt-3", "text": "Kết hợp chặt chẽ cả tri thức chung (tri thức triết học, khoa học chuyên ngành) và tri thức thực tiễn; xem xét mỗi nguyên lý chung theo quan điểm lịch sử và gắn liền với kinh nghiệm cụ thể.", "isCorrect": true }
+      ],
+      "explanation": "Kết luận của triết học không phải là lời giải đáp trực tiếp cho từng việc cụ thể, mà là cơ sở định hướng. Sự kết hợp chặt chẽ các loại tri thức là điều kiện bắt buộc."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b8-mau-thuan-thoi-dai",
+    "type": "multi_select",
+    "title": "Bản chất và mâu thuẫn thời đại trong thế kỷ XXI",
+    "config": {
+      "question": "Bước vào thế kỷ XXI, xu thế toàn cầu hóa và cách mạng khoa học công nghệ đặt ra những vấn đề phức tạp. Hãy kích hoạt máy quét nhận diện các nhận định chính xác về thời đại ngày nay!",
+      "options": [
+        { "id": "opt-1", "text": "Bản chất của cuộc cách mạng khoa học và công nghệ hiện đại là sự cải biến về chất các lực lượng sản xuất, tri thức khoa học trở thành lực lượng sản xuất trực tiếp.", "isCorrect": true },
+        { "id": "opt-2", "text": "Toàn cầu hóa là quá trình tăng lên mạnh mẽ các mối liên hệ, phụ thuộc lẫn nhau giữa các quốc gia, chứa đựng cả thời cơ và thách thức.", "isCorrect": true },
+        { "id": "opt-3", "text": "Chủ nghĩa đế quốc đang lợi dụng toàn cầu hóa để thực hiện toàn cầu hóa tư bản chủ nghĩa.", "isCorrect": true },
+        { "id": "opt-4", "text": "Mâu thuẫn chủ yếu là mâu thuẫn giữa lợi ích của giai cấp tư sản với tuyệt đại đa số loài người hướng tới hòa bình, tiến bộ xã hội.", "isCorrect": true },
+        { "id": "opt-5", "text": "Toàn cầu hóa đã xóa bỏ hoàn toàn mọi mâu thuẫn giai cấp.", "isCorrect": false },
+        { "id": "opt-6", "text": "Khoa học tự nhiên hiện nay phát triển độc lập không cần cơ sở thế giới quan triết học.", "isCorrect": false }
+      ],
+      "explanation": "Triết học Mác - Lênin là vũ khí lý luận sắc bén để phân tích bản chất của toàn cầu hóa và nhận diện chính xác các mâu thuẫn của thời đại."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b8-vai-tro-doi-moi",
+    "type": "category_sorting",
+    "title": "Vai trò của triết học trong sự nghiệp đổi mới ở Việt Nam",
+    "config": {
+      "instruction": "Sự nghiệp đổi mới ở Việt Nam tất yếu phải dựa trên triết học Mác - Lênin. Hãy phân loại các đóng góp cụ thể của chức năng thế giới quan và phương pháp luận vào công cuộc đổi mới!",
+      "categories": [
+        { "id": "the-gioi-quan", "title": "Chức năng Thế giới quan" },
+        { "id": "phuong-phap-luan", "title": "Chức năng Phương pháp luận" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Nền tảng cho quá trình đổi mới tư duy, khắc phục tình trạng giáo điều, xơ cứng lý luận", "categoryId": "the-gioi-quan" },
+        { "id": "c2", "text": "Giúp nhìn nhận vững chắc con đường đi lên CNXH khi hệ thống ở Đông Âu sụp đổ", "categoryId": "the-gioi-quan" },
+        { "id": "c3", "text": "Đánh giá cục diện thế giới và chỉ ra quy luật tất yếu tư bản chủ nghĩa sẽ bị thay thế", "categoryId": "the-gioi-quan" },
+        { "id": "c4", "text": "Cung cấp phương pháp biện chứng về sự vận động không ngừng để xây dựng lý luận quá độ, kinh tế thị trường định hướng XHCN", "categoryId": "phuong-phap-luan" },
+        { "id": "c5", "text": "Giúp giải quyết các mối quan hệ cơ bản: quan hệ giữa kinh tế thị trường với CNXH", "categoryId": "phuong-phap-luan" },
+        { "id": "c6", "text": "Giải quyết mối quan hệ cốt lõi giữa đổi mới kinh tế và đổi mới chính trị", "categoryId": "phuong-phap-luan" }
+      ],
+      "successFeedback": "Chức năng thế giới quan cung cấp định hướng niềm tin và đánh giá đúng tình hình, trong khi chức năng phương pháp luận cung cấp cách thức giải quyết các vấn đề, mối quan hệ phức tạp của thực tiễn đổi mới."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b8-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nVai trò của triết học Mác - Lênin trong đời sống xã hội và công cuộc đổi mới hiện nay là vô cùng to lớn, đóng vai trò là thế giới quan và phương pháp luận khoa học, cách mạng chung nhất.",
+      "keyTakeaways": [
+        "Các nguyên lý, quy luật của phép biện chứng duy vật có giá trị định hướng trong tất cả mọi trường hợp, đòi hỏi phải tránh cả hai thái cực: xem thường triết học hoặc tuyệt đối hóa triết học.",
+        "Tiền đề của thành công là phải kết hợp chặt chẽ lý luận chung với tri thức thực tiễn và hoàn cảnh lịch sử cụ thể.",
+        "Trong bối cảnh toàn cầu hóa, triết học Mác - Lênin là vũ khí soi đường vạch rõ bản chất các mâu thuẫn thời đại.",
+        "Đối với sự nghiệp đổi mới ở Việt Nam, triết học Mác - Lênin là cơ sở lý luận khoa học cốt lõi để đổi mới tư duy lý luận, giữ vững niềm tin, giải quyết các mối quan hệ lớn (đặc biệt là đổi mới kinh tế - chính trị) và cần không ngừng được bổ sung, phát triển."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

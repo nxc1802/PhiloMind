@@ -1,0 +1,204 @@
+[
+  {
+    "id": "b1-van-de-co-ban",
+    "type": "multi_select",
+    "title": "Vấn đề cơ bản của triết học",
+    "config": {
+      "question": "Triết học, trước khi giải quyết các vấn đề cụ thể của mình, buộc phải giải quyết một vấn đề có ý nghĩa nền tảng. Hãy chọn đúng nền tảng và hai mặt của vấn đề này!",
+      "options": [
+        {
+          "id": "opt-1",
+          "text": "Mối quan hệ giữa vật chất với ý thức (giữa tư duy với tồn tại)",
+          "isCorrect": true
+        },
+        {
+          "id": "opt-2",
+          "text": "Giữa ý thức và vật chất thì cái nào có trước, cái nào có sau, cái nào quyết định cái nào?",
+          "isCorrect": true
+        },
+        {
+          "id": "opt-3",
+          "text": "Con người có khả năng nhận thức được thế giới hay không?",
+          "isCorrect": true
+        },
+        {
+          "id": "opt-4",
+          "text": "Mối quan hệ giữa con người với máy móc",
+          "isCorrect": false
+        },
+        {
+          "id": "opt-5",
+          "text": "Cái nào đẹp hơn cái nào",
+          "isCorrect": false
+        },
+        {
+          "id": "opt-6",
+          "text": "Con người có thể bay vào vũ trụ hay không",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Vấn đề cơ bản lớn của mọi triết học là vấn đề quan hệ giữa tư duy với tồn tại. Khi giải quyết vấn đề cơ bản, mỗi triết học xác định lập trường, thế giới quan của mình."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b1-hai-truong-phai",
+    "type": "category_sorting",
+    "title": "Hai trường phái triết học lớn",
+    "config": {
+      "instruction": "Việc giải quyết mặt thứ nhất của vấn đề cơ bản của triết học đã chia các nhà triết học thành hai trường phái lớn. Hãy đặt các khối vật chất và tinh thần lên chiếc cân lý tính dưới đây để nhận diện rõ lập trường!",
+      "categories": [
+        { "id": "duy-vat", "title": "CHỦ NGHĨA DUY VẬT" },
+        { "id": "duy-tam", "title": "CHỦ NGHĨA DUY TÂM" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Vật chất, giới tự nhiên là cái có trước và quyết định ý thức của con người", "categoryId": "duy-vat" },
+        { "id": "c2", "text": "Giải thích mọi hiện tượng của thế giới này bằng các nguyên nhân vật chất", "categoryId": "duy-vat" },
+        { "id": "c3", "text": "Nguyên nhân tận cùng của mọi vận động của thế giới này là nguyên nhân vật chất", "categoryId": "duy-vat" },
+        { "id": "c4", "text": "Ý thức, tinh thần, ý niệm, cảm giác là cái có trước giới tự nhiên", "categoryId": "duy-tam" },
+        { "id": "c5", "text": "Chủ trương giải thích toàn bộ thế giới này bằng các nguyên nhân tư tưởng, tinh thần", "categoryId": "duy-tam" },
+        { "id": "c6", "text": "Nguyên nhân tận cùng của mọi vận động của thế giới này là nguyên nhân tinh thần", "categoryId": "duy-tam" }
+      ],
+      "successFeedback": "Những quan điểm triết học dù đa dạng đến mấy cũng chỉ thuộc về hai lập trường cơ bản: chủ nghĩa duy vật và chủ nghĩa duy tâm."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b1-ba-hinh-thuc-duy-vat",
+    "type": "timeline_explorer",
+    "title": "Ba hình thức của chủ nghĩa duy vật",
+    "config": {
+      "instruction": "Cho đến nay, chủ nghĩa duy vật đã trải qua một tiến trình lịch sử lâu dài và được thể hiện dưới ba hình thức cơ bản. Bạn hãy sắp xếp các hình thức này vào đúng trục thời gian phát triển của chúng!",
+      "periods": [
+        {
+          "id": "thoi-co-dai",
+          "title": "Mốc Thời cổ đại",
+          "content": "**Chủ nghĩa duy vật chất phác:** Thừa nhận tính thứ nhất của vật chất nhưng đồng nhất vật chất với một hay một số chất cụ thể, mang nặng tính trực quan, ngây thơ, chất phác; giải thích thế giới bằng giới tự nhiên, không viện đến thần linh, thượng đế."
+        },
+        {
+          "id": "the-ky-15-18",
+          "title": "Mốc Thế kỷ XV đến thế kỷ XVIII",
+          "content": "**Chủ nghĩa duy vật siêu hình:** Chịu sự tác động mạnh mẽ của phương pháp tư duy siêu hình, cơ giới; nhìn thế giới như một cỗ máy khổng lồ mà mỗi bộ phận ở trong trạng thái biệt lập và tĩnh tại; góp phần đẩy lùi thế giới quan duy tâm và tôn giáo thời kỳ chuyển tiếp."
+        },
+        {
+          "id": "the-ky-19",
+          "title": "Mốc Những năm 40 của thế kỷ XIX đến nay",
+          "content": "**Chủ nghĩa duy vật biện chứng:** Do C. Mác và Ph. Ăngghen xây dựng, V.I. Lênin phát triển; kế thừa tinh hoa học thuyết trước đó và sử dụng triệt để thành tựu khoa học đương thời; phản ánh đúng hiện thực khách quan và là công cụ hữu hiệu cải tạo hiện thực."
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b1-hai-phai-duy-tam",
+    "type": "category_sorting",
+    "title": "Hai phái của chủ nghĩa duy tâm",
+    "config": {
+      "instruction": "Chủ nghĩa duy tâm trong lịch sử không thuần nhất mà được chia thành hai phái lớn. Hãy phân tách các đặc điểm dưới đây vào đúng ngăn lưu trữ của từng phái!",
+      "categories": [
+        { "id": "chu-quan", "title": "CHỦ NGHĨA DUY TÂM CHỦ QUAN" },
+        { "id": "khach-quan", "title": "CHỦ NGHĨA DUY TÂM KHÁCH QUAN" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Thừa nhận tính thứ nhất của ý thức con người", "categoryId": "chu-quan" },
+        { "id": "c2", "text": "Phủ nhận sự tồn tại khách quan của hiện thực", "categoryId": "chu-quan" },
+        { "id": "c3", "text": "Khẳng định mọi sự vật, hiện tượng chỉ là phức hợp của những cảm giác", "categoryId": "chu-quan" },
+        { "id": "c4", "text": "Thừa nhận tính thứ nhất của ý thức nhưng coi đó là thứ tinh thần khách quan có trước và tồn tại độc lập với con người", "categoryId": "khach-quan" },
+        { "id": "c5", "text": "Thực thể tinh thần khách quan được gọi bằng những cái tên như ý niệm, tinh thần tuyệt đối, lý tính thế giới", "categoryId": "khach-quan" }
+      ],
+      "successFeedback": "Chủ nghĩa duy tâm triết học cho rằng ý thức, tinh thần là cái có trước và sản sinh ra giới tự nhiên, thừa nhận sự sáng tạo của một lực lượng siêu nhiên đối với thế giới nên tôn giáo thường sử dụng làm cơ sở lý luận."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b1-nhat-nguyen-nhi-nguyen",
+    "type": "matching_columns",
+    "title": "Nhất nguyên luận và Nhị nguyên luận",
+    "config": {
+      "instruction": "Dựa vào số lượng bản nguyên giải thích nguồn gốc thế giới, các học thuyết triết học được phân chia như thế nào? Hãy cùng tham gia trò chơi ghép đôi để tìm ra câu trả lời!",
+      "leftColumn": [
+        { "id": "nhat-nguyen", "text": "Nhất nguyên luận" },
+        { "id": "nhi-nguyen", "text": "Nhị nguyên luận" },
+        { "id": "ban-chat-nhi-nguyen", "text": "Bản chất cuối cùng của nhị nguyên luận" }
+      ],
+      "rightColumn": [
+        { "id": "r1", "text": "Học thuyết triết học chỉ thừa nhận một trong hai thực thể (vật chất hoặc tinh thần) là bản nguyên (nguồn gốc) của thế giới, quyết định sự vận động của thế giới (nhất nguyên luận duy vật hoặc nhất nguyên luận duy tâm)." },
+        { "id": "r2", "text": "Học thuyết giải thích thế giới bằng cả hai bản nguyên vật chất và tinh thần, xem chúng là hai bản nguyên có thể cùng quyết định nguồn gốc và sự vận động của thế giới. Điển hình là Descartes." },
+        { "id": "r3", "text": "Những người theo thuyết này thường ở thời điểm này là người duy vật, nhưng ở thời điểm khác, khi giải quyết vấn đề khác lại là người duy tâm. Song, xét đến cùng học thuyết này thuộc về chủ nghĩa duy tâm." }
+      ],
+      "correctPairs": [
+        { "leftId": "nhat-nguyen", "rightId": "r1" },
+        { "leftId": "nhi-nguyen", "rightId": "r2" },
+        { "leftId": "ban-chat-nhi-nguyen", "rightId": "r3" }
+      ]
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b1-nhan-thuc-the-gioi",
+    "type": "category_sorting",
+    "title": "Mặt thứ hai - Khả năng nhận thức thế giới",
+    "config": {
+      "instruction": "Mặt thứ hai của vấn đề cơ bản của triết học đối diện với câu hỏi: 'Con người có khả năng nhận thức được thế giới hay không?'. Hãy đưa các hệ thống lý luận vào đúng lăng kính phân loại!",
+      "categories": [
+        { "id": "kha-tri", "title": "THUYẾT KHẢ TRI (Thuyết có thể biết)" },
+        { "id": "bat-kha-tri", "title": "THUYẾT BẤT KHẢ TRI (Thuyết không thể biết)" },
+        { "id": "hoai-nghi", "title": "HOÀI NGHI LUẬN" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Tuyệt đại đa số các nhà triết học (cả duy vật và duy tâm) tham gia", "categoryId": "kha-tri" },
+        { "id": "c2", "text": "Khẳng định khả năng nhận thức của con người, về nguyên tắc con người có thể hiểu được bản chất của sự vật", "categoryId": "kha-tri" },
+        { "id": "c3", "text": "Ý thức con người có được về sự vật về nguyên tắc là phù hợp với bản thân sự vật", "categoryId": "kha-tri" },
+        { "id": "c4", "text": "Phủ nhận khả năng nhận thức của con người, về nguyên tắc con người không thể hiểu được bản chất của đối tượng", "categoryId": "bat-kha-tri" },
+        { "id": "c5", "text": "Kết quả nhận thức chỉ là hình thức bề ngoài, hạn hẹp và cắt xén", "categoryId": "bat-kha-tri" },
+        { "id": "c6", "text": "Ý thức con người không thể đạt tới thực tại tuyệt đối hay thực tại như nó vốn có vì nằm ngoài kinh nghiệm", "categoryId": "bat-kha-tri" },
+        { "id": "c7", "text": "Đại biểu điển hình là D. Hume và Kant; thuật ngữ do T.H. Huxley đưa ra năm 1869", "categoryId": "bat-kha-tri" },
+        { "id": "c8", "text": "Nâng sự hoài nghi lên thành nguyên tắc trong việc xem xét tri thức đã đạt được", "categoryId": "hoai-nghi" },
+        { "id": "c9", "text": "Cho rằng con người không thể đạt đến chân lý khách quan", "categoryId": "hoai-nghi" },
+        { "id": "c10", "text": "Thời phục hưng giữ vai trò quan trọng chống hệ tư tưởng và quyền uy Giáo hội, thừa nhận sự hoài nghi đối với cả Kinh thánh và các tín điều tôn giáo", "categoryId": "hoai-nghi" }
+      ],
+      "successFeedback": "Trước Kant, Hume tuyệt đối hóa kinh nghiệm khiến Hume trở thành nhà bất khả tri. Trong khi đó, Kant với thuyết về vật tự nó, tuyệt đối hóa sự bí ẩn của đối tượng, cho rằng con người không thể có tri thức đúng đắn về thực tại nằm ngoài kinh nghiệm."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b1-lap-truong-duy-vat-bien-chung",
+    "type": "mcq",
+    "title": "Lập trường duy vật biện chứng (Phê phán của Ph. Ăngghen)",
+    "config": {
+      "question": "Ph. Ăngghen đã phê phán quan điểm bất khả tri của Kant và khẳng định khả năng nhận thức của con người bằng luận điểm nào?",
+      "options": [
+        {
+          "id": "opt-1",
+          "text": "Nhận thức của con người bị giới hạn vĩnh viễn bởi các thực tại siêu nhiên và không thể vượt qua ranh giới của kinh nghiệm cảm giác.",
+          "isCorrect": false
+        },
+        {
+          "id": "opt-2",
+          "text": "Nếu chúng ta có thể chứng minh được tính chính xác của quan điểm của chúng ta về một hiện tượng tự nhiên nào đó, bằng cách tự chúng ta làm ra hiện tượng ấy, bằng cách tạo ra nó từ những điều kiện của nó, và hơn nữa, còn bắt nó phải phục vụ mục đích của chúng ta, thì sẽ không còn có cái 'vật tự nó' không thể nắm được của Canto nữa.",
+          "isCorrect": true
+        },
+        {
+          "id": "opt-3",
+          "text": "Con người hoàn toàn không thể đồng nhất các hình ảnh thu nhận được với đối tượng thực tại khách quan.",
+          "isCorrect": false
+        }
+      ]
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b1-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nVấn đề cơ bản của triết học là mối quan hệ giữa vật chất với ý thức (giữa tư duy với tồn tại), bao gồm hai mặt: cái nào có trước và quyết định cái nào; và con người có khả năng nhận thức thế giới hay không.",
+      "keyTakeaways": [
+        "Cách giải quyết mặt thứ nhất chia triết học thành Chủ nghĩa duy vật (trải qua ba hình thức: chất phác, siêu hình, biện chứng) và Chủ nghĩa duy tâm (gồm hai phái: chủ quan và khách quan), cấu thành nên thế giới quan nhất nguyên hoặc nhị nguyên.",
+        "Cách giải quyết mặt thứ hai phân định thành Thuyết khả tri (thừa nhận năng lực nhận thức của con người) và Thuyết bất khả tri (phủ nhận khả năng đạt tới bản chất chân thực của đối tượng) cùng trào lưu Hoài nghi luận.",
+        "Trên lập trường duy vật biện chứng, Ph. Ăngghen khẳng định khả năng nhận thức vô tận của con người; thông qua hoạt động thực tiễn chứng minh luận điểm khoa học."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]

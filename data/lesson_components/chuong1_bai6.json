@@ -1,0 +1,105 @@
+[
+  {
+    "id": "b6-ban-chat-khoa-hoc",
+    "type": "matching_columns",
+    "title": "Bản chất khoa học",
+    "config": {
+      "instruction": "Chủ nghĩa Mác - Lênin không phải là một giáo điều xơ cứng, mà là một hệ thống lý luận khoa học chặt chẽ. Hãy tham gia trò chơi ghép đôi dưới đây để làm rõ các khía cạnh của bản chất khoa học này!",
+      "leftColumn": [
+        { "id": "t1", "text": "Thái độ với tri thức nhân loại" },
+        { "id": "t2", "text": "Mối quan hệ với thực tiễn" },
+        { "id": "t3", "text": "Khả năng phát triển" }
+      ],
+      "rightColumn": [
+        { "id": "r1", "text": "Tiếp thu tinh hoa tư tưởng của nhân loại, không phải là hệ thống đóng kín." },
+        { "id": "r2", "text": "Là kết quả của sự tổng kết thực tiễn, luôn lấy thực tiễn làm tiêu chuẩn để kiểm nghiệm chân lý." },
+        { "id": "r3", "text": "Không ngừng được bổ sung, phát triển cùng với sự tiến bộ của khoa học và thực tiễn xã hội." }
+      ],
+      "correctPairs": [
+        { "leftId": "t1", "rightId": "r1" },
+        { "leftId": "t2", "rightId": "r2" },
+        { "leftId": "t3", "rightId": "r3" }
+      ]
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b6-ban-chat-cach-mang",
+    "type": "timeline_explorer",
+    "title": "Bản chất cách mạng",
+    "config": {
+      "instruction": "Triết học Mác - Lênin là vũ khí lý luận của giai cấp công nhân. Hãy sắp xếp các luận điểm theo cấp độ phát triển để thấy rõ sức mạnh cải tạo thế giới của nó!",
+      "periods": [
+        {
+          "id": "cap-do-1",
+          "title": "Mục tiêu tối thượng",
+          "content": "Không dừng lại ở việc giải thích và hiểu biết thế giới, mà hướng đến mục tiêu cao cả là **cải tạo thế giới**, giải phóng giai cấp, giải phóng xã hội và giải phóng con người khỏi mọi ách áp bức, bóc lột."
+        },
+        {
+          "id": "cap-do-2",
+          "title": "Lập trường giai cấp",
+          "content": "Là hệ tư tưởng, vũ khí lý luận sắc bén của **giai cấp công nhân** và nhân dân lao động trong cuộc đấu tranh chống lại giai cấp tư sản và chế độ tư bản chủ nghĩa."
+        },
+        {
+          "id": "cap-do-3",
+          "title": "Tinh thần phê phán",
+          "content": "Mang tinh thần **phê phán triệt để**. Nó không chùn bước trước bất cứ uy quyền nào, luôn phân tích mọi sự vật hiện tượng trong quá trình vận động, sinh thành và tiêu vong tất yếu của chúng."
+        }
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  },
+  {
+    "id": "b6-su-thong-nhat",
+    "type": "fill_in_blanks",
+    "title": "Sự thống nhất giữa bản chất khoa học và cách mạng",
+    "config": {
+      "instruction": "Bản chất khoa học và cách mạng trong triết học Mác - Lênin không tách rời mà thống nhất chặt chẽ với nhau. Hãy điền chính xác các từ khóa còn thiếu để hoàn thiện công thức thống nhất này!",
+      "textWithBlanks": "Sự thống nhất giữa bản chất khoa học và cách mạng thể hiện ở chỗ: Khoa học mang tính cách mạng vì nó hướng tới giải phóng con người; Cách mạng mang tính khoa học vì nó dựa trên sự thấu hiểu quy luật khách quan. Do đó, phong trào công nhân cần phải có [blank_1] dẫn đường, và ngược lại, lý luận phải gắn liền với [blank_2], không ngừng [blank_3] để không trở thành giáo điều.",
+      "blanks": [
+        { "id": "blank_1", "correctAnswer": "lý luận", "distractors": ["kinh nghiệm", "niềm tin"] },
+        { "id": "blank_2", "correctAnswer": "thực tiễn", "distractors": ["tưởng tượng", "suy đoán"] },
+        { "id": "blank_3", "correctAnswer": "sáng tạo", "distractors": ["bảo thủ", "lặp lại"] }
+      ],
+      "successFeedback": "Sự thống nhất lý luận và thực tiễn là nguyên tắc tối cao của chủ nghĩa Mác - Lênin."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b6-dac-trung-mo",
+    "type": "category_sorting",
+    "title": "Đặc trưng mở của Chủ nghĩa Mác - Lênin",
+    "config": {
+      "instruction": "Chủ nghĩa Mác - Lênin có những đặc trưng cơ bản nào tạo nên sức sống vượt thời gian? Hãy đóng dấu các thẻ thuộc tính vào đúng các luồng tư tưởng cốt lõi!",
+      "categories": [
+        { "id": "he-thong", "title": "Tính hệ thống" },
+        { "id": "thuc-tien", "title": "Tính thực tiễn" },
+        { "id": "mo", "title": "Tính mở" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Các bộ phận cấu thành liên kết hữu cơ, logic chặt chẽ với nhau (Triết học, Kinh tế chính trị, CNXH Khoa học)", "categoryId": "he-thong" },
+        { "id": "c2", "text": "Luôn hướng tới giải quyết các vấn đề bức thiết do cuộc sống đặt ra", "categoryId": "thuc-tien" },
+        { "id": "c3", "text": "Lấy hiện thực khách quan làm tiêu chuẩn duy nhất để kiểm nghiệm chân lý", "categoryId": "thuc-tien" },
+        { "id": "c4", "text": "Sẵn sàng tiếp thu những thành tựu mới của văn minh nhân loại", "categoryId": "mo" },
+        { "id": "c5", "text": "Không phải là một khuôn mẫu cứng nhắc, mà cần được bổ sung, phát triển theo thời đại", "categoryId": "mo" }
+      ],
+      "successFeedback": "Chính những đặc trưng này khiến chủ nghĩa Mác - Lênin luôn giữ được sức sống mãnh liệt và không bị lạc hậu trước sự thay đổi của lịch sử."
+    },
+    "completionRule": { "type": "correct" }
+  },
+  {
+    "id": "b6-tong-ket",
+    "type": "final_summary",
+    "title": "Khung thông điệp kết luận toàn diện",
+    "config": {
+      "message": "BẠN ĐÃ HOÀN THÀNH XUẤT SẮC BÀI HỌC!\nBản chất của triết học Mác - Lênin được biểu hiện tập trung ở sự thống nhất cao độ giữa tính khoa học triệt để và tính cách mạng sâu sắc.",
+      "keyTakeaways": [
+        "**Tính khoa học:** Kế thừa tinh hoa nhân loại, tổng kết thực tiễn, phản ánh đúng quy luật khách quan của tự nhiên, xã hội và tư duy.",
+        "**Tính cách mạng:** Là vũ khí lý luận của giai cấp công nhân nhằm cải tạo thế giới, giải phóng con người, mang tinh thần phê phán triệt để.",
+        "**Tính thống nhất:** Khoa học để cách mạng thành công, và cách mạng phải dựa trên cơ sở khoa học.",
+        "Với tính mở, tính hệ thống và tính thực tiễn, triết học Mác - Lênin không phải là một hệ thống giáo điều khép kín mà luôn phát triển sáng tạo cùng thời đại."
+      ]
+    },
+    "completionRule": { "type": "viewed" }
+  }
+]
