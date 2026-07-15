@@ -265,7 +265,7 @@ export default function MatchingQuiz() {
                       className={`px-4 py-2 rounded-3xl text-xs font-bold transition-all border ${
                         currentGame?.id === q.id
                           ? "bg-primary-800 text-white border-primary-600 shadow-md scale-105"
-                          : "bg-slate-950 text-slate-400 border-slate-800 hover:text-slate-200"
+                          : "bg-slate-950 text-slate-350 border-slate-800 hover:text-slate-200"
                       }`}
                     >
                       Bản đồ {idx + 1}: {q.title}

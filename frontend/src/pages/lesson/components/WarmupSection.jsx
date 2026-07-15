@@ -167,7 +167,7 @@ function WorldviewFilterGame({ data, onDone }) {
         <div className="bg-slate-950/80 border-2 border-amber-400 rounded-3xl p-6 shadow-inner max-w-md mx-auto">
           <span className="text-xs uppercase tracking-[0.2em] text-amber-500 font-bold block mb-1">Chứng nhận danh hiệu</span>
           <h4 className="text-2xl font-black text-white tracking-wide">BẬC THẦY NHÌN THẤU NHÂN SINH</h4>
-          <p className="text-[10px] text-gray-500 mt-2 font-mono">Được cấp bởi Ban giảng huấn học thuật PhiloMind</p>
+          <p className="text-[10px] text-gray-450 mt-2 font-mono">Được cấp bởi Ban giảng huấn học thuật PhiloMind</p>
         </div>
         <div className="flex flex-col sm:flex-row justify-center gap-3">
           <button
@@ -196,7 +196,7 @@ function WorldviewFilterGame({ data, onDone }) {
       <div className="bg-slate-950 text-white rounded-3xl p-8 border border-red-600/30 shadow-xl text-center space-y-5">
         <div className="text-primary-500 inline-block text-5xl">☠️</div>
         <h3 className="text-2xl font-bold text-primary-500">THỬ THÁCH THẤT BẠI!</h3>
-        <p className="text-gray-400 text-sm max-w-md mx-auto">
+        <p className="text-gray-350 text-sm max-w-md mx-auto">
           {feedback ? feedback.text : "Đồng chí đã hết thời gian hoặc lựa chọn nhầm thế giới quan cảm tính!"}
         </p>
         <div>
@@ -229,7 +229,7 @@ function WorldviewFilterGame({ data, onDone }) {
             <span className="material-symbols-outlined text-sm text-primary-500 animate-pulse">timer</span>
             <span className="font-mono text-sm font-bold text-red-400">{timeLeft}s</span>
           </div>
-          <div className="bg-slate-950 px-3 py-1.5 rounded-3xl border border-slate-800 text-xs font-bold text-slate-400">
+          <div className="bg-slate-950 px-3 py-1.5 rounded-3xl border border-slate-800 text-xs font-bold text-slate-350">
             {currentIdx + 1} / {situations.length} (Đúng: {score})
           </div>
         </div>
@@ -260,7 +260,7 @@ function WorldviewFilterGame({ data, onDone }) {
           </div>
 
           <div className="space-y-2">
-            <p className="text-xs uppercase tracking-wider text-gray-500 font-bold">Phân loại phát ngôn trên thuộc thế giới quan:</p>
+            <p className="text-xs uppercase tracking-wider text-gray-450 font-bold">Phân loại phát ngôn trên thuộc thế giới quan:</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <button
                 type="button"

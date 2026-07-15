@@ -160,6 +160,28 @@
   color: var(--text-primary);
 }
 
+/* Ép các sắc xám/navy tiêu chuẩn (không phải shade tuỳ biến nửa bước như
+   350/450/650...) sang đen tuyền ở CHẾ ĐỘ SÁNG, cho chắc ăn — đây từng là màu
+   navy/xám nhạt gây cảm giác chữ mờ. Scope bằng html:not(.dark) để không đụng
+   vào các quy tắc dark-mode phía trên. Các card nền tối cố định (không phụ
+   thuộc theme, ví dụ mini-game "Kính Lọc Cuộc Đời" hay bộ chọn bản đồ trong
+   MatchingQuiz) đã được đổi sang shade tuỳ biến tương đương (vd 400->350,
+   500->450) để không bị quy tắc này ép đen mất chữ trên nền tối. */
+html:not(.dark) .text-gray-400,
+html:not(.dark) .text-gray-500,
+html:not(.dark) .text-gray-600,
+html:not(.dark) .text-gray-700,
+html:not(.dark) .text-gray-800,
+html:not(.dark) .text-gray-900,
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-slate-500,
+html:not(.dark) .text-slate-600,
+html:not(.dark) .text-slate-700,
+html:not(.dark) .text-slate-800,
+html:not(.dark) .text-slate-900 {
+  color: #000000 !important;
+}
+
 /* Contrast guardrails for legacy utility combinations.
    Ép các sắc primary sáng (250..500) về teal-700 đủ đậm để đọc rõ trên nền
    sáng (đồng bộ với palette teal-blue mới). */
