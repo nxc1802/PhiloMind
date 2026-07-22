@@ -3,25 +3,67 @@ import React, { useMemo } from "react";
 export function parseInlineMarkdown(text) {
   if (!text) return "";
 
-  // Helper to parse bold inside text/elements
-  const parseBold = (str, keyPrefix) => {
+  const parseFormatting = (str, keyPrefix) => {
     if (typeof str !== "string") return str;
-    const boldRegex = /\*\*(.*?)\*\*/g;
+
+    const regex = /(\$[^$]+\$|\*\*\*[\s\S]+?\*\*\*|\*\*[\s\S]+?\*\*|\*[\s\S]+?\*|_[\s\S]+?_)/g;
     const res = [];
     let lastIdx = 0;
     let match;
-    while ((match = boldRegex.exec(str)) !== null) {
+
+    while ((match = regex.exec(str)) !== null) {
       const matchIdx = match.index;
       if (matchIdx > lastIdx) {
         res.push(str.slice(lastIdx, matchIdx));
       }
-      res.push(
-        <strong key={`${keyPrefix}-bold-${matchIdx}`} className="font-bold text-primary-950">
-          {match[1]}
-        </strong>
-      );
-      lastIdx = boldRegex.lastIndex;
+      const token = match[0];
+      if (token.startsWith("$") && token.endsWith("$")) {
+        const mathContent = token.slice(1, -1);
+        res.push(
+          <code
+            key={`${keyPrefix}-math-${matchIdx}`}
+            className="font-mono text-sm bg-slate-100 dark:bg-slate-800 text-primary-700 dark:text-primary-300 px-1.5 py-0.5 rounded font-semibold"
+          >
+            {mathContent}
+          </code>
+        );
+      } else if (token.startsWith("***") && token.endsWith("***")) {
+        const content = token.slice(3, -3);
+        res.push(
+          <strong
+            key={`${keyPrefix}-bi-${matchIdx}`}
+            className="font-bold italic text-primary-950 dark:text-primary-100"
+          >
+            {content}
+          </strong>
+        );
+      } else if (token.startsWith("**") && token.endsWith("**")) {
+        const content = token.slice(2, -2);
+        res.push(
+          <strong
+            key={`${keyPrefix}-b-${matchIdx}`}
+            className="font-bold text-primary-950 dark:text-primary-100"
+          >
+            {content}
+          </strong>
+        );
+      } else if (
+        (token.startsWith("*") && token.endsWith("*")) ||
+        (token.startsWith("_") && token.endsWith("_"))
+      ) {
+        const content = token.slice(1, -1);
+        res.push(
+          <em
+            key={`${keyPrefix}-i-${matchIdx}`}
+            className="italic text-primary-900 dark:text-primary-200"
+          >
+            {content}
+          </em>
+        );
+      }
+      lastIdx = regex.lastIndex;
     }
+
     if (lastIdx < str.length) {
       res.push(str.slice(lastIdx));
     }
@@ -36,11 +78,11 @@ export function parseInlineMarkdown(text) {
     const matchIndex = match.index;
     if (matchIndex > lastIndex) {
       const textSegment = text.slice(lastIndex, matchIndex);
-      const boldSegments = parseBold(textSegment, `seg-${matchIndex}`);
-      if (Array.isArray(boldSegments)) {
-        parts.push(...boldSegments);
+      const formatted = parseFormatting(textSegment, `seg-${matchIndex}`);
+      if (Array.isArray(formatted)) {
+        parts.push(...formatted);
       } else {
-        parts.push(boldSegments);
+        parts.push(formatted);
       }
     }
     const linkText = match[1];
@@ -51,9 +93,9 @@ export function parseInlineMarkdown(text) {
         href={linkUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary-600 dark:text-primary-350 hover:underline font-semibold"
+        className="text-primary-600 dark:text-primary-350 hover:underline font-bold"
       >
-        {parseBold(linkText, `link-text-${matchIndex}`)}
+        {parseFormatting(linkText, `link-text-${matchIndex}`)}
       </a>
     );
     lastIndex = linkRegex.lastIndex;
@@ -61,11 +103,11 @@ export function parseInlineMarkdown(text) {
 
   if (lastIndex < text.length) {
     const textSegment = text.slice(lastIndex);
-    const boldSegments = parseBold(textSegment, "seg-end");
-    if (Array.isArray(boldSegments)) {
-      parts.push(...boldSegments);
+    const formatted = parseFormatting(textSegment, "seg-end");
+    if (Array.isArray(formatted)) {
+      parts.push(...formatted);
     } else {
-      parts.push(boldSegments);
+      parts.push(formatted);
     }
   }
 
@@ -74,7 +116,7 @@ export function parseInlineMarkdown(text) {
 
 export function parseMarkdownToReact(text) {
   if (!text) return null;
-  const lines = text.split("\n").map(line => line.trim());
+  const lines = text.split("\n").map((line) => line.trim());
   const elements = [];
 
   let i = 0;
@@ -98,9 +140,9 @@ export function parseMarkdownToReact(text) {
       // Parse tableLines
       if (tableLines.length >= 1) {
         // Find rows
-        const parsedRows = tableLines.map(tLine => {
+        const parsedRows = tableLines.map((tLine) => {
           // split by | but ignore first and last empty segments
-          const cells = tLine.split("|").map(c => c.trim());
+          const cells = tLine.split("|").map((c) => c.trim());
           if (cells[0] === "") cells.shift();
           if (cells[cells.length - 1] === "") cells.pop();
           return cells;
@@ -111,7 +153,11 @@ export function parseMarkdownToReact(text) {
         let bodyRows = [];
 
         // If the second row is a separator row (like |---|---|), then the first row is header
-        const hasSeparator = parsedRows[1] && parsedRows[1].every(cell => /^:-*-*:*$/.test(cell) || /^-+$/.test(cell));
+        const hasSeparator =
+          parsedRows[1] &&
+          parsedRows[1].every(
+            (cell) => /^:-*-*:*$/.test(cell) || /^-+$/.test(cell),
+          );
         if (hasSeparator) {
           headerRow = parsedRows[0];
           bodyRows = parsedRows.slice(2);
@@ -126,7 +172,10 @@ export function parseMarkdownToReact(text) {
         }
 
         elements.push(
-          <div key={`table-wrapper-${i}`} className="overflow-x-auto my-6 rounded-3xl border border-gray-200 shadow-sm">
+          <div
+            key={`table-wrapper-${i}`}
+            className="overflow-x-auto my-6 rounded-3xl border border-gray-200 shadow-sm"
+          >
             <table className="min-w-full divide-y divide-gray-250 text-sm">
               {headerRow && (
                 <thead className="bg-primary-50 dark:bg-primary-900/35">
@@ -145,7 +194,10 @@ export function parseMarkdownToReact(text) {
               )}
               <tbody className="bg-white dark:bg-[#002b37] divide-y divide-gray-200">
                 {bodyRows.map((row, rowIdx) => (
-                  <tr key={`tr-${rowIdx}`} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/10">
+                  <tr
+                    key={`tr-${rowIdx}`}
+                    className="hover:bg-slate-50/50 dark:hover:bg-slate-800/10"
+                  >
                     {row.map((cell, cellIdx) => (
                       <td
                         key={`td-${cellIdx}`}
@@ -158,7 +210,7 @@ export function parseMarkdownToReact(text) {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div>,
         );
         continue;
       }
@@ -168,9 +220,12 @@ export function parseMarkdownToReact(text) {
     if (line.startsWith("# ") || /^\d+\.\s+/.test(line)) {
       const cleanText = line.startsWith("# ") ? line.slice(2) : line;
       elements.push(
-        <h2 key={`h2-${i}`} className="text-xl md:text-2xl font-bold text-primary-950 dark:text-primary-100 border-b-2 border-primary-200 dark:border-primary-800/60 pb-2 mt-8 mb-4 font-serif">
+        <h2
+          key={`h2-${i}`}
+          className="text-xl md:text-2xl font-bold text-primary-950 dark:text-primary-100 border-b-2 border-primary-200 dark:border-primary-800/60 pb-2 mt-8 mb-4 font-serif"
+        >
           {parseInlineMarkdown(cleanText)}
-        </h2>
+        </h2>,
       );
       i++;
       continue;
@@ -180,24 +235,36 @@ export function parseMarkdownToReact(text) {
     if (line.startsWith("## ") || /^[a-z]\)\s+/.test(line)) {
       const cleanText = line.startsWith("## ") ? line.slice(3) : line;
       elements.push(
-        <h3 key={`h3-${i}`} className="text-lg md:text-xl font-bold text-primary-650 dark:text-primary-300 mt-6 mb-3 font-serif">
+        <h3
+          key={`h3-${i}`}
+          className="text-lg md:text-xl font-bold text-primary-650 dark:text-primary-300 mt-6 mb-3 font-serif"
+        >
           {parseInlineMarkdown(cleanText)}
-        </h3>
+        </h3>,
       );
       i++;
       continue;
     }
 
-    // 3. Heading 3 / List bullet title (### or * )
-    if (line.startsWith("### ") || line.startsWith("* ")) {
-      const cleanText = line.startsWith("### ") ? line.slice(4) : line.slice(2).trim();
+    // 3. Heading 3 / List bullet title (### or * or - )
+    if (
+      line.startsWith("### ") ||
+      line.startsWith("* ") ||
+      line.startsWith("- ")
+    ) {
+      const cleanText = line.startsWith("### ")
+        ? line.slice(4)
+        : line.slice(2).trim();
       elements.push(
-        <div key={`h3-bullet-${i}`} className="flex items-start gap-2.5 mt-5 mb-3 pl-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary-600 mt-2.5 shrink-0" />
-          <span className="text-base font-bold text-primary-850 dark:text-primary-100">
+        <div
+          key={`h3-bullet-${i}`}
+          className="flex items-start gap-2.5 mt-3 mb-2 pl-1"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-primary-600 dark:bg-primary-400 mt-2.5 shrink-0" />
+          <span className="text-sm md:text-base font-medium text-slate-800 dark:text-primary-100 leading-relaxed">
             {parseInlineMarkdown(cleanText)}
           </span>
-        </div>
+        </div>,
       );
       i++;
       continue;

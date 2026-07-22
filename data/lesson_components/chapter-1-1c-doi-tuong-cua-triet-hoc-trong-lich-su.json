@@ -75,7 +75,9 @@
             "config": {
               "content": "Trong tiến trình phát triển của xã hội và nhận thức, đối tượng của triết học không hề cố định mà luôn biến đổi qua các thời kỳ lịch sử. Hãy cùng quay ngược thời gian về thời kỳ Cổ đại để khám phá diện mạo đầu tiên của đối tượng triết học qua tương tác dưới đây!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "ancient-knowledge",
@@ -85,18 +87,38 @@
             "config": {
               "question": "Nền triết học tự nhiên ở phương Tây thời kỳ này bao gồm tất cả những tri thức mà con người có được. Hãy tìm các lĩnh vực tri thức thuộc phạm vi triết học thời kỳ này!",
               "options": [
-                { "id": "math", "text": "Toán học", "isCorrect": true },
-                { "id": "physics", "text": "Vật lý học", "isCorrect": true },
-                { "id": "astronomy", "text": "Thiên văn học", "isCorrect": true },
-                { "id": "specific_sciences", "text": "Khoa học chuyên ngành độc lập", "isCorrect": false }
+                {
+                  "id": "math",
+                  "text": "Toán học",
+                  "isCorrect": true
+                },
+                {
+                  "id": "physics",
+                  "text": "Vật lý học",
+                  "isCorrect": true
+                },
+                {
+                  "id": "astronomy",
+                  "text": "Thiên văn học",
+                  "isCorrect": true
+                },
+                {
+                  "id": "specific_sciences",
+                  "text": "Khoa học chuyên ngành độc lập",
+                  "isCorrect": false
+                }
               ],
               "explanation": "Ngay từ khi ra đời, triết học được xem là hình thái cao nhất của tri thức. Các ngành khoa học chuyên ngành mãi về sau mới dần tách ra."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "ancient-piece",
@@ -142,7 +164,9 @@
             "config": {
               "content": "Khi quyền lực tối cao của Giáo hội bao trùm Tây Âu trung cổ, một trật tự tư tưởng mới được thiết lập. Triết học không còn được tự do tìm hiểu thế giới. Bạn hãy sắm vai một giáo sĩ: Thanh trừng các tư tưởng tự nhiên cũ và Thu nạp những tư tưởng được Giáo hội chấp nhận để hoàn thiện diện mạo Triết học Kinh viện!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "medieval-sorting",
@@ -163,23 +187,63 @@
                 }
               ],
               "cards": [
-                { "id": "c1", "text": "Đạt thành tựu rực rỡ tại Hy Lạp cổ đại", "categoryId": "old_ideology" },
-                { "id": "c2", "text": "Bao hàm tri thức toán học, vật lý học, thiên văn học", "categoryId": "old_ideology" },
-                { "id": "c3", "text": "Nữ tì của thần học", "categoryId": "new_ideology" },
-                { "id": "c4", "text": "Chịu sự chi phối của hệ tư tưởng Kitô giáo", "categoryId": "new_ideology" },
-                { "id": "c5", "text": "Niềm tin tôn giáo", "categoryId": "new_ideology" },
-                { "id": "c6", "text": "Thiên đường, địa ngục", "categoryId": "new_ideology" },
-                { "id": "c7", "text": "Mặc khải", "categoryId": "new_ideology" },
-                { "id": "c8", "text": "Chú giải các tín điều phi thế tục", "categoryId": "new_ideology" },
-                { "id": "c9", "text": "Nặng về tư biện", "categoryId": "new_ideology" }
+                {
+                  "id": "c1",
+                  "text": "Đạt thành tựu rực rỡ tại Hy Lạp cổ đại",
+                  "categoryId": "old_ideology"
+                },
+                {
+                  "id": "c2",
+                  "text": "Bao hàm tri thức toán học, vật lý học, thiên văn học",
+                  "categoryId": "old_ideology"
+                },
+                {
+                  "id": "c3",
+                  "text": "Nữ tì của thần học",
+                  "categoryId": "new_ideology"
+                },
+                {
+                  "id": "c4",
+                  "text": "Chịu sự chi phối của hệ tư tưởng Kitô giáo",
+                  "categoryId": "new_ideology"
+                },
+                {
+                  "id": "c5",
+                  "text": "Niềm tin tôn giáo",
+                  "categoryId": "new_ideology"
+                },
+                {
+                  "id": "c6",
+                  "text": "Thiên đường, địa ngục",
+                  "categoryId": "new_ideology"
+                },
+                {
+                  "id": "c7",
+                  "text": "Mặc khải",
+                  "categoryId": "new_ideology"
+                },
+                {
+                  "id": "c8",
+                  "text": "Chú giải các tín điều phi thế tục",
+                  "categoryId": "new_ideology"
+                },
+                {
+                  "id": "c9",
+                  "text": "Nặng về tư biện",
+                  "categoryId": "new_ideology"
+                }
               ],
               "summary": "Ở Tây Âu thời trung cổ, nền triết học tự nhiên bị bóp nghẹt để nhường chỗ cho triết học kinh viện – nơi triết học chấp nhận làm 'nữ tì của thần học'."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "medieval-piece",
@@ -224,7 +288,9 @@
             "config": {
               "content": "Sau ‘cuộc cách mạng’ Copernicus, các khoa học Tây Âu thế kỷ XV, XVI dần phục hưng, thúc đẩy sự hình thành của quan hệ sản xuất tư bản chủ nghĩa và sản xuất công nghiệp. Hãy cùng phân định các trường phái triết học thế kỷ XVII - XVIII trên bàn cân tri thức!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "modern-matching",
@@ -233,22 +299,50 @@
             "linkedMediaId": "modern-media",
             "config": {
               "categories": [
-                { "id": "materialism", "label": "Khoa học, triết học duy vật", "description": "Trường phái khoa học và duy vật" },
-                { "id": "idealism", "label": "Chủ nghĩa duy tâm, tôn giáo", "description": "Trường phái duy tâm và tôn giáo" }
+                {
+                  "id": "materialism",
+                  "label": "Khoa học, triết học duy vật",
+                  "description": "Trường phái khoa học và duy vật"
+                },
+                {
+                  "id": "idealism",
+                  "label": "Chủ nghĩa duy tâm, tôn giáo",
+                  "description": "Trường phái duy tâm và tôn giáo"
+                }
               ],
               "cards": [
-                { "id": "bacon", "text": "F. Bacon, T. Hobbes (Anh): Đỉnh cao mới trong chủ nghĩa duy vật thế kỷ XVII - XVIII.", "categoryId": "materialism" },
-                { "id": "diderot", "text": "D. Diderot, C. Helvetius (Pháp): Triết học duy nhất triệt để, trung thành với học thuyết khoa học tự nhiên.", "categoryId": "materialism" },
-                { "id": "spinoza", "text": "B. Spinoza (Hà Lan): Đại biểu tiêu biểu của chủ nghĩa duy vật.", "categoryId": "materialism" },
-                { "id": "kant_hegel", "text": "Kant, G.W.F. Hegel (Đức): Đỉnh cao của học thuyết triết học duy tâm.", "categoryId": "idealism" }
+                {
+                  "id": "bacon",
+                  "text": "F. Bacon, T. Hobbes (Anh): Đỉnh cao mới trong chủ nghĩa duy vật thế kỷ XVII - XVIII.",
+                  "categoryId": "materialism"
+                },
+                {
+                  "id": "diderot",
+                  "text": "D. Diderot, C. Helvetius (Pháp): Triết học duy nhất triệt để, trung thành với học thuyết khoa học tự nhiên.",
+                  "categoryId": "materialism"
+                },
+                {
+                  "id": "spinoza",
+                  "text": "B. Spinoza (Hà Lan): Đại biểu tiêu biểu của chủ nghĩa duy vật.",
+                  "categoryId": "materialism"
+                },
+                {
+                  "id": "kant_hegel",
+                  "text": "Kant, G.W.F. Hegel (Đức): Đỉnh cao của học thuyết triết học duy tâm.",
+                  "categoryId": "idealism"
+                }
               ],
               "summary": "Thành tựu khoa học thực nghiệm thế kỷ XV-XVI đã thúc đẩy cuộc đấu tranh giữa khoa học, duy vật với duy tâm. Sự phát triển của các khoa học chuyên ngành từng bước xóa bỏ vai trò 'khoa học của các khoa học'. Triết học Hegel là học thuyết cuối cùng thể hiện tham vọng đó."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "modern-piece",
@@ -294,7 +388,9 @@
             "config": {
               "content": "Sự phát triển mạnh mẽ của khoa học vào đầu thế kỷ XIX đã dẫn đến một bước ngoặt vĩ đại: Sự ra đời của triết học Mác. Hãy kích hoạt các mảnh ghép tư duy để xem triết học Mác và triết học phương Tây hiện đại đã xác định đối tượng nghiên cứu của mình như thế nào!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "contemporary-sorting",
@@ -303,25 +399,65 @@
             "linkedMediaId": "contemporary-media",
             "config": {
               "categories": [
-                { "id": "marxism", "label": "TRIẾT HỌC MÁC", "description": "Lập trường duy vật triệt để" },
-                { "id": "western", "label": "TRIẾT HỌC HIỆN ĐẠI PHƯƠNG TÂY", "description": "Các trường phái phương Tây" }
+                {
+                  "id": "marxism",
+                  "label": "TRIẾT HỌC MÁC",
+                  "description": "Lập trường duy vật triệt để"
+                },
+                {
+                  "id": "western",
+                  "label": "TRIẾT HỌC HIỆN ĐẠI PHƯƠNG TÂY",
+                  "description": "Các trường phái phương Tây"
+                }
               ],
               "cards": [
-                { "id": "m1", "text": "Đoạn tuyệt triệt để với quan niệm triết học là ‘khoa học của các khoa học’", "categoryId": "marxism" },
-                { "id": "m2", "text": "Tiếp tục giải quyết mối quan hệ giữa tồn tại và tư duy, giữa vật chất và ý thức trên lập trường duy vật triệt để", "categoryId": "marxism" },
-                { "id": "m3", "text": "Nghiên cứu những quy luật chung nhất của tự nhiên, xã hội và tư duy", "categoryId": "marxism" },
-                { "id": "w1", "text": "Muốn từ bỏ quan niệm truyền thống về triết học", "categoryId": "western" },
-                { "id": "w2", "text": "Xác định đối tượng nghiên cứu riêng như mô tả những hiện tượng tinh thần", "categoryId": "western" },
-                { "id": "w3", "text": "Phân tích ngữ nghĩa", "categoryId": "western" },
-                { "id": "w4", "text": "Chú giải văn bản", "categoryId": "western" }
+                {
+                  "id": "m1",
+                  "text": "Đoạn tuyệt triệt để với quan niệm triết học là ‘khoa học của các khoa học’",
+                  "categoryId": "marxism"
+                },
+                {
+                  "id": "m2",
+                  "text": "Tiếp tục giải quyết mối quan hệ giữa tồn tại và tư duy, giữa vật chất và ý thức trên lập trường duy vật triệt để",
+                  "categoryId": "marxism"
+                },
+                {
+                  "id": "m3",
+                  "text": "Nghiên cứu những quy luật chung nhất của tự nhiên, xã hội và tư duy",
+                  "categoryId": "marxism"
+                },
+                {
+                  "id": "w1",
+                  "text": "Muốn từ bỏ quan niệm truyền thống về triết học",
+                  "categoryId": "western"
+                },
+                {
+                  "id": "w2",
+                  "text": "Xác định đối tượng nghiên cứu riêng như mô tả những hiện tượng tinh thần",
+                  "categoryId": "western"
+                },
+                {
+                  "id": "w3",
+                  "text": "Phân tích ngữ nghĩa",
+                  "categoryId": "western"
+                },
+                {
+                  "id": "w4",
+                  "text": "Chú giải văn bản",
+                  "categoryId": "western"
+                }
               ],
               "summary": "Với sự ra đời của triết học Mác, đối tượng của triết học được xác lập một cách hợp lý trên lập trường duy vật triệt để, đoạn tuyệt tham vọng trở thành 'khoa học của các khoa học'."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "contemporary-piece",
@@ -365,7 +501,8 @@
         "actions": {
           "retryButton": true,
           "nextLessonButton": true
-        }
+        },
+        "referenceUrl": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/documents/Book_full.pdf#page=20"
       },
       "completionRule": {
         "type": "viewed"

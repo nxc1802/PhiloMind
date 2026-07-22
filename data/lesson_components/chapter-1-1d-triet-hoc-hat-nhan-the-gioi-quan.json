@@ -56,28 +56,75 @@
               },
               "pairs": [
                 {
-                  "left": { "id": "l1", "image": { "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap01.png", "fit": "contain" } },
-                  "right": { "id": "r1", "text": "Biết có hạn, muốn biết vô hạn" }
+                  "left": {
+                    "id": "l1",
+                    "image": {
+                      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap01.png",
+                      "fit": "contain"
+                    }
+                  },
+                  "right": {
+                    "id": "r1",
+                    "text": "Biết có hạn, muốn biết vô hạn"
+                  }
                 },
                 {
-                  "left": { "id": "l2", "image": { "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap02.png", "fit": "contain" } },
-                  "right": { "id": "r2", "text": "Thế giới quan — ngọn đèn dẫn lối" }
+                  "left": {
+                    "id": "l2",
+                    "image": {
+                      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap02.png",
+                      "fit": "contain"
+                    }
+                  },
+                  "right": {
+                    "id": "r2",
+                    "text": "Thế giới quan — ngọn đèn dẫn lối"
+                  }
                 },
                 {
-                  "left": { "id": "l3", "image": { "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap03.png", "fit": "contain" } },
-                  "right": { "id": "r3", "text": "Triết học — hạt nhân của thế giới quan" }
+                  "left": {
+                    "id": "l3",
+                    "image": {
+                      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap03.png",
+                      "fit": "contain"
+                    }
+                  },
+                  "right": {
+                    "id": "r3",
+                    "text": "Triết học — hạt nhân của thế giới quan"
+                  }
                 },
                 {
-                  "left": { "id": "l4", "image": { "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap04.jpg", "fit": "contain" } },
-                  "right": { "id": "r4", "text": "Ai cũng nhìn qua một lăng kính" }
+                  "left": {
+                    "id": "l4",
+                    "image": {
+                      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap04.jpg",
+                      "fit": "contain"
+                    }
+                  },
+                  "right": {
+                    "id": "r4",
+                    "text": "Ai cũng nhìn qua một lăng kính"
+                  }
                 },
                 {
-                  "left": { "id": "l5", "image": { "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap05.png", "fit": "contain" } },
-                  "right": { "id": "r5", "text": "Tri thức → Niềm tin → Lý tưởng" }
+                  "left": {
+                    "id": "l5",
+                    "image": {
+                      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.d/cap05.png",
+                      "fit": "contain"
+                    }
+                  },
+                  "right": {
+                    "id": "r5",
+                    "text": "Tri thức → Niềm tin → Lý tưởng"
+                  }
                 }
               ]
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           },
           {
             "id": "m1-intro",
@@ -86,11 +133,15 @@
             "config": {
               "content": "Trí tuệ loài người luôn hướng đến việc hiểu biết sâu sắc và toàn diện về mọi hiện tượng, sự vật, quá trình. Tuy nhiên, tri thức ở thời đại nào cũng có hạn so với thế giới cần nhận thức. Trong bối cảnh đó, con người buộc phải xác định những quan điểm về toàn bộ thế giới để định hướng cho nhận thức và hành động. Đó chính là thế giới quan."
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "m1-piece",
@@ -110,7 +161,9 @@
         ],
         "reward": "Bạn đã thu thập được mảnh ghép: ĐỊNH NGHĨA THẾ GIỚI QUAN!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "structure-group",
@@ -131,7 +184,9 @@
             "config": {
               "content": "Thế giới quan được cấu thành từ nhiều yếu tố khác nhau và phát triển theo các cấp độ từ thấp đến cao. Hãy cùng tham gia thử thách xây dựng cấu trúc của thế giới quan!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "m2-matching",
@@ -140,27 +195,58 @@
             "config": {
               "instruction": "Nối các thành phần của thế giới quan với đặc điểm của chúng.",
               "leftColumn": [
-                { "id": "knowledge", "text": "Tri thức" },
-                { "id": "belief", "text": "Niềm tin" },
-                { "id": "ideal", "text": "Lý tưởng" }
+                {
+                  "id": "knowledge",
+                  "text": "Tri thức"
+                },
+                {
+                  "id": "belief",
+                  "text": "Niềm tin"
+                },
+                {
+                  "id": "ideal",
+                  "text": "Lý tưởng"
+                }
               ],
               "rightColumn": [
-                { "id": "foundation", "text": "Là cơ sở trực tiếp hình thành thế giới quan." },
-                { "id": "verified", "text": "Tri thức chỉ gia nhập thế giới quan khi đã được kiểm nghiệm ít nhiều trong thực tiễn." },
-                { "id": "peak", "text": "Là trình độ phát triển cao nhất của thế giới quan." }
+                {
+                  "id": "foundation",
+                  "text": "Là cơ sở trực tiếp hình thành thế giới quan."
+                },
+                {
+                  "id": "verified",
+                  "text": "Tri thức chỉ gia nhập thế giới quan khi đã được kiểm nghiệm ít nhiều trong thực tiễn."
+                },
+                {
+                  "id": "peak",
+                  "text": "Là trình độ phát triển cao nhất của thế giới quan."
+                }
               ],
               "correctPairs": [
-                { "leftId": "knowledge", "rightId": "foundation" },
-                { "leftId": "belief", "rightId": "verified" },
-                { "leftId": "ideal", "rightId": "peak" }
+                {
+                  "leftId": "knowledge",
+                  "rightId": "foundation"
+                },
+                {
+                  "leftId": "belief",
+                  "rightId": "verified"
+                },
+                {
+                  "leftId": "ideal",
+                  "rightId": "peak"
+                }
               ],
               "summary": "Với tính cách là hệ quan điểm chỉ dẫn tư duy và hành động, thiếu thế giới quan, con người không có phương hướng hành động."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "classification-group",
@@ -180,27 +266,75 @@
             "title": "Phân loại Thế giới quan",
             "config": {
               "categories": [
-                { "id": "main", "label": "Ba hình thức chủ yếu của thế giới quan", "description": "" },
-                { "id": "other", "label": "Các hình thức khác của thế giới quan", "description": "" },
-                { "id": "universal", "label": "Hình thức chung nhất của thế giới quan", "description": "" }
+                {
+                  "id": "main",
+                  "label": "Ba hình thức chủ yếu của thế giới quan",
+                  "description": ""
+                },
+                {
+                  "id": "other",
+                  "label": "Các hình thức khác của thế giới quan",
+                  "description": ""
+                },
+                {
+                  "id": "universal",
+                  "label": "Hình thức chung nhất của thế giới quan",
+                  "description": ""
+                }
               ],
               "cards": [
-                { "id": "c1", "text": "Thế giới quan tôn giáo", "categoryId": "main" },
-                { "id": "c2", "text": "Thế giới quan khoa học", "categoryId": "main" },
-                { "id": "c3", "text": "Thế giới quan triết học", "categoryId": "main" },
-                { "id": "c4", "text": "Thế giới quan huyền thoại", "categoryId": "other" },
-                { "id": "c5", "text": "Thế giới quan theo các thời đại, dân tộc", "categoryId": "other" },
-                { "id": "c6", "text": "Thế giới quan kinh nghiệm", "categoryId": "other" },
-                { "id": "c7", "text": "Thế giới quan thông thường", "categoryId": "other" },
-                { "id": "c8", "text": "Triết học (được sử dụng trong mọi khoa học và đời sống)", "categoryId": "universal" }
+                {
+                  "id": "c1",
+                  "text": "Thế giới quan tôn giáo",
+                  "categoryId": "main"
+                },
+                {
+                  "id": "c2",
+                  "text": "Thế giới quan khoa học",
+                  "categoryId": "main"
+                },
+                {
+                  "id": "c3",
+                  "text": "Thế giới quan triết học",
+                  "categoryId": "main"
+                },
+                {
+                  "id": "c4",
+                  "text": "Thế giới quan huyền thoại",
+                  "categoryId": "other"
+                },
+                {
+                  "id": "c5",
+                  "text": "Thế giới quan theo các thời đại, dân tộc",
+                  "categoryId": "other"
+                },
+                {
+                  "id": "c6",
+                  "text": "Thế giới quan kinh nghiệm",
+                  "categoryId": "other"
+                },
+                {
+                  "id": "c7",
+                  "text": "Thế giới quan thông thường",
+                  "categoryId": "other"
+                },
+                {
+                  "id": "c8",
+                  "text": "Triết học (được sử dụng trong mọi khoa học và đời sống)",
+                  "categoryId": "universal"
+                }
               ],
               "summary": "Thế giới quan triết học là thế giới quan chung nhất, phổ biến nhất, được sử dụng trong mọi ngành khoa học và đời sống xã hội."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "core-reason-group",
@@ -221,7 +355,9 @@
             "config": {
               "content": "Vì sao triết học lại được khẳng định là hạt nhân lý luận của thế giới quan? Hãy kích hoạt các mảnh ghép lập luận dưới đây để tìm ra 4 nguyên nhân cốt lõi chi phối mối quan hệ này!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "m4-select",
@@ -230,20 +366,48 @@
             "config": {
               "question": "Chọn 4 căn cứ đúng khẳng định triết học là hạt nhân lý luận của thế giới quan.",
               "options": [
-                { "id": "o1", "text": "Bản thân triết học chính là thế giới quan.", "isCorrect": true },
-                { "id": "o2", "text": "Trong các thế giới quan khác, triết học bao giờ cũng đóng vai trò là nhân tố cốt lõi.", "isCorrect": true },
-                { "id": "o3", "text": "Với các loại thế giới quan tôn giáo, kinh nghiệm... triết học bao giờ cũng có ảnh hưởng và chi phối.", "isCorrect": true },
-                { "id": "o4", "text": "Thế giới quan triết học như thế nào sẽ quy định các thế giới quan và các quan niệm khác như thế.", "isCorrect": true },
-                { "id": "o5", "text": "Triết học tách rời hoàn toàn khỏi thế giới quan tôn giáo.", "isCorrect": false },
-                { "id": "o6", "text": "Các khoa học cụ thể quy định nội dung của thế giới quan triết học.", "isCorrect": false }
+                {
+                  "id": "o1",
+                  "text": "Bản thân triết học chính là thế giới quan.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Trong các thế giới quan khác, triết học bao giờ cũng đóng vai trò là nhân tố cốt lõi.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "Với các loại thế giới quan tôn giáo, kinh nghiệm... triết học bao giờ cũng có ảnh hưởng và chi phối.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o4",
+                  "text": "Thế giới quan triết học như thế nào sẽ quy định các thế giới quan và các quan niệm khác như thế.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o5",
+                  "text": "Triết học tách rời hoàn toàn khỏi thế giới quan tôn giáo.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o6",
+                  "text": "Các khoa học cụ thể quy định nội dung của thế giới quan triết học.",
+                  "isCorrect": false
+                }
               ],
               "explanation": "Thế giới quan đúng đắn là tiền đề quan trọng để xác lập phương thức tư duy hợp lý và nhân sinh quan tích cực. Trình độ phát triển của thế giới quan đánh giá sự trưởng thành của cá nhân và xã hội."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "dialectical-group",
@@ -264,7 +428,9 @@
             "config": {
               "content": "Thế giới quan duy vật biện chứng được coi là đỉnh cao trong lịch sử. Hãy chọn các thành phần cấu thành chính xác của nó!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "m5-select",
@@ -273,18 +439,38 @@
             "config": {
               "question": "Hãy chọn các yếu tố tạo nên đỉnh cao của thế giới quan duy vật biện chứng.",
               "options": [
-                { "id": "o1", "text": "Đòi hỏi thế giới phải được xem xét dựa trên những nguyên lý về mối liên hệ phổ biến và sự phát triển.", "isCorrect": true },
-                { "id": "o2", "text": "Nhận thức thế giới và con người theo quan điểm toàn diện, lịch sử, cụ thể và phát triển.", "isCorrect": true },
-                { "id": "o3", "text": "Bao gồm tri thức khoa học, niềm tin khoa học và lý tưởng cách mạng.", "isCorrect": true },
-                { "id": "o4", "text": "Xem xét thế giới dựa trên các tín điều tưởng tượng.", "isCorrect": false }
+                {
+                  "id": "o1",
+                  "text": "Đòi hỏi thế giới phải được xem xét dựa trên những nguyên lý về mối liên hệ phổ biến và sự phát triển.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Nhận thức thế giới và con người theo quan điểm toàn diện, lịch sử, cụ thể và phát triển.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "Bao gồm tri thức khoa học, niềm tin khoa học và lý tưởng cách mạng.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o4",
+                  "text": "Xem xét thế giới dựa trên các tín điều tưởng tượng.",
+                  "isCorrect": false
+                }
               ],
               "explanation": "Thế giới quan duy vật biện chứng là đỉnh cao nhờ hệ thống lý luận khoa học và cách nhìn nhận biện chứng, toàn diện."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "limits-mcq-group",
@@ -305,13 +491,23 @@
             "config": {
               "question": "Tại sao thế giới quan tôn giáo không được ứng dụng trong khoa học và thường dẫn đến sai lầm trong hoạt động thực tiễn?",
               "options": [
-                { "id": "a", "text": "Do đặt niềm tin vào các tín điều, coi tín ngưỡng cao hơn lý trí, phủ nhận tính khách quan của tri thức khoa học.", "isCorrect": true },
-                { "id": "b", "text": "Do tổng kết toàn bộ lịch sử của khoa học và lịch sử của bản thân tư tưởng triết học.", "isCorrect": false }
+                {
+                  "id": "a",
+                  "text": "Do đặt niềm tin vào các tín điều, coi tín ngưỡng cao hơn lý trí, phủ nhận tính khách quan của tri thức khoa học.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b",
+                  "text": "Do tổng kết toàn bộ lịch sử của khoa học và lịch sử của bản thân tư tưởng triết học.",
+                  "isCorrect": false
+                }
               ],
               "correctFeedback": "Đúng! Bản chất của TGQ tôn giáo là đặt niềm tin vào các tín điều và coi tín ngưỡng cao hơn lý trí.",
               "wrongFeedback": "Sai! Phương án B là đặc thù của triết học lý luận, không phải của tôn giáo."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           },
           {
             "id": "m7-mcq",
@@ -320,17 +516,29 @@
             "config": {
               "question": "Ph. Ăngghen đã khẳng định như thế nào về sự chi phối của triết học đối với các nhà khoa học tự nhiên?",
               "options": [
-                { "id": "a", "text": "Những nhà khoa học tự nhiên hoàn toàn không bị triết học chi phối nếu họ chỉ tập trung nghiên cứu thực nghiệm.", "isCorrect": false },
-                { "id": "b", "text": "Dù làm gì đi nữa thì họ cũng vẫn bị triết học chi phối. Vấn đề chỉ ở chỗ họ muốn bị chi phối bởi thứ triết học tồi tệ hay một hình thức tư duy lý luận đúng đắn.", "isCorrect": true }
+                {
+                  "id": "a",
+                  "text": "Những nhà khoa học tự nhiên hoàn toàn không bị triết học chi phối nếu họ chỉ tập trung nghiên cứu thực nghiệm.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "b",
+                  "text": "Dù làm gì đi nữa thì họ cũng vẫn bị triết học chi phối. Vấn đề chỉ ở chỗ họ muốn bị chi phối bởi thứ triết học tồi tệ hay một hình thức tư duy lý luận đúng đắn.",
+                  "isCorrect": true
+                }
               ],
               "correctFeedback": "Đúng! Tư duy triết học luôn là một thành tố hữu cơ trong tri thức khoa học cũng như trong tri thức thông thường.",
               "wrongFeedback": "Sai! Ph. Ăngghen khẳng định không ai có thể hoàn toàn thoát khỏi sự chi phối của triết học."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "final",
@@ -344,10 +552,19 @@
           "Thế giới quan duy vật biện chứng là đỉnh cao trong lịch sử nhờ hệ thống lý luận khoa học.",
           "Tư duy triết học luôn là một thành tố hữu cơ trong mọi tri thức."
         ],
-        "rewards": { "xp": 150, "badge": "Hạt nhân thế giới quan" },
-        "actions": { "retryButton": true, "nextLessonButton": true }
+        "rewards": {
+          "xp": 150,
+          "badge": "Hạt nhân thế giới quan"
+        },
+        "actions": {
+          "retryButton": true,
+          "nextLessonButton": true
+        },
+        "referenceUrl": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/documents/Book_full.pdf#page=24"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     }
   ]
 }

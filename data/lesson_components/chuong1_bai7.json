@@ -219,7 +219,8 @@
           "Thực hiện hai chức năng cơ bản thống nhất hữu cơ: chức năng thế giới quan và chức năng phương pháp luận.",
           "Trong hoạt động thực tiễn, không được xem thường phương pháp luận triết học (dẫn đến mò mẫm) cũng không được tuyệt đối hóa nó (dẫn đến giáo điều).",
           "Luôn phải kết hợp chặt chẽ lý luận triết học với tri thức khoa học cụ thể và kinh nghiệm thực tiễn."
-        ]
+        ],
+        "referenceUrl": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/documents/Book_full.pdf#page=92"
       },
       "completionRule": {
         "type": "viewed"

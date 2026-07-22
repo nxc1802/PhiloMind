@@ -40,12 +40,16 @@ async function main() {
       continue;
     }
 
+    const videoMedia = (lessonMedia as any[]).find((m: any) => m.type === "video");
+    const videoUrlToSet = videoMedia ? videoMedia.url : (lessonData.videoUrl || undefined);
+
     // Update node
     await prisma.conceptNode.update({
       where: { id: node.id },
       data: {
         lessonFlow: lessonFlow as any,
         lessonMedia: lessonMedia as any,
+        ...(videoUrlToSet ? { videoUrl: videoUrlToSet } : {}),
         contentReady: true,
         lessonStatus: "published",
         lessonType: "flow"

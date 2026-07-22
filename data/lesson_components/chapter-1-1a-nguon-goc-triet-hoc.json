@@ -46,7 +46,9 @@
       "type": "component_group",
       "title": "Cỗ Máy Thời Gian",
       "linkedMediaId": "origin-opening-video",
-      "navigation_config": { "shortLabel": "Khởi hành" },
+      "navigation_config": {
+        "shortLabel": "Khởi hành"
+      },
       "config": {
         "layout": "vertical",
         "revealMode": "sequential",
@@ -73,7 +75,9 @@
                 }
               ]
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "origin-journey-choice",
@@ -101,11 +105,15 @@
               ],
               "explanation": "Tuyệt vời! Dù khởi hành từ đâu, mọi nền văn minh cổ đại đều cùng chạm tới một bước ngoặt tư duy giống nhau. Lên đường thôi!"
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "cognitive-scene",
@@ -131,7 +139,9 @@
           }
         ]
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "cognitive-myth-quiz",
@@ -160,14 +170,18 @@
         "correctFeedback": "Chính xác! Khi chưa có tri thức khoa học, con người cổ đại giải thích mọi hiện tượng tự nhiên bằng THẦN THOẠI và TÍN NGƯỠNG — coi đó là ý chí hay cơn thịnh nộ của thần linh.",
         "wrongFeedback": "Chưa đúng. Hãy nhớ bối cảnh: thời cổ đại chưa có khoa học để chứng minh, và con người luôn khao khát tìm nguyên nhân."
       },
-      "completionRule": { "type": "correct" }
+      "completionRule": {
+        "type": "correct"
+      }
     },
     {
       "id": "cognitive-turning-point",
       "type": "component_group",
       "title": "Bước ngoặt hoài nghi",
       "linkedMediaId": "cognitive-video",
-      "navigation_config": { "shortLabel": "Hoài nghi" },
+      "navigation_config": {
+        "shortLabel": "Hoài nghi"
+      },
       "config": {
         "layout": "vertical",
         "revealMode": "sequential",
@@ -194,7 +208,9 @@
                 }
               ]
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "cognitive-shift-quiz",
@@ -223,11 +239,15 @@
               "correctFeedback": "Chính xác! Khoảnh khắc con người ngờ vực thần thoại và đi tìm quy luật bằng lý lẽ — đó là lúc tư duy lý luận, tức triết học, bắt đầu nảy mầm.",
               "wrongFeedback": "Chưa đúng. Lyra không kêu gọi tế lễ; cô ấy đang đi tìm một quy luật tự nhiên."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "cognitive-piece",
@@ -247,14 +267,18 @@
         ],
         "reward": "Bạn đã thu thập được mảnh ghép: NGUỒN GỐC NHẬN THỨC!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "social-role-experience",
       "type": "component_group",
       "title": "...khi phương thức sản xuất thay đổi...",
       "linkedMediaId": "social-video",
-      "navigation_config": { "shortLabel": "Vai 1" },
+      "navigation_config": {
+        "shortLabel": "Vai 1"
+      },
       "config": {
         "layout": "vertical",
         "revealMode": "sequential",
@@ -280,7 +304,9 @@
                 }
               ]
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "social-borin-dialogue",
@@ -295,7 +321,9 @@
                 }
               ]
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "social-role-slave",
@@ -319,18 +347,24 @@
               "correctFeedback": "Đúng vậy. Lao động chân tay nặng nhọc và nỗi lo sinh tồn không để lại điều kiện nào cho việc nghiên cứu lý luận.",
               "wrongFeedback": "Khó lắm! Một người kiệt sức vì lao động chân tay gần như không còn thời gian, sức lực cho tư duy lý luận."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "social-theon-experience",
       "type": "component_group",
       "title": "Vai 2: Tầng lớp quý tộc / trí thức",
       "linkedMediaId": "social-video",
-      "navigation_config": { "shortLabel": "Vai 2" },
+      "navigation_config": {
+        "shortLabel": "Vai 2"
+      },
       "config": {
         "layout": "vertical",
         "revealMode": "sequential",
@@ -349,7 +383,9 @@
                 }
               ]
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "social-role-noble",
@@ -373,11 +409,15 @@
               "correctFeedback": "Chính xác. Có của cải dư thừa và thời gian rảnh, tầng lớp trí óc mới đủ điều kiện để nghiên cứu và sáng tạo lý luận.",
               "wrongFeedback": "Không phải. Theon không phải lao động chân tay — ông có dư thời gian để suy ngẫm."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "social-core-quiz",
@@ -406,7 +446,9 @@
         "correctFeedback": "Hoàn toàn đúng! Chỉ khi lao động trí óc tách khỏi lao động chân tay, tầng lớp trí thức mới xuất hiện và có điều kiện hệ thống hóa tri thức thành triết học.",
         "wrongFeedback": "Hãy nhớ lại trải nghiệm vừa rồi: chỉ tầng lớp có của cải dư thừa và thời gian rảnh mới đủ điều kiện làm việc đó."
       },
-      "completionRule": { "type": "correct" }
+      "completionRule": {
+        "type": "correct"
+      }
     },
     {
       "id": "social-warning",
@@ -416,7 +458,9 @@
       "config": {
         "content": "- Triết học không thể ra đời trong một xã hội mông muội, dã man. Nó chỉ ra đời khi xã hội đạt đến một trình độ tương đối cao của sản xuất xã hội, phân công lao động xã hội hình thành, giai cấp phân hóa rõ và mạnh, nhà nước ra đời.\n- Tầng lớp tri thức xuất hiện đóng vai trò quan trọng trong việc hệ thống hóa toàn bộ tri thức của thời đại để xây dựng nên các học thuyết, lý luận, triết thuyết.\n- Triết học, ngay từ khi xuất hiện, đã mang trong mình tính giai cấp sâu sắc."
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "social-origin-chain",
@@ -450,7 +494,9 @@
         "successFeedback": "Chuỗi nhân quả đã sáng lên! Đây chính là nguồn gốc xã hội của triết học.",
         "reward": "NGUỒN GỐC XÃ HỘI"
       },
-      "completionRule": { "type": "correct" }
+      "completionRule": {
+        "type": "correct"
+      }
     },
     {
       "id": "social-piece",
@@ -469,7 +515,9 @@
         ],
         "reward": "Bạn đã thu thập được mảnh ghép: NGUỒN GỐC XÃ HỘI!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "origin-union",
@@ -502,7 +550,9 @@
         ],
         "finalStatement": "Triết học ra đời từ sự hợp nhất của nhu cầu nhận thức thế giới và những điều kiện xã hội chín muồi."
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "origin-final-quiz",
@@ -567,7 +617,9 @@
           }
         ]
       },
-      "completionRule": { "type": "correct" }
+      "completionRule": {
+        "type": "correct"
+      }
     },
     {
       "id": "origin-final",
@@ -581,14 +633,23 @@
           "Triết học thay thế tư duy huyền thoại bằng tư duy lý luận.",
           "Triết học ra đời khi xã hội xuất hiện phân công lao động, giai cấp và tầng lớp trí thức."
         ],
-        "rewards": { "xp": 120, "badge": "Nhà Khai Sáng" },
+        "rewards": {
+          "xp": 120,
+          "badge": "Nhà Khai Sáng"
+        },
         "quote": {
           "text": "Các nhà triết học đã chỉ giải thích thế giới bằng nhiều cách khác nhau, song vấn đề là cải tạo thế giới.",
           "author": "Karl Marx, Luận cương về Feuerbach"
         },
-        "actions": { "retryButton": true, "nextLessonButton": true }
+        "actions": {
+          "retryButton": true,
+          "nextLessonButton": true
+        },
+        "referenceUrl": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/documents/Book_full.pdf#page=9"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     }
   ]
 }

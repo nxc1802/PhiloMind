@@ -49,7 +49,9 @@
             "config": {
               "content": "Triết học, khác với một số loại hình nhận thức khác, trước khi giải quyết các vấn đề cụ thể của mình, nó buộc phải giải quyết một vấn đề có ý nghĩa nền tảng và là điểm xuất phát để giải quyết tất cả những vấn đề còn lại. Hãy cùng khám phá câu hỏi tối thượng này!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "basic-problem-question-mcq",
@@ -58,19 +60,39 @@
             "config": {
               "question": "Đâu là vấn đề cơ bản lớn của mọi hệ thống triết học trong lịch sử?",
               "options": [
-                { "id": "opt1", "text": "Mối quan hệ giữa vật chất với ý thức (giữa tư duy với tồn tại).", "isCorrect": true },
-                { "id": "opt2", "text": "Mối quan hệ giữa con người với máy móc.", "isCorrect": false },
-                { "id": "opt3", "text": "Cái nào đẹp hơn cái nào.", "isCorrect": false },
-                { "id": "opt4", "text": "Con người có thể bay vào vũ trụ hay không.", "isCorrect": false }
+                {
+                  "id": "opt1",
+                  "text": "Mối quan hệ giữa vật chất với ý thức (giữa tư duy với tồn tại).",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt2",
+                  "text": "Mối quan hệ giữa con người với máy móc.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt3",
+                  "text": "Cái nào đẹp hơn cái nào.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt4",
+                  "text": "Con người có thể bay vào vũ trụ hay không.",
+                  "isCorrect": false
+                }
               ],
               "correctFeedback": "Chính xác! Mối quan hệ giữa vật chất và ý thức (hoặc tư duy và tồn tại) là vấn đề cơ bản lớn nhất.",
               "wrongFeedback": "Chưa chính xác. Triết học nghiên cứu mối quan hệ phổ quát nhất giữa con người và thế giới, đó là mối quan hệ giữa ý thức/tư duy và vật chất/tồn tại."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "basic-problem-group-2",
@@ -91,13 +113,23 @@
             "config": {
               "question": "Mặt thứ nhất của vấn đề cơ bản của triết học phải trả lời cho câu hỏi nào?",
               "options": [
-                { "id": "opt_a", "text": "Giữa ý thức và vật chất thì cái nào có trước, cái nào có sau, cái nào quyết định cái nào?", "isCorrect": true },
-                { "id": "opt_b", "text": "Con người có khả năng nhận thức được thế giới hay không?", "isCorrect": false }
+                {
+                  "id": "opt_a",
+                  "text": "Giữa ý thức và vật chất thì cái nào có trước, cái nào có sau, cái nào quyết định cái nào?",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Con người có khả năng nhận thức được thế giới hay không?",
+                  "isCorrect": false
+                }
               ],
               "correctFeedback": "Chính xác! Mặt thứ nhất xoay quanh vấn đề bản thể luận - cái nào có trước và quyết định cái nào.",
               "wrongFeedback": "Chưa đúng. Đây là câu hỏi thuộc về mặt thứ hai (nhận thức luận)."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           },
           {
             "id": "aspect-two-mcq",
@@ -106,17 +138,29 @@
             "config": {
               "question": "Mặt thứ hai của vấn đề cơ bản của triết học phải trả lời cho câu hỏi nào?",
               "options": [
-                { "id": "opt_x", "text": "Con người có khả năng nhận thức được thế giới hay không?", "isCorrect": true },
-                { "id": "opt_y", "text": "Giữa ý thức và vật chất thì cái nào có trước, cái nào có sau, cái nào quyết định cái nào?", "isCorrect": false }
+                {
+                  "id": "opt_x",
+                  "text": "Con người có khả năng nhận thức được thế giới hay không?",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_y",
+                  "text": "Giữa ý thức và vật chất thì cái nào có trước, cái nào có sau, cái nào quyết định cái nào?",
+                  "isCorrect": false
+                }
               ],
               "correctFeedback": "Chính xác! Mặt thứ hai giải quyết câu hỏi về khả năng nhận thức của con người (nhận thức luận).",
               "wrongFeedback": "Chưa đúng. Đây là câu hỏi thuộc về mặt thứ nhất."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "basic-problem-piece",
@@ -136,7 +180,9 @@
         ],
         "reward": "Bạn đã thu thập mảnh ghép: VẤN ĐỀ CƠ BẢN CỦA TRIẾT HỌC!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "schools-group",
@@ -157,7 +203,9 @@
             "config": {
               "content": "Việc giải quyết mặt thứ nhất của vấn đề cơ bản của triết học đã chia các nhà triết học thành hai trường phái lớn độc lập: Chủ nghĩa duy vật và Chủ nghĩa duy tâm. Hãy thử phân định các luận điểm cốt lõi dưới đây!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "schools-sorting",
@@ -165,24 +213,60 @@
             "title": "Phân loại luận điểm",
             "config": {
               "categories": [
-                { "id": "materialism", "label": "Chủ nghĩa duy vật", "description": "Vật chất quyết định ý thức" },
-                { "id": "idealism", "label": "Chủ nghĩa duy tâm", "description": "Ý thức quyết định vật chất" }
+                {
+                  "id": "materialism",
+                  "label": "Chủ nghĩa duy vật",
+                  "description": "Vật chất quyết định ý thức"
+                },
+                {
+                  "id": "idealism",
+                  "label": "Chủ nghĩa duy tâm",
+                  "description": "Ý thức quyết định vật chất"
+                }
               ],
               "cards": [
-                { "id": "m1", "text": "Vật chất, giới tự nhiên là cái có trước và quyết định ý thức của con người.", "categoryId": "materialism" },
-                { "id": "m2", "text": "Giải thích mọi hiện tượng của thế giới này bằng các nguyên nhân vật chất.", "categoryId": "materialism" },
-                { "id": "m3", "text": "Nguyên nhân tận cùng của mọi vận động của thế giới này là nguyên nhân vật chất.", "categoryId": "materialism" },
-                { "id": "i1", "text": "Ý thức, tinh thần, ý niệm, cảm giác là cái có trước giới tự nhiên.", "categoryId": "idealism" },
-                { "id": "i2", "text": "Chủ trương giải thích toàn bộ thế giới này bằng các nguyên nhân tư tưởng, tinh thần.", "categoryId": "idealism" },
-                { "id": "i3", "text": "Nguyên nhân tận cùng của mọi vận động của thế giới này là nguyên nhân tinh thần.", "categoryId": "idealism" }
+                {
+                  "id": "m1",
+                  "text": "Vật chất, giới tự nhiên là cái có trước và quyết định ý thức của con người.",
+                  "categoryId": "materialism"
+                },
+                {
+                  "id": "m2",
+                  "text": "Giải thích mọi hiện tượng của thế giới này bằng các nguyên nhân vật chất.",
+                  "categoryId": "materialism"
+                },
+                {
+                  "id": "m3",
+                  "text": "Nguyên nhân tận cùng của mọi vận động của thế giới này là nguyên nhân vật chất.",
+                  "categoryId": "materialism"
+                },
+                {
+                  "id": "i1",
+                  "text": "Ý thức, tinh thần, ý niệm, cảm giác là cái có trước giới tự nhiên.",
+                  "categoryId": "idealism"
+                },
+                {
+                  "id": "i2",
+                  "text": "Chủ trương giải thích toàn bộ thế giới này bằng các nguyên nhân tư tưởng, tinh thần.",
+                  "categoryId": "idealism"
+                },
+                {
+                  "id": "i3",
+                  "text": "Nguyên nhân tận cùng của mọi vận động của thế giới này là nguyên nhân tinh thần.",
+                  "categoryId": "idealism"
+                }
               ],
               "summary": "Cách giải quyết mặt thứ nhất phân định triệt để lập trường triết học thành duy vật hoặc duy tâm."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "schools-piece",
@@ -202,7 +286,9 @@
         ],
         "reward": "Bạn đã thu thập mảnh ghép: HAI TRƯỜNG PHÁI TRIẾT HỌC!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "materialism-forms-group",
@@ -223,7 +309,9 @@
             "config": {
               "content": "Cho đến nay, chủ nghĩa duy vật đã trải qua một tiến trình lịch sử lâu dài và được thể hiện dưới ba hình thức cơ bản. Hãy ghép nối các hình thức đó với đặc trưng tương ứng của chúng!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "materialism-forms-matching",
@@ -232,27 +320,58 @@
             "config": {
               "instruction": "Nối các hình thức của chủ nghĩa duy vật với đặc điểm cốt lõi.",
               "leftColumn": [
-                { "id": "naive", "text": "Chủ nghĩa duy vật chất phác (Cổ đại)" },
-                { "id": "metaphysical", "text": "Chủ nghĩa duy vật siêu hình (TK XV - XVIII)" },
-                { "id": "dialectical", "text": "Chủ nghĩa duy vật biện chứng (TK XIX - nay)" }
+                {
+                  "id": "naive",
+                  "text": "Chủ nghĩa duy vật chất phác (Cổ đại)"
+                },
+                {
+                  "id": "metaphysical",
+                  "text": "Chủ nghĩa duy vật siêu hình (TK XV - XVIII)"
+                },
+                {
+                  "id": "dialectical",
+                  "text": "Chủ nghĩa duy vật biện chứng (TK XIX - nay)"
+                }
               ],
               "rightColumn": [
-                { "id": "naive_desc", "text": "Đồng nhất vật chất với các chất cụ thể, trực quan, ngây thơ; giải thích thế giới bằng tự nhiên không thần linh." },
-                { "id": "meta_desc", "text": "Chịu tác động mạnh của tư duy cơ giới; nhìn thế giới như một cỗ máy khổng lồ biệt lập và tĩnh tại." },
-                { "id": "dia_desc", "text": "Kế thừa tinh hoa học thuyết trước, sử dụng khoa học đương thời; phản ánh đúng hiện thực khách quan và cải tạo hiện thực." }
+                {
+                  "id": "naive_desc",
+                  "text": "Đồng nhất vật chất với các chất cụ thể, trực quan, ngây thơ; giải thích thế giới bằng tự nhiên không thần linh."
+                },
+                {
+                  "id": "meta_desc",
+                  "text": "Chịu tác động mạnh của tư duy cơ giới; nhìn thế giới như một cỗ máy khổng lồ biệt lập và tĩnh tại."
+                },
+                {
+                  "id": "dia_desc",
+                  "text": "Kế thừa tinh hoa học thuyết trước, sử dụng khoa học đương thời; phản ánh đúng hiện thực khách quan và cải tạo hiện thực."
+                }
               ],
               "correctPairs": [
-                { "leftId": "naive", "rightId": "naive_desc" },
-                { "leftId": "metaphysical", "rightId": "meta_desc" },
-                { "leftId": "dialectical", "rightId": "dia_desc" }
+                {
+                  "leftId": "naive",
+                  "rightId": "naive_desc"
+                },
+                {
+                  "leftId": "metaphysical",
+                  "rightId": "meta_desc"
+                },
+                {
+                  "leftId": "dialectical",
+                  "rightId": "dia_desc"
+                }
               ],
               "summary": "Ba hình thức phát triển từ chất phác trực quan lên siêu hình máy móc và đạt đỉnh cao ở biện chứng khoa học."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "materialism-forms-piece",
@@ -272,7 +391,9 @@
         ],
         "reward": "Bạn đã thu thập mảnh ghép: BA HÌNH THỨC CỦA CHỦ NGHĨA DUY VẬT!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "idealism-sects-group",
@@ -293,7 +414,9 @@
             "config": {
               "content": "Chủ nghĩa duy tâm trong lịch sử không thuần nhất mà được chia thành hai phái lớn với bản chất nhận thức và nguồn gốc xã hội rất đặc thù. Hãy phân loại các đặc điểm dưới đây!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "idealism-sects-sorting",
@@ -301,23 +424,55 @@
             "title": "Duy tâm chủ quan vs khách quan",
             "config": {
               "categories": [
-                { "id": "subjective", "label": "Chủ nghĩa duy tâm chủ quan", "description": "Tập trung ý thức cá nhân con người" },
-                { "id": "objective", "label": "Chủ nghĩa duy tâm khách quan", "description": "Tập trung vào tinh thần siêu nhiên độc lập" }
+                {
+                  "id": "subjective",
+                  "label": "Chủ nghĩa duy tâm chủ quan",
+                  "description": "Tập trung ý thức cá nhân con người"
+                },
+                {
+                  "id": "objective",
+                  "label": "Chủ nghĩa duy tâm khách quan",
+                  "description": "Tập trung vào tinh thần siêu nhiên độc lập"
+                }
               ],
               "cards": [
-                { "id": "s1", "text": "Thừa nhận tính thứ nhất của ý thức con người.", "categoryId": "subjective" },
-                { "id": "s2", "text": "Phủ nhận sự tồn tại khách quan của hiện thực.", "categoryId": "subjective" },
-                { "id": "s3", "text": "Khẳng định mọi sự vật chỉ là phức hợp của những cảm giác cá nhân.", "categoryId": "subjective" },
-                { "id": "o1", "text": "Coi tinh thần khách quan có trước và tồn tại độc lập với con người.", "categoryId": "objective" },
-                { "id": "o2", "text": "Thực thể tinh thần được gọi bằng những cái tên như ý niệm, tinh thần tuyệt đối, lý tính thế giới.", "categoryId": "objective" }
+                {
+                  "id": "s1",
+                  "text": "Thừa nhận tính thứ nhất của ý thức con người.",
+                  "categoryId": "subjective"
+                },
+                {
+                  "id": "s2",
+                  "text": "Phủ nhận sự tồn tại khách quan của hiện thực.",
+                  "categoryId": "subjective"
+                },
+                {
+                  "id": "s3",
+                  "text": "Khẳng định mọi sự vật chỉ là phức hợp của những cảm giác cá nhân.",
+                  "categoryId": "subjective"
+                },
+                {
+                  "id": "o1",
+                  "text": "Coi tinh thần khách quan có trước và tồn tại độc lập với con người.",
+                  "categoryId": "objective"
+                },
+                {
+                  "id": "o2",
+                  "text": "Thực thể tinh thần được gọi bằng những cái tên như ý niệm, tinh thần tuyệt đối, lý tính thế giới.",
+                  "categoryId": "objective"
+                }
               ],
               "summary": "Duy tâm chủ quan tuyệt đối hóa cảm giác cá nhân, còn duy tâm khách quan tuyệt đối hóa thực thể tinh thần siêu nhiên."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "idealism-sects-piece",
@@ -337,7 +492,9 @@
         ],
         "reward": "Bạn đã thu thập mảnh ghép: HAI PHÁI CỦA CHỦ NGHĨA DUY TÂM!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "monism-dualism-group",
@@ -358,7 +515,9 @@
             "config": {
               "content": "Dựa vào số lượng bản nguyên giải thích nguồn gốc thế giới, các học thuyết triết học được phân chia thành Nhất nguyên luận và Nhị nguyên luận. Hãy cùng phân loại các đặc điểm của chúng!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "monism-dualism-sorting",
@@ -366,23 +525,55 @@
             "title": "Nhất nguyên vs Nhị nguyên",
             "config": {
               "categories": [
-                { "id": "monism", "label": "Nhất nguyên luận", "description": "Thừa nhận một bản nguyên" },
-                { "id": "dualism", "label": "Nhị nguyên luận", "description": "Thừa nhận hai bản nguyên độc lập" }
+                {
+                  "id": "monism",
+                  "label": "Nhất nguyên luận",
+                  "description": "Thừa nhận một bản nguyên"
+                },
+                {
+                  "id": "dualism",
+                  "label": "Nhị nguyên luận",
+                  "description": "Thừa nhận hai bản nguyên độc lập"
+                }
               ],
               "cards": [
-                { "id": "m_card1", "text": "Thừa nhận một trong hai thực thể (vật chất hoặc tinh thần) là bản nguyên của thế giới.", "categoryId": "monism" },
-                { "id": "m_card2", "text": "Bao gồm hai hướng đi: nhất nguyên luận duy vật hoặc nhất nguyên luận duy tâm.", "categoryId": "monism" },
-                { "id": "d_card1", "text": "Giải thích thế giới bằng cả hai bản nguyên vật chất và tinh thần song song tồn tại.", "categoryId": "dualism" },
-                { "id": "d_card2", "text": "Descartes là đại biểu điển hình giải thích thế giới bằng hai bản nguyên cùng quyết định.", "categoryId": "dualism" },
-                { "id": "d_card3", "text": "Xét đến cùng, học thuyết này vẫn thuộc về chủ nghĩa duy tâm.", "categoryId": "dualism" }
+                {
+                  "id": "m_card1",
+                  "text": "Thừa nhận một trong hai thực thể (vật chất hoặc tinh thần) là bản nguyên của thế giới.",
+                  "categoryId": "monism"
+                },
+                {
+                  "id": "m_card2",
+                  "text": "Bao gồm hai hướng đi: nhất nguyên luận duy vật hoặc nhất nguyên luận duy tâm.",
+                  "categoryId": "monism"
+                },
+                {
+                  "id": "d_card1",
+                  "text": "Giải thích thế giới bằng cả hai bản nguyên vật chất và tinh thần song song tồn tại.",
+                  "categoryId": "dualism"
+                },
+                {
+                  "id": "d_card2",
+                  "text": "Descartes là đại biểu điển hình giải thích thế giới bằng hai bản nguyên cùng quyết định.",
+                  "categoryId": "dualism"
+                },
+                {
+                  "id": "d_card3",
+                  "text": "Xét đến cùng, học thuyết này vẫn thuộc về chủ nghĩa duy tâm.",
+                  "categoryId": "dualism"
+                }
               ],
               "summary": "Nhất nguyên thừa nhận một bản nguyên duy nhất làm nguồn gốc thế giới; nhị nguyên thừa nhận cả hai bản nguyên song song."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "monism-dualism-piece",
@@ -402,7 +593,9 @@
         ],
         "reward": "Bạn đã thu thập mảnh ghép: NHẤT NGUYÊN VÀ NHỊ NGUYÊN LUẬN!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "second-aspect-group",
@@ -423,7 +616,9 @@
             "config": {
               "content": "Mặt thứ hai của vấn đề cơ bản của triết học đối diện với câu hỏi: 'Con người có khả năng nhận thức được thế giới hay không?' Hãy cùng phân chia các trường phái nhận thức luận lớn thông qua phân loại dưới đây!"
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "second-aspect-sorting",
@@ -431,25 +626,65 @@
             "title": "Khả tri, Bất khả tri & Hoài nghi",
             "config": {
               "categories": [
-                { "id": "gnosticism", "label": "Thuyết khả tri", "description": "Có thể nhận thức thế giới" },
-                { "id": "agnosticism", "label": "Thuyết bất khả tri", "description": "Không thể nhận thức bản chất thực tại" },
-                { "id": "skepticism", "label": "Hoài nghi luận", "description": "Hoài nghi về tri thức khách quan" }
+                {
+                  "id": "gnosticism",
+                  "label": "Thuyết khả tri",
+                  "description": "Có thể nhận thức thế giới"
+                },
+                {
+                  "id": "agnosticism",
+                  "label": "Thuyết bất khả tri",
+                  "description": "Không thể nhận thức bản chất thực tại"
+                },
+                {
+                  "id": "skepticism",
+                  "label": "Hoài nghi luận",
+                  "description": "Hoài nghi về tri thức khách quan"
+                }
               ],
               "cards": [
-                { "id": "g1", "text": "Khẳng định con người có thể hiểu được bản chất của sự vật.", "categoryId": "gnosticism" },
-                { "id": "g2", "text": "Tuyệt đại đa số các nhà triết học (cả duy vật và duy tâm) thuộc trường phái này.", "categoryId": "gnosticism" },
-                { "id": "a1", "text": "Phủ nhận khả năng nhận thức của con người đối với bản chất sâu xa của đối tượng.", "categoryId": "agnosticism" },
-                { "id": "a2", "text": "Hume và Kant là các đại biểu điển hình; thuật ngữ ra đời năm 1869 bởi T.H. Huxley.", "categoryId": "agnosticism" },
-                { "id": "s1", "text": "Nâng sự hoài nghi lên thành nguyên tắc trong việc xem xét tri thức đã đạt được.", "categoryId": "skepticism" },
-                { "id": "s2", "text": "Thời Phục Hưng giữ vai trò quan trọng chống quyền uy Giáo hội và Kinh thánh.", "categoryId": "skepticism" }
+                {
+                  "id": "g1",
+                  "text": "Khẳng định con người có thể hiểu được bản chất của sự vật.",
+                  "categoryId": "gnosticism"
+                },
+                {
+                  "id": "g2",
+                  "text": "Tuyệt đại đa số các nhà triết học (cả duy vật và duy tâm) thuộc trường phái này.",
+                  "categoryId": "gnosticism"
+                },
+                {
+                  "id": "a1",
+                  "text": "Phủ nhận khả năng nhận thức của con người đối với bản chất sâu xa của đối tượng.",
+                  "categoryId": "agnosticism"
+                },
+                {
+                  "id": "a2",
+                  "text": "Hume và Kant là các đại biểu điển hình; thuật ngữ ra đời năm 1869 bởi T.H. Huxley.",
+                  "categoryId": "agnosticism"
+                },
+                {
+                  "id": "s1",
+                  "text": "Nâng sự hoài nghi lên thành nguyên tắc trong việc xem xét tri thức đã đạt được.",
+                  "categoryId": "skepticism"
+                },
+                {
+                  "id": "s2",
+                  "text": "Thời Phục Hưng giữ vai trò quan trọng chống quyền uy Giáo hội và Kinh thánh.",
+                  "categoryId": "skepticism"
+                }
               ],
               "summary": "Lập trường phân định giữa việc khẳng định (khả tri), phủ nhận (bất khả tri) hay nghi ngờ (hoài nghi) năng lực nhận thức của con người."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "second-aspect-piece",
@@ -469,7 +704,9 @@
         ],
         "reward": "Bạn đã thu thập mảnh ghép: KHẢ NĂNG NHẬN THỨC CỦA CON NGƯỜI!"
       },
-      "completionRule": { "type": "viewed" }
+      "completionRule": {
+        "type": "viewed"
+      }
     },
     {
       "id": "engels-criticism-group",
@@ -490,7 +727,9 @@
             "config": {
               "content": "Quan điểm bất khả tri và 'vật tự nó' của Kant đã bị phê phán gay gắt bởi nhiều nhà triết học. Trên lập trường duy vật biện chứng, Ăngghen đã đưa ra câu trả lời đanh thép bằng thực tiễn hành động."
             },
-            "completionRule": { "type": "viewed" }
+            "completionRule": {
+              "type": "viewed"
+            }
           },
           {
             "id": "engels-criticism-mcq",
@@ -518,11 +757,15 @@
               "correctFeedback": "Đúng! Thực tiễn tự tay tạo ra và sử dụng hiện tượng chính là câu trả lời đập tan thuyết bất khả tri.",
               "wrongFeedback": "Chưa chính xác. Luận điểm này hạ thấp khả năng của con người và mang tính bất khả tri."
             },
-            "completionRule": { "type": "correct" }
+            "completionRule": {
+              "type": "correct"
+            }
           }
         ]
       },
-      "completionRule": { "type": "all" }
+      "completionRule": {
+        "type": "all"
+      }
     },
     {
       "id": "lesson2-mindmap",
@@ -609,7 +852,8 @@
         "actions": {
           "retryButton": true,
           "nextLessonButton": true
-        }
+        },
+        "referenceUrl": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/documents/Book_full.pdf#page=30"
       },
       "completionRule": {
         "type": "viewed"

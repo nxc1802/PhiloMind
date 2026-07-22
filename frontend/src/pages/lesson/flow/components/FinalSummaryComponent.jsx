@@ -159,6 +159,25 @@ export function FinalSummaryComponent({ component, onComplete }) {
               </p>
             </div>
           </div>
+
+          {component.config.referenceUrl && (
+            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-primary-850 text-xs md:text-sm font-medium text-slate-600 dark:text-primary-300 flex items-center gap-2">
+              <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-400">
+                menu_book
+              </span>
+              <span>
+                Bài học tham khảo từ{" "}
+                <a
+                  href={component.config.referenceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-primary-600 dark:text-primary-350 underline hover:text-primary-700"
+                >
+                  tài liệu
+                </a>
+              </span>
+            </div>
+          )}
         </div>
       </div>
 

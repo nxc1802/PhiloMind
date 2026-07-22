@@ -2024,13 +2024,10 @@ async function main() {
     } catch (e: any) {
       console.warn('Error verifying/creating bucket "documents":', e.message);
     }
-  }
+  await prisma.document.deleteMany({});
 
   for (const doc of docFiles) {
-    const srcPath = path.join(
-      "/Volumes/WorkSpace/Project/PhiloMind/data",
-      doc.fileName,
-    );
+    const srcPath = path.resolve(__dirname, "../../data", doc.fileName);
     if (!fs.existsSync(srcPath)) {
       console.warn(`Source PDF file not found: ${srcPath}`);
       continue;
@@ -2092,6 +2089,26 @@ async function main() {
       },
     });
   }
+
+  // ==================== SEED: PHILOSOFUN VIDEOS ====================
+  console.log("Seeding Philosofun videos...");
+  await prisma.philosofun.deleteMany({});
+  const philosofunVideos = [
+    {
+      title: "Quan điểm toàn diện trong Triết học Mác - Lênin",
+      description:
+        "Tình huống phân tích quan điểm toàn diện và nguyên lý về mối liên hệ phổ biến trong Triết học Mác - Lênin qua các ví dụ thực tiễn sinh động.",
+      videoUrl: "https://www.youtube.com/watch?v=zq3u-R-WAhQ",
+    },
+  ];
+
+  for (const item of philosofunVideos) {
+    await prisma.philosofun.create({
+      data: item,
+    });
+    console.log(`Seeded Philosofun video: ${item.title}`);
+  }
+
 
   // ==================== NEW SEED: DEBATE TOPICS / SCENARIOS ====================
   const debateTopicSeedData = [

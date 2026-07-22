@@ -315,7 +315,8 @@
         "actions": {
           "retryButton": true,
           "nextLessonButton": true
-        }
+        },
+        "referenceUrl": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/documents/Book_full.pdf#page=16"
       },
       "completionRule": {
         "type": "viewed"

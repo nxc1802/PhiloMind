@@ -9,7 +9,7 @@ export function DialogueComponent({ component, onComplete }) {
   const lines = useMemo(
     () =>
       sourceLines.map((line, index) => ({
-        who: line.who || "guide",
+        who: line.who || line.speaker || "guide",
         text: line.text,
         image:
           line.image ||
