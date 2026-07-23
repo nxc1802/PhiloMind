@@ -54,18 +54,24 @@
     },
     {
       "key": "2.1.a",
-      "title": "Vật chất và phương thức tồn tại của vật chất",
-      "file": "chuong2_khung_hoang_vat_ly.json",
+      "title": "Quan niệm về phạm trù vật chất & Cuộc cách mạng KHTN",
+      "file": "chuong2_vat_chat_va_phuong_thuc_ton_tai.json",
       "status": "converted"
     },
     {
       "key": "2.1.b",
+      "title": "Phương thức tồn tại của vật chất & Tính thống nhất vật chất",
+      "file": "chuong2_phuong_thuc_ton_tai.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.1.c",
       "title": "Nguồn gốc, bản chất và kết cấu của ý thức",
       "file": "chuong2_nguon_goc_ban_chat_y_thuc.json",
       "status": "converted"
     },
     {
-      "key": "2.1.c",
+      "key": "2.1.d",
       "title": "Mối quan hệ giữa vật chất và ý thức",
       "file": "chuong2_moi_quan_he_vat_chat_y_thuc.json",
       "status": "converted"
@@ -78,8 +84,20 @@
     },
     {
       "key": "2.2.b",
-      "title": "Nội dung của phép biện chứng duy vật",
-      "file": "chuong2_noi_dung_phep_bien_chung.json",
+      "title": "Hai nguyên lý của phép biện chứng duy vật",
+      "file": "chuong2_hai_nguyen_ly_co_ban.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.2.c",
+      "title": "Các cặp phạm trù cơ bản của phép biện chứng duy vật",
+      "file": "chuong2_cac_cap_pham_tru.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.2.d",
+      "title": "Các quy luật cơ bản của phép biện chứng duy vật",
+      "file": "chuong2_ba_quy_luat_co_ban.json",
       "status": "converted"
     },
     {
@@ -90,8 +108,20 @@
     },
     {
       "key": "2.3.b",
-      "title": "Lý luận nhận thức duy vật biện chứng",
-      "file": "chuong2_ly_luan_nhan_thuc_duy_vat_bien_chung.json",
+      "title": "Nguồn gốc, bản chất và các giai đoạn nhận thức",
+      "file": "chuong2_ban_chat_nhan_thuc.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.3.c",
+      "title": "Thực tiễn và vai trò của thực tiễn đối với nhận thức",
+      "file": "chuong2_thuc_tien_vai_tro.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.3.d",
+      "title": "Quan điểm của CNDVBC về chân lý",
+      "file": "chuong2_chan_ly.json",
       "status": "converted"
     }
   ]

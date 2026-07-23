@@ -1262,13 +1262,14 @@ async function main() {
   });
 
   const ch2Nodes = [
+    // --- Section I: VẬT CHẤT VÀ Ý THỨC ---
     {
-      title: "Vật chất và phương thức tồn tại của vật chất",
+      title: "Quan niệm về phạm trù vật chất & Cuộc cách mạng KHTN",
       summary:
-        "Vật chất là thực tại khách quan tồn tại độc lập với ý thức; vận động, không gian và thời gian là phương thức và hình thức tồn tại của vật chất.",
+        "Quan niệm vật chất qua các thời kỳ lịch sử và cuộc cách mạng KHTN cuối XIX - đầu XX.",
       originalText:
-        "Quan niệm của chủ nghĩa duy tâm và chủ nghĩa duy vật trước C. Mác về phạm trù vật chất\nCuộc cách mạng trong khoa học tự nhiên cuối thế kỉ XIX, đầu thế kỉ XX và sự phá sản của các quan điểm duy vật siêu hình về vật chất\nQuan niệm của triết học Mác - Lênin về vật chất\nPhương thức tồn tại của vật chất\nTính thống nhất vật chất của thế giới",
-      quickTake: "Vật chất là thực tại khách quan tồn tại độc lập với ý thức.",
+        "Quan niệm của chủ nghĩa duy tâm và chủ nghĩa duy vật trước C. Mác về phạm trù vật chất\nCuộc cách mạng trong khoa học tự nhiên cuối thế kỉ XIX, đầu thế kỉ XX và sự phá sản của các quan điểm duy vật siêu hình về vật chất\nQuan niệm của triết học Mác - Lênin về vật chất",
+      quickTake: "Định nghĩa vật chất và cuộc cách mạng KHTN.",
       difficulty: "Hard",
       timeToRead: "15 min read",
       orderIndex: 1,
@@ -1278,36 +1279,53 @@ async function main() {
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Nguồn gốc, bản chất và kết cấu của ý thức",
+      title: "Phương thức tồn tại của vật chất & Tính thống nhất vật chất",
       summary:
-        "Ý thức có nguồn gốc tự nhiên và nguồn gốc xã hội; bản chất là hình ảnh chủ quan của thế giới khách quan.",
+        "Vận động, không gian, thời gian là phương thức và hình thức tồn tại của vật chất; thế giới thống nhất ở tính vật chất.",
       originalText:
-        "Nguồn gốc của ý thức\nBản chất của ý thức\nKết cấu của ý thức",
-      quickTake: "Ý thức là sự phản ánh năng động, sáng tạo bộ não người.",
+        "Phương thức tồn tại của vật chất\nTính thống nhất vật chất của thế giới",
+      quickTake: "Phương thức tồn tại và tính thống nhất vật chất.",
       difficulty: "Hard",
-      timeToRead: "12 min read",
+      timeToRead: "10 min read",
       orderIndex: 2,
       sectionChapter: ch2SectionMatter,
       sectionOrderIndex: 2,
+      file: "chuong2_phuong_thuc_ton_tai.json",
+      videoUrl: defaultYoutubeUrl,
+    },
+    {
+      title: "Nguồn gốc, bản chất và kết cấu của ý thức",
+      summary:
+        "Ý thức có nguồn gốc tự nhiên và xã hội; bản chất là sự phản ánh năng động, sáng tạo thế giới khách quan.",
+      originalText:
+        "Nguồn gốc của ý thức\nBản chất của ý thức\nKết cấu của ý thức",
+      quickTake: "Ý thức là hình ảnh chủ quan của thế giới khách quan.",
+      difficulty: "Hard",
+      timeToRead: "12 min read",
+      orderIndex: 3,
+      sectionChapter: ch2SectionMatter,
+      sectionOrderIndex: 3,
       file: "chuong2_nguon_goc_ban_chat_y_thuc.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
       title: "Mối quan hệ giữa vật chất và ý thức",
       summary:
-        "Vật chất quyết định ý thức; ý thức có tính độc lập tương đối và tác động trở lại thông qua thực tiễn.",
+        "Vật chất quyết định ý thức; ý thức tác động trở lại thế giới vật chất thông qua thực tiễn.",
       originalText:
         "Quan điểm của chủ nghĩa duy tâm và duy vật siêu hình\nQuan điểm của chủ nghĩa duy vật biện chứng",
       quickTake:
         "Vật chất quyết định ý thức; ý thức tác động trở lại qua thực tiễn.",
       difficulty: "Hard",
       timeToRead: "11 min read",
-      orderIndex: 3,
+      orderIndex: 4,
       sectionChapter: ch2SectionMatter,
-      sectionOrderIndex: 3,
+      sectionOrderIndex: 4,
       file: "chuong2_moi_quan_he_vat_chat_y_thuc.json",
       videoUrl: defaultYoutubeUrl,
     },
+
+    // --- Section II: PHÉP BIỆN CHỨNG DUY VẬT ---
     {
       title: "Hai loại hình biện chứng và phép biện chứng duy vật",
       summary:
@@ -1317,55 +1335,113 @@ async function main() {
       quickTake: "Tư duy biện chứng phản ánh sự vận động khách quan.",
       difficulty: "Medium",
       timeToRead: "10 min read",
-      orderIndex: 4,
+      orderIndex: 5,
       sectionChapter: ch2SectionDialectics,
       sectionOrderIndex: 1,
       file: "chuong2_hai_loai_hinh_bien_chung.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Nội dung của phép biện chứng duy vật",
+      title: "Hai nguyên lý của phép biện chứng duy vật",
       summary:
-        "Hệ thống lý luận bao gồm 2 nguyên lý cơ bản, 6 cặp phạm trù và 3 quy luật cơ bản của phép biện chứng.",
-      originalText:
-        "Hai nguyên lý của phép biện chứng duy vật\nCác cặp phạm trù cơ bản của phép biện chứng duy vật\nCác quy luật cơ bản của phép biện chứng duy vật",
-      quickTake: "Nguyên lý, phạm trù và quy luật phản ánh sự phát triển.",
+        "Nguyên lý về mối liên hệ phổ biến và Nguyên lý về sự phát triển.",
+      originalText: "Hai nguyên lý của phép biện chứng duy vật",
+      quickTake: "Nguyên lý mối liên hệ phổ biến và sự phát triển.",
       difficulty: "Hard",
-      timeToRead: "18 min read",
-      orderIndex: 5,
+      timeToRead: "10 min read",
+      orderIndex: 6,
       sectionChapter: ch2SectionDialectics,
       sectionOrderIndex: 2,
-      file: "chuong2_noi_dung_phep_bien_chung.json",
+      file: "chuong2_hai_nguyen_ly_co_ban.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
+      title: "Các cặp phạm trù cơ bản của phép biện chứng duy vật",
+      summary:
+        "6 cặp phạm trù cơ bản phản ánh các mối liên hệ phổ biến nhất của thế giới khách quan.",
+      originalText: "Các cặp phạm trù cơ bản của phép biện chứng duy vật",
+      quickTake: "Các cặp phạm trù cơ bản của phép biện chứng.",
+      difficulty: "Hard",
+      timeToRead: "12 min read",
+      orderIndex: 7,
+      sectionChapter: ch2SectionDialectics,
+      sectionOrderIndex: 3,
+      file: "chuong2_cac_cap_pham_tru.json",
+      videoUrl: defaultYoutubeUrl,
+    },
+    {
+      title: "Các quy luật cơ bản của phép biện chứng duy vật",
+      summary:
+        "3 quy luật cơ bản vạch ra nguồn gốc, phương thức và khuynh hướng của sự vận động, phát triển.",
+      originalText: "Các quy luật cơ bản của phép biện chứng duy vật",
+      quickTake: "3 quy luật cơ bản của phép biện chứng duy vật.",
+      difficulty: "Hard",
+      timeToRead: "15 min read",
+      orderIndex: 8,
+      sectionChapter: ch2SectionDialectics,
+      sectionOrderIndex: 4,
+      file: "chuong2_ba_quy_luat_co_ban.json",
+      videoUrl: defaultYoutubeUrl,
+    },
+
+    // --- Section III: LÝ LUẬN NHẬN THỨC ---
+    {
       title: "Quan niệm về nhận thức trong lịch sử triết học",
       summary:
-        "Lịch sử nhận thức luận từ chủ nghĩa duy tâm, hoài nghi luận, thuyết bất khả tri đến hạn chế của duy vật trước Mác.",
+        "Lịch sử nhận thức luận từ duy tâm, hoài nghi luận, thuyết bất khả tri đến duy vật trước Mác.",
       originalText:
         "Khái niệm lý luận nhận thức\nQuan điểm của chủ nghĩa duy tâm về nhận thức\nQuan điểm của chủ nghĩa hoài nghi\nQuan điểm của thuyết không thể biết\nQuan điểm của chủ nghĩa duy vật trước C. Mác",
       quickTake: "Các quan điểm nhận thức luận trong lịch sử triết học.",
       difficulty: "Medium",
       timeToRead: "9 min read",
-      orderIndex: 6,
+      orderIndex: 9,
       sectionChapter: ch2SectionKnowledge,
       sectionOrderIndex: 1,
       file: "chuong2_quan_niem_nhan_thuc_lich_su.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Lý luận nhận thức duy vật biện chứng",
+      title: "Nguồn gốc, bản chất và các giai đoạn nhận thức",
       summary:
-        "Bản chất của nhận thức, vai trò của thực tiễn, các giai đoạn nhận thức và quan điểm về chân lý.",
+        "Nguồn gốc, bản chất của nhận thức và các giai đoạn nhận thức từ cảm tính đến lý tính.",
       originalText:
-        "Nguồn gốc, bản chất của nhận thức\nThực tiễn và vai trò của thực tiễn đối với nhận thức\nCác giai đoạn của quá trình nhận thức\nQuan điểm của CNDVBC về chân lý",
-      quickTake: "Thực tiễn là cơ sở nhận thức và tiêu chuẩn chân lý.",
+        "Nguồn gốc, bản chất của nhận thức\nCác giai đoạn của quá trình nhận thức",
+      quickTake:
+        "Nhận thức là quá trình phản ánh thế giới khách quan vào bộ não.",
       difficulty: "Hard",
-      timeToRead: "15 min read",
-      orderIndex: 7,
+      timeToRead: "11 min read",
+      orderIndex: 10,
       sectionChapter: ch2SectionKnowledge,
       sectionOrderIndex: 2,
-      file: "chuong2_ly_luan_nhan_thuc_duy_vat_bien_chung.json",
+      file: "chuong2_ban_chat_nhan_thuc.json",
+      videoUrl: defaultYoutubeUrl,
+    },
+    {
+      title: "Thực tiễn và vai trò của thực tiễn đối với nhận thức",
+      summary:
+        "Thực tiễn là cơ sở, động lực, mục đích của nhận thức và là tiêu chuẩn của chân lý.",
+      originalText: "Thực tiễn và vai trò của thực tiễn đối với nhận thức",
+      quickTake: "Thực tiễn là cơ sở nhận thức và tiêu chuẩn chân lý.",
+      difficulty: "Hard",
+      timeToRead: "10 min read",
+      orderIndex: 11,
+      sectionChapter: ch2SectionKnowledge,
+      sectionOrderIndex: 3,
+      file: "chuong2_thuc_tien_vai_tro.json",
+      videoUrl: defaultYoutubeUrl,
+    },
+    {
+      title: "Quan điểm của CNDVBC về chân lý",
+      summary:
+        "Chân lý khách quan, chân lý tuyệt đối và chân lý tương đối trong lý luận nhận thức Mác - Lênin.",
+      originalText: "Quan điểm của CNDVBC về chân lý",
+      quickTake: "Chân lý là tri thức phù hợp với thực tại khách quan.",
+      difficulty: "Medium",
+      timeToRead: "8 min read",
+      orderIndex: 12,
+      sectionChapter: ch2SectionKnowledge,
+      sectionOrderIndex: 4,
+      file: "chuong2_chan_ly.json",
       videoUrl: defaultYoutubeUrl,
     },
   ];
