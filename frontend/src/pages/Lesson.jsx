@@ -367,16 +367,29 @@ const Lesson = () => {
               groupsMap.set(mapKey, { isMultiple: false, title: groupTitle, lessons: [] });
             }
             const grp = groupsMap.get(mapKey);
-            if (isSubItem) {
+            
+            const subTopics = extractSubTopics(node);
+            if (isSubItem && subTopics && subTopics.length > 0) {
               grp.isMultiple = true;
+              subTopics.forEach((subTitle, sIdx) => {
+                grp.lessons.push({
+                  id: `${node.id}-sub-${sIdx}`,
+                  title: cleanTitle(subTitle),
+                  originalTitle: subTitle,
+                  slug: getSlugFromTitle(node.title),
+                  subTopics: [],
+                });
+              });
+            } else {
+              if (isSubItem) grp.isMultiple = true;
+              grp.lessons.push({
+                id: node.id,
+                title: lessonTitle,
+                originalTitle: node.title,
+                slug: getSlugFromTitle(node.title),
+                subTopics: [],
+              });
             }
-            grp.lessons.push({
-              id: node.id,
-              title: lessonTitle,
-              originalTitle: node.title,
-              slug: getSlugFromTitle(node.title),
-              subTopics: extractSubTopics(node),
-            });
           });
 
           const groups = Array.from(groupsMap.values()).map((gData) => ({
