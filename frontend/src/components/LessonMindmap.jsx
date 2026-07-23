@@ -64,9 +64,9 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
           <div className="absolute left-0 top-0 bottom-3 w-0.5 bg-slate-300 dark:bg-primary-850" />
 
           {groups.map((group, gIdx) => {
-            const hasMultipleSubLessons = group.hasMultiple && group.lessons && group.lessons.length > 1;
+            const isGroupTopic = !!group.title && group.lessons && group.lessons.length > 0;
 
-            if (hasMultipleSubLessons) {
+            if (isGroupTopic) {
               const firstSubLesson = group.lessons[0];
 
               return (
