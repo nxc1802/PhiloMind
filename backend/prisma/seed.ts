@@ -2024,6 +2024,8 @@ async function main() {
     } catch (e: any) {
       console.warn('Error verifying/creating bucket "documents":', e.message);
     }
+  }
+
   await prisma.document.deleteMany({});
 
   for (const doc of docFiles) {
@@ -2099,6 +2101,12 @@ async function main() {
       description:
         "Tình huống phân tích quan điểm toàn diện và nguyên lý về mối liên hệ phổ biến trong Triết học Mác - Lênin qua các ví dụ thực tiễn sinh động.",
       videoUrl: "https://www.youtube.com/watch?v=zq3u-R-WAhQ",
+    },
+    {
+      title: "Tổng quan Triết học Mác - Lênin",
+      description:
+        "Tổng quan hệ thống kiến thức Triết học Mác - Lênin trực quan, sinh động giúp nắm bắt bản chất các quy luật triết học.",
+      videoUrl: "https://www.youtube.com/watch?v=b2tmiYsk68A",
     },
   ];
 
