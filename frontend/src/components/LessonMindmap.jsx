@@ -5,13 +5,13 @@ const countSections = (chapter) => (chapter.sections || []).length;
 const countLessons  = (chapter) =>
   (chapter.sections || []).reduce((total, section) => total + (section.lessons || []).length, 0);
 
-// Lọc dữ liệu mindmap theo từ khoá; giữ đề mục/bài học khớp keyword
+// Lọc dữ liệu mindmap theo từ khoá; giữ đề mục/bài học/nội dung chi tiết khớp keyword
 function filterChaptersByKeyword(chapters, keyword) {
   const normalizedKeyword = keyword.trim().toLowerCase();
   if (!normalizedKeyword) return chapters;
 
   const matchesKeyword = (text) =>
-    text.toLowerCase().includes(normalizedKeyword);
+    (text || "").toLowerCase().includes(normalizedKeyword);
 
   return chapters
     .map((chapter) => ({
@@ -20,7 +20,8 @@ function filterChaptersByKeyword(chapters, keyword) {
         .map((section) => ({
           ...section,
           lessons: (section.lessons || []).filter((lesson) =>
-            matchesKeyword(lesson.title)
+            matchesKeyword(lesson.title) ||
+            (lesson.subTopics || []).some((sub) => matchesKeyword(sub))
           ),
         }))
         .filter(
@@ -31,8 +32,12 @@ function filterChaptersByKeyword(chapters, keyword) {
     .filter((chapter) => (chapter.sections || []).length > 0);
 }
 
-// Nhánh nhỏ: 1 đề mục + danh sách bài học bên trong
+// Nhánh nhỏ: 1 đề mục + danh sách bài học + nội dung chi tiết cấp thấp
 function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
+  const groups = section.groups || [
+    { title: null, hasMultiple: false, lessons: section.lessons || [] }
+  ];
+
   return (
     <div className="flex items-start gap-4">
       <div className="flex items-center pt-6 shrink-0">
@@ -52,76 +57,84 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
           </span>
         </button>
 
-        <div className="mt-3 ml-8 space-y-2 relative">
+        <div className="mt-4 ml-8 space-y-4 relative">
           <div className="absolute left-0 top-0 bottom-3 w-0.5 bg-slate-200 dark:bg-primary-850" />
-          {(section.lessons || []).map((lesson) => {
-            const isActive = lesson.slug === activeSlug;
-            const status =
-              progressMap[lesson.id] ||
-              progressMap[lesson.slug] ||
-              progressMap[lesson.title] ||
-              'locked';
-            const isLocked = status === 'locked' || status === 'content_locked';
-            const isContentLocked = status === 'content_locked';
-            const isCompleted = status === 'completed';
+          {groups.map((group, gIdx) => {
+            const showGroupHeader = group.hasMultiple && group.title;
 
             return (
-              <div key={lesson.id} className="flex flex-col">
-                <div className="flex items-center gap-3">
-                  <div className="h-0.5 w-6 bg-slate-250 dark:bg-primary-850" />
-                  <button
-                    onClick={() => onOpenLesson(lesson.slug)}
-                    className={`group flex items-center gap-2 px-4 py-2 rounded-3xl border transition-all text-sm font-medium hover:shadow-md ${
-                      isLocked
-                        ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
-                        : isActive
-                          ? "bg-primary-600 text-white border-primary-600 shadow-md"
-                          : isCompleted
-                            ? "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-300 dark:border-green-800/40 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white"
-                            : "bg-primary-50/50 dark:bg-primary-900/10 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white text-slate-800 dark:text-slate-200 border-slate-200 dark:border-primary-850 hover:border-primary-600"
-                    }`}
-                  >
-                    <span
-                      className={`material-symbols-outlined text-sm transition-colors ${
-                        isLocked
-                          ? "text-slate-400"
-                          : isActive
-                            ? "text-white"
-                            : isCompleted
-                              ? "text-green-600 dark:text-green-400 group-hover:text-white"
-                              : "text-primary-600 dark:text-primary-300 group-hover:text-white"
-                      }`}
-                    >
-                      {isContentLocked ? "lock_clock" : isLocked ? "lock" : isCompleted ? "check_circle" : "menu_book"}
-                    </span>
-                    {lesson.title}
-                    {isContentLocked && (
-                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
-                        Sắp có
+              <div key={gIdx} className="space-y-3 relative pl-3">
+                {showGroupHeader && (
+                  <div className="flex items-center gap-2">
+                    <div className="h-0.5 w-4 bg-slate-300 dark:bg-primary-800" />
+                    <div className="inline-flex items-center gap-2 bg-slate-100 dark:bg-primary-900/30 text-slate-800 dark:text-primary-200 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-205 dark:border-primary-800/40">
+                      <span className="material-symbols-outlined text-xs text-primary-600 dark:text-primary-400">
+                        folder_open
                       </span>
-                    )}
-                    {!isLocked && (
-                      <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                        chevron_right
-                      </span>
-                    )}
-                  </button>
-                </div>
-
-                {/* Lower level sub-items (a, b, c, d...) */}
-                {lesson.subItems && lesson.subItems.length > 0 && (
-                  <div className="mt-2 ml-10 pl-3 border-l-2 border-dashed border-primary-400/40 dark:border-primary-700/50 space-y-1.5 py-1">
-                    {lesson.subItems.map((sub, sIdx) => (
-                      <div
-                        key={sIdx}
-                        className="flex items-start gap-2 text-xs text-slate-600 dark:text-primary-250 hover:text-primary-700 dark:hover:text-primary-100 transition-colors"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary-500 dark:bg-primary-400 mt-1 shrink-0" />
-                        <span className="leading-relaxed font-normal">{sub}</span>
-                      </div>
-                    ))}
+                      {group.title}
+                    </div>
                   </div>
                 )}
+
+                <div className={`space-y-3 ${showGroupHeader ? "ml-2" : ""}`}>
+                  {(group.lessons || []).map((lesson) => {
+                    const isActive = lesson.slug === activeSlug;
+                    const status =
+                      progressMap[lesson.id] ||
+                      progressMap[lesson.slug] ||
+                      progressMap[lesson.title] ||
+                      progressMap[lesson.originalTitle] ||
+                      'locked';
+                    const isLocked = status === 'locked' || status === 'content_locked';
+                    const isContentLocked = status === 'content_locked';
+                    const isCompleted = status === 'completed';
+
+                    return (
+                      <div key={lesson.id} className="flex flex-col gap-2">
+                        <div className="flex items-center gap-3">
+                          <div className="h-0.5 w-5 bg-slate-250 dark:bg-primary-850" />
+                          <button
+                            onClick={() => onOpenLesson(lesson.slug)}
+                            className={`group flex items-center gap-2 px-4 py-2 rounded-3xl border transition-all text-sm font-semibold hover:shadow-md ${
+                              isLocked
+                                ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
+                                : isActive
+                                  ? "bg-primary-600 text-white border-primary-600 shadow-md"
+                                  : isCompleted
+                                    ? "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-300 dark:border-green-800/40 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white"
+                                    : "bg-primary-50/50 dark:bg-primary-900/10 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white text-slate-800 dark:text-slate-200 border-slate-200 dark:border-primary-850 hover:border-primary-600"
+                            }`}
+                          >
+                            <span
+                              className={`material-symbols-outlined text-sm transition-colors ${
+                                isLocked
+                                  ? "text-slate-400"
+                                  : isActive
+                                    ? "text-white"
+                                    : isCompleted
+                                      ? "text-green-600 dark:text-green-400 group-hover:text-white"
+                                      : "text-primary-600 dark:text-primary-300 group-hover:text-white"
+                              }`}
+                            >
+                              {isContentLocked ? "lock_clock" : isLocked ? "lock" : isCompleted ? "check_circle" : "menu_book"}
+                            </span>
+                            {lesson.title}
+                            {isContentLocked && (
+                              <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
+                                Sắp có
+                              </span>
+                            )}
+                            {!isLocked && (
+                              <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                                chevron_right
+                              </span>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}

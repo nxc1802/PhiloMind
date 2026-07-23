@@ -200,7 +200,49 @@ const Lesson = () => {
     });
   }, [activeLesson, allJourneyNodes, queryClient, user?.id]);
 
-  // Transform dbJourney to hierarchical chapters/sections/lessons for Mindmap
+  // Helper to extract lower-level sub-topics (a, b, c, d...) from node
+  const extractSubTopics = (node) => {
+    if (!node) return [];
+    if (node.subTopics && Array.isArray(node.subTopics) && node.subTopics.length > 0) {
+      return node.subTopics;
+    }
+
+    const subTopics = [];
+    if (node.originalText) {
+      const lines = node.originalText.split("\n");
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        if (/^[a-zđ]\)\s+/i.test(trimmed)) {
+          subTopics.push(trimmed);
+        } else if (/^[-*•]\s+/.test(trimmed)) {
+          const indexStr = String.fromCharCode(97 + subTopics.length);
+          subTopics.push(`${indexStr}) ${trimmed.replace(/^[-*•]\s+/, "")}`);
+        }
+      }
+    }
+
+    if (subTopics.length === 0 && node.lessonFlow && Array.isArray(node.lessonFlow)) {
+      node.lessonFlow.forEach((comp) => {
+        if (
+          comp.title &&
+          comp.title !== node.title &&
+          comp.type !== "final_summary" &&
+          comp.type !== "markdown" &&
+          !comp.title.includes("Mở đầu") &&
+          !comp.title.includes("Thử thách") &&
+          !comp.title.includes("Kiểm tra")
+        ) {
+          const indexStr = String.fromCharCode(97 + subTopics.length);
+          subTopics.push(`${indexStr}) ${comp.title}`);
+        }
+      });
+    }
+
+    return subTopics;
+  };
+
+  // Transform dbJourney to hierarchical chapters/sections/groups/lessons for Mindmap
   const mindmapChapters = useMemo(() => {
     if (!dbJourney || dbJourney.length === 0) return [];
 
@@ -220,35 +262,134 @@ const Lesson = () => {
       "from-[#00BAE3] to-[#00829F]",
     ];
 
-    const extractSubItems = (originalText) => {
-      if (!originalText) return [];
-      const lines = originalText.split("\n").map((l) => l.trim());
-      const items = [];
-      for (const line of lines) {
-        if (!line) continue;
-        if (
-          /^[a-đA-Đ]\)/.test(line) ||
-          (/^[-*]/.test(line) && !line.includes("V.I. Lênin"))
-        ) {
-          items.push(line.replace(/^[-*]\s*/, ""));
-        }
-      }
-      return items;
-    };
-
     return mainChapters.map((chap, idx) => {
       const sections = subChapters
         .filter((sub) => sub.parentChapterId === chap.id)
-        .map((sub) => ({
-          id: sub.id,
-          title: sub.title,
-          lessons: (sub.nodes || []).map((node) => ({
-            id: node.id,
-            title: node.title,
-            slug: getSlugFromTitle(node.title),
-            subItems: extractSubItems(node.originalText),
-          })),
-        }));
+        .map((sub) => {
+          const rawNodes = sub.nodes || [];
+          
+          // Group nodes into topics/subsections
+          const groupsMap = new Map();
+          
+          rawNodes.forEach((node) => {
+            let groupTitle = "Bài học chi tiết";
+            let lessonTitle = node.title;
+            let isSubItem = false;
+
+            // Custom grouping rules for Chapter 1
+            if (chap.orderIndex === 1 || chap.title.includes("Chương 1")) {
+              if (
+                node.title.includes("Nguồn gốc") ||
+                node.title.includes("Khái niệm") ||
+                node.title.includes("Đối tượng của triết học") ||
+                node.title.includes("hạt nhân")
+              ) {
+                groupTitle = "1. Khái lược về triết học";
+                isSubItem = true;
+                if (node.title.includes("Nguồn gốc")) lessonTitle = "a. Nguồn gốc của triết học";
+                else if (node.title.includes("Khái niệm")) lessonTitle = "b. Khái niệm triết học";
+                else if (node.title.includes("Đối tượng")) lessonTitle = "c. Đối tượng của triết học trong lịch sử";
+                else if (node.title.includes("hạt nhân")) lessonTitle = "d. Triết học - hạt nhân lý luận của thế giới quan";
+              } else if (node.title.includes("Vấn đề cơ bản")) {
+                groupTitle = "2. Vấn đề cơ bản của triết học";
+                lessonTitle = "2. Vấn đề cơ bản của triết học";
+              } else if (node.title.includes("Biện chứng") || node.title.includes("siêu hình")) {
+                groupTitle = "3. Biện chứng và siêu hình";
+                lessonTitle = "3. Biện chứng và siêu hình";
+              } else if (node.title.includes("ra đời") || node.title.includes("phát triển")) {
+                groupTitle = "1. Sự ra đời và phát triển của triết học Mác - Lênin";
+                lessonTitle = "1. Sự ra đời và phát triển của triết học Mác - Lênin";
+              } else if (node.title.includes("Đối tượng và chức năng")) {
+                groupTitle = "2. Đối tượng và chức năng của triết học Mác - Lênin";
+                lessonTitle = "2. Đối tượng và chức năng của triết học Mác - Lênin";
+              } else if (node.title.includes("Vai trò")) {
+                groupTitle = "3. Vai trò của triết học Mác - Lênin trong đời sống xã hội";
+                lessonTitle = "3. Vai trò của triết học Mác - Lênin trong đời sống xã hội";
+              }
+            }
+            // Custom grouping rules for Chapter 2
+            else if (chap.orderIndex === 2 || chap.title.includes("Chương 2")) {
+              if (node.title.includes("Phạm trù vật chất") || node.title.includes("khủng hoảng")) {
+                groupTitle = "1. Vật chất và phương thức tồn tại của vật chất";
+                isSubItem = true;
+                lessonTitle = "a. Quan niệm về phạm trù vật chất & Cuộc cách mạng KHTN";
+              } else if (node.title.includes("Phương thức tồn tại")) {
+                groupTitle = "1. Vật chất và phương thức tồn tại của vật chất";
+                isSubItem = true;
+                lessonTitle = "b. Phương thức tồn tại của vật chất & Tính thống nhất vật chất";
+              } else if (node.title.includes("ý thức") && !node.title.includes("Mối quan hệ")) {
+                groupTitle = "2. Nguồn gốc, bản chất và kết cấu của ý thức";
+                lessonTitle = "2. Nguồn gốc, bản chất và kết cấu của ý thức";
+              } else if (node.title.includes("Mối quan hệ")) {
+                groupTitle = "3. Mối quan hệ giữa vật chất và ý thức";
+                lessonTitle = "3. Mối quan hệ giữa vật chất và ý thức";
+              } else if (node.title.includes("Hai loại hình biện chứng")) {
+                groupTitle = "1. Hai loại hình biện chứng và phép biện chứng duy vật";
+                lessonTitle = "1. Hai loại hình biện chứng và phép biện chứng duy vật";
+              } else if (node.title.includes("Hai nguyên lý")) {
+                groupTitle = "2. Nội dung của phép biện chứng duy vật";
+                isSubItem = true;
+                lessonTitle = "a. Hai nguyên lý của phép biện chứng duy vật";
+              } else if (node.title.includes("phạm trù")) {
+                groupTitle = "2. Nội dung của phép biện chứng duy vật";
+                isSubItem = true;
+                lessonTitle = "b. Các cặp phạm trù cơ bản của phép biện chứng duy vật";
+              } else if (node.title.includes("quy luật")) {
+                groupTitle = "2. Nội dung của phép biện chứng duy vật";
+                isSubItem = true;
+                lessonTitle = "c. Các quy luật cơ bản của phép biện chứng duy vật";
+              } else if (node.title.includes("lịch sử triết học")) {
+                groupTitle = "1. Quan niệm về nhận thức trong lịch sử triết học";
+                lessonTitle = "1. Quan niệm về nhận thức trong lịch sử triết học";
+              } else if (node.title.includes("Bản chất của nhận thức")) {
+                groupTitle = "2. Lý luận nhận thức duy vật biện chứng";
+                isSubItem = true;
+                lessonTitle = "a. Nguồn gốc, bản chất và các giai đoạn nhận thức";
+              } else if (node.title.includes("Thực tiễn")) {
+                groupTitle = "2. Lý luận nhận thức duy vật biện chứng";
+                isSubItem = true;
+                lessonTitle = "b. Thực tiễn và vai trò của thực tiễn đối với nhận thức";
+              } else if (node.title.includes("Chân lý")) {
+                groupTitle = "2. Lý luận nhận thức duy vật biện chứng";
+                isSubItem = true;
+                lessonTitle = "c. Quan điểm của CNDVBC về chân lý";
+              }
+            }
+
+            if (!groupsMap.has(groupTitle)) {
+              groupsMap.set(groupTitle, { isMultiple: false, lessons: [] });
+            }
+            const grp = groupsMap.get(groupTitle);
+            if (isSubItem) {
+              grp.isMultiple = true;
+            }
+            grp.lessons.push({
+              id: node.id,
+              title: lessonTitle,
+              originalTitle: node.title,
+              slug: getSlugFromTitle(node.title),
+              subTopics: extractSubTopics(node),
+            });
+          });
+
+          const groups = Array.from(groupsMap.entries()).map(([gTitle, gData]) => ({
+            title: gTitle,
+            hasMultiple: gData.isMultiple || gData.lessons.length > 1,
+            lessons: gData.lessons,
+          }));
+
+          return {
+            id: sub.id,
+            title: sub.title,
+            groups,
+            lessons: rawNodes.map((node) => ({
+              id: node.id,
+              title: node.title,
+              slug: getSlugFromTitle(node.title),
+              subTopics: extractSubTopics(node),
+            })),
+          };
+        });
 
       if (sections.length === 0 && chap.nodes && chap.nodes.length > 0) {
         sections.push({
@@ -258,7 +399,7 @@ const Lesson = () => {
             id: node.id,
             title: node.title,
             slug: getSlugFromTitle(node.title),
-            subItems: extractSubItems(node.originalText),
+            subTopics: extractSubTopics(node),
           })),
         });
       }

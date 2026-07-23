@@ -110,7 +110,8 @@
       "config": {
         "label": "Đúc kết",
         "takeaways": [
-          "Dù là duy tâm khách quan hay duy tâm chủ quan, các nhà triết học thuộc trường phái này tuy buộc phải thừa nhận sự hiện diện của các sự vật, hiện tượng trong thực tế nhưng về mặt bản chất, họ đã phủ nhận đặc tính tồn tại độc lập (khách quan) của vật chất đối với ý thức con người."
+          "Dù là duy tâm khách quan hay duy tâm chủ quan, các nhà triết học thuộc trường phái này tuy buộc phải thừa nhận sự hiện diện của các sự vật, hiện tượng trong thực tế nhưng về mặt bản chất, họ đã phủ nhận đặc tính tồn tại độc lập (khách quan) của vật chất đối với ý thức con người.",
+          "Như vậy, về thực chất, các nhà triết học duy tâm đã phủ nhận đặc tính tồn tại khách quan của vật chất. Thế giới quan duy tâm rất gần với thế giới quan tôn giáo và tất yếu dẫn họ đến với thần học."
         ]
       },
       "completionRule": {
@@ -119,36 +120,38 @@
     },
     {
       "id": "c2-duy-vat-lich-su",
-      "type": "timeline_explorer",
+      "type": "chain_sorting",
       "title": "Quan niệm của chủ nghĩa duy vật qua các thời kỳ lịch sử",
       "linkedMediaId": "c2-thoi-co-dai",
       "config": {
-        "instruction": "Trái ngược với chủ nghĩa duy tâm, sự phát triển của chủ nghĩa duy vật gắn liền với thực tiễn sản xuất và sự tiến bộ của tri thức khoa học qua các thời kỳ.",
-        "periods": [
+        "instruction": "Hãy sắp xếp các giai đoạn phát triển của quan niệm duy vật về vật chất theo đúng tiến trình lịch sử (từ Cổ đại đến Cận đại).",
+        "items": [
           {
             "id": "thoi-co-dai-so-khai",
-            "title": "Chủ nghĩa duy vật sơ khai thời Cổ đại",
-            "content": "Từ thuở sơ khai, khi khoa học tự nhiên còn non trẻ, các triết gia đã cố gắng tìm kiếm **\"bản nguyên\"** – chất liệu đầu tiên cấu thành nên toàn bộ vũ trụ mà không cần dùng đến các thế lực siêu nhiên thần thánh. Họ đồng nhất vật chất với các yếu tố tự nhiên cụ thể:\n\n- **Thales:** Cho rằng bản nguyên của thế giới là **Nước**.\n- **Heraclitus:** Coi nguồn gốc của mọi sự vật là **Lửa**.\n- **Anaximenes:** Chọn **Không khí** làm nền tảng.\n- **Ấn Độ cổ đại (Trường phái Tứ đại):** Quy thế giới về 4 yếu tố: **Đất, nước, lửa, gió**.\n- **Trung Quốc cổ đại (Thuyết Ngũ hành):** Giải thích sự biến đổi của thế giới qua 5 yếu tố: **Kim, mộc, thủy, hỏa, thổ**.\n\n**Đánh giá:** Mang tính tích cực khi dùng giới tự nhiên để giải thích thế giới nhưng hạn chế ở chỗ đồng nhất vật chất với vật thể cụ thể."
+            "order": 0,
+            "text": "Chủ nghĩa duy vật sơ khai thời Cổ đại: Đồng nhất vật chất với các yếu tố tự nhiên cụ thể (Thales - Nước, Heraclitus - Lửa, Tứ đại, Ngũ hành)."
           },
           {
             "id": "buoc-tien-apeiron",
-            "title": "Bước tiến Apeiron của Anaximander",
-            "content": "Nhận ra rằng nước, lửa hay không khí đều có thể biến đổi và tự triệt tiêu nhau, Anaximander cho rằng nguồn gốc của vạn vật phải là một thứ chung, đứng sau mọi dạng vật chất cụ thể. Ông gọi đó là **Apeiron** – một bản chất vô định, vô hạn và không thể suy tàn.\n\n*Ý nghĩa:* Đây là nỗ lực vượt bậc nhằm thoát khỏi hạn chế của việc \"đồng nhất vật chất với một vật thể cụ thể\" của các nhà duy vật đi trước."
+            "order": 1,
+            "text": "Bước tiến Apeiron của Anaximander: Coi bản nguyên vũ trụ là Apeiron – một bản chất vô định, vô hạn đứng sau vạn vật."
           },
           {
             "id": "thuyet-nguyen-tu",
-            "title": "Thuyết Nguyên tử của Democritus",
-            "content": "Tiếp nối nỗ lực tìm kiếm bản chất chung của thế giới, Leucippus và Democritus đã tiến một bước dài mang tính đột phá khi đưa ra **Thuyết Nguyên tử**.\n\n*Quan điểm:* Họ khẳng định mọi sự vật, hiện tượng trong vũ trụ đều được cấu tạo từ những hạt vật chất cực kỳ nhỏ bé, không thể phân chia và không thể nhìn thấy bằng mắt thường, gọi là **nguyên tử**."
+            "order": 2,
+            "text": "Thuyết Nguyên tử của Leucippus & Democritus: Khẳng định vạn vật được cấu tạo từ những hạt nguyên tử cực nhỏ, không thể phân chia."
           },
           {
             "id": "thoi-can-dai",
-            "title": "Chủ nghĩa duy vật thời Cận đại (Thế kỷ XV – XVIII)",
-            "content": "Tư duy triết học gắn liền với sự bùng nổ của khoa học thực nghiệm. Các nhà triết học tiêu biểu thời kỳ này đã cùng nhau thảo luận và đi đến một quan điểm lớn: **Giới tự nhiên là một thế giới vật chất tồn tại khách quan và vận động theo các quy luật mà con người có thể nhận thức được bằng quan sát, thực nghiệm và lý trí.**\n\n- **Francis Bacon:** Muốn hiểu thế giới, phải đi từ quan sát, thí nghiệm và kinh nghiệm thực tế.\n- **Thomas Hobbes:** Thế giới là tổng thể các vật thể đang vận động. Vận động của vật chất giải thích cho mọi hiện tượng tự nhiên.\n- **René Descartes:** Xem tự nhiên như một hệ thống vận hành theo các quy luật cơ học chặt chẽ.\n- **Baruch Spinoza:** Tự nhiên tự tồn tại, là nguyên nhân của chính nó (*causa sui*).\n- **Denis Diderot:** Vật chất luôn gắn liền với vận động; tự nhiên luôn biến đổi không ngừng chứ không hề tĩnh tại."
+            "order": 3,
+            "text": "Chủ nghĩa duy vật Cận đại (TK XV – XVIII): Coi tự nhiên là hệ thống vật chất vận động theo quy luật cơ học thực nghiệm (Bacon, Hobbes, Descartes, Spinoza, Diderot)."
           }
-        ]
+        ],
+        "successFeedback": "Chính xác! Bạn đã sắp xếp đúng tiến trình phát triển lịch sử của chủ nghĩa duy vật từ cổ đại trực quan đến cận đại cơ học.",
+        "reward": "TIẾN TRÌNH DUY VẬT"
       },
       "completionRule": {
-        "type": "viewed"
+        "type": "correct"
       }
     },
     {

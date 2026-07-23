@@ -630,7 +630,7 @@ async function main() {
 
   const ch1SectionIntro = await prisma.chapter.create({
     data: {
-      title: "Khái lược về Triết học",
+      title: "I. Triết học và vấn đề cơ bản của Triết học",
       orderIndex: 1,
       courseId: course.id,
       parentChapterId: chapter1.id,
@@ -639,7 +639,8 @@ async function main() {
 
   const ch1SectionMarxism = await prisma.chapter.create({
     data: {
-      title: "Triết học Mác – Lênin",
+      title:
+        "II. Triết học Mác – Lênin và vai trò của triết học Mác – Lênin trong đời sống xã hội",
       orderIndex: 2,
       courseId: course.id,
       parentChapterId: chapter1.id,
@@ -2086,7 +2087,6 @@ async function main() {
     });
     console.log(`Seeded Philosofun video: ${item.title}`);
   }
-
 
   // ==================== NEW SEED: DEBATE TOPICS / SCENARIOS ====================
   const debateTopicSeedData = [

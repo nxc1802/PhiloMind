@@ -28,11 +28,15 @@ async function main() {
     ...getRandomQuestions(ch3_quizzes, 20),
   ].sort(() => 0.5 - Math.random());
 
-  console.log("Mock exam generated with", mockExamQuestions.length, "questions.");
+  console.log(
+    "Mock exam generated with",
+    mockExamQuestions.length,
+    "questions.",
+  );
 
   console.log("Deleting old mcq quizzes...");
   await prisma.quiz.deleteMany({
-    where: { type: "mcq" }
+    where: { type: "mcq" },
   });
 
   const nodes = await prisma.conceptNode.findMany({
@@ -42,19 +46,22 @@ async function main() {
       chapter: {
         select: {
           title: true,
-          orderIndex: true
-        }
-      }
+          orderIndex: true,
+        },
+      },
     },
-    orderBy: [
-      { chapter: { orderIndex: 'asc' } },
-      { orderIndex: 'asc' }
-    ]
+    orderBy: [{ chapter: { orderIndex: "asc" } }, { orderIndex: "asc" }],
   });
 
-  const ch1Nodes = nodes.filter(n => n.chapter.title.includes("Chương 1") || n.chapter.orderIndex === 1);
-  const ch2Nodes = nodes.filter(n => n.chapter.title.includes("Chương 2") || n.chapter.orderIndex === 2);
-  const ch3Nodes = nodes.filter(n => n.chapter.title.includes("Chương 3") || n.chapter.orderIndex === 3);
+  const ch1Nodes = nodes.filter(
+    (n) => n.chapter.title.includes("Chương 1") || n.chapter.orderIndex === 1,
+  );
+  const ch2Nodes = nodes.filter(
+    (n) => n.chapter.title.includes("Chương 2") || n.chapter.orderIndex === 2,
+  );
+  const ch3Nodes = nodes.filter(
+    (n) => n.chapter.title.includes("Chương 3") || n.chapter.orderIndex === 3,
+  );
 
   if (ch1Nodes.length > 0) {
     await prisma.quiz.create({
@@ -106,7 +113,8 @@ async function main() {
       nodeId: null,
       type: "mcq",
       title: "Đề thi thử học thuật số 1: Tổng hợp Triết học Mác - Lênin",
-      description: "Đề thi thử mô phỏng kỳ thi chính thức (60 câu, mỗi chương 20 câu ngẫu nhiên).",
+      description:
+        "Đề thi thử mô phỏng kỳ thi chính thức (60 câu, mỗi chương 20 câu ngẫu nhiên).",
       questions: mockExamQuestions as any,
     },
   });

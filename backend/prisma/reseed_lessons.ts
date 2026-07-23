@@ -9,30 +9,39 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log("Reading lesson manifest...");
-  const manifestPath = path.resolve(__dirname, "../../data/lesson_components/manifest.json");
+  const manifestPath = path.resolve(
+    __dirname,
+    "../../data/lesson_components/manifest.json",
+  );
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 
-  const convertedLessons = manifest.lessons.filter((l: any) => l.status === "converted");
+  const convertedLessons = manifest.lessons.filter(
+    (l: any) => l.status === "converted",
+  );
 
   console.log(`Found ${convertedLessons.length} converted lessons to reseed.`);
 
   for (const lesson of convertedLessons) {
     console.log(`\nProcessing: ${lesson.title}`);
-    
+
     // Read the json file
-    const filePath = path.resolve(__dirname, "../../data/lesson_components", lesson.file);
+    const filePath = path.resolve(
+      __dirname,
+      "../../data/lesson_components",
+      lesson.file,
+    );
     if (!fs.existsSync(filePath)) {
       console.warn(`File not found: ${filePath}`);
       continue;
     }
-    
+
     const lessonData = JSON.parse(fs.readFileSync(filePath, "utf8"));
     const lessonFlow = lessonData.lessonFlow || [];
     const lessonMedia = lessonData.lessonMedia || [];
 
     // Find the node
     const node = await prisma.conceptNode.findFirst({
-      where: { title: lesson.title }
+      where: { title: lesson.title },
     });
 
     if (!node) {
@@ -40,8 +49,12 @@ async function main() {
       continue;
     }
 
-    const videoMedia = (lessonMedia as any[]).find((m: any) => m.type === "video");
-    const videoUrlToSet = videoMedia ? videoMedia.url : (lessonData.videoUrl || undefined);
+    const videoMedia = (lessonMedia as any[]).find(
+      (m: any) => m.type === "video",
+    );
+    const videoUrlToSet = videoMedia
+      ? videoMedia.url
+      : lessonData.videoUrl || undefined;
 
     // Update node
     await prisma.conceptNode.update({
@@ -52,18 +65,20 @@ async function main() {
         ...(videoUrlToSet ? { videoUrl: videoUrlToSet } : {}),
         contentReady: true,
         lessonStatus: "published",
-        lessonType: "flow"
-      }
+        lessonType: "flow",
+      },
     });
 
     console.log(`Updated ConceptNode: ${node.title}`);
 
     // Clear Progress for this node to prevent UI crash with old components
     const deletedProgress = await prisma.progress.deleteMany({
-      where: { nodeId: node.id }
+      where: { nodeId: node.id },
     });
 
-    console.log(`Cleared ${deletedProgress.count} Progress records for node: ${node.title}`);
+    console.log(
+      `Cleared ${deletedProgress.count} Progress records for node: ${node.title}`,
+    );
   }
 
   console.log("\nReseed lessons completed successfully!");

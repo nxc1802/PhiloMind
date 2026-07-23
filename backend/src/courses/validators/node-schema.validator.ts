@@ -257,7 +257,10 @@ export class NodeSchemaValidator {
       requireArray(config.blanks, `${label}.blanks`);
       config.blanks.forEach((blank: any, blankIdx: number) => {
         requireString(blank.id, `${label}.blanks[${blankIdx}].id`);
-        requireString(blank.correctAnswer, `${label}.blanks[${blankIdx}].correctAnswer`);
+        requireString(
+          blank.correctAnswer,
+          `${label}.blanks[${blankIdx}].correctAnswer`,
+        );
       });
     }
 
