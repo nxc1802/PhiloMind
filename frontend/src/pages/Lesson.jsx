@@ -223,11 +223,7 @@ const Lesson = () => {
       for (const line of lines) {
         const trimmed = line.trim();
         if (!trimmed) continue;
-        if (/^[a-zđ]\)\s+/i.test(trimmed)) {
-          subTopics.push(cleanTitle(trimmed));
-        } else if (/^[-*•]\s+/.test(trimmed)) {
-          subTopics.push(cleanTitle(trimmed));
-        }
+        subTopics.push(cleanTitle(trimmed));
       }
     }
 
