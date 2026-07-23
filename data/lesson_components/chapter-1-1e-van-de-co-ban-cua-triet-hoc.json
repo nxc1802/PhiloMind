@@ -47,6 +47,7 @@
       "id": "warmup-house-origin-group",
       "type": "component_group",
       "title": "Khởi động: Ngôi nhà & Nguồn gốc",
+      "linkedMediaId": "media-house-design-materials",
       "navigation_config": {
         "shortLabel": "Khởi động 1"
       },
@@ -56,22 +57,10 @@
         "completionMode": "all",
         "components": [
           {
-            "id": "warmup-house-media-1",
-            "type": "media",
-            "title": "Hình ảnh ngôi nhà",
-            "config": {
-              "mediaType": "image",
-              "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/house_design_materials.jpg",
-              "caption": "Mối quan hệ giữa bản thiết kế và vật liệu xây dựng"
-            },
-            "completionRule": {
-              "type": "viewed"
-            }
-          },
-          {
             "id": "warmup-house-q1-mcq",
             "type": "mcq",
             "title": "Câu hỏi 1: Cái gì có trước?",
+            "linkedMediaId": "media-house-design-materials",
             "config": {
               "question": "Để ngôi nhà này xuất hiện trên thực tế, Bản thiết kế/Ý tưởng trong đầu kiến trúc sư có trước, hay Đất đá, gạch, sắt thép có trước?",
               "options": [
@@ -97,6 +86,7 @@
             "id": "warmup-house-q2-mcq",
             "type": "mcq",
             "title": "Câu hỏi 2: Nguyên nhân quyết định?",
+            "linkedMediaId": "media-house-design-materials",
             "config": {
               "question": "Khi ngôi nhà bị đổ sập bởi một thiên tai, nguyên nhân quyết định đến từ sự tác động của lực vật chất (động đất, bão) hay từ sự thiếu sót trong tư duy/ý chí của con người?",
               "options": [
@@ -133,6 +123,7 @@
       "id": "warmup-house-cognition-group",
       "type": "component_group",
       "title": "Khởi động: Khả năng nhận thức",
+      "linkedMediaId": "media-house-laws-cognition",
       "navigation_config": {
         "shortLabel": "Khởi động 2"
       },
@@ -142,22 +133,10 @@
         "completionMode": "all",
         "components": [
           {
-            "id": "warmup-house-media-2",
-            "type": "media",
-            "title": "Hình ảnh khám phá ngôi nhà",
-            "config": {
-              "mediaType": "image",
-              "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/house_laws_cognition.jpg",
-              "caption": "Trí tuệ con người đối với các quy luật tự nhiên"
-            },
-            "completionRule": {
-              "type": "viewed"
-            }
-          },
-          {
             "id": "warmup-house-cognition-mcq",
             "type": "mcq",
             "title": "Khả năng nhận thức 100% quy luật",
+            "linkedMediaId": "media-house-laws-cognition",
             "config": {
               "question": "Giả sử ngôi nhà này chứa đựng hàng ngàn chi tiết từ móng ngầm, kết cấu bê tông đến các hiện tượng vật lý bên trong. Liệu trí tuệ con người có thể hiểu biết 100% tất cả các quy luật tự nhiên đang tác động lên ngôi nhà này không? Hay chúng ta chỉ hiểu được một phần, còn lại vẫn nằm ngoài tầm kiểm soát?",
               "options": [
