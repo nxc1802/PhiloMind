@@ -66,45 +66,62 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
             const isCompleted = status === 'completed';
 
             return (
-              <div key={lesson.id} className="flex items-center gap-3">
-                <div className="h-0.5 w-6 bg-slate-250 dark:bg-primary-850" />
-                <button
-                  onClick={() => onOpenLesson(lesson.slug)}
-                  className={`group flex items-center gap-2 px-4 py-2 rounded-3xl border transition-all text-sm font-medium hover:shadow-md ${
-                    isLocked
-                      ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
-                      : isActive
-                        ? "bg-primary-600 text-white border-primary-600 shadow-md"
-                        : isCompleted
-                          ? "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-300 dark:border-green-800/40 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white"
-                          : "bg-primary-50/50 dark:bg-primary-900/10 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white text-slate-800 dark:text-slate-200 border-slate-200 dark:border-primary-850 hover:border-primary-600"
-                  }`}
-                >
-                  <span
-                    className={`material-symbols-outlined text-sm transition-colors ${
+              <div key={lesson.id} className="flex flex-col">
+                <div className="flex items-center gap-3">
+                  <div className="h-0.5 w-6 bg-slate-250 dark:bg-primary-850" />
+                  <button
+                    onClick={() => onOpenLesson(lesson.slug)}
+                    className={`group flex items-center gap-2 px-4 py-2 rounded-3xl border transition-all text-sm font-medium hover:shadow-md ${
                       isLocked
-                        ? "text-slate-400"
+                        ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
                         : isActive
-                          ? "text-white"
+                          ? "bg-primary-600 text-white border-primary-600 shadow-md"
                           : isCompleted
-                            ? "text-green-600 dark:text-green-400 group-hover:text-white"
-                            : "text-primary-600 dark:text-primary-300 group-hover:text-white"
+                            ? "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-300 dark:border-green-800/40 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white"
+                            : "bg-primary-50/50 dark:bg-primary-900/10 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white text-slate-800 dark:text-slate-200 border-slate-200 dark:border-primary-850 hover:border-primary-600"
                     }`}
                   >
-                    {isContentLocked ? "lock_clock" : isLocked ? "lock" : isCompleted ? "check_circle" : "menu_book"}
-                  </span>
-                  {lesson.title}
-                  {isContentLocked && (
-                    <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
-                      Sắp có
+                    <span
+                      className={`material-symbols-outlined text-sm transition-colors ${
+                        isLocked
+                          ? "text-slate-400"
+                          : isActive
+                            ? "text-white"
+                            : isCompleted
+                              ? "text-green-600 dark:text-green-400 group-hover:text-white"
+                              : "text-primary-600 dark:text-primary-300 group-hover:text-white"
+                      }`}
+                    >
+                      {isContentLocked ? "lock_clock" : isLocked ? "lock" : isCompleted ? "check_circle" : "menu_book"}
                     </span>
-                  )}
-                  {!isLocked && (
-                    <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                      chevron_right
-                    </span>
-                  )}
-                </button>
+                    {lesson.title}
+                    {isContentLocked && (
+                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
+                        Sắp có
+                      </span>
+                    )}
+                    {!isLocked && (
+                      <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                        chevron_right
+                      </span>
+                    )}
+                  </button>
+                </div>
+
+                {/* Lower level sub-items (a, b, c, d...) */}
+                {lesson.subItems && lesson.subItems.length > 0 && (
+                  <div className="mt-2 ml-10 pl-3 border-l-2 border-dashed border-primary-400/40 dark:border-primary-700/50 space-y-1.5 py-1">
+                    {lesson.subItems.map((sub, sIdx) => (
+                      <div
+                        key={sIdx}
+                        className="flex items-start gap-2 text-xs text-slate-600 dark:text-primary-250 hover:text-primary-700 dark:hover:text-primary-100 transition-colors"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary-500 dark:bg-primary-400 mt-1 shrink-0" />
+                        <span className="leading-relaxed font-normal">{sub}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}

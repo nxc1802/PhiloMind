@@ -1,0 +1,125 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-qnnt-intro",
+      "type": "dialogue",
+      "title": "Quan niệm về nhận thức trong lịch sử triết học",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Chào mừng bạn đến với Phần III: Lý luận nhận thức!"
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Lý luận nhận thức (Epistemology) là bộ phận triết học nghiên cứu về bản chất, khả năng, nguồn gốc và tiêu chuẩn chân lý của nhận thức con người."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Trước triết học Mác, các trường phái triết học khác nhau đã có những góc nhìn rất đa dạng nhưng cũng mang nhiều hạn chế lịch sử."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-qnnt-mindmap",
+      "type": "mindmap_reveal",
+      "title": "Các trường phái nhận thức luận trong lịch sử",
+      "config": {
+        "instruction": "Hãy lật mở để xem quan niệm về nhận thức của các triết phái lịch sử trước C. Mác.",
+        "layoutConfig": {
+          "type": "matrix"
+        },
+        "nodes": [
+          {
+            "id": "cndt-nhan-thuc",
+            "front": {
+              "text": "Chủ nghĩa Duy tâm"
+            },
+            "back": {
+              "text": "Coi nhận thức là sự tự ý thức của tinh thần tuyệt đối (Duy tâm khách quan) hoặc là sự phức hợp cảm giác chủ quan của cá nhân (Duy tâm chủ quan)."
+            }
+          },
+          {
+            "id": "hoai-nghi-luan",
+            "front": {
+              "text": "Hoài nghi luận"
+            },
+            "back": {
+              "text": "Nâng sự hoài nghi lên thành nguyên tắc; nghi ngờ khả năng đạt đến chân lý khách quan của con người."
+            }
+          },
+          {
+            "id": "bat-kha-tri",
+            "front": {
+              "text": "Thuyết Bất khả tri (Hume, Kant)"
+            },
+            "back": {
+              "text": "Phủ nhận khả năng con người có thể nhận thức được bản chất chân thực của đối tượng ('vật tự nó' của Kant nằm ngoài khả năng kinh nghiệm)."
+            }
+          },
+          {
+            "id": "cndv-truoc-mac",
+            "front": {
+              "text": "Chủ nghĩa Duy vật trước Mác"
+            },
+            "back": {
+              "text": "Khẳng định con người nhận thức được thế giới khách quan, nhưng hạn chế ở chỗ coi nhận thức là sự phản ánh trực quan, thụ động, máy móc và chưa thấy vai trò của thực tiễn."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-qnnt-mcq",
+      "type": "mcq",
+      "title": "Hạn chế lớn nhất của CNDV trước Mác",
+      "config": {
+        "question": "Hạn chế lớn nhất của chủ nghĩa duy vật trước C. Mác trong việc giải quyết bài toán nhận thức luận là gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "text": "Phủ nhận hoàn toàn sự tồn tại của thế giới khách quan.",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-2",
+            "text": "Coi nhận thức là sự phản ánh thụ động, máy móc như tấm gương phẳng và hoàn toàn không thấy được vai trò của thực tiễn.",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-3",
+            "text": "Cho rằng thần linh ban tri thức cho con người.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! CNDV trước Mác mang tính trực quan, máy móc, thiếu quan điểm thực tiễn và chưa thấy tính năng động sáng tạo của quá trình nhận thức."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-qnnt-summary",
+      "type": "final_summary",
+      "title": "Tổng kết Quan niệm về nhận thức trong lịch sử",
+      "config": {
+        "message": "Bạn đã nắm vững các trường phái nhận thức luận trong lịch sử triết học.",
+        "keyTakeaways": [
+          "Lý luận nhận thức nghiên cứu bản chất và khả năng nhận thức của con người.",
+          "Sự đối lập giữa Thuyết Khả tri (thừa nhận khả năng nhận thức) và Thuyết Bất khả tri (phủ nhận khả năng nhận thức).",
+          "Hạn chế của CNDV cũ: phản ánh thụ động, thiếu vai trò thực tiễn."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

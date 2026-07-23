@@ -1235,7 +1235,7 @@ async function main() {
 
   const ch2SectionMatter = await prisma.chapter.create({
     data: {
-      title: "Vật chất và ý thức",
+      title: "I. VẬT CHẤT VÀ Ý THỨC",
       orderIndex: 1,
       courseId: course.id,
       parentChapterId: chapter2.id,
@@ -1244,7 +1244,7 @@ async function main() {
 
   const ch2SectionDialectics = await prisma.chapter.create({
     data: {
-      title: "Phép biện chứng duy vật",
+      title: "II. PHÉP BIỆN CHỨNG DUY VẬT",
       orderIndex: 2,
       courseId: course.id,
       parentChapterId: chapter2.id,
@@ -1253,7 +1253,7 @@ async function main() {
 
   const ch2SectionKnowledge = await prisma.chapter.create({
     data: {
-      title: "Lý luận nhận thức",
+      title: "III. LÝ LUẬN NHẬN THỨC",
       orderIndex: 3,
       courseId: course.id,
       parentChapterId: chapter2.id,
@@ -1262,148 +1262,118 @@ async function main() {
 
   const ch2Nodes = [
     {
-      title: "Phạm trù vật chất",
+      title: "Vật chất và phương thức tồn tại của vật chất",
       summary:
-        "Vật chất là thực tại khách quan tồn tại độc lập với ý thức và được đem lại cho con người trong cảm giác.",
+        "Vật chất là thực tại khách quan tồn tại độc lập với ý thức; vận động, không gian và thời gian là phương thức và hình thức tồn tại của vật chất.",
       originalText:
-        "Vật chất là một phạm trù triết học dùng để chỉ thực tại khách quan được đem lại cho con người trong cảm giác, được cảm giác của chúng ta chép lại, chụp lại, phản ánh, và tồn tại không lệ thuộc vào cảm giác. - V.I. Lênin",
+        "1. Vật chất và phương thức tồn tại của vật chất\na) Quan niệm của chủ nghĩa duy tâm và chủ nghĩa duy vật trước C. Mác về phạm trù vật chất\nb) Cuộc cách mạng trong khoa học tự nhiên cuối thế kỉ XIX, đầu thế kỉ XX và sự phá sản của các quan điểm duy vật siêu hình về vật chất\nc) Quan niệm của triết học Mác - Lênin về vật chất\nd) Phương thức tồn tại của vật chất\nđ) Tính thống nhất vật chất của thế giới",
       quickTake: "Vật chất là thực tại khách quan tồn tại độc lập với ý thức.",
       difficulty: "Hard",
       timeToRead: "15 min read",
       orderIndex: 1,
+      sectionChapter: ch2SectionMatter,
+      sectionOrderIndex: 1,
+      file: "chuong2_vat_chat_va_phuong_thuc_ton_tai.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Phương thức tồn tại của vật chất",
+      title: "Nguồn gốc, bản chất và kết cấu của ý thức",
       summary:
-        "Vận động là phương thức tồn tại của vật chất, không gian và thời gian là những hình thức tồn tại của nó.",
+        "Ý thức có nguồn gốc tự nhiên và nguồn gốc xã hội; bản chất là hình ảnh chủ quan của thế giới khách quan.",
       originalText:
-        "Vận động là thuộc tính cố hữu của vật chất, là phương thức tồn tại của vật chất. Không có vật chất không vận động cũng như không có vận động ngoài vật chất.",
-      quickTake: "Vận động là phương thức tồn tại tuyệt đối của vật chất.",
-      difficulty: "Medium",
-      timeToRead: "10 min read",
-      orderIndex: 2,
-      videoUrl: defaultYoutubeUrl,
-    },
-    {
-      title: "Nguồn gốc và bản chất của ý thức",
-      summary:
-        "Ý thức là sự phản ánh sáng tạo thực tại khách quan vào bộ não người.",
-      originalText:
-        "Ý thức có nguồn gốc tự nhiên (bộ não người và sự tác động của thế giới bên ngoài) và nguồn gốc xã hội (lao động và ngôn ngữ). Bản chất của ý thức là hình ảnh chủ quan của thế giới khách quan.",
+        "2. Nguồn gốc, bản chất và kết cấu của ý thức\na) Nguồn gốc của ý thức\nb) Bản chất của ý thức\nc) Kết cấu của ý thức",
       quickTake: "Ý thức là sự phản ánh năng động, sáng tạo bộ não người.",
       difficulty: "Hard",
       timeToRead: "12 min read",
-      orderIndex: 3,
+      orderIndex: 2,
+      sectionChapter: ch2SectionMatter,
+      sectionOrderIndex: 2,
+      file: "chuong2_nguon_goc_ban_chat_y_thuc.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Mối quan hệ vật chất – ý thức",
+      title: "Mối quan hệ giữa vật chất và ý thức",
       summary:
-        "Vật chất quyết định ý thức, nhưng ý thức có tính độc lập tương đối và tác động trở lại mạnh mẽ.",
+        "Vật chất quyết định ý thức; ý thức có tính độc lập tương đối và tác động trở lại thông qua thực tiễn.",
       originalText:
-        "Vật chất quyết định ý thức về nguồn gốc, nội dung và sự biến đổi. Ngược lại, ý thức tác động trở lại vật chất thông qua hoạt động thực tiễn của con người.",
+        "3. Mối quan hệ giữa vật chất và ý thức\na) Quan điểm của chủ nghĩa duy tâm và duy vật siêu hình\nb) Quan điểm của chủ nghĩa duy vật biện chứng",
       quickTake:
         "Vật chất quyết định ý thức; ý thức tác động trở lại qua thực tiễn.",
       difficulty: "Hard",
       timeToRead: "11 min read",
-      orderIndex: 4,
+      orderIndex: 3,
+      sectionChapter: ch2SectionMatter,
+      sectionOrderIndex: 3,
+      file: "chuong2_moi_quan_he_vat_chat_y_thuc.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Hai nguyên lý cơ bản",
+      title: "Hai loại hình biện chứng và phép biện chứng duy vật",
       summary:
-        "Nguyên lý về mối liên hệ phổ biến và nguyên lý về sự phát triển của phép biện chứng.",
+        "Biện chứng khách quan và biện chứng chủ quan; phép biện chứng duy vật là khoa học về mối liên hệ phổ biến và sự phát triển.",
       originalText:
-        "Mọi sự vật, hiện tượng đều tồn tại trong mối liên hệ phổ biến, ràng buộc lẫn nhau và luôn luôn trong quá trình vận động, phát triển không ngừng từ thấp đến cao.",
-      quickTake: "Mọi sự vật liên hệ phổ biến và luôn phát triển đi lên.",
-      difficulty: "Medium",
-      timeToRead: "9 min read",
-      orderIndex: 5,
-      videoUrl: defaultYoutubeUrl,
-    },
-    {
-      title: "Các cặp phạm trù",
-      summary:
-        "Sáu cặp phạm trù cơ bản phản ánh các mối liên hệ biện chứng phổ biến nhất.",
-      originalText:
-        "Các cặp phạm trù: Cái riêng và cái chung; Nguyên nhân và kết quả; Tất nhiên và ngẫu nhiên; Nội dung và hình thức; Bản chất và hiện tượng; Khả năng và hiện thực.",
-      quickTake: "Các cặp quan hệ đối lập thống nhất phản ánh hiện thực.",
-      difficulty: "Hard",
-      timeToRead: "14 min read",
-      orderIndex: 6,
-      videoUrl: defaultYoutubeUrl,
-    },
-    {
-      title: "Ba quy luật cơ bản",
-      summary:
-        "Quy luật Lượng - Chất, quy luật Mâu thuẫn và quy luật Phủ định của phủ định.",
-      originalText:
-        "Quy luật lượng chất chỉ ra cách thức phát triển. Quy luật mâu thuẫn chỉ ra nguồn gốc, động lực phát triển. Quy luật phủ định của phủ định chỉ ra khuynh hướng của phát triển.",
-      quickTake:
-        "Mâu thuẫn là động lực; Lượng đổi dẫn đến Chất đổi; Phát triển đường xoáy ốc.",
-      difficulty: "Hard",
-      timeToRead: "16 min read",
-      orderIndex: 7,
-      videoUrl: defaultYoutubeUrl,
-    },
-    {
-      title: "Bản chất của nhận thức",
-      summary:
-        "Nhận thức là quá trình phản ánh hiện thực khách quan một cách tích cực, sáng tạo.",
-      originalText:
-        "Nhận thức đi từ trực quan sinh động đến tư duy trừu tượng, và từ tư duy trừu tượng đến thực tiễn - đó là con đường biện chứng của sự nhận thức chân lý.",
-      quickTake:
-        "Đi từ nhận thức cảm tính lên nhận thức lý tính rồi đến thực tiễn.",
-      difficulty: "Medium",
-      timeToRead: "8 min read",
-      orderIndex: 8,
-      videoUrl: defaultYoutubeUrl,
-    },
-    {
-      title: "Thực tiễn và vai trò của thực tiễn",
-      summary:
-        "Thực tiễn là cơ sở, động lực, mục đích của nhận thức và là tiêu chuẩn của chân lý.",
-      originalText:
-        "Thực tiễn là toàn bộ hoạt động vật chất có mục đích, mang tính lịch sử - xã hội của con người nhằm cải tạo tự nhiên và xã hội.",
-      quickTake: "Thực tiễn là tiêu chuẩn tối cao để kiểm nghiệm chân lý.",
+        "1. Hai loại hình biện chứng và phép biện chứng duy vật\na) Hai loại hình biện chứng\nb) Khái niệm phép biện chứng duy vật",
+      quickTake: "Tư duy biện chứng phản ánh sự vận động khách quan.",
       difficulty: "Medium",
       timeToRead: "10 min read",
-      orderIndex: 9,
+      orderIndex: 4,
+      sectionChapter: ch2SectionDialectics,
+      sectionOrderIndex: 1,
+      file: "chuong2_hai_loai_hinh_bien_chung.json",
       videoUrl: defaultYoutubeUrl,
     },
     {
-      title: "Chân lý",
+      title: "Nội dung của phép biện chứng duy vật",
       summary:
-        "Chân lý là những tri thức phù hợp với thực tế khách quan và được thực tiễn kiểm nghiệm.",
+        "Hệ thống lý luận bao gồm 2 nguyên lý cơ bản, 6 cặp phạm trù và 3 quy luật cơ bản của phép biện chứng.",
       originalText:
-        "Chân lý là tri thức có nội dung khách quan, phản ánh đúng đắn hiện thực khách quan và đã được thực tiễn kiểm nghiệm là đúng.",
-      quickTake: "Tri thức khách quan đã được thực tiễn khẳng định.",
-      difficulty: "Easy",
-      timeToRead: "7 min read",
-      orderIndex: 10,
+        "2. Nội dung của phép biện chứng duy vật\na) Hai nguyên lý của phép biện chứng duy vật\nb) Các cặp phạm trù cơ bản của phép biện chứng duy vật\nc) Các quy luật cơ bản của phép biện chứng duy vật",
+      quickTake: "Nguyên lý, phạm trù và quy luật phản ánh sự phát triển.",
+      difficulty: "Hard",
+      timeToRead: "18 min read",
+      orderIndex: 5,
+      sectionChapter: ch2SectionDialectics,
+      sectionOrderIndex: 2,
+      file: "chuong2_noi_dung_phep_bien_chung.json",
+      videoUrl: defaultYoutubeUrl,
+    },
+    {
+      title: "Quan niệm về nhận thức trong lịch sử triết học",
+      summary:
+        "Lịch sử nhận thức luận từ chủ nghĩa duy tâm, hoài nghi luận, thuyết bất khả tri đến hạn chế của duy vật trước Mác.",
+      originalText:
+        "1. Quan niệm về nhận thức trong lịch sử triết học\n- Khái niệm lý luận nhận thức\n- Quan điểm của chủ nghĩa duy tâm về nhận thức\n- Quan điểm của chủ nghĩa hoài nghi\n- Quan điểm của thuyết không thể biết\n- Quan điểm của chủ nghĩa duy vật trước C. Mác",
+      quickTake: "Các quan điểm nhận thức luận trong lịch sử triết học.",
+      difficulty: "Medium",
+      timeToRead: "9 min read",
+      orderIndex: 6,
+      sectionChapter: ch2SectionKnowledge,
+      sectionOrderIndex: 1,
+      file: "chuong2_quan_niem_nhan_thuc_lich_su.json",
+      videoUrl: defaultYoutubeUrl,
+    },
+    {
+      title: "Lý luận nhận thức duy vật biện chứng",
+      summary:
+        "Bản chất của nhận thức, vai trò của thực tiễn, các giai đoạn nhận thức và quan điểm về chân lý.",
+      originalText:
+        "2. Lý luận nhận thức duy vật biện chứng\na) Nguồn gốc, bản chất của nhận thức\nb) Thực tiễn và vai trò của thực tiễn đối với nhận thức\nc) Các giai đoạn của quá trình nhận thức\nd) Quan điểm của CNDVBC về chân lý",
+      quickTake: "Thực tiễn là cơ sở nhận thức và tiêu chuẩn chân lý.",
+      difficulty: "Hard",
+      timeToRead: "15 min read",
+      orderIndex: 7,
+      sectionChapter: ch2SectionKnowledge,
+      sectionOrderIndex: 2,
+      file: "chuong2_ly_luan_nhan_thuc_duy_vat_bien_chung.json",
       videoUrl: defaultYoutubeUrl,
     },
   ];
 
   const createdCh2Nodes = [];
   for (const n of ch2Nodes) {
-    const hasSeededLessonContent = n.title === "Phạm trù vật chất";
-    const sectionChapter =
-      n.orderIndex <= 4
-        ? ch2SectionMatter
-        : n.orderIndex <= 7
-          ? ch2SectionDialectics
-          : ch2SectionKnowledge;
-    const sectionOrderIndex =
-      sectionChapter.id === ch2SectionMatter.id
-        ? n.orderIndex
-        : sectionChapter.id === ch2SectionDialectics.id
-          ? n.orderIndex - 4
-          : n.orderIndex - 7;
-    const lessonFlow = hasSeededLessonContent
-      ? buildMaterialLessonFlow(n)
-      : buildDefaultLessonFlow(n);
+    const lessonFlow = loadConvertedLessonFlow(n.file);
+    const lessonMedia = loadConvertedLessonMedia(n.file);
+
     const node = await prisma.conceptNode.create({
       data: {
         title: n.title,
@@ -1413,13 +1383,13 @@ async function main() {
         difficulty: n.difficulty,
         timeToRead: n.timeToRead,
         videoUrl: n.videoUrl,
-        orderIndex: sectionOrderIndex,
-        chapterId: sectionChapter.id,
+        orderIndex: n.sectionOrderIndex,
+        chapterId: n.sectionChapter.id,
         lessonType: "flow",
         lessonFlow: lessonFlow as any,
-        lessonMedia: extractLessonMedia(lessonFlow, n) as any,
-        contentReady: hasSeededLessonContent,
-        lessonStatus: hasSeededLessonContent ? "published" : "draft",
+        lessonMedia: lessonMedia as any,
+        contentReady: true,
+        lessonStatus: "published",
       },
     });
     createdCh2Nodes.push(node);

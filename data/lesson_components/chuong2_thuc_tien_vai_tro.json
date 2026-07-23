@@ -1,0 +1,125 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-9-intro",
+      "type": "dialogue",
+      "title": "Thực tiễn và vai trò của thực tiễn",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Chào bạn! Con đường nhận thức đi từ trực quan đến tư duy, nhưng chặng cuối cùng và quan trọng nhất chính là quay về phục vụ Thực tiễn."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Thực tiễn là toàn bộ hoạt động vật chất - cảm tính có tính lịch sử - xã hội của con người nhằm cải tạo thế giới khách quan."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Hãy cùng khám phá 4 vai trò quyết định của Thực tiễn đối với Nhận thức qua sơ đồ dưới đây!"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-9-roles-mindmap",
+      "type": "mindmap_reveal",
+      "title": "Bốn vai trò của Thực tiễn đối với Nhận thức",
+      "config": {
+        "instruction": "Thực tiễn là lõi năng lượng quyết định trực tiếp toàn bộ quá trình nhận thức. Hãy lật mở chi tiết từng vai trò.",
+        "layoutConfig": {
+          "type": "horizontal"
+        },
+        "nodes": [
+          {
+            "id": "co-so",
+            "front": {
+              "text": "1. Cơ sở của nhận thức"
+            },
+            "back": {
+              "text": "Thực tiễn cung cấp tài liệu, dữ liệu thực tế cho bộ não. Thông qua việc tác động vào thế giới bằng công cụ thực tế, con người mới bộc lộ thuộc tính sự vật để nhận thức."
+            }
+          },
+          {
+            "id": "dong-luc",
+            "front": {
+              "text": "2. Động lực của nhận thức"
+            },
+            "back": {
+              "text": "Thực tiễn luôn đặt ra các nhu cầu mới, nhiệm vụ mới buộc nhận thức phải phát triển để giải quyết (Ví dụ: thực tiễn cần đo đạc lại ruộng đất sau lũ lụt thúc đẩy toán học hình học cổ đại ra đời)."
+            }
+          },
+          {
+            "id": "muc-dich",
+            "front": {
+              "text": "3. Mục đích của nhận thức"
+            },
+            "back": {
+              "text": "Tri thức thu về không phải để cất giữ trong lý thuyết suông, mà phải quay lại phục vụ, dẫn đường cho con người cải tạo thế giới, nâng cao đời sống."
+            }
+          },
+          {
+            "id": "tieu-chuan",
+            "front": {
+              "text": "4. Tiêu chuẩn của chân lý"
+            },
+            "back": {
+              "text": "Chỉ có hoạt động thực tiễn mới là thước đo khách quan duy nhất để chứng minh một học thuyết hay lý thuyết là đúng hay sai (Kiểm nghiệm thực tế)."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-9-dogmatism-mcq",
+      "type": "mcq",
+      "title": "Căn bệnh Giáo điều",
+      "config": {
+        "question": "Nếu nhận thức của chúng ta chỉ dừng lại ở các lý thuyết trừu tượng trong phòng thí nghiệm (tư duy trừu tượng) mà từ chối đưa kết quả về để thực tiễn kiểm nghiệm, điều chỉnh thì chúng ta sẽ mắc vào sai lầm nào?",
+        "options": [
+          {
+            "id": "empiricism",
+            "text": "Bệnh kinh nghiệm (chỉ tin vào quan sát trực tiếp, coi thường lý luận).",
+            "isCorrect": false
+          },
+          {
+            "id": "dogmatism",
+            "text": "Bệnh giáo điều (chỉ tin vào sách vở, lý thuyết suông mà xa rời thực tiễn khách quan).",
+            "isCorrect": true
+          },
+          {
+            "id": "skepticism",
+            "text": "Hoài nghi luận (không tin vào khả năng nhận thức của con người).",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Căn bệnh giáo điều xuất hiện khi con người tuyệt đối hóa lý thuyết, áp dụng máy móc sách vở và từ chối đối chiếu, kiểm chứng hay phục vụ thực tiễn sinh động."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-9-summary",
+      "type": "final_summary",
+      "title": "Tổng kết vai trò thực tiễn",
+      "config": {
+        "message": "Bạn đã hoàn thành nội dung về Thực tiễn và vai trò của thực tiễn.",
+        "keyTakeaways": [
+          "Thực tiễn là hoạt động vật chất - cảm tính mang tính xã hội - lịch sử của con người.",
+          "Thực tiễn giữ vai trò là cơ sở, động lực, mục đích của nhận thức và là tiêu chuẩn duy nhất của chân lý.",
+          "Lý luận phải đi đôi với thực tiễn; lý luận không có thực tiễn là lý luận suông."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

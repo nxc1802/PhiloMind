@@ -1,0 +1,147 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-5-intro-spiral",
+      "type": "progression_spiral",
+      "title": "Hai nguyên lý cơ bản của Phép biện chứng",
+      "config": {
+        "instruction": "Hãy nhấp vào các mốc để khám phá hai nguyên lý nền tảng giúp chúng ta nhìn nhận thế giới như một chỉnh thể vận động liên tục.",
+        "center": "Hai nguyên lý cơ bản",
+        "milestones": [
+          {
+            "id": "lien-he-pho-bien",
+            "label": "Nguyên lý mối liên hệ phổ biến",
+            "summary": "**Không có sự vật nào tồn tại cô lập.** Mỗi sự vật đều nằm trong một mạng lưới các quan hệ nhất định, tác động qua lại lẫn nhau.\n\n* **Khái niệm:** Sự quy định, tác động và chuyển hóa lẫn nhau giữa các sự vật, hiện tượng hoặc giữa các mặt trong một sự vật.\n* **Tính chất:** Khách quan (vốn có của sự vật), Phổ biến (ở mọi lĩnh vực tự nhiên, xã hội, tư duy), Đa dạng phong phú (bên trong - bên ngoài, trực tiếp - gián tiếp...)"
+          },
+          {
+            "id": "su-phat-trien",
+            "label": "Nguyên lý về sự phát triển",
+            "summary": "**Sự phát triển là khuynh hướng đi lên của vận động:** Từ thấp đến cao, đơn giản đến phức tạp, cái mới ra đời thay thế cái cũ lạc hậu.\n\n* **Đường đi:** Phát triển không thẳng tắp mà quanh co, phức tạp, đi qua các bước zigzag và có thể thụt lùi tạm thời.\n* **Tính chất:** Khách quan, Phổ biến, Đa dạng phong phú và **Kế thừa** (không phủ định sạch trơn cái cũ)."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-5-motion-development-mcq",
+      "type": "mcq",
+      "title": "Phân biệt Vận động và Phát triển",
+      "config": {
+        "question": "Sự khác biệt cốt lõi giữa hai khái niệm 'Vận động' và 'Phát triển' là gì?",
+        "options": [
+          {
+            "id": "motion-is-directional",
+            "text": "Vận động luôn hướng lên, còn phát triển có thể hướng xuống.",
+            "isCorrect": false
+          },
+          {
+            "id": "dev-is-upward-motion",
+            "text": "Vận động là mọi sự biến đổi nói chung (không giới hạn chiều hướng), còn phát triển là sự vận động có khuynh hướng đi lên (cái mới thay thế cái cũ).",
+            "isCorrect": true
+          },
+          {
+            "id": "identical",
+            "text": "Hai khái niệm này hoàn toàn đồng nhất với nhau trong mọi trường hợp.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Mọi sự phát triển đều là vận động, nhưng không phải mọi vận động đều là phát triển. Phát triển chỉ những vận động có xu hướng đi lên, tiến bộ."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-5-sorting-study-group",
+      "type": "category_sorting",
+      "title": "Đổi mới nhóm học: Sàng lọc & Kế thừa",
+      "config": {
+        "categories": [
+          {
+            "id": "ke-thua",
+            "label": "Yếu tố cần kế thừa (Giữ lại)",
+            "description": "Các khía cạnh tích cực, lành mạnh và hiệu quả từ phương pháp cũ."
+          },
+          {
+            "id": "sang-loc",
+            "label": "Yếu tố cần sàng lọc (Loại bỏ)",
+            "description": "Những thói quen tiêu cực, kém hiệu quả và lỗi thời cần triệt tiêu."
+          }
+        ],
+        "cards": [
+          {
+            "id": "spirit",
+            "text": "Tinh thần hỗ trợ, đoàn kết lẫn nhau",
+            "categoryId": "ke-thua"
+          },
+          {
+            "id": "assignment",
+            "text": "Thói quen phân công nhiệm vụ rõ ràng",
+            "categoryId": "ke-thua"
+          },
+          {
+            "id": "free-rider",
+            "text": "Tình trạng ỷ lại (một người làm, cả nhóm đứng tên)",
+            "categoryId": "sang-loc"
+          },
+          {
+            "id": "procrastinate",
+            "text": "Tác phong trì hoãn, nộp bài sát hạn",
+            "categoryId": "sang-loc"
+          }
+        ],
+        "summary": "Phát triển đòi hỏi sự phủ định biện chứng: lọc bỏ cái lạc hậu và kế thừa cái tích cực để đi lên."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-5-sleeping-student-mcq",
+      "type": "mcq",
+      "title": "Đánh giá tình huống: Sinh viên ngủ gật",
+      "config": {
+        "question": "Một sinh viên thường xuyên ngủ gật trong lớp. Nếu áp dụng quan điểm toàn diện và lịch sử - cụ thể, giảng viên nên làm gì để đánh giá đúng bản chất sự việc?",
+        "options": [
+          {
+            "id": "lazy-tag",
+            "text": "Ngay lập tức kết luận sinh viên lười biếng và phạt cảnh cáo.",
+            "isCorrect": false
+          },
+          {
+            "id": "holistic-investigation",
+            "text": "Tìm hiểu nhiều góc độ: hoàn cảnh gia đình, sức khỏe, lịch làm thêm ca đêm để đánh giá trong hoàn cảnh cụ thể.",
+            "isCorrect": true
+          },
+          {
+            "id": "ignore",
+            "text": "Bỏ qua sự việc vì đó là việc cá nhân của sinh viên.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Quan điểm toàn diện yêu cầu đặt đối tượng trong tổng hòa các mối liên hệ; quan điểm lịch sử - cụ thể đòi hỏi xem xét hoàn cảnh không gian, thời gian cụ thể của chủ thể."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-5-summary",
+      "type": "final_summary",
+      "title": "Tổng kết hai nguyên lý",
+      "config": {
+        "message": "Bạn đã hoàn thành nội dung về Hai nguyên lý cơ bản của phép biện chứng.",
+        "keyTakeaways": [
+          "Nguyên lý mối liên hệ phổ biến yêu cầu xem xét sự vật một cách toàn diện và lịch sử - cụ thể.",
+          "Nguyên lý sự phát triển chỉ ra xu hướng đi lên và đòi hỏi quan điểm phát triển, kế thừa có chọn lọc.",
+          "Phân biệt rõ vận động và phát triển để tránh tư duy phiến diện, máy móc."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

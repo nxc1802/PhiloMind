@@ -323,6 +323,7 @@ export class CoursesService {
             title: true,
             summary: true,
             quickTake: true,
+            originalText: true,
             orderIndex: true,
             difficulty: true,
             timeToRead: true,

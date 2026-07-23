@@ -1,0 +1,97 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-2-intro",
+      "type": "dialogue",
+      "title": "Phương thức tồn tại của vật chất",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Chào bạn! Trong bài học trước, chúng ta đã hiểu vật chất là gì. Bây giờ, câu hỏi tiếp theo là: Vật chất tồn tại bằng cách nào?"
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Theo triết học duy vật biện chứng, vật chất không bao giờ đứng yên hoàn toàn. Vận động là phương thức tồn tại của vật chất, là thuộc tính cố hữu của nó."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Điều này có nghĩa là thế giới vật chất luôn tự mình biến đổi, phát triển mà không cần một bàn tay hay thế lực siêu nhiên nào đứng ngoài kích hoạt."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-2-self-motion-tf",
+      "type": "true_false",
+      "title": "Thử thách: Vật chất đứng im?",
+      "config": {
+        "statement": "Có thể có vật chất không vận động, và có thể có vận động nằm ngoài vật chất.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Vận động là thuộc tính cố hữu, là phương thức tồn tại của vật chất. Không có vật chất không vận động, cũng như không có vận động ngoài vật chất."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-2-space-time-md",
+      "type": "markdown",
+      "title": "Không gian và thời gian biện chứng",
+      "config": {
+        "content": "#### Không gian và thời gian biện chứng\n\nBên cạnh vận động, **không gian** và **thời gian** chính là những hình thức tồn tại của vật chất.\n\n* **Tính khách quan:** Không gian và thời gian tồn tại thực tế, độc lập với ý thức con người.\n* **Mối liên hệ biện chứng:** Bản chất không gian, thời gian và khối lượng không phải là các đại lượng tuyệt đối, tĩnh tại hay tách rời nhau.\n* **Tính tương đối co giãn:** Chúng mang tính tương đối, co giãn và biến dạng tùy thuộc vào vận tốc chuyển động và sự phân bố của vật chất trong vũ trụ."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-2-einstein-mcq",
+      "type": "mcq",
+      "title": "Thuyết Tương Đối Einstein chứng minh điều gì?",
+      "config": {
+        "question": "Thuyết Tương đối của Albert Einstein đã chứng minh thuộc tính nào của không gian và thời gian dưới góc nhìn duy vật biện chứng?",
+        "options": [
+          {
+            "id": "absolute",
+            "text": "Không gian và thời gian là tuyệt đối, bất biến và độc lập hoàn toàn với vật chất.",
+            "isCorrect": false
+          },
+          {
+            "id": "relative",
+            "text": "Không gian và thời gian mang tính tương đối, co giãn và biến dạng tùy thuộc vào vận tốc chuyển động và sự phân bố vật chất.",
+            "isCorrect": true
+          },
+          {
+            "id": "subjective",
+            "text": "Không gian và thời gian chỉ là những cảm giác chủ quan, ảo tưởng của con người.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Thuyết Tương đối chứng minh không gian và thời gian mang tính tương đối, co giãn (ví dụ mạng lưới không gian bị kéo cong bởi khối lượng vật thể), gắn liền biện chứng với sự vận động của vật chất."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-2-summary",
+      "type": "final_summary",
+      "title": "Tổng kết phương thức tồn tại",
+      "config": {
+        "message": "Bạn đã hoàn thành nội dung về Phương thức tồn tại của vật chất.",
+        "keyTakeaways": [
+          "Vận động là thuộc tính cố hữu, phương thức tồn tại của vật chất.",
+          "Không có vật chất không vận động và không có vận động ngoài vật chất.",
+          "Không gian và thời gian là những hình thức tồn tại mang tính khách quan và tương đối của vật chất."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

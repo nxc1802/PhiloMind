@@ -1,0 +1,190 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-3-intro",
+      "type": "dialogue",
+      "title": "Nguồn gốc và bản chất của ý thức",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Chào bạn! Chúng ta đã tìm hiểu về vật chất. Vậy ý thức — thế giới tinh thần của con người — từ đâu mà ra và có bản chất là gì?"
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Ý thức không phải là một thực thể siêu nhiên thần bí độc lập với thể xác, cũng không phải là hoạt động cơ học thuần túy."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Hãy cùng khám phá nguồn gốc tự nhiên và nguồn gốc xã hội kiến tạo nên ý thức qua thử thách phân loại dưới đây!"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-3-sorting-sources",
+      "type": "category_sorting",
+      "title": "Phân loại nguồn gốc ý thức",
+      "config": {
+        "categories": [
+          {
+            "id": "natural-source",
+            "label": "Nguồn gốc tự nhiên",
+            "description": "Những tiền đề vật chất sinh học cần thiết cho sự hình thành ý thức."
+          },
+          {
+            "id": "social-source",
+            "label": "Nguồn gốc xã hội",
+            "description": "Các nhân tố quyết định trực tiếp việc định hình ý thức con người."
+          }
+        ],
+        "cards": [
+          {
+            "id": "brain",
+            "text": "Bộ óc con người phát triển tinh vi",
+            "categoryId": "natural-source"
+          },
+          {
+            "id": "interaction",
+            "text": "Sự tác động của thế giới khách quan lên bộ óc",
+            "categoryId": "natural-source"
+          },
+          {
+            "id": "labor",
+            "text": "Hoạt động lao động thực tiễn cải tạo thế giới",
+            "categoryId": "social-source"
+          },
+          {
+            "id": "language",
+            "text": "Ngôn ngữ (vỏ vật chất của tư duy) để giao tiếp",
+            "categoryId": "social-source"
+          }
+        ],
+        "summary": "Nguồn gốc tự nhiên là điều kiện cần (tiền đề vật chất), còn nguồn gốc xã hội là điều kiện đủ (yếu tố quyết định trực tiếp)."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-3-feral-children-mcq",
+      "type": "mcq",
+      "title": "Trường hợp 'Người sói' chứng minh điều gì?",
+      "config": {
+        "question": "Những đứa trẻ bị thú nuôi dưỡng từ nhỏ (như các em bé người sói) dù có bộ não người hoàn chỉnh nhưng không có ý thức như con người. Trường hợp này chứng minh điều gì?",
+        "options": [
+          {
+            "id": "natural-decisive",
+            "text": "Nguồn gốc tự nhiên mới là yếu tố quyết định trực tiếp tạo nên ý thức.",
+            "isCorrect": false
+          },
+          {
+            "id": "social-decisive",
+            "text": "Nguồn gốc xã hội (lao động, ngôn ngữ, môi trường giao tiếp loài người) mới là yếu tố quyết định trực tiếp hình thành ý thức.",
+            "isCorrect": true
+          },
+          {
+            "id": "no-brain",
+            "text": "Bộ óc con người không có vai trò gì trong sự hình thành ý thức.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Dù có bộ óc người (nguồn gốc tự nhiên), nếu tách khỏi xã hội loài người, thiếu lao động và ngôn ngữ thì ý thức con người không bao giờ được hình thành."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-3-nature-mindmap",
+      "type": "mindmap_reveal",
+      "title": "Bản chất và Kết cấu của Ý thức",
+      "config": {
+        "instruction": "Ý thức là hình ảnh chủ quan của thế giới khách quan, mang tính phản ánh năng động, sáng tạo. Hãy lật mở để xem kết cấu phức tạp của ý thức.",
+        "layoutConfig": {
+          "type": "horizontal"
+        },
+        "nodes": [
+          {
+            "id": "tri-thuc",
+            "front": {
+              "text": "Tri thức"
+            },
+            "back": {
+              "text": "**Cốt lõi quan trọng nhất:** Sự hiểu biết của con người về tự nhiên, xã hội và chính mình. Đây là phương thức tồn tại duy nhất của ý thức. Không có tri thức thì ý thức chỉ là hư vô."
+            }
+          },
+          {
+            "id": "tinh-cam",
+            "front": {
+              "text": "Tình cảm"
+            },
+            "back": {
+              "text": "**Nguồn động lực:** Sự rung động, trạng thái cảm xúc của chủ thể đối với thế giới, giúp thúc đẩy quá trình nhận thức và hành động thực tiễn."
+            }
+          },
+          {
+            "id": "y-chi",
+            "front": {
+              "text": "Ý chí"
+            },
+            "back": {
+              "text": "**Quyết tâm hành động:** Sự nỗ lực vượt qua rào cản, chướng ngại để đạt mục đích; khả năng tự điều khiển hành vi của bản thân."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-3-bee-architect-mcq",
+      "type": "mcq",
+      "title": "Kiến trúc sư và Con ong mật",
+      "config": {
+        "question": "Vì sao Karl Marx nói: 'Một kiến trúc sư tồi khác với một con ong mật giỏi nhất ở chỗ: người kiến trúc sư đã vẽ ra bản thiết kế trong đầu trước khi xây nó ngoài đời thực'?",
+        "options": [
+          {
+            "id": "bee-better",
+            "text": "Con ong mật có ý thức cao hơn người kiến trúc sư.",
+            "isCorrect": false
+          },
+          {
+            "id": "active-reflection",
+            "text": "Để chứng minh tính chất phản ánh năng động, sáng tạo và có mục đích của ý thức con người so với hoạt động bản năng của động vật.",
+            "isCorrect": true
+          },
+          {
+            "id": "no-difference",
+            "text": "Để chứng minh con người và con vật đều xây tổ theo cùng một cách thức phản ánh thụ động.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Ý thức con người không phản ánh thụ động như tấm gương. Thông qua lao động, con người có khả năng lọc thông tin, tưởng tượng ra kết quả dự kiến (mô hình tinh thần) trước khi hiện thực hóa nó."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-3-summary",
+      "type": "final_summary",
+      "title": "Tổng kết ý thức",
+      "config": {
+        "message": "Chúc mừng bạn đã hoàn thành bài học về Nguồn gốc và bản chất của ý thức.",
+        "keyTakeaways": [
+          "Ý thức ra đời từ nguồn gốc tự nhiên (bộ óc người + thế giới tác động) và nguồn gốc xã hội (lao động + ngôn ngữ).",
+          "Bản chất ý thức là hình ảnh chủ quan của thế giới khách quan, mang tính phản ánh năng động và sáng tạo.",
+          "Kết cấu của ý thức gồm tri thức (cốt lõi), tình cảm và ý chí."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

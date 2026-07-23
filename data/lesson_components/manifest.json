@@ -53,9 +53,45 @@
       "status": "converted"
     },
     {
-      "key": "2.1",
-      "title": "Phạm trù vật chất",
-      "file": "chuong2_khung_hoang_vat_ly.json",
+      "key": "2.1.a",
+      "title": "Vật chất và phương thức tồn tại của vật chất",
+      "file": "chuong2_vat_chat_va_phuong_thuc_ton_tai.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.1.b",
+      "title": "Nguồn gốc, bản chất và kết cấu của ý thức",
+      "file": "chuong2_nguon_goc_ban_chat_y_thuc.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.1.c",
+      "title": "Mối quan hệ giữa vật chất và ý thức",
+      "file": "chuong2_moi_quan_he_vat_chat_y_thuc.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.2.a",
+      "title": "Hai loại hình biện chứng và phép biện chứng duy vật",
+      "file": "chuong2_hai_loai_hinh_bien_chung.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.2.b",
+      "title": "Nội dung của phép biện chứng duy vật",
+      "file": "chuong2_noi_dung_phep_bien_chung.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.3.a",
+      "title": "Quan niệm về nhận thức trong lịch sử triết học",
+      "file": "chuong2_quan_niem_nhan_thuc_lich_su.json",
+      "status": "converted"
+    },
+    {
+      "key": "2.3.b",
+      "title": "Lý luận nhận thức duy vật biện chứng",
+      "file": "chuong2_ly_luan_nhan_thuc_duy_vat_bien_chung.json",
       "status": "converted"
     }
   ]

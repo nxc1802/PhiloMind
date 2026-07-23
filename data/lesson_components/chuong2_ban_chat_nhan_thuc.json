@@ -1,0 +1,99 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-8-intro-md",
+      "type": "markdown",
+      "title": "Bản chất của nhận thức",
+      "config": {
+        "content": "#### Bản chất của nhận thức\n\nNhận thức không phải là sự ghi nhận thụ động thế giới, mà là quá trình phản ánh thế giới khách quan vào bộ não người một cách năng động, sáng tạo dựa trên cơ sở thực tiễn.\n\nTheo luận điểm nổi tiếng của V.I. Lênin:\n\n> *\"Từ trực quan sinh động đến tư duy trừu tượng, và từ tư duy trừu tượng đến thực tiễn — đó là con đường biện chứng của sự nhận thức chân lý, nhận thức thực tại khách quan.\"*\n\nCon đường nhận thức này đi qua hai giai đoạn biện chứng chính: **Nhận thức cảm tính** và **Nhận thức lý tính**."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-8-sorting-cognition",
+      "type": "category_sorting",
+      "title": "Phân loại các giai đoạn nhận thức",
+      "config": {
+        "categories": [
+          {
+            "id": "cam-tinh",
+            "label": "Nhận thức Cảm tính",
+            "description": "Giai đoạn đầu (Trực quan sinh động): Phản ánh trực tiếp, bề ngoài của đối tượng."
+          },
+          {
+            "id": "ly-tinh",
+            "label": "Nhận thức Lý tính",
+            "description": "Giai đoạn sau (Tư duy trừu tượng): Phản ánh gián tiếp, sâu sắc bản chất quy luật."
+          }
+        ],
+        "cards": [
+          {
+            "id": "cam-giac",
+            "text": "Cảm giác: Tín hiệu sơ khai (chạm tay vào lửa thấy nóng)",
+            "categoryId": "cam-tinh"
+          },
+          {
+            "id": "tri-giac",
+            "text": "Tri giác: Tổng hợp cảm giác (lửa đỏ, có khói, nhiệt cao)",
+            "categoryId": "cam-tinh"
+          },
+          {
+            "id": "bieu-tuong",
+            "text": "Biểu tượng: Hình ảnh lưu lại trong não khi vật không còn tác động",
+            "categoryId": "cam-tinh"
+          },
+          {
+            "id": "khai-niem",
+            "text": "Khái niệm: Trích xuất đặc tính bản chất (Lửa là quá trình oxy hóa nhanh)",
+            "categoryId": "ly-tinh"
+          },
+          {
+            "id": "phan-doan",
+            "text": "Phán đoán: Khẳng định/phủ định quan hệ (Lửa có thể đốt cháy nhựa)",
+            "categoryId": "ly-tinh"
+          },
+          {
+            "id": "suy-luan",
+            "text": "Suy luận: Logic liên kết các phán đoán (Nếu gặp lửa, nhựa sẽ biến dạng)",
+            "categoryId": "ly-tinh"
+          }
+        ],
+        "summary": "Nhận thức cảm tính cung cấp cơ sở kinh nghiệm trực tiếp, còn nhận thức lý tính đi sâu nắm bắt quy luật bản chất bên trong."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-8-cognition-interaction-tf",
+      "type": "true_false",
+      "title": "Mối quan hệ cảm tính - lý tính",
+      "config": {
+        "statement": "Nhận thức lý tính là giai đoạn cao hơn nên có thể hoàn toàn thay thế nhận thức cảm tính mà không cần đến các tài liệu giác quan nữa.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Dù là giai đoạn cao hơn, nhận thức lý tính vẫn bắt buộc phải dựa trên tài liệu thực tế do nhận thức cảm tính cung cấp. Không có nhận thức cảm tính thì nhận thức lý tính không có nguyên liệu để tư duy."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-8-summary",
+      "type": "final_summary",
+      "title": "Tổng kết nhận thức",
+      "config": {
+        "message": "Bạn đã hoàn thành nội dung về Bản chất của nhận thức.",
+        "keyTakeaways": [
+          "Nhận thức là sự phản ánh năng động, sáng tạo thế giới khách quan vào bộ não người.",
+          "Tiến trình nhận thức gồm Nhận thức cảm tính (Cảm giác, Tri giác, Biểu tượng) và Nhận thức lý tính (Khái niệm, Phán đoán, Suy luận).",
+          "Cảm tính và lý tính liên kết chặt chẽ và cùng hướng tới thực tiễn để kiểm chứng."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

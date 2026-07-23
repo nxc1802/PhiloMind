@@ -1,0 +1,210 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-6-mindmap",
+      "type": "mindmap_reveal",
+      "title": "Sáu cặp phạm trù của phép biện chứng",
+      "config": {
+        "instruction": "Để nhận thức thế giới đầy đủ và không phiến diện, triết học cung cấp 6 cặp phạm trù như sáu lăng kính phản ánh các mối liên hệ biện chứng phổ biến nhất.",
+        "layoutConfig": {
+          "type": "matrix"
+        },
+        "nodes": [
+          {
+            "id": "rieng-chung-donnhat",
+            "front": {
+              "text": "Cái riêng - Cái chung - Cái đơn nhất"
+            },
+            "back": {
+              "text": "**Cái riêng:** Sự vật cụ thể độc lập. **Cái chung:** Thuộc tính lặp lại ở nhiều cái riêng. **Cái đơn nhất:** Thuộc tính chỉ có ở 1 sự vật.\n\n*Phương pháp luận:* Phải áp dụng cái chung linh hoạt vào cái riêng cụ thể, đồng thời tạo điều kiện nhân rộng cái đơn nhất tích cực thành cái chung."
+            }
+          },
+          {
+            "id": "nguyennhan-ketqua",
+            "front": {
+              "text": "Nguyên nhân - Kết quả"
+            },
+            "back": {
+              "text": "**Nguyên nhân:** Sự tác động gây ra biến đổi. **Kết quả:** Biến đổi do nguyên nhân sinh ra.\n\n*Phương pháp luận:* Muốn thay đổi kết quả phải tác động đúng vào nguyên nhân sinh ra nó. Tránh quy kết phức tạp về một nguyên nhân đơn lẻ."
+            }
+          },
+          {
+            "id": "tatnhien-ngaunhien",
+            "front": {
+              "text": "Tất nhiên - Ngẫu nhiên"
+            },
+            "back": {
+              "text": "**Tất nhiên:** Cái do nguyên nhân bên trong quy định, nhất định phải xảy ra. **Ngẫu nhiên:** Cái do tác động bên ngoài, có thể xảy ra hoặc không.\n\n*Phương pháp luận:* Phải xây dựng kế hoạch dựa trên cái tất nhiên, nhưng luôn có phương án dự phòng cho cái ngẫu nhiên bất ngờ."
+            }
+          },
+          {
+            "id": "noidung-hinhthuc",
+            "front": {
+              "text": "Nội dung - Hình thức"
+            },
+            "back": {
+              "text": "**Nội dung:** Tổng hợp các yếu tố cấu thành sự vật. **Hình thức:** Cách thức tổ chức, liên kết nội dung đó.\n\n*Phương pháp luận:* Nội dung quyết định hình thức, nhưng hình thức phù hợp sẽ thúc đẩy nội dung. Phải coi trọng nội dung trước tiên và tránh chủ nghĩa hình thức sáo rỗng."
+            }
+          },
+          {
+            "id": "banchat-hientuong",
+            "front": {
+              "text": "Bản chất - Hiện tượng"
+            },
+            "back": {
+              "text": "**Bản chất:** Các mối liên hệ tất nhiên, tương đối ổn định bên trong sự vật. **Hiện tượng:** Sự bộc lộ ra ngoài của bản chất.\n\n*Phương pháp luận:* Hiện tượng phản ánh bản chất nhưng có thể làm sai lệch nó (hiện tượng giả tạo). Phải phân tích sâu để nắm bản chất chứ không đánh giá bề nổi."
+            }
+          },
+          {
+            "id": "khanang-hienthuc",
+            "front": {
+              "text": "Khả năng - Hiện thực"
+            },
+            "back": {
+              "text": "**Khả năng:** Cái chưa xảy ra nhưng sẽ xuất hiện khi có đủ điều kiện. **Hiện thực:** Cái đang tồn tại thực tế.\n\n*Phương pháp luận:* Hoạt động thực tiễn phải dựa trên hiện thực hiện tại, nhưng phải phát hiện các khả năng để chủ động thúc đẩy khả năng tốt, phòng ngừa khả năng xấu."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-6-shinkei-matching",
+      "type": "shinkei_matching",
+      "title": "Trò chơi ghép cặp tình huống thực tiễn",
+      "config": {
+        "instruction": "Lật một thẻ tình huống thực tế và một thẻ cặp phạm trù phù hợp để ghép đôi chúng.",
+        "pairs": [
+          {
+            "id": "pair-rieng-chung",
+            "left": {
+              "id": "situation-rieng-chung",
+              "text": "Bạn Lan là một sinh viên năm nhất học đại học."
+            },
+            "right": {
+              "id": "category-rieng-chung",
+              "text": "Cái riêng – Cái chung"
+            }
+          },
+          {
+            "id": "pair-nguyennhan-ketqua",
+            "left": {
+              "id": "situation-nguyennhan-ketqua",
+              "text": "Học tập chăm chỉ tích lũy dẫn đến đạt điểm thi cao."
+            },
+            "right": {
+              "id": "category-nguyennhan-ketqua",
+              "text": "Nguyên nhân – Kết quả"
+            }
+          },
+          {
+            "id": "pair-tatnhien-ngaunhien",
+            "left": {
+              "id": "situation-tatnhien-ngaunhien",
+              "text": "Học chăm sẽ giỏi lên, nhưng hôm nay đi thi trúng tủ câu vừa đọc lướt."
+            },
+            "right": {
+              "id": "category-tatnhien-ngaunhien",
+              "text": "Tất nhiên – Ngẫu nhiên"
+            }
+          },
+          {
+            "id": "pair-noidung-hinhthuc",
+            "left": {
+              "id": "situation-noidung-hinhthuc",
+              "text": "Kiến thức/số liệu bài thuyết trình và cách bố cục slide đẹp mắt."
+            },
+            "right": {
+              "id": "category-noidung-hinhthuc",
+              "text": "Nội dung – Hình thức"
+            }
+          },
+          {
+            "id": "pair-banchat-hientuong",
+            "left": {
+              "id": "situation-banchat-hientuong",
+              "text": "Nghỉ học nhiều nhìn bề ngoài là lười nhưng bản chất do đi làm ca đêm hỗ trợ gia đình."
+            },
+            "right": {
+              "id": "category-banchat-hientuong",
+              "text": "Bản chất – Hiện tượng"
+            }
+          },
+          {
+            "id": "pair-khanang-hienthuc",
+            "left": {
+              "id": "situation-khanang-hienthuc",
+              "text": "Đang giữ ý tưởng tốt và nỗ lực hoàn thành đề tài để nhận học bổng."
+            },
+            "right": {
+              "id": "category-khanang-hienthuc",
+              "text": "Khả năng – Hiện thực"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-6-quiz",
+      "type": "quiz_sequence",
+      "title": "Thử thách phương pháp luận",
+      "config": {
+        "questions": [
+          {
+            "question": "Khi xây dựng kế hoạch và hành động thực tế, chúng ta phải dựa vào nhân tố nào?",
+            "options": [
+              "Chỉ dựa vào cái ngẫu nhiên may rủi.",
+              "Dựa vào cái tất nhiên (xu hướng quy luật ổn định) là chính, nhưng không coi thường cái ngẫu nhiên.",
+              "Hoàn toàn bỏ qua cái tất nhiên."
+            ],
+            "correctIndex": 1,
+            "explanation": "Tất nhiên vạch đường đi thông qua ngẫu nhiên, nên hành động phải dựa vào cái tất nhiên nhưng luôn có phương án dự phòng cho ngẫu nhiên."
+          },
+          {
+            "question": "Khi xem xét một sự vật có hình thức bên ngoài rất lộng lẫy nhưng nội dung trống rỗng, ta phạm vào lỗi gì?",
+            "options": [
+              "Quan điểm toàn diện.",
+              "Chủ nghĩa hình thức (chỉ coi trọng hình thức mà bỏ qua quyết định của nội dung).",
+              "Quan điểm lịch sử - cụ thể."
+            ],
+            "correctIndex": 1,
+            "explanation": "Chủ nghĩa hình thức là việc tuyệt đối hóa hình thức, tách rời hình thức khỏi nội dung quyết định."
+          },
+          {
+            "question": "Trong hoạt động thực tiễn của con người, sự chuyển hóa từ khả năng thành hiện thực đòi hỏi thêm yếu tố gì?",
+            "options": [
+              "Chỉ cần chờ đợi thời gian trôi qua tự động.",
+              "Nhân tố chủ quan (hoạt động có ý thức, nỗ lực thực tiễn của con người).",
+              "Sự may mắn ngẫu nhiên tuyệt đối."
+            ],
+            "correctIndex": 1,
+            "explanation": "Trong xã hội, khả năng muốn thành hiện thực cần có sự tác động chủ động của con người (nhân tố chủ quan) để hội đủ các điều kiện khách quan cần thiết."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-6-summary",
+      "type": "final_summary",
+      "title": "Tổng kết 6 cặp phạm trù",
+      "config": {
+        "message": "Bạn đã hoàn thành xuất sắc thử thách về các cặp phạm trù biện chứng.",
+        "keyTakeaways": [
+          "Các cặp phạm trù phản ánh mối liên hệ qua lại đa chiều của thế giới khách quan.",
+          "Hành động thực tiễn phải dựa trên Cái chung, Nguyên nhân chủ yếu, Cái tất nhiên, Nội dung quyết định, Bản chất sâu sắc và Hiện thực khách quan."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

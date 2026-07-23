@@ -1,0 +1,73 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-4-intro-md",
+      "type": "markdown",
+      "title": "Mối quan hệ biện chứng giữa vật chất và ý thức",
+      "config": {
+        "content": "#### Mối quan hệ giữa vật chất và ý thức\n\nTheo chủ nghĩa duy vật biện chứng, vật chất và ý thức có mối quan hệ tác động qua lại sâu sắc:\n\n1. **Vật chất quyết định ý thức:** Vật chất quyết định nguồn gốc, nội dung, bản chất và sự biến đổi của ý thức. Ý thức chỉ là sản phẩm của một dạng vật chất có tổ chức cao (bộ óc người).\n2. **Ý thức có tính năng động chủ quan:** Ý thức tác động trở lại vật chất thông qua hoạt động thực tiễn của con người. Tri thức đúng đắn kết hợp với ý chí quyết tâm sẽ giúp con người cải tạo thế giới hiệu quả."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-4-direct-influence-tf",
+      "type": "true_false",
+      "title": "Sức mạnh của ý thức",
+      "config": {
+        "statement": "Ý thức có thể trực tiếp tác động làm thay đổi thế giới vật chất mà không cần thông qua hoạt động thực tiễn của con người.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Ý thức tự bản thân nó không thể thay đổi thực tại vật chất. Sức mạnh của ý thức chỉ được hiện thực hóa khi nó chỉ đạo và hướng dẫn cho hoạt động thực tiễn của con người."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-4-ai-mcq",
+      "type": "mcq",
+      "title": "Ranh giới Người và Máy (Bài toán AI)",
+      "config": {
+        "question": "Các mô hình trí tuệ nhân tạo (AI) hiện nay (như ChatGPT, Gemini) có thể làm thơ, lập trình và giả lập cảm xúc. Tuy nhiên, dưới góc nhìn duy vật biện chứng, máy tính hiện tại chưa thể có ý thức vì lý do nào sau đây?",
+        "options": [
+          {
+            "id": "too-slow",
+            "text": "Tốc độ xử lý của máy tính còn quá chậm so với bộ não người.",
+            "isCorrect": false
+          },
+          {
+            "id": "no-social-origin",
+            "text": "Máy tính thiếu đi nguồn gốc xã hội — chúng không tham gia lao động tự thân và không có nhu cầu sinh tồn thực tiễn trong đời sống xã hội như con người.",
+            "isCorrect": true
+          },
+          {
+            "id": "no-silicon",
+            "text": "Vì chất bán dẫn silicon không thể chứa đựng được các thông tin tinh thần.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Ý thức là sản phẩm mang tính xã hội sâu sắc, hình thành qua quá trình lao động thực tiễn lâu dài của loài người. Toàn bộ hoạt động của AI hiện tại chỉ là các thuật toán cơ học đóng kín, không xuất phát từ nhu cầu sinh tồn và lao động thực tế."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-4-summary",
+      "type": "final_summary",
+      "title": "Tổng kết mối quan hệ",
+      "config": {
+        "message": "Bạn đã hoàn thành nội dung về Mối quan hệ vật chất - ý thức.",
+        "keyTakeaways": [
+          "Vật chất quyết định ý thức về nguồn gốc, nội dung, bản chất và sự biến đổi.",
+          "Ý thức tác động ngược lại vật chất, nhưng bắt buộc phải thông qua hoạt động thực tiễn của con người.",
+          "Ý thức có tính năng động chủ quan; AI chưa có ý thức vì thiếu nguồn gốc xã hội."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

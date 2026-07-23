@@ -26,6 +26,7 @@ const supportedTypes = new Set([
   "hotspot_gallery",
   "shinkei_matching",
   "final_summary",
+  "fill_in_blanks",
 ]);
 
 function assert(condition, message) {

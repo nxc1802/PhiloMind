@@ -1,0 +1,471 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-5-intro-spiral",
+      "type": "progression_spiral",
+      "title": "Hai nguyên lý cơ bản của Phép biện chứng",
+      "config": {
+        "instruction": "Hãy nhấp vào các mốc để khám phá hai nguyên lý nền tảng giúp chúng ta nhìn nhận thế giới như một chỉnh thể vận động liên tục.",
+        "center": "Hai nguyên lý cơ bản",
+        "milestones": [
+          {
+            "id": "lien-he-pho-bien",
+            "label": "Nguyên lý mối liên hệ phổ biến",
+            "summary": "**Không có sự vật nào tồn tại cô lập.** Mỗi sự vật đều nằm trong một mạng lưới các quan hệ nhất định, tác động qua lại lẫn nhau.\n\n* **Khái niệm:** Sự quy định, tác động và chuyển hóa lẫn nhau giữa các sự vật, hiện tượng hoặc giữa các mặt trong một sự vật.\n* **Tính chất:** Khách quan (vốn có của sự vật), Phổ biến (ở mọi lĩnh vực tự nhiên, xã hội, tư duy), Đa dạng phong phú (bên trong - bên ngoài, trực tiếp - gián tiếp...)"
+          },
+          {
+            "id": "su-phat-trien",
+            "label": "Nguyên lý về sự phát triển",
+            "summary": "**Sự phát triển là khuynh hướng đi lên của vận động:** Từ thấp đến cao, đơn giản đến phức tạp, cái mới ra đời thay thế cái cũ lạc hậu.\n\n* **Đường đi:** Phát triển không thẳng tắp mà quanh co, phức tạp, đi qua các bước zigzag và có thể thụt lùi tạm thời.\n* **Tính chất:** Khách quan, Phổ biến, Đa dạng phong phú và **Kế thừa** (không phủ định sạch trơn cái cũ)."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-5-motion-development-mcq",
+      "type": "mcq",
+      "title": "Phân biệt Vận động và Phát triển",
+      "config": {
+        "question": "Sự khác biệt cốt lõi giữa hai khái niệm 'Vận động' và 'Phát triển' là gì?",
+        "options": [
+          {
+            "id": "motion-is-directional",
+            "text": "Vận động luôn hướng lên, còn phát triển có thể hướng xuống.",
+            "isCorrect": false
+          },
+          {
+            "id": "dev-is-upward-motion",
+            "text": "Vận động là mọi sự biến đổi nói chung (không giới hạn chiều hướng), còn phát triển là sự vận động có khuynh hướng đi lên (cái mới thay thế cái cũ).",
+            "isCorrect": true
+          },
+          {
+            "id": "identical",
+            "text": "Hai khái niệm này hoàn toàn đồng nhất với nhau trong mọi trường hợp.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Mọi sự phát triển đều là vận động, nhưng không phải mọi vận động đều là phát triển. Phát triển chỉ những vận động có xu hướng đi lên, tiến bộ."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-5-sorting-study-group",
+      "type": "category_sorting",
+      "title": "Đổi mới nhóm học: Sàng lọc & Kế thừa",
+      "config": {
+        "categories": [
+          {
+            "id": "ke-thua",
+            "label": "Yếu tố cần kế thừa (Giữ lại)",
+            "description": "Các khía cạnh tích cực, lành mạnh và hiệu quả từ phương pháp cũ."
+          },
+          {
+            "id": "sang-loc",
+            "label": "Yếu tố cần sàng lọc (Loại bỏ)",
+            "description": "Những thói quen tiêu cực, kém hiệu quả và lỗi thời cần triệt tiêu."
+          }
+        ],
+        "cards": [
+          {
+            "id": "spirit",
+            "text": "Tinh thần hỗ trợ, đoàn kết lẫn nhau",
+            "categoryId": "ke-thua"
+          },
+          {
+            "id": "assignment",
+            "text": "Thói quen phân công nhiệm vụ rõ ràng",
+            "categoryId": "ke-thua"
+          },
+          {
+            "id": "free-rider",
+            "text": "Tình trạng ỷ lại (một người làm, cả nhóm đứng tên)",
+            "categoryId": "sang-loc"
+          },
+          {
+            "id": "procrastinate",
+            "text": "Tác phong trì hoãn, nộp bài sát hạn",
+            "categoryId": "sang-loc"
+          }
+        ],
+        "summary": "Phát triển đòi hỏi sự phủ định biện chứng: lọc bỏ cái lạc hậu và kế thừa cái tích cực để đi lên."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-5-sleeping-student-mcq",
+      "type": "mcq",
+      "title": "Đánh giá tình huống: Sinh viên ngủ gật",
+      "config": {
+        "question": "Một sinh viên thường xuyên ngủ gật trong lớp. Nếu áp dụng quan điểm toàn diện và lịch sử - cụ thể, giảng viên nên làm gì để đánh giá đúng bản chất sự việc?",
+        "options": [
+          {
+            "id": "lazy-tag",
+            "text": "Ngay lập tức kết luận sinh viên lười biếng và phạt cảnh cáo.",
+            "isCorrect": false
+          },
+          {
+            "id": "holistic-investigation",
+            "text": "Tìm hiểu nhiều góc độ: hoàn cảnh gia đình, sức khỏe, lịch làm thêm ca đêm để đánh giá trong hoàn cảnh cụ thể.",
+            "isCorrect": true
+          },
+          {
+            "id": "ignore",
+            "text": "Bỏ qua sự việc vì đó là việc cá nhân của sinh viên.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Quan điểm toàn diện yêu cầu đặt đối tượng trong tổng hòa các mối liên hệ; quan điểm lịch sử - cụ thể đòi hỏi xem xét hoàn cảnh không gian, thời gian cụ thể của chủ thể."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-6-mindmap",
+      "type": "mindmap_reveal",
+      "title": "Sáu cặp phạm trù của phép biện chứng",
+      "config": {
+        "instruction": "Để nhận thức thế giới đầy đủ và không phiến diện, triết học cung cấp 6 cặp phạm trù như sáu lăng kính phản ánh các mối liên hệ biện chứng phổ biến nhất.",
+        "layoutConfig": {
+          "type": "matrix"
+        },
+        "nodes": [
+          {
+            "id": "rieng-chung-donnhat",
+            "front": {
+              "text": "Cái riêng - Cái chung - Cái đơn nhất"
+            },
+            "back": {
+              "text": "**Cái riêng:** Sự vật cụ thể độc lập. **Cái chung:** Thuộc tính lặp lại ở nhiều cái riêng. **Cái đơn nhất:** Thuộc tính chỉ có ở 1 sự vật.\n\n*Phương pháp luận:* Phải áp dụng cái chung linh hoạt vào cái riêng cụ thể, đồng thời tạo điều kiện nhân rộng cái đơn nhất tích cực thành cái chung."
+            }
+          },
+          {
+            "id": "nguyennhan-ketqua",
+            "front": {
+              "text": "Nguyên nhân - Kết quả"
+            },
+            "back": {
+              "text": "**Nguyên nhân:** Sự tác động gây ra biến đổi. **Kết quả:** Biến đổi do nguyên nhân sinh ra.\n\n*Phương pháp luận:* Muốn thay đổi kết quả phải tác động đúng vào nguyên nhân sinh ra nó. Tránh quy kết phức tạp về một nguyên nhân đơn lẻ."
+            }
+          },
+          {
+            "id": "tatnhien-ngaunhien",
+            "front": {
+              "text": "Tất nhiên - Ngẫu nhiên"
+            },
+            "back": {
+              "text": "**Tất nhiên:** Cái do nguyên nhân bên trong quy định, nhất định phải xảy ra. **Ngẫu nhiên:** Cái do tác động bên ngoài, có thể xảy ra hoặc không.\n\n*Phương pháp luận:* Phải xây dựng kế hoạch dựa trên cái tất nhiên, nhưng luôn có phương án dự phòng cho cái ngẫu nhiên bất ngờ."
+            }
+          },
+          {
+            "id": "noidung-hinhthuc",
+            "front": {
+              "text": "Nội dung - Hình thức"
+            },
+            "back": {
+              "text": "**Nội dung:** Tổng hợp các yếu tố cấu thành sự vật. **Hình thức:** Cách thức tổ chức, liên kết nội dung đó.\n\n*Phương pháp luận:* Nội dung quyết định hình thức, nhưng hình thức phù hợp sẽ thúc đẩy nội dung. Phải coi trọng nội dung trước tiên và tránh chủ nghĩa hình thức sáo rỗng."
+            }
+          },
+          {
+            "id": "banchat-hientuong",
+            "front": {
+              "text": "Bản chất - Hiện tượng"
+            },
+            "back": {
+              "text": "**Bản chất:** Các mối liên hệ tất nhiên, tương đối ổn định bên trong sự vật. **Hiện tượng:** Sự bộc lộ ra ngoài của bản chất.\n\n*Phương pháp luận:* Hiện tượng phản ánh bản chất nhưng có thể làm sai lệch nó (hiện tượng giả tạo). Phải phân tích sâu để nắm bản chất chứ không đánh giá bề nổi."
+            }
+          },
+          {
+            "id": "khanang-hienthuc",
+            "front": {
+              "text": "Khả năng - Hiện thực"
+            },
+            "back": {
+              "text": "**Khả năng:** Cái chưa xảy ra nhưng sẽ xuất hiện khi có đủ điều kiện. **Hiện thực:** Cái đang tồn tại thực tế.\n\n*Phương pháp luận:* Hoạt động thực tiễn phải dựa trên hiện thực hiện tại, nhưng phải phát hiện các khả năng để chủ động thúc đẩy khả năng tốt, phòng ngừa khả năng xấu."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-6-shinkei-matching",
+      "type": "shinkei_matching",
+      "title": "Trò chơi ghép cặp tình huống thực tiễn",
+      "config": {
+        "instruction": "Lật một thẻ tình huống thực tế và một thẻ cặp phạm trù phù hợp để ghép đôi chúng.",
+        "pairs": [
+          {
+            "id": "pair-rieng-chung",
+            "left": {
+              "id": "situation-rieng-chung",
+              "text": "Bạn Lan là một sinh viên năm nhất học đại học."
+            },
+            "right": {
+              "id": "category-rieng-chung",
+              "text": "Cái riêng – Cái chung"
+            }
+          },
+          {
+            "id": "pair-nguyennhan-ketqua",
+            "left": {
+              "id": "situation-nguyennhan-ketqua",
+              "text": "Học tập chăm chỉ tích lũy dẫn đến đạt điểm thi cao."
+            },
+            "right": {
+              "id": "category-nguyennhan-ketqua",
+              "text": "Nguyên nhân – Kết quả"
+            }
+          },
+          {
+            "id": "pair-tatnhien-ngaunhien",
+            "left": {
+              "id": "situation-tatnhien-ngaunhien",
+              "text": "Học chăm sẽ giỏi lên, nhưng hôm nay đi thi trúng tủ câu vừa đọc lướt."
+            },
+            "right": {
+              "id": "category-tatnhien-ngaunhien",
+              "text": "Tất nhiên – Ngẫu nhiên"
+            }
+          },
+          {
+            "id": "pair-noidung-hinhthuc",
+            "left": {
+              "id": "situation-noidung-hinhthuc",
+              "text": "Kiến thức/số liệu bài thuyết trình và cách bố cục slide đẹp mắt."
+            },
+            "right": {
+              "id": "category-noidung-hinhthuc",
+              "text": "Nội dung – Hình thức"
+            }
+          },
+          {
+            "id": "pair-banchat-hientuong",
+            "left": {
+              "id": "situation-banchat-hientuong",
+              "text": "Nghỉ học nhiều nhìn bề ngoài là lười nhưng bản chất do đi làm ca đêm hỗ trợ gia đình."
+            },
+            "right": {
+              "id": "category-banchat-hientuong",
+              "text": "Bản chất – Hiện tượng"
+            }
+          },
+          {
+            "id": "pair-khanang-hienthuc",
+            "left": {
+              "id": "situation-khanang-hienthuc",
+              "text": "Đang giữ ý tưởng tốt và nỗ lực hoàn thành đề tài để nhận học bổng."
+            },
+            "right": {
+              "id": "category-khanang-hienthuc",
+              "text": "Khả năng – Hiện thực"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-6-quiz",
+      "type": "quiz_sequence",
+      "title": "Thử thách phương pháp luận",
+      "config": {
+        "questions": [
+          {
+            "question": "Khi xây dựng kế hoạch và hành động thực tế, chúng ta phải dựa vào nhân tố nào?",
+            "options": [
+              "Chỉ dựa vào cái ngẫu nhiên may rủi.",
+              "Dựa vào cái tất nhiên (xu hướng quy luật ổn định) là chính, nhưng không coi thường cái ngẫu nhiên.",
+              "Hoàn toàn bỏ qua cái tất nhiên."
+            ],
+            "correctIndex": 1,
+            "explanation": "Tất nhiên vạch đường đi thông qua ngẫu nhiên, nên hành động phải dựa vào cái tất nhiên nhưng luôn có phương án dự phòng cho ngẫu nhiên."
+          },
+          {
+            "question": "Khi xem xét một sự vật có hình thức bên ngoài rất lộng lẫy nhưng nội dung trống rỗng, ta phạm vào lỗi gì?",
+            "options": [
+              "Quan điểm toàn diện.",
+              "Chủ nghĩa hình thức (chỉ coi trọng hình thức mà bỏ qua quyết định của nội dung).",
+              "Quan điểm lịch sử - cụ thể."
+            ],
+            "correctIndex": 1,
+            "explanation": "Chủ nghĩa hình thức là việc tuyệt đối hóa hình thức, tách rời hình thức khỏi nội dung quyết định."
+          },
+          {
+            "question": "Trong hoạt động thực tiễn của con người, sự chuyển hóa từ khả năng thành hiện thực đòi hỏi thêm yếu tố gì?",
+            "options": [
+              "Chỉ cần chờ đợi thời gian trôi qua tự động.",
+              "Nhân tố chủ quan (hoạt động có ý thức, nỗ lực thực tiễn của con người).",
+              "Sự may mắn ngẫu nhiên tuyệt đối."
+            ],
+            "correctIndex": 1,
+            "explanation": "Trong xã hội, khả năng muốn thành hiện thực cần có sự tác động chủ động của con người (nhân tố chủ quan) để hội đủ các điều kiện khách quan cần thiết."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-7-intro-matching",
+      "type": "matching_columns",
+      "title": "Vai trò của Ba quy luật cơ bản",
+      "config": {
+        "instruction": "Kéo các cột bên trái để ghép đúng vai trò của mỗi quy luật đối với sự phát triển của thế giới.",
+        "leftColumn": [
+          {
+            "id": "quy-luat-mau-thuan",
+            "text": "Quy luật Mâu thuẫn\n(Thống nhất và đấu tranh mặt đối lập)"
+          },
+          {
+            "id": "quy-luat-luong-chat",
+            "text": "Quy luật Lượng - Chất\n(Biến đổi lượng dẫn đến biến đổi chất)"
+          },
+          {
+            "id": "quy-luat-phu-dinh",
+            "text": "Quy luật Phủ định của phủ định\n(Phát triển đường xoáy ốc)"
+          }
+        ],
+        "rightColumn": [
+          {
+            "id": "dong-luc",
+            "text": "Chỉ ra NGUỒN GỐC và ĐỘNG LỰC của sự phát triển."
+          },
+          {
+            "id": "cach-thuc",
+            "text": "Chỉ ra CÁCH THỨC của sự phát triển."
+          },
+          {
+            "id": "khuynh-huong",
+            "text": "Chỉ ra KHUYNH HƯỚNG của sự phát triển."
+          }
+        ],
+        "correctPairs": [
+          {
+            "leftId": "quy-luat-mau-thuan",
+            "rightId": "dong-luc"
+          },
+          {
+            "leftId": "quy-luat-luong-chat",
+            "rightId": "cach-thuc"
+          },
+          {
+            "leftId": "quy-luat-phu-dinh",
+            "rightId": "khuynh-huong"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-7-luong-chat-group",
+      "type": "component_group",
+      "title": "Thử thách Quy luật Lượng - Chất",
+      "config": {
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "luong-chat-dialogue",
+            "type": "dialogue",
+            "title": "Tiến trình Lượng - Chất qua ví dụ nước sôi",
+            "config": {
+              "lines": [
+                {
+                  "speaker": "Sophia",
+                  "text": "Hãy cùng xét ví dụ kinh điển: đun nước lỏng đến khi sôi hóa hơi."
+                },
+                {
+                  "speaker": "Sophia",
+                  "text": "Nhiệt độ nước tăng dần từ 0°C lên 99°C là sự tích lũy về Lượng. Ở khoảng này, nước vẫn giữ nguyên Chất (thể lỏng). Khoảng giới hạn này gọi là ĐỘ."
+                },
+                {
+                  "speaker": "Sophia",
+                  "text": "Chạm mốc 100°C là ĐIỂM NÚT. Tại đây, nước lỏng lập tức thực hiện BƯỚC NHẢY chuyển hóa sang chất mới (thể hơi/khí)."
+                }
+              ]
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "luong-chat-mcq",
+            "type": "mcq",
+            "title": "Cơ chế Lượng - Chất",
+            "config": {
+              "question": "Trong việc tự học ngoại ngữ, việc tích lũy từ vựng mỗi ngày từ 5 từ lên 300 từ đại diện cho sự thay đổi nào, và kết quả đạt năng lực giao tiếp trôi chảy đại diện cho cái gì?",
+              "options": [
+                {
+                  "id": "option-1",
+                  "text": "Tích lũy từ vựng là thay đổi về Chất; giao tiếp trôi chảy là thay đổi về Lượng.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "option-2",
+                  "text": "Tích lũy từ vựng là tích lũy dần về Lượng; giao tiếp trôi chảy là thực hiện bước nhảy làm thay đổi về Chất.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "option-3",
+                  "text": "Cả hai đều chỉ là thay đổi về Lượng mà không có thay đổi về Chất.",
+                  "isCorrect": false
+                }
+              ],
+              "explanation": "Chính xác! Lượng thay đổi dần dần vượt quá giới hạn Độ, chạm Điểm nút sẽ dẫn tới sự thay đổi căn bản về Chất thông qua Bước nhảy."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "completed"
+      }
+    },
+    {
+      "id": "c2-7-negation-tf",
+      "type": "true_false",
+      "title": "Bản chất Phủ định biện chứng",
+      "config": {
+        "statement": "Phủ định biện chứng là sự phủ định sạch trơn, xóa bỏ hoàn toàn cái cũ để xây dựng cái mới từ đầu.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Phủ định biện chứng có tính khách quan và tính KẾ THỪA. Nó loại bỏ yếu tố lỗi thời, giữ lại và cải biến các yếu tố tích cực của cái cũ để phát triển lên trình độ cao hơn."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-ndpbc-summary",
+      "type": "final_summary",
+      "title": "Tổng kết Nội dung của phép biện chứng duy vật",
+      "config": {
+        "message": "Bạn đã hoàn thành bài học: Nội dung của phép biện chứng duy vật.",
+        "keyTakeaways": [
+          "Hai nguyên lý: Mối liên hệ phổ biến và Sự phát triển.",
+          "Sáu cặp phạm trù phản ánh các mối quan hệ biện chứng phổ biến.",
+          "Ba quy luật cơ bản chỉ ra Động lực (Mâu thuẫn), Cách thức (Lượng - Chất) và Khuynh hướng (Phủ định của phủ định)."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

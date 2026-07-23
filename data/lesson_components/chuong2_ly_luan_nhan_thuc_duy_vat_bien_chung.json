@@ -1,0 +1,267 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-8-intro-md",
+      "type": "markdown",
+      "title": "Bản chất của nhận thức duy vật biện chứng",
+      "config": {
+        "content": "#### Bản chất của nhận thức duy vật biện chứng\n\nNhận thức không phải là sự ghi nhận thụ động thế giới, mà là quá trình phản ánh thế giới khách quan vào bộ não người một cách năng động, sáng tạo dựa trên cơ sở thực tiễn.\n\nTheo luận điểm nổi tiếng của V.I. Lênin:\n\n> *\"Từ trực quan sinh động đến tư duy trừu tượng, và từ tư duy trừu tượng đến thực tiễn — đó là con đường biện chứng của sự nhận thức chân lý, nhận thức thực tại khách quan.\"*\n\nCon đường nhận thức này đi qua hai giai đoạn biện chứng chính: **Nhận thức cảm tính** và **Nhận thức lý tính**."
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-8-sorting-cognition",
+      "type": "category_sorting",
+      "title": "Phân loại các giai đoạn của quá trình nhận thức",
+      "config": {
+        "categories": [
+          {
+            "id": "cam-tinh",
+            "label": "Nhận thức Cảm tính",
+            "description": "Giai đoạn đầu (Trực quan sinh động): Phản ánh trực tiếp, bề ngoài của đối tượng."
+          },
+          {
+            "id": "ly-tinh",
+            "label": "Nhận thức Lý tính",
+            "description": "Giai đoạn sau (Tư duy trừu tượng): Phản ánh gián tiếp, sâu sắc bản chất quy luật."
+          }
+        ],
+        "cards": [
+          {
+            "id": "cam-giac",
+            "text": "Cảm giác: Tín hiệu sơ khai (chạm tay vào lửa thấy nóng)",
+            "categoryId": "cam-tinh"
+          },
+          {
+            "id": "tri-giac",
+            "text": "Tri giác: Tổng hợp cảm giác (lửa đỏ, có khói, nhiệt cao)",
+            "categoryId": "cam-tinh"
+          },
+          {
+            "id": "bieu-tuong",
+            "text": "Biểu tượng: Hình ảnh lưu lại trong não khi vật không còn tác động",
+            "categoryId": "cam-tinh"
+          },
+          {
+            "id": "khai-niem",
+            "text": "Khái niệm: Trích xuất đặc tính bản chất (Lửa là quá trình oxy hóa nhanh)",
+            "categoryId": "ly-tinh"
+          },
+          {
+            "id": "phan-doan",
+            "text": "Phán đoán: Khẳng định/phủ định quan hệ (Lửa có thể đốt cháy nhựa)",
+            "categoryId": "ly-tinh"
+          },
+          {
+            "id": "suy-luan",
+            "text": "Suy luận: Logic liên kết các phán đoán (Nếu gặp lửa, nhựa sẽ biến dạng)",
+            "categoryId": "ly-tinh"
+          }
+        ],
+        "summary": "Nhận thức cảm tính cung cấp cơ sở kinh nghiệm trực tiếp, còn nhận thức lý tính đi sâu nắm bắt quy luật bản chất bên trong."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-8-cognition-interaction-tf",
+      "type": "true_false",
+      "title": "Mối quan hệ cảm tính - lý tính",
+      "config": {
+        "statement": "Nhận thức lý tính là giai đoạn cao hơn nên có thể hoàn toàn thay thế nhận thức cảm tính mà không cần đến các tài liệu giác quan nữa.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Dù là giai đoạn cao hơn, nhận thức lý tính vẫn bắt buộc phải dựa trên tài liệu thực tế do nhận thức cảm tính cung cấp. Không có nhận thức cảm tính thì nhận thức lý tính không có nguyên liệu để tư duy."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-9-intro",
+      "type": "dialogue",
+      "title": "Thực tiễn và vai trò của thực tiễn đối với nhận thức",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Con đường nhận thức đi từ trực quan đến tư duy, nhưng chặng cuối cùng và quan trọng nhất chính là quay về phục vụ Thực tiễn."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Thực tiễn là toàn bộ hoạt động vật chất - cảm tính có tính lịch sử - xã hội của con người nhằm cải tạo thế giới khách quan."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Hãy cùng khám phá 4 vai trò quyết định của Thực tiễn đối với Nhận thức qua sơ đồ dưới đây!"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-9-roles-mindmap",
+      "type": "mindmap_reveal",
+      "title": "Bốn vai trò của Thực tiễn đối với Nhận thức",
+      "config": {
+        "instruction": "Thực tiễn là lõi năng lượng quyết định trực tiếp toàn bộ quá trình nhận thức. Hãy lật mở chi tiết từng vai trò.",
+        "layoutConfig": {
+          "type": "horizontal"
+        },
+        "nodes": [
+          {
+            "id": "co-so",
+            "front": {
+              "text": "1. Cơ sở của nhận thức"
+            },
+            "back": {
+              "text": "Thực tiễn cung cấp tài liệu, dữ liệu thực tế cho bộ não. Thông qua việc tác động vào thế giới bằng công cụ thực tế, con người mới bộc lộ thuộc tính sự vật để nhận thức."
+            }
+          },
+          {
+            "id": "dong-luc",
+            "front": {
+              "text": "2. Động lực của nhận thức"
+            },
+            "back": {
+              "text": "Thực tiễn luôn đặt ra các nhu cầu mới, nhiệm vụ mới buộc nhận thức phải phát triển để giải quyết (Ví dụ: thực tiễn cần đo đạc lại ruộng đất sau lũ lụt thúc đẩy toán học hình học cổ đại ra đời)."
+            }
+          },
+          {
+            "id": "muc-dich",
+            "front": {
+              "text": "3. Mục đích của nhận thức"
+            },
+            "back": {
+              "text": "Tri thức thu về không phải để cất giữ trong lý thuyết suông, mà phải quay lại phục vụ, dẫn đường cho con người cải tạo thế giới, nâng cao đời sống."
+            }
+          },
+          {
+            "id": "tieu-chuan",
+            "front": {
+              "text": "4. Tiêu chuẩn của chân lý"
+            },
+            "back": {
+              "text": "Chỉ có hoạt động thực tiễn mới là thước đo khách quan duy nhất để chứng minh một học thuyết hay lý thuyết là đúng hay sai (Kiểm nghiệm thực tế)."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-9-dogmatism-mcq",
+      "type": "mcq",
+      "title": "Căn bệnh Giáo điều",
+      "config": {
+        "question": "Nếu nhận thức của chúng ta chỉ dừng lại ở các lý thuyết trừu tượng trong phòng thí nghiệm (tư duy trừu tượng) mà từ chối đưa kết quả về để thực tiễn kiểm nghiệm, điều chỉnh thì chúng ta sẽ mắc vào sai lầm nào?",
+        "options": [
+          {
+            "id": "empiricism",
+            "text": "Bệnh kinh nghiệm (chỉ tin vào quan sát trực tiếp, coi thường lý luận).",
+            "isCorrect": false
+          },
+          {
+            "id": "dogmatism",
+            "text": "Bệnh giáo điều (chỉ tin vào sách vở, lý thuyết suông mà xa rời thực tiễn khách quan).",
+            "isCorrect": true
+          },
+          {
+            "id": "skepticism",
+            "text": "Hoài nghi luận (không tin vào khả năng nhận thức của con người).",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Căn bệnh giáo điều xuất hiện khi con người tuyệt đối hóa lý thuyết, áp dụng máy móc sách vở và từ chối đối chiếu, kiểm chứng hay phục vụ thực tiễn sinh động."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-10-intro",
+      "type": "dialogue",
+      "title": "Quan điểm của CNDVBC về chân lý",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Chân lý là những tri thức phù hợp với hiện thực khách quan và đã được thực tiễn kiểm nghiệm, xác chứng đúng đắn."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Chân lý mang 3 tính chất cơ bản: Tính khách quan, Tính cụ thể, và Sự thống nhất giữa Tính tương đối và Tính tuyệt đối."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-10-objectivity-mcq",
+      "type": "mcq",
+      "title": "Ngụy biện số đông và Tính khách quan của chân lý",
+      "config": {
+        "question": "Giả sử 99% dân số ở một thời kỳ lịch sử tin rằng Trái Đất là phẳng dẹt. Niềm tin số đông này có được coi là chân lý không? Vì sao?",
+        "options": [
+          {
+            "id": "yes-belief",
+            "text": "Có, vì khi hầu hết mọi người cùng thừa nhận thì nó tự khắc trở thành chân lý.",
+            "isCorrect": false
+          },
+          {
+            "id": "no-objectivity",
+            "text": "Không, vì chân lý mang tính khách quan. Nội dung của chân lý phản ánh đúng thực tại khách quan, hoàn toàn độc lập với ý chí chủ quan hay niềm tin của số đông.",
+            "isCorrect": true
+          },
+          {
+            "id": "sometimes",
+            "text": "Chỉ đúng vào thời kỳ đó, còn thời kỳ sau thì sai.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Tính khách quan của chân lý khẳng định: Chân lý phản ánh thực tại khách quan ngoài ý muốn con người. Số đông tin theo không quyết định chân lý, thực tiễn kiểm nghiệm khách quan mới quyết định."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-10-concrete-tf",
+      "type": "true_false",
+      "title": "Nước sôi ở 100°C và Tính cụ thể của chân lý",
+      "config": {
+        "statement": "Luận điểm 'Nước sôi ở 100°C' luôn là một chân lý trừu tượng, đúng đắn trong mọi hoàn cảnh và mọi điều kiện không gian, thời gian.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Không có chân lý trừu tượng chung chung, chân lý luôn mang tính cụ thể. Luận điểm trên chỉ đúng trong điều kiện áp suất khí quyển tiêu chuẩn; ở đỉnh núi cao (áp suất thấp), nước sôi ở nhiệt độ thấp hơn."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-llntdvbc-summary",
+      "type": "final_summary",
+      "title": "Tổng kết Lý luận nhận thức duy vật biện chứng",
+      "config": {
+        "message": "Chúc mừng bạn đã hoàn thành xuất sắc toàn bộ Chương 2: Chủ nghĩa duy vật biện chứng!",
+        "keyTakeaways": [
+          "Bản chất nhận thức: sự phản ánh năng động, sáng tạo thế giới khách quan vào bộ não người.",
+          "Hai giai đoạn: Nhận thức cảm tính (Cảm giác, Tri giác, Biểu tượng) và Nhận thức lý tính (Khái niệm, Phán đoán, Suy luận).",
+          "Thực tiễn là cơ sở, động lực, mục đích của nhận thức và là tiêu chuẩn tối cao của chân lý.",
+          "Chân lý có tính khách quan, cụ thể và thống nhất giữa tương đối và tuyệt đối."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

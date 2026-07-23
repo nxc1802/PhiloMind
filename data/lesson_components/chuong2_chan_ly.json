@@ -1,0 +1,85 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-10-intro",
+      "type": "dialogue",
+      "title": "Chân lý là gì?",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Chào bạn! Điểm cuối cùng trên hành trình khám phá nhận thức là Chân lý."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Chân lý là những tri thức phù hợp với hiện thực khách quan và đã được thực tiễn kiểm nghiệm, xác chứng đúng đắn."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Hãy cùng kiểm tra các thuộc tính đặc thù của chân lý qua thử thách dưới đây!"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-10-objectivity-mcq",
+      "type": "mcq",
+      "title": "Ngụy biện số đông và Tính khách quan",
+      "config": {
+        "question": "Giả sử 99% dân số ở một thời kỳ lịch sử tin rằng Trái Đất là phẳng dẹt. Niềm tin số đông này có được coi là chân lý không? Vì sao?",
+        "options": [
+          {
+            "id": "yes-belief",
+            "text": "Có, vì khi hầu hết mọi người cùng thừa nhận thì nó tự khắc trở thành chân lý.",
+            "isCorrect": false
+          },
+          {
+            "id": "no-objectivity",
+            "text": "Không, vì chân lý mang tính khách quan. Nội dung của chân lý phản ánh đúng thực tại khách quan, hoàn toàn độc lập với ý chí chủ quan hay niềm tin của số đông.",
+            "isCorrect": true
+          },
+          {
+            "id": "sometimes",
+            "text": "Chỉ đúng vào thời kỳ đó, còn thời kỳ sau thì sai.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Tính khách quan của chân lý khẳng định: Chân lý phản ánh thực tại khách quan ngoài ý muốn con người. Số đông tin theo không quyết định chân lý, thực tiễn kiểm nghiệm khách quan mới quyết định."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-10-concrete-tf",
+      "type": "true_false",
+      "title": "Nước sôi ở 100°C và Tính cụ thể",
+      "config": {
+        "statement": "Luận điểm 'Nước sôi ở 100°C' luôn là một chân lý trừu tượng, đúng đắn trong mọi hoàn cảnh và mọi điều kiện không gian, thời gian.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Không có chân lý trừu tượng chung chung, chân lý luôn mang tính cụ thể. Luận điểm trên chỉ đúng trong điều kiện áp suất khí quyển tiêu chuẩn; ở đỉnh núi cao (áp suất thấp), nước sôi ở nhiệt độ thấp hơn."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-10-summary",
+      "type": "final_summary",
+      "title": "Tổng kết Chân lý",
+      "config": {
+        "message": "Chúc mừng bạn đã hoàn thành chặng cuối cùng của Chương 2: Chân lý.",
+        "keyTakeaways": [
+          "Chân lý là tri thức phù hợp thực tế khách quan đã được kiểm nghiệm thực tế.",
+          "Chân lý có 3 tính chất chính: Tính khách quan, Tính cụ thể và Sự thống nhất giữa Tính tương đối và Tính tuyệt đối."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

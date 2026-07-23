@@ -1,0 +1,153 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-7-intro-matching",
+      "type": "matching_columns",
+      "title": "Vai trò của Ba quy luật cơ bản",
+      "config": {
+        "instruction": "Kéo các cột bên trái để ghép đúng vai trò của mỗi quy luật đối với sự phát triển của thế giới.",
+        "leftColumn": [
+          {
+            "id": "quy-luat-mau-thuan",
+            "text": "Quy luật Mâu thuẫn\n(Thống nhất và đấu tranh mặt đối lập)"
+          },
+          {
+            "id": "quy-luat-luong-chat",
+            "text": "Quy luật Lượng - Chất\n(Biến đổi lượng dẫn đến biến đổi chất)"
+          },
+          {
+            "id": "quy-luat-phu-dinh",
+            "text": "Quy luật Phủ định của phủ định\n(Phát triển đường xoáy ốc)"
+          }
+        ],
+        "rightColumn": [
+          {
+            "id": "dong-luc",
+            "text": "Chỉ ra NGUỒN GỐC và ĐỘNG LỰC của sự phát triển."
+          },
+          {
+            "id": "cach-thuc",
+            "text": "Chỉ ra CÁCH THỨC của sự phát triển."
+          },
+          {
+            "id": "khuynh-huong",
+            "text": "Chỉ ra KHUYNH HƯỚNG của sự phát triển."
+          }
+        ],
+        "correctPairs": [
+          {
+            "leftId": "quy-luat-mau-thuan",
+            "rightId": "dong-luc"
+          },
+          {
+            "leftId": "quy-luat-luong-chat",
+            "rightId": "cach-thuc"
+          },
+          {
+            "leftId": "quy-luat-phu-dinh",
+            "rightId": "khuynh-huong"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-7-luong-chat-group",
+      "type": "component_group",
+      "title": "Thử thách Quy luật Lượng - Chất",
+      "config": {
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "luong-chat-dialogue",
+            "type": "dialogue",
+            "title": "Tiến trình Lượng - Chất qua ví dụ nước sôi",
+            "config": {
+              "lines": [
+                {
+                  "speaker": "Sophia",
+                  "text": "Hãy cùng xét ví dụ kinh điển: đun nước lỏng đến khi sôi hóa hơi."
+                },
+                {
+                  "speaker": "Sophia",
+                  "text": "Nhiệt độ nước tăng dần từ 0°C lên 99°C là sự tích lũy về Lượng. Ở khoảng này, nước vẫn giữ nguyên Chất (thể lỏng). Khoảng giới hạn này gọi là ĐỘ."
+                },
+                {
+                  "speaker": "Sophia",
+                  "text": "Chạm mốc 100°C là ĐIỂM NÚT. Tại đây, nước lỏng lập tức thực hiện BƯỚC NHẢY chuyển hóa sang chất mới (thể hơi/khí)."
+                }
+              ]
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "luong-chat-mcq",
+            "type": "mcq",
+            "title": "Cơ chế Lượng - Chất",
+            "config": {
+              "question": "Trong việc tự học ngoại ngữ, việc tích lũy từ vựng mỗi ngày từ 5 từ lên 300 từ đại diện cho sự thay đổi nào, và kết quả đạt năng lực giao tiếp trôi chảy đại diện cho cái gì?",
+              "options": [
+                {
+                  "id": "option-1",
+                  "text": "Tích lũy từ vựng là thay đổi về Chất; giao tiếp trôi chảy là thay đổi về Lượng.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "option-2",
+                  "text": "Tích lũy từ vựng là tích lũy dần về Lượng; giao tiếp trôi chảy là thực hiện bước nhảy làm thay đổi về Chất.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "option-3",
+                  "text": "Cả hai đều chỉ là thay đổi về Lượng mà không có thay đổi về Chất.",
+                  "isCorrect": false
+                }
+              ],
+              "explanation": "Chính xác! Lượng thay đổi dần dần vượt quá giới hạn Độ, chạm Điểm nút sẽ dẫn tới sự thay đổi căn bản về Chất thông qua Bước nhảy."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "completed"
+      }
+    },
+    {
+      "id": "c2-7-negation-tf",
+      "type": "true_false",
+      "title": "Bản chất Phủ định biện chứng",
+      "config": {
+        "statement": "Phủ định biện chứng là sự phủ định sạch trơn, xóa bỏ hoàn toàn cái cũ để xây dựng cái mới từ đầu.",
+        "correctAnswer": false,
+        "explanation": "Chính xác! Phủ định biện chứng có tính khách quan và tính KẾ THỪA. Nó loại bỏ yếu tố lỗi thời, giữ lại và cải biến các yếu tố tích cực của cái cũ để phát triển lên trình độ cao hơn (Ví dụ: hạt mầm phủ định hạt giống ban đầu nhưng kế thừa chất dinh dưỡng từ hạt)."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-7-summary",
+      "type": "final_summary",
+      "title": "Tổng kết Ba quy luật",
+      "config": {
+        "message": "Bạn đã hoàn thành nội dung về Ba quy luật cơ bản của phép biện chứng.",
+        "keyTakeaways": [
+          "Mâu thuẫn biện chứng là sự thống nhất và đấu tranh của các mặt đối lập — động lực của phát triển.",
+          "Sự thay đổi về Lượng dẫn đến sự thay đổi về Chất thông qua Độ, Điểm nút và Bước nhảy.",
+          "Phủ định của phủ định chỉ ra khuynh hướng phát triển tiến lên theo đường xoáy ốc kế thừa."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

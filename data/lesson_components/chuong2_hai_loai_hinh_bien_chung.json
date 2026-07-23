@@ -1,0 +1,152 @@
+{
+  "lessonFlow": [
+    {
+      "id": "c2-hlhbc-intro",
+      "type": "dialogue",
+      "title": "Hai loại hình biện chứng",
+      "config": {
+        "lines": [
+          {
+            "speaker": "Sophia",
+            "text": "Chào mừng bạn đến với Phần II: Phép biện chứng duy vật!"
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Trước khi đi vào nội dung chi tiết, ta cần phân biệt hai loại hình biện chứng: Biện chứng khách quan (sự vận động của bản thân thế giới vật chất) và Biện chứng chủ quan (sự phản ánh sự vận động đó vào tư duy con người)."
+          },
+          {
+            "speaker": "Sophia",
+            "text": "Trong lịch sử, phép biện chứng đã trải qua 3 hình thức phát triển chính. Hãy cùng khám phá qua thử thách phân loại dưới đây!"
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-hlhbc-sorting",
+      "type": "category_sorting",
+      "title": "Ba hình thức của Phép biện chứng trong lịch sử",
+      "config": {
+        "categories": [
+          {
+            "id": "chat-phac",
+            "label": "Biện chứng chất phác thời Cổ đại",
+            "description": "Quan sát trực quan tự nhiên nhưng còn thơ ngây, ngây thơ."
+          },
+          {
+            "id": "duy-tam",
+            "label": "Biện chứng duy tâm Cổ điển Đức",
+            "description": "Nghiên cứu biện chứng sâu sắc nhưng dựng trên nền tảng ý niệm duy tâm."
+          },
+          {
+            "id": "duy-vat",
+            "label": "Phép biện chứng duy vật Mác - Lênin",
+            "description": "Sự kết hợp giữa chủ nghĩa duy vật triệt để và phương pháp biện chứng khoa học."
+          }
+        ],
+        "cards": [
+          {
+            "id": "heraclitus",
+            "text": "Heraclitus: 'Không ai tắm hai lần trên một dòng sông'",
+            "categoryId": "chat-phac"
+          },
+          {
+            "id": "hegel",
+            "text": "Hegel: Phép biện chứng của Ý niệm tuyệt đối",
+            "categoryId": "duy-tam"
+          },
+          {
+            "id": "marx",
+            "text": "C. Mác & Ph. Ăngghen: Biện chứng của bản thân thế giới vật chất",
+            "categoryId": "duy-vat"
+          }
+        ],
+        "summary": "Phép biện chứng duy vật Mác - Lênin là hình thức phát triển cao nhất, giải phóng phép biện chứng khỏi cái vỏ duy tâm của Hegel."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-hlhbc-forms",
+      "type": "mindmap_reveal",
+      "title": "Khái niệm Phép biện chứng duy vật",
+      "config": {
+        "instruction": "Phép biện chứng duy vật được định nghĩa là khoa học về mối liên hệ phổ biến và sự phát triển. Hãy lật mở các đặc trưng cốt lõi.",
+        "layoutConfig": {
+          "type": "horizontal"
+        },
+        "nodes": [
+          {
+            "id": "bien-chung-khach-quan",
+            "front": {
+              "text": "Biện chứng khách quan"
+            },
+            "back": {
+              "text": "Là biện chứng của bản thân thế giới vật chất tồn tại độc lập với ý thức con người. Nó quyết định và là cơ sở cho biện chứng chủ quan."
+            }
+          },
+          {
+            "id": "bien-chung-chu-quan",
+            "front": {
+              "text": "Biện chứng chủ quan"
+            },
+            "back": {
+              "text": "Là tư duy biện chứng, sự phản ánh biện chứng khách quan vào bộ não con người. Nó có tính độc lập tương đối và chỉ đạo hoạt động thực tiễn."
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    },
+    {
+      "id": "c2-hlhbc-concept-mcq",
+      "type": "mcq",
+      "title": "Định nghĩa Phép biện chứng duy vật",
+      "config": {
+        "question": "Theo Ph. Ăngghen, Phép biện chứng duy vật là khoa học nghiên cứu về cái gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "text": "Khoa học về các quy luật vận động, phát triển chung nhất của tự nhiên, xã hội và tư duy.",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "text": "Khoa học về sự dịch chuyển cơ học thuần túy của các vật thể.",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "text": "Học thuyết về sự sáng tạo thế giới của tinh thần tuyệt đối.",
+            "isCorrect": false
+          }
+        ],
+        "explanation": "Chính xác! Phép biện chứng duy vật là môn khoa học về những quy luật phổ biến của sự vận động và phát triển của tự nhiên, xã hội và tư duy."
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-hlhbc-summary",
+      "type": "final_summary",
+      "title": "Tổng kết Hai loại hình biện chứng",
+      "config": {
+        "message": "Bạn đã nắm vững khái niệm và hai loại hình biện chứng.",
+        "keyTakeaways": [
+          "Phân biệt biện chứng khách quan (thế giới thực) và biện chứng chủ quan (tư duy).",
+          "Ba hình thức lịch sử: chất phác cổ đại, duy tâm cổ điển Đức, duy vật Mác - Lênin.",
+          "Phép biện chứng duy vật là khoa học về mối liên hệ phổ biến và sự phát triển."
+        ]
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}

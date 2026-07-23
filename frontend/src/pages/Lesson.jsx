@@ -220,6 +220,22 @@ const Lesson = () => {
       "from-[#00BAE3] to-[#00829F]",
     ];
 
+    const extractSubItems = (originalText) => {
+      if (!originalText) return [];
+      const lines = originalText.split("\n").map((l) => l.trim());
+      const items = [];
+      for (const line of lines) {
+        if (!line) continue;
+        if (
+          /^[a-đA-Đ]\)/.test(line) ||
+          (/^[-*]/.test(line) && !line.includes("V.I. Lênin"))
+        ) {
+          items.push(line.replace(/^[-*]\s*/, ""));
+        }
+      }
+      return items;
+    };
+
     return mainChapters.map((chap, idx) => {
       const sections = subChapters
         .filter((sub) => sub.parentChapterId === chap.id)
@@ -230,6 +246,7 @@ const Lesson = () => {
             id: node.id,
             title: node.title,
             slug: getSlugFromTitle(node.title),
+            subItems: extractSubItems(node.originalText),
           })),
         }));
 
@@ -241,6 +258,7 @@ const Lesson = () => {
             id: node.id,
             title: node.title,
             slug: getSlugFromTitle(node.title),
+            subItems: extractSubItems(node.originalText),
           })),
         });
       }
