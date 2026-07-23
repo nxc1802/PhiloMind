@@ -316,50 +316,13 @@ const Lesson = () => {
             }
             // Custom grouping rules for Chapter 2
             else if (chap.orderIndex === 2 || chap.title.includes("Chương 2")) {
-              if (node.title.includes("Phạm trù vật chất") || node.title.includes("khủng hoảng")) {
-                groupTitle = "Vật chất và phương thức tồn tại của vật chất";
+              const subTopics = extractSubTopics(node);
+              if (subTopics && subTopics.length > 0) {
+                groupTitle = cleanTitle(node.title);
                 isSubItem = true;
-                lessonTitle = "Quan niệm về phạm trù vật chất & Cuộc cách mạng KHTN";
-              } else if (node.title.includes("Phương thức tồn tại")) {
-                groupTitle = "Vật chất và phương thức tồn tại của vật chất";
-                isSubItem = true;
-                lessonTitle = "Phương thức tồn tại của vật chất & Tính thống nhất vật chất";
-              } else if (node.title.includes("ý thức") && !node.title.includes("Mối quan hệ")) {
+              } else {
                 groupTitle = null;
-                lessonTitle = "Nguồn gốc, bản chất và kết cấu của ý thức";
-              } else if (node.title.includes("Mối quan hệ")) {
-                groupTitle = null;
-                lessonTitle = "Mối quan hệ giữa vật chất và ý thức";
-              } else if (node.title.includes("Hai loại hình biện chứng")) {
-                groupTitle = null;
-                lessonTitle = "Hai loại hình biện chứng và phép biện chứng duy vật";
-              } else if (node.title.includes("Hai nguyên lý")) {
-                groupTitle = "Nội dung của phép biện chứng duy vật";
-                isSubItem = true;
-                lessonTitle = "Hai nguyên lý của phép biện chứng duy vật";
-              } else if (node.title.includes("phạm trù")) {
-                groupTitle = "Nội dung của phép biện chứng duy vật";
-                isSubItem = true;
-                lessonTitle = "Các cặp phạm trù cơ bản của phép biện chứng duy vật";
-              } else if (node.title.includes("quy luật")) {
-                groupTitle = "Nội dung của phép biện chứng duy vật";
-                isSubItem = true;
-                lessonTitle = "Các quy luật cơ bản của phép biện chứng duy vật";
-              } else if (node.title.includes("lịch sử triết học")) {
-                groupTitle = null;
-                lessonTitle = "Quan niệm về nhận thức trong lịch sử triết học";
-              } else if (node.title.includes("Bản chất của nhận thức")) {
-                groupTitle = "Lý luận nhận thức duy vật biện chứng";
-                isSubItem = true;
-                lessonTitle = "Nguồn gốc, bản chất và các giai đoạn nhận thức";
-              } else if (node.title.includes("Thực tiễn")) {
-                groupTitle = "Lý luận nhận thức duy vật biện chứng";
-                isSubItem = true;
-                lessonTitle = "Thực tiễn và vai trò của thực tiễn đối với nhận thức";
-              } else if (node.title.includes("Chân lý")) {
-                groupTitle = "Lý luận nhận thức duy vật biện chứng";
-                isSubItem = true;
-                lessonTitle = "Quan điểm của CNDVBC về chân lý";
+                lessonTitle = cleanTitle(node.title);
               }
             }
 
@@ -370,14 +333,25 @@ const Lesson = () => {
             const grp = groupsMap.get(mapKey);
             if (isSubItem) {
               grp.isMultiple = true;
+              const subTopics = extractSubTopics(node);
+              subTopics.forEach((subTitle, sIdx) => {
+                grp.lessons.push({
+                  id: `${node.id}-sub-${sIdx}`,
+                  title: cleanTitle(subTitle),
+                  originalTitle: subTitle,
+                  slug: getSlugFromTitle(node.title),
+                  subTopics: [],
+                });
+              });
+            } else {
+              grp.lessons.push({
+                id: node.id,
+                title: lessonTitle,
+                originalTitle: node.title,
+                slug: getSlugFromTitle(node.title),
+                subTopics: [],
+              });
             }
-            grp.lessons.push({
-              id: node.id,
-              title: lessonTitle,
-              originalTitle: node.title,
-              slug: getSlugFromTitle(node.title),
-              subTopics: extractSubTopics(node),
-            });
           });
 
           const groups = Array.from(groupsMap.values()).map((gData) => ({
