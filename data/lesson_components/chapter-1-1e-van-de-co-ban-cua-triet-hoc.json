@@ -40,6 +40,12 @@
       "type": "image",
       "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/house_laws_cognition.jpg",
       "caption": "Khả năng hiểu biết 100% các quy luật tự nhiên tác động lên ngôi nhà"
+    },
+    {
+      "id": "media-ngoi-nha",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/ngoi_nha.jpg",
+      "caption": "Tổng quan ngôi nhà triết học"
     }
   ],
   "lessonFlow": [
@@ -168,6 +174,7 @@
       "id": "basic-problem-group-1",
       "type": "component_group",
       "title": "Vấn đề cơ bản của Triết học",
+      "linkedMediaId": "media-ngoi-nha",
       "navigation_config": {
         "shortLabel": "Vấn đề cơ bản"
       },
@@ -180,6 +187,7 @@
             "id": "basic-problem-intro",
             "type": "markdown",
             "title": "Vấn đề cơ bản",
+            "linkedMediaId": "media-ngoi-nha",
             "config": {
               "content": "Các bạn thấy đấy, cùng nhìn vào một Ngôi nhà, nhưng chúng ta lại có hai góc nhìn hoàn toàn trái ngược về việc CÁI GÌ CÓ TRƯỚC và KHẢ NĂNG NHẬN THỨC CỦA CHÚNG TA ĐẾN ĐÂU. Trong lịch sử nhân loại, hàng ngàn triết gia vĩ đại cũng đã tranh luận đúng hai câu hỏi này!\n\nĐó chính là vấn đề cơ bản của triết học. Vậy, vấn đề cơ bản của triết học là gì?"
             },

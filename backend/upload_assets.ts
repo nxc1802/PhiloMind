@@ -53,7 +53,8 @@ async function main() {
     { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/doi_tuong_03.png", dest: "chapter-1/1.1.c/doi_tuong_03.png" },
     { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/doi_tuong_04.png", dest: "chapter-1/1.1.c/doi_tuong_04.png" },
     { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/1784802430681_3329002652664996422_3329002652664996422_50ab04a905c8ba8fbdf0201d13b5060e.jpg", dest: "chapter-1/1.1.e/house_design_materials.jpg" },
-    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/1784802445772_3329002652664996422_3329002652664996422_9aeba97b976e1778e4f435c8a8a8880f.jpg", dest: "chapter-1/1.1.e/house_laws_cognition.jpg" }
+    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/1784802445772_3329002652664996422_3329002652664996422_9aeba97b976e1778e4f435c8a8a8880f.jpg", dest: "chapter-1/1.1.e/house_laws_cognition.jpg" },
+    { src: "/Volumes/WorkSpace/Project/PhiloMind/data/asset/ngoi_nha.jpg", dest: "chapter-1/1.1.e/ngoi_nha.jpg" }
   ];
 
   for (const file of filesToUpload) {
