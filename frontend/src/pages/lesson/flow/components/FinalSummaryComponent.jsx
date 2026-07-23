@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
 import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
+import { parseInlineMarkdown, parseMarkdownToReact } from "../../components/MarkdownRenderer";
 
 function getFinalQuizCorrectIndex(question) {
   if (typeof question?.correctIndex === "number") return question.correctIndex;
@@ -135,7 +136,7 @@ export function FinalSummaryComponent({ component, onComplete }) {
                     check_circle
                   </span>
                   <span className="min-w-0 flex-1 break-words text-sm leading-6">
-                    {typeof item === "object" ? item.text || item.label : item}
+                    {parseInlineMarkdown(typeof item === "object" ? item.text || item.label : item)}
                   </span>
                   <ComponentImage
                     image={typeof item === "object" ? item.image : null}

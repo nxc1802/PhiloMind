@@ -8,6 +8,7 @@ import React, {
 import { ComponentFrame } from "./ComponentFrame";
 import { ComponentImage, firstImageAsset } from "./ComponentImage";
 import { ContinueButton } from "./ContinueButton";
+import { parseInlineMarkdown, parseMarkdownToReact } from "../../components/MarkdownRenderer";
 
 function getNodeText(value) {
   if (typeof value === "string") return value;
@@ -223,7 +224,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
                 Khái niệm đích
               </p>
               <p className="text-base font-extrabold leading-tight">
-                {centerLabel}
+                {parseInlineMarkdown(centerLabel)}
               </p>
             </div>
           </div>
@@ -281,7 +282,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
                     {open ? (
                       <>
                         <p className="break-words text-base font-extrabold leading-snug text-primary-900 dark:text-primary-100">
-                          {title}
+                          {parseInlineMarkdown(title)}
                         </p>
                         <ComponentImage
                           image={nodeImage}
@@ -291,9 +292,9 @@ export function MindmapRevealComponent({ component, onComplete }) {
                           imageClassName="max-h-48"
                         />
                         {detail && (
-                          <p className="mt-1 max-h-24 overflow-y-auto whitespace-normal break-words pr-1 text-sm leading-6 text-slate-650 dark:text-primary-200">
-                            {detail}
-                          </p>
+                          <div className="mt-1 max-h-24 overflow-y-auto whitespace-normal break-words pr-1 text-sm leading-6 text-slate-650 dark:text-primary-200">
+                            {parseInlineMarkdown(detail)}
+                          </div>
                         )}
                       </>
                     ) : (
@@ -301,7 +302,7 @@ export function MindmapRevealComponent({ component, onComplete }) {
                         <>
                           {frontText && (
                             <p className="break-words text-sm font-bold leading-6 text-slate-500 dark:text-primary-200">
-                              {frontText}
+                              {parseInlineMarkdown(frontText)}
                             </p>
                           )}
                           <ComponentImage
@@ -327,11 +328,11 @@ export function MindmapRevealComponent({ component, onComplete }) {
         <div className="mt-5 shrink-0 overflow-hidden rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 to-primary-50 p-5 text-primary-950 dark:border-amber-800 dark:from-amber-950/30 dark:to-primary-950/40 dark:text-primary-100">
           {(component.config.summary || component.config.finalStatement) && (
             <div className="text-sm font-semibold leading-relaxed text-slate-700 dark:text-primary-150 mb-4 space-y-2">
-              <p>{component.config.summary || component.config.finalStatement}</p>
+              <div>{parseMarkdownToReact(component.config.summary || component.config.finalStatement)}</div>
               {component.config.guideLines && (
                 <ul className="list-disc pl-5 mt-2 space-y-1 font-normal">
                   {component.config.guideLines.map((line, idx) => (
-                    <li key={idx}>{line}</li>
+                    <li key={idx}>{parseInlineMarkdown(line)}</li>
                   ))}
                 </ul>
               )}

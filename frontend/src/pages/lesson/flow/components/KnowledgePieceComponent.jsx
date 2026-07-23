@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { ComponentFrame } from "./ComponentFrame";
 import { ComponentImage, firstImageAsset } from "./ComponentImage";
+import { parseInlineMarkdown, parseMarkdownToReact } from "../../components/MarkdownRenderer";
 
 function Spark({ className = "" }) {
   return (
@@ -128,7 +129,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
             Mảnh ghép kiến thức
           </p>
           <h3 className="mt-2 text-2xl font-extrabold leading-tight text-primary-950 dark:text-primary-100">
-            {label}
+            {parseInlineMarkdown(label)}
           </h3>
           <ComponentImage
             image={firstImageAsset([image, component.config?.imageUrl], label)}
@@ -138,9 +139,9 @@ export function KnowledgePieceComponent({ component, onComplete }) {
             imageClassName="max-h-72"
           />
           {summary && (
-            <p className="mt-3 max-h-56 w-full max-w-2xl overflow-y-auto whitespace-pre-line rounded-2xl border border-white/70 bg-white/60 px-4 py-3 text-left text-sm font-medium leading-6 text-slate-650 shadow-sm dark:border-primary-850/60 dark:bg-primary-950/25 dark:text-primary-200">
-              {summary}
-            </p>
+            <div className="mt-3 max-h-56 w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/70 bg-white/60 px-4 py-3 text-left text-sm font-medium leading-6 text-slate-650 shadow-sm dark:border-primary-850/60 dark:bg-primary-950/25 dark:text-primary-200">
+              {parseMarkdownToReact(summary)}
+            </div>
           )}
 
           {takeaways.length > 0 && (
@@ -153,7 +154,7 @@ export function KnowledgePieceComponent({ component, onComplete }) {
                   <span className="material-symbols-outlined mt-0.5 shrink-0 text-base text-amber-600 dark:text-amber-300">
                     auto_awesome
                   </span>
-                  <span>{item}</span>
+                  <span className="min-w-0 flex-1">{parseInlineMarkdown(item)}</span>
                 </div>
               ))}
             </div>
