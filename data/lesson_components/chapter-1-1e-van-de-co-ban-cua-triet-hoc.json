@@ -8,7 +8,7 @@
       "1. Vấn đề cơ bản của triết học",
       "2. Hai trường phái triết học",
       "3. Ba hình thức của chủ nghĩa duy vật",
-      "4. Hai phái của chủ nghĩa duy tâm",
+      "4. Hai hình thức của chủ nghĩa duy tâm",
       "5. Nhất nguyên luận và nhị nguyên luận",
       "6. Mặt thứ hai của vấn đề cơ bản của triết học",
       "7. Phê phán của Ph. Ăngghen"
@@ -46,6 +46,24 @@
       "type": "image",
       "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/ngoi_nha.jpg",
       "caption": "Tổng quan ngôi nhà triết học"
+    },
+    {
+      "id": "media-basic-problem-kp",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/basic_problem_kp.jpg",
+      "caption": "Mảnh ghép Vấn đề cơ bản của Triết học"
+    },
+    {
+      "id": "media-two-schools-group",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/two_schools_group.jpg",
+      "caption": "Hai trường phái Triết học"
+    },
+    {
+      "id": "media-final-summary",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/final_summary.jpg",
+      "caption": "Đúc kết bài học"
     }
   ],
   "lessonFlow": [
@@ -308,6 +326,7 @@
       "id": "basic-problem-piece",
       "type": "knowledge_piece",
       "title": "Vấn đề cơ bản của triết học",
+      "linkedMediaId": "media-basic-problem-kp",
       "config": {
         "pieceId": "basic-problem-def",
         "label": "VẤN ĐỀ CƠ BẢN",
@@ -330,6 +349,7 @@
       "id": "schools-group",
       "type": "component_group",
       "title": "Hai trường phái Triết học",
+      "linkedMediaId": "media-two-schools-group",
       "navigation_config": {
         "shortLabel": "Trường phái"
       },
@@ -342,6 +362,7 @@
             "id": "schools-intro",
             "type": "markdown",
             "title": "Hai trường phái lớn",
+            "linkedMediaId": "media-two-schools-group",
             "config": {
               "content": "Việc giải quyết mặt thứ nhất của vấn đề cơ bản của triết học đã chia các nhà triết học thành hai trường phái lớn độc lập: Chủ nghĩa duy vật và Chủ nghĩa duy tâm. Hãy thử phân định các luận điểm cốt lõi dưới đây!"
             },
@@ -353,6 +374,7 @@
             "id": "schools-sorting",
             "type": "category_sorting",
             "title": "Phân loại luận điểm",
+            "linkedMediaId": "media-two-schools-group",
             "config": {
               "categories": [
                 {
@@ -540,7 +562,7 @@
     {
       "id": "idealism-sects-group",
       "type": "component_group",
-      "title": "Hai phái của Chủ nghĩa Duy tâm",
+      "title": "Hai hình thức của Chủ nghĩa Duy tâm",
       "navigation_config": {
         "shortLabel": "Hình thức duy tâm"
       },
@@ -554,7 +576,7 @@
             "type": "markdown",
             "title": "Sự phân nhánh của Duy tâm",
             "config": {
-              "content": "Chủ nghĩa duy tâm trong lịch sử không thuần nhất mà được chia thành hai phái lớn với bản chất nhận thức và nguồn gốc xã hội rất đặc thù. Hãy phân loại các đặc điểm dưới đây!"
+              "content": "Chủ nghĩa duy tâm trong lịch sử không thuần nhất mà được chia thành hai hình thức cơ bản với bản chất nhận thức và nguồn gốc xã hội rất đặc thù. Hãy phân loại các đặc điểm dưới đây!"
             },
             "completionRule": {
               "type": "viewed"
@@ -622,8 +644,8 @@
       "title": "Bản chất của Duy tâm",
       "config": {
         "pieceId": "idealism-sects-def",
-        "label": "HAI PHÁI DUY TÂM",
-        "shortLabel": "Hai phái duy tâm",
+        "label": "HAI HÌNH THỨC DUY TÂM",
+        "shortLabel": "Hai hình thức duy tâm",
         "icon": "cloud",
         "color": "from-purple-400 via-pink-500 to-primary-700",
         "summary": "Chủ nghĩa duy tâm tuyệt đối hóa phiến diện một mặt của nhận thức và thường làm cơ sở lý luận cho tôn giáo.",
@@ -632,7 +654,7 @@
           "Duy tâm khách quan coi thực tại được sinh ra từ một thực thể tinh thần khách quan (tinh thần tuyệt đối, ý niệm).",
           "Nguồn gốc xã hội gắn với sự tách rời lao động trí óc và chân tay, được các giai cấp thống trị bảo trợ lý luận."
         ],
-        "reward": "Bạn đã thu thập mảnh ghép: HAI PHÁI CỦA CHỦ NGHĨA DUY TÂM!"
+        "reward": "Bạn đã thu thập mảnh ghép: HAI HÌNH THỨC CỦA CHỦ NGHĨA DUY TÂM!"
       },
       "completionRule": {
         "type": "viewed"
@@ -723,8 +745,8 @@
       "title": "Số lượng bản nguyên",
       "config": {
         "pieceId": "monism-dualism-def",
-        "label": "NHẤT VY / NHỊ VY",
-        "shortLabel": "Nhất/Nhị nguyên",
+        "label": "NHẤT NGUYÊN LUẬN / NHỊ NGUYÊN LUẬN",
+        "shortLabel": "Nhất/Nhị nguyên luận",
         "icon": "filter_1",
         "color": "from-indigo-400 via-purple-500 to-primary-700",
         "summary": "Nhị nguyên luận xem vật chất và tinh thần là hai bản nguyên song song, nhưng xét đến cùng vẫn thuộc chủ nghĩa duy tâm.",
@@ -910,80 +932,15 @@
       }
     },
     {
-      "id": "lesson2-mindmap",
-      "type": "mindmap_reveal",
-      "title": "Sơ đồ tư duy bài học",
-      "config": {
-        "coreConcept": {
-          "title": "Vấn đề cơ bản của Triết học",
-          "icon": "psychology",
-          "subtitle": "Mối quan hệ Vật chất - Ý thức"
-        },
-        "nodes": [
-          {
-            "id": "n1",
-            "title": "Vấn đề cơ bản",
-            "front": {
-              "title": "Vấn đề cơ bản",
-              "summary": "Mối quan hệ giữa vật chất và ý thức."
-            },
-            "back": {
-              "title": "Hai mặt của vấn đề",
-              "description": "Mặt 1: Bản thể luận (Cái nào quyết định?). Mặt 2: Nhận thức luận (Con người có thể nhận thức được thế giới?)."
-            }
-          },
-          {
-            "id": "n2",
-            "title": "Trường phái chính",
-            "front": {
-              "title": "Hai trường phái chính",
-              "summary": "Chủ nghĩa duy vật và Chủ nghĩa duy tâm."
-            },
-            "back": {
-              "title": "Duy vật vs Duy tâm",
-              "description": "Duy vật: Giới tự nhiên quyết định ý thức. Duy tâm: Ý thức quyết định tự nhiên."
-            }
-          },
-          {
-            "id": "n3",
-            "title": "Số lượng bản nguyên",
-            "front": {
-              "title": "Bản nguyên học thuyết",
-              "summary": "Nhất nguyên luận và Nhị nguyên luận."
-            },
-            "back": {
-              "title": "Nhất nguyên vs Nhị nguyên",
-              "description": "Nhất nguyên: 1 nguồn gốc (vật chất HOẶC tinh thần). Nhị nguyên: 2 nguồn gốc song song (Descartes)."
-            }
-          },
-          {
-            "id": "n4",
-            "title": "Khả năng nhận thức",
-            "front": {
-              "title": "Nhận thức luận",
-              "summary": "Khả tri, Bất khả tri và Hoài nghi luận."
-            },
-            "back": {
-              "title": "Khả tri vs Bất khả tri",
-              "description": "Khả tri: Nhận thức được bản chất. Bất khả tri: Phủ nhận (Kant, Hume). Hoài nghi: Hoài nghi tri thức."
-            }
-          }
-        ],
-        "summary": "Tóm tắt: Vấn đề cơ bản lớn nhất của triết học là mối quan hệ giữa vật chất và ý thức, chi phối toàn bộ tiến trình lịch sử đấu tranh giữa các trường phái duy vật - duy tâm, khả tri - bất khả tri."
-      },
-      "completionRule": {
-        "type": "viewed"
-      }
-    },
-    {
       "id": "final",
       "type": "final_summary",
       "title": "Đúc kết bài học",
+      "linkedMediaId": "media-final-summary",
       "config": {
         "message": "Bạn đã xuất sắc hoàn thành bài học về Vấn đề cơ bản của Triết học!",
         "keyTakeaways": [
           "Vấn đề cơ bản của triết học là mối quan hệ giữa vật chất với ý thức (giữa tư duy với tồn tại), gồm hai mặt rõ rệt.",
-          "Cách giải quyết mặt thứ nhất chia triết học thành Chủ nghĩa duy vật (chất phác, siêu hình, biện chứng) và Chủ nghĩa duy tâm (gồm hai phái: chủ quan và khách quan).",
+          "Cách giải quyết mặt thứ nhất chia triết học thành Chủ nghĩa duy vật (chất phác, siêu hình, biện chứng) và Chủ nghĩa duy tâm (gồm hai hình thức: chủ quan và khách quan).",
           "Cách giải quyết mặt thứ hai phân định thành Thuyết khả tri (thừa nhận năng lực nhận thức của con người), Thuyết bất khả tri (Kant, Hume) và Hoài nghi luận.",
           "Ph. Ăngghen khẳng định khả năng nhận thức vô tận thông qua thực tiễn, biến 'vật tự nó' thành 'vật cho ta'."
         ],
