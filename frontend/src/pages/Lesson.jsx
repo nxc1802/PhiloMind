@@ -373,7 +373,13 @@ const Lesson = () => {
               } else if (titleLower.includes("lịch sử triết học")) {
                 groupTitle = "Quan niệm về nhận thức trong lịch sử triết học";
                 isSubItem = true;
-                customSubTopics = ["Quan niệm về nhận thức trong lịch sử triết học"];
+                customSubTopics = [
+                  "Khái niệm lý luận nhận thức",
+                  "Quan điểm của chủ nghĩa duy tâm về nhận thức",
+                  "Quan điểm của chủ nghĩa hoài nghi",
+                  "Quan điểm của thuyết không thể biết",
+                  "Quan điểm của chủ nghĩa duy vật trước C. Mác",
+                ];
               } else if (
                 titleLower.includes("giai đoạn nhận thức") ||
                 titleLower.includes("thực tiễn") ||
