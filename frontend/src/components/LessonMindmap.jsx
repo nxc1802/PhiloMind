@@ -40,12 +40,13 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
 
   return (
     <div className="flex items-start gap-4">
+      {/* Connector line from Chapter tree */}
       <div className="flex items-center pt-6 shrink-0">
         <div className="h-0.5 w-8 bg-slate-300 dark:bg-primary-850" />
       </div>
 
       <div className="flex-1 text-left">
-        {/* Click đề mục -> mở bài học đầu tiên của đề mục đó */}
+        {/* Section Badge (Tier 2): e.g. "I. Triết học và vấn đề cơ bản của Triết học" */}
         <button
           onClick={() => onOpenLesson((section.lessons || [])[0]?.slug)}
           className="group inline-flex items-center gap-2 bg-white dark:bg-surface-dark-elevated border-2 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-5 py-2.5 rounded-3xl shadow-sm hover:bg-primary-650 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-lg hover:-translate-y-0.5"
@@ -57,42 +58,60 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
           </span>
         </button>
 
-        <div className="mt-4 ml-8 space-y-4 relative">
-          <div className="absolute left-0 top-0 bottom-3 w-0.5 bg-slate-200 dark:bg-primary-850" />
-          {groups.map((group, gIdx) => {
-            const showGroupHeader = group.hasMultiple && group.title;
+        {/* Section Items Tree */}
+        <div className="mt-4 ml-8 space-y-6 relative">
+          {/* Main Vertical Line for Section */}
+          <div className="absolute left-0 top-0 bottom-4 w-0.5 bg-slate-300 dark:bg-primary-850" />
 
-            return (
-              <div key={gIdx} className="space-y-3 relative pl-3">
-                {showGroupHeader && (
-                  <div className="flex items-center gap-2">
-                    <div className="h-0.5 w-4 bg-slate-300 dark:bg-primary-800" />
-                    <div className="inline-flex items-center gap-2 bg-slate-100 dark:bg-primary-900/30 text-slate-800 dark:text-primary-200 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-205 dark:border-primary-800/40">
-                      <span className="material-symbols-outlined text-xs text-primary-600 dark:text-primary-400">
+          {groups.map((group, gIdx) => {
+            const hasMultipleSubLessons = group.hasMultiple && group.lessons && group.lessons.length > 1;
+
+            if (hasMultipleSubLessons) {
+              const firstSubLesson = group.lessons[0];
+
+              return (
+                <div key={gIdx} className="relative pl-6 space-y-3">
+                  {/* Horizontal Connector to Tier-3 Parent Button */}
+                  <div className="absolute left-0 top-5 w-6 h-0.5 bg-slate-300 dark:bg-primary-850" />
+
+                  {/* Tier 3 Parent Button (Full-sized button!) */}
+                  <div className="relative inline-block">
+                    <button
+                      onClick={() => onOpenLesson(firstSubLesson?.slug)}
+                      className="group inline-flex items-center gap-2.5 bg-white dark:bg-surface-dark-elevated border-2 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-5 py-2.5 rounded-3xl shadow-sm hover:bg-primary-600 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-md"
+                    >
+                      <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-400 group-hover:text-white">
                         folder_open
                       </span>
-                      {group.title}
-                    </div>
+                      <span>{group.title}</span>
+                      <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                        chevron_right
+                      </span>
+                    </button>
                   </div>
-                )}
 
-                <div className={`space-y-3 ${showGroupHeader ? "ml-2" : ""}`}>
-                  {(group.lessons || []).map((lesson) => {
-                    const isActive = lesson.slug === activeSlug;
-                    const status =
-                      progressMap[lesson.id] ||
-                      progressMap[lesson.slug] ||
-                      progressMap[lesson.title] ||
-                      progressMap[lesson.originalTitle] ||
-                      'locked';
-                    const isLocked = status === 'locked' || status === 'content_locked';
-                    const isContentLocked = status === 'content_locked';
-                    const isCompleted = status === 'completed';
+                  {/* Nested Sub-lessons Branching Line & Sub-buttons */}
+                  <div className="ml-6 space-y-2.5 relative pl-6 py-1">
+                    {/* Vertical Branch Line for Sub-lessons */}
+                    <div className="absolute left-0 top-0 bottom-3 w-0.5 bg-slate-300 dark:bg-primary-850" />
 
-                    return (
-                      <div key={lesson.id} className="flex flex-col gap-2">
-                        <div className="flex items-center gap-3">
-                          <div className="h-0.5 w-5 bg-slate-250 dark:bg-primary-850" />
+                    {group.lessons.map((lesson) => {
+                      const isActive = lesson.slug === activeSlug;
+                      const status =
+                        progressMap[lesson.id] ||
+                        progressMap[lesson.slug] ||
+                        progressMap[lesson.title] ||
+                        progressMap[lesson.originalTitle] ||
+                        'locked';
+                      const isLocked = status === 'locked' || status === 'content_locked';
+                      const isContentLocked = status === 'content_locked';
+                      const isCompleted = status === 'completed';
+
+                      return (
+                        <div key={lesson.id} className="relative flex items-center gap-3">
+                          {/* Horizontal Connector to Sub-button */}
+                          <div className="absolute left-0 top-1/2 -translate-y-1/2 -ml-6 w-6 h-0.5 bg-slate-300 dark:bg-primary-850" />
+
                           <button
                             onClick={() => onOpenLesson(lesson.slug)}
                             className={`group flex items-center gap-2 px-4 py-2 rounded-3xl border transition-all text-sm font-semibold hover:shadow-md ${
@@ -131,10 +150,73 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
                             )}
                           </button>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
+              );
+            }
+
+            // Standalone Single Tier 3 Lesson Button (Same size, font & alignment!)
+            return (
+              <div key={gIdx} className="space-y-3 relative pl-6">
+                {/* Horizontal Connector */}
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-6 h-0.5 bg-slate-300 dark:bg-primary-850" />
+
+                {(group.lessons || []).map((lesson) => {
+                  const isActive = lesson.slug === activeSlug;
+                  const status =
+                    progressMap[lesson.id] ||
+                    progressMap[lesson.slug] ||
+                    progressMap[lesson.title] ||
+                    progressMap[lesson.originalTitle] ||
+                    'locked';
+                  const isLocked = status === 'locked' || status === 'content_locked';
+                  const isContentLocked = status === 'content_locked';
+                  const isCompleted = status === 'completed';
+
+                  return (
+                    <div key={lesson.id} className="flex items-center gap-3">
+                      <button
+                        onClick={() => onOpenLesson(lesson.slug)}
+                        className={`group flex items-center gap-2.5 px-5 py-2.5 rounded-3xl border-2 transition-all text-sm font-bold hover:shadow-md ${
+                          isLocked
+                            ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
+                            : isActive
+                              ? "bg-primary-600 text-white border-primary-600 shadow-md"
+                              : isCompleted
+                                ? "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-300 dark:border-green-800/40 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white"
+                                : "bg-white dark:bg-surface-dark-elevated text-primary-700 dark:text-primary-350 border-primary-600 dark:border-primary-400 hover:bg-primary-600 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950"
+                        }`}
+                      >
+                        <span
+                          className={`material-symbols-outlined text-base transition-colors ${
+                            isLocked
+                              ? "text-slate-400"
+                              : isActive
+                                ? "text-white"
+                                : isCompleted
+                                  ? "text-green-600 dark:text-green-400 group-hover:text-white"
+                                  : "text-primary-600 dark:text-primary-300 group-hover:text-white"
+                          }`}
+                        >
+                          {isContentLocked ? "lock_clock" : isLocked ? "lock" : isCompleted ? "check_circle" : "menu_book"}
+                        </span>
+                        {lesson.title}
+                        {isContentLocked && (
+                          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
+                            Sắp có
+                          </span>
+                        )}
+                        {!isLocked && (
+                          <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            chevron_right
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             );
           })}

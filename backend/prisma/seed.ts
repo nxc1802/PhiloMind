@@ -1267,7 +1267,7 @@ async function main() {
       summary:
         "Vật chất là thực tại khách quan tồn tại độc lập với ý thức; vận động, không gian và thời gian là phương thức và hình thức tồn tại của vật chất.",
       originalText:
-        "1. Vật chất và phương thức tồn tại của vật chất\na) Quan niệm của chủ nghĩa duy tâm và chủ nghĩa duy vật trước C. Mác về phạm trù vật chất\nb) Cuộc cách mạng trong khoa học tự nhiên cuối thế kỉ XIX, đầu thế kỉ XX và sự phá sản của các quan điểm duy vật siêu hình về vật chất\nc) Quan niệm của triết học Mác - Lênin về vật chất\nd) Phương thức tồn tại của vật chất\nđ) Tính thống nhất vật chất của thế giới",
+        "Quan niệm của chủ nghĩa duy tâm và chủ nghĩa duy vật trước C. Mác về phạm trù vật chất\nCuộc cách mạng trong khoa học tự nhiên cuối thế kỉ XIX, đầu thế kỉ XX và sự phá sản của các quan điểm duy vật siêu hình về vật chất\nQuan niệm của triết học Mác - Lênin về vật chất\nPhương thức tồn tại của vật chất\nTính thống nhất vật chất của thế giới",
       quickTake: "Vật chất là thực tại khách quan tồn tại độc lập với ý thức.",
       difficulty: "Hard",
       timeToRead: "15 min read",
@@ -1282,7 +1282,7 @@ async function main() {
       summary:
         "Ý thức có nguồn gốc tự nhiên và nguồn gốc xã hội; bản chất là hình ảnh chủ quan của thế giới khách quan.",
       originalText:
-        "2. Nguồn gốc, bản chất và kết cấu của ý thức\na) Nguồn gốc của ý thức\nb) Bản chất của ý thức\nc) Kết cấu của ý thức",
+        "Nguồn gốc của ý thức\nBản chất của ý thức\nKết cấu của ý thức",
       quickTake: "Ý thức là sự phản ánh năng động, sáng tạo bộ não người.",
       difficulty: "Hard",
       timeToRead: "12 min read",
@@ -1297,7 +1297,7 @@ async function main() {
       summary:
         "Vật chất quyết định ý thức; ý thức có tính độc lập tương đối và tác động trở lại thông qua thực tiễn.",
       originalText:
-        "3. Mối quan hệ giữa vật chất và ý thức\na) Quan điểm của chủ nghĩa duy tâm và duy vật siêu hình\nb) Quan điểm của chủ nghĩa duy vật biện chứng",
+        "Quan điểm của chủ nghĩa duy tâm và duy vật siêu hình\nQuan điểm của chủ nghĩa duy vật biện chứng",
       quickTake:
         "Vật chất quyết định ý thức; ý thức tác động trở lại qua thực tiễn.",
       difficulty: "Hard",
@@ -1313,7 +1313,7 @@ async function main() {
       summary:
         "Biện chứng khách quan và biện chứng chủ quan; phép biện chứng duy vật là khoa học về mối liên hệ phổ biến và sự phát triển.",
       originalText:
-        "1. Hai loại hình biện chứng và phép biện chứng duy vật\na) Hai loại hình biện chứng\nb) Khái niệm phép biện chứng duy vật",
+        "Hai loại hình biện chứng\nKhái niệm phép biện chứng duy vật",
       quickTake: "Tư duy biện chứng phản ánh sự vận động khách quan.",
       difficulty: "Medium",
       timeToRead: "10 min read",
@@ -1328,7 +1328,7 @@ async function main() {
       summary:
         "Hệ thống lý luận bao gồm 2 nguyên lý cơ bản, 6 cặp phạm trù và 3 quy luật cơ bản của phép biện chứng.",
       originalText:
-        "2. Nội dung của phép biện chứng duy vật\na) Hai nguyên lý của phép biện chứng duy vật\nb) Các cặp phạm trù cơ bản của phép biện chứng duy vật\nc) Các quy luật cơ bản của phép biện chứng duy vật",
+        "Hai nguyên lý của phép biện chứng duy vật\nCác cặp phạm trù cơ bản của phép biện chứng duy vật\nCác quy luật cơ bản của phép biện chứng duy vật",
       quickTake: "Nguyên lý, phạm trù và quy luật phản ánh sự phát triển.",
       difficulty: "Hard",
       timeToRead: "18 min read",
@@ -1343,7 +1343,7 @@ async function main() {
       summary:
         "Lịch sử nhận thức luận từ chủ nghĩa duy tâm, hoài nghi luận, thuyết bất khả tri đến hạn chế của duy vật trước Mác.",
       originalText:
-        "1. Quan niệm về nhận thức trong lịch sử triết học\n- Khái niệm lý luận nhận thức\n- Quan điểm của chủ nghĩa duy tâm về nhận thức\n- Quan điểm của chủ nghĩa hoài nghi\n- Quan điểm của thuyết không thể biết\n- Quan điểm của chủ nghĩa duy vật trước C. Mác",
+        "Khái niệm lý luận nhận thức\nQuan điểm của chủ nghĩa duy tâm về nhận thức\nQuan điểm của chủ nghĩa hoài nghi\nQuan điểm của thuyết không thể biết\nQuan điểm của chủ nghĩa duy vật trước C. Mác",
       quickTake: "Các quan điểm nhận thức luận trong lịch sử triết học.",
       difficulty: "Medium",
       timeToRead: "9 min read",
@@ -1358,7 +1358,7 @@ async function main() {
       summary:
         "Bản chất của nhận thức, vai trò của thực tiễn, các giai đoạn nhận thức và quan điểm về chân lý.",
       originalText:
-        "2. Lý luận nhận thức duy vật biện chứng\na) Nguồn gốc, bản chất của nhận thức\nb) Thực tiễn và vai trò của thực tiễn đối với nhận thức\nc) Các giai đoạn của quá trình nhận thức\nd) Quan điểm của CNDVBC về chân lý",
+        "Nguồn gốc, bản chất của nhận thức\nThực tiễn và vai trò của thực tiễn đối với nhận thức\nCác giai đoạn của quá trình nhận thức\nQuan điểm của CNDVBC về chân lý",
       quickTake: "Thực tiễn là cơ sở nhận thức và tiêu chuẩn chân lý.",
       difficulty: "Hard",
       timeToRead: "15 min read",
