@@ -115,7 +115,7 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
                           {/* Tier 4 Sub-lesson Button */}
                           <button
                             onClick={() => onOpenLesson(lesson.slug)}
-                            className={`group flex items-center gap-1.5 px-3 py-1 rounded-lg border transition-all text-xs font-normal hover:shadow-xs ${
+                            className={`group flex items-center gap-1.5 px-3 py-1 rounded-2xl border transition-all text-xs font-normal hover:shadow-xs ${
                               isLocked
                                 ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
                                 : isActive
