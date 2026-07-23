@@ -28,8 +28,163 @@
       "final_summary"
     ]
   },
-  "lessonMedia": [],
+  "lessonMedia": [
+    {
+      "id": "media-house-design-materials",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/house_design_materials.jpg",
+      "caption": "Mối quan hệ giữa bản thiết kế và vật liệu xây dựng ngôi nhà"
+    },
+    {
+      "id": "media-house-laws-cognition",
+      "type": "image",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/house_laws_cognition.jpg",
+      "caption": "Khả năng hiểu biết 100% các quy luật tự nhiên tác động lên ngôi nhà"
+    }
+  ],
   "lessonFlow": [
+    {
+      "id": "warmup-house-origin-group",
+      "type": "component_group",
+      "title": "Khởi động: Ngôi nhà & Nguồn gốc",
+      "navigation_config": {
+        "shortLabel": "Khởi động 1"
+      },
+      "config": {
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "warmup-house-media-1",
+            "type": "media",
+            "title": "Hình ảnh ngôi nhà",
+            "config": {
+              "mediaType": "image",
+              "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/house_design_materials.jpg",
+              "caption": "Mối quan hệ giữa bản thiết kế và vật liệu xây dựng"
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "warmup-house-q1-mcq",
+            "type": "mcq",
+            "title": "Câu hỏi 1: Cái gì có trước?",
+            "config": {
+              "question": "Để ngôi nhà này xuất hiện trên thực tế, Bản thiết kế/Ý tưởng trong đầu kiến trúc sư có trước, hay Đất đá, gạch, sắt thép có trước?",
+              "options": [
+                {
+                  "id": "opt1",
+                  "text": "Ý tưởng phải có trước, không có bản thiết kế và ý chí con người thì gạch đá mãi chỉ là đống vôi vữa vô hại.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt2",
+                  "text": "Đất, đá, vật liệu phải có sẵn trong tự nhiên thì bộ não con người mới dựa vào đó để tưởng tượng ra bản thiết kế.",
+                  "isCorrect": true
+                }
+              ],
+              "correctFeedback": "Góc nhìn rất tuyệt vời! Cả hai lựa chọn đều thể hiện góc nhìn hợp lý về vai trò của ý thức và vật chất.",
+              "wrongFeedback": "Đáp án nào cũng chứa đựng hạt nhân lý luận hợp lý!"
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          },
+          {
+            "id": "warmup-house-q2-mcq",
+            "type": "mcq",
+            "title": "Câu hỏi 2: Nguyên nhân quyết định?",
+            "config": {
+              "question": "Khi ngôi nhà bị đổ sập bởi một thiên tai, nguyên nhân quyết định đến từ sự tác động của lực vật chất (động đất, bão) hay từ sự thiếu sót trong tư duy/ý chí của con người?",
+              "options": [
+                {
+                  "id": "opt1",
+                  "text": "Sự tác động của các yếu tố bên ngoài",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt2",
+                  "text": "Sự sai sót trong tư duy, ý chí của con người",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt3",
+                  "text": "Cả 2 ý trên",
+                  "isCorrect": true
+                }
+              ],
+              "correctFeedback": "Chính xác! Cả 3 lựa chọn đều là những góc nhìn suy ngẫm triết học sâu sắc.",
+              "wrongFeedback": "Tất cả các đáp án đều hoàn toàn đúng!"
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "all"
+      }
+    },
+    {
+      "id": "warmup-house-cognition-group",
+      "type": "component_group",
+      "title": "Khởi động: Khả năng nhận thức",
+      "navigation_config": {
+        "shortLabel": "Khởi động 2"
+      },
+      "config": {
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "warmup-house-media-2",
+            "type": "media",
+            "title": "Hình ảnh khám phá ngôi nhà",
+            "config": {
+              "mediaType": "image",
+              "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.e/house_laws_cognition.jpg",
+              "caption": "Trí tuệ con người đối với các quy luật tự nhiên"
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "warmup-house-cognition-mcq",
+            "type": "mcq",
+            "title": "Khả năng nhận thức 100% quy luật",
+            "config": {
+              "question": "Giả sử ngôi nhà này chứa đựng hàng ngàn chi tiết từ móng ngầm, kết cấu bê tông đến các hiện tượng vật lý bên trong. Liệu trí tuệ con người có thể hiểu biết 100% tất cả các quy luật tự nhiên đang tác động lên ngôi nhà này không? Hay chúng ta chỉ hiểu được một phần, còn lại vẫn nằm ngoài tầm kiểm soát?",
+              "options": [
+                {
+                  "id": "opt1",
+                  "text": "Phe 'Tin tưởng': Con người hoàn toàn có khả năng khám phá và hiểu hết mọi quy luật của thế giới (Khả知).",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt2",
+                  "text": "Phe 'Hoài nghi': Nhận thức của con người luôn có giới hạn, thế giới tự nhiên còn rất nhiều bí ẩn vượt quá khả năng tư duy (Bất khả知).",
+                  "isCorrect": true
+                }
+              ],
+              "correctFeedback": "Rất chính xác! Bạn đã tiếp cận đúng hai góc nhìn lớn trong triết học: Khả知 luận và Bất khả知 luận.",
+              "wrongFeedback": "Cả hai phe đều phát biểu những góc nhìn triết học quan trọng!"
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "all"
+      }
+    },
     {
       "id": "basic-problem-group-1",
       "type": "component_group",
@@ -47,7 +202,7 @@
             "type": "markdown",
             "title": "Vấn đề cơ bản",
             "config": {
-              "content": "Triết học, khác với một số loại hình nhận thức khác, trước khi giải quyết các vấn đề cụ thể của mình, nó buộc phải giải quyết một vấn đề có ý nghĩa nền tảng và là điểm xuất phát để giải quyết tất cả những vấn đề còn lại. Hãy cùng khám phá câu hỏi tối thượng này!"
+              "content": "Các bạn thấy đấy, cùng nhìn vào một Ngôi nhà, nhưng chúng ta lại có hai góc nhìn hoàn toàn trái ngược về việc CÁI GÌ CÓ TRƯỚC và KHẢ NĂNG NHẬN THỨC CỦA CHÚNG TA ĐẾN ĐÂU. Trong lịch sử nhân loại, hàng ngàn triết gia vĩ đại cũng đã tranh luận đúng hai câu hỏi này!\n\nĐó chính là vấn đề cơ bản của triết học. Vậy, vấn đề cơ bản của triết học là gì?"
             },
             "completionRule": {
               "type": "viewed"
