@@ -41,27 +41,27 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
   return (
     <div className="flex items-start gap-4">
       {/* Connector line from Chapter tree */}
-      <div className="flex items-center pt-6 shrink-0">
-        <div className="h-0.5 w-8 bg-slate-300 dark:bg-primary-850" />
+      <div className="flex items-center pt-5 shrink-0">
+        <div className="h-0.5 w-7 bg-slate-300 dark:bg-primary-850" />
       </div>
 
       <div className="flex-1 text-left">
-        {/* Section Badge (Tier 2): Largest Header Badge e.g. "I. Triết học và vấn đề cơ bản của Triết học" */}
+        {/* Section Badge (Tier 2): Sleek Compact Header Badge */}
         <button
           onClick={() => onOpenLesson((section.lessons || [])[0]?.slug)}
-          className="group inline-flex items-center gap-2.5 bg-white dark:bg-surface-dark-elevated border-2 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-6 py-3 rounded-3xl shadow-sm hover:bg-primary-650 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-lg hover:-translate-y-0.5"
+          className="group inline-flex items-center gap-2 bg-white dark:bg-surface-dark-elevated border-1.5 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-4 py-2 rounded-2xl shadow-sm hover:bg-primary-650 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-md hover:-translate-y-0.5 text-sm"
         >
-          <span className="material-symbols-outlined text-lg">topic</span>
-          <span className="text-base">{section.title}</span>
-          <span className="material-symbols-outlined text-base opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="material-symbols-outlined text-base">topic</span>
+          <span>{section.title}</span>
+          <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
             arrow_forward
           </span>
         </button>
 
         {/* Section Items Tree */}
-        <div className="mt-4 ml-8 space-y-5 relative">
+        <div className="mt-3.5 ml-7 space-y-4 relative">
           {/* Main Vertical Line for Section */}
-          <div className="absolute left-0 top-0 bottom-4 w-0.5 bg-slate-300 dark:bg-primary-850" />
+          <div className="absolute left-0 top-0 bottom-3 w-0.5 bg-slate-300 dark:bg-primary-850" />
 
           {groups.map((group, gIdx) => {
             const hasMultipleSubLessons = group.hasMultiple && group.lessons && group.lessons.length > 1;
@@ -70,30 +70,30 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
               const firstSubLesson = group.lessons[0];
 
               return (
-                <div key={gIdx} className="relative pl-6 space-y-3">
+                <div key={gIdx} className="relative pl-5 space-y-2.5">
                   {/* Horizontal Connector to Tier-3 Parent Button */}
-                  <div className="absolute left-0 top-4.5 w-6 h-0.5 bg-slate-300 dark:bg-primary-850" />
+                  <div className="absolute left-0 top-4 w-5 h-0.5 bg-slate-300 dark:bg-primary-850" />
 
-                  {/* Tier 3 Parent Button (Medium-sized topic button - smaller than Tier 2!) */}
+                  {/* Tier 3 Parent Button (Compact topic node) */}
                   <div className="relative inline-block">
                     <button
                       onClick={() => onOpenLesson(firstSubLesson?.slug)}
-                      className="group inline-flex items-center gap-2 bg-white dark:bg-surface-dark-elevated border-1.5 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-semibold px-4 py-2 rounded-2xl shadow-sm hover:bg-primary-600 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-md text-sm"
+                      className="group inline-flex items-center gap-2 bg-white dark:bg-surface-dark-elevated border border-primary-500/70 dark:border-primary-400/60 text-primary-700 dark:text-primary-300 font-semibold px-3.5 py-1.5 rounded-xl shadow-xs hover:bg-primary-600 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all text-xs md:text-sm"
                     >
-                      <span className="material-symbols-outlined text-base text-primary-600 dark:text-primary-400 group-hover:text-white">
+                      <span className="material-symbols-outlined text-xs md:text-sm text-primary-600 dark:text-primary-400 group-hover:text-white">
                         folder_open
                       </span>
                       <span>{group.title}</span>
-                      <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                         chevron_right
                       </span>
                     </button>
                   </div>
 
                   {/* Nested Sub-lessons Branching Line & Sub-buttons (Tier 4) */}
-                  <div className="ml-5 space-y-2 relative pl-5 py-0.5">
+                  <div className="ml-4 space-y-1.5 relative pl-4 py-0.5">
                     {/* Vertical Branch Line for Sub-lessons */}
-                    <div className="absolute left-0 top-0 bottom-3 w-0.5 bg-slate-300 dark:bg-primary-850" />
+                    <div className="absolute left-0 top-0 bottom-2.5 w-0.5 bg-slate-300 dark:bg-primary-850" />
 
                     {group.lessons.map((lesson) => {
                       const isActive = lesson.slug === activeSlug;
@@ -108,25 +108,25 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
                       const isCompleted = status === 'completed';
 
                       return (
-                        <div key={lesson.id} className="relative flex items-center gap-2.5">
+                        <div key={lesson.id} className="relative flex items-center gap-2">
                           {/* Horizontal Connector to Sub-button */}
-                          <div className="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 w-5 h-0.5 bg-slate-300 dark:bg-primary-850" />
+                          <div className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 w-4 h-0.5 bg-slate-300 dark:bg-primary-850" />
 
-                          {/* Tier 4 Sub-lesson Button (Smaller than Tier 3!) */}
+                          {/* Tier 4 Sub-lesson Button */}
                           <button
                             onClick={() => onOpenLesson(lesson.slug)}
-                            className={`group flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border transition-all text-xs font-medium hover:shadow-sm ${
+                            className={`group flex items-center gap-1.5 px-3 py-1 rounded-lg border transition-all text-xs font-normal hover:shadow-xs ${
                               isLocked
                                 ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
                                 : isActive
-                                  ? "bg-primary-600 text-white border-primary-600 shadow-sm"
+                                  ? "bg-primary-600 text-white border-primary-600 shadow-xs font-medium"
                                   : isCompleted
                                     ? "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-300 dark:border-green-800/40 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white"
-                                    : "bg-primary-50/50 dark:bg-primary-900/10 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white text-slate-800 dark:text-slate-200 border-slate-200 dark:border-primary-850 hover:border-primary-600"
+                                    : "bg-primary-50/40 dark:bg-primary-900/10 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white text-slate-800 dark:text-slate-200 border-slate-200 dark:border-primary-850 hover:border-primary-600"
                             }`}
                           >
                             <span
-                              className={`material-symbols-outlined text-xs transition-colors ${
+                              className={`material-symbols-outlined text-[13px] transition-colors ${
                                 isLocked
                                   ? "text-slate-400"
                                   : isActive
@@ -145,7 +145,7 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
                               </span>
                             )}
                             {!isLocked && (
-                              <span className="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                              <span className="material-symbols-outlined text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">
                                 chevron_right
                               </span>
                             )}
@@ -158,11 +158,11 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
               );
             }
 
-            // Standalone Single Tier 3 Lesson Button (Medium size - smaller than Tier 2!)
+            // Standalone Single Tier 3 Lesson Button
             return (
-              <div key={gIdx} className="space-y-3 relative pl-6">
+              <div key={gIdx} className="space-y-2.5 relative pl-5">
                 {/* Horizontal Connector */}
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-6 h-0.5 bg-slate-300 dark:bg-primary-850" />
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-0.5 bg-slate-300 dark:bg-primary-850" />
 
                 {(group.lessons || []).map((lesson) => {
                   const isActive = lesson.slug === activeSlug;
@@ -177,21 +177,21 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
                   const isCompleted = status === 'completed';
 
                   return (
-                    <div key={lesson.id} className="flex items-center gap-3">
+                    <div key={lesson.id} className="flex items-center gap-2.5">
                       <button
                         onClick={() => onOpenLesson(lesson.slug)}
-                        className={`group flex items-center gap-2 px-4 py-2 rounded-2xl border-1.5 transition-all text-sm font-semibold hover:shadow-md ${
+                        className={`group flex items-center gap-2 px-3.5 py-1.5 rounded-xl border transition-all text-xs md:text-sm font-semibold hover:shadow-sm ${
                           isLocked
                             ? "bg-slate-100 dark:bg-primary-900/10 text-slate-400 dark:text-primary-500 border-slate-200 dark:border-primary-850 cursor-not-allowed opacity-60"
                             : isActive
-                              ? "bg-primary-600 text-white border-primary-600 shadow-md"
+                              ? "bg-primary-600 text-white border-primary-600 shadow-sm"
                               : isCompleted
                                 ? "bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-300 border-green-300 dark:border-green-800/40 hover:bg-primary-600 dark:hover:bg-primary-450 hover:text-white"
-                                : "bg-white dark:bg-surface-dark-elevated text-primary-700 dark:text-primary-350 border-primary-600 dark:border-primary-400 hover:bg-primary-600 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950"
+                                : "bg-white dark:bg-surface-dark-elevated text-primary-700 dark:text-primary-350 border-primary-500/70 dark:border-primary-400/60 hover:bg-primary-600 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950"
                         }`}
                       >
                         <span
-                          className={`material-symbols-outlined text-base transition-colors ${
+                          className={`material-symbols-outlined text-sm transition-colors ${
                             isLocked
                               ? "text-slate-400"
                               : isActive
@@ -205,12 +205,12 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
                         </span>
                         {lesson.title}
                         {isContentLocked && (
-                          <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
+                          <span className="text-[9px] font-bold uppercase tracking-wide text-slate-400 dark:text-primary-500">
                             Sắp có
                           </span>
                         )}
                         {!isLocked && (
-                          <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                          <span className="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                             chevron_right
                           </span>
                         )}

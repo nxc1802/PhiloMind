@@ -200,10 +200,11 @@ const Lesson = () => {
     });
   }, [activeLesson, allJourneyNodes, queryClient, user?.id]);
 
-  // Helper to clean title prefixes like "1. ", "a. ", "b. ", "a) ", "- "
+  // Helper to clean title prefixes like "I. ", "1. ", "a. ", "b. ", "a) ", "- "
   const cleanTitle = (title) => {
     if (!title) return "";
     return title
+      .replace(/^(I|II|III|IV|V|VI|VII|VIII|IX|X)\.\s+/i, "")
       .replace(/^([0-9]+\.|[a-zđ]\.|\b[a-zđ]\))\s+/i, "")
       .replace(/^[-*•]\s+/, "")
       .trim();

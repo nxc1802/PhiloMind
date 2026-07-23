@@ -630,7 +630,7 @@ async function main() {
 
   const ch1SectionIntro = await prisma.chapter.create({
     data: {
-      title: "I. Triết học và vấn đề cơ bản của Triết học",
+      title: "Triết học và vấn đề cơ bản của Triết học",
       orderIndex: 1,
       courseId: course.id,
       parentChapterId: chapter1.id,
@@ -640,7 +640,7 @@ async function main() {
   const ch1SectionMarxism = await prisma.chapter.create({
     data: {
       title:
-        "II. Triết học Mác – Lênin và vai trò của triết học Mác – Lênin trong đời sống xã hội",
+        "Triết học Mác – Lênin và vai trò của triết học Mác – Lênin trong đời sống xã hội",
       orderIndex: 2,
       courseId: course.id,
       parentChapterId: chapter1.id,
@@ -1236,7 +1236,7 @@ async function main() {
 
   const ch2SectionMatter = await prisma.chapter.create({
     data: {
-      title: "I. VẬT CHẤT VÀ Ý THỨC",
+      title: "Vật chất và ý thức",
       orderIndex: 1,
       courseId: course.id,
       parentChapterId: chapter2.id,
@@ -1245,7 +1245,7 @@ async function main() {
 
   const ch2SectionDialectics = await prisma.chapter.create({
     data: {
-      title: "II. PHÉP BIỆN CHỨNG DUY VẬT",
+      title: "Phép biện chứng duy vật",
       orderIndex: 2,
       courseId: course.id,
       parentChapterId: chapter2.id,
@@ -1254,7 +1254,7 @@ async function main() {
 
   const ch2SectionKnowledge = await prisma.chapter.create({
     data: {
-      title: "III. LÝ LUẬN NHẬN THỨC",
+      title: "Lý luận nhận thức",
       orderIndex: 3,
       courseId: course.id,
       parentChapterId: chapter2.id,
