@@ -313,49 +313,88 @@ const Lesson = () => {
             }
             // Custom grouping rules for Chapter 2
             else if (chap.orderIndex === 2 || chap.title.includes("Chương 2")) {
+              const titleLower = node.title.toLowerCase();
+              let customSubTopics = [];
+
               if (
-                node.title.includes("Phạm trù vật chất") ||
-                node.title.includes("Phương thức tồn tại")
+                titleLower.includes("phạm trù vật chất") ||
+                titleLower.includes("phương thức tồn tại")
               ) {
                 groupTitle = "Vật chất và phương thức tồn tại của vật chất";
                 isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
-              } else if (node.title.includes("kết cấu của ý thức")) {
+                if (titleLower.includes("phạm trù vật chất")) {
+                  customSubTopics = [
+                    "Quan niệm của chủ nghĩa duy tâm và chủ nghĩa duy vật trước C. Mác về phạm trù vật chất",
+                    "Cuộc cách mạng trong khoa học tự nhiên cuối thế kỉ XIX, đầu thế kỉ XX và sự phá sản của các quan điểm duy vật siêu hình về vật chất",
+                    "Quan niệm của triết học Mác - Lênin về vật chất",
+                  ];
+                } else {
+                  customSubTopics = [
+                    "Phương thức tồn tại của vật chất",
+                    "Tính thống nhất vật chất của thế giới",
+                  ];
+                }
+              } else if (titleLower.includes("kết cấu của ý thức") || titleLower.includes("bản chất và kết cấu")) {
                 groupTitle = "Nguồn gốc, bản chất và kết cấu của ý thức";
                 isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
-              } else if (node.title.includes("Mối quan hệ")) {
+                customSubTopics = [
+                  "Nguồn gốc của ý thức",
+                  "Bản chất của ý thức",
+                  "Kết cấu của ý thức",
+                ];
+              } else if (titleLower.includes("mối quan hệ")) {
                 groupTitle = "Mối quan hệ giữa vật chất và ý thức";
                 isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
-              } else if (node.title.includes("Hai loại hình biện chứng")) {
+                customSubTopics = [
+                  "Quan điểm của chủ nghĩa duy tâm và duy vật siêu hình",
+                  "Quan điểm của chủ nghĩa duy vật biện chứng",
+                ];
+              } else if (titleLower.includes("hai loại hình biện chứng")) {
                 groupTitle = "Hai loại hình biện chứng và phép biện chứng duy vật";
                 isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
+                customSubTopics = [
+                  "Hai loại hình biện chứng",
+                  "Khái niệm phép biện chứng duy vật",
+                ];
               } else if (
-                node.title.includes("Hai nguyên lý") ||
-                node.title.includes("phạm trù") ||
-                node.title.includes("quy luật")
+                titleLower.includes("hai nguyên lý") ||
+                titleLower.includes("các cặp phạm trù") ||
+                titleLower.includes("các quy luật")
               ) {
                 groupTitle = "Nội dung của phép biện chứng duy vật";
                 isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
-              } else if (node.title.includes("lịch sử triết học")) {
+                if (titleLower.includes("hai nguyên lý")) {
+                  customSubTopics = ["Hai nguyên lý của phép biện chứng duy vật"];
+                } else if (titleLower.includes("phạm trù")) {
+                  customSubTopics = ["Các cặp phạm trù cơ bản của phép biện chứng duy vật"];
+                } else {
+                  customSubTopics = ["Các quy luật cơ bản của phép biện chứng duy vật"];
+                }
+              } else if (titleLower.includes("lịch sử triết học")) {
                 groupTitle = "Quan niệm về nhận thức trong lịch sử triết học";
                 isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
+                customSubTopics = ["Quan niệm về nhận thức trong lịch sử triết học"];
               } else if (
-                node.title.includes("giai đoạn nhận thức") ||
-                node.title.includes("Thực tiễn") ||
-                node.title.includes("chân lý")
+                titleLower.includes("giai đoạn nhận thức") ||
+                titleLower.includes("thực tiễn") ||
+                titleLower.includes("chân lý")
               ) {
                 groupTitle = "Lý luận nhận thức duy vật biện chứng";
                 isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
+                if (titleLower.includes("giai đoạn nhận thức")) {
+                  customSubTopics = ["Nguồn gốc, bản chất và các giai đoạn nhận thức"];
+                } else if (titleLower.includes("thực tiễn")) {
+                  customSubTopics = ["Thực tiễn và vai trò của thực tiễn đối với nhận thức"];
+                } else {
+                  customSubTopics = ["Quan điểm của CNDVBC về chân lý"];
+                }
               } else {
                 groupTitle = null;
                 lessonTitle = cleanTitle(node.title);
               }
+
+              // Store custom subTopics for unpacking
+              node._customSubTopics = customSubTopics;
             }
 
             const mapKey = groupTitle || `single-${node.id}`;
@@ -364,7 +403,9 @@ const Lesson = () => {
             }
             const grp = groupsMap.get(mapKey);
             
-            const subTopics = extractSubTopics(node);
+            const customSubTopics = node._customSubTopics || [];
+            const subTopics = customSubTopics.length > 0 ? customSubTopics : extractSubTopics(node);
+
             if (isSubItem && subTopics && subTopics.length > 0) {
               grp.isMultiple = true;
               subTopics.forEach((subTitle, sIdx) => {
