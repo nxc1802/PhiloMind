@@ -382,13 +382,20 @@ const Lesson = () => {
                 ];
               } else if (
                 titleLower.includes("giai đoạn nhận thức") ||
+                titleLower.includes("bản chất và các giai đoạn") ||
                 titleLower.includes("thực tiễn") ||
                 titleLower.includes("chân lý")
               ) {
                 groupTitle = "Lý luận nhận thức duy vật biện chứng";
                 isSubItem = true;
-                if (titleLower.includes("giai đoạn nhận thức")) {
-                  customSubTopics = ["Nguồn gốc, bản chất và các giai đoạn nhận thức"];
+                if (
+                  titleLower.includes("giai đoạn nhận thức") ||
+                  titleLower.includes("bản chất và các giai đoạn")
+                ) {
+                  customSubTopics = [
+                    "Nguồn gốc, bản chất của nhận thức",
+                    "Các giai đoạn của quá trình nhận thức",
+                  ];
                 } else if (titleLower.includes("thực tiễn")) {
                   customSubTopics = ["Thực tiễn và vai trò của thực tiễn đối với nhận thức"];
                 } else {
