@@ -318,73 +318,60 @@ const Lesson = () => {
                 node.title.includes("Phương thức tồn tại")
               ) {
                 groupTitle = "Vật chất và phương thức tồn tại của vật chất";
-                isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
-              } else if (node.title.includes("kết cấu của ý thức")) {
+              } else if (
+                node.title.includes("kết cấu của ý thức") ||
+                node.title.includes("Nguồn gốc, bản chất")
+              ) {
                 groupTitle = "Nguồn gốc, bản chất và kết cấu của ý thức";
-                isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
               } else if (node.title.includes("Mối quan hệ")) {
                 groupTitle = "Mối quan hệ giữa vật chất và ý thức";
-                isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
               } else if (node.title.includes("Hai loại hình biện chứng")) {
                 groupTitle = "Hai loại hình biện chứng và phép biện chứng duy vật";
-                isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
               } else if (
                 node.title.includes("Hai nguyên lý") ||
                 node.title.includes("phạm trù") ||
                 node.title.includes("quy luật")
               ) {
                 groupTitle = "Nội dung của phép biện chứng duy vật";
-                isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
               } else if (node.title.includes("lịch sử triết học")) {
                 groupTitle = "Quan niệm về nhận thức trong lịch sử triết học";
-                isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
               } else if (
                 node.title.includes("giai đoạn nhận thức") ||
                 node.title.includes("Thực tiễn") ||
                 node.title.includes("chân lý")
               ) {
                 groupTitle = "Lý luận nhận thức duy vật biện chứng";
-                isSubItem = true;
-                lessonTitle = cleanTitle(node.title);
               } else {
-                groupTitle = null;
-                lessonTitle = cleanTitle(node.title);
+                groupTitle = cleanTitle(node.title);
               }
-            }
 
-            const mapKey = groupTitle || `single-${node.id}`;
-            if (!groupsMap.has(mapKey)) {
-              groupsMap.set(mapKey, { isMultiple: false, title: groupTitle, lessons: [] });
-            }
-            const grp = groupsMap.get(mapKey);
-            
-            const subTopics = extractSubTopics(node);
-            if (isSubItem && subTopics && subTopics.length > 0) {
+              const mapKey = groupTitle;
+              if (!groupsMap.has(mapKey)) {
+                groupsMap.set(mapKey, { isMultiple: true, title: groupTitle, lessons: [] });
+              }
+              const grp = groupsMap.get(mapKey);
               grp.isMultiple = true;
-              subTopics.forEach((subTitle, sIdx) => {
+
+              const subTopics = extractSubTopics(node);
+              if (subTopics && subTopics.length > 0) {
+                subTopics.forEach((subTitle, sIdx) => {
+                  grp.lessons.push({
+                    id: `${node.id}-sub-${sIdx}`,
+                    title: cleanTitle(subTitle),
+                    originalTitle: subTitle,
+                    slug: getSlugFromTitle(node.title),
+                    subTopics: [],
+                  });
+                });
+              } else {
                 grp.lessons.push({
-                  id: `${node.id}-sub-${sIdx}`,
-                  title: cleanTitle(subTitle),
-                  originalTitle: subTitle,
+                  id: node.id,
+                  title: cleanTitle(node.title),
+                  originalTitle: node.title,
                   slug: getSlugFromTitle(node.title),
                   subTopics: [],
                 });
-              });
-            } else {
-              if (isSubItem) grp.isMultiple = true;
-              grp.lessons.push({
-                id: node.id,
-                title: lessonTitle,
-                originalTitle: node.title,
-                slug: getSlugFromTitle(node.title),
-                subTopics: [],
-              });
+              }
             }
           });
 
