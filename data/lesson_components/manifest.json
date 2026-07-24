@@ -123,6 +123,12 @@
       "title": "Quan điểm của CNDVBC về chân lý",
       "file": "chuong2_chan_ly.json",
       "status": "converted"
+    },
+    {
+      "key": "2.3",
+      "title": "Nguồn gốc và bản chất của ý thức",
+      "file": "chuong2_nguon_goc_va_ban_chat_y_thuc.json",
+      "status": "converted"
     }
   ]
 }

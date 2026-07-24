@@ -220,9 +220,6 @@ export function MindmapRevealComponent({ component, onComplete }) {
               </span>
             </span>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                Khái niệm đích
-              </p>
               <p className="text-base font-extrabold leading-tight">
                 {parseInlineMarkdown(centerLabel)}
               </p>

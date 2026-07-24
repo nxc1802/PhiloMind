@@ -2155,6 +2155,12 @@ async function main() {
         "Tổng quan hệ thống kiến thức Triết học Mác - Lênin trực quan, sinh động giúp nắm bắt bản chất các quy luật triết học.",
       videoUrl: "https://www.youtube.com/watch?v=b2tmiYsk68A",
     },
+    {
+      title: "Tình huống Triết học - Thế giới quan",
+      description:
+        "Tình huống phân tích thế giới quan và phương pháp luận triết học trong đời sống.",
+      videoUrl: "https://www.youtube.com/watch?v=LkEYAdoZTU8",
+    },
   ];
 
   for (const item of philosofunVideos) {

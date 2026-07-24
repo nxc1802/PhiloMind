@@ -14,6 +14,8 @@
     "prisma:db-push": "prisma db push",
     "prisma:seed": "ts-node prisma/seed.ts",
     "reseed:lessons": "ts-node prisma/reseed_lessons.ts",
+    "reseed:quizzes": "ts-node prisma/reseed_quizzes.ts",
+    "reseed:documents": "ts-node prisma/reseed_documents.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

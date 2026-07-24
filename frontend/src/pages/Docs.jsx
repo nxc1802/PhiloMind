@@ -1,7 +1,7 @@
 import React from "react";
 import PageShell, { PageHero } from "../components/PageShell";
 import OnboardingGuide from "../components/OnboardingGuide";
-import { api } from "../services/api";
+import { api, resolveBackendAssetUrl } from "../services/api";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "../services/queryKeys";
 
@@ -13,15 +13,13 @@ export default function Docs() {
   });
   const dbDocs = dbDocsData || [];
 
-
-  const displayDocs = dbDocs.map(doc => ({
+  const displayDocs = dbDocs.map((doc) => ({
     id: doc.id,
     title: doc.title || doc.fileName,
     description: doc.description || "Tài liệu giáo trình học thuật thực tế được tải lên bởi Ban quản trị.",
-    pages: 120, // default placeholder
-    size: "Supabase Storage",
-    fileUrl: doc.fileUrl.startsWith('http') ? doc.fileUrl : `http://localhost:3001${doc.fileUrl}`,
-    isReal: true
+    fileUrl: resolveBackendAssetUrl(doc.fileUrl),
+    fileName: doc.fileName,
+    isReal: true,
   }));
 
   const handleDownload = (doc) => {

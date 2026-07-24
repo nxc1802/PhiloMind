@@ -353,7 +353,25 @@ export class CoursesService {
     });
 
     if (!chapters) throw new NotFoundException("Course journey not found");
-    return chapters;
+
+    return chapters.map((chap) => {
+      const nodes = chap.nodes || [];
+      const totalLessons = nodes.length;
+      const completedLessons = nodes.filter(
+        (n) =>
+          n.progress?.[0]?.status === "completed" ||
+          n.progress?.[0]?.lessonCompleted === true,
+      ).length;
+      const progressPercent =
+        totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+
+      return {
+        ...chap,
+        totalLessons,
+        completedLessons,
+        progressPercent,
+      };
+    });
   }
 
   async getNodeDetails(nodeId: string, userId: string, role?: string) {

@@ -247,7 +247,7 @@ export default function Practice() {
       <PageHero
         eyebrow="Tự luyện kiến thức"
         icon="fitness_center"
-        title="Practice Arena"
+        title="Khu Luyện Tập"
         subtitle="Rèn luyện thấu đáo các khái niệm, quy luật và hệ lý luận Triết học Mác - Lênin."
       />
 

@@ -5,6 +5,19 @@ const countSections = (chapter) => (chapter.sections || []).length;
 const countLessons  = (chapter) =>
   (chapter.sections || []).reduce((total, section) => total + (section.lessons || []).length, 0);
 
+// Helper tính số bài học hoàn thành trong một chương
+const countCompletedLessons = (chapter, progressMap = {}) => {
+  const allLessons = (chapter.sections || []).flatMap((s) => s.lessons || []);
+  return allLessons.filter((l) => {
+    const status =
+      progressMap[l.id] ||
+      progressMap[l.slug] ||
+      progressMap[l.title] ||
+      progressMap[l.originalTitle];
+    return status === "completed";
+  }).length;
+};
+
 // Lọc dữ liệu mindmap theo từ khoá; giữ đề mục/bài học/nội dung chi tiết khớp keyword
 function filterChaptersByKeyword(chapters, keyword) {
   const normalizedKeyword = keyword.trim().toLowerCase();
@@ -32,7 +45,7 @@ function filterChaptersByKeyword(chapters, keyword) {
     .filter((chapter) => (chapter.sections || []).length > 0);
 }
 
-// Nhánh nhỏ: 1 đề mục + danh sách bài học + nội dung chi tiết cấp thấp
+// Nhánh nhỏ: 1 đề mục (không click) + danh sách bài học bên trong
 function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
   const groups = section.groups || [
     { title: null, hasMultiple: false, lessons: section.lessons || [] }
@@ -46,17 +59,11 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
       </div>
 
       <div className="flex-1 text-left">
-        {/* Section Badge (Tier 2): Sleek Compact Header Badge */}
-        <button
-          onClick={() => onOpenLesson((section.lessons || [])[0]?.slug)}
-          className="group inline-flex items-center gap-2 bg-white dark:bg-surface-dark-elevated border-1.5 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-4 py-2 rounded-2xl shadow-sm hover:bg-primary-650 dark:hover:bg-primary-400 hover:text-white dark:hover:text-primary-950 transition-all hover:shadow-md hover:-translate-y-0.5 text-sm"
-        >
+        {/* Đề mục lớn - không link / click được */}
+        <div className="inline-flex items-center gap-2 bg-white dark:bg-surface-dark-elevated border-2 border-primary-600 dark:border-primary-400 text-primary-700 dark:text-primary-350 font-bold px-5 py-2.5 rounded-3xl shadow-sm text-sm">
           <span className="material-symbols-outlined text-base">topic</span>
-          <span>{section.title}</span>
-          <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-            arrow_forward
-          </span>
-        </button>
+          {section.title}
+        </div>
 
         {/* Section Items Tree */}
         <div className="mt-3.5 ml-7 space-y-4 relative">
@@ -229,6 +236,11 @@ function Branch({ section, activeSlug, onOpenLesson, progressMap }) {
 
 // Sơ đồ 1 chương: node gốc bên trái, các nhánh bên phải
 function ChapterMap({ chapter, activeSlug, onOpenLesson, progressMap }) {
+  const totalLessons = countLessons(chapter);
+  const completedLessons = countCompletedLessons(chapter, progressMap);
+  const progressPercent =
+    totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+
   return (
     <div className="py-6 mb-10 text-left border-b border-slate-205 dark:border-primary-900/20 last:border-0">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -248,7 +260,23 @@ function ChapterMap({ chapter, activeSlug, onOpenLesson, progressMap }) {
               </span>
               {countSections(chapter)} đề mục
               <span>·</span>
-              {countLessons(chapter)} bài học
+              {totalLessons} bài học
+            </div>
+
+            {/* Thanh tiến trình học theo từng chương */}
+            <div className="mt-4 pt-3 border-t border-white/20">
+              <div className="flex items-center justify-between text-xs font-bold text-white/90 mb-1.5">
+                <span>Tiến trình bài học</span>
+                <span>
+                  {completedLessons}/{totalLessons} ({progressPercent}%)
+                </span>
+              </div>
+              <div className="w-full h-2 bg-white/25 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-white rounded-full transition-all duration-500 shadow-sm"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
             </div>
           </div>
         </div>

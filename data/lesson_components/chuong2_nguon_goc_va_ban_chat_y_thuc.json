@@ -1,0 +1,453 @@
+{
+  "schemaVersion": 1,
+  "lessonKey": "2.3",
+  "title": "Nguồn gốc và bản chất của ý thức",
+  "sourceCoverage": {
+    "sourceFile": "../data/Chuong_02/content_workshop.md",
+    "sections": [
+      "Nguồn gốc của ý thức (Tự nhiên & Xã hội)",
+      "Bản chất của ý thức (Hình ảnh chủ quan của thế giới khách quan, tính sáng tạo)",
+      "Kết cấu của ý thức & Vấn đề Trí tuệ nhân tạo (AI)"
+    ]
+  },
+  "videoUrl": "https://www.youtube.com/watch?v=GuTfEheDvk0",
+  "lessonMedia": [
+    {
+      "id": "c2-consciousness-video",
+      "type": "video",
+      "url": "https://www.youtube.com/watch?v=GuTfEheDvk0",
+      "title": "Nguồn gốc, bản chất và kết cấu của ý thức",
+      "subtitle": "Video bài học chính",
+      "badge": "Video Bài học"
+    }
+  ],
+  "lessonFlow": [
+    {
+      "id": "c2-intro-group",
+      "type": "component_group",
+      "title": "Khởi động: Vùng đất Ý thức con người",
+      "linkedMediaId": "c2-consciousness-video",
+      "navigation_config": {
+        "shortLabel": "Khởi động"
+      },
+      "config": {
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "c2-intro-dialogue",
+            "type": "dialogue",
+            "title": "Lập trường Triết học về Ý thức",
+            "config": {
+              "characters": {
+                "guide": {
+                  "name": "Sophia",
+                  "role": "Người dẫn đường",
+                  "avatar": "guide",
+                  "color": "from-indigo-500 to-violet-600"
+                }
+              },
+              "lines": [
+                {
+                  "who": "guide",
+                  "text": "Chào mừng bạn đến với bài học 'Nguồn gốc, bản chất và kết cấu của ý thức'! Việc giải thích nguồn gốc của ý thức chính là thước đo phân định lập trường Duy vật hay Duy tâm trong lịch sử triết học."
+                },
+                {
+                  "who": "guide",
+                  "text": "Chỉ đến Chủ nghĩa duy vật biện chứng, nguồn gốc của ý thức mới được giải thích một cách khoa học trên cơ sở thống nhất giữa nguồn gốc TỰ NHIÊN và nguồn gốc XÃ HỘI."
+                }
+              ]
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "c2-intro-mcq",
+            "type": "mcq",
+            "title": "Lập trường triết học",
+            "config": {
+              "question": "Chủ nghĩa duy vật biện chứng giải thích nguồn gốc của ý thức dựa trên sự thống nhất giữa hai yếu tố nào?",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Nguồn gốc tự nhiên và nguồn gốc xã hội.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b",
+                  "text": "Nguồn gốc thần thánh và niềm tin tâm linh.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "c",
+                  "text": "Cảm giác cá nhân và sự hồi tưởng ý niệm.",
+                  "isCorrect": false
+                }
+              ],
+              "correctFeedback": "Chính xác! Duy vật biện chứng khẳng định ý thức là sự thống nhất giữa nguồn gốc tự nhiên (bộ óc người, thế giới khách quan) và nguồn gốc xã hội (lao động, ngôn ngữ).",
+              "wrongFeedback": "Chưa đúng. Hãy nhớ rằng duy vật biện chứng dựa trên khoa học: kết hợp tự nhiên và xã hội."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "all"
+      }
+    },
+    {
+      "id": "c2-origins-group",
+      "type": "component_group",
+      "title": "Nguồn gốc của Ý thức (Tự nhiên & Xã hội)",
+      "navigation_config": {
+        "shortLabel": "Nguồn gốc"
+      },
+      "config": {
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "c2-origins-content",
+            "type": "markdown",
+            "title": "Phân tích Hai Nguồn gốc Ý thức",
+            "config": {
+              "content": "### 1. Nguồn gốc Tự nhiên (Điều kiện Cần)\n- **Bộ óc người**: Cơ quan vật chất tinh vi nhất của ý thức. Ý thức là chức năng phản ánh đặc biệt của bộ óc người.\n- **Thế giới khách quan**: Đối tượng và nguồn nội dung của ý thức. Thế giới khách quan tác động vào các giác quan và bộ óc người sinh ra phản ánh.\n\n### 2. Nguồn gốc Xã hội (Điều kiện Đủ & Quyết định trực tiếp)\n- **Lao động**: Hoạt động đặc trưng của con người, dùng công cụ cải tạo tự nhiên, giúp bộ óc và tư duy phát triển.\n- **Ngôn ngữ**: 'Vỏ vật chất' của tư duy, ra đời từ nhu cầu giao tiếp trong lao động tập thể, giúp khái quát hóa khái niệm và truyền đạt tri thức."
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "c2-origins-sorting",
+            "type": "category_sorting",
+            "title": "Phân loại Nguồn gốc Ý thức",
+            "config": {
+              "categories": [
+                {
+                  "id": "natural",
+                  "label": "Nguồn gốc Tự nhiên",
+                  "description": "Điều kiện vật chất cần thiết sinh ra phản ánh ý thức."
+                },
+                {
+                  "id": "social",
+                  "label": "Nguồn gốc Xã hội",
+                  "description": "Yếu tố trực tiếp quyết định sự hình thành ý thức người."
+                }
+              ],
+              "cards": [
+                {
+                  "id": "brain",
+                  "text": "Bộ óc người đang hoạt động bình thường",
+                  "categoryId": "natural"
+                },
+                {
+                  "id": "world-impact",
+                  "text": "Sự tác động của thế giới khách quan vào giác quan",
+                  "categoryId": "natural"
+                },
+                {
+                  "id": "labor",
+                  "text": "Lao động sản xuất cải tạo thế giới",
+                  "categoryId": "social"
+                },
+                {
+                  "id": "language",
+                  "text": "Ngôn ngữ giao tiếp và tư duy",
+                  "categoryId": "social"
+                }
+              ],
+              "summary": "Nguồn gốc tự nhiên là điều kiện cần, còn lao động và ngôn ngữ (nguồn gốc xã hội) là điều kiện đủ quyết định sự ra đời của ý thức người."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          },
+          {
+            "id": "c2-origins-piece",
+            "type": "knowledge_piece",
+            "title": "Đúc kết Nguồn gốc Ý thức",
+            "config": {
+              "pieceId": "c2-origins-piece",
+              "label": "NGUỒN GỐC Ý THỨC",
+              "shortLabel": "Nguồn gốc",
+              "icon": "psychology",
+              "color": "from-blue-500 via-indigo-600 to-purple-700",
+              "summary": "Ý thức là sản phẩm của sự thống nhất giữa nguồn gốc tự nhiên và nguồn gốc xã hội.",
+              "takeaways": [
+                "Nguồn gốc tự nhiên: Bộ óc người có tổ chức cao và thế giới khách quan tác động vào bộ óc.",
+                "Nguồn gốc xã hội: Lao động và ngôn ngữ là hai nhân tố trực tiếp quyết định sự hình thành ý thức."
+              ],
+              "reward": "Bạn đã thu thập được mảnh ghép: NGUỒN GỐC Ý THỨC!"
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "all"
+      }
+    },
+    {
+      "id": "c2-nature-group",
+      "type": "component_group",
+      "title": "Bản chất của Ý thức",
+      "navigation_config": {
+        "shortLabel": "Bản chất"
+      },
+      "config": {
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "c2-nature-content",
+            "type": "markdown",
+            "title": "Bản chất năng động, sáng tạo",
+            "config": {
+              "content": "Bản chất của ý thức là **hình ảnh chủ quan của thế giới khách quan**, là quá trình phản ánh **tích cực, năng động và sáng tạo** hiện thực khách quan của óc người.\n\n- **Nội dung mang tính khách quan**: Nguồn gốc từ thế giới hiện thực.\n- **Hình thức mang tính chủ quan**: Phụ thuộc vào tri thức, kinh nghiệm, lợi ích và năng lực của chủ thể.\n- **Tính sáng tạo**: Ý thức không phản ánh thụ động như cái gương, mà biết trao đổi thông tin, mô hình hóa tư duy và sáng tạo ra những lý tưởng, kế hoạch thực tiễn chưa có sẵn trong tự nhiên."
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "c2-nature-mcq",
+            "type": "mcq",
+            "title": "Đặc trưng bản chất nhất",
+            "config": {
+              "question": "Đặc trưng bản chất nhất thể hiện sự khác biệt giữa ý thức con người và các hình thức phản ánh khác là gì?",
+              "options": [
+                {
+                  "id": "creative",
+                  "text": "Tính năng động, tích cực và sáng tạo hiện thực khách quan.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "passive",
+                  "text": "Sự phản ánh thụ động, nguyên xi như một chiếc gương soi.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "spiritual",
+                  "text": "Sự tách rời hoàn toàn khỏi vật chất và thế giới thực tại.",
+                  "isCorrect": false
+                }
+              ],
+              "correctFeedback": "Chính xác! Tính sáng tạo và năng động cải tạo thế giới thông qua thực tiễn là đặc trưng bản chất nhất của ý thức người.",
+              "wrongFeedback": "Chưa đúng. Ý thức không thụ động như cái gương soi mà luôn có tính sáng tạo, mô hình hóa và cải tạo thực tại."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          },
+          {
+            "id": "c2-nature-piece",
+            "type": "knowledge_piece",
+            "title": "Đúc kết Bản chất Ý thức",
+            "config": {
+              "pieceId": "c2-nature-piece",
+              "label": "BẢN CHẤT Ý THỨC",
+              "shortLabel": "Bản chất",
+              "icon": "auto_awesome",
+              "color": "from-emerald-400 via-teal-500 to-cyan-700",
+              "summary": "Ý thức là hình ảnh chủ quan của thế giới khách quan, mang tính tích cực và sáng tạo.",
+              "takeaways": [
+                "Ý thức là hình ảnh chủ quan của thế giới khách quan trong bộ óc con người.",
+                "Sáng tạo là đặc trưng bản chất nhất của ý thức, giúp con người tạo ra 'giới tự nhiên thứ hai'."
+              ],
+              "reward": "Bạn đã thu thập được mảnh ghép: BẢN CHẤT Ý THỨC!"
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "all"
+      }
+    },
+    {
+      "id": "c2-structure-group",
+      "type": "component_group",
+      "title": "Kết cấu Ý thức & Trí tuệ nhân tạo (AI)",
+      "navigation_config": {
+        "shortLabel": "Kết cấu & AI"
+      },
+      "config": {
+        "layout": "vertical",
+        "revealMode": "sequential",
+        "completionMode": "all",
+        "components": [
+          {
+            "id": "c2-structure-content",
+            "type": "markdown",
+            "title": "Cấu trúc, Cấp độ Ý thức và Vấn đề AI",
+            "config": {
+              "content": "### Kết cấu của ý thức\n- **Các lớp cấu trúc**: **Tri thức** (yếu tố cơ bản nhất), **Tình cảm**, **Niềm tin**, **Ý chí**.\n- **Các cấp độ đời sống nội tâm**: **Tự ý thức** (nhận thức bản thân), **Tiềm thức** (tri thức tự động hóa), **Vô thức** (hiện tượng tâm lý ngoài lý trí).\n\n### Trí tuệ nhân tạo (AI)\n- Máy tính và AI xử lý thông tin theo thuật toán do con người thiết kế. AI thực chất là quá trình vật lý - kỹ thuật.\n- Máy móc **không có bộ óc người**, **không có đời sống xã hội - lịch sử**, **không có tình cảm, niềm tin và trách nhiệm xã hội** như con người. Con người luôn là chủ thể sáng tạo và định hướng công nghệ."
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          },
+          {
+            "id": "c2-ai-mcq",
+            "type": "mcq",
+            "title": "Vấn đề Trí tuệ nhân tạo (AI)",
+            "config": {
+              "question": "Vì sao Trí tuệ nhân tạo (AI) dù rất thông minh vẫn không thể thay thế con người với tư cách là chủ thể có ý thức?",
+              "options": [
+                {
+                  "id": "a",
+                  "text": "Vì AI chỉ hoạt động theo thuật toán vật lý - kỹ thuật, không có bộ óc người, đời sống xã hội, tình cảm và trách nhiệm xã hội.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "b",
+                  "text": "Vì AI xử lý thông tin chậm hơn bộ não con người.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "c",
+                  "text": "Vì AI không thể thực hiện các phép tính toán phức tạp.",
+                  "isCorrect": false
+                }
+              ],
+              "correctFeedback": "Chính xác! AI chỉ hỗ trợ con người xử lý thông tin, nhưng không thể có bản chất xã hội, tình cảm, niềm tin và ý chí sáng tạo như con người.",
+              "wrongFeedback": "Chưa đúng. AI xử lý rất nhanh nhưng thiếu bản chất xã hội - lịch sử, tình cảm và trách nhiệm của chủ thể con người."
+            },
+            "completionRule": {
+              "type": "correct"
+            }
+          },
+          {
+            "id": "c2-structure-piece",
+            "type": "knowledge_piece",
+            "title": "Đúc kết Kết cấu Ý thức & AI",
+            "config": {
+              "pieceId": "c2-structure-piece",
+              "label": "KẾT CẤU Ý THỨC & AI",
+              "shortLabel": "Kết cấu & AI",
+              "icon": "memory",
+              "color": "from-amber-400 via-orange-500 to-red-600",
+              "summary": "Tri thức là hạt nhân của kết cấu ý thức. Con người là chủ thể sáng tạo, làm chủ công nghệ và AI.",
+              "takeaways": [
+                "Tri thức là phương thức tồn tại cơ bản nhất của ý thức, kết hợp cùng tình cảm, niềm tin và ý chí.",
+                "AI là công cụ hỗ trợ mở rộng nhận thức, con người mới là chủ thể sáng tạo và làm chủ thực tiễn."
+              ],
+              "reward": "Bạn đã thu thập được mảnh ghép: KẾT CẤU Ý THỨC & AI!"
+            },
+            "completionRule": {
+              "type": "viewed"
+            }
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "all"
+      }
+    },
+    {
+      "id": "c2-quiz-sequence",
+      "type": "quiz_sequence",
+      "title": "Kiểm tra kiến thức bài Nguồn gốc và bản chất của ý thức",
+      "config": {
+        "questions": [
+          {
+            "question": "Nguồn gốc tự nhiên của ý thức bao gồm những yếu tố nào?",
+            "options": [
+              "Bộ óc người và sự tác động của thế giới khách quan vào bộ óc người.",
+              "Lao động sản xuất và ngôn ngữ giao tiếp.",
+              "Thần thoại cổ đại và các nghi lễ tôn giáo.",
+              "Bộ óc của các loài động vật bậc cao."
+            ],
+            "correctIndex": 0,
+            "explanation": "Nguồn gốc tự nhiên của ý thức là bộ óc người cùng thế giới khách quan tác động vào bộ óc."
+          },
+          {
+            "question": "Hai nhân tố trực tiếp quyết định sự hình thành nguồn gốc xã hội của ý thức là gì?",
+            "options": [
+              "Thần thoại và tôn giáo.",
+              "Lao động và ngôn ngữ.",
+              "Bộ óc và hệ thần kinh.",
+              "Cảm giác và trực giác."
+            ],
+            "correctIndex": 1,
+            "explanation": "Lao động và ngôn ngữ là hai nhân tố trực tiếp quyết định nguồn gốc xã hội của ý thức."
+          },
+          {
+            "question": "Bản chất của ý thức theo chủ nghĩa duy vật biện chứng được định nghĩa là gì?",
+            "options": [
+              "Thực thể độc lập có trước và sinh ra thế giới vật chất.",
+              "Hình ảnh chủ quan của thế giới khách quan, mang tính tích cực, năng động và sáng tạo.",
+              "Sự phản ánh thụ động, nguyên xi như một chiếc gương soi.",
+              "Dạng vật chất đặc biệt do bộ óc tiết ra giống như gan tiết ra mật."
+            ],
+            "correctIndex": 1,
+            "explanation": "Ý thức là hình ảnh chủ quan của thế giới khách quan, là sự phản ánh năng động, sáng tạo bộ óc người."
+          },
+          {
+            "question": "Trong kết cấu cấu trúc của ý thức, yếu tố nào giữ vai trò cơ bản nhất?",
+            "options": [
+              "Tình cảm",
+              "Tri thức",
+              "Vô thức",
+              "Tiềm thức"
+            ],
+            "correctIndex": 1,
+            "explanation": "Tri thức là nội dung và phương thức tồn tại cơ bản nhất của ý thức."
+          },
+          {
+            "question": "Mối quan hệ giữa ý thức con người và Trí tuệ nhân tạo (AI) được xác định như thế nào?",
+            "options": [
+              "AI sẽ thay thế hoàn toàn ý thức và vai trò của con người trong tương lai.",
+              "Con người là chủ thể sáng tạo có bản chất xã hội, AI chỉ là công cụ mô phỏng hỗ trợ xử lý thông tin.",
+              "AI có tình cảm, niềm tin và ý chí giống như con người.",
+              "Ý thức con người và AI hoàn toàn không có điểm khác biệt."
+            ],
+            "correctIndex": 1,
+            "explanation": "AI là công cụ hỗ trợ xử lý thông tin theo thuật toán, con người mới là chủ thể xã hội sáng tạo."
+          }
+        ]
+      },
+      "completionRule": {
+        "type": "correct"
+      }
+    },
+    {
+      "id": "c2-final-summary",
+      "type": "final_summary",
+      "title": "Hoàn thành bài Nguồn gốc và bản chất của ý thức",
+      "config": {
+        "message": "Bạn đã hoàn thành xuất sắc bài học về Nguồn gốc, bản chất và kết cấu của ý thức!",
+        "keyTakeaways": [
+          "Ý thức là sự thống nhất giữa nguồn gốc tự nhiên (bộ óc, thế giới khách quan) và nguồn gốc xã hội (lao động, ngôn ngữ).",
+          "Bản chất của ý thức là hình ảnh chủ quan của thế giới khách quan, có tính năng động và sáng tạo.",
+          "Tri thức là phương thức tồn tại cơ bản nhất của ý thức; con người là chủ thể sáng tạo làm chủ khoa học công nghệ và AI."
+        ],
+        "rewards": {
+          "xp": 120,
+          "badge": "Nhà thấu hiểu Ý thức"
+        },
+        "quote": {
+          "text": "Ý thức không bao giờ có thể là cái gì khác hơn là tồn tại được nhận thức...",
+          "author": "C. Mác và Ph. Ăngghen, Hệ tư tưởng Đức"
+        },
+        "actions": {
+          "retryButton": true,
+          "nextLessonButton": true
+        }
+      },
+      "completionRule": {
+        "type": "viewed"
+      }
+    }
+  ]
+}
