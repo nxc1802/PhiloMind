@@ -1276,7 +1276,7 @@ async function main() {
       sectionChapter: ch2SectionMatter,
       sectionOrderIndex: 1,
       file: "chuong2_vat_chat_va_phuong_thuc_ton_tai.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=zq3u-R-WAhQ",
     },
     {
       title: "Phương thức tồn tại của vật chất & Tính thống nhất vật chất",
@@ -1291,7 +1291,7 @@ async function main() {
       sectionChapter: ch2SectionMatter,
       sectionOrderIndex: 2,
       file: "chuong2_phuong_thuc_ton_tai.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=X3XGNvRmSQc",
     },
     {
       title: "Nguồn gốc, bản chất và kết cấu của ý thức",
@@ -1306,7 +1306,7 @@ async function main() {
       sectionChapter: ch2SectionMatter,
       sectionOrderIndex: 3,
       file: "chuong2_nguon_goc_ban_chat_y_thuc.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=GuTfEheDvk0",
     },
     {
       title: "Mối quan hệ giữa vật chất và ý thức",
@@ -1322,7 +1322,7 @@ async function main() {
       sectionChapter: ch2SectionMatter,
       sectionOrderIndex: 4,
       file: "chuong2_moi_quan_he_vat_chat_y_thuc.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=b2tmiYsk68A",
     },
 
     // --- Section II: PHÉP BIỆN CHỨNG DUY VẬT ---
@@ -1339,7 +1339,7 @@ async function main() {
       sectionChapter: ch2SectionDialectics,
       sectionOrderIndex: 1,
       file: "chuong2_hai_loai_hinh_bien_chung.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=LkEYAdoZTU8",
     },
     {
       title: "Hai nguyên lý của phép biện chứng duy vật",
@@ -1353,7 +1353,7 @@ async function main() {
       sectionChapter: ch2SectionDialectics,
       sectionOrderIndex: 2,
       file: "chuong2_hai_nguyen_ly_co_ban.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=1VwbmgMTbkk",
     },
     {
       title: "Các cặp phạm trù cơ bản của phép biện chứng duy vật",
@@ -1367,7 +1367,7 @@ async function main() {
       sectionChapter: ch2SectionDialectics,
       sectionOrderIndex: 3,
       file: "chuong2_cac_cap_pham_tru.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=JNutDwj92is",
     },
     {
       title: "Các quy luật cơ bản của phép biện chứng duy vật",
@@ -1381,7 +1381,7 @@ async function main() {
       sectionChapter: ch2SectionDialectics,
       sectionOrderIndex: 4,
       file: "chuong2_ba_quy_luat_co_ban.json",
-      videoUrl: defaultYoutubeUrl,
+      videoUrl: "https://www.youtube.com/watch?v=k_jbTWq-u50",
     },
 
     // --- Section III: LÝ LUẬN NHẬN THỨC ---

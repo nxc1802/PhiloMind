@@ -30,14 +30,14 @@
     {
       "id": "concept-sorting-image",
       "type": "image",
-      "url": "/public/uploads/IMG_2811.JPG",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.b/IMG_2811.JPG",
       "title": "So sánh Triết học và Thần thoại - Tôn giáo",
       "alt": "Ảnh minh họa phân loại thế giới quan"
     },
     {
       "id": "concept-final-image",
       "type": "image",
-      "url": "/public/uploads/IMG_2810.JPG",
+      "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.b/IMG_2810.JPG",
       "title": "Đúc kết bài học Khái niệm Triết học",
       "alt": "Ảnh tổng kết bài học"
     }
@@ -159,7 +159,7 @@
             "config": {
               "content": "Triết học và các hình thức nhận thức khác đều muốn vẽ nên bức tranh về thế giới, nhưng công cụ của chúng rất khác nhau. Hãy phân loại các yếu tố dưới đây để làm rõ tính đặc thù của nhận thức triết học.",
               "image": {
-                "url": "/public/uploads/IMG_2811.JPG",
+                "url": "https://vqkliqnanzemrjifvawf.supabase.co/storage/v1/object/public/lesson-assets/chapter-1/1.1.b/IMG_2811.JPG",
                 "alt": "So sánh Triết học và Thần thoại - Tôn giáo"
               }
             },
