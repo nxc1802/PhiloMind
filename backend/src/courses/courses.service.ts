@@ -363,7 +363,9 @@ export class CoursesService {
           n.progress?.[0]?.lessonCompleted === true,
       ).length;
       const progressPercent =
-        totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+        totalLessons > 0
+          ? Math.round((completedLessons / totalLessons) * 100)
+          : 0;
 
       return {
         ...chap,

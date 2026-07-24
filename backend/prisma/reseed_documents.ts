@@ -120,10 +120,12 @@ async function main() {
     if (supabaseClient) {
       try {
         const fileBuffer = fs.readFileSync(srcPath);
-        await supabaseClient.storage.from("documents").upload(doc.fileName, fileBuffer, {
-          contentType: "application/pdf",
-          upsert: true,
-        });
+        await supabaseClient.storage
+          .from("documents")
+          .upload(doc.fileName, fileBuffer, {
+            contentType: "application/pdf",
+            upsert: true,
+          });
 
         const { data: urlData } = supabaseClient.storage
           .from("documents")
@@ -133,7 +135,9 @@ async function main() {
           fileUrl = urlData.publicUrl;
         }
       } catch (e: any) {
-        console.warn(`Supabase upload failed for ${doc.fileName}: ${e.message}`);
+        console.warn(
+          `Supabase upload failed for ${doc.fileName}: ${e.message}`,
+        );
       }
     }
 
